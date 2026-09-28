@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A sponsored slot raised agents' visits to a worse product by 15 runs in 60 and its purchases by 48 | Blolabel</title>
+<meta name="description" content="CAVEAT (arXiv:2609.27273, 23 September 2026, CMU and Microsoft Research): sponsoring one suboptimal product raised visits from 45 to 60 of 60 runs and purchases from 0 to 48. Optimal purchases fell from 78.6% to 17.3% across five models; GPT-5.6-Sol high went from 45/50 to 0/50 on an 88-page catalog. CAVEAT-Harness arms are 15 episodes; verification alone 10/15 vs full 12/15, p 0.68.">
+<link rel="canonical" href="https://blolabel.ai/blog/sponsored-slot-changes-what-agents-buy/">
+<meta property="og:title" content="A sponsored slot raised agents' visits to a worse product by 15 runs in 60 and its purchases by 48 | Blolabel">
+<meta property="og:description" content="CAVEAT (arXiv:2609.27273, 23 September 2026, CMU and Microsoft Research): sponsoring one suboptimal product raised visits from 45 to 60 of 60 runs and purchases from 0 to 48. Optimal purchases fell from 78.6% to 17.3% across five models; GPT-5.6-Sol high went from 45/50 to 0/50 on an 88-page catalog. CAVEAT-Harness arms are 15 episodes; verification alone 10/15 vs full 12/15, p 0.68.">
+<meta property="og:url" content="https://blolabel.ai/blog/sponsored-slot-changes-what-agents-buy/">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"A sponsored slot raised agents' visits to a worse product by 15 runs in 60 and its purchases by 48","description":"CAVEAT (arXiv:2609.27273, 23 September 2026, CMU and Microsoft Research): sponsoring one suboptimal product raised visits from 45 to 60 of 60 runs and purchases from 0 to 48. Optimal purchases fell from 78.6% to 17.3% across five models; GPT-5.6-Sol high went from 45/50 to 0/50 on an 88-page catalog. CAVEAT-Harness arms are 15 episodes; verification alone 10/15 vs full 12/15, p 0.68.",
+ "datePublished":"2026-09-27","dateModified":"2026-09-27",
+ "url":"https://blolabel.ai/blog/sponsored-slot-changes-what-agents-buy/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/sponsored-slot-changes-what-agents-buy/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"}}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Do computer-use agents buy sponsored products?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "In CAVEAT (arXiv:2609.27273, 23 September 2026), moving one suboptimal product into a sponsored slot raised visits from 45 to 60 of 60 runs and purchases from 0 to 48 of 60. The agents had usually seen it already; sponsorship changed whether they bought it."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How much do marketplace steering tactics reduce agent decision quality?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Across 52 tasks, 3 repetitions and 5 model configurations, switching on eight steering mechanisms cut the optimal purchase rate from 78.6% to 17.3%. On an 88-page catalog GPT-5.6-Sol at high reasoning went from 45 of 50 to 0 of 50, and all 50 failures stopped on page 1."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What fixed it?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "A verification tool the agent calls before buying reached 10 of 15 on CAVEAT-Hard, and the full CAVEAT-Harness 12 of 15 (Fisher p 0.68 for the difference). The abstract's '55.0%' improvement is 55.0 percentage points, 11.7% to 66.7%, a 5.7-fold rise, at 2.6 times the runtime."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Would a purchase-confirmation gate catch these mistakes?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Not one that checks the action. phoneshell's 14 confirm_patterns match labels such as buy, checkout and place order, so every wrong purchase in CAVEAT's placement arm would reach the human as an ordinary purchase of a real product at a true price."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-09-27">27 September 2026</time>
+    <span>6 min read</span>
+  </div>
+  <h1>A sponsored slot raised agents' visits to a worse product by 15 runs in 60 and its purchases by 48</h1>
+  <p class="standfirst">CAVEAT holds catalog, prices and the right answer fixed and switches on the tactics real marketplaces use. Agents mostly saw the worse product already; sponsorship changed whether they bought it. A spending gate that checks the action, not the choice, would have approved every one.</p>
+
+  <p>Moving one suboptimal product into a sponsored slot near the top of the results raised the share of
+agent runs that visited it from 45 of 60 to 60 of 60, and the share that bought it from 0 of 60 to
+48 of 60. The agents already saw it in three runs out of four and never chose it; sponsorship changed
+the verdict, not the discovery. The numbers are from CAVEAT (arXiv:2609.27273, submitted 23 September
+2026 by Yuxuan Li of Carnegie Mellon and Will Epperson, Wesley Deng and Zezhou Huang of Microsoft
+Research).</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/sponsored-slot-changes-what-agents-buy-hero.png" alt="Abstract technical illustration of a long grid of identical product tiles fading into the distance, with the first tile lifted and lit and a thin path ending at it while the optimal tile sits unlit many rows back" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="what-caveat-measured">What CAVEAT measured</h2>
+
+<p>CAVEAT is nine browser marketplaces (lodging, retail, food delivery, resale, freelance services,
+grocery, specialty shops) in which every scored task has exactly one product that meets the user's hard
+requirements and is best on all stated preferences. Each task runs twice with the same catalog, prices
+and optimum: once as a matched control, once with eight steering mechanisms switched on (sponsored
+placement, preferential ranking, drip pricing, promotional framing, defaults and bundling, scarcity and
+social proof, trust signals, friction). Every mechanism shows only true information. Agents run in the
+BrowserUse framework; the main sweep is 52 tasks, 3 repetitions, 5 model configurations.</p>
+
+<p>Across that sweep the optimal purchase rate fell from 78.6% to 17.3%, which on 780 episodes per
+condition is about 613 against 135 (our reconstruction; the paper gives percentages). On CAVEAT-Hard,
+five tasks with 2,112 products over 88 result pages, GPT-5.6-Sol at high reasoning bought the optimum
+in 90.0% of controls and in none of 50 steered episodes. All 50 failures stopped on page 1.</p>
+
+<table>
+  <thead>
+    <tr><th>Condition</th><th>Model</th><th>Optimal purchases</th><th>95% interval (ours)</th><th>Source</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>All mechanisms off, CAVEAT-Shop</td><td>GPT-5.6-Sol, low</td><td>60/60 (100%)</td><td>94.0 to 100</td><td>Section 4.1</td></tr>
+    <tr><td>Sponsored placement only</td><td>GPT-5.6-Sol, low</td><td>38/60 (63.3%)</td><td>50.7 to 74.4</td><td>Section 4.1</td></tr>
+    <tr><td>Preferential ranking only</td><td>GPT-5.6-Sol, low</td><td>45/60 (75%)</td><td>62.8 to 84.2</td><td>Section 4.1</td></tr>
+    <tr><td>Drip pricing only</td><td>GPT-5.6-Sol, low</td><td>50/60 (83.3%)</td><td>72.0 to 90.7</td><td>Section 4.1</td></tr>
+    <tr><td>Other five mechanisms, one at a time</td><td>GPT-5.6-Sol, low</td><td>"smaller drops"</td><td>not reported as numbers</td><td>Section 4.1</td></tr>
+    <tr><td>Drip pricing only</td><td>GPT-5.6-Terra, low</td><td>25/60 (35 suboptimal, all the drip-priced item)</td><td>30.1 to 54.3</td><td>Section 5.3</td></tr>
+    <tr><td>CAVEAT-Hard, control</td><td>GPT-5.6-Sol, high</td><td>45/50 (90.0%)</td><td>78.6 to 95.7</td><td>Section 4.1</td></tr>
+    <tr><td>CAVEAT-Hard, steered</td><td>GPT-5.6-Sol, high</td><td>0/50</td><td>0 to 7.1</td><td>Section 4.1</td></tr>
+    <tr><td>Hard, steered, full CAVEAT-Harness</td><td>GPT-5.6-Sol, high</td><td>12/15 (80.0%)</td><td>54.8 to 93.0</td><td>Section 6.1</td></tr>
+    <tr><td>Hard, steered, verification tool only</td><td>GPT-5.6-Sol, high</td><td>10/15 (66.7%)</td><td>41.7 to 84.8</td><td>Section 6.1</td></tr>
+    <tr><td>Hard, steered, structured objective only</td><td>GPT-5.6-Sol, high</td><td>1/15 (6.7%)</td><td>1.2 to 29.8</td><td>Section 6.1</td></tr>
+    <tr><td>Hard, steered, prompt only</td><td>GPT-5.6-Sol, high</td><td>2/15 (13.3%)</td><td>3.7 to 37.9</td><td>Section 6.1</td></tr>
+  </tbody>
+</table>
+
+<p>Counts are ours, rebuilt from the percentages and the stated designs: CAVEAT-Shop is 20 tasks, and
+the CAVEAT-Harness comparisons use three repetitions per task, so 60 episodes on Shop and 15 on Hard. Every
+percentage in Section 6.1 lands exactly on those denominators (7/60 is 11.7%, 12/15 is 80.0%). Intervals
+are Wilson 95%.</p>
+
+<h2 id="where-steering-enters-three-points-each-with-a-number">Where steering enters: three points, each with a number</h2>
+
+<svg viewBox="0 0 760 400" style="width:100%;height:auto" role="img" aria-label="Flow diagram of where marketplace steering enters an agent's purchase, from CAVEAT, arXiv 2609.27273. First, objective drift: swapping the order of two equal-priority preferences changed the chosen product in 25 of 25 matched pairs. Second, premature search closure: sponsoring a suboptimal product raised visits from 45 to 60 of 60 runs but purchases from 0 to 48 of 60, and on CAVEAT-Hard all 50 failures stopped on page 1 of 88. Third, commitment with unresolved evidence: 23 runs rejected an optimum already found, mostly by confusing list and payable prices, and drip pricing alone produced 35 suboptimal purchases in 60. The harness adds a fixed specification before browsing and a verification tool before purchase; verification alone reached 10 of 15 on Hard, the full harness 12 of 15.">
+  <g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="12">
+    <text x="20" y="26" font-size="14" font-weight="600">One purchase, three places the marketplace gets in</text>
+    <rect x="20" y="52" width="150" height="56" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="34" y="76" font-weight="600">User request</text>
+    <text x="34" y="94" fill="#c4ccda">hard + comparative</text>
+    <rect x="200" y="52" width="170" height="56" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="214" y="76" font-weight="600">Read priorities</text>
+    <text x="214" y="94" fill="#c4ccda">what matters most</text>
+    <rect x="400" y="52" width="160" height="56" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="414" y="76" font-weight="600">Search, stop</text>
+    <text x="414" y="94" fill="#c4ccda">how far to look</text>
+    <rect x="590" y="52" width="150" height="56" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="604" y="76" font-weight="600">Compare, buy</text>
+    <text x="604" y="94" fill="#c4ccda">which fact decides</text>
+    <line x1="170" y1="80" x2="196" y2="80" stroke="#c4ccda"/><polygon points="196,76 202,80 196,84" fill="#c4ccda"/>
+    <line x1="370" y1="80" x2="396" y2="80" stroke="#c4ccda"/><polygon points="396,76 402,80 396,84" fill="#c4ccda"/>
+    <line x1="560" y1="80" x2="586" y2="80" stroke="#c4ccda"/><polygon points="586,76 592,80 586,84" fill="#c4ccda"/>
+    <rect x="200" y="140" width="170" height="132" rx="8" fill="#2a1f14" stroke="#f2a65a"/>
+    <text x="212" y="162" font-weight="600" fill="#f2a65a">Objective drift</text>
+    <text x="212" y="184" fill="#c4ccda">swap order of two</text>
+    <text x="212" y="200" fill="#c4ccda">equal preferences:</text>
+    <text x="212" y="222" fill="#e9ecf2">choice changed in</text>
+    <text x="212" y="240" fill="#f2a65a" font-weight="600">25 of 25 pairs</text>
+    <rect x="390" y="140" width="180" height="132" rx="8" fill="#2a1f14" stroke="#f2a65a"/>
+    <text x="402" y="162" font-weight="600" fill="#f2a65a">Search closure</text>
+    <text x="402" y="184" fill="#c4ccda">sponsor one bad item:</text>
+    <text x="402" y="202" fill="#e9ecf2">visits 45 to 60 of 60</text>
+    <text x="402" y="220" fill="#f2a65a" font-weight="600">bought 0 to 48 of 60</text>
+    <text x="402" y="244" fill="#c4ccda">Hard: 50 of 50 failures</text>
+    <text x="402" y="262" fill="#c4ccda">stop on page 1 of 88</text>
+    <rect x="590" y="140" width="150" height="132" rx="8" fill="#2a1f14" stroke="#f2a65a"/>
+    <text x="602" y="162" font-weight="600" fill="#f2a65a">Unresolved facts</text>
+    <text x="602" y="184" fill="#c4ccda">23 runs dropped a</text>
+    <text x="602" y="200" fill="#c4ccda">found optimum, mostly</text>
+    <text x="602" y="216" fill="#c4ccda">list vs payable price</text>
+    <text x="602" y="240" fill="#f2a65a" font-weight="600">drip only: 35 of 60</text>
+    <text x="602" y="260" fill="#c4ccda">bought that item</text>
+    <line x1="285" y1="108" x2="285" y2="136" stroke="#f2a65a" stroke-dasharray="4 3"/>
+    <line x1="480" y1="108" x2="480" y2="136" stroke="#f2a65a" stroke-dasharray="4 3"/>
+    <line x1="665" y1="108" x2="665" y2="136" stroke="#f2a65a" stroke-dasharray="4 3"/>
+    <rect x="200" y="292" width="170" height="80" rx="8" fill="#16261f" stroke="#5ad1a0"/>
+    <text x="212" y="314" font-weight="600" fill="#5ad1a0">Fixed spec first</text>
+    <text x="212" y="334" fill="#c4ccda">alone on Hard:</text>
+    <text x="212" y="352" fill="#5ad1a0">1 of 15</text>
+    <rect x="390" y="292" width="350" height="80" rx="8" fill="#16261f" stroke="#5ad1a0"/>
+    <text x="402" y="314" font-weight="600" fill="#5ad1a0">Verify before buying (tool)</text>
+    <text x="402" y="334" fill="#c4ccda">alone on Hard: 10 of 15; full CAVEAT-Harness: 12 of 15</text>
+    <text x="402" y="352" fill="#c4ccda">cost: 2.6x runtime, 2.3x steps and tool calls</text>
+  </g>
+</svg>
+
+<p>The placement experiment is the cleanest of the three. Across five product types and four preference
+settings, 60 runs per arm, the request, catalog and attributes are fixed and only the position of one
+suboptimal product changes. Visits rose by 15 runs; purchases rose by 48. Once it was sponsored, 80% of
+the runs that saw it bought it, against 0% of the 45 that saw it unsponsored. On the evidence side, the 23 runs that dropped
+a found optimum came from 19 model, task and condition settings, and 13 of those settings had another
+repetition that bought the optimum once the decisive fact was read correctly.</p>
+
+<svg viewBox="0 0 760 300" style="width:100%;height:auto" role="img" aria-label="Bar chart of GPT-5.6-Sol at low reasoning on the 20 CAVEAT-Shop tasks with one steering mechanism switched on at a time, 60 episodes each. With all mechanisms off it buys the optimal product in 100 percent of episodes. Sponsored placement alone lowers that to 63.3 percent, preferential ranking to 75 percent and drip pricing to 83.3 percent. The other five mechanisms produced smaller drops that the paper does not give as numbers.">
+  <g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+    <text x="20" y="26" font-size="14" font-weight="600">One mechanism at a time: optimal purchase rate, GPT-5.6-Sol low (n = 60 each)</text>
+    <line x1="220" y1="50" x2="220" y2="250" stroke="#6f7b90"/>
+    <line x1="220" y1="250" x2="720" y2="250" stroke="#6f7b90"/>
+    <text x="216" y="268" font-size="11" fill="#8a93a5">0%</text>
+    <line x1="470" y1="246" x2="470" y2="254" stroke="#6f7b90"/><text x="460" y="268" font-size="11" fill="#8a93a5">50%</text>
+    <line x1="720" y1="246" x2="720" y2="254" stroke="#6f7b90"/><text x="702" y="268" font-size="11" fill="#8a93a5">100%</text>
+    <text x="20" y="78" font-size="12">All mechanisms off</text>
+    <rect x="220" y="64" width="500" height="22" fill="#6f7b90"/><text x="600" y="80" font-size="11">100% (60/60)</text>
+    <text x="20" y="122" font-size="12" fill="#f2a65a">Sponsored placement</text>
+    <rect x="220" y="108" width="316.5" height="22" fill="#f2a65a"/><text x="544" y="124" font-size="11" fill="#f2a65a">63.3% (38/60)</text>
+    <text x="20" y="166" font-size="12">Preferential ranking</text>
+    <rect x="220" y="152" width="375" height="22" fill="#c4ccda"/><text x="603" y="168" font-size="11">75% (45/60)</text>
+    <text x="20" y="210" font-size="12">Drip pricing</text>
+    <rect x="220" y="196" width="416.5" height="22" fill="#c4ccda"/><text x="644" y="212" font-size="11">83.3% (50/60)</text>
+    <text x="220" y="290" font-size="11" fill="#8a93a5">The other five families: "smaller drops", no numbers in the text.</text>
+  </g>
+</svg>
+
+<h2 id="three-of-the-paper-s-claims-are-smaller-than-they-read">Three of the paper's claims are smaller than they read</h2>
+
+<p>The abstract says CAVEAT-Harness "raises user-optimal purchasing by 55.0%". That is 55.0 percentage
+points, 11.7% to 66.7% for GPT-5.6-Terra on Shop, or 7 to 40 of 60 episodes: a 5.7-fold rise. The
+relative figure is larger than the abstract says, and the unit is wrong.</p>
+
+<p>The Hard ablation of CAVEAT-Harness runs on 15 episodes per arm. Verification alone reached 10 of 15 and the
+full version 12 of 15; Fisher's exact p for that difference is 0.68. On this sample the structured
+objective adds nothing measurable, and the paper's reading that verification "accounts for most of the
+gain" is as far as the data go.</p>
+
+<p>The transfer evidence is 12 episodes per arm on four CAVEAT-Stay tasks. CAVEAT-Harness took GPT-5.6-Terra
+from 2 to 6 of 12 (p 0.19); CAVEAT-27B reached 2 of 12 against 0 of 12 for its backbone (p 0.48). The
+paper calls both "preliminary", which is accurate: neither is distinguishable from no transfer. The
+in-domain post-training result does hold: 11 of 48 against 2 of 48 on the held-out Shop tasks, p 0.014.</p>
+
+<h2 id="what-it-means-for-an-agent-buying-on-a-phone">What it means for an agent buying on a phone</h2>
+
+<p>phoneshell's spending rail confirms that a purchase happens, not which product. The 14
+<code>confirm_patterns</code> in <code>phoneshell/config.py</code> match labels such as "place order",
+"buy", "checkout" and "subscribe"; <code>max_spend_local</code> is 0.0, so every payment needs a human
+tap; and rule 6 of the MCP instructions tells the model to show the user what it is about to do before
+calling again with <code>confirmed=true</code>. In CAVEAT's placement arm, all 48 wrong purchases would
+have reached that gate as ordinary purchases of a real product at a true price. A human approving
+"buy item X for $Y" sees what the agent saw. None of the 14 patterns compares the chosen item with
+anything else on the screen.</p>
+
+<p>CAVEAT's strongest single lever was a check on the choice, not the action: a tool the agent can call
+before buying to argue that its search was complete and that no unresolved fact could change the
+comparison. For a phone agent that means the confirmation message should carry the evidence (how many
+results were inspected, whether the price shown is the payable one) rather than only the item name.
+That costs time; the paper measured 2.6 times the runtime. A separate study of default and social-proof nudges on a
+test web store (<a href="https://arxiv.org/abs/2609.19843">arXiv:2609.19843</a>, 17 September 2026)
+points at the same gap from the defaults side.</p>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<ul>
+  <li>Paper: <code>https://arxiv.org/abs/2609.27273</code>; HTML <code>https://arxiv.org/html/2609.27273v1</code>. Placement numbers are in Section 5.2, drip pricing in 5.3, single-mechanism ablation in 4.1, CAVEAT-Harness arms in 6.1.</li>
+  <li>Intervals and tests: <code>from scipy.stats import fisher_exact; fisher_exact([[12,3],[10,5]])</code> gives 0.68; <code>fisher_exact([[2,10],[6,6]])</code> gives 0.19; <code>fisher_exact([[0,60],[48,12]])</code> gives 3.2e-22.</li>
+  <li>Denominators: <code>python3 -c "print(7/60, 40/60, 18/60, 12/15, 10/15, 2/15, 1/15)"</code> reproduces every Section 6.1 percentage.</li>
+  <li>Our gate: <code>sed -n 125,150p phoneshell/config.py</code> and <code>grep -n confirmed phoneshell/mcp_server.py</code> in the phoneshell repo.</li>
+</ul>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>Prediction, dated 31 March 2027: in any rerun of the CAVEAT-Hard ablation with at least 30
+episodes per arm, verification alone lands within 15 points of the full CAVEAT-Harness. If the full version
+beats verification alone by more than 15 points at that size, the structured objective matters and our
+reading of the 15-episode arms was too cautious. Second prediction, same date: a CAVEAT-Stay transfer
+test with at least 60 episodes per arm shows the CAVEAT-Harness gain as significant (p below 0.05); if it does
+not, CAVEAT-Harness is a Shop-specific fix.</p>
+
+  <section class="sources">
+    <h2>Sources</h2>
+    <ol>
+      <li><a href="https://arxiv.org/abs/2609.27273">Li, Epperson, Deng and Huang, the CAVEAT paper on computer-use agents in incentive-misaligned environments, arXiv:2609.27273, submitted 23 September 2026</a></li>
+      <li><a href="https://arxiv.org/html/2609.27273v1">CAVEAT HTML edition: Sections 4.1 (matched sweep, single-mechanism ablation, CAVEAT-Hard), 5.1 to 5.3 (placement, drip pricing), 6.1 and 6.2 (harness and CAVEAT-27B)</a></li>
+      <li><a href="https://github.com/Blomega/phoneshell/blob/main/phoneshell/config.py">phoneshell SafetyConfig: 14 confirm_patterns and max_spend_local 0.0, read 27 September 2026</a></li>
+      <li><a href="https://arxiv.org/abs/2609.19843">A Dual-Process Perspective on Nudge Susceptibility in LLM-Based GUI Agents, arXiv:2609.19843, submitted 17 September 2026</a></li>
+    </ol>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
