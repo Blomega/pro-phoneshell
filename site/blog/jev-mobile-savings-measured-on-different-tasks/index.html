@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jev-Mobile's 73% cost cut rests on a table whose baseline cost rows disagree 38-fold | Blolabel</title>
+<meta name="description" content="Jev-Mobile (arXiv:2609.30186, 24 September 2026) reports 79% on AndroidWorld against 84% for a step-wise Qwen3.8-Max agent at $0.0727 against $0.2737 per success. For the one-model baseline, summed executor cost ($0.694774) and mean cost times successes (about $26.55) differ 38-fold; Jev itself is 0.2% of spend; the gap is 5 or 6 of 116 tasks, Fisher p 0.39 to 0.50.">
+<link rel="canonical" href="https://blolabel.ai/blog/jev-mobile-savings-measured-on-different-tasks/">
+<meta property="og:title" content="Jev-Mobile's 73% cost cut rests on a table whose baseline cost rows disagree 38-fold | Blolabel">
+<meta property="og:description" content="Jev-Mobile (arXiv:2609.30186, 24 September 2026) reports 79% on AndroidWorld against 84% for a step-wise Qwen3.8-Max agent at $0.0727 against $0.2737 per success. For the one-model baseline, summed executor cost ($0.694774) and mean cost times successes (about $26.55) differ 38-fold; Jev itself is 0.2% of spend; the gap is 5 or 6 of 116 tasks, Fisher p 0.39 to 0.50.">
+<meta property="og:url" content="https://blolabel.ai/blog/jev-mobile-savings-measured-on-different-tasks/">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"Jev-Mobile's 73% cost cut rests on a table whose baseline cost rows disagree 38-fold","description":"Jev-Mobile (arXiv:2609.30186, 24 September 2026) reports 79% on AndroidWorld against 84% for a step-wise Qwen3.8-Max agent at $0.0727 against $0.2737 per success. For the one-model baseline, summed executor cost ($0.694774) and mean cost times successes (about $26.55) differ 38-fold; Jev itself is 0.2% of spend; the gap is 5 or 6 of 116 tasks, Fisher p 0.39 to 0.50.",
+ "datePublished":"2026-09-27","dateModified":"2026-09-27",
+ "url":"https://blolabel.ai/blog/jev-mobile-savings-measured-on-different-tasks/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/jev-mobile-savings-measured-on-different-tasks/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"}}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "How well does Jev-Mobile do on AndroidWorld?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Jev-Mobile (arXiv:2609.30186, 24 September 2026) reports 0.79 task success on the full AndroidWorld suite, against 0.84 for a step-wise Qwen3.8-Max agent and 0.78 for SeeAct-V with UI-TARS-1.5-7B grounding. On 116 tasks the 5-point gap is 5 or 6 tasks from one run, and Fisher's exact test gives p 0.39 to 0.50."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Where does Jev-Mobile's 73.4% cost saving come from?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Jev's own charges are $0.013091 across about 92 successes, $0.00014 each, 0.2% of Jev-Mobile's $0.072744 per success. The saving comes from calling the Qwen planner about 3.8 times less per successful task, not from a cheap executor."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Is the Jev-Mobile cost table internally consistent?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Not for the step-wise baseline. It uses one model, so its summed executor cost over successes should equal its mean cost per success times its successes. The table gives $0.694774 against about $26.55 (0.273694 x 97), a 38-fold difference."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Can an accessibility-tree executor tap something that is only in the pixels?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Not in Jev-Mobile: it has no coordinate fallback, so a target with no tree node returns BLOCKED. The paper promises coverage, selection and handoff failure counts but does not report them. phoneshell's MCP tools make the same choice: none of its 23 tools takes a coordinate."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-09-27">27 September 2026</time>
+    <span>6 min read</span>
+  </div>
+  <h1>Jev-Mobile's 73% cost cut rests on a table whose baseline cost rows disagree 38-fold</h1>
+  <p class="standfirst">A typed decision model picking accessibility-tree IDs got within 5 points of a step-wise VLM on AndroidWorld at a quarter of the spend. The 5 points are 5 or 6 tasks from one run, the savings are averaged over different tasks, and one baseline row cannot be reconciled with another.</p>
+
+  <p>Jev-Mobile, posted to arXiv on 24 September 2026, reports 79% on AndroidWorld against 84% for a
+step-wise Qwen3.8-Max agent, at $0.072744 of model spend per successful task against $0.273694, a 73.4%
+saving. Its own Table 1 does not reconcile: for the step-wise baseline, a one-model system, the summed
+executor cost over successful runs is $0.694774, while the mean cost per success implies about $26.55,
+38 times more. And the 5-point success gap is 5 or 6 of AndroidWorld's 116 tasks from a single run,
+which no test on these numbers can separate from zero.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/jev-mobile-savings-measured-on-different-tasks-hero.png" alt="Abstract technical illustration of a large slow node sending a single beam to a small fast node that fans out into many short steps along a grid of labelled-looking boxes, one box left unreached" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="what-jev-mobile-changed-and-what-it-reported">What Jev-Mobile changed, and what it reported</h2>
+
+<p>Linghua Zhang, writing from a Rice University address, splits a mobile agent into two speeds. A vision-language model,
+Qwen3.8-Max (<code>qwen/qwen3.8-max-0902</code> on OpenRouter), reads the task, the screenshot and the
+accessibility tree, and emits a local goal plus any exact text to type. A program then enumerates every
+visible, enabled node in the fresh tree as a numbered candidate (click, long-press, scroll, focus, plus
+Back, Home, Enter and Open app), and Jev, a typed decision model, picks one ID or returns DONE or
+BLOCKED. After each action the tree is re-read and the IDs are rebuilt. Jev never sees the screenshot,
+and there is no coordinate fallback: a target missing from the tree cannot be tapped.</p>
+
+<p>The comparison has three systems on the full AndroidWorld suite: step-wise VLM (Qwen chooses every
+action), SeeAct-V (Qwen decides, UI-TARS-1.5-7B grounds, substituted for the original UGround), and
+Jev-Mobile. Success uses every task instance. Every time and cost row uses only each system's own
+successful trajectories.</p>
+
+<table>
+  <thead>
+    <tr><th>Metric</th><th>Step-wise VLM</th><th>SeeAct-V</th><th>Jev-Mobile</th><th>Source</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Full-task success rate</td><td>0.84</td><td>0.78</td><td>0.79</td><td>Table 1</td></tr>
+    <tr><td>Successes out of 116 (ours, from the rate)</td><td>97 or 98</td><td>90 or 91</td><td>92</td><td>AndroidWorld task count; arithmetic ours</td></tr>
+    <tr><td>Mean total time per success (s)</td><td>197.21</td><td>162.63</td><td>132.67</td><td>Table 1</td></tr>
+    <tr><td>Mean executor time per success (s)</td><td>94.30</td><td>12.37</td><td>5.16</td><td>Table 1</td></tr>
+    <tr><td>Time outside the executor (s, ours)</td><td>102.91</td><td>150.26</td><td>127.51</td><td>Table 1, subtraction ours</td></tr>
+    <tr><td>Executor cost, summed over successes (USD)</td><td>0.694774</td><td>0.030579</td><td>0.013091</td><td>Table 1</td></tr>
+    <tr><td>Mean all-model cost per success (USD)</td><td>0.273694</td><td>0.193207</td><td>0.072744</td><td>Table 1</td></tr>
+    <tr><td>Executor cost per success (USD, ours)</td><td>0.00716</td><td>0.00034</td><td>0.00014</td><td>Table 1 divided by successes, ours</td></tr>
+    <tr><td>Coverage, selection and handoff failure counts</td><td>not reported</td><td>not reported</td><td>not reported</td><td>promised in Section 1, absent</td></tr>
+    <tr><td>Number of runs per task</td><td>not reported</td><td>not reported</td><td>not reported</td><td>paper</td></tr>
+  </tbody>
+</table>
+
+<p>The paper never states how many task instances it ran. AndroidWorld ships 116 tasks (Rawles et al.,
+arXiv:2405.14573), and the reported rates fit that: 92/116 is 0.793, 97/116 is 0.836 and 98/116 is
+0.845. If the authors ran a different count, the task arithmetic below moves with it; the cost
+inconsistency does not depend on it.</p>
+
+<h2 id="the-step-wise-baseline-s-two-cost-rows-disagree-38-fold">The step-wise baseline's two cost rows disagree 38-fold</h2>
+
+<p>Section 5.2 defines executor cost as "the sum of that model's API charges over successful
+trajectories", and the executor for step-wise VLM is Qwen, which is also the only model that system
+calls. So its summed executor cost and its mean all-model cost times its successes are the same
+quantity. They are not: $0.273694 &times; 97 is $26.55, and the table says $0.694774, a ratio of 38.2.
+Either the executor row counts only part of Qwen's charges, or the mean row is inflated. We cannot tell
+which, and the headline 73.4% saving is computed from the mean row.</p>
+
+<p>The two rows that do reconcile say something the abstract does not. Jev's own charges come to
+$0.013091 across roughly 92 successes, $0.00014 each, which is 0.2% of Jev-Mobile's $0.072744 per
+success. The other 99.8% is Qwen planning. The saving therefore comes from calling Qwen about 3.8
+times less per successful task ($0.0726 against $0.2737), not from a cheap executor. Any model that
+could pick from the candidate list without being called at every step would earn most of it, which is
+the ablation the paper lists as untested (Jev replaced by a small VLM).</p>
+
+<svg viewBox="0 0 760 330" style="width:100%;height:auto" role="img" aria-label="Stacked bar chart of mean model API cost per successful AndroidWorld task, from Table 1 of arXiv 2609.30186. Step-wise VLM costs 0.2737 dollars, all of it Qwen3.8-Max. SeeAct-V costs 0.1932 dollars, of which UI-TARS grounding is 0.00034. Jev-Mobile costs 0.0727 dollars, of which Jev is 0.00014, or 0.2 percent, so almost all of Jev-Mobile's saving is fewer Qwen calls. A marker shows that the step-wise system's summed executor cost of 0.6948 dollars implies 0.0072 dollars per success, 38 times below its own mean cost row.">
+  <g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+    <text x="20" y="26" font-size="14" font-weight="600">Model spend per successful AndroidWorld task (USD), Table 1</text>
+    <text x="20" y="46" font-size="11" fill="#8a93a5"><tspan fill="#c4ccda">grey: Qwen3.8-Max planning or stepping</tspan>   <tspan fill="#5ad1a0">green: executor (UI-TARS or Jev)</tspan>   <tspan fill="#f2a65a">amber: implied by the summed row</tspan></text>
+    <line x1="200" y1="62" x2="200" y2="262" stroke="#6f7b90"/>
+    <line x1="200" y1="262" x2="740" y2="262" stroke="#6f7b90"/>
+    <text x="196" y="280" font-size="11" fill="#8a93a5">0</text>
+    <line x1="382" y1="258" x2="382" y2="266" stroke="#6f7b90"/><text x="370" y="280" font-size="11" fill="#8a93a5">0.10</text>
+    <line x1="564" y1="258" x2="564" y2="266" stroke="#6f7b90"/><text x="552" y="280" font-size="11" fill="#8a93a5">0.20</text>
+    <line x1="700" y1="258" x2="700" y2="266" stroke="#6f7b90"/><text x="690" y="280" font-size="11" fill="#8a93a5">0.275</text>
+    <text x="20" y="92" font-size="12">Step-wise VLM</text>
+    <rect x="200" y="78" width="498" height="22" fill="#6f7b90"/>
+    <text x="704" y="94" font-size="11">0.2737</text>
+    <text x="20" y="126" font-size="11" fill="#f2a65a">step-wise, summed row</text>
+    <rect x="200" y="114" width="13" height="16" fill="#f2a65a"/>
+    <text x="220" y="126" font-size="11" fill="#f2a65a">0.0072 per success (0.694774 / 97): 38x below the row above</text>
+    <text x="20" y="166" font-size="12">SeeAct-V</text>
+    <rect x="200" y="152" width="351" height="22" fill="#6f7b90"/>
+    <rect x="551" y="152" width="2" height="22" fill="#5ad1a0"/>
+    <text x="560" y="168" font-size="11">0.1932 (UI-TARS 0.00034)</text>
+    <text x="20" y="216" font-size="12">Jev-Mobile</text>
+    <rect x="200" y="202" width="132" height="22" fill="#6f7b90"/>
+    <rect x="332" y="202" width="2" height="22" fill="#5ad1a0"/>
+    <text x="340" y="218" font-size="11">0.0727 (Jev 0.00014, 0.2%)</text>
+    <text x="200" y="306" font-size="11" fill="#8a93a5">Each bar averages over that system's own successes only: 97, about 90 and 92 tasks.</text>
+  </g>
+</svg>
+
+<h2 id="the-success-gap-is-five-or-six-tasks-and-the-time-and-cost-r">The success gap is five or six tasks, and the time and cost rows compare different tasks</h2>
+
+<p>At 116 tasks, 0.84 against 0.79 is 97 or 98 successes against 92. Treated as independent samples,
+Fisher's exact test gives p 0.39 to 0.50. The design is paired (same tasks), which is stronger, but the
+paper publishes no per-task outcomes. The most favourable case for a real difference is that every
+disagreement runs one way: 5 discordant tasks give an exact McNemar p of 0.0625, 6 give 0.031. Any
+task Jev-Mobile solves and step-wise does not pushes it back out of reach. The same arithmetic applies
+to "close to SeeAct-V": one task apart.</p>
+
+<p>The efficiency rows compare means over different task sets. Step-wise VLM's average includes the
+5 or 6 tasks that Jev-Mobile failed, and a task one agent solves and another does not is plausibly a
+harder, longer one. That is a judgement, not a measurement; the direction of the bias is what matters.
+Cost per attempted task, including failures that ran to the budget, is the comparison a buyer needs,
+and it is not reported.</p>
+
+<p>Time tells a similar story once split. Step-wise VLM spends 94.30 of its 197.21 seconds (47.8%) in
+the executor; Jev-Mobile spends 5.16 of 132.67 (3.9%). Outside the executor, which for Jev-Mobile
+includes Qwen planning and for step-wise VLM is device interaction and waits, Jev-Mobile takes longer:
+127.51 seconds against 102.91.</p>
+
+<svg viewBox="0 0 760 390" style="width:100%;height:auto" role="img" aria-label="Flow diagram of the Jev-Mobile control loop as described in arXiv 2609.30186. Qwen3.8-Max reads the task, screenshot and accessibility tree and emits a local goal and exact text, costing about 0.0726 dollars per successful task. A candidate builder turns every visible enabled tree node into a numbered action. Jev picks one ID, DONE or BLOCKED, averaging 5.16 seconds and 0.00014 dollars per success. The Android executor performs one action and the tree is re-read. A target present only in the pixels has no candidate, so the loop returns BLOCKED; there is no coordinate fallback. The paper promises coverage, selection and handoff counts for these exits but does not report them.">
+  <g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="12">
+    <text x="20" y="26" font-size="14" font-weight="600">Jev-Mobile: one expensive decision, many cheap ones, one blind spot</text>
+    <rect x="20" y="50" width="220" height="92" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="34" y="74" font-weight="600">Qwen3.8-Max (planner)</text>
+    <text x="34" y="94" fill="#c4ccda">reads task, screenshot, tree</text>
+    <text x="34" y="112" fill="#c4ccda">emits local goal + exact text</text>
+    <text x="34" y="130" fill="#f2a65a">about $0.0726 per success</text>
+    <rect x="280" y="50" width="200" height="92" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="294" y="74" font-weight="600">Candidate builder</text>
+    <text x="294" y="94" fill="#c4ccda">visible, enabled nodes only</text>
+    <text x="294" y="112" fill="#c4ccda">IDs rebuilt every screen</text>
+    <text x="294" y="130" fill="#c4ccda">no coordinates, ASCII text only</text>
+    <rect x="520" y="50" width="220" height="92" rx="8" fill="#1d2330" stroke="#5ad1a0"/>
+    <text x="534" y="74" font-weight="600" fill="#5ad1a0">Jev (typed choice)</text>
+    <text x="534" y="94" fill="#c4ccda">picks one ID, DONE or BLOCKED</text>
+    <text x="534" y="112" fill="#c4ccda">text tree only, no image</text>
+    <text x="534" y="130" fill="#5ad1a0">5.16 s, $0.00014 per success</text>
+    <line x1="240" y1="96" x2="276" y2="96" stroke="#c4ccda" stroke-width="1.5"/>
+    <polygon points="276,91 284,96 276,101" fill="#c4ccda"/>
+    <line x1="480" y1="96" x2="516" y2="96" stroke="#c4ccda" stroke-width="1.5"/>
+    <polygon points="516,91 524,96 516,101" fill="#c4ccda"/>
+    <rect x="520" y="186" width="220" height="64" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="534" y="210" font-weight="600">Android executor</text>
+    <text x="534" y="230" fill="#c4ccda">one action, then re-observe</text>
+    <line x1="630" y1="142" x2="630" y2="182" stroke="#c4ccda" stroke-width="1.5"/>
+    <polygon points="625,182 630,190 635,182" fill="#c4ccda"/>
+    <path d="M520 218 L380 218 L380 146" fill="none" stroke="#c4ccda" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="392" y="210" font-size="11" fill="#8a93a5">new tree, new IDs</text>
+    <path d="M580 142 C 560 160, 300 170, 130 146" fill="none" stroke="#6f7b90" stroke-width="1.2"/>
+    <text x="40" y="170" font-size="11" fill="#8a93a5">DONE or BLOCKED returns control</text>
+    <rect x="20" y="286" width="340" height="76" rx="8" fill="#2a1f14" stroke="#f2a65a"/>
+    <text x="34" y="310" font-weight="600" fill="#f2a65a">Target only in pixels</text>
+    <text x="34" y="330" fill="#c4ccda">no tree node, so no candidate: BLOCKED</text>
+    <text x="34" y="348" fill="#c4ccda">coverage failures: promised, not reported</text>
+    <rect x="400" y="286" width="340" height="76" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="414" y="310" font-weight="600">What Table 1 scores</text>
+    <text x="414" y="330" fill="#c4ccda">success over all tasks: 0.79</text>
+    <text x="414" y="348" fill="#c4ccda">time and cost over successes only</text>
+  </g>
+</svg>
+
+<h2 id="what-it-means-for-anyone-acting-on-a-phone-by-element-id">What it means for anyone acting on a phone by element ID</h2>
+
+<p>The design is the one phoneshell already ships. Rule 2 of the instructions our MCP server hands the
+model reads: "Act by id (phone_tap, phone_type). Never guess coordinates; if what you want is not in the
+table, scroll or re-observe." None of the 23 tools in <code>phoneshell/mcp_server.py</code> takes a
+coordinate. So the number Jev-Mobile left out is the one we would most want from it: how many of the
+failures were targets with no tree node. Our house result is that when an answer exists only as pixels,
+a screenshot takes the task from 0% to 100%. Jev-Mobile keeps the screenshot for its planner, so it can
+read such an answer and pass it as text, but it cannot tap such a target. Reading and acting fail
+differently, and one success rate hides which one happened.</p>
+
+<p>Three decisions follow. Budget from cost per attempted task, not per success; an agent that fails
+expensively looks cheap on the paper's metric. Treat a 5-point gap on 116 tasks from one run as
+unresolved. And if you split planner and executor, count how often the executor returns BLOCKED for
+lack of a candidate; that is the ceiling the split imposes.</p>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<ul>
+  <li>Paper: <code>https://arxiv.org/abs/2609.30186</code>, HTML at <code>https://arxiv.org/html/2609.30186v1</code>; Table 1 is in Section 6, the cost definitions in Section 5.2.</li>
+  <li>Task count: AndroidWorld's 116 tasks, <code>https://arxiv.org/abs/2405.14573</code>.</li>
+  <li>The reconciliation: <code>python3 -c "print(0.273694*97, 0.273694*97/0.694774)"</code> prints 26.548 and 38.2.</li>
+  <li>The Jev share: <code>python3 -c "print(0.013091/92/0.072744)"</code> prints 0.00196.</li>
+  <li>The tests: <code>from scipy.stats import fisher_exact, binomtest; fisher_exact([[97,19],[92,24]]); binomtest(6,6,0.5)</code> give p 0.499 and 0.031.</li>
+  <li>Our side: <code>grep -n "Never guess coordinates" phoneshell/mcp_server.py</code> and <code>grep -c "^def phone_" phoneshell/mcp_server.py</code> in the phoneshell repo.</li>
+</ul>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>If the author publishes per-task outcomes by 31 December 2026, we predict two things: the step-wise
+and Jev-Mobile runs will disagree on at least 10 tasks, with an exact McNemar p above 0.05, and one of
+the two step-wise cost rows in Table 1 will be corrected, the summed executor cost towards roughly $26
+or the per-success mean towards roughly $0.007. If the per-task data show 6 or fewer disagreements all
+in step-wise's favour, the gap is real and we were wrong to call it unresolved. If both cost rows are
+confirmed as printed, we misread the definitions in Section 5.2 and will say so on this page.</p>
+
+  <section class="sources">
+    <h2>Sources</h2>
+    <ol>
+      <li><a href="https://arxiv.org/abs/2609.30186">Linghua Zhang, Jev-Mobile: Jev as an Executor for Mobile GUI Agents, arXiv:2609.30186, submitted 24 September 2026</a></li>
+      <li><a href="https://arxiv.org/html/2609.30186v1">Jev-Mobile HTML edition: Table 1 (success, time, cost), Section 5.2 (cost definitions), Section 8 (limitations)</a></li>
+      <li><a href="https://arxiv.org/abs/2405.14573">Rawles et al., AndroidWorld: A Dynamic Benchmarking Environment for Autonomous Agents, arXiv:2405.14573 (116 tasks), ICLR 2025</a></li>
+      <li><a href="https://github.com/Blomega/phoneshell/blob/main/phoneshell/mcp_server.py">phoneshell MCP server: INSTRUCTIONS rule 2 and the 23 phone_ tools, read 27 September 2026</a></li>
+    </ol>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
