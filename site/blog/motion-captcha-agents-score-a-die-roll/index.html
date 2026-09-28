@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Thirteen GUI agents scored 13.8% to 20.8% on a six-option motion CAPTCHA, where chance is 16.7% | Blolabel</title>
+<meta name="description" content="MVCAP-Bench (arXiv:2609.27461, 23 September 2026): humans 99.6%, 13 agent configurations 13.8% to 20.8% against 16.7% chance on 600 instances. By exact binomial test 12 of 13 match chance; GPT-5.4 native at 125/600 (p 0.0072) fails correction. Seven Browser Use backbones score exactly 27/200 on L1, which independent guessing would do with probability 1.2e-10. Removing the moving background lifts agents to 39.7% to 68.0%.">
+<link rel="canonical" href="https://blolabel.ai/blog/motion-captcha-agents-score-a-die-roll/">
+<meta property="og:title" content="Thirteen GUI agents scored 13.8% to 20.8% on a six-option motion CAPTCHA, where chance is 16.7% | Blolabel">
+<meta property="og:description" content="MVCAP-Bench (arXiv:2609.27461, 23 September 2026): humans 99.6%, 13 agent configurations 13.8% to 20.8% against 16.7% chance on 600 instances. By exact binomial test 12 of 13 match chance; GPT-5.4 native at 125/600 (p 0.0072) fails correction. Seven Browser Use backbones score exactly 27/200 on L1, which independent guessing would do with probability 1.2e-10. Removing the moving background lifts agents to 39.7% to 68.0%.">
+<meta property="og:url" content="https://blolabel.ai/blog/motion-captcha-agents-score-a-die-roll/">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"Thirteen GUI agents scored 13.8% to 20.8% on a six-option motion CAPTCHA, where chance is 16.7%","description":"MVCAP-Bench (arXiv:2609.27461, 23 September 2026): humans 99.6%, 13 agent configurations 13.8% to 20.8% against 16.7% chance on 600 instances. By exact binomial test 12 of 13 match chance; GPT-5.4 native at 125/600 (p 0.0072) fails correction. Seven Browser Use backbones score exactly 27/200 on L1, which independent guessing would do with probability 1.2e-10. Removing the moving background lifts agents to 39.7% to 68.0%.",
+ "datePublished":"2026-09-27","dateModified":"2026-09-27",
+ "url":"https://blolabel.ai/blog/motion-captcha-agents-score-a-die-roll/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/motion-captcha-agents-score-a-die-roll/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"}}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Can GUI agents solve motion-based CAPTCHAs?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Not in MVCAP-Bench (arXiv:2609.27461, 23 September 2026). Thirteen agent configurations scored 13.8% to 20.8% on six-option challenges where chance is 16.7%; humans scored 99.6%. By exact binomial test 12 of the 13 are indistinguishable from guessing."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Is any agent above chance on MVCAP?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "GPT-5.4 with native computer use scored 125 of 600 (20.8%), p 0.0072 against one in six, which does not survive a Bonferroni correction across the 23 configurations reported (threshold 0.0022)."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Why did several models score exactly the same?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Seven of ten Browser Use backbones report 13.5%, exactly 27 of 200, on the text level. Independent guessers would all do that with probability about 1.2 x 10^-10, so their answers are correlated, most likely a shared fallback option. The paper does not test this."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does giving the model more frames help?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Barely. Offline, with frames sampled at 10 per second, averages rose to 17.0% to 20.9%. Removing the moving background did help: 39.7% to 68.0%, and 96% to 100% on text for seven backbones."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-09-27">27 September 2026</time>
+    <span>6 min read</span>
+  </div>
+  <h1>Thirteen GUI agents scored 13.8% to 20.8% on a six-option motion CAPTCHA, where chance is 16.7%</h1>
+  <p class="standfirst">MVCAP hides the answer in motion, so every frame is noise. Twelve of thirteen agent configurations are indistinguishable from guessing, seven report the identical 27 of 200 on one level, and sampling frames at 10 per second barely moved them.</p>
+
+  <p>On MVCAP-Bench, a six-option CAPTCHA whose answer is visible only as motion, 13 GUI agent
+configurations scored between 13.8% and 20.8% against a chance level of 16.7%, while 30 human
+participants scored 99.6%. By our binomial tests on the 600 instances, 12 of the 13 are
+indistinguishable from guessing; the 13th, GPT-5.4 with native computer use at 125 of 600, clears chance
+at p 0.0072, which does not survive correction for the 23 configurations the paper reports. The
+benchmark is arXiv:2609.27461, submitted 23 September 2026 by Zeyu Zhang, Guangtao Zhai and colleagues.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/motion-captcha-agents-score-a-die-roll-hero.png" alt="Abstract technical illustration of a field of scattered dots in which a faint coherent shape is visible only as a set of short parallel motion trails, surrounded by randomly oriented trails" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="what-mvcap-changed">What MVCAP changed</h2>
+
+<p>MVCAP renders the target as a field of dots that moves coherently against a background of dots that
+moves differently. Any single frame is dots. Three levels, 200 instances each: L1 text shapes, L2
+rotating 3D objects, L3 point-light human actions. Each instance is a looping video in a live web page
+with a prompt and six answer buttons. A matched control, MVCAP-Bench-FG, removes the moving background
+and keeps everything else. Ten backbones run in Browser Use; GPT-5.4, Claude Sonnet 4.6 and Gemini 3 Flash
+also run as native computer-use agents; an offline setting feeds the same videos as frames sampled at
+10 per second. Every instance is attempted once (Pass@1).</p>
+
+<table>
+  <thead>
+    <tr><th>Agent</th><th>Framework</th><th>Full, avg</th><th>Correct (ours)</th><th>p vs 1/6 (ours)</th><th>Foreground only</th><th>Cost, full run</th><th>Source</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>GPT-5-mini</td><td>Browser Use</td><td>15.8%</td><td>95/600</td><td>0.62</td><td>49.3%</td><td>$2.56</td><td>Table 2; count and p ours</td></tr>
+    <tr><td>GPT-5.4</td><td>Browser Use</td><td>16.8%</td><td>101/600</td><td>0.91</td><td>61.7%</td><td>$57.06</td><td>Table 2; count and p ours</td></tr>
+    <tr><td>Claude Sonnet 4.6</td><td>Browser Use</td><td>15.7%</td><td>94/600</td><td>0.55</td><td>57.8%</td><td>$39.60</td><td>Table 2; count and p ours</td></tr>
+    <tr><td>Claude Opus 4.6</td><td>Browser Use</td><td>15.3%</td><td>92/600</td><td>0.41</td><td>54.7%</td><td>$59.96</td><td>Table 2; count and p ours</td></tr>
+    <tr><td>Gemini 3 Flash</td><td>Browser Use</td><td>15.8%</td><td>95/600</td><td>0.62</td><td>63.0%</td><td>$4.66</td><td>Table 2; count and p ours</td></tr>
+    <tr><td>Gemini 3.1 Pro</td><td>Browser Use</td><td>13.8%</td><td>83/600</td><td>0.063</td><td>68.0%</td><td>$12.21</td><td>Table 2; count and p ours</td></tr>
+    <tr><td>Doubao Seed 2.0 Pro</td><td>Browser Use</td><td>16.3%</td><td>98/600</td><td>0.87</td><td>53.7%</td><td>$8.33</td><td>Table 2; count and p ours</td></tr>
+    <tr><td>GLM-4.6V</td><td>Browser Use</td><td>14.5%</td><td>87/600</td><td>0.17</td><td>39.7%</td><td>$5.19</td><td>Table 2; count and p ours</td></tr>
+    <tr><td>Kimi K2.5</td><td>Browser Use</td><td>15.0%</td><td>90/600</td><td>0.3</td><td>46.5%</td><td>$11.69</td><td>Table 2; count and p ours</td></tr>
+    <tr><td>Qwen3.5-Plus</td><td>Browser Use</td><td>14.8%</td><td>89/600</td><td>0.25</td><td>53.8%</td><td>$1.52</td><td>Table 2; count and p ours</td></tr>
+    <tr><td>GPT-5.4</td><td>native computer use</td><td>20.8%</td><td>125/600</td><td>0.0072</td><td>62.0%</td><td>$49.55</td><td>Table 2; count and p ours</td></tr>
+    <tr><td>Claude Sonnet 4.6</td><td>native computer use</td><td>15.2%</td><td>91/600</td><td>0.35</td><td>60.7%</td><td>$36.77</td><td>Table 2; count and p ours</td></tr>
+    <tr><td>Gemini 3 Flash</td><td>native computer use</td><td>15.7%</td><td>94/600</td><td>0.55</td><td>64.7%</td><td>$18.44</td><td>Table 2; count and p ours</td></tr>
+    <tr><td>Humans (30 participants)</td><td>browser</td><td>99.6%</td><td>not reported (60 sampled instances)</td><td>n/a</td><td>100.0%</td><td>n/a</td><td>Table 2, Section 5.1</td></tr>
+    <tr><td>Random guess</td><td>n/a</td><td>16.7%</td><td>100/600 expected</td><td>n/a</td><td>16.7%</td><td>n/a</td><td>Table 2</td></tr>  </tbody>
+</table>
+
+<p>Correct counts are the average times 600, rounded; p values are two-sided exact binomial tests against
+one in six. Across 23 configurations (13 in the browser, 10 offline) the Bonferroni threshold is 0.0022.
+The two lowest p values, GPT-5.4 native at 125 of 600 and Gemini 3 Flash offline at 125 of 600, are both
+0.0072.</p>
+
+<h2 id="seven-backbones-scored-exactly-27-of-200-on-the-text-level">Seven backbones scored exactly 27 of 200 on the text level</h2>
+
+<p>On L1, seven of the ten Browser Use backbones report 13.5%: GPT-5-mini, Claude Sonnet 4.6, Gemini 3
+Flash, Gemini 3.1 Pro, GLM-4.6V, Kimi K2.5 and Qwen3.5-Plus. That is 27 correct out of 200 each. A model
+guessing uniformly lands on exactly 27 with probability 0.038, so seven independent guessers doing it
+together has a probability near 1 in 8 billion (1.2 &times; 10<sup>-10</sup>). Four of the same models also
+report 13.5% on L2. The answers are not independent guesses. Our reading, which the paper does not test,
+is that models that cannot see the target fall back on the same option, whether by position or by
+plausibility, and 27 of the 200 L1 answer keys sit on that option. If so, the full-benchmark scores
+measure the answer key's layout, and a model ranking on them is noise.</p>
+
+<p>The foreground control shows the models can read the targets once they are exposed: seven backbones
+reach 96.0% to 100.0% on L1 text with the background removed. Averages rise by 44.9 points for GPT-5.4
+(16.8% to 61.7%), 54.2 for Gemini 3.1 Pro (13.8% to 68.0%) and 47.2 for Gemini 3 Flash (15.8% to 63.0%).
+L3 stays hard even then: the best foreground-only result is 29.5%.</p>
+
+<svg viewBox="0 0 760 432" style="width:100%;height:auto" role="img" aria-label="Paired bar chart of the 13 agent configurations on MVCAP-Bench, arXiv 2609.27461 Table 2. On the full motion CAPTCHA every configuration scores between 13.8 and 20.8 percent against a six-option chance level of 16.7 percent; ten Browser Use backbones sit between 13.8 and 16.8. On the foreground-only control the same configurations score between 39.7 and 68.0 percent. Only GPT-5.4 with native computer use, at 20.8 percent or 125 of 600, clears chance at p 0.0072, which does not survive a correction for the 23 configurations tested. Humans score 99.6 percent.">
+  <g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+    <text x="20" y="26" font-size="14" font-weight="600">MVCAP-Bench average Pass@1 (%): full challenge vs foreground-only control</text>
+    <text x="20" y="46" font-size="11" fill="#8a93a5"><tspan fill="#5ad1a0">green: foreground only</tspan>   <tspan fill="#c4ccda">grey: full (camouflaged)</tspan>   <tspan fill="#f2a65a">dashed: six-option chance, 16.7</tspan></text>
+    <text x="20" y="82" font-size="11" fill="#c4ccda">GPT-5-mini</text>
+    <rect x="250" y="72" width="216.9" height="8" fill="#5ad1a0" opacity="0.55"/>
+    <rect x="250" y="80" width="69.5" height="8" fill="#6f7b90"/>
+    <text x="472.9" y="80" font-size="10" fill="#5ad1a0">49.3</text>
+    <text x="325.5" y="88" font-size="10" fill="#c4ccda">full 15.8</text>
+    <text x="20" y="106" font-size="11" fill="#c4ccda">GPT-5.4</text>
+    <rect x="250" y="96" width="271.5" height="8" fill="#5ad1a0" opacity="0.55"/>
+    <rect x="250" y="104" width="73.9" height="8" fill="#6f7b90"/>
+    <text x="527.5" y="104" font-size="10" fill="#5ad1a0">61.7</text>
+    <text x="329.9" y="112" font-size="10" fill="#c4ccda">full 16.8</text>
+    <text x="20" y="130" font-size="11" fill="#c4ccda">Claude Sonnet 4.6</text>
+    <rect x="250" y="120" width="254.3" height="8" fill="#5ad1a0" opacity="0.55"/>
+    <rect x="250" y="128" width="69.1" height="8" fill="#6f7b90"/>
+    <text x="510.3" y="128" font-size="10" fill="#5ad1a0">57.8</text>
+    <text x="325.1" y="136" font-size="10" fill="#c4ccda">full 15.7</text>
+    <text x="20" y="154" font-size="11" fill="#c4ccda">Claude Opus 4.6</text>
+    <rect x="250" y="144" width="240.7" height="8" fill="#5ad1a0" opacity="0.55"/>
+    <rect x="250" y="152" width="67.3" height="8" fill="#6f7b90"/>
+    <text x="496.7" y="152" font-size="10" fill="#5ad1a0">54.7</text>
+    <text x="323.3" y="160" font-size="10" fill="#c4ccda">full 15.3</text>
+    <text x="20" y="178" font-size="11" fill="#c4ccda">Gemini 3 Flash</text>
+    <rect x="250" y="168" width="277.2" height="8" fill="#5ad1a0" opacity="0.55"/>
+    <rect x="250" y="176" width="69.5" height="8" fill="#6f7b90"/>
+    <text x="533.2" y="176" font-size="10" fill="#5ad1a0">63.0</text>
+    <text x="325.5" y="184" font-size="10" fill="#c4ccda">full 15.8</text>
+    <text x="20" y="202" font-size="11" fill="#c4ccda">Gemini 3.1 Pro</text>
+    <rect x="250" y="192" width="299.2" height="8" fill="#5ad1a0" opacity="0.55"/>
+    <rect x="250" y="200" width="60.7" height="8" fill="#6f7b90"/>
+    <text x="555.2" y="200" font-size="10" fill="#5ad1a0">68.0</text>
+    <text x="316.7" y="208" font-size="10" fill="#c4ccda">full 13.8</text>
+    <text x="20" y="226" font-size="11" fill="#c4ccda">Doubao Seed 2.0 Pro</text>
+    <rect x="250" y="216" width="236.3" height="8" fill="#5ad1a0" opacity="0.55"/>
+    <rect x="250" y="224" width="71.7" height="8" fill="#6f7b90"/>
+    <text x="492.3" y="224" font-size="10" fill="#5ad1a0">53.7</text>
+    <text x="327.7" y="232" font-size="10" fill="#c4ccda">full 16.3</text>
+    <text x="20" y="250" font-size="11" fill="#c4ccda">GLM-4.6V</text>
+    <rect x="250" y="240" width="174.7" height="8" fill="#5ad1a0" opacity="0.55"/>
+    <rect x="250" y="248" width="63.8" height="8" fill="#6f7b90"/>
+    <text x="430.7" y="248" font-size="10" fill="#5ad1a0">39.7</text>
+    <text x="319.8" y="256" font-size="10" fill="#c4ccda">full 14.5</text>
+    <text x="20" y="274" font-size="11" fill="#c4ccda">Kimi K2.5</text>
+    <rect x="250" y="264" width="204.6" height="8" fill="#5ad1a0" opacity="0.55"/>
+    <rect x="250" y="272" width="66.0" height="8" fill="#6f7b90"/>
+    <text x="460.6" y="272" font-size="10" fill="#5ad1a0">46.5</text>
+    <text x="322.0" y="280" font-size="10" fill="#c4ccda">full 15.0</text>
+    <text x="20" y="298" font-size="11" fill="#c4ccda">Qwen3.5-Plus</text>
+    <rect x="250" y="288" width="236.7" height="8" fill="#5ad1a0" opacity="0.55"/>
+    <rect x="250" y="296" width="65.1" height="8" fill="#6f7b90"/>
+    <text x="492.7" y="296" font-size="10" fill="#5ad1a0">53.8</text>
+    <text x="321.1" y="304" font-size="10" fill="#c4ccda">full 14.8</text>
+    <text x="20" y="322" font-size="11" fill="#c4ccda">GPT-5.4 (CU)</text>
+    <rect x="250" y="312" width="272.8" height="8" fill="#5ad1a0" opacity="0.55"/>
+    <rect x="250" y="320" width="91.5" height="8" fill="#f2a65a"/>
+    <text x="528.8" y="320" font-size="10" fill="#5ad1a0">62.0</text>
+    <text x="347.5" y="328" font-size="10" fill="#f2a65a">full 20.8</text>
+    <text x="20" y="346" font-size="11" fill="#c4ccda">Claude Sonnet 4.6 (CU)</text>
+    <rect x="250" y="336" width="267.1" height="8" fill="#5ad1a0" opacity="0.55"/>
+    <rect x="250" y="344" width="66.9" height="8" fill="#6f7b90"/>
+    <text x="523.1" y="344" font-size="10" fill="#5ad1a0">60.7</text>
+    <text x="322.9" y="352" font-size="10" fill="#c4ccda">full 15.2</text>
+    <text x="20" y="370" font-size="11" fill="#c4ccda">Gemini 3 Flash (CU)</text>
+    <rect x="250" y="360" width="284.7" height="8" fill="#5ad1a0" opacity="0.55"/>
+    <rect x="250" y="368" width="69.1" height="8" fill="#6f7b90"/>
+    <text x="540.7" y="368" font-size="10" fill="#5ad1a0">64.7</text>
+    <text x="325.1" y="376" font-size="10" fill="#c4ccda">full 15.7</text>
+    <line x1="323.5" y1="64" x2="323.5" y2="392" stroke="#f2a65a" stroke-dasharray="4 3"/>
+    <line x1="250" y1="392" x2="690" y2="392" stroke="#6f7b90"/>
+    <text x="242" y="408" font-size="10" fill="#8a93a5">0</text>
+    <text x="352" y="408" font-size="10" fill="#8a93a5">25</text>
+    <text x="462" y="408" font-size="10" fill="#8a93a5">50</text>
+    <text x="572" y="408" font-size="10" fill="#8a93a5">75</text>
+    <text x="682" y="408" font-size="10" fill="#8a93a5">100</text>
+    <text x="250" y="424" font-size="10" fill="#8a93a5">Humans: 99.6 full, 100.0 foreground only. CU = native computer use; the rest run in Browser Use.</text>
+  </g>
+</svg>
+<h2 id="more-frames-did-not-rescue-it">More frames did not rescue it</h2>
+
+<p>Removing the browser and handing the model frames sampled at 10 per second raised full-benchmark
+averages from 13.8%-16.8% to 17.0%-20.9%. Eleven of the 60 offline cells are not multiples of 0.5 (for example
+18.1%, 15.6% and 33.2%), so some offline denominators are below 200 and are not reported. The finding holds
+either way: time-sampled frames did not turn the motion into a readable signal for any model tested.</p>
+
+<svg viewBox="0 0 760 340" style="width:100%;height:auto" role="img" aria-label="Diagram of why a motion-defined CAPTCHA defeats a screenshot-driven agent. In any single frame, foreground and background are identical random dots, so a screenshot contains no answer and the accessibility tree contains only a video element and six buttons. Across frames, the foreground dots move together while background dots move differently, and humans segregate the shape, scoring 99.6 percent. Agents that observe one frame per step score 13.8 to 20.8 percent against 16.7 percent chance. Offline frames at 10 per second give 17.0 to 20.9 percent. Removing the moving background lifts agents to 39.7 to 68.0 percent.">
+  <g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="12">
+    <text x="20" y="26" font-size="14" font-weight="600">Where the answer lives, and what each observer gets</text>
+    <rect x="20" y="46" width="220" height="150" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="34" y="68" font-weight="600">One frame (a screenshot)</text>
+    <g fill="#8a93a5">
+      <circle cx="50" cy="96" r="2"/><circle cx="72" cy="120" r="2"/><circle cx="96" cy="88" r="2"/><circle cx="120" cy="140" r="2"/><circle cx="146" cy="104" r="2"/><circle cx="170" cy="130" r="2"/><circle cx="196" cy="92" r="2"/><circle cx="214" cy="150" r="2"/><circle cx="60" cy="160" r="2"/><circle cx="110" cy="112" r="2"/><circle cx="136" cy="166" r="2"/><circle cx="182" cy="170" r="2"/><circle cx="88" cy="146" r="2"/><circle cx="158" cy="84" r="2"/><circle cx="204" cy="122" r="2"/>
+    </g>
+    <text x="34" y="188" fill="#c4ccda">uniform dots: no answer</text>
+    <rect x="270" y="46" width="220" height="150" rx="8" fill="#1d2330" stroke="#5ad1a0"/>
+    <text x="284" y="68" font-weight="600" fill="#5ad1a0">Across frames</text>
+    <g stroke="#5ad1a0" stroke-width="2">
+      <line x1="330" y1="100" x2="344" y2="100"/><line x1="330" y1="118" x2="344" y2="118"/><line x1="330" y1="136" x2="344" y2="136"/><line x1="360" y1="100" x2="374" y2="100"/><line x1="390" y1="100" x2="404" y2="100"/><line x1="390" y1="118" x2="404" y2="118"/><line x1="390" y1="136" x2="404" y2="136"/><line x1="360" y1="136" x2="374" y2="136"/>
+    </g>
+    <g stroke="#6f7b90" stroke-width="1.5">
+      <line x1="296" y1="90" x2="300" y2="102"/><line x1="440" y1="96" x2="452" y2="90"/><line x1="300" y1="160" x2="292" y2="168"/><line x1="450" y1="150" x2="446" y2="162"/><line x1="420" y1="170" x2="432" y2="174"/><line x1="310" y1="130" x2="304" y2="122"/><line x1="462" y1="124" x2="470" y2="132"/>
+    </g>
+    <text x="284" y="188" fill="#c4ccda">shape moves together</text>
+    <rect x="520" y="46" width="220" height="150" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="534" y="68" font-weight="600">Accessibility tree</text>
+    <text x="534" y="96" fill="#c4ccda">video element</text>
+    <text x="534" y="116" fill="#c4ccda">prompt text</text>
+    <text x="534" y="136" fill="#c4ccda">6 answer buttons</text>
+    <text x="534" y="188" fill="#c4ccda">no answer either</text>
+    <rect x="20" y="226" width="170" height="92" rx="8" fill="#16261f" stroke="#5ad1a0"/>
+    <text x="32" y="250" font-weight="600" fill="#5ad1a0">Humans</text>
+    <text x="32" y="272" fill="#e9ecf2">99.6%</text>
+    <text x="32" y="292" fill="#c4ccda">integrate over time</text>
+    <rect x="206" y="226" width="170" height="92" rx="8" fill="#2a1f14" stroke="#f2a65a"/>
+    <text x="218" y="250" font-weight="600" fill="#f2a65a">GUI agents</text>
+    <text x="218" y="272" fill="#e9ecf2">13.8% to 20.8%</text>
+    <text x="218" y="292" fill="#c4ccda">chance is 16.7%</text>
+    <rect x="392" y="226" width="170" height="92" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="404" y="250" font-weight="600">Offline, 10 fps</text>
+    <text x="404" y="272" fill="#e9ecf2">17.0% to 20.9%</text>
+    <text x="404" y="292" fill="#c4ccda">frames alone do not help</text>
+    <rect x="578" y="226" width="162" height="92" rx="8" fill="#1d2330" stroke="#5ad1a0"/>
+    <text x="590" y="250" font-weight="600" fill="#5ad1a0">Background off</text>
+    <text x="590" y="272" fill="#e9ecf2">39.7% to 68.0%</text>
+    <text x="590" y="292" fill="#c4ccda">shape readable again</text>
+  </g>
+</svg>
+
+<p>Money did not buy anything either. GPT-5.4 in Browser Use spent $57.06 on the full benchmark for 101
+correct answers, where a die would expect 100; Claude Opus 4.6 spent $59.96 for 92; Qwen3.5-Plus spent
+$1.52 for 89.</p>
+
+<h2 id="what-it-means-for-phone-agents-and-for-the-people-blocking-t">What it means for phone agents and for the people blocking them</h2>
+
+<p>Our house result is that when an answer exists only as pixels, the screenshot is the whole task:
+100% with it, 0% without. MVCAP is the next case down, an answer that exists only across pixels over
+time, and there a single image is worth nothing too. phoneshell's <code>phone_observe</code> returns an
+element table plus one picture, and none of its 23 tools records video. Anything on an iPhone that
+means something only in motion (an animated progress cue, a loading shimmer that implies state, a
+moving-dot challenge) is invisible to it by construction. We have not measured how often that occurs
+in real apps; the claim is about what the observation can contain, not about frequency.</p>
+
+<p>For anyone deploying a challenge like this, the useful number is not 16.8%, it is the floor. A
+six-option format hands every non-seeing agent 16.7% free, and our reading of the 27-of-200 cluster
+says models may concentrate on one option, which a defender can exploit or be hurt by depending on the
+answer layout. Two consecutive passes drop a pure guesser to 2.8%. Randomise answer position per
+instance and check the rate at which each option is chosen, not just the accuracy.</p>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<ul>
+  <li>Paper: <code>https://arxiv.org/abs/2609.27461</code>; HTML <code>https://arxiv.org/html/2609.27461v1</code>. Table 2 holds per-level Pass@1 and cost; Table 3 the offline results; Section 5.1 the human protocol (30 participants, 60 instances per dataset).</li>
+  <li>The chance tests: <code>from scipy.stats import binomtest; binomtest(125,600,1/6).pvalue</code> gives 0.0072; <code>binomtest(101,600,1/6).pvalue</code> gives 0.91.</li>
+  <li>The L1 cluster: <code>from scipy.stats import binom; binom.pmf(27,200,1/6)**7</code> gives 1.2e-10.</li>
+  <li>No code or dataset link appears in the paper as of 27 September 2026, so the answer-key layout cannot yet be checked.</li>
+  <li>Our side: <code>grep -n "def phone_observe" -A 12 phoneshell/mcp_server.py</code> in the phoneshell repo.</li>
+</ul>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>Two predictions, dated 31 March 2027. First, when the MVCAP instances or per-answer logs are
+released, the seven 13.5% L1 scores will trace to one shared answer choice (one option position or one
+option label) chosen in most of each model's L1 attempts. If the logs show those models spreading their
+answers across all six options, the identical scores were coincidence and our reading is wrong. Second,
+no agent configuration will exceed 33.3%, twice chance, on full MVCAP-Bench L1 under the paper's
+protocol by that date.</p>
+
+  <section class="sources">
+    <h2>Sources</h2>
+    <ol>
+      <li><a href="https://arxiv.org/abs/2609.27461">Zhang, Rong, Chen, Zhang, Min and Zhai, Invisible in Space, Visible in Time: Motion Vision CAPTCHA against GUI Agents, arXiv:2609.27461, submitted 23 September 2026</a></li>
+      <li><a href="https://arxiv.org/html/2609.27461v1">MVCAP HTML edition: Table 2 (Pass@1 and cost per level, Browser Use and native computer use), Table 3 (offline, 10 frames per second), Section 5.1 (human protocol)</a></li>
+      <li><a href="https://github.com/browser-use/browser-use">Browser Use, the agent harness used for the ten backbones</a></li>
+      <li><a href="https://github.com/Blomega/phoneshell/blob/main/phoneshell/mcp_server.py">phoneshell MCP server: phone_observe returns one element table and one picture, read 27 September 2026</a></li>
+    </ol>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
