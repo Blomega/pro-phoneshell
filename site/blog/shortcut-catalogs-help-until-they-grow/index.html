@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shortcut catalogs help phone agents until they grow: a full deeplink list cut Qwen3.7-Plus from 61.5% to 53.0% | Blolabel</title>
+<meta name="description" content="GUI-Hopper (arXiv:2609.30887, 25 September 2026) and PhoneCLI (arXiv:2609.35671, 28 September 2026) compared. Untrained Qwen3.7-Plus on MobileWorld: 61.5% with no deeplinks, 59.5% with the top 10, 53.0% with the full catalog. PhoneCLI Settings: 87.0%, 95.7%, 78.3% at 10, 50, 100 screens. Removing any one PhoneCLI check lands at or below the plain agent's 50.7%.">
+<link rel="canonical" href="https://blolabel.ai/blog/shortcut-catalogs-help-until-they-grow/">
+<meta property="og:title" content="Shortcut catalogs help phone agents until they grow: a full deeplink list cut Qwen3.7-Plus from 61.5% to 53.0% | Blolabel">
+<meta property="og:description" content="GUI-Hopper (arXiv:2609.30887, 25 September 2026) and PhoneCLI (arXiv:2609.35671, 28 September 2026) compared. Untrained Qwen3.7-Plus on MobileWorld: 61.5% with no deeplinks, 59.5% with the top 10, 53.0% with the full catalog. PhoneCLI Settings: 87.0%, 95.7%, 78.3% at 10, 50, 100 screens. Removing any one PhoneCLI check lands at or below the plain agent's 50.7%.">
+<meta property="og:url" content="https://blolabel.ai/blog/shortcut-catalogs-help-until-they-grow/">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"Shortcut catalogs help phone agents until they grow: a full deeplink list cut Qwen3.7-Plus from 61.5% to 53.0%","description":"GUI-Hopper (arXiv:2609.30887, 25 September 2026) and PhoneCLI (arXiv:2609.35671, 28 September 2026) compared. Untrained Qwen3.7-Plus on MobileWorld: 61.5% with no deeplinks, 59.5% with the top 10, 53.0% with the full catalog. PhoneCLI Settings: 87.0%, 95.7%, 78.3% at 10, 50, 100 screens. Removing any one PhoneCLI check lands at or below the plain agent's 50.7%.",
+ "datePublished":"2026-09-29","dateModified":"2026-09-29",
+ "url":"https://blolabel.ai/blog/shortcut-catalogs-help-until-they-grow/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/shortcut-catalogs-help-until-they-grow/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"}}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Do deeplinks help mobile GUI agents?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "When the offer is small and matched to the task. In GUI-Hopper (arXiv:2609.30887), untrained Qwen3.7-Plus on MobileWorld scored 61.5% with no deeplinks, 62.4% with task-matched ones, 59.5% with the top 10 retrieved and 53.0% with the full catalog."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does a bigger compiled navigation map always help?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. PhoneCLI (arXiv:2609.35671) measured Settings at 87.0%, 95.7% and 78.3% with 10, 50 and 100 screens, and Clock at 63.0%, 77.8% and 66.7%. The router's catalog grows from about 130 tokens to 3.5k."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Is PhoneCLI guaranteed never to be worse than the plain agent?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Only while its checks work. Removing any one of five mechanisms scored 47.1% to 50.7% against the plain agent's 50.7% on 138 AndroidLab tasks; without the landing check it was 12.3 points below full PhoneCLI."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How does phoneshell check a deep link today?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "It counts an open_url as successful if the foreground app changed or the screen differs by more than 2% after 1.6 seconds, and its macro recorder stores open_url steps with no anchor or expected text, so a link to the wrong screen in the right app passes."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind comparison">comparison</span>
+    <time datetime="2026-09-29">29 September 2026</time>
+    <span>7 min read</span>
+  </div>
+  <h1>Shortcut catalogs help phone agents until they grow: a full deeplink list cut Qwen3.7-Plus from 61.5% to 53.0%</h1>
+  <p class="standfirst">GUI-Hopper jumps with verified deeplinks, PhoneCLI replays compiled navigation. Both run on Qwen3.7-Plus, both peak at a middle catalog size, and both depend on a landing check that phoneshell's own deep-link step does not have.</p>
+
+  <p>Given the full catalog of verified deeplinks for MobileWorld's apps, an untrained Qwen3.7-Plus agent
+succeeded on 53.0% of 351 runs, against 61.5% with no deeplinks at all. Three days later a second paper,
+on the same backbone, found the same shape for compiled navigation commands: growing its app map from
+50 to 100 screens dropped Settings from 95.7% to 78.3%. The papers are GUI-Hopper (arXiv:2609.30887,
+25 September 2026, Tongyi Lab and Shanghai Jiao Tong University) and PhoneCLI (arXiv:2609.35671,
+28 September 2026, University of Hong Kong).</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/shortcut-catalogs-help-until-they-grow-hero.png" alt="Abstract technical illustration of a branching network of routes in which a few direct arcs skip across many small steps, while a dense cluster of extra arcs at the edge tangles" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="what-the-two-papers-built">What the two papers built</h2>
+
+<p><strong>GUI-Hopper</strong> mines Android deeplinks from app manifests and shortcut definitions,
+drops components that are not exported, checks each candidate resolves, then opens it on a real device
+and keeps only entries that land on a meaningful screen. For 26 apps in MobileWorld-Real that yields
+1,251 callable entries, 246 of them with parameters; Bilibili alone has 330. One map app's search screen
+was reachable through 11 entries across 5 domains and 3 URI schemes before deduplication. A Qwen3.5
+model is then trained on hybrid trajectories (deeplink or GUI action) with online RL, and at run time a
+retriever hands it at most 10 candidates. After each call the runtime checks that the landing Activity
+matches the one recorded in the catalog.</p>
+
+<p><strong>PhoneCLI</strong> crawls each app offline, breadth first, up to 50 screens and depth 3, and
+compiles every screen into a replayable command. Across AndroidLab's 9 apps that is 320 screens, 2,822
+elements, 1,089 navigation edges and 2,017 operations, about ten minutes per app. Online, a router picks
+a command, a verifier approves it, the app is force-stopped and the recorded taps replay with no model
+call, then a landing check confirms the screen. The paper's own example replays
+<code>force_stop | launch | tap(548,1428) | tap(496,874)</code>. Any failure hands control to the plain
+VLM agent.</p>
+
+<table>
+  <thead>
+    <tr><th>Setting</th><th>Benchmark, runs</th><th>Without shortcuts</th><th>With shortcuts</th><th>Our count and test</th><th>Source</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Qwen3.7-Plus, untrained, deeplinks task-matched</td><td>MobileWorld, 117 tasks x 3</td><td>61.5%</td><td>62.4%</td><td>216 vs 219 of 351</td><td>GUI-Hopper Table 4</td></tr>
+    <tr><td>Qwen3.7-Plus, untrained, top 10 retrieved</td><td>MobileWorld, 117 x 3</td><td>61.5%</td><td>59.5%</td><td>216 vs 209, p 0.64</td><td>GUI-Hopper Table 4</td></tr>
+    <tr><td>Qwen3.7-Plus, untrained, full catalog</td><td>MobileWorld, 117 x 3</td><td>61.5%</td><td>53.0%</td><td>216 vs 186, p 0.027*</td><td>GUI-Hopper Table 4</td></tr>
+    <tr><td>GUI-Hopper 9B, top 10 retrieved</td><td>MobileWorld, 117 x 3</td><td>56.7%</td><td>63.5%</td><td>199 vs 223</td><td>GUI-Hopper Table 4</td></tr>
+    <tr><td>Qwen3.5-9B, GUI-only training vs hybrid</td><td>MobileWorld-Real, 119 tasks</td><td>77.1%</td><td>86.6%</td><td>not reported per task</td><td>GUI-Hopper Table 2</td></tr>
+    <tr><td>Qwen3.7-Plus, VLM-only vs PhoneCLI</td><td>AndroidLab, 138 tasks x 1</td><td>50.7%</td><td>63.0%</td><td>70 vs 87, p 0.052</td><td>PhoneCLI Tables 1 and 2</td></tr>
+    <tr><td>Qwen3.7-Plus, map as text only (no replay)</td><td>AndroidLab, 138 x 1</td><td>50.7%</td><td>55.1%</td><td>70 vs 76</td><td>PhoneCLI Table 2</td></tr>
+    <tr><td>Kimi-K3, VLM-only vs PhoneCLI</td><td>AndroidLab, 138 x 1</td><td>68.8%</td><td>69.6%</td><td>95 vs 96</td><td>PhoneCLI Tables 1 and 2</td></tr>
+    <tr><td>M3A on Qwen3.7-Plus, with PhoneCLI routing</td><td>AndroidWorld, 116 x 1</td><td>61.2%</td><td>65.5%</td><td>71 vs 76, p 0.59</td><td>PhoneCLI Table 4</td></tr>
+  </tbody>
+</table>
+
+<p>Counts are the reported rate times the number of runs, rounded; p values are our two-sided Fisher
+exact tests. *The MobileWorld runs are three per task, so treating 351 runs as independent overstates the
+evidence; per-task results are not published. PhoneCLI reports its gains as significant with a test it
+does not name; unpaired, 87 against 70 of 138 gives p 0.052, and a paired test needs per-task outcomes
+the paper does not print.</p>
+
+<h2 id="both-papers-found-an-optimum-catalog-size-and-it-is-not-the-">Both papers found an optimum catalog size, and it is not the largest</h2>
+
+<p>With task-matched deeplinks, untrained Qwen3.7-Plus barely gains in success (61.5% to 62.4%) but
+takes about 16% fewer steps (25.6 to 21.4 on average). Widening the offer to the retrieved top 10 costs 2 points; the
+full catalog costs 8.5. GUI-Hopper's trained 9B model holds 62.8% to 63.8% across the same three
+supplies, which is the paper's argument for training. Note the other reading of the same table: the
+trained 9B with retrieved deeplinks (63.5%) is 2 points above the untrained Qwen3.7-Plus with none
+(61.5%), 223 against 216 of 351 runs.</p>
+
+<p>PhoneCLI measured map size directly on two apps. Settings went 87.0%, 95.7%, 78.3% at 10, 50 and 100
+screens; Clock went 63.0%, 77.8%, 66.7%. The catalog the router reads grows from about 130 tokens at 10
+screens to 3.5k at 100, and the authors attribute the fall to mis-routing among more, noisier
+candidates. Neither paper frames it this way, but the two curves describe one mechanism: the shortcut
+is deterministic, the choice of shortcut is not, and the choice gets harder with every entry.</p>
+
+<svg viewBox="0 0 760 400" style="width:100%;height:auto" role="img" aria-label="Line chart of success rate against shortcut catalog size in two papers that both use the Qwen3.7-Plus backbone. In GUI-Hopper, arXiv 2609.30887 Table 4, untrained Qwen3.7-Plus on MobileWorld scores 61.5 percent with no deeplinks, 62.4 with the task-matched ones, 59.5 with the top 10 retrieved and 53.0 with the full catalog. In PhoneCLI, arXiv 2609.35671 Figure 3, a map budget of 10, 50 and 100 screens gives 87.0, 95.7 and 78.3 percent on Settings and 63.0, 77.8 and 66.7 percent on Clock. Both curves peak at a middle size and fall at the largest.">
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Success (%) as the shortcut catalog grows, same backbone (Qwen3.7-Plus)</text>
+<text x="20" y="56" font-size="12" font-weight="600" fill="#c4ccda">GUI-Hopper: deeplinks offered to untrained Qwen3.7-Plus</text>
+<line x1="60" y1="330" x2="350" y2="330" stroke="#6f7b90"/><line x1="60" y1="330" x2="60" y2="80" stroke="#6f7b90"/>
+<text x="54" y="333.0" font-size="10" fill="#8a93a5" text-anchor="end">40</text><line x1="60" y1="330.0" x2="350" y2="330.0" stroke="#2a3140"/>
+<text x="54" y="249.7" font-size="10" fill="#8a93a5" text-anchor="end">50</text><line x1="60" y1="246.7" x2="350" y2="246.7" stroke="#2a3140"/>
+<text x="54" y="166.3" font-size="10" fill="#8a93a5" text-anchor="end">60</text><line x1="60" y1="163.3" x2="350" y2="163.3" stroke="#2a3140"/>
+<text x="54" y="83.0" font-size="10" fill="#8a93a5" text-anchor="end">70</text><line x1="60" y1="80.0" x2="350" y2="80.0" stroke="#2a3140"/>
+<text x="80.0" y="346" font-size="10" fill="#8a93a5" text-anchor="middle">none</text>
+<text x="163.3" y="346" font-size="10" fill="#8a93a5" text-anchor="middle">task-matched</text>
+<text x="246.7" y="346" font-size="10" fill="#8a93a5" text-anchor="middle">top 10</text>
+<text x="330.0" y="346" font-size="10" fill="#8a93a5" text-anchor="middle">full catalog</text>
+<polyline points="80.0,150.8 163.3,143.3 246.7,167.5 330.0,221.7" fill="none" stroke="#5ad1a0" stroke-width="2"/>
+<circle cx="80.0" cy="150.8" r="4" fill="#5ad1a0"/><text x="80.0" y="141.8" font-size="10" fill="#5ad1a0" text-anchor="middle">61.5</text>
+<circle cx="163.3" cy="143.3" r="4" fill="#5ad1a0"/><text x="163.3" y="134.3" font-size="10" fill="#5ad1a0" text-anchor="middle">62.4</text>
+<circle cx="246.7" cy="167.5" r="4" fill="#5ad1a0"/><text x="246.7" y="158.5" font-size="10" fill="#5ad1a0" text-anchor="middle">59.5</text>
+<circle cx="330.0" cy="221.7" r="4" fill="#5ad1a0"/><text x="330.0" y="212.7" font-size="10" fill="#5ad1a0" text-anchor="middle">53.0</text>
+<text x="20" y="72" font-size="10" fill="#5ad1a0">MobileWorld, 351 runs</text>
+<text x="400" y="56" font-size="12" font-weight="600" fill="#c4ccda">PhoneCLI: map budget in screens</text>
+<line x1="440" y1="330" x2="730" y2="330" stroke="#6f7b90"/><line x1="440" y1="330" x2="440" y2="80" stroke="#6f7b90"/>
+<text x="434" y="333.0" font-size="10" fill="#8a93a5" text-anchor="end">50</text><line x1="440" y1="330.0" x2="730" y2="330.0" stroke="#2a3140"/>
+<text x="434" y="283.0" font-size="10" fill="#8a93a5" text-anchor="end">60</text><line x1="440" y1="280.0" x2="730" y2="280.0" stroke="#2a3140"/>
+<text x="434" y="233.0" font-size="10" fill="#8a93a5" text-anchor="end">70</text><line x1="440" y1="230.0" x2="730" y2="230.0" stroke="#2a3140"/>
+<text x="434" y="183.0" font-size="10" fill="#8a93a5" text-anchor="end">80</text><line x1="440" y1="180.0" x2="730" y2="180.0" stroke="#2a3140"/>
+<text x="434" y="133.0" font-size="10" fill="#8a93a5" text-anchor="end">90</text><line x1="440" y1="130.0" x2="730" y2="130.0" stroke="#2a3140"/>
+<text x="434" y="83.0" font-size="10" fill="#8a93a5" text-anchor="end">100</text><line x1="440" y1="80.0" x2="730" y2="80.0" stroke="#2a3140"/>
+<text x="460.0" y="346" font-size="10" fill="#8a93a5" text-anchor="middle">10 screens</text>
+<text x="585.0" y="346" font-size="10" fill="#8a93a5" text-anchor="middle">50 screens</text>
+<text x="710.0" y="346" font-size="10" fill="#8a93a5" text-anchor="middle">100 screens</text>
+<polyline points="460.0,145.0 585.0,101.5 710.0,188.5" fill="none" stroke="#5ad1a0" stroke-width="2"/>
+<circle cx="460.0" cy="145.0" r="4" fill="#5ad1a0"/><text x="460.0" y="136.0" font-size="10" fill="#5ad1a0" text-anchor="middle">87.0</text>
+<circle cx="585.0" cy="101.5" r="4" fill="#5ad1a0"/><text x="585.0" y="92.5" font-size="10" fill="#5ad1a0" text-anchor="middle">95.7</text>
+<circle cx="710.0" cy="188.5" r="4" fill="#5ad1a0"/><text x="710.0" y="179.5" font-size="10" fill="#5ad1a0" text-anchor="middle">78.3</text>
+<text x="400" y="72" font-size="10" fill="#5ad1a0">Settings</text>
+<polyline points="460.0,265.0 585.0,191.0 710.0,246.5" fill="none" stroke="#f2a65a" stroke-width="2"/>
+<circle cx="460.0" cy="265.0" r="4" fill="#f2a65a"/><text x="460.0" y="281.0" font-size="10" fill="#f2a65a" text-anchor="middle">63.0</text>
+<circle cx="585.0" cy="191.0" r="4" fill="#f2a65a"/><text x="585.0" y="207.0" font-size="10" fill="#f2a65a" text-anchor="middle">77.8</text>
+<circle cx="710.0" cy="246.5" r="4" fill="#f2a65a"/><text x="710.0" y="262.5" font-size="10" fill="#f2a65a" text-anchor="middle">66.7</text>
+<text x="490" y="72" font-size="10" fill="#f2a65a">Clock</text>
+<text x="20" y="380" font-size="10" fill="#8a93a5">PhoneCLI catalog text grows from about 130 tokens at 10 screens to 3.5k at 100. Sources: arXiv 2609.30887 Table 4; arXiv 2609.35671 Section 3.4.</text>
+</g></svg>
+
+<h2 id="phonecli-s-can-only-help-holds-only-while-every-check-works">PhoneCLI's "can only help" holds only while every check works</h2>
+
+<p>The abstract says compilation "can only help" because every failure falls back to the plain agent,
+which is the VLM-only baseline. The paper's own ablation does not bear that out as a guarantee. Removing
+any one of five mechanisms lands at or below the 50.7% baseline: no landing check 50.7% (70 of 138), no
+landing hint 50.0% (69), no command completion 48.6% (67), no semantic enrichment 47.8% (66), no element
+classification 47.1% (65). Those are 0 to 5 tasks, inside single-run noise (65 against 70 gives p 0.63),
+so they do not show the layer hurts either. They show the floor is a property of the checks, not of the
+design. On Calendar, the map injected as text collapsed success to 0 of 14; replay recovered 4 of 14.</p>
+
+<p>The fallback also assumes a reset that a real phone does not give. PhoneCLI's runs restore a clean
+emulator snapshot before every task, and a failed landing check calls <code>Restart(app)</code> before
+handing over. On a user's phone a force-stop discards whatever was typed but not saved, and it undoes
+nothing already sent. The replayed taps are element centres stored as normalised screen positions and multiplied out to
+pixels at run time, which survives a change of resolution but not a change of layout; every run in the
+paper uses one Pixel 7 Pro emulator on Android 13.</p>
+
+<svg viewBox="0 0 760 420" style="width:100%;height:auto" role="img" aria-label="Flow diagram of a shortcut step as GUI-Hopper and PhoneCLI implement it, compared with phoneshell. A router chooses one entry from a catalog, which grows to 1,251 deeplinks in GUI-Hopper and 2,017 operations in PhoneCLI. The shortcut executes deterministically. A landing check then compares the screen reached with the one recorded: GUI-Hopper checks the landing Activity and PhoneCLI checks the screen, and removing PhoneCLI's check costs 12.3 points. phoneshell's open_url only checks that the foreground app changed or the screen changed by more than 2 percent after 1.6 seconds, and its macro recorder stores open_url steps with no anchor and no expected text.">
+  <g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="12">
+    <text x="20" y="26" font-size="14" font-weight="600">A shortcut step has three parts; only one of them is deterministic</text>
+    <rect x="20" y="52" width="210" height="96" rx="8" fill="#1d2330" stroke="#f2a65a"/>
+    <text x="32" y="76" font-weight="600" fill="#f2a65a">1. Choose an entry</text>
+    <text x="32" y="96" fill="#c4ccda">GUI-Hopper: 1,251 deeplinks</text>
+    <text x="32" y="114" fill="#c4ccda">PhoneCLI: 2,017 operations</text>
+    <text x="32" y="132" fill="#8a93a5">errors grow with catalog size</text>
+    <line x1="230" y1="100" x2="270" y2="100" stroke="#6f7b90"/>
+    <rect x="270" y="52" width="210" height="96" rx="8" fill="#1d2330" stroke="#5ad1a0"/>
+    <text x="282" y="76" font-weight="600" fill="#5ad1a0">2. Execute</text>
+    <text x="282" y="96" fill="#c4ccda">deeplink call, or force-stop</text>
+    <text x="282" y="114" fill="#c4ccda">plus recorded taps</text>
+    <text x="282" y="132" fill="#8a93a5">zero model calls</text>
+    <line x1="480" y1="100" x2="520" y2="100" stroke="#6f7b90"/>
+    <rect x="520" y="52" width="220" height="96" rx="8" fill="#1d2330" stroke="#f2a65a"/>
+    <text x="532" y="76" font-weight="600" fill="#f2a65a">3. Check the landing</text>
+    <text x="532" y="96" fill="#c4ccda">Activity or screen match</text>
+    <text x="532" y="114" fill="#c4ccda">without it: -12.3 points</text>
+    <text x="532" y="132" fill="#8a93a5">PhoneCLI Table 3</text>
+    <line x1="630" y1="148" x2="630" y2="186" stroke="#6f7b90"/>
+    <rect x="470" y="186" width="270" height="64" rx="8" fill="#161b26" stroke="#6f7b90"/>
+    <text x="482" y="210" fill="#e9ecf2">fail: restart app, hand to plain VLM</text>
+    <text x="482" y="230" fill="#8a93a5">safe on an emulator snapshot, not a phone</text>
+    <rect x="20" y="276" width="720" height="124" rx="8" fill="#161b26" stroke="#2a3140"/>
+    <text x="34" y="300" font-weight="600">phoneshell today (read 29 September 2026)</text>
+    <text x="34" y="324" fill="#c4ccda">choose: the model recalls a URL from memory, no catalog; INSTRUCTIONS rule 5 says prefer deep links</text>
+    <text x="34" y="346" fill="#c4ccda">check: "moved" = foreground bundle changed, or screen differs by more than 2%, after 1.6 s</text>
+    <text x="34" y="368" fill="#f2a65a">macro replay: open_url stored with no anchor and no expect; 0 of 7 recorder calls set expect</text>
+    <text x="34" y="388" fill="#8a93a5">a link that opens the right app on the wrong screen passes</text>
+  </g>
+</svg>
+
+<h2 id="what-it-means-for-an-agent-on-an-iphone">What it means for an agent on an iPhone</h2>
+
+<p>The instruction phoneshell gives every model, rule 5, is "Prefer phone_open_app and phone_open_url
+over tapping your way through the home screen. A deep link is one deterministic step instead of five
+fragile ones." Both papers agree the step is deterministic. Both also show the choice of link is where
+the failures move, and both verify every catalog entry on a device before a model sees it. phoneshell has no catalog: the
+model types a URL it remembers. That is GUI-Hopper's untrained condition with an unverified supply,
+which the paper did not test and we have not measured.</p>
+
+<p>Our landing check is weaker than either paper's. <code>actions.py</code> treats an
+<code>open_url</code> as successful if the foreground bundle id changed or the screenshot differs by more
+than 2% after 1.6 seconds. A link that opens the right app on the wrong screen passes. In replayed
+macros the gap is wider: the recorder stores <code>open_url</code> steps with no anchor and no expected
+text, and none of its seven recording calls ever sets <code>expect</code>. Tap, type and picker steps do
+carry an anchor, so a wrong landing is caught at the next tap, if there is one, not at the link. PhoneCLI measured what
+removing the landing check costs on its benchmark: 12.3 points.</p>
+
+<p>As far as we know, iOS offers no equivalent of Android's exported-component list that an outside tool
+can enumerate on an unmodified phone. Custom URL schemes are declared in each app's Info.plist and universal links in the
+developer's apple-app-site-association file, so a mining pipeline like GUI-Hopper's would start from app
+bundles and web domains, not from the device. We have not built one. The cheaper fix is on our side: a
+landing check that compares the screen reached to an expected element, which is what both papers
+already do.</p>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<ul>
+  <li>GUI-Hopper: <code>https://arxiv.org/abs/2609.30887</code>; Table 4 (deeplink supply), Table 2 (MobileWorld-Real), Appendix A and Table 5 (catalog of 1,251 entries).</li>
+  <li>PhoneCLI: <code>https://arxiv.org/abs/2609.35671</code>; Tables 1 to 4, Section 3.4 (map budget), Appendix A.1 (map statistics). The paper links <code>https://github.com/HKUDS/OpenPhone</code>.</li>
+  <li>Our tests: <code>scipy.stats.fisher_exact([[216,135],[186,165]])</code> gives p 0.027; <code>fisher_exact([[87,51],[70,68]])</code> gives 0.052; <code>fisher_exact([[76,40],[71,45]])</code> gives 0.59.</li>
+  <li>phoneshell: <code>grep -n "def open_url" -A 28 phoneshell/actions.py</code>; <code>grep -n "recorder.record(" phoneshell/mcp_server.py</code>; <code>grep -n "5\. Prefer" phoneshell/mcp_server.py</code>.</li>
+</ul>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>Two predictions, dated 31 March 2027. First, any follow-up that offers an untrained agent a verified
+shortcut catalog at two or more sizes on the same tasks will again find the largest size below the
+best size by at least 5 points. A result where success rises monotonically with catalog size, on a
+catalog of at least 500 entries, would show the routing cost can be engineered away without training.
+Second, when phoneshell adds a landing check that asserts an expected element after
+<code>open_url</code>, the share of deep-link steps that report success but land on the wrong screen
+will be above zero on our 80 tasks; if it is zero, the weakness described here is theoretical on this
+suite.</p>
+
+  <section class="sources">
+    <h2>Sources</h2>
+    <ol>
+      <li><a href="https://arxiv.org/abs/2609.30887">Sun, Cai, Zhang et al. (Tongyi Lab, Alibaba; Shanghai Jiao Tong University), From Tapping to Hopping: Augmenting Mobile GUI Agents with App-Native Deeplinks, arXiv:2609.30887, submitted 25 September 2026</a></li>
+      <li><a href="https://arxiv.org/html/2609.30887v1">GUI-Hopper HTML edition: Table 1 (MobileWorld), Table 2 (MobileWorld-Real), Table 4 (deeplink supply), Appendix A (catalog of 1,251 entries)</a></li>
+      <li><a href="https://arxiv.org/abs/2609.35671">Jiang, Xu and Huang (University of Hong Kong), PhoneCLI: From App Interfaces to Callable Commands for Mobile Agents, arXiv:2609.35671, submitted 28 September 2026</a></li>
+      <li><a href="https://arxiv.org/html/2609.35671v1">PhoneCLI HTML edition: Tables 1 to 4, Section 3.4 (map budget), Appendix A.1 (map statistics)</a></li>
+      <li><a href="https://github.com/HKUDS/OpenPhone">HKUDS/OpenPhone, the repository the PhoneCLI paper links</a></li>
+      <li><a href="https://github.com/Blomega/phoneshell/blob/main/phoneshell/actions.py">phoneshell actions.py open_url and agent/macros.py replay, read 29 September 2026</a></li>
+    </ol>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
