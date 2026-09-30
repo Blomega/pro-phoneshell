@@ -1,0 +1,1448 @@
+{
+ "board": {
+  "moonshotai/kimi-k3": {
+   "skipped": 0,
+   "tasks": 58,
+   "passed": 56,
+   "pass_rate": 96.6,
+   "avg_turns": 5.1,
+   "avg_seconds": 66.5,
+   "total_cost_usd": 2.3851
+  },
+  "openai/gpt-5.1": {
+   "skipped": 0,
+   "tasks": 58,
+   "passed": 53,
+   "pass_rate": 91.4,
+   "avg_turns": 4.8,
+   "avg_seconds": 37.7,
+   "total_cost_usd": 0.5079
+  },
+  "anthropic/claude-opus-4.8": {
+   "skipped": 0,
+   "tasks": 58,
+   "passed": 53,
+   "pass_rate": 91.4,
+   "avg_turns": 4.4,
+   "avg_seconds": 46.9,
+   "total_cost_usd": 4.4039
+  },
+  "qwen/qwen3-max": {
+   "skipped": 0,
+   "tasks": 58,
+   "passed": 52,
+   "pass_rate": 89.7,
+   "avg_turns": 5.6,
+   "avg_seconds": 43.4,
+   "total_cost_usd": 0.3823
+  },
+  "google/gemini-3.1-pro-preview": {
+   "skipped": 0,
+   "tasks": 58,
+   "passed": 54,
+   "pass_rate": 93.1,
+   "avg_turns": 4.8,
+   "avg_seconds": 47.0,
+   "total_cost_usd": 1.3326
+  },
+  "deepseek/deepseek-v3.2": {
+   "skipped": 0,
+   "tasks": 58,
+   "passed": 54,
+   "pass_rate": 93.1,
+   "avg_turns": 6.7,
+   "avg_seconds": 68.3,
+   "total_cost_usd": 0.1451
+  }
+ },
+ "runs": [
+  {
+   "task_id": "weather.open",
+   "model": "claude-sonnet-5",
+   "passed": false,
+   "skipped": true,
+   "skip_reason": "com.apple.weather is not installed on this phone",
+   "turns": 0,
+   "seconds": 0.0,
+   "cost_usd": 0.0,
+   "checks": [],
+   "scaffold": false,
+   "started_at": 0.0
+  },
+  {
+   "task_id": "weather.read_temperature",
+   "model": "claude-sonnet-5",
+   "passed": false,
+   "skipped": true,
+   "skip_reason": "com.apple.weather is not installed on this phone",
+   "turns": 0,
+   "seconds": 0.0,
+   "cost_usd": 0.0,
+   "checks": [],
+   "scaffold": false,
+   "started_at": 0.0
+  },
+  {
+   "task_id": "books.search",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 6,
+   "seconds": 55.33578968048096,
+   "cost_usd": 0.17431000000000002,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.iBooks, wanted com.apple.iBooks"
+    },
+    {
+     "kind": "element_exists_anywhere",
+     "passed": true,
+     "detail": "'Moby' was already visible"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788859996.3510232
+  },
+  {
+   "task_id": "calculator.arithmetic",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 9,
+   "seconds": 43.6251060962677,
+   "cost_usd": 0.21322660000000007,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.calculator, wanted com.apple.calculator"
+    },
+    {
+     "kind": "regex_on_screen",
+     "passed": true,
+     "detail": "pattern '\\\\b423\\\\b' matched"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788860052.862375
+  },
+  {
+   "task_id": "calculator.chain",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 12,
+   "seconds": 79.54790186882019,
+   "cost_usd": 0.2330874,
+   "checks": [
+    {
+     "kind": "regex_on_screen",
+     "passed": true,
+     "detail": "pattern '\\\\b100\\\\b' matched"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788860097.5864582
+  },
+  {
+   "task_id": "calculator.percentage",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 11,
+   "seconds": 63.37571692466736,
+   "cost_usd": 0.2479738,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.calculator, wanted com.apple.calculator"
+    },
+    {
+     "kind": "regex_on_screen",
+     "passed": true,
+     "detail": "pattern '\\\\b36\\\\b' matched"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788860237.481337
+  },
+  {
+   "task_id": "calendar.month_view",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 3,
+   "seconds": 24.909010887145996,
+   "cost_usd": 0.1358126,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.mobilecal, wanted com.apple.mobilecal"
+    },
+    {
+     "kind": "regex_on_screen",
+     "passed": true,
+     "detail": "pattern 'Mon|Tue|Wed|Thu|Fri|Sat|Sun' matched"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788860302.102079
+  },
+  {
+   "task_id": "calendar.today",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 3,
+   "seconds": 19.297009229660034,
+   "cost_usd": 0.1113568,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.mobilecal, wanted com.apple.mobilecal"
+    },
+    {
+     "kind": "regex_on_screen",
+     "passed": true,
+     "detail": "pattern 'Today' matched"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788860328.131199
+  },
+  {
+   "task_id": "clock.alarm.reach_picker",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 4,
+   "seconds": 52.766839027404785,
+   "cost_usd": 0.1279536,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.mobiletimer, wanted com.apple.mobiletimer"
+    },
+    {
+     "kind": "element_exists",
+     "passed": true,
+     "detail": "'Cancel' found on screen"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788860348.548855
+  },
+  {
+   "task_id": "clock.alarm.set_time",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 6,
+   "seconds": 187.42669916152954,
+   "cost_usd": 0.1714624,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.mobiletimer, wanted com.apple.mobiletimer"
+    },
+    {
+     "kind": "regex_on_screen",
+     "passed": true,
+     "detail": "pattern '(?<![0-9])7 o.clock' matched"
+    },
+    {
+     "kind": "regex_on_screen",
+     "passed": true,
+     "detail": "pattern '(?<![0-9])30 minutes' matched"
+    },
+    {
+     "kind": "regex_on_screen",
+     "passed": true,
+     "detail": "pattern '\\\\bAM\\\\b' matched"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788860466.0843468
+  },
+  {
+   "task_id": "clock.stopwatch.start",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 4,
+   "seconds": 48.15749406814575,
+   "cost_usd": 0.1262676,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.mobiletimer, wanted com.apple.mobiletimer"
+    },
+    {
+     "kind": "element_exists",
+     "passed": true,
+     "detail": "'Stop' found on screen"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788860719.55314
+  },
+  {
+   "task_id": "clock.tab.alarms",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 3,
+   "seconds": 38.59972405433655,
+   "cost_usd": 0.11170080000000002,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.mobiletimer, wanted com.apple.mobiletimer"
+    },
+    {
+     "kind": "element_exists",
+     "passed": true,
+     "detail": "'Alarms' found on screen"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788860768.8959548
+  },
+  {
+   "task_id": "clock.tab.timers",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 4,
+   "seconds": 38.99550104141235,
+   "cost_usd": 0.1459378,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.mobiletimer, wanted com.apple.mobiletimer"
+    },
+    {
+     "kind": "element_exists",
+     "passed": true,
+     "detail": "'Timers' found on screen"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788860838.4768882
+  },
+  {
+   "task_id": "clock.timer.set",
+   "model": "claude-sonnet-5",
+   "passed": false,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 5,
+   "seconds": 53.39194583892822,
+   "cost_usd": 0.162713,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.mobiletimer, wanted com.apple.mobiletimer"
+    },
+    {
+     "kind": "regex_on_screen",
+     "passed": false,
+     "detail": "pattern '0?[34]:\\\\d\\\\d|0?5:00' did not match"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788866628.078429
+  },
+  {
+   "task_id": "clock.timer.set_hours_minutes",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 7,
+   "seconds": 74.16870284080505,
+   "cost_usd": 0.1707376,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.mobiletimer, wanted com.apple.mobiletimer"
+    },
+    {
+     "kind": "regex_on_screen",
+     "passed": true,
+     "detail": "pattern '(?<![0-9])1 hour' matched"
+    },
+    {
+     "kind": "regex_on_screen",
+     "passed": true,
+     "detail": "pattern '(?<![0-9])30 min' matched"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788860939.94068
+  },
+  {
+   "task_id": "clock.timer.set_minutes",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 6,
+   "seconds": 51.89334177970886,
+   "cost_usd": 0.15681439999999996,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.mobiletimer, wanted com.apple.mobiletimer"
+    },
+    {
+     "kind": "regex_on_screen",
+     "passed": true,
+     "detail": "pattern '(?<![0-9])5 min' matched"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788861015.3210702
+  },
+  {
+   "task_id": "clock.worldclock.tab",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 4,
+   "seconds": 47.96352696418762,
+   "cost_usd": 0.1239848,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.mobiletimer, wanted com.apple.mobiletimer"
+    },
+    {
+     "kind": "element_exists",
+     "passed": true,
+     "detail": "'World Clock' found on screen"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788861170.044068
+  },
+  {
+   "task_id": "compass.read_heading",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 3,
+   "seconds": 21.24332094192505,
+   "cost_usd": 0.1086496,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.compass, wanted com.apple.compass"
+    },
+    {
+     "kind": "regex_on_screen",
+     "passed": true,
+     "detail": "pattern 'N|S|E|W' matched"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788861219.149573
+  },
+  {
+   "task_id": "contacts.search",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 5,
+   "seconds": 41.33298206329346,
+   "cost_usd": 0.1498612,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.MobileAddressBook, wanted com.apple.MobileAddressBook"
+    },
+    {
+     "kind": "regex_on_screen",
+     "passed": true,
+     "detail": "pattern '(?i)(search|cancel|results|no results)' matched"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788861241.527179
+  },
+  {
+   "task_id": "files.browse_tab",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 4,
+   "seconds": 29.642148971557617,
+   "cost_usd": 0.12701500000000002,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.DocumentsApp, wanted com.apple.DocumentsApp"
+    },
+    {
+     "kind": "regex_on_screen",
+     "passed": true,
+     "detail": "pattern 'Browse|Locations|On My iPhone' matched"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788861288.637491
+  },
+  {
+   "task_id": "maps.search_place",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 5,
+   "seconds": 47.21495699882507,
+   "cost_usd": 0.14728,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.Maps, wanted com.apple.Maps"
+    },
+    {
+     "kind": "element_exists_anywhere",
+     "passed": true,
+     "detail": "'Eiffel Tower' was already visible"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788861319.445395
+  },
+  {
+   "task_id": "measure.open",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 3,
+   "seconds": 24.619567155838013,
+   "cost_usd": 0.1282844,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.measure, wanted com.apple.measure"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788861367.937481
+  },
+  {
+   "task_id": "multi.app_switch",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 5,
+   "seconds": 39.02985596656799,
+   "cost_usd": 0.1569912,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.calculator, wanted com.apple.calculator"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788861393.797041
+  },
+  {
+   "task_id": "multi.return_after_detour",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 5,
+   "seconds": 30.752579927444458,
+   "cost_usd": 0.13922800000000002,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.calculator, wanted com.apple.calculator"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788866682.60444
+  },
+  {
+   "task_id": "multi.three_apps",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 5,
+   "seconds": 44.556931018829346,
+   "cost_usd": 0.1367456,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.Preferences, wanted com.apple.Preferences"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788861641.691027
+  },
+  {
+   "task_id": "notes.create_titled",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 7,
+   "seconds": 46.34895586967468,
+   "cost_usd": 0.17223239999999998,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.mobilenotes, wanted com.apple.mobilenotes"
+    },
+    {
+     "kind": "element_exists",
+     "passed": true,
+     "detail": "'phoneshell benchmark' found on screen"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788861753.099415
+  },
+  {
+   "task_id": "notes.search",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 9,
+   "seconds": 55.53960299491882,
+   "cost_usd": 0.20566679999999998,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.mobilenotes, wanted com.apple.mobilenotes"
+    },
+    {
+     "kind": "element_exists",
+     "passed": true,
+     "detail": "'phoneshell benchmark' found on screen"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788861800.716821
+  },
+  {
+   "task_id": "notes.text_select",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 10,
+   "seconds": 100.84059810638428,
+   "cost_usd": 0.26557959999999997,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.mobilenotes, wanted com.apple.mobilenotes"
+    },
+    {
+     "kind": "regex_on_screen",
+     "passed": true,
+     "detail": "pattern 'Select All|Look Up|Paste|Cut' matched"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788861857.463209
+  },
+  {
+   "task_id": "notes.type_long",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 6,
+   "seconds": 44.82260298728943,
+   "cost_usd": 0.17677720000000002,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.mobilenotes, wanted com.apple.mobilenotes"
+    },
+    {
+     "kind": "element_exists",
+     "passed": true,
+     "detail": "'quick brown fox' found on screen"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788861959.535296
+  },
+  {
+   "task_id": "notes.type_punctuation",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 6,
+   "seconds": 36.118409872055054,
+   "cost_usd": 0.15529959999999998,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.mobilenotes, wanted com.apple.mobilenotes"
+    },
+    {
+     "kind": "element_exists",
+     "passed": true,
+     "detail": "'benchmark-test' found on screen"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788862005.602129
+  },
+  {
+   "task_id": "reminders.create",
+   "model": "claude-sonnet-5",
+   "passed": false,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 6,
+   "seconds": 52.47745203971863,
+   "cost_usd": 0.16619640000000002,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.reminders, wanted com.apple.reminders"
+    },
+    {
+     "kind": "element_exists_anywhere",
+     "passed": false,
+     "detail": "'collect parcel' not found anywhere"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788866751.620265
+  },
+  {
+   "task_id": "resilience.deep_start",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 3,
+   "seconds": 29.34587001800537,
+   "cost_usd": 0.1096946,
+   "checks": [
+    {
+     "kind": "element_exists",
+     "passed": true,
+     "detail": "'Example Domain' found on screen"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788862149.843605
+  },
+  {
+   "task_id": "resilience.scrolled_list",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 5,
+   "seconds": 42.859352827072144,
+   "cost_usd": 0.0695182,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.Preferences, wanted com.apple.Preferences"
+    },
+    {
+     "kind": "element_exists",
+     "passed": true,
+     "detail": "'About' found on screen"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788862240.143747
+  },
+  {
+   "task_id": "resilience.wrong_app",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 13,
+   "seconds": 68.92655205726624,
+   "cost_usd": 0.26049940000000005,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.Preferences, wanted com.apple.Preferences"
+    },
+    {
+     "kind": "element_exists",
+     "passed": true,
+     "detail": "'Display' found on screen"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788862288.734505
+  },
+  {
+   "task_id": "safari.link_menu",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 4,
+   "seconds": 31.9553120136261,
+   "cost_usd": 0.1267152,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.mobilesafari, wanted com.apple.mobilesafari"
+    },
+    {
+     "kind": "regex_on_screen",
+     "passed": true,
+     "detail": "pattern 'Open in New Tab|Add to Reading List|Copy Link|Share' matched"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788862364.460315
+  },
+  {
+   "task_id": "safari.navigate.example",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 3,
+   "seconds": 39.77003598213196,
+   "cost_usd": 0.0334032,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.mobilesafari, wanted com.apple.mobilesafari"
+    },
+    {
+     "kind": "element_exists",
+     "passed": true,
+     "detail": "'Example Domain' found on screen"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788862397.559333
+  },
+  {
+   "task_id": "safari.tabs.open_switcher",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 4,
+   "seconds": 26.964474201202393,
+   "cost_usd": 0.1260096,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.mobilesafari, wanted com.apple.mobilesafari"
+    },
+    {
+     "kind": "regex_on_screen",
+     "passed": true,
+     "detail": "pattern '(?i)(tab|\\\\+|done|private)' matched"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788862438.55315
+  },
+  {
+   "task_id": "safari.read.heading",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 3,
+   "seconds": 22.278521060943604,
+   "cost_usd": 0.10828919999999999,
+   "checks": [
+    {
+     "kind": "element_exists",
+     "passed": true,
+     "detail": "'Example Domain' found on screen"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788862466.706174
+  },
+  {
+   "task_id": "safari.search.web",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 5,
+   "seconds": 37.137906074523926,
+   "cost_usd": 0.1445104,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.mobilesafari, wanted com.apple.mobilesafari"
+    },
+    {
+     "kind": "regex_on_screen",
+     "passed": true,
+     "detail": "pattern '(?i)iso.?8601' matched"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788862490.253425
+  },
+  {
+   "task_id": "settings.about.reach",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 6,
+   "seconds": 37.629878997802734,
+   "cost_usd": 0.1526988,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.Preferences, wanted com.apple.Preferences"
+    },
+    {
+     "kind": "element_exists",
+     "passed": true,
+     "detail": "'Model Number' found on screen"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788862551.043762
+  },
+  {
+   "task_id": "settings.about.serial",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 6,
+   "seconds": 40.123809814453125,
+   "cost_usd": 0.1511768,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.Preferences, wanted com.apple.Preferences"
+    },
+    {
+     "kind": "element_exists",
+     "passed": true,
+     "detail": "'Model Number' found on screen"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788862589.819653
+  },
+  {
+   "task_id": "settings.accessibility.reach",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 23,
+   "seconds": 108.534991979599,
+   "cost_usd": 0.41385120000000003,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.Preferences, wanted com.apple.Preferences"
+    },
+    {
+     "kind": "element_exists",
+     "passed": true,
+     "detail": "'Accessibility' found on screen"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788862631.125124
+  },
+  {
+   "task_id": "settings.back.twice",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 9,
+   "seconds": 77.69774103164673,
+   "cost_usd": 0.19216559999999996,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.Preferences, wanted com.apple.Preferences"
+    },
+    {
+     "kind": "element_exists",
+     "passed": true,
+     "detail": "'General' found on screen"
+    },
+    {
+     "kind": "element_exists",
+     "passed": true,
+     "detail": "unexpectedly 'Model Number' not found on screen"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788862740.826855
+  },
+  {
+   "task_id": "settings.battery.percentage",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 11,
+   "seconds": 54.75462293624878,
+   "cost_usd": 0.21804620000000002,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.Preferences, wanted com.apple.Preferences"
+    },
+    {
+     "kind": "regex_on_screen",
+     "passed": true,
+     "detail": "pattern '\\\\d+\\\\s?%' matched"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788862819.719095
+  },
+  {
+   "task_id": "settings.bluetooth.reach",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 4,
+   "seconds": 25.52208685874939,
+   "cost_usd": 0.1257536,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.Preferences, wanted com.apple.Preferences"
+    },
+    {
+     "kind": "element_exists",
+     "passed": true,
+     "detail": "'Bluetooth' found on screen"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788862875.732644
+  },
+  {
+   "task_id": "settings.datetime.reach",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 10,
+   "seconds": 67.87383604049683,
+   "cost_usd": 0.21054979999999998,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.Preferences, wanted com.apple.Preferences"
+    },
+    {
+     "kind": "element_exists",
+     "passed": true,
+     "detail": "'Date & Time' found on screen"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788862902.429098
+  },
+  {
+   "task_id": "settings.fonts.reach",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 7,
+   "seconds": 61.05520987510681,
+   "cost_usd": 0.1698562,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.Preferences, wanted com.apple.Preferences"
+    },
+    {
+     "kind": "element_exists",
+     "passed": true,
+     "detail": "'Fonts' found on screen"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788862971.5584042
+  },
+  {
+   "task_id": "settings.keyboard.reach",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 8,
+   "seconds": 71.39108610153198,
+   "cost_usd": 0.1859654,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.Preferences, wanted com.apple.Preferences"
+    },
+    {
+     "kind": "element_exists",
+     "passed": true,
+     "detail": "'Keyboard' found on screen"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788863033.755616
+  },
+  {
+   "task_id": "settings.scroll.to_bottom",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 7,
+   "seconds": 68.57709002494812,
+   "cost_usd": 0.16665600000000003,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.Preferences, wanted com.apple.Preferences"
+    },
+    {
+     "kind": "element_exists",
+     "passed": true,
+     "detail": "'Developer' found on screen"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788863180.228029
+  },
+  {
+   "task_id": "settings.search.wifi",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 6,
+   "seconds": 45.40280723571777,
+   "cost_usd": 0.1624052,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.Preferences, wanted com.apple.Preferences"
+    },
+    {
+     "kind": "element_exists",
+     "passed": true,
+     "detail": "'Wi-Fi' found on screen"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788863249.998616
+  },
+  {
+   "task_id": "settings.search.battery",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 6,
+   "seconds": 49.039567947387695,
+   "cost_usd": 0.16768560000000002,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.Preferences, wanted com.apple.Preferences"
+    },
+    {
+     "kind": "element_exists",
+     "passed": true,
+     "detail": "'Battery' found on screen"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788863296.619863
+  },
+  {
+   "task_id": "settings.search.bluetooth",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 26,
+   "seconds": 199.32292985916138,
+   "cost_usd": 0.5270038000000001,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.Preferences, wanted com.apple.Preferences"
+    },
+    {
+     "kind": "element_exists",
+     "passed": true,
+     "detail": "'Bluetooth' found on screen"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788863346.9306722
+  },
+  {
+   "task_id": "settings.search.storage",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 5,
+   "seconds": 30.842190980911255,
+   "cost_usd": 0.1418784,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.Preferences, wanted com.apple.Preferences"
+    },
+    {
+     "kind": "element_exists",
+     "passed": true,
+     "detail": "'Storage' found on screen"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788863547.420217
+  },
+  {
+   "task_id": "settings.software_update.reach",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 8,
+   "seconds": 49.17094087600708,
+   "cost_usd": 0.17609680000000003,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.Preferences, wanted com.apple.Preferences"
+    },
+    {
+     "kind": "element_exists",
+     "passed": true,
+     "detail": "'Software Update' found on screen"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788863579.441065
+  },
+  {
+   "task_id": "settings.storage.reach",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 7,
+   "seconds": 38.267810106277466,
+   "cost_usd": 0.15961720000000001,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.Preferences, wanted com.apple.Preferences"
+    },
+    {
+     "kind": "element_exists",
+     "passed": true,
+     "detail": "'iPhone Storage' found on screen"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788863672.2816489
+  },
+  {
+   "task_id": "settings.textsize.reach",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 23,
+   "seconds": 179.25179314613342,
+   "cost_usd": 0.4023704,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.Preferences, wanted com.apple.Preferences"
+    },
+    {
+     "kind": "regex_on_screen",
+     "passed": true,
+     "detail": "pattern 'Larger Text|Larger Accessibility Sizes|Text Size' matched"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788863764.8751628
+  },
+  {
+   "task_id": "settings.wifi.switch_visible",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 4,
+   "seconds": 29.08041501045227,
+   "cost_usd": 0.12829859999999998,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.Preferences, wanted com.apple.Preferences"
+    },
+    {
+     "kind": "element_exists",
+     "passed": true,
+     "detail": "'Wi-Fi' found on screen"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788863945.2493482
+  },
+  {
+   "task_id": "system.appstore.open",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 3,
+   "seconds": 21.61865210533142,
+   "cost_usd": 0.10811559999999999,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.AppStore, wanted com.apple.AppStore"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788864079.732576
+  },
+  {
+   "task_id": "system.notifications.open",
+   "model": "claude-sonnet-5",
+   "passed": false,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 24,
+   "seconds": 231.84355115890503,
+   "cost_usd": 0.5193106,
+   "checks": [
+    {
+     "kind": "regex_on_screen",
+     "passed": false,
+     "detail": "pattern 'Clear|No Notifications|Notification Cent|Older Notifications' did not match"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788866805.233388
+  },
+  {
+   "task_id": "system.spotlight.find_app",
+   "model": "claude-sonnet-5",
+   "passed": true,
+   "skipped": false,
+   "skip_reason": "",
+   "turns": 7,
+   "seconds": 53.88821816444397,
+   "cost_usd": 0.1849308,
+   "checks": [
+    {
+     "kind": "foreground_app",
+     "passed": true,
+     "detail": "foreground is com.apple.calculator, wanted com.apple.calculator"
+    }
+   ],
+   "scaffold": false,
+   "started_at": 1788867040.176395
+  }
+ ]
+}

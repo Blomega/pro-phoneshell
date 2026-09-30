@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Blolabel &mdash; the iOS agent benchmark</title>
+<meta name="description" content="A benchmark for AI agents that operate a real iPhone. Real device, real apps, graded by the phone itself.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="icon" href="data:image/png;base64,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">
+<link rel="stylesheet" href="/style.css">
+</head><body>
+
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+
+<div class="hero"><div class="wrap inner">
+  <span class="eyebrow">pre-registered &middot; 120 paired runs &middot; physical iPhone, iOS 26</span>
+  <h1>Vision Is Worth<br><span class="grad">100 Points Or Zero.</span><br>Never In Between.</h1>
+  <p class="lede">We gave three frontier models the same task on a real iPhone, once with a
+     screenshot and once without, and varied only where the answer lived. When it was in the
+     accessibility tree the picture changed nothing. When it existed only as pixels, the picture
+     was the entire task.</p>
+  <a class="cta" href="#finding">See the result &rarr;</a>
+  <div class="dots">
+    <span><i style="background:var(--emerald)"></i>30/30 with the image</span>
+    <span><i style="background:var(--red)"></i>0/30 without it</span>
+    <span><i style="background:var(--blue)"></i>p &lt; 0.0001</span>
+  </div>
+</div></div>
+
+<div class="strip">
+  <div class="hi"><b class="num">100%</b><span>with the screenshot</span></div>
+  <div><b class="num">0%</b><span>without it</span></div>
+  <div><b class="num">120</b><span>paired runs</span></div>
+  <div><b class="num">3</b><span>frontier models</span></div>
+  <div><b class="num">+35%</b><span>cost of the image</span></div>
+  <div><b class="num">80</b><span>public tasks</span></div>
+</div>
+
+<div class="wrap">
+
+<section id="finding">
+  <div class="sh"><h2>The result</h2>
+  <p>Every task was run twice by the same model, back to back, with the order alternating. The only
+     thing that differed between the two arms is whether the model was shown the screen.</p></div>
+
+  <div class="scroll"><table>
+    <thead><tr><th>Where the answer lives</th><th class="r">With the image</th>
+      <th class="r">Tree only</th><th class="r">McNemar exact</th></tr></thead>
+    <tbody>
+      <tr><td><b>Only in the pixels</b><br><span class="dim">a word drawn into a picture, no alt text</span></td>
+        <td class="r num"><b>30/30</b><br>
+          <span class="pill p-pass">100%</span></td>
+        <td class="r num"><b>0/30</b><br>
+          <span class="pill p-fail">0%</span></td>
+        <td class="r num"><b>p &lt; 0.0001</b></td></tr>
+      <tr><td><b>In the accessibility tree</b><br><span class="dim">the control: same page, same question</span></td>
+        <td class="r num">29/30<br>
+          <span class="pill p-idle">96%</span></td>
+        <td class="r num">30/30<br>
+          <span class="pill p-idle">100%</span></td>
+        <td class="r num">p = 1.0</td></tr>
+    </tbody></table></div>
+
+  <p class="note" style="margin-top:24px"><b>The interaction is the finding, not the headline
+     number.</b> The control row shows nothing at all. Same pages, same navigation, same question
+     shape, same resolution, same prompt: the only difference is where the answer sits. So the
+     effect cannot be an artifact of the harness, and a model that scores 100% on one row scores
+     zero on the other.</p>
+
+  <h3 style="margin:34px 0 6px">The same effect in every model</h3>
+  <p class="dim" style="margin:0 0 14px;font-size:14px">This is a replication check, not a
+     ranking. The task is deliberately binary, so any model that can read gets everything with the
+     image and nothing without it. Identical numbers are the expected result and the point of
+     them: an effect that varied by model would suggest one model&rsquo;s eyesight rather than a
+     property of the information. For an actual comparison between models see the
+     <a href="#leaderboard">leaderboard</a>.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Model</th><th class="r">With the image</th><th class="r">Tree only</th>
+      <th class="r">p</th></tr></thead><tbody>
+    <tr><td>Gemini 3.1 Pro</td><td class='r num'>10/10</td><td class='r num'>0/10</td><td class='r num'>0.0020</td></tr>
+<tr><td>Kimi K3</td><td class='r num'>10/10</td><td class='r num'>0/10</td><td class='r num'>0.0020</td></tr>
+<tr><td>GPT-5.1</td><td class='r num'>10/10</td><td class='r num'>0/10</td><td class='r num'>0.0020</td></tr>
+    </tbody></table></div>
+
+  <div class="cards" style="margin-top:34px">
+    <div class="card"><span class="n">WHAT IT COSTS</span><h3>+35% per task</h3>
+      <p>Carrying the screenshot is a pure token tax. Step counts were unchanged either way, so
+         the model does not work harder with it, only more expensively.</p></div>
+    <div class="card"><span class="n">THE RULE</span><h3>Send it for rendered content</h3>
+      <p>Not as a global setting. On a labelled screen the image buys nothing; on a map tile, a
+         chart, a book cover or a canvas it is the whole task.</p></div>
+    <div class="card"><span class="n">THE LIMIT</span><h3>This shows existence, not degree</h3>
+      <p>A binary task proves the effect crisply and says nothing about size. On a realistic screen
+         the answer is rarely wholly present or wholly absent, and how much vision is worth in
+         between is not measured here.</p></div>
+    <div class="card"><span class="n">THE CATCH</span><h3>Apple labels its own apps well</h3>
+      <p>Across thirteen first-party screens, eleven were fully described by their tree. Third-party
+         apps are a different story: one chat app returns
+         <code>WAMessageBubbleTableViewCell</code> where a button name should be.</p></div>
+  </div>
+</section>
+
+<section id="method">
+  <div class="sh"><h2>Why you can believe it</h2>
+  <p>An earlier version of this experiment reported that vision was worth nothing, and it was wrong.
+     The image had been downscaled to 235&times;512, so the vision arm was never a test of vision.
+     That retraction is why the method below exists.</p></div>
+  <div class="cards">
+    <div class="card"><span class="n">01 PRE-REGISTERED</span><h3>The analysis was fixed first</h3>
+      <p>The design, the primary endpoint, the minimum detectable effect and the falsification
+         condition were committed to git before the run. The sequence is auditable.</p></div>
+    <div class="card"><span class="n">02 CONTROLLED STIMULUS</span><h3>Not found, built</h3>
+      <p>Ten pages, each with one word in HTML and another rendered into an image. Verified on the
+         device: 0 of 10 image words appear anywhere in the tree, 10 of 10 written words do.</p></div>
+    <div class="card"><span class="n">03 PAIRED AND INTERLEAVED</span><h3>Drift cancels</h3>
+      <p>Each task runs both ways back to back with the order alternating, so device state cannot
+         load onto one arm. A real phone changes underneath you.</p></div>
+  </div>
+</section>
+
+<section id="leaderboard">
+  <div class="sh"><h2>Leaderboard</h2>
+  <p>Every task runs on a physical iPhone. Nothing is simulated, and no human decides whether a
+     run passed.</p></div>
+  <table><thead><tr><th>Model</th><th class='num'>Pass rate</th><th class='num'>Passed</th><th class='num'>Avg steps</th><th class='num'>Avg time</th><th class='num'>Cost/task</th></tr></thead><tbody>
+<tr><td>Kimi K3</td><td class='num'><b>96.6%</b><span class='ci'>95% CI 88–99%</span><div class='bar'><i style='width:96.6%'></i></div></td><td class='num'>56/58</td><td class='num'>5.1</td><td class='num'>66s</td><td class='num'>$0.041</td></tr>
+<tr><td>Gemini 3.1 Pro</td><td class='num'><b>93.1%</b><span class='ci'>95% CI 84–97%</span><div class='bar'><i style='width:93.1%'></i></div></td><td class='num'>54/58</td><td class='num'>4.8</td><td class='num'>47s</td><td class='num'>$0.023</td></tr>
+<tr><td>DeepSeek v3.2</td><td class='num'><b>93.1%</b><span class='ci'>95% CI 84–97%</span><div class='bar'><i style='width:93.1%'></i></div></td><td class='num'>54/58</td><td class='num'>6.7</td><td class='num'>68s</td><td class='num'>$0.003</td></tr>
+<tr><td>GPT-5.1</td><td class='num'><b>91.4%</b><span class='ci'>95% CI 81–96%</span><div class='bar'><i style='width:91.4%'></i></div></td><td class='num'>53/58</td><td class='num'>4.8</td><td class='num'>38s</td><td class='num'>$0.009</td></tr>
+<tr><td>Claude Opus 4.8</td><td class='num'><b>91.4%</b><span class='ci'>95% CI 81–96%</span><div class='bar'><i style='width:91.4%'></i></div></td><td class='num'>53/58</td><td class='num'>4.4</td><td class='num'>47s</td><td class='num'>$0.076</td></tr>
+<tr><td>Qwen3-Max</td><td class='num'><b>89.7%</b><span class='ci'>95% CI 79–95%</span><div class='bar'><i style='width:89.7%'></i></div></td><td class='num'>52/58</td><td class='num'>5.6</td><td class='num'>43s</td><td class='num'>$0.007</td></tr>
+</tbody></table>
+  
+  <div class="warn" style="margin-top:26px"><b>None of the 15 pairs of models on this board separate.</b> Every model ran the same 58 tasks, which makes this a paired comparison, and not one pair reaches p&lt;0.05 under McNemar’s exact test. The order of the table above is sorted, not ranked. The widest gap on the board would need about <b>80 tasks</b> to reach significance, against the 58 it has.</div>
+  <div class="sh" style="margin-top:34px"><h3>Every pair, tested</h3>
+  <p class="dim">Wins are counted only on tasks where the two models disagreed;
+     tasks they both passed or both failed carry no information about which is
+     better. The last column holds each pair’s observed disagreement rate
+     fixed and asks how large the suite would have to be for that gap to be
+     real.</p></div>
+  <table class="pairs"><thead><tr><th>Pair</th><th class="num">Wins</th>
+  <th class="num">p</th><th class="num">Tasks needed</th></tr></thead>
+  <tbody><tr><td>Kimi K3 <span class='ns'>vs</span> Qwen3-Max</td><td class='num'>4–0</td><td class='num'>0.12</td><td class='num'>80 tasks</td></tr><tr><td>Kimi K3 <span class='ns'>vs</span> Claude Opus 4.8</td><td class='num'>3–0</td><td class='num'>0.25</td><td class='num'>107 tasks</td></tr><tr><td>Kimi K3 <span class='ns'>vs</span> GPT-5.1</td><td class='num'>3–0</td><td class='num'>0.25</td><td class='num'>107 tasks</td></tr><tr><td>Kimi K3 <span class='ns'>vs</span> Gemini 3.1 Pro</td><td class='num'>2–0</td><td class='num'>0.50</td><td class='num'>160 tasks</td></tr><tr><td>Kimi K3 <span class='ns'>vs</span> DeepSeek v3.2</td><td class='num'>3–1</td><td class='num'>0.62</td><td class='num'>242 tasks</td></tr><tr><td>DeepSeek v3.2 <span class='ns'>vs</span> Qwen3-Max</td><td class='num'>3–1</td><td class='num'>0.62</td><td class='num'>242 tasks</td></tr><tr><td>Gemini 3.1 Pro <span class='ns'>vs</span> Qwen3-Max</td><td class='num'>3–1</td><td class='num'>0.62</td><td class='num'>242 tasks</td></tr><tr><td>Gemini 3.1 Pro <span class='ns'>vs</span> Claude Opus 4.8</td><td class='num'>2–1</td><td class='num'>1.00</td><td class='num'>711 tasks</td></tr><tr><td>Gemini 3.1 Pro <span class='ns'>vs</span> GPT-5.1</td><td class='num'>2–1</td><td class='num'>1.00</td><td class='num'>711 tasks</td></tr><tr><td>DeepSeek v3.2 <span class='ns'>vs</span> Claude Opus 4.8</td><td class='num'>3–2</td><td class='num'>1.00</td><td class='num'>1170 tasks</td></tr><tr><td>DeepSeek v3.2 <span class='ns'>vs</span> GPT-5.1</td><td class='num'>3–2</td><td class='num'>1.00</td><td class='num'>1170 tasks</td></tr><tr><td>Claude Opus 4.8 <span class='ns'>vs</span> Qwen3-Max</td><td class='num'>3–2</td><td class='num'>1.00</td><td class='num'>1170 tasks</td></tr><tr><td>GPT-5.1 <span class='ns'>vs</span> Qwen3-Max</td><td class='num'>3–2</td><td class='num'>1.00</td><td class='num'>1170 tasks</td></tr><tr><td>DeepSeek v3.2 <span class='ns'>vs</span> Gemini 3.1 Pro</td><td class='num'>2–2</td><td class='num'>1.00</td><td class='num'><span class='ns'>never: the wins are symmetric</span></td></tr><tr><td>Claude Opus 4.8 <span class='ns'>vs</span> GPT-5.1</td><td class='num'>2–2</td><td class='num'>1.00</td><td class='num'><span class='ns'>never: the wins are symmetric</span></td></tr></tbody></table>
+  <p class="note" style="margin-top:22px">Of the 58 tasks,
+     <b>46</b> were passed by every model and <b>1</b>
+     by none. Only <b>11</b> tell the models apart, so 
+     81% of the suite is
+     measuring nothing. Harder tasks, not more models, is what this benchmark
+     needs next.</p>
+  <p class="note" style="margin-top:22px">A task passes only if the phone itself ends in the
+     required state. What the agent <em>says</em> it did counts for nothing: an agent that reports
+     &ldquo;I have enabled that setting&rdquo; and an agent that enabled it are different things,
+     and only the second one passes.</p>
+</section>
+
+<section id="capabilities">
+  <div class="sh"><h2>What it measures</h2>
+  <p>A pass rate says how often a model succeeded. This says at what. Each capability is isolated
+     by at least one short task, so a failure names a missing skill instead of pointing vaguely at
+     a long task that went wrong somewhere in the middle.</p></div>
+  <div class="scroll"><table><thead><tr><th>Capability</th><th>What it takes</th><th class='num'>Tasks</th><th class='num'>Passed</th></tr></thead><tbody>
+<tr><td><code>app-resolve</code></td><td class='dim'>turning a spoken app name into the right bundle id</td><td class='num'>1</td><td class='num'>1/1</td></tr>
+<tr><td><code>back</code></td><td class='dim'>leaving a screen when the way out has no label</td><td class='num'>1</td><td class='num'>1/1</td></tr>
+<tr><td><code>context-menu</code></td><td class='dim'>holding a link until its preview menu opens</td><td class='num'>1</td><td class='num'>1/1</td></tr>
+<tr><td><code>date-navigate</code></td><td class='dim'>moving around a calendar rather than a list</td><td class='num'>1</td><td class='num'>1/1</td></tr>
+<tr><td><code>edge-gesture</code></td><td class='dim'>a swipe that must start at y=0, off the drawn screen</td><td class='num'>1</td><td class='num'>0/1</td></tr>
+<tr><td><code>hierarchy</code></td><td class='dim'>going up, not just down, through nested screens</td><td class='num'>4</td><td class='num'>4/4</td></tr>
+<tr><td><code>icon-only-control</code></td><td class='dim'>a control with a glyph and no text to match on</td><td class='num'>1</td><td class='num'>1/1</td></tr>
+<tr><td><code>lifecycle</code></td><td class='dim'>launching, backgrounding and returning to an app</td><td class='num'>2</td><td class='num'>2/2</td></tr>
+<tr><td><code>picker</code></td><td class='dim'>reaching a spinning wheel</td><td class='num'>1</td><td class='num'>1/1</td></tr>
+<tr><td><code>picker-multi</code></td><td class='dim'>addressing the right column when several are side by side</td><td class='num'>1</td><td class='num'>1/1</td></tr>
+<tr><td><code>picker-set</code></td><td class='dim'>turning a wheel to a value, which a swipe cannot do</td><td class='num'>2</td><td class='num'>2/2</td></tr>
+<tr><td><code>precise-taps</code></td><td class='dim'>hitting small targets laid out in a grid</td><td class='num'>1</td><td class='num'>1/1</td></tr>
+<tr><td><code>read-field</code></td><td class='dim'>reading a value back off the screen, not guessing it</td><td class='num'>2</td><td class='num'>2/2</td></tr>
+<tr><td><code>recover</code></td><td class='dim'>noticing the wrong app is open and fixing it</td><td class='num'>1</td><td class='num'>1/1</td></tr>
+<tr><td><code>render-dependent</code></td><td class='dim'></td><td class='num'>10</td><td class='num'><span class='dim'>-</span></td></tr>
+<tr><td><code>scroll-end</code></td><td class='dim'>reaching something below the fold</td><td class='num'>1</td><td class='num'>1/1</td></tr>
+<tr><td><code>search-then-act</code></td><td class='dim'>using an app&#x27;s own search instead of navigating</td><td class='num'>5</td><td class='num'>5/5</td></tr>
+<tr><td><code>slider</code></td><td class='dim'>reaching a continuous control</td><td class='num'>1</td><td class='num'>1/1</td></tr>
+<tr><td><code>switch</code></td><td class='dim'>reading and setting a toggle</td><td class='num'>1</td><td class='num'>1/1</td></tr>
+<tr><td><code>tabbar</code></td><td class='dim'>moving between tabs in an unfamiliar app</td><td class='num'>3</td><td class='num'>3/3</td></tr>
+<tr><td><code>text-exact</code></td><td class='dim'>typing a string that must match character for character</td><td class='num'>1</td><td class='num'>1/1</td></tr>
+<tr><td><code>text-long</code></td><td class='dim'>typing something long enough for autocorrect to interfere</td><td class='num'>1</td><td class='num'>1/1</td></tr>
+<tr><td><code>text-select</code></td><td class='dim'>selecting text that is already on screen</td><td class='num'>1</td><td class='num'>1/1</td></tr>
+<tr><td><code>tree-sufficient</code></td><td class='dim'></td><td class='num'>10</td><td class='num'><span class='dim'>-</span></td></tr>
+</tbody></table></div>
+</section>
+
+<section id="anatomy">
+  <div class="sh"><h2>How a task works</h2>
+  <p>Three parts. The first and the third involve no model at all, which is what makes a score
+     reproducible.</p></div>
+  <div class="cards">
+    <div class="card"><span class="n">01 SETUP</span><h3>Put the phone in a known state</h3>
+      <p>Deterministic steps, no model involved, so every attempt starts identically.</p></div>
+    <div class="card"><span class="n">02 INSTRUCTION</span><h3>Hand over one sentence</h3>
+      <p>The agent sees an accessibility tree and a screenshot, and acts with taps, typing,
+         gestures and picker wheels.</p></div>
+    <div class="card"><span class="n">03 CHECKS</span><h3>Ask the phone, not the agent</h3>
+      <p>Assertions read the device directly and decide pass or fail. The agent never sees them.</p></div>
+  </div>
+  <p style="margin:26px 0 14px;color:var(--muted)">A complete task, exactly as it is stored in the
+     repository:</p>
+  <pre><code>id: calculator.arithmetic
+name: Do arithmetic in the Calculator
+app: com.apple.calculator
+difficulty: easy
+tags:
+- calculator
+- input
+- first-party
+instruction: Open the Calculator app and compute 47 multiplied by 9. Leave the result on screen.
+setup:
+- terminate: com.apple.calculator
+- home
+checks:
+- kind: foreground_app
+  text: com.apple.calculator
+- kind: regex_on_screen
+  text: \b423\b
+teardown:
+- terminate: com.apple.calculator
+notes: A precise sequence of taps where every one must land. 47x9=423.
+</code></pre>
+</section>
+
+<section id="tasks">
+  <div class="sh"><h2>The 80 public tasks</h2>
+  <p>15 easy, 58 medium, 7 hard, all
+     against Apple&rsquo;s own applications: Settings, Safari, Notes, Reminders, Clock, Calculator,
+     Contacts, Maps, Calendar, Files, Books, Compass, Shortcuts, Voice Memos and the home screen
+     itself. No third-party app is automated, so no third party&rsquo;s terms are involved.</p>
+  <p class="note">These are 80 of 96. 16 are held back and are in
+     neither the public repository nor its history: a benchmark whose entire answer key is public
+     becomes training data, and the score then measures memorisation rather than capability. The
+     public 80 cover all 24 capabilities, so a score over them is comparable between
+     models and you can run the whole thing today. <b>Steps and time</b> in the table come from the
+     single-model reference run; <b>solved by</b> comes from the 6-model sweep, which has
+     so far covered 58 of these tasks.</p></div>
+  <div class="scroll"><table><thead><tr><th>Task</th><th>App</th><th>Difficulty</th><th class='num'>Checks</th><th class='num'>Steps</th><th class='num'>Time</th><th class='num'>Solved by</th></tr></thead><tbody>
+<tr><td><code>books.search</code><br><span class='dim'>Open the Books app and search for &#x27;Moby Dick&#x27;.</span></td><td>iBooks</td><td>medium</td><td class='num'>2</td><td class='num'>6</td><td class='num'>55s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>calculator.arithmetic</code><br><span class='dim'>Open the Calculator app and compute 47 multiplied by 9. Leave the result on screen.</span></td><td>calculator</td><td>easy</td><td class='num'>2</td><td class='num'>9</td><td class='num'>44s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>calculator.chain</code><br><span class='dim'>Open the Calculator and compute (12 plus 8) multiplied by 5. Leave the answer on screen.</span></td><td>calculator</td><td>medium</td><td class='num'>1</td><td class='num'>12</td><td class='num'>80s</td><td class='num'><span class=''>5/6</span><div class='bar-mini'><i style='width:83%'></i></div></td></tr>
+<tr><td><code>calculator.percentage</code><br><span class='dim'>Open the Calculator and work out what 15 percent of 240 is. Leave the answer on screen.</span></td><td>calculator</td><td>medium</td><td class='num'>2</td><td class='num'>11</td><td class='num'>63s</td><td class='num'><span class=''>5/6</span><div class='bar-mini'><i style='width:83%'></i></div></td></tr>
+<tr><td><code>calendar.month_view</code><br><span class='dim'>Open the Calendar app and switch it to the month view, showing a whole month at once.</span></td><td>mobilecal</td><td>medium</td><td class='num'>2</td><td class='num'>3</td><td class='num'>25s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>calendar.today</code><br><span class='dim'>Open the Calendar app and make sure it is showing today.</span></td><td>mobilecal</td><td>easy</td><td class='num'>2</td><td class='num'>3</td><td class='num'>19s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>clock.alarm.reach_picker</code><br><span class='dim'>Open the Clock app, go to Alarms, and start adding a new alarm so the time picker is sho</span></td><td>mobiletimer</td><td>medium</td><td class='num'>2</td><td class='num'>4</td><td class='num'>53s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>clock.alarm.set_time</code><br><span class='dim'>Open the Clock app, go to Alarms, start adding a new alarm and set its time to 7:30 in t</span></td><td>mobiletimer</td><td>hard</td><td class='num'>4</td><td class='num'>6</td><td class='num'>187s</td><td class='num'><span class=''>5/6</span><div class='bar-mini'><i style='width:83%'></i></div></td></tr>
+<tr><td><code>clock.stopwatch.start</code><br><span class='dim'>Open the Clock app, go to the Stopwatch tab and start it.</span></td><td>mobiletimer</td><td>easy</td><td class='num'>2</td><td class='num'>4</td><td class='num'>48s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>clock.tab.alarms</code><br><span class='dim'>Open the Clock app and switch to the Alarms tab.</span></td><td>mobiletimer</td><td>easy</td><td class='num'>2</td><td class='num'>3</td><td class='num'>39s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>clock.tab.timers</code><br><span class='dim'>Open the Clock app and switch to the Timers tab.</span></td><td>mobiletimer</td><td>easy</td><td class='num'>2</td><td class='num'>4</td><td class='num'>39s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>clock.timer.set</code><br><span class='dim'>Open the Clock app and start a timer for 5 minutes.</span></td><td>mobiletimer</td><td>medium</td><td class='num'>2</td><td class='num'>5</td><td class='num'>53s</td><td class='num'><span class=''>1/6</span><div class='bar-mini'><i style='width:16%'></i></div></td></tr>
+<tr><td><code>clock.timer.set_hours_minutes</code><br><span class='dim'>Open the Clock app, go to Timers, and set the timer to 1 hour and 30 minutes. Do not sta</span></td><td>mobiletimer</td><td>hard</td><td class='num'>3</td><td class='num'>7</td><td class='num'>74s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>clock.timer.set_minutes</code><br><span class='dim'>Open the Clock app, go to Timers, and set the timer duration to 5 minutes. Do not start </span></td><td>mobiletimer</td><td>medium</td><td class='num'>2</td><td class='num'>6</td><td class='num'>52s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>clock.worldclock.tab</code><br><span class='dim'>Open the Clock app and switch to the World Clock tab.</span></td><td>mobiletimer</td><td>easy</td><td class='num'>2</td><td class='num'>4</td><td class='num'>48s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>compass.read_heading</code><br><span class='dim'>Open the Compass app and tell me which direction the phone is pointing.</span></td><td>compass</td><td>medium</td><td class='num'>2</td><td class='num'>3</td><td class='num'>21s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>contacts.search</code><br><span class='dim'>Open Contacts and use its search field to search for the letter &#x27;a&#x27;. Stop once results s</span></td><td>MobileAddressBook</td><td>medium</td><td class='num'>2</td><td class='num'>5</td><td class='num'>41s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>files.browse_tab</code><br><span class='dim'>Open the Files app and go to its Browse tab.</span></td><td>DocumentsApp</td><td>easy</td><td class='num'>2</td><td class='num'>4</td><td class='num'>30s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>maps.search_place</code><br><span class='dim'>Open Maps and search for the Eiffel Tower. Stop once the search results show it.</span></td><td>Maps</td><td>medium</td><td class='num'>2</td><td class='num'>5</td><td class='num'>47s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>measure.open</code><br><span class='dim'>Open the Measure app.</span></td><td>measure</td><td>easy</td><td class='num'>1</td><td class='num'>3</td><td class='num'>25s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>multi.app_switch</code><br><span class='dim'>Open the Calculator, then open Safari, then go back to the Calculator.</span></td><td>springboard</td><td>medium</td><td class='num'>1</td><td class='num'>5</td><td class='num'>39s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>multi.return_after_detour</code><br><span class='dim'>Open the Calculator, then open Notes, then come back to the Calculator.</span></td><td>calculator</td><td>hard</td><td class='num'>1</td><td class='num'>5</td><td class='num'>31s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>multi.three_apps</code><br><span class='dim'>Open the Calculator, then the Clock, then Settings. End on Settings.</span></td><td>springboard</td><td>medium</td><td class='num'>1</td><td class='num'>5</td><td class='num'>45s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>notes.create_titled</code><br><span class='dim'>Open the Notes app and create a new note whose first line is exactly &quot;phoneshell benchma</span></td><td>mobilenotes</td><td>medium</td><td class='num'>2</td><td class='num'>7</td><td class='num'>46s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>notes.search</code><br><span class='dim'>Open Notes and use search to find the note containing the words &#x27;phoneshell benchmark&#x27;.</span></td><td>mobilenotes</td><td>medium</td><td class='num'>2</td><td class='num'>9</td><td class='num'>56s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>notes.text_select</code><br><span class='dim'>Open Notes, create a new note, type the word &#x27;anchor&#x27;, then long press that word so the </span></td><td>mobilenotes</td><td>hard</td><td class='num'>2</td><td class='num'>10</td><td class='num'>101s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>notes.type_long</code><br><span class='dim'>Open Notes, create a new note, and type: the quick brown fox jumps over the lazy dog nin</span></td><td>mobilenotes</td><td>medium</td><td class='num'>2</td><td class='num'>6</td><td class='num'>45s</td><td class='num'><span class=''>5/6</span><div class='bar-mini'><i style='width:83%'></i></div></td></tr>
+<tr><td><code>notes.type_punctuation</code><br><span class='dim'>Open Notes, create a new note, and type exactly: benchmark-test (v2).</span></td><td>mobilenotes</td><td>medium</td><td class='num'>2</td><td class='num'>6</td><td class='num'>36s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>probe.image.eight</code><br><span class='dim'>Open https://blolabel.ai/probe/eight/ and tell me the word shown in the picture.</span></td><td>mobilesafari</td><td>medium</td><td class='num'>2</td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>not swept</span></td></tr>
+<tr><td><code>probe.image.five</code><br><span class='dim'>Open https://blolabel.ai/probe/five/ and tell me the word shown in the picture.</span></td><td>mobilesafari</td><td>medium</td><td class='num'>2</td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>not swept</span></td></tr>
+<tr><td><code>probe.image.four</code><br><span class='dim'>Open https://blolabel.ai/probe/four/ and tell me the word shown in the picture.</span></td><td>mobilesafari</td><td>medium</td><td class='num'>2</td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>not swept</span></td></tr>
+<tr><td><code>probe.image.nine</code><br><span class='dim'>Open https://blolabel.ai/probe/nine/ and tell me the word shown in the picture.</span></td><td>mobilesafari</td><td>medium</td><td class='num'>2</td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>not swept</span></td></tr>
+<tr><td><code>probe.image.one</code><br><span class='dim'>Open https://blolabel.ai/probe/one/ and tell me the word shown in the picture.</span></td><td>mobilesafari</td><td>medium</td><td class='num'>2</td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>not swept</span></td></tr>
+<tr><td><code>probe.image.seven</code><br><span class='dim'>Open https://blolabel.ai/probe/seven/ and tell me the word shown in the picture.</span></td><td>mobilesafari</td><td>medium</td><td class='num'>2</td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>not swept</span></td></tr>
+<tr><td><code>probe.image.six</code><br><span class='dim'>Open https://blolabel.ai/probe/six/ and tell me the word shown in the picture.</span></td><td>mobilesafari</td><td>medium</td><td class='num'>2</td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>not swept</span></td></tr>
+<tr><td><code>probe.image.ten</code><br><span class='dim'>Open https://blolabel.ai/probe/ten/ and tell me the word shown in the picture.</span></td><td>mobilesafari</td><td>medium</td><td class='num'>2</td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>not swept</span></td></tr>
+<tr><td><code>probe.image.three</code><br><span class='dim'>Open https://blolabel.ai/probe/three/ and tell me the word shown in the picture.</span></td><td>mobilesafari</td><td>medium</td><td class='num'>2</td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>not swept</span></td></tr>
+<tr><td><code>probe.image.two</code><br><span class='dim'>Open https://blolabel.ai/probe/two/ and tell me the word shown in the picture.</span></td><td>mobilesafari</td><td>medium</td><td class='num'>2</td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>not swept</span></td></tr>
+<tr><td><code>probe.text.eight</code><br><span class='dim'>Open https://blolabel.ai/probe/eight/ and tell me the written word.</span></td><td>mobilesafari</td><td>medium</td><td class='num'>2</td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>not swept</span></td></tr>
+<tr><td><code>probe.text.five</code><br><span class='dim'>Open https://blolabel.ai/probe/five/ and tell me the written word.</span></td><td>mobilesafari</td><td>medium</td><td class='num'>2</td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>not swept</span></td></tr>
+<tr><td><code>probe.text.four</code><br><span class='dim'>Open https://blolabel.ai/probe/four/ and tell me the written word.</span></td><td>mobilesafari</td><td>medium</td><td class='num'>2</td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>not swept</span></td></tr>
+<tr><td><code>probe.text.nine</code><br><span class='dim'>Open https://blolabel.ai/probe/nine/ and tell me the written word.</span></td><td>mobilesafari</td><td>medium</td><td class='num'>2</td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>not swept</span></td></tr>
+<tr><td><code>probe.text.one</code><br><span class='dim'>Open https://blolabel.ai/probe/one/ and tell me the written word.</span></td><td>mobilesafari</td><td>medium</td><td class='num'>2</td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>not swept</span></td></tr>
+<tr><td><code>probe.text.seven</code><br><span class='dim'>Open https://blolabel.ai/probe/seven/ and tell me the written word.</span></td><td>mobilesafari</td><td>medium</td><td class='num'>2</td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>not swept</span></td></tr>
+<tr><td><code>probe.text.six</code><br><span class='dim'>Open https://blolabel.ai/probe/six/ and tell me the written word.</span></td><td>mobilesafari</td><td>medium</td><td class='num'>2</td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>not swept</span></td></tr>
+<tr><td><code>probe.text.ten</code><br><span class='dim'>Open https://blolabel.ai/probe/ten/ and tell me the written word.</span></td><td>mobilesafari</td><td>medium</td><td class='num'>2</td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>not swept</span></td></tr>
+<tr><td><code>probe.text.three</code><br><span class='dim'>Open https://blolabel.ai/probe/three/ and tell me the written word.</span></td><td>mobilesafari</td><td>medium</td><td class='num'>2</td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>not swept</span></td></tr>
+<tr><td><code>probe.text.two</code><br><span class='dim'>Open https://blolabel.ai/probe/two/ and tell me the written word.</span></td><td>mobilesafari</td><td>medium</td><td class='num'>2</td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>not swept</span></td></tr>
+<tr><td><code>reminders.create</code><br><span class='dim'>Open Reminders and add a new reminder called &#x27;collect parcel&#x27;.</span></td><td>reminders</td><td>medium</td><td class='num'>2</td><td class='num'>6</td><td class='num'>52s</td><td class='num'><span class=''>1/6</span><div class='bar-mini'><i style='width:16%'></i></div></td></tr>
+<tr><td><code>resilience.deep_start</code><br><span class='dim'>Open Safari and go to example.com</span></td><td>mobilesafari</td><td>medium</td><td class='num'>1</td><td class='num'>3</td><td class='num'>29s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>resilience.scrolled_list</code><br><span class='dim'>In Settings, open the General page.</span></td><td>Preferences</td><td>medium</td><td class='num'>2</td><td class='num'>5</td><td class='num'>43s</td><td class='num'><span class=''>5/6</span><div class='bar-mini'><i style='width:83%'></i></div></td></tr>
+<tr><td><code>resilience.wrong_app</code><br><span class='dim'>Go to the Settings page for Display and Brightness.</span></td><td>Preferences</td><td>medium</td><td class='num'>2</td><td class='num'>13</td><td class='num'>69s</td><td class='num'><span class=''>5/6</span><div class='bar-mini'><i style='width:83%'></i></div></td></tr>
+<tr><td><code>safari.link_menu</code><br><span class='dim'>Open Safari, go to example.com, and long press the &#x27;More information...&#x27; link until its </span></td><td>mobilesafari</td><td>hard</td><td class='num'>2</td><td class='num'>4</td><td class='num'>32s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>safari.navigate.example</code><br><span class='dim'>Open Safari and go to example.com</span></td><td>mobilesafari</td><td>easy</td><td class='num'>2</td><td class='num'>3</td><td class='num'>40s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>safari.tabs.open_switcher</code><br><span class='dim'>Open Safari and show the tab switcher, where all the open tabs are listed.</span></td><td>mobilesafari</td><td>medium</td><td class='num'>2</td><td class='num'>4</td><td class='num'>27s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>safari.read.heading</code><br><span class='dim'>Open Safari, go to example.com, and tell me the exact heading shown on that page.</span></td><td>mobilesafari</td><td>medium</td><td class='num'>1</td><td class='num'>3</td><td class='num'>22s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>safari.search.web</code><br><span class='dim'>Open Safari and search the web for &#x27;iso 8601 date format&#x27;. Stop once results are showing</span></td><td>mobilesafari</td><td>medium</td><td class='num'>2</td><td class='num'>5</td><td class='num'>37s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>settings.about.reach</code><br><span class='dim'>Open Settings and navigate to the About page that shows the iPhone&#x27;s model number.</span></td><td>Preferences</td><td>easy</td><td class='num'>2</td><td class='num'>6</td><td class='num'>38s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>settings.about.serial</code><br><span class='dim'>Open Settings and find the About page, then tell me the Model Number of this iPhone.</span></td><td>Preferences</td><td>medium</td><td class='num'>2</td><td class='num'>6</td><td class='num'>40s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>settings.accessibility.reach</code><br><span class='dim'>Open Settings and go to the Accessibility page.</span></td><td>Preferences</td><td>easy</td><td class='num'>2</td><td class='num'>23</td><td class='num'>109s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>settings.back.twice</code><br><span class='dim'>Open Settings, go into General, then into About, then go back to the main Settings list.</span></td><td>Preferences</td><td>medium</td><td class='num'>3</td><td class='num'>9</td><td class='num'>78s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>settings.battery.percentage</code><br><span class='dim'>Open Settings, go to the Battery screen, and tell me the current battery percentage.</span></td><td>Preferences</td><td>medium</td><td class='num'>2</td><td class='num'>11</td><td class='num'>55s</td><td class='num'><span class=''>4/6</span><div class='bar-mini'><i style='width:66%'></i></div></td></tr>
+<tr><td><code>settings.bluetooth.reach</code><br><span class='dim'>Open Settings and go to the Bluetooth page.</span></td><td>Preferences</td><td>easy</td><td class='num'>2</td><td class='num'>4</td><td class='num'>26s</td><td class='num'><span class=''>5/6</span><div class='bar-mini'><i style='width:83%'></i></div></td></tr>
+<tr><td><code>settings.datetime.reach</code><br><span class='dim'>Open Settings and navigate to the Date &amp; Time page under General.</span></td><td>Preferences</td><td>medium</td><td class='num'>2</td><td class='num'>10</td><td class='num'>68s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>settings.fonts.reach</code><br><span class='dim'>Open Settings and navigate to the Fonts page under General.</span></td><td>Preferences</td><td>medium</td><td class='num'>2</td><td class='num'>7</td><td class='num'>61s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>settings.keyboard.reach</code><br><span class='dim'>Open Settings and navigate to the Keyboard page under General.</span></td><td>Preferences</td><td>medium</td><td class='num'>2</td><td class='num'>8</td><td class='num'>71s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>settings.scroll.to_bottom</code><br><span class='dim'>Open Settings and scroll all the way to the very bottom of the main settings list.</span></td><td>Preferences</td><td>medium</td><td class='num'>2</td><td class='num'>7</td><td class='num'>69s</td><td class='num'><span class=''>5/6</span><div class='bar-mini'><i style='width:83%'></i></div></td></tr>
+<tr><td><code>settings.search.wifi</code><br><span class='dim'>Open Settings and use its search field to search for &quot;Wi-Fi&quot;, then open the Wi-Fi settin</span></td><td>Preferences</td><td>medium</td><td class='num'>2</td><td class='num'>6</td><td class='num'>45s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>settings.search.battery</code><br><span class='dim'>Open Settings, search for &quot;Battery&quot; using the search field, and open the Battery page fr</span></td><td>Preferences</td><td>medium</td><td class='num'>2</td><td class='num'>6</td><td class='num'>49s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>settings.search.bluetooth</code><br><span class='dim'>Open Settings, search for &quot;Bluetooth&quot; using the search field, and open the Bluetooth pag</span></td><td>Preferences</td><td>medium</td><td class='num'>2</td><td class='num'>26</td><td class='num'>199s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>settings.search.storage</code><br><span class='dim'>Open Settings, search for &quot;Storage&quot; using the search field, and open the Storage page fr</span></td><td>Preferences</td><td>medium</td><td class='num'>2</td><td class='num'>5</td><td class='num'>31s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>settings.software_update.reach</code><br><span class='dim'>Open Settings and navigate to the Software Update screen. Do not install anything.</span></td><td>Preferences</td><td>medium</td><td class='num'>2</td><td class='num'>8</td><td class='num'>49s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>settings.storage.reach</code><br><span class='dim'>Open Settings and navigate to the iPhone Storage screen that shows how much space is use</span></td><td>Preferences</td><td>medium</td><td class='num'>2</td><td class='num'>7</td><td class='num'>38s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>settings.textsize.reach</code><br><span class='dim'>In Settings, reach the screen with the slider that makes text larger. Do not change it.</span></td><td>Preferences</td><td>hard</td><td class='num'>2</td><td class='num'>23</td><td class='num'>179s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>settings.wifi.switch_visible</code><br><span class='dim'>Open Settings and go to the Wi-Fi page.</span></td><td>Preferences</td><td>easy</td><td class='num'>2</td><td class='num'>4</td><td class='num'>29s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>system.appstore.open</code><br><span class='dim'>Open the App Store app. Do not download anything.</span></td><td>AppStore</td><td>easy</td><td class='num'>1</td><td class='num'>3</td><td class='num'>22s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>system.notifications.open</code><br><span class='dim'>Open the iPhone&#x27;s Notification Centre.</span></td><td>springboard</td><td>hard</td><td class='num'>1</td><td class='num'>24</td><td class='num'>232s</td><td class='num'><span class='fail'>0/6</span><div class='bar-mini'><i style='width:0%'></i></div></td></tr>
+<tr><td><code>system.spotlight.find_app</code><br><span class='dim'>Using the iPhone&#x27;s own search (Spotlight), find the Calculator app and open it.</span></td><td>springboard</td><td>medium</td><td class='num'>1</td><td class='num'>7</td><td class='num'>54s</td><td class='num'><span class='pass'>6/6</span><div class='bar-mini'><i style='width:100%'></i></div></td></tr>
+<tr><td><code>weather.open</code><br><span class='dim'>Open the Weather app.</span></td><td>weather</td><td>easy</td><td class='num'>1</td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim' title='com.apple.weather is not installed on this phone'>not scored</span></td></tr>
+<tr><td><code>weather.read_temperature</code><br><span class='dim'>Open the Weather app and tell me the current temperature where I am.</span></td><td>weather</td><td>medium</td><td class='num'>2</td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim'>-</span></td><td class='num'><span class='dim' title='com.apple.weather is not installed on this phone'>not scored</span></td></tr>
+</tbody></table></div>
+</section>
+
+<section id="run">
+  <div class="sh"><h2>Run it yourself</h2>
+  <p>A Mac, an iPhone, a cable and an Apple developer account. The harness builds and installs the
+     automation runner onto the phone for you.</p></div>
+  <pre><code>git clone https://github.com/Blomega/phoneshell
+cd phoneshell
+bin/phoneshell doctor      # tells you exactly what is missing
+bin/phoneshell setup       # builds and installs the runner on your iPhone
+bin/phoneshell up          # brings the bridge up
+
+bin/phoneshell bench --list
+bin/phoneshell bench --model claude-sonnet-5</code></pre>
+  <p class="note" style="margin-top:22px">Or skip the hardware entirely. Every task definition and
+     every scored run on this page is published as a dataset at
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">
+     huggingface.co/datasets/blolabel/phoneshell-bench</a>, including the paired runs behind the
+     result above, so the statistics can be recomputed from source rather than taken on trust.</p>
+</section>
+
+<section>
+  <div class="sh"><h2>Who this is for</h2></div>
+  <div class="cards">
+    <div class="card"><h3>Teams running agents against real iPhones</h3>
+      <p>The harness is free and open. What breaks it is not your code: it is an iOS point release,
+         an Xcode update or a change in WebDriverAgent, any of which can stop the bridge working on
+         a Tuesday morning. We keep a tested build working and there is a person to call.</p></div>
+    <div class="card"><h3>Flows a device farm cannot run</h3>
+      <p>Cloud farms give you clean, ephemeral phones. Some things need a real handset: an OTP to a
+         real SIM, a payment through a local wallet, region-locked content, an account with history
+         behind it.</p></div>
+    <div class="card"><h3>Labs training phone-use models</h3>
+      <p>Every published mobile-agent number is Android, because Android runs in software and iOS
+         does not. If you want your model measured on iOS rather than assumed to transfer, the suite
+         above is free to run today.</p></div>
+  </div>
+</section>
+
+</div>
+
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 14 Pro running iOS 26.3.1 and iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+
+<div id="cookie"><div class="wrap in">
+  <div>
+    <h3>&#127850; Blolabel uses cookies</h3>
+    <p>We use cookies to enhance your browsing experience and provide essential functionality.
+       You can customize which cookies you allow us to use.</p>
+  </div>
+  <div class="btns">
+    <button data-consent="essential">Essential Only</button>
+    <button class="solid" data-consent="all">Accept All</button>
+  </div>
+</div></div>
+
+<script>
+(function(){
+  var KEY='blolabel-cookie-consent', el=document.getElementById('cookie');
+  if(!el) return;
+  try{ if(localStorage.getItem(KEY)) { el.remove(); return; } }catch(e){}
+  function choose(v){ try{ localStorage.setItem(KEY,v); }catch(e){} el.remove(); }
+  el.querySelectorAll('[data-consent]').forEach(function(b){
+    b.addEventListener('click', function(){ choose(b.dataset.consent); });
+  });
+})();
+</script>
+</body></html>

@@ -13,9 +13,9 @@ __pycache__/
 *.egg-info/
 .DS_Store
 
-# Published artefacts are generated, never hand-edited
-site/results.json
-site/index.html
+# site/index.html and site/results.json are generated, never hand-edited, but they
+# ARE committed: the blog bot deploys site/ from a fresh clone, and without them
+# blolabel.ai served a 404 homepage from 2026-09-21 to 2026-09-30.
 .wrangler/
 
 # Local code-graph cache from the graphify tool. Generated, machine-specific,
