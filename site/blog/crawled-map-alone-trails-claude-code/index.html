@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ActionEngine's crawled map alone scores 73.1% on WebArena, 9.6 points under Claude Code; its 91.2% comes after a warm-up over the task templates | Blolabel</title>
+<meta name="description" content="ActionEngine (arXiv:2602.20502 v2, 28 September 2026, Georgia Tech and Microsoft), Claude Opus 4.6 throughout: crawled map 73.1%, Claude Code 82.7%, after warm-up 91.2%; GitLab 55.0 vs 89.0. Crawl $11.6 to $37.2, break-even 39 to 101 tasks excluding warm-up. phoneshell's crawler never types or toggles, so a crawl-built map would lack form operations.">
+<link rel="canonical" href="https://blolabel.ai/blog/crawled-map-alone-trails-claude-code/">
+<meta property="og:title" content="ActionEngine's crawled map alone scores 73.1% on WebArena, 9.6 points under Claude Code; its 91.2% comes after a warm-up over the task templates | Blolabel">
+<meta property="og:description" content="ActionEngine (arXiv:2602.20502 v2, 28 September 2026, Georgia Tech and Microsoft), Claude Opus 4.6 throughout: crawled map 73.1%, Claude Code 82.7%, after warm-up 91.2%; GitLab 55.0 vs 89.0. Crawl $11.6 to $37.2, break-even 39 to 101 tasks excluding warm-up. phoneshell's crawler never types or toggles, so a crawl-built map would lack form operations.">
+<meta property="og:url" content="https://blolabel.ai/blog/crawled-map-alone-trails-claude-code/">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"ActionEngine's crawled map alone scores 73.1% on WebArena, 9.6 points under Claude Code; its 91.2% comes after a warm-up over the task templates","description":"ActionEngine (arXiv:2602.20502 v2, 28 September 2026, Georgia Tech and Microsoft), Claude Opus 4.6 throughout: crawled map 73.1%, Claude Code 82.7%, after warm-up 91.2%; GitLab 55.0 vs 89.0. Crawl $11.6 to $37.2, break-even 39 to 101 tasks excluding warm-up. phoneshell's crawler never types or toggles, so a crawl-built map would lack form operations.",
+ "datePublished":"2026-09-30","dateModified":"2026-09-30",
+ "url":"https://blolabel.ai/blog/crawled-map-alone-trails-claude-code/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/crawled-map-alone-trails-claude-code/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"}}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "How well does ActionEngine do without its warm-up?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Its crawler-built map alone scores 73.1% on 655 WebArena tasks, 9.6 points below Claude Code's 82.7% with the same Claude Opus 4.6 backbone, and 55.0% against 89.0% on GitLab."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What is ActionEngine's warm-up?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Before scoring, the authors run one generated task per WebArena task template with a Patcher that repairs the map, then disable the Patcher for the scored runs. The warm-up's cost is not reported."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Is ActionEngine cheaper than Claude Code?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Per task, yes: $0.05 against $0.40, 27 seconds against 87, and 1.5 to 3.5 model calls against 7 to 16. Crawling costs $11.6 to $37.2 per site, repaid after 39 to 101 tasks, not counting the warm-up."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Could a phone agent build the same map by crawling?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Only partly. phoneshell's crawler never types or toggles a switch and refuses 80 labels, so a crawl-built iOS map would lack the form operations where ActionEngine's crawled map was weakest."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAABOCAMAAAD4iTj8AAAAilBMVEVMaXFiXmJhXmEVieRkYGRiXmJiXmJEaZJiX2IWjehNaIJhXmEUjOcVjOdgXWBjX2MWjecUjOZiXmJiXmIUi+UVjehUoN7w9/33+/7q9Pzg7/p8gIlkYGQXjuj///9oZGgWk/JmY2YVjullYWUJh+dtaG0olumr1/dSq+7T6vo6n+tntfCMx/N7vvJEi25LAAAAHHRSTlMAakku/HusA/z7Eo+hwDL30nXizUnjHfvKolE8aPCOgAAAAAlwSFlzAAALEgAACxIB0t1+/AAAB35JREFUeJztmn1zsjoThwMCCaCg4EvbASFA1bZ3v//XO7MJeQFBwJ55nnNP85v+oSYB9mJ3k2yKkJGRkZGRkZGRkZGRkZGRkZGRkdHPhZXQ7xPuGH2P4Gk4P8L6P3slGCOEV7vderNZr3f7I/yEfpEwQqvd1i+FDpt90PWCwBKyF147kiOjxc8VzborvtdI++gV0Grtl2XuC1Vledhh5QQY2e8F17u3yASMQjnSXehVGFnaXReOxUvug3c+WJ9LMQbblbwpRnYdO6CYLgZA25HFEwAKddfxscdVX0eIaPnw6ueR2xw3ZaVZLxiU/k7cFSObkgzkFIsBFE478hkAYuw4AIzWld/TYbvetw6M0Ur69XZ4/GpbCvOrBiQQ5KUgMAeACjM95voAxoJxKH5nAyh7r6+qyrLacAcGAK095RAAjI7K/uZy+/q6fVYtAt8XBKYB6I89wwPu0tTQtZ4GkEMMl/4exkwBQHijhv85nUEfN+kELYFJABjhyA09L7QxQpEtFPQAoMCCTlakJVhucWDDcM9zoU363dMAcnj2A5/NHwLojL6ehb6ED1Q+c6QpABjZqUMhXdM0QuG7Q5lY3tcB2AnvFHuRPsUg24spaykojVMLuP0YQO6Xa3gxDwFgtJfpr/mW9p9Pl0oM2szwAIzcmhLiOA4hNI7CIiYgh3YAvFu2Q6ET62WpBBt4tMjYcN5WJHbrd0sB+FwiFRyC6RDQAuBDATh/d4PgMQAwkvDmLCM09age9QIAqcOklr1I0RLAKErUaDaM1DVLF8sBlEzSBao9ZJcHADDaqwT4qdl/vioA26kQYI3KAuKIL10AGXEcrReJWRSA/e2llYjD8CwHsGbypfvuJgEoB2huOoAPLZIYxocekN6ZMASgZ2R7IZwWyi3kpwzwLAewZ9j2/kwA0NbCyvPmSwcgkwBPJY8AqDb++p0HACDO5eestVFaXVMVImDxYgAVvCssX+sMADuVAUYBQCp5DMBTNlBKVUDfASAFLSQsUoRglPQeSB7KlQiBCHnGAxAKtjyz+9VqCsB6GgC/zKMQCGRuI5ln2558jf0cQJzQtmQzoSnGKIrl1xAj7EkcbOziHLADbVr72/T1aBbQ5oCxHNDOA6MAwAb5/l0gHgoj+gAoS/yyOUsCJCPAoSm7Wtrycdj257lZoOT255C9HgPABwWgupyGZoEZAOz2mUmdsCJCkAx6AKlTFqCyOcsiwNG20jACuVS72E/WAX6Vs1XsQwCBBiBv1ELwfL4tASAs5E+J0cg6gMe8aia1jZDyeS4REVkWPwFAU3XgCWECgLYNbj5PQw4wDUA9Zbt86W5/epsh3SUYgMFJEgBEPwKQ+5s9b57rAdpa+PT5/wDAl8Liy1Me4OtL4bJcT4UAVjthRuDPgP0DADrFNz0EpI+TIQBUNHcBCJ+vO8qeygGlvhb22yXM3FmgyS/N7eN0Pl0vzacqi8zIATJvpcAGYTEt9gC0zWrW5ElQTBlx0pX3xEpww5bCG7+NbLaKnbcOaKrb9eP01TSXz7zJr+ePP5+NXFHvdStpGukKkDaV1xZbvo1Ng5kNzSLPizQnr4uDIMBRFADDIAiCpxdCaN8ucPmGeM5KsLnxreD1dskv3+3nC3eC6nDsLHdJrKm2tIUQyWI3ilyxLLgHEFtRFIooh2kRoSiTCyHobMdJ6rk2cH1mN7jn4Sl/YRviGXsBEfwQ/yc5F3ywVOCXG30v0BVf26ipLCvieHwpTDIaO3LjyI3CqSKQul6cZVAYIUnq/cADkAhteHkdAHdnB6xnZwVw7q0G2h3FMACHAZA+DzYKe4Y3Q5DepQfwiNA2QwXAg8pIRuD44QkAGGLnuBOze+VrAPLK32o6MLugHqCXgro6XRqfQXzsAVpa6+K58wB9KIsAfSeRqXoBrxYsB3DgkiWRTgjkeVXq4gvFbakvgPq6Nv2K0AAAfUvLHl5Y2s8BtV42IZTVvTCyZQHl5wWRiksuCyB8NQDq6AuqxtywfaklgHt9VlvIR489AGHvXQuCRG5ougBqL5FOQMh7KJ7fqnUyjCBLiM8URX2tJNifBrtqC94wWq8F9vXdtMV1u26Llh3BLMB24F4BRVD2V9iuPNByO0djllU4bSen8LRjtwRqolKZXhSdPhrDY1Vh5gBTAKB68MD+81WeC4hjyq7eRWnTjYuC1jUtYqt3HKp/c+Oihk40sXQLAjehBaV1VlNoC1VZfMbhKB4GAE6+CaYBYHQcTwHn86u4beQOq63vYxRYXpokaRghZHda9W8oCqGTJyr/wgQU2CEMT1IvtNlT89/VXcePxzEAuFdV+uugezbYlTr1ehsn8DL7NJPBDAJ5qjPai3e6O0Djw1nToqNtxADcy9+u5dngQLOcBTiBl/H3r53mDUtrFw/fbez0lT/dmdH+1G2a8+81GO22m67Wu91K+BFGq82gttrZ9/F1yPzTG/qbhZf4Eb53gtMrbAH+DuHH/yQz4bttp7eXU8/8v8b+f0Ng6/Ht9YXp9fWN589fJTzx/TcIyw+/0XojIyMjIyMjIyMjIyMjIyP0n9Y/P2/lF8zxuoMAAAAASUVORK5CYII=" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-09-30">30 September 2026</time>
+    <span>6 min read</span>
+  </div>
+  <h1>ActionEngine's crawled map alone scores 73.1% on WebArena, 9.6 points under Claude Code; its 91.2% comes after a warm-up over the task templates</h1>
+  <p class="standfirst">The map-then-program web agent matches Claude Code on three of four WebArena domains with its crawled map, trails it by 34 points on GitLab, and reaches its headline only after a template-driven warm-up whose cost the paper does not report.</p>
+
+  <p>ActionEngine's headline is 91.2% on 655 WebArena tasks, 8.5 points above Claude Code on the same Claude Opus 4.6 backbone. With only the map its crawler built, it scores 73.1%, which is 9.6 points below Claude Code and 34.0 below it on GitLab. The rest comes from a warm-up that runs one generated task for every WebArena task template and patches the map, and version 2 of the paper (arXiv:2602.20502, 28 September 2026) does not report what that warm-up costs.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/crawled-map-alone-trails-claude-code-hero.png" alt="Abstract technical illustration of a sparse node-and-edge map drawn over a grid, with a second pass adding and correcting a subset of the edges" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="what-the-paper-changed-and-what-it-measures">What the paper changed and what it measures</h2>
+
+<p>ActionEngine is from Hongbin Zhong and Kexin Rong (Georgia Tech) with Fazle Faisal, Luis França, Tanakorn Leesatapornwongsa, Adriana Szekeres and Suman Nath (Microsoft). Version 1 was posted on 24 February 2026 and version 2 on 28 September. A crawling agent explores a web application offline and writes a state-machine graph: page templates as states, each with the operations available on it and the transitions they cause, serialised as YAML. At run time a planner reads that graph and writes a complete program in one call, which then executes without further planning. When a step breaks, a reactive fallback repairs it and a Patcher updates the graph.</p>
+
+<p>The evaluation adds a warm-up between those two phases. The authors generate and execute one task per WebArena task template with the Patcher switched on, then switch it off for the scored runs, so each scored task is a single attempt on a fixed map. Warm-up tasks share templates with the evaluation tasks but not their instances or parameters. Failed tasks from every system were hand-reviewed, and answers that were correct but formatted differently from the reference were counted as passes.</p>
+
+<table>
+  <thead>
+    <tr><th>Domain</th><th>Tasks</th><th>Claude Code</th><th>Crawled map only</th><th>After warm-up</th><th>Crawl cost, time</th><th>Break-even (tasks)</th><th>States, operations after warm-up</th><th>Source</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Reddit (Postmill)</td><td>106</td><td>92.4</td><td>89.0</td><td>95.0</td><td>$11.6, 36 min</td><td>39</td><td>57, 130 (+2)</td><td>Tables 1, 2(a)</td></tr>
+    <tr><td>Shopping</td><td>187</td><td>79.7</td><td>80.7</td><td>87.0</td><td>$16.9, 132 min</td><td>44</td><td>59, 105 (+2)</td><td>Tables 1, 2(a)</td></tr>
+    <tr><td>Shopping Admin</td><td>182</td><td>74.2</td><td>74.0</td><td>95.3</td><td>$37.2, 260 min</td><td>101</td><td>184, 1,182 (minus 4)</td><td>Tables 1, 2(a)</td></tr>
+    <tr><td>GitLab</td><td>180</td><td>89.0</td><td>55.0</td><td>89.0</td><td>$29.5, 230 min</td><td>88</td><td>219, 1,148 (+66)</td><td>Tables 1, 2(a)</td></tr>
+    <tr><td>Overall</td><td>655</td><td>82.7</td><td>73.1</td><td>91.2</td><td>$95.2, 658 min (our sum)</td><td>not reported</td><td>not reported</td><td>Tables 1, 2(a)</td></tr>
+  </tbody>
+</table>
+
+<p>Success rates are percentages. Break-even is the paper's: tasks needed for ActionEngine's lower per-task cost to repay the crawl, relative to Claude Code. It does not include the warm-up, whose cost is not reported. The paper links no code repository that we could find.</p>
+
+<h2 id="the-crawl-gets-you-to-parity-on-simple-sites-and-the-warm-up">The crawl gets you to parity on simple sites, and the warm-up does the rest</h2>
+
+<p>On three domains the crawled map alone lands within 3.4 points of Claude Code: 89.0 against 92.4 on Reddit, 80.7 against 79.7 on Shopping, 74.0 against 74.2 on Shopping Admin. GitLab is the exception, at 55.0 against 89.0. The warm-up closes that and more: GitLab's map gains 66 operations and reaches 89.0, and Shopping Admin goes from 74.0 to 95.3 while losing 4 operations to merges. The authors sort the repairs into three kinds: selectors that did not fire the page's JavaScript handlers, missing waits after asynchronous updates, and operation descriptions that needed behaviour learned by running them, such as a save that stays on the edit page.</p>
+
+<svg viewBox="0 0 760 400" style="width:100%;height:auto" role="img" aria-label="Grouped bar chart from ActionEngine, arXiv 2602.20502 version 2 Tables 1 and 2, WebArena success with Claude Opus 4.6 in every system. Claude Code with Playwright scores 92.4, 79.7, 74.2 and 89.0 percent on Reddit, Shopping, Shopping Admin and GitLab, 82.7 overall. ActionEngine with the crawler-built map alone scores 89.0, 80.7, 74.0 and 55.0, 73.1 overall. ActionEngine after warm-up refinement scores 95.0, 87.0, 95.3 and 89.0, 91.2 overall. The crawler-only map matches Claude Code within about 3 points on three domains and trails it by 34 points on GitLab.">
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">WebArena success (%), same backbone (Claude Opus 4.6)</text>
+<rect x="20" y="40" width="12" height="10" fill="#8a93a5"/><text x="38" y="49" font-size="11" fill="#c4ccda">Claude Code + Playwright</text>
+<rect x="220" y="40" width="12" height="10" fill="#f2a65a"/><text x="238" y="49" font-size="11" fill="#c4ccda">ActionEngine, crawled map only</text>
+<rect x="460" y="40" width="12" height="10" fill="#5ad1a0"/><text x="478" y="49" font-size="11" fill="#c4ccda">ActionEngine, after warm-up</text>
+<text x="54" y="333.0" font-size="9" fill="#8a93a5" text-anchor="end">0</text><line x1="60" y1="330.0" x2="740" y2="330.0" stroke="#2a3140"/>
+<text x="54" y="270.5" font-size="9" fill="#8a93a5" text-anchor="end">25</text><line x1="60" y1="267.5" x2="740" y2="267.5" stroke="#2a3140"/>
+<text x="54" y="208.0" font-size="9" fill="#8a93a5" text-anchor="end">50</text><line x1="60" y1="205.0" x2="740" y2="205.0" stroke="#2a3140"/>
+<text x="54" y="145.5" font-size="9" fill="#8a93a5" text-anchor="end">75</text><line x1="60" y1="142.5" x2="740" y2="142.5" stroke="#2a3140"/>
+<text x="54" y="83.0" font-size="9" fill="#8a93a5" text-anchor="end">100</text><line x1="60" y1="80.0" x2="740" y2="80.0" stroke="#2a3140"/>
+<rect x="80" y="99.0" width="30" height="231.0" fill="#8a93a5"/><text x="95" y="95.0" font-size="10" fill="#8a93a5" text-anchor="middle">92.4</text>
+<rect x="116" y="107.5" width="30" height="222.5" fill="#f2a65a"/><text x="131" y="103.5" font-size="10" fill="#f2a65a" text-anchor="middle">89.0</text>
+<rect x="152" y="92.5" width="30" height="237.5" fill="#5ad1a0"/><text x="167" y="88.5" font-size="10" fill="#5ad1a0" text-anchor="middle">95.0</text>
+<text x="131" y="346" font-size="11" fill="#c4ccda" text-anchor="middle">Reddit</text><text x="131" y="360" font-size="9" fill="#8a93a5" text-anchor="middle">106 tasks</text>
+<rect x="216" y="130.8" width="30" height="199.2" fill="#8a93a5"/><text x="231" y="126.8" font-size="10" fill="#8a93a5" text-anchor="middle">79.7</text>
+<rect x="252" y="128.2" width="30" height="201.8" fill="#f2a65a"/><text x="267" y="124.2" font-size="10" fill="#f2a65a" text-anchor="middle">80.7</text>
+<rect x="288" y="112.5" width="30" height="217.5" fill="#5ad1a0"/><text x="303" y="108.5" font-size="10" fill="#5ad1a0" text-anchor="middle">87.0</text>
+<text x="267" y="346" font-size="11" fill="#c4ccda" text-anchor="middle">Shopping</text><text x="267" y="360" font-size="9" fill="#8a93a5" text-anchor="middle">187 tasks</text>
+<rect x="352" y="144.5" width="30" height="185.5" fill="#8a93a5"/><text x="367" y="140.5" font-size="10" fill="#8a93a5" text-anchor="middle">74.2</text>
+<rect x="388" y="145.0" width="30" height="185.0" fill="#f2a65a"/><text x="403" y="141.0" font-size="10" fill="#f2a65a" text-anchor="middle">74.0</text>
+<rect x="424" y="91.8" width="30" height="238.2" fill="#5ad1a0"/><text x="439" y="87.8" font-size="10" fill="#5ad1a0" text-anchor="middle">95.3</text>
+<text x="403" y="346" font-size="11" fill="#c4ccda" text-anchor="middle">Shop. Admin</text><text x="403" y="360" font-size="9" fill="#8a93a5" text-anchor="middle">182 tasks</text>
+<rect x="488" y="107.5" width="30" height="222.5" fill="#8a93a5"/><text x="503" y="103.5" font-size="10" fill="#8a93a5" text-anchor="middle">89.0</text>
+<rect x="524" y="192.5" width="30" height="137.5" fill="#f2a65a"/><text x="539" y="188.5" font-size="10" fill="#f2a65a" text-anchor="middle">55.0</text>
+<rect x="560" y="107.5" width="30" height="222.5" fill="#5ad1a0"/><text x="575" y="103.5" font-size="10" fill="#5ad1a0" text-anchor="middle">89.0</text>
+<text x="539" y="346" font-size="11" fill="#c4ccda" text-anchor="middle">GitLab</text><text x="539" y="360" font-size="9" fill="#8a93a5" text-anchor="middle">180 tasks</text>
+<rect x="624" y="123.2" width="30" height="206.8" fill="#8a93a5"/><text x="639" y="119.2" font-size="10" fill="#8a93a5" text-anchor="middle">82.7</text>
+<rect x="660" y="147.2" width="30" height="182.8" fill="#f2a65a"/><text x="675" y="143.2" font-size="10" fill="#f2a65a" text-anchor="middle">73.1</text>
+<rect x="696" y="102.0" width="30" height="228.0" fill="#5ad1a0"/><text x="711" y="98.0" font-size="10" fill="#5ad1a0" text-anchor="middle">91.2</text>
+<text x="675" y="346" font-size="11" fill="#c4ccda" text-anchor="middle">Overall</text><text x="675" y="360" font-size="9" fill="#8a93a5" text-anchor="middle">655 tasks</text>
+<text x="20" y="385" font-size="10" fill="#8a93a5">Source: arXiv 2602.20502v2 Table 1 (Claude Code, refined) and Table 2(a) (crawler-only). Failed tasks were hand-reviewed for every system.</text>
+</g></svg>
+
+<p>The efficiency numbers are large and hold after warm-up: 27 seconds per task against 87 for Claude Code and 787 for AgentOccam, 1.5 to 3.5 model calls against 7 to 16, and $0.05 per task against $0.40, of which prefix caching accounts for the step from $0.16 to $0.05. The success comparison is the part that depends on the warm-up. Our judgement is that "task-independent" fits the crawl but not the 91.2%, because the warm-up is steered by the benchmark's own templates. Nobody deploying this on a new site has a template list.</p>
+
+<svg viewBox="0 0 760 450" style="width:100%;height:auto" role="img" aria-label="Pipeline diagram of ActionEngine, arXiv 2602.20502 version 2, compared with phoneshell's two halves. ActionEngine crawls each site offline for 36 to 260 minutes at 11.6 to 37.2 dollars, producing a state-machine graph that scores 73.1 percent on WebArena. A warm-up runs one generated task per WebArena template with the Patcher on, repairing selectors, waits and descriptions; its cost is not reported. The scored runs use the patched graph with the Patcher off: one planning call writes a program that executes deterministically, 1.5 to 3.5 model calls per task, 27 seconds and 5 cents, reaching 91.2 percent. phoneshell has a deterministic crawler at 1.2 seconds a step that never types or toggles and refuses 80 labels, and an app memory that records which control led to which screen, learns settle times, and shows up to 8 remembered routes as hints after a screen has been seen twice; nothing plans a program over it.">
+  <g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="12">
+    <text x="20" y="26" font-size="14" font-weight="600">Map, patch, then execute: where each number in the headline comes from</text>
+    <rect x="20" y="48" width="220" height="92" rx="8" fill="#1d2330" stroke="#f2a65a"/>
+    <text x="32" y="70" font-weight="600" fill="#f2a65a">1. offline crawl</text>
+    <text x="32" y="90" fill="#c4ccda" font-size="11">36 to 260 min, $11.6 to $37.2</text>
+    <text x="32" y="106" fill="#c4ccda" font-size="11">states + operations as YAML</text>
+    <text x="32" y="126" fill="#f2a65a" font-size="11">scores 73.1% alone</text>
+    <line x1="240" y1="94" x2="270" y2="94" stroke="#6f7b90"/>
+    <rect x="270" y="48" width="220" height="92" rx="8" fill="#1d2330" stroke="#8a93a5" stroke-dasharray="4 3"/>
+    <text x="282" y="70" font-weight="600">2. warm-up, Patcher on</text>
+    <text x="282" y="90" fill="#c4ccda" font-size="11">one task per WebArena template</text>
+    <text x="282" y="106" fill="#c4ccda" font-size="11">fixes selectors, waits, descriptions</text>
+    <text x="282" y="126" fill="#8a93a5" font-size="11">cost: not reported</text>
+    <line x1="490" y1="94" x2="520" y2="94" stroke="#6f7b90"/>
+    <rect x="520" y="48" width="220" height="92" rx="8" fill="#1d2330" stroke="#5ad1a0"/>
+    <text x="532" y="70" font-weight="600" fill="#5ad1a0">3. scored runs, Patcher off</text>
+    <text x="532" y="90" fill="#c4ccda" font-size="11">1 plan call, program executes</text>
+    <text x="532" y="106" fill="#c4ccda" font-size="11">1.5 to 3.5 calls, 27 s, $0.05</text>
+    <text x="532" y="126" fill="#5ad1a0" font-size="11">scores 91.2%</text>
+    <text x="20" y="178" font-size="13" font-weight="600" fill="#c4ccda">phoneshell has pieces of boxes 1 and 3, built separately and never joined</text>
+    <rect x="20" y="192" width="350" height="140" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="32" y="214" font-weight="600">crawl.py (no model)</text>
+    <text x="32" y="236" fill="#c4ccda" font-size="11">1.2 s a step, deterministic traversal</text>
+    <text x="32" y="254" fill="#c4ccda" font-size="11">screen identity: layout fingerprint + content</text>
+    <text x="32" y="272" fill="#f2a65a" font-size="11">never types, never toggles a switch</text>
+    <text x="32" y="290" fill="#f2a65a" font-size="11">refuses 80 labels (send, pay, delete, allow)</text>
+    <text x="32" y="316" fill="#8a93a5" font-size="11">output: screenshots of screens</text>
+    <rect x="390" y="192" width="350" height="140" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="402" y="214" font-weight="600">memory.py (during agent runs)</text>
+    <text x="402" y="236" fill="#c4ccda" font-size="11">control on screen A led to screen B, n times</text>
+    <text x="402" y="254" fill="#5ad1a0" font-size="11">settle time learned per screen (1.4 x mean)</text>
+    <text x="402" y="272" fill="#c4ccda" font-size="11">known after 2 visits</text>
+    <text x="402" y="290" fill="#c4ccda" font-size="11">up to 8 routes shown to the model as a hint</text>
+    <text x="402" y="316" fill="#8a93a5" font-size="11">no planner writes a program from it</text>
+    <text x="20" y="364" font-size="11" fill="#c4ccda">ActionEngine's largest warm-up gains were on form-heavy sites: Shopping Admin plus 21.3, GitLab plus 34.0.</text>
+    <text x="20" y="382" font-size="11" fill="#c4ccda">Forms need typing and toggles, the two things phoneshell's crawler is built never to do.</text>
+    <text x="20" y="430" font-size="10" fill="#8a93a5">Sources: arXiv 2602.20502v2 Sections 4 and 5, Tables 1 and 2; phoneshell/crawl.py and phoneshell/memory.py.</text>
+  </g>
+</svg>
+
+<h2 id="what-it-means-for-a-phone-agent-with-a-memory">What it means for a phone agent with a memory</h2>
+
+<p>phoneshell has both halves of this design, built separately. <code>phoneshell/crawl.py</code> walks an iPhone's screens with no model in the loop at about 1.2 seconds a step, identifying screens by a layout fingerprint plus a content signature, and it never types, never toggles a switch and refuses 80 labels (send, pay, delete, allow, sign out and so on). <code>phoneshell/memory.py</code> records, during ordinary agent runs, which control on which screen led to which screen and how often. It treats a screen as known after two visits and shows the model up to eight remembered routes as a hint. Its docstring says a route walked enough times "becomes replayable outright, with no model in the loop"; in the code, memory only produces hints, and replay lives in the separate macro recorder.</p>
+
+<p>ActionEngine's split of repairs maps onto that code. One of its three repair kinds, waits after asynchronous updates, phoneshell already handles by measurement: each remembered screen keeps a running mean of how long it took to settle and uses 1.4 times that, clamped to 0.15 to 2.5 seconds. The other two do not arise the same way on iOS, because phoneshell resolves controls against the live accessibility tree rather than stored selectors, and it has no operation descriptions to enrich.</p>
+
+<p>The gap is the one the GitLab row shows. The crawled map was weakest where tasks go through forms, and the warm-up gains were largest on the two form-heavy domains, plus 21.3 on Shopping Admin and plus 34.0 on GitLab. A phoneshell crawl leaves out exactly the operations those forms need, by design, since a crawler that types and toggles on a real phone changes the user's data. Our judgement: on iOS a map-then-program agent would have to learn its input operations from supervised agent runs, the way <code>memory.py</code> already learns transitions. It could not get them from a crawl, and until it does, its crawl-only number is the one to expect.</p>
+
+<p>The plan-then-execute limit also carries over. After warm-up, ActionEngine's remaining failures were mostly ambiguous intent (about 23 cases) and search-dependent tasks (about 22), where the planner has to pick search terms before seeing results. On a phone, search fields are the common entry point to Maps, Contacts, Settings and the App Store, all of which appear in phoneshell's 80 tasks.</p>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<ul>
+  <li>Paper: <code>https://arxiv.org/abs/2602.20502v2</code>; Table 1 (success and latency by domain), Table 2(a) (crawl cost, time, break-even, states, operations, crawler-only success), Table 2(b) (prefix caching), Section 5.1 (warm-up protocol and manual review), Section 5.3.</li>
+  <li>Arithmetic: crawler-only overall = (106 x 89.0 + 187 x 80.7 + 182 x 74.0 + 180 x 55.0) / 655 = 73.1; Claude Code minus crawler-only = 82.7 minus 73.1 = 9.6.</li>
+  <li>phoneshell: <code>sed -n 1,40p phoneshell/crawl.py</code> (design notes, 1.2 s a step); <code>grep -n "def suggested_settle" -A 4 phoneshell/memory.py</code>; <code>grep -n "def hint" -A 30 phoneshell/memory.py</code> (known after 2 visits, 8 routes).</li>
+</ul>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>Dated 31 March 2027. If ActionEngine, or a replication, runs the warm-up on half of WebArena's templates and scores only tasks from the other half, overall success will be below 85%. A held-out score at or above 88% would show the warm-up teaches reusable site knowledge rather than template coverage, and the 91.2% would stand as a deployment number. If a published follow-up reports warm-up cost, break-even including it will exceed 100 tasks on at least one of the four domains.</p>
+
+  <section class="sources">
+    <h2>Sources</h2>
+    <ol>
+      <li><a href="https://arxiv.org/abs/2602.20502v2">Zhong, Faisal, França, Leesatapornwongsa, Szekeres, Rong, Nath (Georgia Tech, Microsoft), ActionEngine: From Reactive to Programmatic Web Agents via State Machine Memory, arXiv:2602.20502 v2, 28 September 2026 (v1 24 February 2026)</a></li>
+      <li><a href="https://arxiv.org/html/2602.20502v2">ActionEngine v2 HTML: Section 5.1 (warm-up, manual review), Table 1 (success and latency), Table 2 (crawl cost, break-even, crawler-only success, caching), Figure 4</a></li>
+      <li><a href="https://arxiv.org/abs/2307.13854">Zhou et al., WebArena: A Realistic Web Environment for Building Autonomous Agents, arXiv:2307.13854, 2023</a></li>
+      <li><a href="https://github.com/Blomega/phoneshell">phoneshell source: phoneshell/bench/openrouter.py, runner.py, schema.py, crawl.py, memory.py, environments/*.yaml (read 30 September 2026)</a></li>
+    </ol>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
