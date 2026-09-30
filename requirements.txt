@@ -11,3 +11,5 @@ rich==15.0.0
 typer==0.27.2
 uvicorn==0.52.4
 websockets==17.1
+pyobjc-framework-Quartz==12.2.2
+pyobjc-framework-Vision==12.2.2

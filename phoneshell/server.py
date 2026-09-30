@@ -40,6 +40,7 @@ from .crawl import (CRAWLS, DENY_BUNDLES, Crawler, Plan as CrawlPlan, is_user_ap
                     earlier_scans, list_runs, new_run_dir, plan_from_prompt, shot_filenames)
 from .lock import DeviceBusy, device_lock
 from .safety import Guard
+from .scan import Scanner, run_extract
 from .wda.client import WDAError, WDAUnreachable
 
 log = logging.getLogger("phoneshell.server")
@@ -539,6 +540,112 @@ async def websocket(ws: WebSocket) -> None:
 
 BRIDGE = Bridge()
 CRAWL: dict[str, object] = {"crawler": None, "thread": None, "run": None}
+
+
+_scanner = Scanner()
+
+
+@app.get("/scan")
+def scan_page() -> FileResponse:
+    return FileResponse(UI_DIR / "scan.html")
+
+
+@app.post("/api/scan/start")
+async def scan_start(payload: dict | None = None) -> dict:
+    """Enqueue-style: the scan runs in a server thread and the page renders its
+    state, so a reload or a closed tab never stops or loses it."""
+    scan = _scanner.start((payload or {}).get("label", ""))
+    return {"ok": True, "scan": scan.summary()}
+
+
+@app.post("/api/scan/stop")
+async def scan_stop() -> dict:
+    scan = _scanner.stop()
+    return {"ok": True, "scan": scan.summary() if scan else None}
+
+
+@app.get("/api/scans")
+def scan_history() -> dict:
+    cur = _scanner.current
+    return {"current": cur.summary() if cur else None, "scans": Scanner.history()}
+
+
+def _scan_or_404(sid: str):
+    scan = _scanner.get(sid)
+    if scan is None:
+        return None, JSONResponse({"error": "no such scan"}, status_code=404)
+    return scan, None
+
+
+@app.get("/api/scan/{sid}")
+def scan_state(sid: str, since: int = 0):
+    """Lines are returned whole (they are re-ordered as you scroll back up), frames
+    only past `since` so the thumbnail strip polls cheaply."""
+    scan, err = _scan_or_404(sid)
+    if err:
+        return err
+    return {**scan.summary(), "frame_count": len(scan.frames), "events": scan.events, "extract": scan.extract,
+            "lines": [{"text": l.text, "frame": l.frame, "gap": l.gap} for l in scan.content()],
+            "frames": [f.__dict__ for f in scan.frames if f.n > since]}
+
+
+@app.get("/api/scan/{sid}/frame/{n}")
+def scan_frame(sid: str, n: int) -> Response:
+    scan, err = _scan_or_404(sid)
+    if err:
+        return err
+    path = scan.dir / "frames" / f"{n:04d}.jpg"
+    return FileResponse(path) if path.exists() else JSONResponse({"error": "no such frame"}, status_code=404)
+
+
+@app.get("/api/scan/{sid}/export")
+def scan_export(sid: str, fmt: str = "txt") -> Response:
+    import csv
+    import io as _io
+    scan, err = _scan_or_404(sid)
+    if err:
+        return err
+    name = f"scan-{scan.id}"
+    headers = lambda ext: {"Content-Disposition": f'attachment; filename="{name}.{ext}"'}
+    if fmt == "json":
+        body = json.dumps({"scan": scan.summary(), "lines": [l.text for l in scan.content()],
+                           "extract": scan.extract}, ensure_ascii=False, indent=1)
+        return Response(body, media_type="application/json", headers=headers("json"))
+    if fmt == "csv":
+        ex = scan.extract
+        if ex.get("status") != "done":
+            return JSONResponse({"error": "run Extract first; CSV is the structured table"}, status_code=409)
+        buf = _io.StringIO()
+        w = csv.DictWriter(buf, fieldnames=ex["columns"], extrasaction="ignore")
+        w.writeheader()
+        for row in ex["rows"]:
+            w.writerow({c: row.get(c, "") for c in ex["columns"]})
+        return Response(buf.getvalue(), media_type="text/csv", headers=headers("csv"))
+    return Response(scan.text(), media_type="text/plain; charset=utf-8", headers=headers("txt"))
+
+
+@app.post("/api/scan/{sid}/extract")
+async def scan_extract(sid: str, payload: dict | None = None):
+    """Queues the LLM pass on a worker thread and returns at once; the page polls
+    scan.extract for queued -> running -> done | failed."""
+    scan, err = _scan_or_404(sid)
+    if err:
+        return err
+    if scan.extract.get("status") == "running":
+        return JSONResponse({"error": "an extraction is already running for this scan"}, status_code=409)
+    instruction = ((payload or {}).get("instruction") or "").strip()
+    scan.extract = {"status": "running", "instruction": instruction, "started": time.time()}
+    threading.Thread(target=run_extract, args=(scan, instruction), daemon=True).start()
+    return {"ok": True}
+
+
+@app.delete("/api/scan/{sid}")
+def scan_delete(sid: str):
+    if _scanner.current and _scanner.current.id == sid:
+        if _scanner.current.status == "running":
+            return JSONResponse({"error": "stop the scan first"}, status_code=409)
+        _scanner.current = None
+    return {"ok": Scanner.delete(sid)}
 
 
 @app.get("/collect")
