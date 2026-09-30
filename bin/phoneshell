@@ -29,4 +29,7 @@ if [ ! -x "$PY" ]; then
   "$PY" -m pip install --quiet -r "$ROOT/requirements.txt"
   echo "ready" >&2
 fi
+# Importable from any working directory (an MCP client or another tool may
+# start this from anywhere); relative paths in arguments still mean the caller's.
+export PYTHONPATH="$ROOT${PYTHONPATH:+:$PYTHONPATH}"
 exec "$PY" -m phoneshell.cli "$@"

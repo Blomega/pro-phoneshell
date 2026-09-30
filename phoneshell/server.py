@@ -18,6 +18,7 @@ import logging
 import os
 import shutil
 import time
+import uuid
 from pathlib import Path
 
 import httpx
@@ -40,6 +41,9 @@ from .crawl import (CRAWLS, DENY_BUNDLES, Crawler, Plan as CrawlPlan, is_user_ap
                     earlier_scans, list_runs, new_run_dir, plan_from_prompt, shot_filenames)
 from .lock import DeviceBusy, device_lock
 from .safety import Guard
+from .watch import Watcher, to_macro
+from .agent import macros as macro_lib
+from .perception.tree import find_by_text
 from .wda.client import WDAError, WDAUnreachable
 
 log = logging.getLogger("phoneshell.server")
@@ -353,6 +357,7 @@ async def tap(payload: dict) -> dict:
     """Tap a point given in the phone's POINT space (the UI converts from pixels)."""
     x, y = float(payload["x"]), float(payload["y"])
     _guard.audit("manual_tap", x=x, y=y)
+    _watcher.note_web_tap(x, y)
     phone().tap_point(x, y)
     return {"ok": True}
 
@@ -539,6 +544,126 @@ async def websocket(ws: WebSocket) -> None:
 
 BRIDGE = Bridge()
 CRAWL: dict[str, object] = {"crawler": None, "thread": None, "run": None}
+
+
+_watcher = Watcher()
+_runs: dict[str, dict] = {}          # macro run jobs, newest last
+_runs_lock = threading.Lock()
+
+
+@app.get("/learn")
+def learn_page() -> FileResponse:
+    return FileResponse(UI_DIR / "learn.html")
+
+
+@app.post("/api/watch/start")
+async def watch_start(payload: dict | None = None) -> dict:
+    """Starts watching on a server thread and returns at once."""
+    demo = _watcher.start((payload or {}).get("label", ""))
+    _guard.audit("watch_start", demo=demo.id, label=demo.label)
+    return {"ok": True, "demo": demo.summary()}
+
+
+@app.post("/api/watch/stop")
+async def watch_stop(payload: dict | None = None) -> dict:
+    """Stops watching and queues the learning pass; the page polls for the draft."""
+    demo = _watcher.stop(learn=(payload or {}).get("learn", True))
+    return {"ok": True, "demo": demo.summary() if demo else None}
+
+
+@app.get("/api/watches")
+def watches() -> dict:
+    cur = _watcher.current
+    return {"current": cur.summary() if cur else None, "demos": Watcher.history()}
+
+
+@app.get("/api/watch/{did}")
+def watch_state(did: str):
+    demo = _watcher.get(did)
+    if demo is None:
+        return JSONResponse({"error": "no such demo"}, status_code=404)
+    return {**demo.summary(), "draft": demo.draft,
+            "frames": [{"n": f.n, "app": f.app, "t": round(f.t - demo.started, 1)} for f in demo.frames]}
+
+
+@app.get("/api/watch/{did}/frame/{n}")
+def watch_frame(did: str, n: int):
+    demo = _watcher.get(did)
+    path = demo.dir / "frames" / f"{n:04d}.jpg" if demo else None
+    if path is None or not path.exists():
+        return JSONResponse({"error": "no such frame"}, status_code=404)
+    return FileResponse(path)
+
+
+@app.post("/api/watch/{did}/save")
+async def watch_save(did: str, payload: dict):
+    """Save the (possibly edited) learned steps as a macro."""
+    demo = _watcher.get(did)
+    if demo is None or demo.status not in ("ready", "saved"):
+        return JSONResponse({"error": "nothing learned to save yet"}, status_code=409)
+    steps = [s for s in payload.get("steps") or demo.draft.get("steps", []) if s.get("keep", True)]
+    if not steps:
+        return JSONResponse({"error": "no steps left to save"}, status_code=400)
+    macro = to_macro(demo, payload.get("name") or demo.draft.get("name") or demo.label,
+                     payload.get("description") or demo.draft.get("description", ""), steps,
+                     payload.get("inputs") if payload.get("inputs") is not None else demo.draft.get("inputs", {}))
+    path = macro.save()
+    demo.status, demo.saved_as = "saved", macro.name
+    demo.save()
+    _guard.audit("macro_save", name=macro.name, steps=len(macro.steps), source="demo", demo=demo.id)
+    return {"ok": True, "name": macro.name, "path": str(path), "steps": len(macro.steps)}
+
+
+@app.get("/api/macros")
+def macros_list() -> dict:
+    return {"macros": [{"name": m.name, "description": m.description, "steps": len(m.steps),
+                        "inputs": m.inputs, "source": m.source, "runs": m.runs, "failures": m.failures,
+                        "confirm_steps": [i for i, st in enumerate(m.steps, 1) if st.confirm]}
+                       for m in macro_lib.list_macros()]}
+
+
+@app.post("/api/macro/{name}/run")
+async def macro_run(name: str, payload: dict | None = None):
+    """Queues a replay on a worker thread and returns at once. It stops by itself
+    before any step that spends, sends or deletes; the page confirms and runs
+    again from that step."""
+    payload = payload or {}
+    macro = macro_lib.get(name)
+    if macro is None:
+        return JSONResponse({"error": f"no macro called {name!r}"}, status_code=404)
+    with _runs_lock:
+        if any(r["status"] == "running" for r in _runs.values()):
+            return JSONResponse({"error": "a macro is already running"}, status_code=409)
+        job = {"id": uuid.uuid4().hex[:8], "macro": name, "status": "running", "started": time.time(),
+               "from_step": int(payload.get("from_step") or 1), "confirmed": bool(payload.get("confirmed"))}
+        _runs[job["id"]] = job
+
+    def work() -> None:
+        try:
+            _guard.audit("macro_run", name=name, from_step=job["from_step"], confirmed=job["confirmed"],
+                         source="page")
+            res = macro_lib.replay(macro, phone(), find_by_text, confirmed=job["confirmed"],
+                                   start_at=job["from_step"], inputs=payload.get("inputs") or None,
+                                   guard=_guard)
+            macro.runs += 1
+            if not res.ok and not res.needs_confirmation:
+                macro.failures += 1
+            macro.save()
+            job.update(status="done" if res.ok else ("paused" if res.needs_confirmation else "stopped"),
+                       message=res.message, completed=res.completed, total=res.total,
+                       at_step=res.diverged_at, log=res.log)
+        except Exception as e:  # noqa: BLE001
+            job.update(status="failed", message=str(e)[:400])
+        job["ended"] = time.time()
+
+    threading.Thread(target=work, daemon=True).start()
+    return {"ok": True, "job": job}
+
+
+@app.get("/api/macro/run/{job_id}")
+def macro_run_state(job_id: str):
+    job = _runs.get(job_id)
+    return job if job else JSONResponse({"error": "no such run"}, status_code=404)
 
 
 SCROLLSCAN_URL = "http://127.0.0.1:8790"

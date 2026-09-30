@@ -32,6 +32,9 @@ class Step:
     target_text: str = ""           # what the tapped element said, for re-finding it
     expect: str = ""                # text expected on screen afterwards
     note: str = ""
+    # Spends money, sends something, deletes something: replay stops here and
+    # asks, every time, however many times the macro has run before.
+    confirm: bool = False
 
 
 @dataclass
@@ -43,6 +46,10 @@ class Macro:
     created: float = 0.0
     runs: int = 0
     failures: int = 0
+    # Values that change between runs, e.g. {"dish": "Pad Thai"}. Steps refer to
+    # them as {dish}; the saved value is the default, a run can pass another.
+    inputs: dict[str, str] = field(default_factory=dict)
+    source: str = ""                # "agent" (saved after an agent run) or "demo" (learned by watching)
 
     @classmethod
     def load(cls, path: Path) -> "Macro":
@@ -103,28 +110,68 @@ class ReplayResult:
     total: int
     message: str = ""
     diverged_at: int | None = None
+    # Stopped on purpose before a step that needs the person's go-ahead. Run
+    # again with confirmed=True and start_at=diverged_at to carry on.
+    needs_confirmation: bool = False
+    log: list[str] = field(default_factory=list)
 
 
-def replay(macro: Macro, phone, find_by_text, max_anchor_wait: float = 8.0) -> ReplayResult:
-    """Run a macro against the live phone, stopping the moment reality diverges."""
-    for i, step in enumerate(macro.steps, start=1):
+def _fill(text: str, values: dict[str, str]) -> str:
+    for k, v in values.items():
+        text = text.replace("{" + k + "}", str(v))
+    return text
+
+
+def resolved(step: Step, values: dict[str, str]) -> Step:
+    """The step with its {input} placeholders filled in."""
+    params = {k: (_fill(v, values) if isinstance(v, str) else v) for k, v in step.params.items()}
+    return Step(action=step.action, params=params, anchor=_fill(step.anchor, values),
+                target_text=_fill(step.target_text, values), expect=_fill(step.expect, values),
+                note=step.note, confirm=step.confirm)
+
+
+def replay(macro: Macro, phone, find_by_text, max_anchor_wait: float = 8.0, *,
+           confirmed: bool = False, start_at: int = 1, inputs: dict[str, str] | None = None,
+           guard=None) -> ReplayResult:
+    """Run a macro against the live phone, stopping the moment reality diverges,
+    and ALWAYS stopping before a step that spends, sends or deletes unless this
+    call was explicitly confirmed. `confirmed` covers exactly one such step (the
+    one at start_at): a macro with two payment steps asks twice."""
+    values = {**macro.inputs, **(inputs or {})}
+    total = len(macro.steps)
+    notes: list[str] = []
+
+    def stop(i: int, done: int, msg: str, confirm: bool = False) -> ReplayResult:
+        return ReplayResult(ok=False, completed=done, total=total, diverged_at=i, message=msg,
+                            needs_confirmation=confirm, log=notes)
+
+    for i, raw in enumerate(macro.steps, start=1):
+        if i < start_at:
+            continue
+        step = resolved(raw, values)
         if step.anchor:
             found = phone.wait_for_text(step.anchor, timeout=max_anchor_wait)
             if not found.ok:
-                return ReplayResult(
-                    ok=False, completed=i - 1, total=len(macro.steps), diverged_at=i,
-                    message=(f"step {i} expected {step.anchor!r} on screen and it is not there. "
-                             "The app has changed or the flow moved; take over from here."),
-                )
+                return stop(i, i - 1, f"step {i} expected {step.anchor!r} on screen and it is not there. "
+                                      "The app has changed or the flow moved; take over from here.")
         snap = phone.snapshot(with_screenshot=False)
         if step.action == "tap":
             target = step.target_text or step.params.get("text", "")
             hits = find_by_text(snap.elements, target) if target else []
+            if not hits and target:
+                # A list item that was on screen during the demo can be further
+                # down today. Look for it before giving up, and say so.
+                if phone.scroll_to_text(target).ok:
+                    notes.append(f"step {i}: had to scroll to find {target!r}")
+                    snap = phone.snapshot(with_screenshot=False)
+                    hits = find_by_text(snap.elements, target)
             if not hits:
-                return ReplayResult(
-                    ok=False, completed=i - 1, total=len(macro.steps), diverged_at=i,
-                    message=f"step {i} wanted to tap {target!r} and nothing on screen matches it.",
-                )
+                return stop(i, i - 1, f"step {i} wanted to tap {target!r} and nothing on screen matches it.")
+            risky = step.confirm or (guard is not None and guard.classify_tap(hits[0]).needs_confirmation)
+            if risky and not (confirmed and i == start_at):
+                return stop(i, i - 1, f"paused before step {i}: tap {hits[0].text!r}. This looks like it spends "
+                                      "money, sends or deletes something. Show the person the screen and run "
+                                      f"again with confirmed=true, from_step={i} once they say yes.", confirm=True)
             phone.tap_element(hits[0])
         elif step.action == "type":
             target = step.target_text
@@ -149,14 +196,10 @@ def replay(macro: Macro, phone, find_by_text, max_anchor_wait: float = 8.0) -> R
             (phone.accept_alert if step.params.get("action", "accept") == "accept"
              else phone.dismiss_alert)(step.params.get("button"))
         else:
-            return ReplayResult(False, i - 1, len(macro.steps), diverged_at=i,
-                                message=f"step {i} has an unknown action {step.action!r}")
+            return stop(i, i - 1, f"step {i} has an unknown action {step.action!r}")
         if step.expect:
             seen = phone.wait_for_text(step.expect, timeout=max_anchor_wait)
             if not seen.ok:
-                return ReplayResult(
-                    ok=False, completed=i, total=len(macro.steps), diverged_at=i + 1,
-                    message=(f"after step {i} the screen should show {step.expect!r} and it does not. "
-                             "Take over from the current screen."),
-                )
-    return ReplayResult(True, len(macro.steps), len(macro.steps), "macro completed")
+                return stop(i + 1, i, f"after step {i} the screen should show {step.expect!r} and it does not. "
+                                      "Take over from the current screen.")
+    return ReplayResult(True, total, total, "macro completed", log=notes)

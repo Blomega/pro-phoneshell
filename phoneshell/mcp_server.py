@@ -800,32 +800,118 @@ def phone_macro_list() -> list[ContentBlock]:
         return _text("no macros saved yet")
     rows = [
         f"{m.name}\t{m.description}\t{len(m.steps)} steps\t{m.runs} runs, {m.failures} failures"
+        f"\t{m.inputs or ''}"
         for m in items
     ]
-    return _text("name\tdescription\tsteps\thistory\n" + "\n".join(rows))
+    return _text("name\tdescription\tsteps\thistory\tinputs\n" + "\n".join(rows))
 
 
 @mcp.tool(
     structured_output=False,
     description=(
-        "Replay a saved macro. It stops the moment the screen stops matching what the "
-        "macro expects and hands you back the current screen, so you can carry on from "
-        "there rather than starting over."
+        "Replay a saved macro. Fast: it finds each button by its text and taps it. It stops the moment "
+        "the screen stops matching and hands you back the current screen, so you can carry on from there. "
+        "It ALSO stops before any step that spends money, sends or deletes something: show the person "
+        "the screen, and only after they say yes call again with confirmed=true and from_step=<that step>. "
+        "inputs overrides a macro's variable values, e.g. {\"dish\": \"Green curry\"}."
     ),
 )
-def phone_macro_run(name: str) -> list[ContentBlock]:
+def phone_macro_run(name: str, confirmed: bool = False, from_step: int = 1,
+                    inputs: dict[str, str] | None = None) -> list[ContentBlock]:
     macro = macro_lib.get(name)
     if macro is None:
         return _text(f"no macro called {name!r}. Use phone_macro_list to see what exists.")
-    BRIDGE.guard.audit("macro_run", name=name, steps=len(macro.steps))
-    result = macro_lib.replay(macro, BRIDGE.phone, find_by_text)
+    BRIDGE.guard.audit("macro_run", name=name, steps=len(macro.steps), from_step=from_step,
+                       confirmed=confirmed, inputs=inputs or {})
+    result = macro_lib.replay(macro, BRIDGE.phone, find_by_text, confirmed=confirmed,
+                              start_at=from_step, inputs=inputs, guard=BRIDGE.guard)
     macro.runs += 1
-    if not result.ok:
+    if not result.ok and not result.needs_confirmation:
         macro.failures += 1
     macro.save()
     header = (f"macro {name!r}: {result.message} "
               f"({result.completed}/{result.total} steps done)")
+    if result.log:
+        header += "\n" + "\n".join(result.log)
     return _act_and_report(header)
+
+
+def _server(path: str, method: str = "GET", body: dict | None = None, timeout: float = 20.0) -> dict:
+    """The watcher lives in the phoneshell web server (it must outlive this
+    process); start that server if it is not running."""
+    import subprocess
+    import httpx
+    base = f"http://{BRIDGE.cfg.server_host}:{BRIDGE.cfg.server_port}"
+    try:
+        httpx.get(f"{base}/api/watches", timeout=2)
+    except httpx.HTTPError:
+        from .config import ROOT
+        subprocess.Popen([str(ROOT / ".venv" / "bin" / "python"), "-m", "phoneshell.server"], cwd=str(ROOT),
+                         stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                         start_new_session=True)
+        for _ in range(40):
+            time.sleep(0.5)
+            try:
+                httpx.get(f"{base}/api/watches", timeout=2)
+                break
+            except httpx.HTTPError:
+                pass
+    r = httpx.request(method, f"{base}{path}", json=body, timeout=timeout)
+    return r.json()
+
+
+@mcp.tool(
+    structured_output=False,
+    description=(
+        "Watch and learn, step 1: start watching the phone while the PERSON does a task by hand "
+        "(e.g. order their usual food). Then tell them: do the task on the phone normally, and say when "
+        "you're done. Do not touch the phone yourself while watching."
+    ),
+)
+def phone_watch_start(label: str) -> list[ContentBlock]:
+    res = _server("/api/watch/start", "POST", {"label": label})
+    d = res.get("demo") or {}
+    return _text(f"watching (demo {d.get('id')}). Ask the person to do '{label}' on the phone now and tell "
+                 f"you when they're done. They can see it at http://127.0.0.1:{BRIDGE.cfg.server_port}/learn")
+
+
+@mcp.tool(
+    structured_output=False,
+    description=(
+        "Watch and learn, step 2: the person finished. Stops watching, learns the steps (30-90 s), "
+        "checks each against the recorded screens, and saves them as a macro under `name` unless "
+        "save=false. Show the person the step list; then phone_macro_run(name) repeats the task fast."
+    ),
+)
+def phone_watch_finish(name: str = "", description: str = "", save: bool = True) -> list[ContentBlock]:
+    res = _server("/api/watch/stop", "POST", {"learn": True})
+    d = res.get("demo")
+    if not d:
+        return _text("nothing was being watched")
+    did = d["id"]
+    for _ in range(300):
+        time.sleep(2)
+        st = _server(f"/api/watch/{did}")
+        if st["status"] not in ("learning", "watching"):
+            break
+    if st["status"] != "ready":
+        return _text(f"learning did not finish: {st['status']} {st.get('reason', '')}")
+    draft = st["draft"]
+    lines = []
+    for i, s in enumerate(draft["steps"], 1):
+        flag = "" if s.get("verified") else "  [UNVERIFIED: " + "; ".join(s.get("checks", [])) + "]"
+        conf = "  [asks first]" if s.get("confirm") else ""
+        lines.append(f"  {i}. {s['action']} {s.get('target_text') or s.get('params')}{conf}{flag}")
+    out = (f"learned {len(draft['steps'])} steps from {st['frames']} screens"
+           f" (inputs: {draft.get('inputs') or 'none'}):\n" + "\n".join(lines))
+    if draft.get("notes"):
+        out += f"\nnotes: {draft['notes']}"
+    if save:
+        saved = _server(f"/api/watch/{did}/save", "POST",
+                        {"name": name or draft.get("name"), "description": description or draft.get("description", "")})
+        out += (f"\nsaved as macro {saved.get('name')!r}. Run it with phone_macro_run." if saved.get("ok")
+                else f"\nnot saved: {saved.get('error')}")
+    return _text(out)
 
 
 @mcp.tool(

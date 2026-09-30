@@ -63,6 +63,17 @@ bin/phoneshell shell       # see exactly what the agent sees, act by element id
 bin/phoneshell serve       # live screen in a browser, click to control, chat to delegate
 ```
 
+### Watch and learn
+
+Do a task on the phone once by hand; phoneshell learns it and repeats it in seconds. Open
+`http://127.0.0.1:8765/learn`, press **Watch me**, do the task (order food, send a form), press **Done**.
+iOS gives no other process your touches, so it records the screens you stop on (screenshot + accessibility
+tree, all sessionless: it never takes the phone from you), and Claude works out the taps and typing between
+them, drops mistakes you undid, and turns choices like the dish into inputs. Every learned step is checked
+against the recorded screens with the same matcher replay uses. Replay (`phone_macro_run`, or **Run** on the
+page) finds each button by its text, scrolls to it if the list moved, and **always stops before a step that
+pays, orders, sends or deletes** until you confirm that step.
+
 Or run the benchmark:
 
 ```bash
