@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agents' 'done' signals miss in both directions: on WebPageBench one framework over-claims by 41 points and another hides a fifth of its real successes | Blolabel</title>
+<meta name="description" content="WebPageBench (arXiv:2609.35026, 28 September 2026): gpt-5.6-luna on OpenManus said done on 152 of 152 tasks, 90 verified. OpenHands left 74 of 383 verified successes unreported across five models; other DOM frameworks 5 of 1,227; screenshot agents 59 of 457. Qwen3.8-27B: 0.763 via DOM, 0.480 via screenshots. phoneshell scores a run that hits its budget as a failure.">
+<link rel="canonical" href="https://blolabel.ai/blog/done-signal-errs-both-ways/">
+<meta property="og:title" content="Agents' 'done' signals miss in both directions: on WebPageBench one framework over-claims by 41 points and another hides a fifth of its real successes | Blolabel">
+<meta property="og:description" content="WebPageBench (arXiv:2609.35026, 28 September 2026): gpt-5.6-luna on OpenManus said done on 152 of 152 tasks, 90 verified. OpenHands left 74 of 383 verified successes unreported across five models; other DOM frameworks 5 of 1,227; screenshot agents 59 of 457. Qwen3.8-27B: 0.763 via DOM, 0.480 via screenshots. phoneshell scores a run that hits its budget as a failure.">
+<meta property="og:url" content="https://blolabel.ai/blog/done-signal-errs-both-ways/">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"Agents' 'done' signals miss in both directions: on WebPageBench one framework over-claims by 41 points and another hides a fifth of its real successes","description":"WebPageBench (arXiv:2609.35026, 28 September 2026): gpt-5.6-luna on OpenManus said done on 152 of 152 tasks, 90 verified. OpenHands left 74 of 383 verified successes unreported across five models; other DOM frameworks 5 of 1,227; screenshot agents 59 of 457. Qwen3.8-27B: 0.763 via DOM, 0.480 via screenshots. phoneshell scores a run that hits its budget as a failure.",
+ "datePublished":"2026-09-30","dateModified":"2026-09-30",
+ "url":"https://blolabel.ai/blog/done-signal-errs-both-ways/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/done-signal-errs-both-ways/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"}}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Can you trust a web or phone agent's own 'task complete' signal?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Not as a score. On WebPageBench (arXiv:2609.35026), gpt-5.6-luna on OpenManus said done on all 152 tasks while the event log confirmed 90, and the OpenHands framework left 74 of 383 verified successes without a done signal across five models."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Do agents over-claim or under-claim success?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Both, depending on the framework. Across 24 WebPageBench pairs, completion minus verified success ranged from minus 11.2 to plus 40.8 points. Screenshot-only agents had 158 over-claims and left 59 of 457 verified successes unreported."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does a DOM or accessibility tree beat screenshots for the same model?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "On WebPageBench, Qwen3.8-27B scored 0.737 to 0.763 through three DOM frameworks and 0.480 through a screenshot-only adapter, 116 against 73 of 152 tasks, in single runs."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How does phoneshell grade a run that runs out of budget?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "As a failure. phoneshell/bench/runner.py sets passed = checks passed and not timed out, so a run that hits its 240 second or 25 turn budget cannot pass, whatever the phone shows afterwards."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-09-30">30 September 2026</time>
+    <span>6 min read</span>
+  </div>
+  <h1>Agents' 'done' signals miss in both directions: on WebPageBench one framework over-claims by 41 points and another hides a fifth of its real successes</h1>
+  <p class="standfirst">WebPageBench grades 24 model and framework pairs from the site's own event log and records the agent's completion claim separately. The claim over-counts by up to 62 of 152 tasks on some frameworks and under-counts by up to 21 on others, so no single correction fixes self-reported success.</p>
+
+  <p>On WebPageBench's public leaderboard, gpt-5.6-luna running in the OpenManus framework declared all 152 tasks finished, and the site's own event log confirmed 90 of them: a 41-point over-claim. The OpenHands framework errs the other way on every model it runs, leaving 74 of its 383 log-verified successes (19%) without a completion signal. Self-reported success is not one bias you can subtract. Its sign depends on the framework around the model.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/done-signal-errs-both-ways-hero.png" alt="Abstract technical illustration of two parallel ledgers that mostly agree, with marks slipping out of step in both directions along their length" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="what-webpagebench-released-on-28-september-2026">What WebPageBench released on 28 September 2026</h2>
+
+<p>WebPageBench (arXiv:2609.35026, v1 dated 28 September 2026) is from Anton Emelyanov, Maria Tikhonova, Zaven Martirosian, Sergei Averkiev and Alena Fenogenova (DAIMLD, HSE University, NUST MISIS). It is six mock sites with brand cues removed: a marketplace, a bookstore, grocery delivery, rail tickets, hotel search and a document cabinet. The pages themselves write typed events (19 event types, such as <code>basket_add</code> with item id and quantity) to a per-run log. A task lists the events it needs; the Event-Match Score (EMS) is 1 only if every condition matches. No judge model is involved and the rendered page is never scraped.</p>
+
+<p>The suite has 152 tasks: 65 hand-written scenarios plus 87 variants that re-render one control (a popup calendar becomes a native date field, say) with the prompt and conditions unchanged. The agent's own completion claim is stored separately from EMS, and a third number, Done&amp;pass, counts tasks where the agent said done and the log agreed. The leaderboard covers 24 model and framework pairs, one run each at default decoding. The code is on GitHub at <code>ai-forever/WebPageBench</code> (repository created 23 September 2026, Apache-2.0) and the leaderboard is a Hugging Face Space.</p>
+
+<table>
+  <thead>
+    <tr><th>Model / framework</th><th>Observation</th><th>EMS</th><th>Said done</th><th>Done&amp;pass</th><th>Over-claims (of 152)</th><th>Under-claims (of 152)</th><th>Source</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>gpt-5.6-luna / openmanus</td><td>DOM + screenshot</td><td>0.592</td><td>1.000</td><td>0.592</td><td>62</td><td>0</td><td>Table 3; counts ours</td></tr>
+    <tr><td>gpt-5.6-luna / openhands</td><td>DOM text</td><td>0.625</td><td>0.638</td><td>0.605</td><td>5</td><td>3</td><td>Table 3; counts ours</td></tr>
+    <tr><td>gemini-3.8-flash / openmanus</td><td>DOM + screenshot</td><td>0.822</td><td>1.000</td><td>0.822</td><td>27</td><td>0</td><td>Table 3; counts ours</td></tr>
+    <tr><td>gemini-3.8-flash / openhands</td><td>DOM text</td><td>0.572</td><td>0.461</td><td>0.454</td><td>1</td><td>18</td><td>Table 3; counts ours</td></tr>
+    <tr><td>minimax-m2.7 / openhands</td><td>DOM text</td><td>0.368</td><td>0.257</td><td>0.230</td><td>4</td><td>21</td><td>Table 3; counts ours</td></tr>
+    <tr><td>qwen3.8-27b / openmanus</td><td>DOM + screenshot</td><td>0.763</td><td>1.000</td><td>0.763</td><td>36</td><td>0</td><td>Table 3; counts ours</td></tr>
+    <tr><td>qwen3.8-27b / qwen3-vl adapter</td><td>screenshot only</td><td>0.480</td><td>0.493</td><td>0.375</td><td>18</td><td>16</td><td>Table 3; counts ours</td></tr>
+    <tr><td>fara-1.5-9b / fara</td><td>screenshot only</td><td>0.638</td><td>0.572</td><td>0.493</td><td>12</td><td>22</td><td>Table 3; counts ours</td></tr>
+    <tr><td>opencua-72b / opencua</td><td>screenshot only</td><td>0.421</td><td>0.724</td><td>0.421</td><td>46</td><td>0</td><td>Table 3; counts ours</td></tr>
+    <tr><td>uitars-1.5-7b / uitars</td><td>screenshot only</td><td>0.336</td><td>0.382</td><td>0.289</td><td>14</td><td>7</td><td>Table 3; counts ours</td></tr>
+  </tbody>
+</table>
+
+<p>Over-claims are (said done minus Done&amp;pass) x 152 and under-claims are (EMS minus Done&amp;pass) x 152, rounded; the paper publishes the three rates, not these counts. Observation types are from the paper's Table 1; the DeepSeek pairs receive DOM text only.</p>
+
+<h2 id="the-framework-decides-which-way-the-self-report-is-wrong">The framework decides which way the self-report is wrong</h2>
+
+<p>In 8 of the 24 pairs the agent said done on 151 or 152 of 152 tasks. Those eight are Gemini and GPT-5.6-luna on openmanus and browser-use, DeepSeek on browser-use, and Qwen3.8-27B on openmanus, ouroboros-cut and browser-use, and their verified scores run from 0.592 to 0.822. A completion rate of 1.000 carries no information about which tasks worked. The same GPT-5.6-luna under OpenHands is nearly calibrated, 0.638 said done against 0.625 verified.</p>
+
+<p>OpenHands flips the sign. It under-claims on all five models it runs: Gemini 18 of 87 verified successes, DeepSeek 18 of 69, GLM-5.2 14 of 76, MiniMax 21 of 56 and GPT-5.6-luna 3 of 95, which is 74 of 383 pooled. The other DOM and text frameworks together leave 5 of 1,227 verified successes unreported. The screenshot-only agents do both at once: 158 over-claims and 59 unreported successes out of 457 verified, 12.9%. The paper's own summary for that group is that between one in nine and one in four verified successes end without a completion signal.</p>
+
+<svg viewBox="0 0 760 546" style="width:100%;height:auto" role="img" aria-label="Diverging bar chart of the 24 model and harness pairs on the WebPageBench public leaderboard, arXiv 2609.35026 Table 3, 152 tasks each. Bars to the right count over-claims, tasks the agent declared finished that the event log failed; bars to the left count under-claims, tasks the log verified that the agent never declared finished. gpt-5.6-luna with openmanus over-claims 62 of 152 and under-claims none. The OpenHands harness under-claims on all five models it runs, 74 of its 383 verified successes in total, for example minimax-m2.7 21 of 56 and gemini-3.8-flash 18 of 87. Screenshot-only agents do both: fara-1.5-9b over-claims 12 and under-claims 22. The other DOM and text harnesses under-claim 5 of 1,227 verified successes.">
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">WebPageBench: what the agent said vs what the event log shows (tasks of 152)</text>
+<text x="422" y="56" font-size="11" fill="#5ad1a0" text-anchor="end">under-claim: log passed, agent never said done</text>
+<text x="438" y="56" font-size="11" fill="#f2a65a">over-claim: agent said done, log failed</text>
+<line x1="430" y1="70" x2="430" y2="486" stroke="#6f7b90"/>
+<text x="317.0" y="89" font-size="10" fill="#c4ccda" text-anchor="end">gemini-3.8-flash / openmanus</text>
+<text x="427.0" y="89" font-size="9" fill="#5ad1a0" text-anchor="end">0</text>
+<rect x="430" y="80" width="113.4" height="11" fill="#f2a65a"/>
+<text x="546.4" y="89" font-size="9" fill="#f2a65a">27</text>
+<text x="317.0" y="106" font-size="10" fill="#c4ccda" text-anchor="end">gemini-3.8-flash / browser-use</text>
+<text x="427.0" y="106" font-size="9" fill="#5ad1a0" text-anchor="end">0</text>
+<rect x="430" y="97" width="180.6" height="11" fill="#f2a65a"/>
+<text x="613.6" y="106" font-size="9" fill="#f2a65a">43</text>
+<text x="317.0" y="123" font-size="10" fill="#c4ccda" text-anchor="end">gemini-3.8-flash / openhands</text>
+<rect x="354.4" y="114" width="75.6" height="11" fill="#5ad1a0"/>
+<text x="351.4" y="123" font-size="9" fill="#5ad1a0" text-anchor="end">18</text>
+<rect x="430" y="114" width="4.2" height="11" fill="#f2a65a"/>
+<text x="437.2" y="123" font-size="9" fill="#f2a65a">1</text>
+<text x="317.0" y="140" font-size="10" fill="#c4ccda" text-anchor="end">gpt-5.6-luna / ouro-full-iso</text>
+<text x="427.0" y="140" font-size="9" fill="#5ad1a0" text-anchor="end">0</text>
+<rect x="430" y="131" width="46.2" height="11" fill="#f2a65a"/>
+<text x="479.2" y="140" font-size="9" fill="#f2a65a">11</text>
+<text x="317.0" y="157" font-size="10" fill="#c4ccda" text-anchor="end">gpt-5.6-luna / browser-use</text>
+<text x="427.0" y="157" font-size="9" fill="#5ad1a0" text-anchor="end">0</text>
+<rect x="430" y="148" width="184.8" height="11" fill="#f2a65a"/>
+<text x="617.8" y="157" font-size="9" fill="#f2a65a">44</text>
+<text x="317.0" y="174" font-size="10" fill="#c4ccda" text-anchor="end">gpt-5.6-luna / ouro-full-env</text>
+<rect x="417.4" y="165" width="12.6" height="11" fill="#5ad1a0"/>
+<text x="414.4" y="174" font-size="9" fill="#5ad1a0" text-anchor="end">3</text>
+<rect x="430" y="165" width="25.2" height="11" fill="#f2a65a"/>
+<text x="458.2" y="174" font-size="9" fill="#f2a65a">6</text>
+<text x="317.0" y="191" font-size="10" fill="#c4ccda" text-anchor="end">gpt-5.6-luna / openhands</text>
+<rect x="417.4" y="182" width="12.6" height="11" fill="#5ad1a0"/>
+<text x="414.4" y="191" font-size="9" fill="#5ad1a0" text-anchor="end">3</text>
+<rect x="430" y="182" width="21.0" height="11" fill="#f2a65a"/>
+<text x="454.0" y="191" font-size="9" fill="#f2a65a">5</text>
+<text x="317.0" y="208" font-size="10" fill="#c4ccda" text-anchor="end">gpt-5.6-luna / openmanus</text>
+<text x="427.0" y="208" font-size="9" fill="#5ad1a0" text-anchor="end">0</text>
+<rect x="430" y="199" width="260.4" height="11" fill="#f2a65a"/>
+<text x="693.4" y="208" font-size="9" fill="#f2a65a">62</text>
+<text x="317.0" y="225" font-size="10" fill="#c4ccda" text-anchor="end">deepseek-v4.1-flash / browser-use</text>
+<rect x="425.8" y="216" width="4.2" height="11" fill="#5ad1a0"/>
+<text x="422.8" y="225" font-size="9" fill="#5ad1a0" text-anchor="end">1</text>
+<rect x="430" y="216" width="134.4" height="11" fill="#f2a65a"/>
+<text x="567.4" y="225" font-size="9" fill="#f2a65a">32</text>
+<text x="317.0" y="242" font-size="10" fill="#c4ccda" text-anchor="end">deepseek-v4.1-flash / openmanus</text>
+<rect x="425.8" y="233" width="4.2" height="11" fill="#5ad1a0"/>
+<text x="422.8" y="242" font-size="9" fill="#5ad1a0" text-anchor="end">1</text>
+<rect x="430" y="233" width="172.2" height="11" fill="#f2a65a"/>
+<text x="605.2" y="242" font-size="9" fill="#f2a65a">41</text>
+<text x="317.0" y="259" font-size="10" fill="#c4ccda" text-anchor="end">deepseek-v4.1-flash / openhands</text>
+<rect x="354.4" y="250" width="75.6" height="11" fill="#5ad1a0"/>
+<text x="351.4" y="259" font-size="9" fill="#5ad1a0" text-anchor="end">18</text>
+<rect x="430" y="250" width="4.2" height="11" fill="#f2a65a"/>
+<text x="437.2" y="259" font-size="9" fill="#f2a65a">1</text>
+<text x="317.0" y="276" font-size="10" fill="#c4ccda" text-anchor="end">qwen3.8-27b / openmanus</text>
+<text x="427.0" y="276" font-size="9" fill="#5ad1a0" text-anchor="end">0</text>
+<rect x="430" y="267" width="151.2" height="11" fill="#f2a65a"/>
+<text x="584.2" y="276" font-size="9" fill="#f2a65a">36</text>
+<text x="317.0" y="293" font-size="10" fill="#c4ccda" text-anchor="end">qwen3.8-27b / ouro-cut</text>
+<text x="427.0" y="293" font-size="9" fill="#5ad1a0" text-anchor="end">0</text>
+<rect x="430" y="284" width="159.6" height="11" fill="#f2a65a"/>
+<text x="592.6" y="293" font-size="9" fill="#f2a65a">38</text>
+<text x="317.0" y="310" font-size="10" fill="#c4ccda" text-anchor="end">qwen3.8-27b / browser-use</text>
+<text x="427.0" y="310" font-size="9" fill="#5ad1a0" text-anchor="end">0</text>
+<rect x="430" y="301" width="168.0" height="11" fill="#f2a65a"/>
+<text x="601.0" y="310" font-size="9" fill="#f2a65a">40</text>
+<text x="317.0" y="327" font-size="10" fill="#e9ecf2" text-anchor="end">qwen3.8-27b / qwen3-vl *</text>
+<rect x="362.8" y="318" width="67.2" height="11" fill="#5ad1a0"/>
+<text x="359.8" y="327" font-size="9" fill="#5ad1a0" text-anchor="end">16</text>
+<rect x="430" y="318" width="75.6" height="11" fill="#f2a65a"/>
+<text x="508.6" y="327" font-size="9" fill="#f2a65a">18</text>
+<text x="317.0" y="344" font-size="10" fill="#e9ecf2" text-anchor="end">fara-1.5-9b / fara *</text>
+<rect x="337.6" y="335" width="92.4" height="11" fill="#5ad1a0"/>
+<text x="334.6" y="344" font-size="9" fill="#5ad1a0" text-anchor="end">22</text>
+<rect x="430" y="335" width="50.4" height="11" fill="#f2a65a"/>
+<text x="483.4" y="344" font-size="9" fill="#f2a65a">12</text>
+<text x="317.0" y="361" font-size="10" fill="#e9ecf2" text-anchor="end">fara-1.5-27b / fara *</text>
+<rect x="383.8" y="352" width="46.2" height="11" fill="#5ad1a0"/>
+<text x="380.8" y="361" font-size="9" fill="#5ad1a0" text-anchor="end">11</text>
+<rect x="430" y="352" width="46.2" height="11" fill="#f2a65a"/>
+<text x="479.2" y="361" font-size="9" fill="#f2a65a">11</text>
+<text x="317.0" y="378" font-size="10" fill="#c4ccda" text-anchor="end">glm-5.2 / openhands</text>
+<rect x="371.2" y="369" width="58.8" height="11" fill="#5ad1a0"/>
+<text x="368.2" y="378" font-size="9" fill="#5ad1a0" text-anchor="end">14</text>
+<rect x="430" y="369" width="12.6" height="11" fill="#f2a65a"/>
+<text x="445.6" y="378" font-size="9" fill="#f2a65a">3</text>
+<text x="317.0" y="395" font-size="10" fill="#e9ecf2" text-anchor="end">opencua-72b / opencua *</text>
+<text x="427.0" y="395" font-size="9" fill="#5ad1a0" text-anchor="end">0</text>
+<rect x="430" y="386" width="193.2" height="11" fill="#f2a65a"/>
+<text x="626.2" y="395" font-size="9" fill="#f2a65a">46</text>
+<text x="317.0" y="412" font-size="10" fill="#c4ccda" text-anchor="end">minimax-m2.7 / openhands</text>
+<rect x="341.8" y="403" width="88.2" height="11" fill="#5ad1a0"/>
+<text x="338.8" y="412" font-size="9" fill="#5ad1a0" text-anchor="end">21</text>
+<rect x="430" y="403" width="16.8" height="11" fill="#f2a65a"/>
+<text x="449.8" y="412" font-size="9" fill="#f2a65a">4</text>
+<text x="317.0" y="429" font-size="10" fill="#e9ecf2" text-anchor="end">opencua-32b / opencua *</text>
+<text x="427.0" y="429" font-size="9" fill="#5ad1a0" text-anchor="end">0</text>
+<rect x="430" y="420" width="142.8" height="11" fill="#f2a65a"/>
+<text x="575.8" y="429" font-size="9" fill="#f2a65a">34</text>
+<text x="317.0" y="446" font-size="10" fill="#e9ecf2" text-anchor="end">uitars-1.5-7b / uitars *</text>
+<rect x="400.6" y="437" width="29.4" height="11" fill="#5ad1a0"/>
+<text x="397.6" y="446" font-size="9" fill="#5ad1a0" text-anchor="end">7</text>
+<rect x="430" y="437" width="58.8" height="11" fill="#f2a65a"/>
+<text x="491.8" y="446" font-size="9" fill="#f2a65a">14</text>
+<text x="317.0" y="463" font-size="10" fill="#e9ecf2" text-anchor="end">evocua-32b-s1 / evocua *</text>
+<rect x="421.6" y="454" width="8.4" height="11" fill="#5ad1a0"/>
+<text x="418.6" y="463" font-size="9" fill="#5ad1a0" text-anchor="end">2</text>
+<rect x="430" y="454" width="21.0" height="11" fill="#f2a65a"/>
+<text x="454.0" y="463" font-size="9" fill="#f2a65a">5</text>
+<text x="317.0" y="480" font-size="10" fill="#e9ecf2" text-anchor="end">evocua-32b-s2 / evocua *</text>
+<rect x="425.8" y="471" width="4.2" height="11" fill="#5ad1a0"/>
+<text x="422.8" y="480" font-size="9" fill="#5ad1a0" text-anchor="end">1</text>
+<rect x="430" y="471" width="75.6" height="11" fill="#f2a65a"/>
+<text x="508.6" y="480" font-size="9" fill="#f2a65a">18</text>
+<text x="430.0" y="504" font-size="9" fill="#8a93a5" text-anchor="middle">0</text>
+<text x="514.0" y="504" font-size="9" fill="#8a93a5" text-anchor="middle">20</text>
+<text x="598.0" y="504" font-size="9" fill="#8a93a5" text-anchor="middle">40</text>
+<text x="682.0" y="504" font-size="9" fill="#8a93a5" text-anchor="middle">60</text>
+<text x="346.0" y="504" font-size="9" fill="#8a93a5" text-anchor="middle">20</text>
+<text x="430" y="520" font-size="10" fill="#c4ccda" text-anchor="middle">tasks (counts are the published rates x 152, rounded)</text>
+<text x="20" y="538" font-size="10" fill="#8a93a5">* screenshot-only agent. Over = Completion minus Done&amp;pass; under = EMS minus Done&amp;pass. Source: arXiv 2609.35026 Table 3, our arithmetic.</text>
+</g></svg>
+
+<p>The completion-minus-EMS gap across the 24 pairs runs from minus 11.2 points (DeepSeek on OpenHands) to plus 40.8 (GPT-5.6-luna on OpenManus). A grader who calibrates self-reports on one framework and applies the correction to another would be wrong by up to 52 points. These are single runs per pair, so a two- or three-task difference in one row is noise. A consistent sign across five models on one framework is not.</p>
+
+<h2 id="same-model-same-prompts-dom-0-763-screenshots-0-480">Same model, same prompts: DOM 0.763, screenshots 0.480</h2>
+
+<p>Qwen3.8-27B scores 0.737 to 0.763 through three DOM frameworks and 0.480 through the screenshot-only adapter, 116 against 73 of the same 152 tasks. The screenshot adapter returns pointer coordinates through the authors' Playwright driver; the DOM frameworks act on element handles. This is the web version of the tree-versus-pixels question our own benchmark asks on iOS, and on this suite the element tree wins by 43 tasks for one model. One run, one model, so treat the size as an anecdote; the direction matches every other screenshot agent on the board, all of which sit at or below 0.638.</p>
+
+<svg viewBox="0 0 760 440" style="width:100%;height:auto" role="img" aria-label="Diagram of how WebPageBench separates two signals, from arXiv 2609.35026. The task file supplies a prompt and event conditions; the agent acts on a mock site; the site writes typed events to a per-run log; check() compares the log against the conditions to give the Event-Match Score, while the agent's own completion claim is recorded separately. A two-by-two grid pools all 24 leaderboard pairs, 3,648 task runs: 1,929 said done and passed, 552 said done and failed the log, 138 passed the log without a done signal, and 1,029 neither. A grader using the self-report scores the top row, 2,481; the event log scores the left column, 2,067. phoneshell scores a pass only when device checks pass and the run did not hit its 240 second or 25 turn budget.">
+  <g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="12">
+    <text x="20" y="26" font-size="14" font-weight="600">Two signals per run, and the grid they make (all 24 pairs, 3,648 task runs)</text>
+    <rect x="20" y="50" width="150" height="54" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="32" y="72" font-weight="600">task file</text>
+    <text x="32" y="90" fill="#c4ccda" font-size="11">prompt + event conditions</text>
+    <line x1="170" y1="77" x2="200" y2="77" stroke="#6f7b90"/>
+    <rect x="200" y="50" width="150" height="54" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="212" y="72" font-weight="600">agent + framework</text>
+    <text x="212" y="90" fill="#c4ccda" font-size="11">acts on the mock site</text>
+    <line x1="275" y1="104" x2="275" y2="134" stroke="#f2a65a"/>
+    <text x="284" y="124" fill="#f2a65a" font-size="11">claims "done" (or not)</text>
+    <line x1="350" y1="77" x2="380" y2="77" stroke="#6f7b90"/>
+    <rect x="380" y="50" width="170" height="54" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="392" y="72" font-weight="600">site event log</text>
+    <text x="392" y="90" fill="#c4ccda" font-size="11">typed events, 19 types</text>
+    <line x1="550" y1="77" x2="580" y2="77" stroke="#6f7b90"/>
+    <rect x="580" y="50" width="160" height="54" rx="8" fill="#1d2330" stroke="#5ad1a0"/>
+    <text x="592" y="72" font-weight="600" fill="#5ad1a0">check() gives EMS</text>
+    <text x="592" y="90" fill="#c4ccda" font-size="11">no judge model</text>
+    <text x="330" y="166" font-size="11" fill="#5ad1a0" text-anchor="middle">log passed</text>
+    <text x="530" y="166" font-size="11" fill="#8a93a5" text-anchor="middle">log failed</text>
+    <text x="160" y="218" font-size="11" fill="#f2a65a" text-anchor="end">agent said done</text>
+    <text x="160" y="318" font-size="11" fill="#8a93a5" text-anchor="end">no done signal</text>
+    <rect x="230" y="176" width="200" height="90" rx="6" fill="#1f3a31" stroke="#5ad1a0"/>
+    <text x="330" y="212" font-size="22" font-weight="600" text-anchor="middle">1,929</text>
+    <text x="330" y="236" font-size="11" fill="#c4ccda" text-anchor="middle">done and passed</text>
+    <rect x="430" y="176" width="200" height="90" rx="6" fill="#3a2d1f" stroke="#f2a65a"/>
+    <text x="530" y="212" font-size="22" font-weight="600" text-anchor="middle" fill="#f2a65a">552</text>
+    <text x="530" y="236" font-size="11" fill="#c4ccda" text-anchor="middle">over-claims</text>
+    <rect x="230" y="276" width="200" height="90" rx="6" fill="#1d2330" stroke="#5ad1a0"/>
+    <text x="330" y="312" font-size="22" font-weight="600" text-anchor="middle" fill="#5ad1a0">138</text>
+    <text x="330" y="336" font-size="11" fill="#c4ccda" text-anchor="middle">under-claims (74 on OpenHands)</text>
+    <rect x="430" y="276" width="200" height="90" rx="6" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="530" y="312" font-size="22" font-weight="600" text-anchor="middle" fill="#8a93a5">1,029</text>
+    <text x="530" y="336" font-size="11" fill="#c4ccda" text-anchor="middle">neither</text>
+    <text x="645" y="226" font-size="11" fill="#f2a65a">self-report counts</text>
+    <text x="645" y="242" font-size="11" fill="#f2a65a">this row: 2,481</text>
+    <text x="230" y="390" font-size="11" fill="#5ad1a0">event log counts the left column: 2,067</text>
+    <text x="20" y="416" font-size="11" fill="#c4ccda">phoneshell's rule: pass = device checks pass AND the run did not hit its 240 s or 25-turn budget</text>
+    <text x="20" y="432" font-size="10" fill="#8a93a5">Counts: published rates x 152, summed over the 24 pairs of arXiv 2609.35026 Table 3 (our arithmetic).</text>
+  </g>
+</svg>
+
+<h2 id="what-it-means-for-grading-an-agent-on-a-phone">What it means for grading an agent on a phone</h2>
+
+<p>Our own phone data sits in the over-claim regime. In the 9 September 2026 sweep behind our <a href="/blog/agents-report-success-device-disagrees/">15 September note</a>, 16 of 27 device-graded failures ended with the model saying the job was done, and none of the 441 device passes across two sweeps had a summary admitting failure. That matches the DOM frameworks here, and the reason is structural in both. phoneshell's OpenRouter loop ends a run when the model calls <code>phone_done</code>, and a reply with no tool call is taken as the answer (<code>phoneshell/bench/openrouter.py</code>), so a completion signal fires on almost every run by construction, the way browser-use's <code>done</code> action does.</p>
+
+<p>The two benchmarks disagree about the under-claim cell, and it is a decision a grader has to make on purpose. WebPageBench scores a task from the log whether or not the agent said done, unless the shared time limit expires. phoneshell refuses to score a pass for a run that hit its 240-second budget or its 25-turn cap, whatever the phone shows afterwards (<code>result.passed = passed and not timed_out</code> in <code>phoneshell/bench/runner.py</code>). That rule came from a measured case: <code>clock.alarm.set_time</code> once timed out with zero completed turns and still satisfied its checks from what was left on screen. Our judgement is that on a real phone the stricter rule is right, because an agent that keeps acting after the goal is met can undo it. The paper does not break its under-claims down by cause (step cap, framework error, or a clean stop without the done action), so we cannot say how many of OpenHands' 74 would fail under our rule.</p>
+
+<p>We also cannot measure our own under-claim rate the way WebPageBench does. phoneshell stores the model's final text and any timeout error, but not whether the text came from <code>phone_done</code> or from a plain reply. Adding that one field would make both cells of the bottom row countable.</p>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<ul>
+  <li>Paper: <code>https://arxiv.org/abs/2609.35026</code>; Table 3 (24 pairs: EMS, Compl., Done&amp;pass), Table 1 (observation types), Section 5.2.</li>
+  <li>Counts: for each row, over = round(152 x (Compl. minus Done&amp;pass)) and under = round(152 x (EMS minus Done&amp;pass)). Gemini on OpenHands: 152 x (0.572 minus 0.454) = 17.9, so 18.</li>
+  <li>Code and leaderboard: <code>https://github.com/ai-forever/WebPageBench</code>, <code>https://huggingface.co/spaces/ai-forever/WebPageBench</code>.</li>
+  <li>phoneshell: <code>grep -n "No tool call and no phone_done" -A 3 phoneshell/bench/openrouter.py</code>; <code>grep -n "passed and not timed_out" phoneshell/bench/runner.py</code>; <code>grep -n "max_steps\|timeout_seconds" phoneshell/bench/schema.py</code>.</li>
+</ul>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>Dated 31 March 2027. If WebPageBench or anyone else re-runs the OpenHands framework on the 152 tasks with at least three of its five models, said-done will again be below EMS on at least two of them. If said-done comes out at or above EMS on all three, the OpenHands under-claim is noise from one run. On our side: once phoneshell records where the final summary came from, runs that pass on the device without a <code>phone_done</code> call will be under 2% of device passes over the next 300 scored runs. A higher share would mean our over-claim-only picture from September missed a whole cell.</p>
+
+  <section class="sources">
+    <h2>Sources</h2>
+    <ol>
+      <li><a href="https://arxiv.org/abs/2609.35026">Emelyanov, Tikhonova, Martirosian, Averkiev, Fenogenova (DAIMLD, HSE University, NUST MISIS), WebPageBench: Event-Level Verification and Controlled UI-Variant Generation for Web Agents, arXiv:2609.35026, 28 September 2026</a></li>
+      <li><a href="https://arxiv.org/html/2609.35026v1">WebPageBench HTML edition: Table 1 (frameworks and observations), Table 3 (24 leaderboard pairs), Section 5.2</a></li>
+      <li><a href="https://github.com/ai-forever/WebPageBench">ai-forever/WebPageBench repository, Apache-2.0, created 23 September 2026</a></li>
+      <li><a href="https://huggingface.co/spaces/ai-forever/WebPageBench">WebPageBench public leaderboard, Hugging Face Space</a></li>
+      <li><a href="https://blolabel.ai/blog/agents-report-success-device-disagrees/">Blolabel, 16 of 27 failures on a physical iPhone were reported as successes by the model that failed them, 15 September 2026 (phoneshell sweep of 9 September 2026)</a></li>
+      <li><a href="https://github.com/Blomega/phoneshell">phoneshell source: phoneshell/bench/openrouter.py, runner.py, schema.py, crawl.py, memory.py, environments/*.yaml (read 30 September 2026)</a></li>
+    </ol>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
