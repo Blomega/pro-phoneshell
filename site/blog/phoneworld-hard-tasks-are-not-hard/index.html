@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PhoneWorld's hard tasks are not hard for frontier agents: 83.3% on its mock apps against 31.6% on AndroidWorld's hard tasks | Blolabel</title>
+<meta name="description" content="PhoneWorld v3 (arXiv:2605.29486, 28 September 2026): seven general agents average 86.0% easy and 83.3% hard on 34 mock Android apps, 86.0% easy and 31.6% hard on AndroidWorld. Fidelity on four apps: 97.7% rendered, 92.4% navigable, 73.0% functional, 59.7% recurring transitions. phoneshell's own difficulty labels are hand-set and unchecked.">
+<link rel="canonical" href="https://blolabel.ai/blog/phoneworld-hard-tasks-are-not-hard/">
+<meta property="og:title" content="PhoneWorld's hard tasks are not hard for frontier agents: 83.3% on its mock apps against 31.6% on AndroidWorld's hard tasks | Blolabel">
+<meta property="og:description" content="PhoneWorld v3 (arXiv:2605.29486, 28 September 2026): seven general agents average 86.0% easy and 83.3% hard on 34 mock Android apps, 86.0% easy and 31.6% hard on AndroidWorld. Fidelity on four apps: 97.7% rendered, 92.4% navigable, 73.0% functional, 59.7% recurring transitions. phoneshell's own difficulty labels are hand-set and unchecked.">
+<meta property="og:url" content="https://blolabel.ai/blog/phoneworld-hard-tasks-are-not-hard/">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"PhoneWorld's hard tasks are not hard for frontier agents: 83.3% on its mock apps against 31.6% on AndroidWorld's hard tasks","description":"PhoneWorld v3 (arXiv:2605.29486, 28 September 2026): seven general agents average 86.0% easy and 83.3% hard on 34 mock Android apps, 86.0% easy and 31.6% hard on AndroidWorld. Fidelity on four apps: 97.7% rendered, 92.4% navigable, 73.0% functional, 59.7% recurring transitions. phoneshell's own difficulty labels are hand-set and unchecked.",
+ "datePublished":"2026-09-30","dateModified":"2026-09-30",
+ "url":"https://blolabel.ai/blog/phoneworld-hard-tasks-are-not-hard/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/phoneworld-hard-tasks-are-not-hard/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"}}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Is PhoneWorld harder than AndroidWorld?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "On hard tasks, no. In PhoneWorld v3 Table 1, seven general agents average 83.3% on PhoneWorld's hard tasks and 31.6% on AndroidWorld's; both average 86.0% on easy tasks."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How faithful are PhoneWorld's mock apps?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "A four-app audit on 963 real trajectories finds 97.7% of real page visits land on a rendered mock page, 92.4% on a navigable one and 73.0% on one whose core action works; recurring transitions are recalled at 59.7%."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Who assigns PhoneWorld's difficulty labels?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Its task generator, which writes the goal, step limit, verifier and difficulty together (Appendix A.3 of arXiv:2605.29486v3)."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does PhoneWorld data help training?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes on the paper's numbers: swapping 10K of 36,193 AndroidWorld training steps for PhoneWorld steps raised AndroidWorld success from 56.9% to 71.6%, and mock-app RL raised the real-phone average from 40.67% to 45.33%."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-09-30">30 September 2026</time>
+    <span>6 min read</span>
+  </div>
+  <h1>PhoneWorld's hard tasks are not hard for frontier agents: 83.3% on its mock apps against 31.6% on AndroidWorld's hard tasks</h1>
+  <p class="standfirst">Version 3 of PhoneWorld adds a 13-agent evaluation and a fidelity audit. Frontier agents score as well on its generator-labelled hard tasks as on its easy ones, and the rebuilt apps render 97.7% of real page visits but make only 73.0% of them work.</p>
+
+  <p>Seven general agents average 86.0% on PhoneWorld's easy tasks and 83.3% on its hard ones. On AndroidWorld the same seven average 86.0% easy and 31.6% hard. Version 3 of PhoneWorld (arXiv:2605.29486, posted 28 September 2026) reports both in one table: the mock apps' "hard" label barely lowers frontier-agent scores, while AndroidWorld's cuts them by 54 points. The same version's fidelity audit finds its rebuilt apps render 97.7% of observed pages but make only 73.0% of them work.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/phoneworld-hard-tasks-are-not-hard-hero.png" alt="Abstract technical illustration of a full-looking facade of panels on the left whose lit interior connections thin out on the right, beside a separate steep stepped structure" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="what-version-3-added">What version 3 added</h2>
+
+<p>PhoneWorld is from Yuxuan Liu and 23 co-authors (Renmin University of China, The Chinese University of Hong Kong Shenzhen, Wuhan University and others). It turns screenshots and trajectories recorded in real consumer apps into runnable, resettable Android mock apps: 34 apps across 16 domains, a 120-task audited benchmark (44 easy, 41 medium, 35 hard), a pool of 7,936 generated tasks, and 3,354 verified training trajectories. Each benchmark task is checked by a program: 49 compare an answer, 71 query the app's SQLite database.</p>
+
+<p>Versions 1 (28 May 2026) and 2 (14 August) were about training data. Version 3 adds three things. There is an online evaluation of 13 agents on PhoneWorld and on AndroidWorld's 116 tasks. There is an RL experiment on real phones. And there is a four-app audit of how faithfully the mocks reproduce Douban, Xiaohongshu, Bilibili and Meituan Waimai. The version 2 HTML has none of these tables. The paper's comment line still reads "work in progress".</p>
+
+<table>
+  <thead>
+    <tr><th>Agent</th><th>PhoneWorld easy</th><th>PhoneWorld hard</th><th>AndroidWorld easy</th><th>AndroidWorld hard</th><th>Source</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Claude Opus 4.8</td><td>100.0</td><td>85.7</td><td>91.8</td><td>31.6</td><td>v3 Table 1</td></tr>
+    <tr><td>Gemini 3.5 Flash</td><td>97.7</td><td>91.4</td><td>95.1</td><td>63.2</td><td>v3 Table 1</td></tr>
+    <tr><td>Kimi-K3</td><td>86.4</td><td>88.6</td><td>86.9</td><td>36.8</td><td>v3 Table 1</td></tr>
+    <tr><td>GPT-5.5</td><td>84.1</td><td>91.4</td><td>91.8</td><td>31.6</td><td>v3 Table 1</td></tr>
+    <tr><td>MiMo 2.5</td><td>84.1</td><td>82.9</td><td>82.0</td><td>21.1</td><td>v3 Table 1</td></tr>
+    <tr><td>Seed 2.0</td><td>77.3</td><td>74.3</td><td>80.3</td><td>21.1</td><td>v3 Table 1</td></tr>
+    <tr><td>DeepSeek-V4 Flash</td><td>72.7</td><td>68.6</td><td>73.8</td><td>15.8</td><td>v3 Table 1</td></tr>
+    <tr><td>Mean of the seven</td><td>86.0</td><td>83.3</td><td>86.0</td><td>31.6</td><td>our arithmetic</td></tr>
+    <tr><td>Mean of 5 open-source GUI agents</td><td>56.3</td><td>37.7</td><td>59.7</td><td>13.7</td><td>our arithmetic</td></tr>
+    <tr><td>PWAgent (Qwen3.5-9B, 26K AndroidWorld + 10K PhoneWorld steps)</td><td>77.3</td><td>51.4</td><td>83.6</td><td>42.1</td><td>v3 Table 1</td></tr>
+    <tr><td>Tasks per cell</td><td>44</td><td>35</td><td>61</td><td>19</td><td>v3 Appendix B</td></tr>
+  </tbody>
+</table>
+
+<p>Rates are strict task success in percent: partial credit, execution errors and failed checks all count as failures.</p>
+
+<h2 id="the-hard-label-means-different-things-on-the-two-benchmarks">The hard label means different things on the two benchmarks</h2>
+
+<p>Pooled, the seven general agents solved 204 of 245 hard PhoneWorld runs and 42 of 133 hard AndroidWorld runs. GPT-5.5 scores higher on PhoneWorld's hard tasks than on its easy ones (91.4 against 84.1), and so does Kimi-K3 (88.6 against 86.4). AndroidWorld's hard split is small, 19 task types, so one agent's 31.6% is 6 tasks. Even so, a 51.7-point gap in the mean across seven agents is far outside what 19 tasks can produce by chance.</p>
+
+<p>The labels come from different places. In PhoneWorld, the task generator writes the goal, the step limit, the verifier and the difficulty in one pass (Appendix A.3; its example task, "search for Project Group and tap Favorite" in the QQ mock, is labelled easy with a 10-step limit). Our reading, which the paper does not state, is that a generator can only call a task hard in terms of what it built. The deeper, service-backed behaviour that makes a real task hard is exactly what the audit says the mocks abstract away.</p>
+
+<svg viewBox="0 0 760 400" style="width:100%;height:auto" role="img" aria-label="Grouped bar chart from PhoneWorld, arXiv 2605.29486 version 3 Table 1. For the mean of seven general agents, success on PhoneWorld mock apps is 86.0 percent easy, 84.3 medium and 83.3 hard, while on AndroidWorld it is 86.0 easy, 63.1 medium and 31.6 hard. Easy tasks score the same on both benchmarks; hard tasks score 83.3 on PhoneWorld and 31.6 on AndroidWorld. For the mean of five open-source GUI agents, PhoneWorld goes 56.3, 51.7, 37.7 and AndroidWorld goes 59.7, 34.5, 13.7.">
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Success by labelled difficulty (%), mean across agents</text>
+<rect x="20" y="40" width="12" height="10" fill="#5ad1a0"/><text x="38" y="49" font-size="11" fill="#c4ccda">PhoneWorld (mock apps, 44 / 41 / 35 tasks)</text>
+<rect x="330" y="40" width="12" height="10" fill="#f2a65a"/><text x="348" y="49" font-size="11" fill="#c4ccda">AndroidWorld (61 / 36 / 19 tasks)</text>
+<text x="30" y="78" font-size="12" font-weight="600" fill="#c4ccda">7 general agents (Claude Opus 4.8 to DeepSeek-V4 Flash)</text>
+<line x1="30" y1="330" x2="350" y2="330" stroke="#6f7b90"/>
+<text x="24" y="333.0" font-size="9" fill="#8a93a5" text-anchor="end">0</text><line x1="30" y1="330.0" x2="350" y2="330.0" stroke="#2a3140"/>
+<text x="24" y="273.0" font-size="9" fill="#8a93a5" text-anchor="end">25</text><line x1="30" y1="270.0" x2="350" y2="270.0" stroke="#2a3140"/>
+<text x="24" y="213.0" font-size="9" fill="#8a93a5" text-anchor="end">50</text><line x1="30" y1="210.0" x2="350" y2="210.0" stroke="#2a3140"/>
+<text x="24" y="153.0" font-size="9" fill="#8a93a5" text-anchor="end">75</text><line x1="30" y1="150.0" x2="350" y2="150.0" stroke="#2a3140"/>
+<text x="24" y="93.0" font-size="9" fill="#8a93a5" text-anchor="end">100</text><line x1="30" y1="90.0" x2="350" y2="90.0" stroke="#2a3140"/>
+<rect x="50" y="123.6" width="30" height="206.4" fill="#5ad1a0"/><text x="65" y="119.6" font-size="10" fill="#5ad1a0" text-anchor="middle">86.0</text>
+<rect x="86" y="123.6" width="30" height="206.4" fill="#f2a65a"/><text x="101" y="119.6" font-size="10" fill="#f2a65a" text-anchor="middle">86.0</text>
+<text x="83" y="346" font-size="10" fill="#c4ccda" text-anchor="middle">easy</text>
+<rect x="155" y="127.7" width="30" height="202.3" fill="#5ad1a0"/><text x="170" y="123.7" font-size="10" fill="#5ad1a0" text-anchor="middle">84.3</text>
+<rect x="191" y="178.6" width="30" height="151.4" fill="#f2a65a"/><text x="206" y="174.6" font-size="10" fill="#f2a65a" text-anchor="middle">63.1</text>
+<text x="188" y="346" font-size="10" fill="#c4ccda" text-anchor="middle">medium</text>
+<rect x="260" y="130.1" width="30" height="199.9" fill="#5ad1a0"/><text x="275" y="126.1" font-size="10" fill="#5ad1a0" text-anchor="middle">83.3</text>
+<rect x="296" y="254.2" width="30" height="75.8" fill="#f2a65a"/><text x="311" y="250.2" font-size="10" fill="#f2a65a" text-anchor="middle">31.6</text>
+<text x="293" y="346" font-size="10" fill="#c4ccda" text-anchor="middle">hard</text>
+<text x="410" y="78" font-size="12" font-weight="600" fill="#c4ccda">5 open-source GUI agents (7B to 8B)</text>
+<line x1="410" y1="330" x2="730" y2="330" stroke="#6f7b90"/>
+<text x="404" y="333.0" font-size="9" fill="#8a93a5" text-anchor="end">0</text><line x1="410" y1="330.0" x2="730" y2="330.0" stroke="#2a3140"/>
+<text x="404" y="273.0" font-size="9" fill="#8a93a5" text-anchor="end">25</text><line x1="410" y1="270.0" x2="730" y2="270.0" stroke="#2a3140"/>
+<text x="404" y="213.0" font-size="9" fill="#8a93a5" text-anchor="end">50</text><line x1="410" y1="210.0" x2="730" y2="210.0" stroke="#2a3140"/>
+<text x="404" y="153.0" font-size="9" fill="#8a93a5" text-anchor="end">75</text><line x1="410" y1="150.0" x2="730" y2="150.0" stroke="#2a3140"/>
+<text x="404" y="93.0" font-size="9" fill="#8a93a5" text-anchor="end">100</text><line x1="410" y1="90.0" x2="730" y2="90.0" stroke="#2a3140"/>
+<rect x="430" y="194.9" width="30" height="135.1" fill="#5ad1a0"/><text x="445" y="190.9" font-size="10" fill="#5ad1a0" text-anchor="middle">56.3</text>
+<rect x="466" y="186.7" width="30" height="143.3" fill="#f2a65a"/><text x="481" y="182.7" font-size="10" fill="#f2a65a" text-anchor="middle">59.7</text>
+<text x="463" y="346" font-size="10" fill="#c4ccda" text-anchor="middle">easy</text>
+<rect x="535" y="205.9" width="30" height="124.1" fill="#5ad1a0"/><text x="550" y="201.9" font-size="10" fill="#5ad1a0" text-anchor="middle">51.7</text>
+<rect x="571" y="247.2" width="30" height="82.8" fill="#f2a65a"/><text x="586" y="243.2" font-size="10" fill="#f2a65a" text-anchor="middle">34.5</text>
+<text x="568" y="346" font-size="10" fill="#c4ccda" text-anchor="middle">medium</text>
+<rect x="640" y="239.5" width="30" height="90.5" fill="#5ad1a0"/><text x="655" y="235.5" font-size="10" fill="#5ad1a0" text-anchor="middle">37.7</text>
+<rect x="676" y="297.1" width="30" height="32.9" fill="#f2a65a"/><text x="691" y="293.1" font-size="10" fill="#f2a65a" text-anchor="middle">13.7</text>
+<text x="673" y="346" font-size="10" fill="#c4ccda" text-anchor="middle">hard</text>
+<text x="20" y="385" font-size="10" fill="#8a93a5">Unweighted means of the rows in arXiv 2605.29486v3 Table 1, our arithmetic. PhoneWorld difficulty is assigned by its task generator.</text>
+</g></svg>
+
+<p>Open-source GUI agents do slow down on PhoneWorld's hard tasks, from 56.3% to 37.7% on average, and PWAgent from 77.3% to 51.4%. So the label is not meaningless. It separates 7B models and does not separate frontier ones. The authors' own claim of a discriminative benchmark rests on the overall spread, 72.5% to 94.2% for general agents and 36.6% to 56.7% for open-source ones, which Table 1 does show.</p>
+
+<h2 id="what-the-mocks-keep-and-what-they-drop">What the mocks keep and what they drop</h2>
+
+<p>The fidelity audit uses 963 real trajectories, 6,442 page visits and 94 page types from the four apps, weighted by how often real users hit each page. Pooled, 97.7% of visits land on a page the mock renders, 92.4% on one that is reachable and usable, and 73.0% on one whose core action produces the expected state change. High-frequency transitions are recalled at 73.7%, recurring ones at 59.7%, and visual similarity is 65.0%. The weakest of the four apps reaches 51.0% functional coverage.</p>
+
+<svg viewBox="0 0 760 430" style="width:100%;height:auto" role="img" aria-label="Pipeline diagram of how PhoneWorld builds a mock app and where fidelity is lost, from arXiv 2605.29486 version 3 Section 4.4 and Appendix C. Real screenshots and trajectories, 963 trajectories and 6,442 page visits over 94 page types in the four audited apps, feed a usage-weighted skeleton, then a page specification, then a coding agent that builds, inspects and repairs an Android app, followed by human acceptance testing. The task generator then writes the goal, step limit, verifier and difficulty label together. Fidelity bars show 97.7 percent of visits on a rendered page, 92.4 percent on a navigable one and 73.0 percent on a functional one; high-frequency transition recall is 73.7 percent, recurring transition recall 59.7 percent, visual fidelity 65.0 percent, and the weakest app has 51.0 percent functional coverage.">
+  <g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="12">
+    <text x="20" y="26" font-size="14" font-weight="600">From recorded app use to a mock app with its own difficulty labels</text>
+    <rect x="20" y="46" width="160" height="70" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="32" y="68" font-weight="600">real-app evidence</text>
+    <text x="32" y="86" fill="#c4ccda" font-size="11">963 trajectories</text>
+    <text x="32" y="102" fill="#c4ccda" font-size="11">6,442 visits, 94 page types</text>
+    <line x1="180" y1="81" x2="200" y2="81" stroke="#6f7b90"/>
+    <rect x="200" y="46" width="160" height="70" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="212" y="68" font-weight="600">skeleton + spec</text>
+    <text x="212" y="86" fill="#c4ccda" font-size="11">usage-weighted pages,</text>
+    <text x="212" y="102" fill="#c4ccda" font-size="11">transitions, state changes</text>
+    <line x1="360" y1="81" x2="380" y2="81" stroke="#6f7b90"/>
+    <rect x="380" y="46" width="170" height="70" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="392" y="68" font-weight="600">coding agent</text>
+    <text x="392" y="86" fill="#c4ccda" font-size="11">build, inspect, repair</text>
+    <text x="392" y="102" fill="#c4ccda" font-size="11">then human acceptance</text>
+    <line x1="550" y1="81" x2="570" y2="81" stroke="#6f7b90"/>
+    <rect x="570" y="46" width="170" height="70" rx="8" fill="#1d2330" stroke="#f2a65a"/>
+    <text x="582" y="68" font-weight="600" fill="#f2a65a">task generator</text>
+    <text x="582" y="86" fill="#c4ccda" font-size="11">goal, step limit, verifier</text>
+    <text x="582" y="102" fill="#f2a65a" font-size="11">and the difficulty label</text>
+    <text x="20" y="160" font-size="13" font-weight="600" fill="#c4ccda">Four-app audit: share of real usage the mock reproduces (%)</text>
+    <g font-size="11">
+      <text x="230" y="192" text-anchor="end" fill="#c4ccda">page rendered</text>
+      <rect x="240" y="180" width="468.9" height="16" fill="#5ad1a0"/><text x="714" y="193" fill="#5ad1a0">97.7</text>
+      <text x="230" y="222" text-anchor="end" fill="#c4ccda">page navigable and usable</text>
+      <rect x="240" y="210" width="443.5" height="16" fill="#5ad1a0" opacity="0.85"/><text x="689" y="223" fill="#5ad1a0">92.4</text>
+      <text x="230" y="252" text-anchor="end" fill="#c4ccda">core action works</text>
+      <rect x="240" y="240" width="350.4" height="16" fill="#f2a65a"/><text x="596" y="253" fill="#f2a65a">73.0</text>
+      <text x="230" y="282" text-anchor="end" fill="#c4ccda">high-frequency transitions</text>
+      <rect x="240" y="270" width="353.8" height="16" fill="#8a93a5"/><text x="600" y="283" fill="#c4ccda">73.7</text>
+      <text x="230" y="312" text-anchor="end" fill="#c4ccda">recurring transitions</text>
+      <rect x="240" y="300" width="286.6" height="16" fill="#8a93a5"/><text x="533" y="313" fill="#c4ccda">59.7</text>
+      <text x="230" y="342" text-anchor="end" fill="#c4ccda">visual similarity</text>
+      <rect x="240" y="330" width="312" height="16" fill="#8a93a5"/><text x="558" y="343" fill="#c4ccda">65.0</text>
+      <text x="230" y="372" text-anchor="end" fill="#c4ccda">weakest app, core action works</text>
+      <rect x="240" y="360" width="244.8" height="16" fill="#f2a65a" opacity="0.7"/><text x="491" y="373" fill="#f2a65a">51.0</text>
+    </g>
+    <text x="20" y="410" font-size="10" fill="#8a93a5">Visit-weighted, pooled over Douban, Xiaohongshu, Bilibili and Meituan Waimai mocks. Source: arXiv 2605.29486v3 Table 4 and Appendix C.</text>
+  </g>
+</svg>
+
+<p>The audit and the difficulty result point the same way. Rendered pages are almost complete, working pages are three quarters complete, and the long tail of transitions is the least complete. A hard task in a real app usually lives in that tail. The authors describe the design as "selectively abstracting deeper service-backed functionality", which is a fair description of a training environment and a limit on a benchmark.</p>
+
+<h2 id="what-it-means-if-you-train-or-rank-phone-agents">What it means if you train or rank phone agents</h2>
+
+<p>As training data, the paper's case is strong on its own numbers. At a fixed 36,193-step budget, swapping 10K AndroidWorld steps for PhoneWorld steps raised AndroidWorld success from 56.9% to 71.6%. Widening app coverage from 5 to 34 apps at a fixed 10K steps raised it from 61.2% to 71.6%. In RL, giving half of a 50-step budget to mock apps raised the real-phone average from 40.67% to 45.33% and AndroidWorld from 77.2% to 83.2%. Cross-app real-phone tasks did not improve, 20.0% to 18.0%.</p>
+
+<p>As a ranking, use it with care. Rankings already flip between the two benchmarks: Claude Opus 4.8 leads Gemini 3.5 Flash on PhoneWorld (94.2% against 92.5%) and trails it on AndroidWorld (78.4% against 85.3%). The real-phone evaluation in Table 3 uses different model versions (Claude Opus 4.7, Gemini 3.1 Pro), so it cannot be paired with Table 1 row by row. It does show what real apps cost. On 150 human-judged real-phone tasks, no reference model beats 60% on any of the three subsets, and Claude Opus 4.7 scores 16.0% on cross-app tasks.</p>
+
+<p>For our own benchmark the lesson is about labels. phoneshell's 80 tasks run on a physical iPhone against Apple's first-party apps and are graded from device state, but their difficulty labels are hand-set in each task's YAML: 15 easy, 58 medium, 7 hard, and <code>medium</code> is the schema default when a file says nothing. Our leaderboard prints the label beside how many of six models solved the task (<code>phoneshell/bench/site.py</code>), and nothing checks one against the other. The PhoneWorld result says to make that check: a label that frontier models ignore is describing the task text, not the task.</p>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<ul>
+  <li>Paper: <code>https://arxiv.org/abs/2605.29486v3</code>; Table 1 (difficulty splits), Table 3 (real phone), Table 4 and Appendix C (fidelity), Appendix A.3 (task synthesis), Appendix B Table 5 (44 / 41 / 35 split).</li>
+  <li>Version 2 for comparison: <code>https://arxiv.org/html/2605.29486v2</code>; its Table 1 is a suite summary with no agent scores.</li>
+  <li>Means: average the seven general-agent rows of v3 Table 1 per column. Pooled hard counts: 35 x (0.857, 0.914, 0.886, 0.914, 0.829, 0.743, 0.686), rounded, sum to 204; 19 x (0.316, 0.632, 0.368, 0.316, 0.211, 0.211, 0.158) sum to 42.</li>
+  <li>phoneshell labels: <code>grep -h "^difficulty:" environments/*.yaml | sort | uniq -c</code> prints 15 easy, 7 hard, 58 medium; <code>grep -n "difficulty" phoneshell/bench/schema.py</code> shows the <code>medium</code> default.</li>
+  <li>Code and gated APKs: <code>https://github.com/EthanLeo-LYX/PhoneWorld</code>, <code>https://huggingface.co/datasets/EthanLeoLYX/PhoneWorld-APKs</code>.</li>
+</ul>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>Dated 31 March 2027. If PhoneWorld's authors or anyone else relabel its 35 hard tasks by human judgement or by measured step count, and the seven general agents still score within 10 points of their easy-task mean on the relabelled hard set, then the flat curve is a property of frontier agents on consumer-app flows, not of generator labels. We expect the relabelled hard set to open a gap of at least 20 points. A future PhoneWorld version whose audit reports functional coverage above 90% on the same four apps, with the hard-task mean still above 80%, would also count against our reading.</p>
+
+  <section class="sources">
+    <h2>Sources</h2>
+    <ol>
+      <li><a href="https://arxiv.org/abs/2605.29486v3">Liu, Lai, Li et al. (Renmin University of China, CUHK Shenzhen, Wuhan University and others), PhoneWorld: From Real-App Trajectories to Dynamic and Verifiable Environments for Phone-Use Agents, arXiv:2605.29486 v3, 28 September 2026 (v1 28 May, v2 14 August 2026)</a></li>
+      <li><a href="https://arxiv.org/html/2605.29486v3">PhoneWorld v3 HTML: Table 1 (difficulty splits), Tables 2 and 3 (training, real phone), Table 4 and Appendix C (fidelity), Appendix A.3 and B</a></li>
+      <li><a href="https://arxiv.org/html/2605.29486v2">PhoneWorld v2 HTML, 14 August 2026, for comparison (no agent evaluation table, no fidelity audit)</a></li>
+      <li><a href="https://github.com/EthanLeo-LYX/PhoneWorld">PhoneWorld repository</a></li>
+      <li><a href="https://huggingface.co/datasets/EthanLeoLYX/PhoneWorld-APKs">PhoneWorld APKs, gated Hugging Face dataset</a></li>
+      <li><a href="https://github.com/Blomega/phoneshell">phoneshell source: phoneshell/bench/openrouter.py, runner.py, schema.py, crawl.py, memory.py, environments/*.yaml (read 30 September 2026)</a></li>
+    </ol>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
