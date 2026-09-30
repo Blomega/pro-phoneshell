@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A 35B model now runs on an iPhone 17 Pro Max at 1.8 to 3.1 tokens a second, too slow to read one agent turn | Blolabel</title>
+<meta name="description" content="Routide (arXiv:2609.29032, 24 September 2026) runs Qwen3.6-35B-A3B-4bit on an iPhone 17 Pro Max: 1.8 to 3.1 tokens/s, 1.87 to 2.73 GiB footprint, 0.00% LRU hits at 512 MiB vs 38.58% at 576 MiB. Prefill is serial; the longest prompt run was 340 tokens. Our extrapolation: phoneshell's 2,542-token tool list would take 13.9 to 23.6 minutes to read, against 4.1 to 6.8 s per turn on a cloud model.">
+<link rel="canonical" href="https://blolabel.ai/blog/iphone-moe-too-slow-for-an-agent-turn/">
+<meta property="og:title" content="A 35B model now runs on an iPhone 17 Pro Max at 1.8 to 3.1 tokens a second, too slow to read one agent turn | Blolabel">
+<meta property="og:description" content="Routide (arXiv:2609.29032, 24 September 2026) runs Qwen3.6-35B-A3B-4bit on an iPhone 17 Pro Max: 1.8 to 3.1 tokens/s, 1.87 to 2.73 GiB footprint, 0.00% LRU hits at 512 MiB vs 38.58% at 576 MiB. Prefill is serial; the longest prompt run was 340 tokens. Our extrapolation: phoneshell's 2,542-token tool list would take 13.9 to 23.6 minutes to read, against 4.1 to 6.8 s per turn on a cloud model.">
+<meta property="og:url" content="https://blolabel.ai/blog/iphone-moe-too-slow-for-an-agent-turn/">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"A 35B model now runs on an iPhone 17 Pro Max at 1.8 to 3.1 tokens a second, too slow to read one agent turn","description":"Routide (arXiv:2609.29032, 24 September 2026) runs Qwen3.6-35B-A3B-4bit on an iPhone 17 Pro Max: 1.8 to 3.1 tokens/s, 1.87 to 2.73 GiB footprint, 0.00% LRU hits at 512 MiB vs 38.58% at 576 MiB. Prefill is serial; the longest prompt run was 340 tokens. Our extrapolation: phoneshell's 2,542-token tool list would take 13.9 to 23.6 minutes to read, against 4.1 to 6.8 s per turn on a cloud model.",
+ "datePublished":"2026-09-29","dateModified":"2026-09-29",
+ "url":"https://blolabel.ai/blog/iphone-moe-too-slow-for-an-agent-turn/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/iphone-moe-too-slow-for-an-agent-turn/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"}}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Can a 35B language model run on an iPhone?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes, as a memory claim. Routide (arXiv:2609.29032) runs Qwen3.6-35B-A3B-4bit on an iPhone 17 Pro Max by paging experts from storage, with sampled process footprints of 1.87 to 2.73 GiB and decode speeds of 1.8 to 3.1 tokens per second."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Is that fast enough to drive a phone agent?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Not yet, by our extrapolation. Routide reads prompts one token per forward; at 0.33 to 0.56 seconds per forward, phoneshell's 2,542 tokens of tool definitions would take 13.9 to 23.6 minutes, against 4.1 to 6.8 seconds per turn with a cloud model."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Why did a 512 MiB cache get zero hits?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "LRU eviction at 512 MiB evicted each expert just before it was needed again, 0.00% demand hits on the recorded routes. Random eviction at the same budget hit 18.80% and LRU at 576 MiB hit 38.58%, so the cliff is a policy effect, not a hard memory size."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How repeatable are the timings?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Two runs of the same configuration differed by 10.58% in elapsed time on nominal thermals, and one paired comparison ran 7.18% slower at the larger cache despite 38.16% fewer reads."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-09-29">29 September 2026</time>
+    <span>5 min read</span>
+  </div>
+  <h1>A 35B model now runs on an iPhone 17 Pro Max at 1.8 to 3.1 tokens a second, too slow to read one agent turn</h1>
+  <p class="standfirst">Routide pages a Qwen3.6-35B-A3B checkpoint's experts from storage and reports everything, including the runs that went wrong. Memory fits in under 3 GiB. Prompts are read one token per forward, so a phone agent's 2,542-token tool list alone would take 14 to 24 minutes.</p>
+
+  <p>A 35-billion-parameter mixture-of-experts model now runs on an iPhone 17 Pro Max by paging its experts
+from storage, decoding at 1.8 to 3.1 tokens a second. The runtime, Routide, processes prompts one token
+per forward pass. At those rates, the 2,542 tokens of tool definitions that phoneshell sends an agent on
+every turn would take 14 to 24 minutes to read, by our extrapolation, before the model saw a single
+screen. The paper is arXiv:2609.29032, submitted 24 September 2026 by Musa Shams.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/iphone-moe-too-slow-for-an-agent-turn-hero.png" alt="Abstract technical illustration of a large grid of small blocks in storage with a narrow channel feeding a few lit blocks into a small working area, most blocks staying dark" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="what-routide-showed-on-which-phone">What Routide showed, on which phone</h2>
+
+<p>Routide is a Swift and MLX runtime for one pinned public checkpoint,
+<code>mlx-community/Qwen3.6-35B-A3B-4bit</code> at revision 38740b8. The text path has 40 layers, 256
+routed experts per layer and top-8 routing, so each forward pass requests 320 experts, 540 MiB of
+expert payload if every one misses. All routed experts together are 18,119,393,280 bytes; one expert is
+1,769,472 bytes (1.6875 MiB). Experts stay in storage and a byte-budgeted cache holds a subset in
+memory. The phone is an iPhone 17 Pro Max, measured on iOS 26.5.2, 26.6.1 and 27.0 across cohorts.</p>
+
+<p>The paper is careful to a degree that is rare. It keeps a run that hit a thermal stop, reports
+timing comparisons that went the wrong way, separates logical reads from physical storage traffic, and
+states what it does not claim: not the first phone LLM runtime, not the fastest throughput, not
+quality parity with a resident model. Its outputs from the phone and from a resident Python reference
+disagree on all five tested prompts, so it makes no numerical-equivalence claim either.</p>
+
+<table>
+  <thead>
+    <tr><th>Measurement</th><th>Value</th><th>Conditions</th><th>Source</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Decode, cold, 512 MiB cache</td><td>2.246 tokens/s; 13.585 s; 16.987 GB read</td><td>23-token prompt, 8 outputs, median of 5</td><td>Section 5.1</td></tr>
+    <tr><td>Decode, cold, 576 MiB cache</td><td>3.052 tokens/s; 10.810 s; 9.709 GB read</td><td>same</td><td>Section 5.1</td></tr>
+    <tr><td>Decode, cold, 640 MiB cache</td><td>2.957 tokens/s; 11.185 s; 9.709 GB read</td><td>same</td><td>Section 5.1</td></tr>
+    <tr><td>Demand hit rate, LRU 512 MiB</td><td>0.00%</td><td>fixed-route replay, five 128-token workloads</td><td>Abstract, Section 5.1</td></tr>
+    <tr><td>Demand hit rate, random eviction 512 MiB</td><td>18.80%</td><td>same, five seeds</td><td>Abstract</td></tr>
+    <tr><td>Demand hit rate, LRU 576 MiB</td><td>38.58%</td><td>same</td><td>Abstract</td></tr>
+    <tr><td>Sustained 512-token runs</td><td>1.795 to 2.085 tokens/s; 272.7 to 314.1 s; about 320 GB logical reads each</td><td>four runs, nominal thermals</td><td>Section 5.4</td></tr>
+    <tr><td>Same configuration, two runs</td><td>272.711 s vs 301.553 s (10.58% apart)</td><td>prefill prefetch 0.20</td><td>Section 5.4</td></tr>
+    <tr><td>Sampled process footprint peak</td><td>1.87 to 2.32 GiB</td><td>49 to 69 prompt tokens, 128 outputs, 12 requests, iOS 27.0</td><td>Section 5.5</td></tr>
+    <tr><td>Footprint, longest prompt tested</td><td>2.39 GiB (576 MiB), 2.73 GiB (512 MiB)</td><td>340 prompt tokens, 32 outputs</td><td>Section 5.5</td></tr>
+    <tr><td>Prefill</td><td>serial, one token per forward; P + G - 1 forwards</td><td>batched prefill not implemented</td><td>Section 3.2</td></tr>
+  </tbody>
+</table>
+
+<h2 id="the-512-mib-cliff-is-a-cache-policy-not-a-memory-size">The 512 MiB "cliff" is a cache policy, not a memory size</h2>
+
+<p>At a 512 MiB expert budget, LRU eviction replayed over the recorded routes scored 0.00% demand hits:
+every expert it kept was evicted just before it was needed again. Our arithmetic suggests why: 512 MiB
+holds 303 expert payloads of 1.6875 MiB, and one forward cycles through up to 320 distinct ones (540
+MiB). A loop larger than the cache is the textbook case where least-recently-used evicts each item just
+before its reuse. Random eviction at the same budget hit 18.80%. Adding 64 MiB lifted LRU to 38.58% and cut cold logical reads from 16.987 GB to 9.709 GB, 43%;
+the next 64 MiB changed nothing. The paper's conclusion, which we agree with, is that the apparent
+capacity cliff is a policy and workload interaction. Anyone sizing a phone runtime from one LRU sweep
+would draw the wrong line.</p>
+
+<svg viewBox="0 0 760 330" style="width:100%;height:auto" role="img" aria-label="Chart of Routide cold-cache measurements on an iPhone 17 Pro Max, arXiv 2609.29032 Section 5.1, for a 23-token prompt and 8 output tokens with five repetitions per budget. At a 512 MiB expert cache the median request took 13.585 seconds, decoded 2.246 tokens per second and read 16.987 GB of expert payload. At 576 MiB it took 10.810 seconds, 3.052 tokens per second and 9.709 GB. At 640 MiB it took 11.185 seconds, 2.957 tokens per second and 9.709 GB. Adding 64 MiB cut reads by 43 percent; the next 64 MiB changed nothing.">
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Routide on iPhone 17 Pro Max: expert cache budget vs reads and speed (cold medians)</text>
+<text x="30" y="58" font-size="12" font-weight="600" fill="#f2a65a">logical expert reads (GB)</text>
+<rect x="50" y="120.1" width="46" height="169.9" fill="#f2a65a" opacity="0.75"/>
+<text x="73" y="114.1" font-size="10" fill="#f2a65a" text-anchor="middle">16.987</text>
+<text x="73" y="306" font-size="10" fill="#8a93a5" text-anchor="middle">512 MiB</text>
+<rect x="120" y="192.9" width="46" height="97.1" fill="#f2a65a" opacity="0.75"/>
+<text x="143" y="186.9" font-size="10" fill="#f2a65a" text-anchor="middle">9.709</text>
+<text x="143" y="306" font-size="10" fill="#8a93a5" text-anchor="middle">576 MiB</text>
+<rect x="190" y="192.9" width="46" height="97.1" fill="#f2a65a" opacity="0.75"/>
+<text x="213" y="186.9" font-size="10" fill="#f2a65a" text-anchor="middle">9.709</text>
+<text x="213" y="306" font-size="10" fill="#8a93a5" text-anchor="middle">640 MiB</text>
+<line x1="40" y1="290" x2="260" y2="290" stroke="#6f7b90"/>
+<text x="275" y="58" font-size="12" font-weight="600" fill="#5ad1a0">decode (tokens/s)</text>
+<rect x="295" y="177.7" width="46" height="112.3" fill="#5ad1a0" opacity="0.75"/>
+<text x="318" y="171.7" font-size="10" fill="#5ad1a0" text-anchor="middle">2.246</text>
+<text x="318" y="306" font-size="10" fill="#8a93a5" text-anchor="middle">512 MiB</text>
+<rect x="365" y="137.4" width="46" height="152.6" fill="#5ad1a0" opacity="0.75"/>
+<text x="388" y="131.4" font-size="10" fill="#5ad1a0" text-anchor="middle">3.052</text>
+<text x="388" y="306" font-size="10" fill="#8a93a5" text-anchor="middle">576 MiB</text>
+<rect x="435" y="142.2" width="46" height="147.8" fill="#5ad1a0" opacity="0.75"/>
+<text x="458" y="136.2" font-size="10" fill="#5ad1a0" text-anchor="middle">2.957</text>
+<text x="458" y="306" font-size="10" fill="#8a93a5" text-anchor="middle">640 MiB</text>
+<line x1="285" y1="290" x2="505" y2="290" stroke="#6f7b90"/>
+<text x="520" y="58" font-size="12" font-weight="600" fill="#c4ccda">elapsed per request (s)</text>
+<rect x="540" y="120.2" width="46" height="169.8" fill="#c4ccda" opacity="0.75"/>
+<text x="563" y="114.2" font-size="10" fill="#c4ccda" text-anchor="middle">13.585</text>
+<text x="563" y="306" font-size="10" fill="#8a93a5" text-anchor="middle">512 MiB</text>
+<rect x="610" y="154.9" width="46" height="135.1" fill="#c4ccda" opacity="0.75"/>
+<text x="633" y="148.9" font-size="10" fill="#c4ccda" text-anchor="middle">10.810</text>
+<text x="633" y="306" font-size="10" fill="#8a93a5" text-anchor="middle">576 MiB</text>
+<rect x="680" y="150.2" width="46" height="139.8" fill="#c4ccda" opacity="0.75"/>
+<text x="703" y="144.2" font-size="10" fill="#c4ccda" text-anchor="middle">11.185</text>
+<text x="703" y="306" font-size="10" fill="#8a93a5" text-anchor="middle">640 MiB</text>
+<line x1="530" y1="290" x2="750" y2="290" stroke="#6f7b90"/>
+</g></svg>
+
+<p>Speed is not stable even on nominal thermals. Two runs of the same configuration differed by 10.58%
+in elapsed time, and one of six paired 128-token comparisons ran 7.18% slower at the larger cache
+despite 38.16% fewer reads. A 512-token generation read about 320 GB of logical expert payload, roughly
+0.62 GB per token by our division. That is bytes delivered by the reader, not NAND traffic, and the
+paper says it is not a wear measurement.</p>
+
+<svg viewBox="0 0 760 420" style="width:100%;height:auto" role="img" aria-label="Diagram of Routide's forward pass on an iPhone 17 Pro Max, arXiv 2609.29032, and our extrapolation to an agent turn. Each forward requests 320 experts across 40 layers, up to 540 MiB of payload, from an 18.1 GB expert store through a 576 MiB cache. Prefill is serial, one token per forward. At the measured 1.795 to 3.052 tokens per second, one forward takes 0.33 to 0.56 seconds, so reading phoneshell's 2,542-token tool list would take 13.9 to 23.6 minutes. phoneshell with a cloud model measured 4.1 to 6.8 seconds per turn. The longest prompt Routide ran was 340 tokens.">
+  <g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="12">
+    <text x="20" y="26" font-size="14" font-weight="600">One forward pass, and what an agent turn would cost at that rate</text>
+    <rect x="20" y="52" width="200" height="104" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="32" y="76" font-weight="600">Expert store (flash)</text>
+    <text x="32" y="96" fill="#c4ccda">18,119,393,280 bytes</text>
+    <text x="32" y="114" fill="#c4ccda">40 layers x 256 experts</text>
+    <text x="32" y="132" fill="#8a93a5">1.6875 MiB per expert</text>
+    <line x1="220" y1="104" x2="262" y2="104" stroke="#f2a65a"/>
+    <rect x="262" y="52" width="220" height="104" rx="8" fill="#1d2330" stroke="#f2a65a"/>
+    <text x="274" y="76" font-weight="600" fill="#f2a65a">Expert cache in RAM</text>
+    <text x="274" y="96" fill="#c4ccda">default 576 MiB, LRU</text>
+    <text x="274" y="114" fill="#c4ccda">hit rate 38.58%</text>
+    <text x="274" y="132" fill="#8a93a5">at 512 MiB: 0.00%</text>
+    <line x1="482" y1="104" x2="524" y2="104" stroke="#5ad1a0"/>
+    <rect x="524" y="52" width="216" height="104" rx="8" fill="#1d2330" stroke="#5ad1a0"/>
+    <text x="536" y="76" font-weight="600" fill="#5ad1a0">One forward</text>
+    <text x="536" y="96" fill="#c4ccda">320 expert requests</text>
+    <text x="536" y="114" fill="#c4ccda">up to 540 MiB if all miss</text>
+    <text x="536" y="132" fill="#8a93a5">0.33 to 0.56 s each</text>
+    <rect x="20" y="186" width="720" height="214" rx="8" fill="#161b26" stroke="#2a3140"/>
+    <text x="34" y="210" font-weight="600">Our extrapolation: one phoneshell agent turn, prompt read one token per forward</text>
+    <text x="34" y="236" fill="#c4ccda">tool definitions sent every turn: 2,542 tokens (FINDINGS section 8)</text>
+    <rect x="34" y="250" width="420" height="16" fill="#f2a65a" opacity="0.8"/>
+    <text x="462" y="263" fill="#f2a65a">13.9 to 23.6 min, tool list only</text>
+    <rect x="34" y="276" width="3" height="16" fill="#5ad1a0"/>
+    <text x="44" y="289" fill="#5ad1a0">4.1 to 6.8 s per whole turn with a cloud model (FINDINGS section 9)</text>
+    <rect x="34" y="302" width="56" height="16" fill="#6f7b90"/>
+    <text x="98" y="315" fill="#c4ccda">340 tokens: the longest prompt Routide ran</text>
+    <text x="34" y="346" fill="#8a93a5">Assumes a prefill forward costs what a decode forward costs. A cached prefix would pay the</text>
+    <text x="34" y="364" fill="#8a93a5">tool list once per session; each new screen would still be read one token at a time.</text>
+    <text x="34" y="386" fill="#8a93a5">Bar lengths are to scale for the tool list and the 340-token prompt, not for the cloud turn.</text>
+  </g>
+</svg>
+
+<h2 id="what-it-means-for-an-agent-running-on-the-phone">What it means for an agent running on the phone</h2>
+
+<p>The number that decides whether a local model can drive a phone is not decode speed, it is how long
+the model takes to read a turn's input. Routide reads prompts one token per forward and has not
+implemented batched prefill; the longest prompt it ran was 340 tokens. An agent turn is larger than
+that before any screen is attached. phoneshell's MCP tool definitions alone are about 2,542 tokens,
+sent on every turn. At the one-forward cost implied by the measured decode rates, 0.33 to 0.56 seconds,
+that is 13.9 to 23.6 minutes. The same agent on a cloud model measured 4.1 to 6.8 seconds per whole
+turn on our rig. The extrapolation assumes prefill forwards cost what decode forwards cost, which the
+paper does not measure, and it would shrink with prefix caching, which pays the static tool list once
+per session. It would not shrink for the screen, which changes every turn.</p>
+
+<p>The memory side is more encouraging. A 35B-total model held sampled process footprints of 1.87 to
+2.73 GiB on this phone, and ran 128-token generations to completion without a memory warning. For an
+agent the practical design today is split: a small resident model on the phone for short, frequent
+decisions, and the large model elsewhere. A 35B-class local planner is feasible as a memory claim and
+not yet as a latency claim.</p>
+
+<p>If you benchmark a runtime like this, copy the paper's habits. Keep stopped runs. Report paired
+comparisons that went the wrong way. Separate logical reads from storage traffic. Its 10.58% spread
+between identical runs is the noise floor any claimed speedup on this phone has to clear.</p>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<ul>
+  <li>Paper: <code>https://arxiv.org/abs/2609.29032</code>; HTML <code>https://arxiv.org/html/2609.29032v1</code>. Section 3.1 (checkpoint inventory), 3.2 (serial prefill), 5.1 (cache budgets), 5.4 (sustained runs), 5.5 (memory).</li>
+  <li>Code: <code>https://github.com/MusaShams/Routide</code>. Checkpoint: <code>https://huggingface.co/mlx-community/Qwen3.6-35B-A3B-4bit</code>, pinned revision 38740b847e4cb78f352aba30aa41c76e08e6eb46.</li>
+  <li>Our arithmetic: <code>2542/3.052/60</code> is 13.9 minutes and <code>2542/1.795/60</code> is 23.6; <code>319.354/512</code> is 0.62 GB per token; <code>1 - 9.709/16.987</code> is 0.43.</li>
+  <li>phoneshell: <code>FINDINGS.md</code> section 8 (2,542 tokens of tool definitions per turn) and section 9 (4.1 to 6.8 seconds per turn).</li>
+</ul>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>Two predictions, dated 31 March 2027. First, no public measurement will show a flash-paged model of
+30B or more total parameters on an iPhone reading a prompt of 2,000 tokens or more in under 60 seconds.
+A result like that, from Routide with batched prefill or from anyone else, would make an on-device
+planner for phone agents a latency question worth reopening, and our extrapolation obsolete. Second, a
+measured Routide prefill of a 2,542-token prompt, if one is published, will take longer than 10 minutes
+on an iPhone 17 Pro Max with the serial path; under 10 minutes would mean prefill forwards are much
+cheaper than decode forwards and our extrapolation overstated the cost.</p>
+
+  <section class="sources">
+    <h2>Sources</h2>
+    <ol>
+      <li><a href="https://arxiv.org/abs/2609.29032">Musa Shams, Paging the Experts: A Reproducible Characterization of Flash-Backed MoE Inference on iPhone, arXiv:2609.29032, submitted 24 September 2026</a></li>
+      <li><a href="https://arxiv.org/html/2609.29032v1">Routide HTML edition: Sections 3.1, 3.2, 5.1, 5.4, 5.5</a></li>
+      <li><a href="https://github.com/MusaShams/Routide">MusaShams/Routide, Swift/MLX runtime source</a></li>
+      <li><a href="https://huggingface.co/mlx-community/Qwen3.6-35B-A3B-4bit">mlx-community/Qwen3.6-35B-A3B-4bit, the pinned checkpoint</a></li>
+      <li><a href="https://github.com/Blomega/phoneshell/blob/main/FINDINGS.md">phoneshell FINDINGS.md sections 8 (token cost) and 9 (seconds per turn)</a></li>
+    </ol>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
