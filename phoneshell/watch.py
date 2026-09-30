@@ -31,7 +31,6 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
 import httpx
-import numpy as np
 from PIL import Image
 
 from .agent.macros import Macro, Step
@@ -44,24 +43,10 @@ log = logging.getLogger("phoneshell.watch")
 DEMOS = RUNTIME / "watch"
 DEMOS.mkdir(parents=True, exist_ok=True)
 
-THUMB = (48, 104)
-# Any rest after motion is worth a look: MJPEG only sends frames when pixels
-# change, so noise never reaches here, and a few typed letters move the whole
-# thumbnail by well under 1.0. The tree comparison in _keyframe drops real repeats.
-CHANGED = 0.15
 SETTLE_GAP = 0.5     # WDA's MJPEG goes silent while nothing moves: silence this long = at rest
-MAX_FRAMES = 150
+LOOK_EVERY = 1.0     # ...but a screen with video never goes silent: look at least this often
+MAX_FRAMES = 300
 ACTIONS = {"open_app", "tap", "type", "scroll_to", "swipe", "press", "alert", "open_url"}
-
-
-def _thumb(img: Image.Image) -> np.ndarray:
-    return np.asarray(img.convert("L").resize(THUMB, Image.BILINEAR), dtype=np.float32)
-
-
-def _diff(a, b) -> float:
-    if a is None or b is None:
-        return 255.0
-    return float(np.abs(a - b).mean())
 
 
 def _mjpeg(url: str, stop: threading.Event, handle: list):
@@ -226,10 +211,10 @@ class Watcher:
         base = self.cfg.wda_base_url
         try:
             with httpx.Client(timeout=15.0) as http:
-                last = self._keyframe(demo, http, base)
+                self._keyframe(demo, http, base)
                 while not stop.is_set() and len(demo.frames) < MAX_FRAMES:
                     try:
-                        last = self._watch(demo, stop, http, base, last)
+                        self._watch(demo, stop, http, base)
                     except httpx.HTTPError as e:
                         log.info("stream dropped: %s", e)
                         if not _alive(http, base):
@@ -243,47 +228,56 @@ class Watcher:
                 demo.status, demo.reason, demo.ended = "failed", str(e), time.time()
                 demo.save()
 
-    def _watch(self, demo: Demo, stop: threading.Event, http: httpx.Client, base: str, last):
-        latest: list = [0, None, None]
+    def _watch(self, demo: Demo, stop: threading.Event, http: httpx.Client, base: str) -> None:
+        """Decide WHEN to look; _keyframe decides whether what it saw is new.
+
+        Two triggers, because neither is enough alone:
+          * the stream went quiet (WDA sends frames only while pixels change):
+            the person stopped on a screen, look now;
+          * something has been moving for LOOK_EVERY seconds: look anyway. A
+            screen with a video, a camera preview or an animated promo banner
+            never goes quiet, and waiting for quiet recorded ONE screen in an
+            81-second demo on a real phone (2026-09-30).
+        """
+        latest: list = [0, None]          # frame count, error
         cond = threading.Condition()
         gone = threading.Event()
         handle: list = []
 
         def reader() -> None:
             try:
-                for jpeg in _mjpeg(self.cfg.mjpeg_url, gone, handle):
+                for _jpeg in _mjpeg(self.cfg.mjpeg_url, gone, handle):
                     with cond:
                         latest[0] += 1
-                        latest[1] = jpeg
                         cond.notify()
             except Exception as e:  # noqa: BLE001
                 with cond:
-                    latest[2] = e
+                    latest[1] = e
                     cond.notify()
 
         threading.Thread(target=reader, daemon=True).start()
-        seen, moved = 0, False
+        seen, moving, looked = 0, False, time.time()
         try:
             while not stop.is_set():
                 with cond:
-                    cond.wait_for(lambda: latest[0] != seen or latest[2] is not None or stop.is_set(),
+                    cond.wait_for(lambda: latest[0] != seen or latest[1] is not None or stop.is_set(),
                                   timeout=SETTLE_GAP)
-                    if latest[2] is not None:
-                        raise latest[2]
+                    if latest[1] is not None:
+                        raise latest[1]
                     fresh = latest[0] != seen
-                    if fresh:
-                        seen, jpeg = latest[0], latest[1]
+                    seen = latest[0]
+                if stop.is_set() or len(demo.frames) >= MAX_FRAMES:
+                    break
                 if fresh:
-                    moved = True
-                    continue
-                if moved and not stop.is_set():
-                    moved = False
-                    t = _thumb(Image.open(io.BytesIO(jpeg)))
-                    if _diff(t, last) >= CHANGED:
-                        kept = self._keyframe(demo, http, base)
-                        if kept is not None:
-                            last = kept
-            return last
+                    moving = True
+                    if time.time() - looked < LOOK_EVERY:
+                        continue
+                elif not moving:
+                    continue                      # still, and already looked at
+                else:
+                    moving = False                # just came to rest
+                looked = time.time()
+                self._keyframe(demo, http, base)
         finally:
             gone.set()
             for r in handle:
@@ -303,14 +297,9 @@ class Watcher:
                                      self.cfg.wda.port, self.cfg.wda.mjpeg_port).ok
 
     def _keyframe(self, demo: Demo, http: httpx.Client, base: str):
-        """Screenshot + tree + app of the screen at rest. Returns its thumbnail."""
-        r = http.get(f"{base}/screenshot")
-        if r.status_code == 500 and "Not authorized" in r.text and self._heal():
-            r = http.get(f"{base}/screenshot")
-        r.raise_for_status()
-        raw = base64.b64decode(r.json()["value"])
-        img = Image.open(io.BytesIO(raw))
-        img.load()
+        """Tree + app of the screen now; a screenshot only if the tree says the
+        screen is new, so looking once a second while things move stays cheap.
+        Returns True when a keyframe was kept."""
         src = http.get(f"{base}/source", params={"format": "json",
                                                   "excluded_attributes": WDAClient.DEFAULT_EXCLUDED_ATTRS})
         src.raise_for_status()
@@ -332,7 +321,13 @@ class Watcher:
             prev = demo.frames[-1]
             if prev.bundle == bundle and [(e["type"], e["text"], e.get("value", ""), round((e["y"] + e["h"] / 2) / 20))
                                           for e in prev.elements] == sig:
-                return _thumb(img)
+                return False
+        r = http.get(f"{base}/screenshot")
+        if r.status_code == 500 and "Not authorized" in r.text and self._heal():
+            r = http.get(f"{base}/screenshot")
+        r.raise_for_status()
+        img = Image.open(io.BytesIO(base64.b64decode(r.json()["value"])))
+        img.load()
         n = len(demo.frames) + 1
         shot = img.convert("RGB")
         shot.thumbnail((600, 1300))
@@ -345,7 +340,7 @@ class Watcher:
                        "accessible": e.accessible, "focused": e.focused, "traits": e.traits,
                        "children_text": e.children_text[:6]} for i, e in enumerate(els)]))
         demo.save()
-        return _thumb(img)
+        return True
 
 
 def _alive(http: httpx.Client, base: str) -> bool:

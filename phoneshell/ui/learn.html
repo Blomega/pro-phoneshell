@@ -52,6 +52,12 @@
   .pane.on{display:block}
   .empty{color:var(--dim);max-width:560px;margin:36px auto}
   .empty ol{color:var(--text)}
+  .live{display:flex;gap:18px;align-items:center;max-width:560px;margin:30px auto}
+  .live img{width:120px;border-radius:14px;border:1px solid var(--line)}
+  .live .big{font-size:40px;font-weight:700;line-height:1}
+  .live .sub{color:var(--dim);font-size:13px;margin-top:6px}
+  .failbox{max-width:560px;margin:30px auto;border:1px solid #5a2020;background:#2a1414;color:#ffb4b4;
+           border-radius:12px;padding:14px 16px}
   .notes{font-size:12px;color:var(--dim);margin-bottom:12px;max-width:760px}
   .var{border-bottom:1px dashed var(--warn);cursor:help}
   .step{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:start;padding:10px 12px;
@@ -224,6 +230,7 @@ function renderFrames(frames) {
 
 function setState(s) {
   status = s?.status || null;
+  const nframes = Array.isArray(s?.frames) ? s.frames.length : (s?.frames || 0);
   const watching = status === 'watching', learning = status === 'learning';
   $('#dot').classList.toggle('rec', watching);
   $('#phone').classList.toggle('rec', watching);
@@ -234,8 +241,8 @@ function setState(s) {
   $('#label').disabled = watching || learning;
   const why = $('#why');
   why.classList.toggle('err', status === 'failed');
-  if (watching) why.textContent = `Watching. Do the task on the phone now. ${s.frames} screens so far.`;
-  else if (learning) why.textContent = `Working out the steps from ${s.frames} screens (about a minute). You can leave this page.`;
+  if (watching) why.textContent = `Watching. Do the task on the phone now. ${nframes} screens so far.`;
+  else if (learning) why.textContent = `Working out the steps from ${nframes} screens (about a minute). You can leave this page.`;
   else if (status === 'failed') why.textContent = 'Could not learn this: ' + s.reason;
   else if (status === 'ready') why.textContent = 'Here is what I learned. Untick anything wrong, name it, and save.';
   $('#meta').textContent = s ? s.label : '';
@@ -267,6 +274,18 @@ async function poll() {
     const s = await api(`/api/watch/${did}`);
     setState(s);
     renderFrames(s.frames);
+    if (s.status === 'watching' || s.status === 'learning') {
+      const lastN = s.frames.length ? s.frames[s.frames.length - 1].n : 0;
+      $('#steps').innerHTML = `<div class="live">
+        ${lastN ? `<img src="/api/watch/${did}/frame/${lastN}" alt="latest screen">` : ''}
+        <div><div class="big">${s.frames.length}</div>
+        <div>screen${s.frames.length === 1 ? '' : 's'} recorded</div>
+        <div class="sub">${s.status === 'learning' ? 'Working out the steps (about a minute)…'
+          : 'Every screen you stop on is added here. If this number does not grow as you use the phone, press Done and tell Claude.'}</div></div></div>`;
+    } else if (s.status === 'failed') {
+      $('#steps').innerHTML = `<div class="failbox"><b>This recording did not work.</b><br>${esc(s.reason)}<br><br>
+        ${s.frames.length} screen${s.frames.length === 1 ? '' : 's'} recorded. Press Watch me to try again.</div>`;
+    }
     if (['ready', 'saved'].includes(s.status) && !draft) renderDraft(s.draft);
     if (['watching', 'learning'].includes(s.status)) { timer = setTimeout(poll, 1000); return; }
   } catch (e) { $('#meta').textContent = e.message; }
