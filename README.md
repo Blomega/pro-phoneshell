@@ -61,7 +61,6 @@ Then either drive it yourself:
 ```bash
 bin/phoneshell shell       # see exactly what the agent sees, act by element id
 bin/phoneshell serve       # live screen in a browser, click to control, chat to delegate
-                           # then /scan: scroll the phone by hand, get the text and a table out
 ```
 
 Or run the benchmark:
