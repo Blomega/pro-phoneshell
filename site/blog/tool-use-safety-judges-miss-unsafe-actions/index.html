@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Giving a computer-use safety judge tools made it worse at catching harm: 29.4 and 38.9 unsafe F1 against 69.1 for a screenshots-only judge, until rubrics came first | Blolabel</title>
+<meta name="description" content="SCOUT (arXiv:2609.36201, 28 September 2026, Columbia): on AutoElicit-Bench, tool-use verifiers IRA and VAGEN score 38.9 and 29.4 unsafe F1, screenshot-only ZeroGUI 69.1, SCOUT 75.4; without its separate rubric step 53.1. Reflection cut unsafe runs 30.2% to 17.2%. phoneshell: 153 checks, 1 negated, none for side effects; 621 leftover alarms.">
+<link rel="canonical" href="https://blolabel.ai/blog/tool-use-safety-judges-miss-unsafe-actions/">
+<meta property="og:title" content="Giving a computer-use safety judge tools made it worse at catching harm: 29.4 and 38.9 unsafe F1 against 69.1 for a screenshots-only judge, until rubrics came first | Blolabel">
+<meta property="og:description" content="SCOUT (arXiv:2609.36201, 28 September 2026, Columbia): on AutoElicit-Bench, tool-use verifiers IRA and VAGEN score 38.9 and 29.4 unsafe F1, screenshot-only ZeroGUI 69.1, SCOUT 75.4; without its separate rubric step 53.1. Reflection cut unsafe runs 30.2% to 17.2%. phoneshell: 153 checks, 1 negated, none for side effects; 621 leftover alarms.">
+<meta property="og:url" content="https://blolabel.ai/blog/tool-use-safety-judges-miss-unsafe-actions/">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"Giving a computer-use safety judge tools made it worse at catching harm: 29.4 and 38.9 unsafe F1 against 69.1 for a screenshots-only judge, until rubrics came first","description":"SCOUT (arXiv:2609.36201, 28 September 2026, Columbia): on AutoElicit-Bench, tool-use verifiers IRA and VAGEN score 38.9 and 29.4 unsafe F1, screenshot-only ZeroGUI 69.1, SCOUT 75.4; without its separate rubric step 53.1. Reflection cut unsafe runs 30.2% to 17.2%. phoneshell: 153 checks, 1 negated, none for side effects; 621 leftover alarms.",
+ "datePublished":"2026-10-01","dateModified":"2026-10-01",
+ "url":"https://blolabel.ai/blog/tool-use-safety-judges-miss-unsafe-actions/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/tool-use-safety-judges-miss-unsafe-actions/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"}}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Do tool-use verifiers catch unsafe computer-use actions better than screenshot judges?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Not by default. On AutoElicit-Bench, IRA and VAGEN scored 38.9 and 29.4 unsafe F1, below the screenshot-only ZeroGUI judge at 69.1, even though they scored higher on completion (68.6 and 68.7 against 56.7)."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What makes SCOUT better at safety verification?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Writing task-specific completion and safety rubrics in a separate request with no tools before probing. Without that step its unsafe F1 fell from 75.4 to 53.1, and its rubric reasoning from 1,642 tokens to 204."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does safety feedback make a computer-use agent safer?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "On AutoElicit-Bench, feeding SCOUT's verdict back to the agent cut unsafe executions from 30.2% to 17.2%, with completion between 43.1% and 50.0% and no consistent direction."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does phoneshell check for side effects?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. Its 80 tasks carry 153 checks of five kinds, one negated, and none looks for unintended changes. Agents saved alarms they were told not to save until the phone held 640 alarms; the fix was a cleanup step, not a failing check."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-01">01 October 2026</time>
+    <span>6 min read</span>
+  </div>
+  <h1>Giving a computer-use safety judge tools made it worse at catching harm: 29.4 and 38.9 unsafe F1 against 69.1 for a screenshots-only judge, until rubrics came first</h1>
+  <p class="standfirst">SCOUT shows that a verifier which can inspect the machine after the run finds completion better but unsafe side effects worse, unless it first writes task-specific rubrics in a separate, tool-free step. phoneshell's 153 device checks look only for what should be there, and a run of leftover alarms shows what that misses.</p>
+
+  <p>Giving a computer-use safety judge a shell made it worse at catching harm. On AutoElicit-Bench, two verifiers that can probe the machine after the agent finishes scored 38.9 (IRA) and 29.4 (VAGEN) unsafe F1, against 69.1 for ZeroGUI, which only reads the trajectory's screenshots (SCOUT, arXiv:2609.36201, 28 September 2026). The tools helped completion checks, where both tool users beat every screenshot judge. Safety improved only when the verifier first wrote task-specific rubrics in a separate, tool-free step: 75.4 unsafe F1.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/tool-use-safety-judges-miss-unsafe-actions-hero.png" alt="Abstract technical illustration of a probe moving through a dim room of closed boxes, guided by a written checklist that lights a few specific boxes" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="what-the-columbia-paper-measured">What the Columbia paper measured</h2>
+
+<p>SCOUT is by Jianxing Chen, Xiao Yu, Shipra Agrawal and Zhou Yu (Columbia University), posted 28 September 2026 with code at <code>github.com/jc-244/SCOUT</code>. It is a verifier, not an agent: it runs after a computer-use agent (Qwen3.6-35B-A3B, 50-step budget) has finished an OSWorld-style task and decides two things, whether the task was completed and whether anything unsafe happened. Stage one, the rubric generator, reads the task and the action trace with no tools and writes completion and safety rubrics specific to that task. Stage two, the probing agent, follows those rubrics with four tools: <code>run_command</code> and <code>run_python</code> (read-only inspection), <code>computer_use</code> (operate the GUI) and <code>check_screenshot</code> (pull a trajectory screenshot).</p>
+
+<p>The baselines get the same general safety criteria. Three are passive judges that read screenshots: DigiRL (last screenshot), DistRL, and ZeroGUI (all trajectory screenshots). Two are tool-use verifiers built for completion checking, IRA and VAGEN, adapted by the authors for safety. One caveat from the paper itself: tool-use verifiers need a live machine, so each judged its own fresh rollouts, while the passive judges shared one rollout set. The comparison is within each method's runs, not on identical trajectories.</p>
+
+<table>
+  <thead>
+    <tr><th>Verifier (backbone)</th><th>Tools</th><th>Completion F1</th><th>Unsafe F1</th><th>OS-Blind unsafe detection</th><th>Source</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>DigiRL (GPT-5.6 Terra)</td><td>no</td><td>43.5</td><td>11.1</td><td>26.4%</td><td>Table 2</td></tr>
+    <tr><td>DistRL (GPT-5.6 Terra)</td><td>no</td><td>40.0</td><td>17.6</td><td>23.2%</td><td>Table 2</td></tr>
+    <tr><td>ZeroGUI (GPT-5.6 Terra)</td><td>no</td><td>56.7</td><td>69.1</td><td>70.0%</td><td>Table 2</td></tr>
+    <tr><td>IRA (GPT-5.6 Terra)</td><td>yes</td><td>68.6</td><td>38.9</td><td>43.6%</td><td>Table 2</td></tr>
+    <tr><td>VAGEN (GPT-5.6 Terra)</td><td>yes</td><td>68.7</td><td>29.4</td><td>39.2%</td><td>Table 2</td></tr>
+    <tr><td>VAGEN (Claude Sonnet 5)</td><td>yes</td><td>65.2</td><td>41.7</td><td>52.8%</td><td>Table 2</td></tr>
+    <tr><td>SCOUT (GPT-5.6 Terra)</td><td>yes</td><td>74.5</td><td>75.4</td><td>76.4%</td><td>Table 2</td></tr>
+    <tr><td>SCOUT without the separate rubric step</td><td>yes</td><td>not reported</td><td>53.1</td><td>not reported</td><td>Table 4</td></tr>
+  </tbody>
+</table>
+
+<p>AutoElicit-Bench completion labels come from OSWorld's own verification scripts; its safety labels from the benchmark's evaluator. OS-Blind tasks cannot be completed safely by construction, so it has no completion score, and the authors excluded its pop-up subset, which is scored by the coordinates of one click.</p>
+
+<svg viewBox="0 0 760 400" style="width:100%;height:auto" role="img" aria-label="Grouped bar chart from Table 2 of arXiv 2609.36201, CUA backbone Qwen3.6-35B. Completion F1 and unsafe F1 per verifier: DigiRL, last screenshot only, 43.5 and 11.1. DistRL 40.0 and 17.6. ZeroGUI, all trajectory screenshots and no tools, 56.7 and 69.1. IRA with tools 68.6 and 38.9. VAGEN with tools on GPT-5.6 Terra 68.7 and 29.4. VAGEN on Claude Sonnet 5 65.2 and 41.7. SCOUT 74.5 and 75.4. Tools raise completion F1 but the two tool-use baselines detect unsafe actions worse than the screenshot-only ZeroGUI judge.">
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Safety verifiers on AutoElicit-Bench: completion F1 vs unsafe F1, %</text>
+<rect x="70" y="40" width="12" height="12" fill="#6f7b90"/>
+<text x="88" y="50" font-size="11" fill="#c4ccda">completion F1</text>
+<rect x="205" y="40" width="12" height="12" fill="#f2a65a"/>
+<text x="223" y="50" font-size="11" fill="#c4ccda">unsafe F1</text>
+<line x1="70" y1="330.0" x2="740" y2="330.0" stroke="#2a3140"/>
+<text x="62" y="334.0" font-size="10" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="70" y1="278.0" x2="740" y2="278.0" stroke="#2a3140"/>
+<text x="62" y="282.0" font-size="10" fill="#c4ccda" text-anchor="end">16</text>
+<line x1="70" y1="226.0" x2="740" y2="226.0" stroke="#2a3140"/>
+<text x="62" y="230.0" font-size="10" fill="#c4ccda" text-anchor="end">32</text>
+<line x1="70" y1="174.0" x2="740" y2="174.0" stroke="#2a3140"/>
+<text x="62" y="178.0" font-size="10" fill="#c4ccda" text-anchor="end">48</text>
+<line x1="70" y1="122.0" x2="740" y2="122.0" stroke="#2a3140"/>
+<text x="62" y="126.0" font-size="10" fill="#c4ccda" text-anchor="end">64</text>
+<line x1="70" y1="70.0" x2="740" y2="70.0" stroke="#2a3140"/>
+<text x="62" y="74.0" font-size="10" fill="#c4ccda" text-anchor="end">80</text>
+<text x="18" y="200" font-size="11" fill="#c4ccda" transform="rotate(-90 18 200)" text-anchor="middle">F1, %</text>
+<rect x="83.9" y="188.6" width="31.0" height="141.4" fill="#6f7b90"/>
+<text x="99.4" y="184.6" font-size="9" fill="#6f7b90" text-anchor="middle">43.5</text>
+<rect x="117.9" y="293.9" width="31.0" height="36.1" fill="#f2a65a"/>
+<text x="133.4" y="289.9" font-size="9" fill="#f2a65a" text-anchor="middle">11.1</text>
+<text x="117.9" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">DigiRL</text>
+<text x="117.9" y="362" font-size="11" fill="#c4ccda" text-anchor="middle">no tools</text>
+<rect x="179.6" y="200.0" width="31.0" height="130.0" fill="#6f7b90"/>
+<text x="195.1" y="196.0" font-size="9" fill="#6f7b90" text-anchor="middle">40</text>
+<rect x="213.6" y="272.8" width="31.0" height="57.2" fill="#f2a65a"/>
+<text x="229.1" y="268.8" font-size="9" fill="#f2a65a" text-anchor="middle">17.6</text>
+<text x="213.6" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">DistRL</text>
+<text x="213.6" y="362" font-size="11" fill="#c4ccda" text-anchor="middle">no tools</text>
+<rect x="275.3" y="145.7" width="31.0" height="184.3" fill="#6f7b90"/>
+<text x="290.8" y="141.7" font-size="9" fill="#6f7b90" text-anchor="middle">56.7</text>
+<rect x="309.3" y="105.4" width="31.0" height="224.6" fill="#f2a65a"/>
+<text x="324.8" y="101.4" font-size="9" fill="#f2a65a" text-anchor="middle">69.1</text>
+<text x="309.3" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">ZeroGUI</text>
+<text x="309.3" y="362" font-size="11" fill="#c4ccda" text-anchor="middle">no tools</text>
+<rect x="371.0" y="107.1" width="31.0" height="222.9" fill="#6f7b90"/>
+<text x="386.5" y="103.1" font-size="9" fill="#6f7b90" text-anchor="middle">68.6</text>
+<rect x="405.0" y="203.6" width="31.0" height="126.4" fill="#f2a65a"/>
+<text x="420.5" y="199.6" font-size="9" fill="#f2a65a" text-anchor="middle">38.9</text>
+<text x="405.0" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">IRA</text>
+<text x="405.0" y="362" font-size="11" fill="#c4ccda" text-anchor="middle">tools</text>
+<rect x="466.7" y="106.7" width="31.0" height="223.3" fill="#6f7b90"/>
+<text x="482.2" y="102.7" font-size="9" fill="#6f7b90" text-anchor="middle">68.7</text>
+<rect x="500.7" y="234.4" width="31.0" height="95.5" fill="#f2a65a"/>
+<text x="516.2" y="230.4" font-size="9" fill="#f2a65a" text-anchor="middle">29.4</text>
+<text x="500.7" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">VAGEN</text>
+<text x="500.7" y="362" font-size="11" fill="#c4ccda" text-anchor="middle">tools</text>
+<rect x="562.4" y="118.1" width="31.0" height="211.9" fill="#6f7b90"/>
+<text x="577.9" y="114.1" font-size="9" fill="#6f7b90" text-anchor="middle">65.2</text>
+<rect x="596.4" y="194.5" width="31.0" height="135.5" fill="#f2a65a"/>
+<text x="611.9" y="190.5" font-size="9" fill="#f2a65a" text-anchor="middle">41.7</text>
+<text x="596.4" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">VAGEN</text>
+<text x="596.4" y="362" font-size="11" fill="#c4ccda" text-anchor="middle">Sonnet 5</text>
+<rect x="658.1" y="87.9" width="31.0" height="242.1" fill="#6f7b90"/>
+<text x="673.6" y="83.9" font-size="9" fill="#6f7b90" text-anchor="middle">74.5</text>
+<rect x="692.1" y="84.9" width="31.0" height="245.1" fill="#f2a65a"/>
+<text x="707.6" y="80.9" font-size="9" fill="#f2a65a" text-anchor="middle">75.4</text>
+<text x="692.1" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">SCOUT</text>
+<text x="692.1" y="362" font-size="11" fill="#c4ccda" text-anchor="middle">tools</text>
+<text x="70" y="392" font-size="10" fill="#c4ccda">Source: Chen, Yu, Agrawal, Yu (Columbia), arXiv:2609.36201 v1, Table 2. Verifier backbone GPT-5.6 Terra unless named.</text>
+</g></svg>
+
+
+<h2 id="tools-find-what-changed-a-rubric-decides-what-to-look-for">Tools find what changed; a rubric decides what to look for</h2>
+
+<p>The completion column climbs the way you would expect with more evidence: 43.5 with one screenshot, 56.7 with all of them, 68.6 and 68.7 with tools. The unsafe column does not. The tool users probe for whether the task got done, and with general safety criteria pasted into the prompt they do not go looking for collateral damage. The paper's two worked cases show what the probes can find when pointed at it: files outside the task's scope made world-readable (visible to a shell, not in any screenshot), and an email the agent was told only to address that is shown "Sending" on the live screen.</p>
+
+<p>The ablation isolates the rubric. Asking SCOUT's own verifier to write rubrics and probe in a single prompt drops unsafe F1 from 75.4 to 53.1 on GPT-5.6 Terra, and from 54.5 to 12.5 with Qwen3.5-9B as the verifier. Table 5 shows why: in a single prompt the model spends 204 reasoning tokens on the rubric, against 1,642 when rubric writing is a separate request with no tools. For Qwen3.5-9B the figures are 269 against 9,872. Merely attaching a dummy tool to the separate request cuts GPT-5.6 Terra's reasoning to 1,099 tokens.</p>
+
+<svg viewBox="0 0 760 430" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting two ways to build a safety verifier for computer-use agents, from arXiv 2609.36201. In a single prompt, the verifier writes rubrics and probes with tools at once; it spends 204 reasoning tokens on the rubric and reaches 53.1 unsafe F1. In SCOUT, a tool-free rubric generator spends 1,642 reasoning tokens writing task-specific completion and safety rubrics, then a probing agent uses run_command, run_python, computer_use and check_screenshot to gather evidence, reaching 75.4 unsafe F1. Using SCOUT's safety feedback for test-time reflection lowered the unsafe execution rate from 30.2 percent to 17.2 percent. phoneshell grades 80 tasks with 153 checks of five kinds, one of them negated, and none looks for side effects; two Clock tasks tell the agent not to save an alarm and enforce it with a cleanup step rather than a failing check, after 621 leftover alarms accumulated.">
+  <g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="12">
+    <text x="20" y="26" font-size="14" font-weight="600">Same verifier model, two structures (GPT-5.6 Terra, AutoElicit-Bench)</text>
+    <text x="20" y="56" font-size="12" fill="#c4ccda" font-weight="600">single prompt</text>
+    <rect x="130" y="40" width="300" height="40" rx="6" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="142" y="64" font-size="11">write rubric + probe with tools, one request</text>
+    <line x1="430" y1="60" x2="456" y2="60" stroke="#6f7b90"/>
+    <rect x="456" y="40" width="284" height="40" rx="6" fill="#1d2330" stroke="#f2a65a"/>
+    <text x="468" y="58" font-size="11" fill="#f2a65a">204 reasoning tokens on the rubric</text>
+    <text x="468" y="73" font-size="11" fill="#f2a65a">unsafe F1 53.1</text>
+    <text x="20" y="124" font-size="12" fill="#c4ccda" font-weight="600">SCOUT</text>
+    <rect x="130" y="104" width="170" height="54" rx="6" fill="#1d2330" stroke="#5ad1a0"/>
+    <text x="142" y="126" font-size="11" fill="#5ad1a0">rubric generator</text>
+    <text x="142" y="144" font-size="10" fill="#c4ccda">no tools, 1,642 tokens</text>
+    <line x1="300" y1="131" x2="326" y2="131" stroke="#6f7b90"/>
+    <rect x="326" y="104" width="230" height="54" rx="6" fill="#1d2330" stroke="#5ad1a0"/>
+    <text x="338" y="126" font-size="11" fill="#5ad1a0">probing agent</text>
+    <text x="338" y="141" font-size="10" fill="#c4ccda">run_command, run_python,</text>
+    <text x="338" y="153" font-size="10" fill="#c4ccda">computer_use, check_screenshot</text>
+    <line x1="556" y1="131" x2="582" y2="131" stroke="#6f7b90"/>
+    <rect x="582" y="104" width="158" height="54" rx="6" fill="#1d2330" stroke="#5ad1a0"/>
+    <text x="594" y="126" font-size="11" fill="#5ad1a0">unsafe F1 75.4</text>
+    <text x="594" y="144" font-size="10" fill="#c4ccda">completion F1 74.5</text>
+    <text x="130" y="186" font-size="11" fill="#c4ccda">SCOUT verdict fed back to the agent: unsafe runs 30.2% to 17.2%, completion 43.1 to 50.0%</text>
+    <line x1="20" y1="206" x2="740" y2="206" stroke="#2a3140"/>
+    <text x="20" y="234" font-size="13" font-weight="600">phoneshell's grader, counted from environments/*.yaml</text>
+    <rect x="20" y="250" width="340" height="150" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="34" y="274" font-size="11">80 tasks, 153 checks, all read after the run</text>
+    <text x="34" y="296" font-size="11" fill="#c4ccda">foreground_app 76</text>
+    <text x="34" y="314" font-size="11" fill="#c4ccda">element_exists 31</text>
+    <text x="34" y="332" font-size="11" fill="#c4ccda">regex_on_screen 23</text>
+    <text x="34" y="350" font-size="11" fill="#c4ccda">answer_contains 20</text>
+    <text x="34" y="368" font-size="11" fill="#c4ccda">element_exists_anywhere 3</text>
+    <text x="34" y="390" font-size="11" fill="#f2a65a">negated (must NOT be there): 1 of 153</text>
+    <rect x="380" y="250" width="360" height="150" rx="8" fill="#1d2330" stroke="#f2a65a"/>
+    <text x="394" y="274" font-size="11" fill="#f2a65a">The side effect no check caught</text>
+    <text x="394" y="296" font-size="11" fill="#c4ccda">2 Clock tasks: "Do not save it."</text>
+    <text x="394" y="314" font-size="11" fill="#c4ccda">agents saved it anyway, run after run</text>
+    <text x="394" y="332" font-size="11" fill="#c4ccda">640 alarms on the phone, 621 artifacts</text>
+    <text x="394" y="350" font-size="11" fill="#c4ccda">found because /source took 24,195 ms</text>
+    <text x="394" y="368" font-size="11" fill="#c4ccda">response: clean_alarms teardown on 3 tasks,</text>
+    <text x="394" y="386" font-size="11" fill="#c4ccda">not a check that fails the run</text>
+  </g>
+</svg>
+
+<h2 id="what-it-means-for-grading-a-phone-agent">What it means for grading a phone agent</h2>
+
+<p>phoneshell grades from the device, which is the point of the project: 153 checks over 80 tasks, read after the run, never from the model's own account. Every one of them asks whether the right thing is present (the right app in front, a value on screen, an answer in the final text). One of the 153 is negated. None asks what else changed.</p>
+
+<p>We have a measured case of what that misses. Two Clock tasks end with "Do not save it." Agents saved the alarm anyway, run after run, until the phone held 640 alarms, 621 of them identical leftovers (phoneshell <code>FINDINGS.md</code>, section 18). No check flagged a saved alarm. The problem surfaced through latency: a full tree read took 2,612 ms on the alarms list against 154 ms on Clock's timer screen, and 24,195 ms with the add sheet open over the list. The fix was a <code>clean_alarms</code> teardown on three Clock tasks, which removes the damage without failing the run that caused it.</p>
+
+<p>SCOUT's result says the cheap fix is not "give the grader more access". A phone grader already has read access to state through WebDriverAgent; <code>phoneshell/bench/verify.py</code> supports twelve check kinds, including <code>app_state</code>, <code>switch_on</code> and <code>ocr_contains</code>, and the tasks use five. What is missing is the step that writes, per task, the list of things that must not have happened: no alarm added, no message sent, no setting other than the named one changed. On a phone those can be checked with the same reads, before and after the run. Our judgement is that a handful of hand-written negative checks per app would have caught the alarm residue on the first day; SCOUT's numbers suggest a model writing them needs its own tool-free step to do it well.</p>
+
+<p>The reflection result is worth a caution. Feeding SCOUT's safety verdict back to the agent cut unsafe runs from 30.2% to 17.2% while completion stayed between 43.1% and 50.0%, with no consistent direction. That is one benchmark with one agent model. Blocking each unsafe action before it ran, in a preliminary test with a 100-step budget, ended at 19.8% unsafe, slightly worse than after-the-fact reflection.</p>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<ul>
+  <li>The paper: <code>https://arxiv.org/abs/2609.36201</code>; Table 2 (main results), Table 4 (ablations), Table 5 (reasoning tokens), Section 4.3 (reflection), Section 5.1 (the two worked cases). Code: <code>https://github.com/jc-244/SCOUT</code>.</li>
+  <li>Count phoneshell's checks: <code>python3 -c "import yaml,glob,collections;c=collections.Counter(ch['kind'] for f in glob.glob('environments/*.yaml') for ch in yaml.safe_load(open(f)).get('checks',[]));print(sum(c.values()),c)"</code> from the repo root gives 153 and the five kinds.</li>
+  <li>Negated checks: <code>grep -rn "negate" environments</code> returns one line, in <code>settings_back_twice.yaml</code>.</li>
+  <li>The alarm tasks and their teardown: <code>environments/clock_alarm_set_time.yaml</code> and <code>clock_alarm_reach_picker.yaml</code>; supported check kinds in <code>phoneshell/bench/verify.py</code>; the incident in <code>FINDINGS.md</code> section 18.</li>
+</ul>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>By 31 March 2027 we will add negative checks (nothing saved, nothing sent, no unrelated setting changed) to every phoneshell task whose instruction forbids or implies a side effect, and rerun the affected tasks three times per model. If no run fails a negative check, our claim that completion-only grading hides real side effects on this suite is wrong for current models. If SCOUT's code, run by others on AutoElicit-Bench with a tool-use baseline given the same separate rubric step, reaches within 5 points of SCOUT's 75.4 unsafe F1, then the gain is the rubric step alone and SCOUT's probing design adds little beyond it.</p>
+
+  <section class="sources">
+    <h2>Sources</h2>
+    <ol>
+      <li><a href="https://arxiv.org/abs/2609.36201">Chen, Yu, Agrawal, Yu (Columbia University), SCOUT: Synergizing Reasoning and Tool-Use for Computer-Use Safety, arXiv:2609.36201, 28 September 2026</a></li>
+      <li><a href="https://arxiv.org/html/2609.36201v1">HTML edition: Table 1 (tools), Table 2 (main results), Tables 3 to 5 (backbones, ablations, reasoning tokens), Sections 4.3 and 5.1</a></li>
+      <li><a href="https://github.com/jc-244/SCOUT">SCOUT code repository</a></li>
+      <li><a href="https://blolabel.ai/blog/accessibility-tree-size-latency/">Blolabel, 640 leftover alarms turned a 154 ms screen read into 24 seconds, and the tree came back 218 switches short</a></li>
+      <li><a href="https://blolabel.ai/blog/eighty-tasks-five-checks/">Blolabel, Eighty iPhone tasks assert five things, and seven of them only check which app is in front</a></li>
+      <li><a href="https://github.com/Blomega/phoneshell">phoneshell source: phoneshell/device.py, config.py, actions.py, mcp_server.py, agent/macros.py, agent/verify.py, bench/verify.py, environments/*.yaml, FINDINGS.md (read 1 October 2026)</a></li>
+    </ol>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
