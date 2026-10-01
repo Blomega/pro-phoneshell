@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A 'screen did not change' notice barely stops computer-use agents repeating themselves; wiping the history changes the next action 96 to 100% of the time | Blolabel</title>
+<meta name="description" content="Absorbed in Inertia (arXiv:2609.37176, 29 September 2026, Neuchatel and TU Delft): failure notice changes repeats -4.6%, -5.0%, -23.4%, +16.9%; R3 -16.9% to -42.7% with task score within plus or minus 2.5 points. Same action again: 79.8 to 87.5% unmodified, 0.0 to 3.6% after reset. phoneshell replies THE SCREEN DID NOT CHANGE; StuckDetector is unused.">
+<link rel="canonical" href="https://blolabel.ai/blog/screen-unchanged-notice-barely-stops-repeats/">
+<meta property="og:title" content="A 'screen did not change' notice barely stops computer-use agents repeating themselves; wiping the history changes the next action 96 to 100% of the time | Blolabel">
+<meta property="og:description" content="Absorbed in Inertia (arXiv:2609.37176, 29 September 2026, Neuchatel and TU Delft): failure notice changes repeats -4.6%, -5.0%, -23.4%, +16.9%; R3 -16.9% to -42.7% with task score within plus or minus 2.5 points. Same action again: 79.8 to 87.5% unmodified, 0.0 to 3.6% after reset. phoneshell replies THE SCREEN DID NOT CHANGE; StuckDetector is unused.">
+<meta property="og:url" content="https://blolabel.ai/blog/screen-unchanged-notice-barely-stops-repeats/">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"A 'screen did not change' notice barely stops computer-use agents repeating themselves; wiping the history changes the next action 96 to 100% of the time","description":"Absorbed in Inertia (arXiv:2609.37176, 29 September 2026, Neuchatel and TU Delft): failure notice changes repeats -4.6%, -5.0%, -23.4%, +16.9%; R3 -16.9% to -42.7% with task score within plus or minus 2.5 points. Same action again: 79.8 to 87.5% unmodified, 0.0 to 3.6% after reset. phoneshell replies THE SCREEN DID NOT CHANGE; StuckDetector is unused.",
+ "datePublished":"2026-10-01","dateModified":"2026-10-01",
+ "url":"https://blolabel.ai/blog/screen-unchanged-notice-barely-stops-repeats/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/screen-unchanged-notice-barely-stops-repeats/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"}}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "What is inertia in computer-use agents?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Repeating the same action on the same screen, with the screen unchanged, right after reasoning that admits the approach is failing. arXiv:2609.37176 finds recurrence in up to 66% of failed trajectories and failure acknowledgment in 55 to 89% of recurrences for three of four models."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does telling an agent the screen did not change stop it repeating?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Not reliably. A factual notice changed the repeat rate by -4.6%, -5.0%, -23.4% and +16.9% across UI-TARS, GUI-Owl, OpenCUA and EvoCUA, none more than 1.4 standard errors from zero."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What does break an agent's repeat loop?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "A full context reset. At recorded stuck states, agents proposed the same action again 79.8 to 87.5% of the time unmodified, 60.7 to 73.9% after deleting only the duplicates, and 0.0 to 3.6% after reset."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does breaking loops raise task success?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Not measurably. R3 cut repeats by 16.9 to 42.7% but changed task scores by +0.60, +1.20, -2.50 and -0.90 points, none distinguishable from zero, and ended 19.59% of trajectories when no action changed the screen."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAABOCAMAAAD4iTj8AAAAilBMVEVMaXFiXmJhXmEVieRkYGRiXmJiXmJEaZJiX2IWjehNaIJhXmEUjOcVjOdgXWBjX2MWjecUjOZiXmJiXmIUi+UVjehUoN7w9/33+/7q9Pzg7/p8gIlkYGQXjuj///9oZGgWk/JmY2YVjullYWUJh+dtaG0olumr1/dSq+7T6vo6n+tntfCMx/N7vvJEi25LAAAAHHRSTlMAakku/HusA/z7Eo+hwDL30nXizUnjHfvKolE8aPCOgAAAAAlwSFlzAAALEgAACxIB0t1+/AAAB35JREFUeJztmn1zsjoThwMCCaCg4EvbASFA1bZ3v//XO7MJeQFBwJ55nnNP85v+oSYB9mJ3k2yKkJGRkZGRkZGRkZGRkZGRkZGRkdHPhZXQ7xPuGH2P4Gk4P8L6P3slGCOEV7vderNZr3f7I/yEfpEwQqvd1i+FDpt90PWCwBKyF147kiOjxc8VzborvtdI++gV0Grtl2XuC1Vledhh5QQY2e8F17u3yASMQjnSXehVGFnaXReOxUvug3c+WJ9LMQbblbwpRnYdO6CYLgZA25HFEwAKddfxscdVX0eIaPnw6ueR2xw3ZaVZLxiU/k7cFSObkgzkFIsBFE478hkAYuw4AIzWld/TYbvetw6M0Ur69XZ4/GpbCvOrBiQQ5KUgMAeACjM95voAxoJxKH5nAyh7r6+qyrLacAcGAK095RAAjI7K/uZy+/q6fVYtAt8XBKYB6I89wwPu0tTQtZ4GkEMMl/4exkwBQHijhv85nUEfN+kELYFJABjhyA09L7QxQpEtFPQAoMCCTlakJVhucWDDcM9zoU363dMAcnj2A5/NHwLojL6ehb6ED1Q+c6QpABjZqUMhXdM0QuG7Q5lY3tcB2AnvFHuRPsUg24spaykojVMLuP0YQO6Xa3gxDwFgtJfpr/mW9p9Pl0oM2szwAIzcmhLiOA4hNI7CIiYgh3YAvFu2Q6ET62WpBBt4tMjYcN5WJHbrd0sB+FwiFRyC6RDQAuBDATh/d4PgMQAwkvDmLCM09age9QIAqcOklr1I0RLAKErUaDaM1DVLF8sBlEzSBao9ZJcHADDaqwT4qdl/vioA26kQYI3KAuKIL10AGXEcrReJWRSA/e2llYjD8CwHsGbypfvuJgEoB2huOoAPLZIYxocekN6ZMASgZ2R7IZwWyi3kpwzwLAewZ9j2/kwA0NbCyvPmSwcgkwBPJY8AqDb++p0HACDO5eestVFaXVMVImDxYgAVvCssX+sMADuVAUYBQCp5DMBTNlBKVUDfASAFLSQsUoRglPQeSB7KlQiBCHnGAxAKtjyz+9VqCsB6GgC/zKMQCGRuI5ln2558jf0cQJzQtmQzoSnGKIrl1xAj7EkcbOziHLADbVr72/T1aBbQ5oCxHNDOA6MAwAb5/l0gHgoj+gAoS/yyOUsCJCPAoSm7Wtrycdj257lZoOT255C9HgPABwWgupyGZoEZAOz2mUmdsCJCkAx6AKlTFqCyOcsiwNG20jACuVS72E/WAX6Vs1XsQwCBBiBv1ELwfL4tASAs5E+J0cg6gMe8aia1jZDyeS4REVkWPwFAU3XgCWECgLYNbj5PQw4wDUA9Zbt86W5/epsh3SUYgMFJEgBEPwKQ+5s9b57rAdpa+PT5/wDAl8Liy1Me4OtL4bJcT4UAVjthRuDPgP0DADrFNz0EpI+TIQBUNHcBCJ+vO8qeygGlvhb22yXM3FmgyS/N7eN0Pl0vzacqi8zIATJvpcAGYTEt9gC0zWrW5ElQTBlx0pX3xEpww5bCG7+NbLaKnbcOaKrb9eP01TSXz7zJr+ePP5+NXFHvdStpGukKkDaV1xZbvo1Ng5kNzSLPizQnr4uDIMBRFADDIAiCpxdCaN8ucPmGeM5KsLnxreD1dskv3+3nC3eC6nDsLHdJrKm2tIUQyWI3ilyxLLgHEFtRFIooh2kRoSiTCyHobMdJ6rk2cH1mN7jn4Sl/YRviGXsBEfwQ/yc5F3ywVOCXG30v0BVf26ipLCvieHwpTDIaO3LjyI3CqSKQul6cZVAYIUnq/cADkAhteHkdAHdnB6xnZwVw7q0G2h3FMACHAZA+DzYKe4Y3Q5DepQfwiNA2QwXAg8pIRuD44QkAGGLnuBOze+VrAPLK32o6MLugHqCXgro6XRqfQXzsAVpa6+K58wB9KIsAfSeRqXoBrxYsB3DgkiWRTgjkeVXq4gvFbakvgPq6Nv2K0AAAfUvLHl5Y2s8BtV42IZTVvTCyZQHl5wWRiksuCyB8NQDq6AuqxtywfaklgHt9VlvIR489AGHvXQuCRG5ougBqL5FOQMh7KJ7fqnUyjCBLiM8URX2tJNifBrtqC94wWq8F9vXdtMV1u26Llh3BLMB24F4BRVD2V9iuPNByO0djllU4bSen8LRjtwRqolKZXhSdPhrDY1Vh5gBTAKB68MD+81WeC4hjyq7eRWnTjYuC1jUtYqt3HKp/c+Oihk40sXQLAjehBaV1VlNoC1VZfMbhKB4GAE6+CaYBYHQcTwHn86u4beQOq63vYxRYXpokaRghZHda9W8oCqGTJyr/wgQU2CEMT1IvtNlT89/VXcePxzEAuFdV+uugezbYlTr1ehsn8DL7NJPBDAJ5qjPai3e6O0Djw1nToqNtxADcy9+u5dngQLOcBTiBl/H3r53mDUtrFw/fbez0lT/dmdH+1G2a8+81GO22m67Wu91K+BFGq82gttrZ9/F1yPzTG/qbhZf4Eb53gtMrbAH+DuHH/yQz4bttp7eXU8/8v8b+f0Ng6/Ht9YXp9fWN589fJTzx/TcIyw+/0XojIyMjIyMjIyMjIyMjIyP0n9Y/P2/lF8zxuoMAAAAASUVORK5CYII=" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-01">01 October 2026</time>
+    <span>6 min read</span>
+  </div>
+  <h1>A 'screen did not change' notice barely stops computer-use agents repeating themselves; wiping the history changes the next action 96 to 100% of the time</h1>
+  <p class="standfirst">Across four open agents, a factual notice about a no-effect action moved repeats by minus 23.4% to plus 16.9%, and deleting just the duplicate attempts still left 61 to 74% of next actions unchanged. Only a full context reset broke the loop. phoneshell's live loop defence is the notice; its loop detector is never called.</p>
+
+  <p>Telling a computer-use agent that its last action left the screen unchanged does little to stop it repeating that action. Across four open agents on 97 OpenComputer tasks, such a notice moved the rate of repeated no-effect actions by between minus 23.4% and plus 16.9%, and none of the four changes exceeds two standard errors (arXiv:2609.37176, 29 September 2026). Wiping the conversation history instead changed the very next action 96.4 to 100% of the time. phoneshell's only live defence against loops is that notice.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/screen-unchanged-notice-barely-stops-repeats-hero.png" alt="Abstract technical illustration of a small marker circling a closed loop many times beside an open exit, with one marker lifted off the loop and set down on the exit path" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="what-neuch-tel-and-delft-measured">What Neuchâtel and Delft measured</h2>
+
+<p>"Absorbed in Inertia: Activation Analysis for Computer-Use Agents" is by Giulio Segalini, Zhi Wen Soi, Jérémie Decouchant and Lydia Chen (Université de Neuchâtel and Delft University of Technology). It defines inertia as two things at once: an exact screen and action pair that recurs and leaves the screen unchanged, detected mechanically, and reasoning text that admits the approach is failing, judged by a separate model that sees only the task and the reasoning. The agents are UI-TARS-1.5-7B, GUI-Owl-1.5-8B-Think, OpenCUA-32B and EvoCUA-32B-S2, on OSWorld and OpenComputer.</p>
+
+<p>Recurrence appears in up to 66% of failed trajectories, more than in successful ones. For three of the four models, 55 to 89% of recurrences come right after reasoning that acknowledges the failure; EvoCUA acknowledges least. The paper's example is UI-TARS writing that Ctrl+A "didn't work", then pressing Ctrl+A again on the same screen. A linear readout of the model's activations just before the action separates recurrent from other actions with held-out AUC 0.72 to 0.95.</p>
+
+<p>The interventions, all compared in paired runs against the unmodified agent: a failure notice (after two unchanged repeats, a factual line added to the instruction saying the action was performed on this screen N times and the screen did not change, history kept); activation steering away from the recurrence direction; Permanent Reset (drop all history, continue from task and current screen); and R3 (reset, try up to three actions until one changes the screen, then restore the earlier history with that action appended).</p>
+
+<table>
+  <thead>
+    <tr><th>Intervention</th><th>Change in repeated no-effect actions (UI-TARS / GUI-Owl / OpenCUA / EvoCUA)</th><th>Change in task score, points</th><th>Source</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Failure notice</td><td>-4.6% / -5.0% / -23.4% / +16.9%</td><td>+1.00 / +0.20 / +2.20 / -3.60</td><td>Table 1</td></tr>
+    <tr><td>Activation steering</td><td>-5.6% / -0.2% / +39.0% / -0.9%</td><td>+2.20 / -2.80 / +4.20 / -0.60</td><td>Table 1</td></tr>
+    <tr><td>Permanent Reset</td><td>-14.6% / -28.8% / -2.3% / +6.9%</td><td>+0.40 / +3.20 / -0.50 / -4.60</td><td>Table 1</td></tr>
+    <tr><td>R3 (reset, reroute, restore)</td><td>-16.9% / -38.0% / -42.7% / -33.8%</td><td>+0.60 / +1.20 / -2.50 / -0.90</td><td>Table 1</td></tr>
+  </tbody>
+</table>
+
+<p>Changes in repeats are relative changes in the per-action rate; task score changes are in points. Task-level standard errors for the notice row are 8.4, 16.6, 16.9 and 17.6 on repeats, so none of the four changes is more than 1.4 standard errors from zero. The paper reports R3's reductions with confidence intervals below zero for all four models; no other arm reduces repeats for all four.</p>
+
+<svg viewBox="0 0 760 400" style="width:100%;height:auto" role="img" aria-label="Grouped bar chart from Table 2 of arXiv 2609.37176, replaying recorded trigger states on OpenComputer. Unmodified agents repeat the action that left the screen unchanged in 79.8 percent of proposals for UI-TARS, 81.0 for GUI-Owl, 87.5 for OpenCUA and 84.8 for EvoCUA. Composite activation steering gives 68.5, 83.3, 85.7 and 84.8. Selective reset, which deletes only the duplicate attempts and names the repeated action, gives 70.2, 60.7, 62.5 and 73.9. A full context reset gives 0.8, 2.4, 3.6 and 0.0.">
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Share of next-action proposals that repeat the failed action, %</text>
+<rect x="70" y="40" width="12" height="12" fill="#6f7b90"/>
+<text x="88" y="50" font-size="11" fill="#c4ccda">unmodified</text>
+<rect x="184" y="40" width="12" height="12" fill="#8a93a5"/>
+<text x="202" y="50" font-size="11" fill="#c4ccda">steering</text>
+<rect x="284" y="40" width="12" height="12" fill="#f2a65a"/>
+<text x="302" y="50" font-size="11" fill="#c4ccda">selective reset</text>
+<rect x="433" y="40" width="12" height="12" fill="#5ad1a0"/>
+<text x="451" y="50" font-size="11" fill="#c4ccda">full reset</text>
+<line x1="70" y1="330.0" x2="740" y2="330.0" stroke="#2a3140"/>
+<text x="62" y="334.0" font-size="10" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="70" y1="278.0" x2="740" y2="278.0" stroke="#2a3140"/>
+<text x="62" y="282.0" font-size="10" fill="#c4ccda" text-anchor="end">20</text>
+<line x1="70" y1="226.0" x2="740" y2="226.0" stroke="#2a3140"/>
+<text x="62" y="230.0" font-size="10" fill="#c4ccda" text-anchor="end">40</text>
+<line x1="70" y1="174.0" x2="740" y2="174.0" stroke="#2a3140"/>
+<text x="62" y="178.0" font-size="10" fill="#c4ccda" text-anchor="end">60</text>
+<line x1="70" y1="122.0" x2="740" y2="122.0" stroke="#2a3140"/>
+<text x="62" y="126.0" font-size="10" fill="#c4ccda" text-anchor="end">80</text>
+<line x1="70" y1="70.0" x2="740" y2="70.0" stroke="#2a3140"/>
+<text x="62" y="74.0" font-size="10" fill="#c4ccda" text-anchor="end">100</text>
+<text x="18" y="200" font-size="11" fill="#c4ccda" transform="rotate(-90 18 200)" text-anchor="middle">same action proposed again, %</text>
+<rect x="85.8" y="122.5" width="31.0" height="207.5" fill="#6f7b90"/>
+<text x="101.2" y="118.5" font-size="9" fill="#6f7b90" text-anchor="middle">79.8</text>
+<rect x="119.8" y="151.9" width="31.0" height="178.1" fill="#8a93a5"/>
+<text x="135.2" y="147.9" font-size="9" fill="#8a93a5" text-anchor="middle">68.5</text>
+<rect x="153.8" y="147.5" width="31.0" height="182.5" fill="#f2a65a"/>
+<text x="169.2" y="143.5" font-size="9" fill="#f2a65a" text-anchor="middle">70.2</text>
+<rect x="187.8" y="327.9" width="31.0" height="2.1" fill="#5ad1a0"/>
+<text x="203.2" y="323.9" font-size="9" fill="#5ad1a0" text-anchor="middle">0.8</text>
+<text x="153.8" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">UI-TARS-1.5-7B</text>
+<rect x="253.2" y="119.4" width="31.0" height="210.6" fill="#6f7b90"/>
+<text x="268.8" y="115.4" font-size="9" fill="#6f7b90" text-anchor="middle">81</text>
+<rect x="287.2" y="113.4" width="31.0" height="216.6" fill="#8a93a5"/>
+<text x="302.8" y="109.4" font-size="9" fill="#8a93a5" text-anchor="middle">83.3</text>
+<rect x="321.2" y="172.2" width="31.0" height="157.8" fill="#f2a65a"/>
+<text x="336.8" y="168.2" font-size="9" fill="#f2a65a" text-anchor="middle">60.7</text>
+<rect x="355.2" y="323.8" width="31.0" height="6.2" fill="#5ad1a0"/>
+<text x="370.8" y="319.8" font-size="9" fill="#5ad1a0" text-anchor="middle">2.4</text>
+<text x="321.2" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">GUI-Owl-1.5-8B</text>
+<rect x="420.8" y="102.5" width="31.0" height="227.5" fill="#6f7b90"/>
+<text x="436.2" y="98.5" font-size="9" fill="#6f7b90" text-anchor="middle">87.5</text>
+<rect x="454.8" y="107.2" width="31.0" height="222.8" fill="#8a93a5"/>
+<text x="470.2" y="103.2" font-size="9" fill="#8a93a5" text-anchor="middle">85.7</text>
+<rect x="488.8" y="167.5" width="31.0" height="162.5" fill="#f2a65a"/>
+<text x="504.2" y="163.5" font-size="9" fill="#f2a65a" text-anchor="middle">62.5</text>
+<rect x="522.8" y="320.6" width="31.0" height="9.4" fill="#5ad1a0"/>
+<text x="538.2" y="316.6" font-size="9" fill="#5ad1a0" text-anchor="middle">3.6</text>
+<text x="488.8" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">OpenCUA-32B</text>
+<rect x="588.2" y="109.5" width="31.0" height="220.5" fill="#6f7b90"/>
+<text x="603.8" y="105.5" font-size="9" fill="#6f7b90" text-anchor="middle">84.8</text>
+<rect x="622.2" y="109.5" width="31.0" height="220.5" fill="#8a93a5"/>
+<text x="637.8" y="105.5" font-size="9" fill="#8a93a5" text-anchor="middle">84.8</text>
+<rect x="656.2" y="137.9" width="31.0" height="192.1" fill="#f2a65a"/>
+<text x="671.8" y="133.9" font-size="9" fill="#f2a65a" text-anchor="middle">73.9</text>
+<rect x="690.2" y="330.0" width="31.0" height="0.0" fill="#5ad1a0"/>
+<text x="705.8" y="326.0" font-size="9" fill="#5ad1a0" text-anchor="middle">0</text>
+<text x="656.2" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">EvoCUA-32B</text>
+<text x="70" y="392" font-size="10" fill="#c4ccda">Source: Segalini, Soi, Decouchant, Chen (Neuchatel, TU Delft), arXiv:2609.37176 v1, Table 2.</text>
+</g></svg>
+
+
+<h2 id="deleting-the-duplicates-is-not-enough-the-whole-history-has-">Deleting the duplicates is not enough; the whole history has to go</h2>
+
+<p>Table 2 replays the exact states where an agent had just repeated a no-effect action and asks each variant for its next action, without executing it. Unmodified, the agents propose the same action again 79.8 to 87.5% of the time. Steering along the direction that the activation readout found still yields 68.5 to 85.7%. Selective reset, which deletes only the duplicate attempts, keeps everything else and names the repeated action in the prompt, still yields 60.7 to 73.9%. A full reset yields 0.0 to 3.6%.</p>
+
+<p>Read together, the notice and the selective reset say the same thing: information about the failure, in the prompt or in the activations, does not by itself move the action. The earlier context does. The authors' reading is an "absorbing region" in activation space; ours is narrower and needs no internals: if the transcript leading up to the stuck state stays in the context, the model tends to reproduce the action that transcript leads to.</p>
+
+<p>Breaking the loop is not the same as finishing the task. R3's task-score changes are plus 0.60, plus 1.20, minus 2.50 and minus 0.90 points, none distinguishable from zero. Part of R3's reduction comes from stopping: when three reroute attempts all fail to change the screen, the run ends, which happened in 19.59% of trajectories. And the reset thresholds were picked on the same OpenComputer comparisons they are reported on, with no held-out selection set, which the paper states.</p>
+
+<svg viewBox="0 0 760 420" style="width:100%;height:auto" role="img" aria-label="Diagram comparing R3 from arXiv 2609.37176 with phoneshell's loop handling. R3 counts consecutive executions of the same screen and action pair that leave the screen unchanged; at the threshold it resets the context to the task and current screen, tries up to three actions until one changes the screen, then restores the earlier history with that action appended; if all three fail the run ends, which happened in 19.59 percent of trajectories. After a reset the agents propose the same action again in 0.0 to 3.6 percent of replays, against 79.8 to 87.5 percent unmodified. phoneshell compares the screen signature after every action and, if it is unchanged, replies THE SCREEN DID NOT CHANGE with the full history kept, which is the failure notice arm; its StuckDetector class, with a repeat limit of 3 and a six-step ping-pong rule, is defined in phoneshell/agent/verify.py and called nowhere.">
+  <g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="12">
+    <text x="20" y="26" font-size="14" font-weight="600">R3 versus what phoneshell does when an action changes nothing</text>
+    <text x="20" y="58" font-size="12" fill="#5ad1a0" font-weight="600">R3 (arXiv:2609.37176)</text>
+    <rect x="20" y="70" width="150" height="56" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="32" y="92" font-size="11">same screen + action,</text>
+    <text x="32" y="108" font-size="11">unchanged, k times</text>
+    <line x1="170" y1="98" x2="190" y2="98" stroke="#6f7b90"/>
+    <rect x="190" y="70" width="150" height="56" rx="8" fill="#1d2330" stroke="#5ad1a0"/>
+    <text x="202" y="92" font-size="11" fill="#5ad1a0">Reset</text>
+    <text x="202" y="108" font-size="10" fill="#c4ccda">task + current screen only</text>
+    <line x1="340" y1="98" x2="360" y2="98" stroke="#6f7b90"/>
+    <rect x="360" y="70" width="170" height="56" rx="8" fill="#1d2330" stroke="#5ad1a0"/>
+    <text x="372" y="92" font-size="11" fill="#5ad1a0">Reroute</text>
+    <text x="372" y="108" font-size="10" fill="#c4ccda">up to 3 tries to move the screen</text>
+    <line x1="530" y1="98" x2="550" y2="98" stroke="#6f7b90"/>
+    <rect x="550" y="70" width="190" height="56" rx="8" fill="#1d2330" stroke="#5ad1a0"/>
+    <text x="562" y="92" font-size="11" fill="#5ad1a0">Restore</text>
+    <text x="562" y="108" font-size="10" fill="#c4ccda">old history + accepted action</text>
+    <line x1="445" y1="126" x2="445" y2="150" stroke="#f2a65a"/>
+    <text x="455" y="146" font-size="10" fill="#f2a65a">all 3 fail: run ends (19.59% of trajectories)</text>
+    <text x="20" y="178" font-size="11" fill="#c4ccda">next action repeats the stuck one: unmodified 79.8 to 87.5% | selective reset 60.7 to 73.9% | full reset 0.0 to 3.6%</text>
+    <line x1="20" y1="200" x2="740" y2="200" stroke="#2a3140"/>
+    <text x="20" y="228" font-size="12" fill="#f2a65a" font-weight="600">phoneshell (mcp_server.py, _act_and_report)</text>
+    <rect x="20" y="242" width="160" height="56" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="32" y="264" font-size="11">any action</text>
+    <text x="32" y="280" font-size="10" fill="#c4ccda">tap, type, swipe, open</text>
+    <line x1="180" y1="270" x2="200" y2="270" stroke="#6f7b90"/>
+    <rect x="200" y="242" width="170" height="56" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="212" y="264" font-size="11">screen signature</text>
+    <text x="212" y="280" font-size="10" fill="#c4ccda">same as before the action?</text>
+    <line x1="370" y1="270" x2="390" y2="270" stroke="#6f7b90"/>
+    <rect x="390" y="242" width="350" height="56" rx="8" fill="#1d2330" stroke="#f2a65a"/>
+    <text x="402" y="264" font-size="11" fill="#f2a65a">"THE SCREEN DID NOT CHANGE ... try something</text>
+    <text x="402" y="280" font-size="11" fill="#f2a65a">different rather than repeating it." History kept.</text>
+    <text x="20" y="330" font-size="11" fill="#c4ccda">Same family as the paper's failure notice: repeats moved -4.6%, -5.0%, -23.4%, +16.9% across four agents.</text>
+    <rect x="20" y="346" width="720" height="56" rx="8" fill="#1d2330" stroke="#6f7b90" stroke-dasharray="5 4"/>
+    <text x="32" y="368" font-size="11">agent/verify.py: StuckDetector, repeat_limit 3, history 8, A-B-A-B-A-B ping-pong rule</text>
+    <text x="32" y="386" font-size="11" fill="#f2a65a">defined, never instantiated: grep finds no caller in phoneshell/, scripts/ or tests/</text>
+  </g>
+</svg>
+
+<h2 id="what-it-means-for-a-phone-agent">What it means for a phone agent</h2>
+
+<p>phoneshell already detects the condition the paper measures. After every action, <code>_act_and_report</code> in <code>phoneshell/mcp_server.py</code> compares the screen signature with the one before; if they match and no alert is up, the tool replies "THE SCREEN DID NOT CHANGE" and tells the model to try something different. Both system prompts (rule 4 in <code>mcp_server.py</code>, and <code>SYSTEM</code> in <code>phoneshell/bench/openrouter.py</code>) say the same. That is the failure notice arm, firing after one unchanged action instead of two, with the whole history kept. On the paper's numbers it is the weakest of the four interventions at reducing repeats.</p>
+
+<p>The stronger mechanism exists in the repo and is switched off. <code>StuckDetector</code> in <code>phoneshell/agent/verify.py</code> tracks the last eight screen signatures and actions and diagnoses three identical unchanged repeats or an A-B-A-B-A-B ping-pong. Its docstring says loops are the failure class models cannot fix on their own. Nothing calls it. Even wired in, it only produces a diagnosis string, which would be one more notice unless the caller acts on it by trimming the context.</p>
+
+<p>How often our agents repeat, we can only bound. phoneshell's local audit log (<code>runtime/logs/audit.jsonl</code>, 7 to 30 September 2026, not in the public repo) records 426 tap and type actions without screen signatures. Thirteen repeat the previous action on the same element within 60 seconds (median gap 9.5 seconds): ten pairs and one run of four, eight of the thirteen on a "General" button at (220, 950). Without signatures we cannot tell which left the screen unchanged, so 3.1% is an upper bound on exact recurrence in that log, not an inertia rate.</p>
+
+<p>The decision for anyone building a phone agent: if loops matter, do not stop at a stronger warning. Count unchanged repeats per screen and action, and at a small threshold call the model with only the task and the current screen, accept the first action that changes the screen, then splice it back into the history. Log every reset; the paper's 19.59% early terminations are a reminder that a loop breaker can also end runs that a retry would have saved.</p>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<ul>
+  <li>The paper: <code>https://arxiv.org/abs/2609.37176</code>; Table 1 (paired changes with standard errors), Table 2 (same action again), Section 4.2 and Figure 7 (screen changes and returns), Appendix D (notice template, thresholds, three-attempt cap). The abstract links an anonymous code release (<code>anonymous.4open.science/r/vlm-agent-defense-D076</code>), which returned HTTP 401 to us on 1 October 2026, so we could not inspect it.</li>
+  <li>phoneshell's notice: <code>grep -n "THE SCREEN DID NOT CHANGE" phoneshell/mcp_server.py</code>; the prompts: <code>grep -n "does not change" phoneshell/bench/openrouter.py phoneshell/bench/runner.py</code>.</li>
+  <li>The unused detector: <code>grep -rn "StuckDetector" phoneshell scripts tests</code> returns only the class definition in <code>phoneshell/agent/verify.py</code>.</li>
+  <li>The repeat count, on your own phoneshell install: read <code>runtime/logs/audit.jsonl</code>, keep <code>tap</code> and <code>type</code> events, and count consecutive events with the same <code>element</code> (or the same <code>into</code> and <code>text</code>) less than 60 seconds apart.</li>
+</ul>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>By 31 March 2027 we will wire a reset-and-reroute step into phoneshell (trigger: the same element tapped twice with an unchanged signature), add screen signatures to the audit log, and run the same 80 tasks with and without it on one model. We predict unchanged repeats per action fall by at least 30% with the reset, while the pass rate moves by less than 3 points either way. If the existing notice alone already keeps unchanged repeats under 1% of actions once signatures are logged, phoneshell's loops are too rare for this to matter, and this note overstates the risk for a tree-driven phone agent.</p>
+
+  <section class="sources">
+    <h2>Sources</h2>
+    <ol>
+      <li><a href="https://arxiv.org/abs/2609.37176">Segalini, Soi, Decouchant, Chen (Universite de Neuchatel, Delft University of Technology), Absorbed in Inertia: Activation Analysis for Computer-Use Agents, arXiv:2609.37176, 29 September 2026</a></li>
+      <li><a href="https://arxiv.org/html/2609.37176v1">HTML edition: Table 1 (paired intervention effects with standard errors), Table 2 (same action again), Section 4.2, Appendix D (notice template, thresholds)</a></li>
+      <li><a href="https://blolabel.ai/blog/agents-report-success-device-disagrees/">Blolabel, 16 of 27 failures on a physical iPhone were reported as successes by the model that failed them</a></li>
+      <li><a href="https://github.com/Blomega/phoneshell">phoneshell source: phoneshell/device.py, config.py, actions.py, mcp_server.py, agent/macros.py, agent/verify.py, bench/verify.py, environments/*.yaml, FINDINGS.md (read 1 October 2026)</a></li>
+    </ol>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
