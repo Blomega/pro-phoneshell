@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WebDriverAgent shipped seven releases on 30 September: finding by accessibility id got 25 to 31% faster, a 1,029-node /source read only 3.3% | Blolabel</title>
+<meta name="description" content="appium-webdriveragent 16.13.0 to 16.13.6, 30 September 2026: accessibility-id finds 24.8 to 30.6% faster (PR #1286); /source at 1,029 nodes 2,882.73 to 2,787.37 ms (PR #1283); serializer 5.41x in isolation (PR #1276); drag no longer re-snapshots or waits for idle (PR #1270). phoneshell pins v16.12.4.">
+<link rel="canonical" href="https://blolabel.ai/blog/wda-16-13-faster-finds-not-faster-source/">
+<meta property="og:title" content="WebDriverAgent shipped seven releases on 30 September: finding by accessibility id got 25 to 31% faster, a 1,029-node /source read only 3.3% | Blolabel">
+<meta property="og:description" content="appium-webdriveragent 16.13.0 to 16.13.6, 30 September 2026: accessibility-id finds 24.8 to 30.6% faster (PR #1286); /source at 1,029 nodes 2,882.73 to 2,787.37 ms (PR #1283); serializer 5.41x in isolation (PR #1276); drag no longer re-snapshots or waits for idle (PR #1270). phoneshell pins v16.12.4.">
+<meta property="og:url" content="https://blolabel.ai/blog/wda-16-13-faster-finds-not-faster-source/">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"WebDriverAgent shipped seven releases on 30 September: finding by accessibility id got 25 to 31% faster, a 1,029-node /source read only 3.3%","description":"appium-webdriveragent 16.13.0 to 16.13.6, 30 September 2026: accessibility-id finds 24.8 to 30.6% faster (PR #1286); /source at 1,029 nodes 2,882.73 to 2,787.37 ms (PR #1283); serializer 5.41x in isolation (PR #1276); drag no longer re-snapshots or waits for idle (PR #1270). phoneshell pins v16.12.4.",
+ "datePublished":"2026-10-01","dateModified":"2026-10-01",
+ "url":"https://blolabel.ai/blog/wda-16-13-faster-finds-not-faster-source/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/wda-16-13-faster-finds-not-faster-source/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"}}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "What changed in WebDriverAgent 16.13?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Seven releases on 30 September 2026 (16.13.0 to 16.13.6) made accessibility-id lookups use a native XCTest predicate, rewrote page-source XML serialization, fixed a drag hang after app switches, stopped retaining responses for abandoned sessions and added a currentDisplayId screenshot setting."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does WebDriverAgent 16.13 make /source faster?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Barely. PR #1283 measured a 1,029-node screen at 2,882.73 ms median before and 2,787.37 ms after, 3.31%, on an iOS 26.5 simulator. The serializer alone got 5.41 times faster (PR #1276), but it is a few milliseconds of the request."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How much faster is find by accessibility id in WebDriverAgent 16.13.4?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "PR #1286 measured POST /elements on a simulator at 24.78% faster with 100 matches (2,613.78 to 1,966.22 ms), 30.59% with 1 match and 28.10% with no match, among 1,024 labels."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Should a phone automation rig upgrade WebDriverAgent straight away?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Pin it and upgrade deliberately. Seven releases in twelve and a half hours changed find, source, drag and session behaviour; invalid drag parameters now return 400 instead of 500. phoneshell pins v16.12.4."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAABOCAMAAAD4iTj8AAAAilBMVEVMaXFiXmJhXmEVieRkYGRiXmJiXmJEaZJiX2IWjehNaIJhXmEUjOcVjOdgXWBjX2MWjecUjOZiXmJiXmIUi+UVjehUoN7w9/33+/7q9Pzg7/p8gIlkYGQXjuj///9oZGgWk/JmY2YVjullYWUJh+dtaG0olumr1/dSq+7T6vo6n+tntfCMx/N7vvJEi25LAAAAHHRSTlMAakku/HusA/z7Eo+hwDL30nXizUnjHfvKolE8aPCOgAAAAAlwSFlzAAALEgAACxIB0t1+/AAAB35JREFUeJztmn1zsjoThwMCCaCg4EvbASFA1bZ3v//XO7MJeQFBwJ55nnNP85v+oSYB9mJ3k2yKkJGRkZGRkZGRkZGRkZGRkZGRkdHPhZXQ7xPuGH2P4Gk4P8L6P3slGCOEV7vderNZr3f7I/yEfpEwQqvd1i+FDpt90PWCwBKyF147kiOjxc8VzborvtdI++gV0Grtl2XuC1Vledhh5QQY2e8F17u3yASMQjnSXehVGFnaXReOxUvug3c+WJ9LMQbblbwpRnYdO6CYLgZA25HFEwAKddfxscdVX0eIaPnw6ueR2xw3ZaVZLxiU/k7cFSObkgzkFIsBFE478hkAYuw4AIzWld/TYbvetw6M0Ur69XZ4/GpbCvOrBiQQ5KUgMAeACjM95voAxoJxKH5nAyh7r6+qyrLacAcGAK095RAAjI7K/uZy+/q6fVYtAt8XBKYB6I89wwPu0tTQtZ4GkEMMl/4exkwBQHijhv85nUEfN+kELYFJABjhyA09L7QxQpEtFPQAoMCCTlakJVhucWDDcM9zoU363dMAcnj2A5/NHwLojL6ehb6ED1Q+c6QpABjZqUMhXdM0QuG7Q5lY3tcB2AnvFHuRPsUg24spaykojVMLuP0YQO6Xa3gxDwFgtJfpr/mW9p9Pl0oM2szwAIzcmhLiOA4hNI7CIiYgh3YAvFu2Q6ET62WpBBt4tMjYcN5WJHbrd0sB+FwiFRyC6RDQAuBDATh/d4PgMQAwkvDmLCM09age9QIAqcOklr1I0RLAKErUaDaM1DVLF8sBlEzSBao9ZJcHADDaqwT4qdl/vioA26kQYI3KAuKIL10AGXEcrReJWRSA/e2llYjD8CwHsGbypfvuJgEoB2huOoAPLZIYxocekN6ZMASgZ2R7IZwWyi3kpwzwLAewZ9j2/kwA0NbCyvPmSwcgkwBPJY8AqDb++p0HACDO5eestVFaXVMVImDxYgAVvCssX+sMADuVAUYBQCp5DMBTNlBKVUDfASAFLSQsUoRglPQeSB7KlQiBCHnGAxAKtjyz+9VqCsB6GgC/zKMQCGRuI5ln2558jf0cQJzQtmQzoSnGKIrl1xAj7EkcbOziHLADbVr72/T1aBbQ5oCxHNDOA6MAwAb5/l0gHgoj+gAoS/yyOUsCJCPAoSm7Wtrycdj257lZoOT255C9HgPABwWgupyGZoEZAOz2mUmdsCJCkAx6AKlTFqCyOcsiwNG20jACuVS72E/WAX6Vs1XsQwCBBiBv1ELwfL4tASAs5E+J0cg6gMe8aia1jZDyeS4REVkWPwFAU3XgCWECgLYNbj5PQw4wDUA9Zbt86W5/epsh3SUYgMFJEgBEPwKQ+5s9b57rAdpa+PT5/wDAl8Liy1Me4OtL4bJcT4UAVjthRuDPgP0DADrFNz0EpI+TIQBUNHcBCJ+vO8qeygGlvhb22yXM3FmgyS/N7eN0Pl0vzacqi8zIATJvpcAGYTEt9gC0zWrW5ElQTBlx0pX3xEpww5bCG7+NbLaKnbcOaKrb9eP01TSXz7zJr+ePP5+NXFHvdStpGukKkDaV1xZbvo1Ng5kNzSLPizQnr4uDIMBRFADDIAiCpxdCaN8ucPmGeM5KsLnxreD1dskv3+3nC3eC6nDsLHdJrKm2tIUQyWI3ilyxLLgHEFtRFIooh2kRoSiTCyHobMdJ6rk2cH1mN7jn4Sl/YRviGXsBEfwQ/yc5F3ywVOCXG30v0BVf26ipLCvieHwpTDIaO3LjyI3CqSKQul6cZVAYIUnq/cADkAhteHkdAHdnB6xnZwVw7q0G2h3FMACHAZA+DzYKe4Y3Q5DepQfwiNA2QwXAg8pIRuD44QkAGGLnuBOze+VrAPLK32o6MLugHqCXgro6XRqfQXzsAVpa6+K58wB9KIsAfSeRqXoBrxYsB3DgkiWRTgjkeVXq4gvFbakvgPq6Nv2K0AAAfUvLHl5Y2s8BtV42IZTVvTCyZQHl5wWRiksuCyB8NQDq6AuqxtywfaklgHt9VlvIR489AGHvXQuCRG5ougBqL5FOQMh7KJ7fqnUyjCBLiM8URX2tJNifBrtqC94wWq8F9vXdtMV1u26Llh3BLMB24F4BRVD2V9iuPNByO0djllU4bSen8LRjtwRqolKZXhSdPhrDY1Vh5gBTAKB68MD+81WeC4hjyq7eRWnTjYuC1jUtYqt3HKp/c+Oihk40sXQLAjehBaV1VlNoC1VZfMbhKB4GAE6+CaYBYHQcTwHn86u4beQOq63vYxRYXpokaRghZHda9W8oCqGTJyr/wgQU2CEMT1IvtNlT89/VXcePxzEAuFdV+uugezbYlTr1ehsn8DL7NJPBDAJ5qjPai3e6O0Djw1nToqNtxADcy9+u5dngQLOcBTiBl/H3r53mDUtrFw/fbez0lT/dmdH+1G2a8+81GO22m67Wu91K+BFGq82gttrZ9/F1yPzTG/qbhZf4Eb53gtMrbAH+DuHH/yQz4bttp7eXU8/8v8b+f0Ng6/Ht9YXp9fWN589fJTzx/TcIyw+/0XojIyMjIyMjIyMjIyMjIyP0n9Y/P2/lF8zxuoMAAAAASUVORK5CYII=" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind event">event</span>
+    <time datetime="2026-10-01">01 October 2026</time>
+    <span>7 min read</span>
+  </div>
+  <h1>WebDriverAgent shipped seven releases on 30 September: finding by accessibility id got 25 to 31% faster, a 1,029-node /source read only 3.3%</h1>
+  <p class="standfirst">The 16.13 series rewrote the page-source XML writer, which got 5.41 times faster in isolation, yet the full screen read barely moved. The time is in the accessibility snapshot, which no 16.13 change touches; the lookup and drag fixes are the ones a phone agent will feel.</p>
+
+  <p>On 30 September 2026 Appium's WebDriverAgent went from 16.12.11 to 16.13.6 in seven releases inside twelve and a half hours. The pull requests behind them carry their own measurements: finding elements by accessibility id got 24.8 to 30.6% faster end to end, while a full <code>/source</code> read of a 1,029-node screen got 3.31% faster, even though the XML writer inside it got 5.41 times faster in isolation. For a phone agent the lesson is where the time is not: the serializer was never the slow part of reading the screen.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/wda-16-13-faster-finds-not-faster-source-hero.png" alt="Abstract technical illustration of a long request pipeline where one short segment is redrawn much thinner while the long segments around it stay unchanged" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="seven-webdriveragent-releases-on-30-september-2026-and-what-">Seven WebDriverAgent releases on 30 September 2026, and what each one changed</h2>
+
+<p>The npm registry timestamps <code>appium-webdriveragent</code> 16.13.0 at 02:02 UTC and 16.13.6 at 14:30 UTC on 30 September; the GitHub releases run from 02:00 to 14:27. Of the ten pull requests we read, eight are from the GitHub account KazuCocoa (two more, #1273 and #1274, are small connection and cache fixes in 16.13.0). The drag fix is from wilcoyay and the multi-display screenshot setting from jsteinberg7. Every performance number below is the pull request author's own measurement on an iOS 26.5 simulator or a Mac, not ours.</p>
+
+<table>
+  <thead>
+    <tr><th>Release (UTC, 30 Sep)</th><th>Pull request</th><th>Change</th><th>Measured effect</th><th>Source</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>16.13.0 (02:00)</td><td>#1270</td><td><code>/wda/dragfromtoforduration</code> and <code>/wda/pressAndDragWithVelocity</code> resolve both points once, up front, and skip XCTest's second app snapshot and idle wait</td><td>Fixes issue #1056 (hang, then <code>point.x != INFINITY</code> assertion after an app switch); no timing reported</td><td>PR #1270, issue #1056</td></tr>
+    <tr><td>16.13.0 (02:00)</td><td>#1278</td><td>Screenshot orientation fix applied the scaling factor twice</td><td>Images were shrunk twice; regression test at three pixel densities</td><td>PR #1278</td></tr>
+    <tr><td>16.13.0 (02:00)</td><td>#1267</td><td>New <code>currentDisplayId</code> setting chooses which display <code>/screenshot</code> captures</td><td>Nothing changes unless set</td><td>PR #1267</td></tr>
+    <tr><td>16.13.1 (02:40)</td><td>#1283</td><td>XML serialization reuses sibling index and frame instead of rescanning</td><td><code>/source</code> median 2,882.73 to 2,787.37 ms at 1,029 nodes (3.31%); 0.43% at 261; 1.18% at 26</td><td>PR #1283</td></tr>
+    <tr><td>16.13.3 (04:56)</td><td>#1282</td><td>Stale session ids rejected without keeping every past response</td><td>Unbounded memory growth across session churn removed; no figure</td><td>PR #1282</td></tr>
+    <tr><td>16.13.4 (07:09)</td><td>#1286</td><td>Accessibility-id lookup uses a native XCTest predicate instead of an Objective-C block</td><td><code>POST /elements</code> median 2,613.78 to 1,966.22 ms (100 matches, 24.78%); 370.08 to 256.87 ms (1 match, 30.59%); 178.76 to 128.54 ms (no match, 28.10%)</td><td>PR #1286</td></tr>
+    <tr><td>16.13.5 (07:27)</td><td>#1276</td><td>Page source written straight to a buffer instead of building, then dumping, a libxml2 document</td><td>Serializer alone: 21.134 to 3.907 ms at 5,000 elements (5.41x). The author states this is not an end-to-end <code>/source</code> speedup</td><td>PR #1276</td></tr>
+    <tr><td>16.13.6 (14:27)</td><td>#1281</td><td>A failing stability wait now restores the quiescence flag and idle timeout</td><td>Settings no longer leak into later commands; no figure</td><td>PR #1281</td></tr>
+  </tbody>
+</table>
+
+<p>16.13.2 (#1277, a request whose bytes arrived with the client's EOF could be dropped) is a correctness fix with no timing. All seven are minor or patch releases; none changes an endpoint's request shape.</p>
+
+<svg viewBox="0 0 760 320" style="width:100%;height:auto" role="img" aria-label="Horizontal bar chart of median time reductions reported in three WebDriverAgent pull requests merged on 29 and 30 September 2026, all measured on an iOS 26.5 simulator or a Mac. The isolated libxml2 serializer benchmark in PR 1276 saves 81.5 percent for 5,000 elements, but it excludes the snapshot and HTTP. Live accessibility id lookups in PR 1286 save 24.78 percent with 100 matches, 30.59 percent with 1 match and 28.10 percent with no match. Live page source requests in PR 1283 save 1.18 percent on a 26 node screen, 0.43 percent on 261 nodes and 3.31 percent on 1,029 nodes.">
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">WebDriverAgent 16.13: median time saved, as measured in each pull request</text>
+<line x1="330.0" y1="56" x2="330.0" y2="272" stroke="#2a3140"/>
+<text x="330.0" y="288" font-size="10" fill="#c4ccda" text-anchor="middle">0</text>
+<line x1="402.0" y1="56" x2="402.0" y2="272" stroke="#2a3140"/>
+<text x="402.0" y="288" font-size="10" fill="#c4ccda" text-anchor="middle">20</text>
+<line x1="474.0" y1="56" x2="474.0" y2="272" stroke="#2a3140"/>
+<text x="474.0" y="288" font-size="10" fill="#c4ccda" text-anchor="middle">40</text>
+<line x1="546.0" y1="56" x2="546.0" y2="272" stroke="#2a3140"/>
+<text x="546.0" y="288" font-size="10" fill="#c4ccda" text-anchor="middle">60</text>
+<line x1="618.0" y1="56" x2="618.0" y2="272" stroke="#2a3140"/>
+<text x="618.0" y="288" font-size="10" fill="#c4ccda" text-anchor="middle">80</text>
+<line x1="690.0" y1="56" x2="690.0" y2="272" stroke="#2a3140"/>
+<text x="690.0" y="288" font-size="10" fill="#c4ccda" text-anchor="middle">100</text>
+<text x="510.0" y="306" font-size="11" fill="#c4ccda" text-anchor="middle">median time reduction, % (grey: isolated microbenchmark, not the endpoint)</text>
+<text x="322" y="77" font-size="11" fill="#c4ccda" text-anchor="end">serializer only, 5,000 elements (#1276, Mac)</text>
+<rect x="330" y="64" width="293.4" height="18" fill="#6f7b90"/>
+<text x="629.4" y="77" font-size="11" fill="#6f7b90">81.5%</text>
+<text x="322" y="105" font-size="11" fill="#c4ccda" text-anchor="end">find by accessibility id, 1 match of 1,024 (#1286)</text>
+<rect x="330" y="92" width="110.1" height="18" fill="#5ad1a0"/>
+<text x="446.1" y="105" font-size="11" fill="#5ad1a0">30.59%</text>
+<text x="322" y="133" font-size="11" fill="#c4ccda" text-anchor="end">find by accessibility id, no match of 1,024 (#1286)</text>
+<rect x="330" y="120" width="101.2" height="18" fill="#5ad1a0"/>
+<text x="437.2" y="133" font-size="11" fill="#5ad1a0">28.1%</text>
+<text x="322" y="161" font-size="11" fill="#c4ccda" text-anchor="end">find by accessibility id, 100 matches (#1286)</text>
+<rect x="330" y="148" width="89.2" height="18" fill="#5ad1a0"/>
+<text x="425.2" y="161" font-size="11" fill="#5ad1a0">24.78%</text>
+<text x="322" y="189" font-size="11" fill="#c4ccda" text-anchor="end">/source, 1,029 nodes (#1283)</text>
+<rect x="330" y="176" width="11.9" height="18" fill="#f2a65a"/>
+<text x="347.9" y="189" font-size="11" fill="#f2a65a">3.31%</text>
+<text x="322" y="217" font-size="11" fill="#c4ccda" text-anchor="end">/source, 26 nodes (#1283)</text>
+<rect x="330" y="204" width="4.2" height="18" fill="#f2a65a"/>
+<text x="340.2" y="217" font-size="11" fill="#f2a65a">1.18%</text>
+<text x="322" y="245" font-size="11" fill="#c4ccda" text-anchor="end">/source, 261 nodes (#1283)</text>
+<rect x="330" y="232" width="1.5" height="18" fill="#f2a65a"/>
+<text x="337.5" y="245" font-size="11" fill="#f2a65a">0.43%</text>
+</g></svg>
+
+
+<h2 id="the-serializer-got-5-41-times-faster-and-source-got-3-31-fas">The serializer got 5.41 times faster and /source got 3.31% faster</h2>
+
+<p>The two numbers do not contradict each other. PR #1276 timed only libxml2 writing XML: 4.294 ms for 1,000 synthetic buttons before the change. PR #1283 timed the whole HTTP request for a 1,029-node screen: 2,882.73 ms. If writing roughly a thousand nodes costs a few milliseconds, then nearly all of the 2.9 seconds is spent before the writer starts, in taking the accessibility snapshot and reading each element's attributes. That split is our inference from two different fixtures; PR #1283 says only that its measurements "cannot identify the precise remaining bottleneck". Neither PR touched snapshot acquisition.</p>
+
+<svg viewBox="0 0 760 360" style="width:100%;height:auto" role="img" aria-label="Diagram of a WebDriverAgent page source request for a 1,029 node screen, timed at a 2,882.73 millisecond median before version 16.13 and 2,787.37 after, per PR 1283. The request passes through four stages: XCTest accessibility snapshot, attribute retrieval per element, XML serialization with libxml2, and the HTTP response. Version 16.13 changes only the serialization stage, through PR 1283 and PR 1276. The isolated serializer benchmark in PR 1276 measured 4.294 milliseconds for 1,000 elements before the change and 0.794 after, so serialization is a few milliseconds of a 2.9 second request. phoneshell measured the same endpoint at 2,612 milliseconds on a 640 alarm screen and 24,195 milliseconds with the Add Alarm sheet open.">
+  <g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="12">
+    <text x="20" y="26" font-size="14" font-weight="600">GET /source, 1,029 nodes: 2,882.73 ms before, 2,787.37 ms after (PR #1283)</text>
+    <rect x="20" y="60" width="200" height="70" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="34" y="86" font-weight="600">XCTest snapshot</text>
+    <text x="34" y="106" fill="#c4ccda" font-size="11">accessibility tree from the app</text>
+    <text x="34" y="121" fill="#c4ccda" font-size="11">not changed in 16.13</text>
+    <line x1="220" y1="95" x2="240" y2="95" stroke="#6f7b90"/>
+    <rect x="240" y="60" width="190" height="70" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="254" y="86" font-weight="600">attribute reads</text>
+    <text x="254" y="106" fill="#c4ccda" font-size="11">label, value, rect, hittable</text>
+    <text x="254" y="121" fill="#c4ccda" font-size="11">not changed in 16.13</text>
+    <line x1="430" y1="95" x2="450" y2="95" stroke="#6f7b90"/>
+    <rect x="450" y="60" width="150" height="70" rx="8" fill="#1d2330" stroke="#f2a65a"/>
+    <text x="464" y="86" font-weight="600" fill="#f2a65a">XML writer</text>
+    <text x="464" y="106" fill="#c4ccda" font-size="11">#1283, #1276</text>
+    <text x="464" y="121" fill="#c4ccda" font-size="11">changed</text>
+    <line x1="600" y1="95" x2="620" y2="95" stroke="#6f7b90"/>
+    <rect x="620" y="60" width="120" height="70" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="634" y="86" font-weight="600">HTTP reply</text>
+    <text x="634" y="106" fill="#c4ccda" font-size="11">272 KB here</text>
+    <text x="20" y="166" font-size="13" font-weight="600">Where the 2.9 seconds can be, by subtraction</text>
+    <rect x="20" y="180" width="700" height="26" fill="#3a4356"/>
+    <rect x="714" y="180" width="6" height="26" fill="#f2a65a"/>
+    <text x="30" y="198" font-size="11">snapshot + attribute reads + transfer: the rest of 2,882.73 ms</text>
+    <text x="720" y="224" font-size="11" fill="#f2a65a" text-anchor="end">serializer: 4.294 ms per 1,000 elements before, 0.794 after (#1276, Mac)</text>
+    <text x="20" y="262" font-size="13" font-weight="600">The same endpoint on phoneshell's physical iPhone (FINDINGS.md section 18)</text>
+    <text x="20" y="286" fill="#c4ccda" font-size="11">Clock timer screen 154 ms | Clock alarms, 640 rows 2,612 ms | Add Alarm sheet open 24,195 ms (6.1 MB)</text>
+    <text x="20" y="310" fill="#c4ccda" font-size="11">snapshotMaxDepth 20: 159 to 210 ms | snapshotMaxDepth 25: 1,270 ms (FINDINGS.md section 2)</text>
+    <text x="20" y="340" fill="#5ad1a0" font-size="11">Depth and tree size move /source by 8x to 157x. The 16.13 writer change moved it 3.31%.</text>
+  </g>
+</svg>
+
+<p>Our own rig points the same way. phoneshell's <code>FINDINGS.md</code> records <code>/source</code> at 154 ms on the Clock timer screen, 2,612 ms on an alarms list that leftover benchmark runs had grown to 640 rows, and 24,195 ms (6.1 MB) with the Add Alarm sheet open over it. Raising <code>snapshotMaxDepth</code> from 20 to 25 took a read from 159 to 210 ms to 1,270 ms. Those are factors of 8 (depth 20 to 25) to 157 (timer screen to sheet over the list), driven by how much tree the snapshot walks. A 3% cut in the writer does not change which screens are slow.</p>
+
+<h2 id="finding-by-accessibility-id-is-the-change-a-phone-agent-feel">Finding by accessibility id is the change a phone agent feels</h2>
+
+<p>PR #1286 replaced a block predicate with a native one on <code>identifier</code> and <code>label</code>. Its benchmark ran ABBA order (before, after, after, before), a fresh WDA launch per block, 60 timed requests, and both after-blocks beat both before-blocks in every case. That is a stronger design than most driver benchmarks, though it is still one simulator and one synthetic screen of 1,024 labels.</p>
+
+<p>phoneshell resolves every tap target through <code>find_handle</code> in <code>phoneshell/actions.py</code>, which tries <code>accessibility id</code> with the element's identifier, then with its name, before falling back to a predicate string and a class chain. So the faster path is the first one phoneshell tries on every tap. The same section 18 table shows a tap at 550 ms on the timer screen and 2,290 ms on the 640-row list, and we have not measured how much of that is the find.</p>
+
+<h2 id="the-drag-fix-removes-a-wait-phoneshell-already-shortened">The drag fix removes a wait phoneshell already shortened</h2>
+
+<p>Issue #1056 (opened 5 September 2025) reported <code>/wda/dragfromtoforduration</code> hanging after an app switch and then failing with <code>Invalid parameter not satisfying: point.x != INFINITY</code>. PR #1270 traced it to XCTest resolving the drag's screen points lazily, inside its own event dispatch, after re-snapshotting the app and waiting for idle. The fix resolves the points once, returns a clear error if either is not finite, and synthesizes the touch events directly, the way W3C actions already did.</p>
+
+<svg viewBox="0 0 760 330" style="width:100%;height:auto" role="img" aria-label="Diagram comparing the drag path in WebDriverAgent before and after PR 1270, released in 16.13.0 on 30 September 2026. Before: the POST to dragfromtoforduration calls XCTest pressForDuration thenDragToCoordinate, XCTest re-snapshots the app, waits for idle, then resolves both screen points and asserts they are finite, which on a busy app hung and then failed with an INFINITY assertion. After: WebDriverAgent resolves both points once up front, returns an error if either is not finite, synthesizes the touch events directly, and waits only up to animationCoolOffTimeout. phoneshell already sets waitForIdleTimeout to 0 and animationCoolOffTimeout to 0.2 seconds, and measured this drag at 1,400 milliseconds on a light screen and 4,200 on the 640 alarm list.">
+  <g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="12">
+    <text x="20" y="26" font-size="14" font-weight="600">POST /wda/dragfromtoforduration, before and after PR #1270</text>
+    <text x="20" y="58" font-size="12" fill="#c4ccda" font-weight="600">16.12.x</text>
+    <rect x="90" y="40" width="150" height="40" rx="6" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="100" y="64" font-size="11">XCTest press..thenDrag</text>
+    <line x1="240" y1="60" x2="258" y2="60" stroke="#6f7b90"/>
+    <rect x="258" y="40" width="130" height="40" rx="6" fill="#1d2330" stroke="#f2a65a"/>
+    <text x="268" y="64" font-size="11" fill="#f2a65a">re-snapshot app</text>
+    <line x1="388" y1="60" x2="406" y2="60" stroke="#6f7b90"/>
+    <rect x="406" y="40" width="110" height="40" rx="6" fill="#1d2330" stroke="#f2a65a"/>
+    <text x="416" y="64" font-size="11" fill="#f2a65a">wait for idle</text>
+    <line x1="516" y1="60" x2="534" y2="60" stroke="#6f7b90"/>
+    <rect x="534" y="40" width="206" height="40" rx="6" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="544" y="58" font-size="11">resolve points, assert finite</text>
+    <text x="544" y="73" font-size="10" fill="#f2a65a">busy app: hang, then INFINITY</text>
+    <text x="20" y="128" font-size="12" fill="#c4ccda" font-weight="600">16.13.0</text>
+    <rect x="90" y="110" width="180" height="40" rx="6" fill="#1d2330" stroke="#5ad1a0"/>
+    <text x="100" y="134" font-size="11" fill="#5ad1a0">resolve both points once</text>
+    <line x1="270" y1="130" x2="288" y2="130" stroke="#6f7b90"/>
+    <rect x="288" y="110" width="170" height="40" rx="6" fill="#1d2330" stroke="#5ad1a0"/>
+    <text x="298" y="128" font-size="11" fill="#5ad1a0">not finite: clear error</text>
+    <text x="298" y="142" font-size="10" fill="#c4ccda">bad velocity: 400, not 500</text>
+    <line x1="458" y1="130" x2="476" y2="130" stroke="#6f7b90"/>
+    <rect x="476" y="110" width="264" height="40" rx="6" fill="#1d2330" stroke="#5ad1a0"/>
+    <text x="486" y="128" font-size="11" fill="#5ad1a0">synthesize touch events directly</text>
+    <text x="486" y="142" font-size="10" fill="#c4ccda">then wait up to animationCoolOffTimeout</text>
+    <line x1="20" y1="180" x2="740" y2="180" stroke="#2a3140"/>
+    <text x="20" y="206" font-size="13" font-weight="600">phoneshell today (WebDriverAgent pinned at v16.12.4)</text>
+    <text x="20" y="230" font-size="11" fill="#c4ccda">config.py: waitForIdleTimeout 0, animationCoolOffTimeout 0.2, snapshotMaxDepth 20</text>
+    <text x="20" y="252" font-size="11" fill="#c4ccda">gestures.py and actions.py: every one-finger, two-point drag goes to /wda/dragfromtoforduration</text>
+    <text x="20" y="274" font-size="11" fill="#c4ccda">measured drag: 1,400 ms on a light screen, 4,200 ms on the 640-row alarms list</text>
+    <text x="20" y="304" font-size="11" fill="#5ad1a0">What 16.13 can remove for phoneshell: the second snapshot. The idle wait was already set to 0.</text>
+  </g>
+</svg>
+
+<p>phoneshell routes every one-finger, two-point drag to this endpoint, because a moving W3C pointer chain cost a flat 19 seconds against 1.4 seconds for the native drag. It already sets <code>waitForIdleTimeout</code> to 0 in <code>phoneshell/config.py</code>, so the idle wait that #1270 removes was already short on our rig. What remains is the second app snapshot, and snapshots are what scale with tree size. Our expectation, not yet a measurement, is that 16.13 helps drags most on exactly the heavy screens where phoneshell measured 4,200 ms.</p>
+
+<h2 id="what-it-means-if-you-drive-an-iphone-through-webdriveragent">What it means if you drive an iPhone through WebDriverAgent</h2>
+
+<p>Pin, then upgrade on purpose. phoneshell pins <code>WDA_TAG = "v16.12.4"</code> in <code>phoneshell/device.py</code>, with the comment that every measurement in <code>FINDINGS.md</code> was taken against it. Seven releases in one day is the case for pinning: a framework that floats on <code>latest</code> would have changed its find, source, drag and session behaviour four times before lunch, and any benchmark run spanning that window would mix versions without recording it.</p>
+
+<p>Do not expect 16.13 to fix slow screens. If an agent step is slow because the screen is big (a long list, a sheet over a list, a deep tree), the cost is in the snapshot, and the levers are still the ones that cut the tree: <code>snapshotMaxDepth</code>, fewer rows, and cleaning up state that earlier runs left behind. If a step is slow because it resolves many elements by accessibility id, 16.13 should help by roughly a quarter, on the PR's simulator numbers.</p>
+
+<p>Read the behaviour changes before upgrading a rig that parses errors. Invalid drag velocity or duration now returns 400 <code>invalid argument</code> instead of 500. Requests to an abandoned session get the standard invalid-session response rather than a replay of the old one (#1282). Code that matched on the old error text will see different text.</p>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<ul>
+  <li>Release times: <code>npm view appium-webdriveragent time --json | grep 16.13</code>, or <code>https://github.com/appium/WebDriverAgent/releases</code>.</li>
+  <li>Changelog: <code>https://github.com/appium/WebDriverAgent/blob/master/CHANGELOG.md</code>, sections 16.13.0 to 16.13.6.</li>
+  <li>The measurements: <code>gh api repos/appium/WebDriverAgent/pulls/1286 --jq .body</code> (find), <code>pulls/1283</code> (live <code>/source</code>, ABBA method), <code>pulls/1276</code> (serializer microbenchmark, with the C source to reproduce it), <code>pulls/1270</code> (drag).</li>
+  <li>phoneshell's pin and usage: <code>phoneshell/device.py</code> (<code>WDA_TAG</code>), <code>phoneshell/actions.py</code> (<code>find_handle</code>, accessibility id first), <code>phoneshell/wda/client.py</code> (<code>drag</code> posts to <code>/wda/dragfromtoforduration</code>), <code>phoneshell/config.py</code> (session settings), <code>FINDINGS.md</code> sections 2 and 18 (per-call timings).</li>
+  <li>Time one read on your own device: <code>curl -s -o /dev/null -w '%{time_total}\n' http://127.0.0.1:8100/source</code>, ten times on a light screen and ten on your longest list, before and after moving the WebDriverAgent tag.</li>
+</ul>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>By 31 December 2026 we will rebuild phoneshell's runner at v16.13.6 and time <code>/source</code> and accessibility-id finds on the physical iPhone, 20 reads each, on the Clock timer screen and on a list of at least 500 rows. We predict the median <code>/source</code> time on the long list changes by less than 10%, and the median accessibility-id find falls by at least 15%. If <code>/source</code> on the long list falls by more than 20%, the serializer was a bigger share of the device read than the simulator numbers implied, and the inference in this note is wrong.</p>
+
+  <section class="sources">
+    <h2>Sources</h2>
+    <ol>
+      <li><a href="https://github.com/appium/WebDriverAgent/releases">appium/WebDriverAgent releases v16.13.0 to v16.13.6, 30 September 2026, 02:00 to 14:27 UTC</a></li>
+      <li><a href="https://github.com/appium/WebDriverAgent/blob/master/CHANGELOG.md">WebDriverAgent CHANGELOG, sections 16.13.0 to 16.13.6</a></li>
+      <li><a href="https://github.com/appium/WebDriverAgent/pull/1286">PR #1286, use native predicates for accessibility id lookups, merged 30 September 2026 (live WDA measurements, ABBA design)</a></li>
+      <li><a href="https://github.com/appium/WebDriverAgent/pull/1283">PR #1283, avoid repeated sibling and frame scans during XML serialization, merged 30 September 2026 (live /source benchmark)</a></li>
+      <li><a href="https://github.com/appium/WebDriverAgent/pull/1276">PR #1276, stream page-source XML with exception-safe cleanup, merged 30 September 2026 (isolated libxml2 microbenchmark)</a></li>
+      <li><a href="https://github.com/appium/WebDriverAgent/pull/1270">PR #1270, avoid infinite-point assertion and hang in coordinate drag gestures, merged 29 September 2026</a></li>
+      <li><a href="https://github.com/appium/WebDriverAgent/issues/1056">Issue #1056, dragfromtoforduration freezes after switching applications, opened 5 September 2025</a></li>
+      <li><a href="https://registry.npmjs.org/appium-webdriveragent">appium-webdriveragent npm registry record, 16.13.6 published 30 September 2026 14:30 UTC</a></li>
+      <li><a href="https://blolabel.ai/blog/accessibility-tree-size-latency/">Blolabel, 640 leftover alarms turned a 154 ms screen read into 24 seconds, and the tree came back 218 switches short</a></li>
+      <li><a href="https://blolabel.ai/blog/w3c-drag-19-seconds-ios/">Blolabel, a moving W3C pointer chain costs 19 seconds on a real iPhone, and the identical drag costs 1.4</a></li>
+      <li><a href="https://github.com/Blomega/phoneshell">phoneshell source: phoneshell/device.py, config.py, actions.py, mcp_server.py, agent/macros.py, agent/verify.py, bench/verify.py, environments/*.yaml, FINDINGS.md (read 1 October 2026)</a></li>
+    </ol>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
