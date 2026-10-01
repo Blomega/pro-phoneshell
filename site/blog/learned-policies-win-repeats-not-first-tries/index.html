@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Learned computer-use policies win on repeats, not first tries: NSPI's OSWorld Pass^1 sits below the agent it was learned from on both models | Blolabel</title>
+<meta name="description" content="Neuro-Symbolic Computer Use (arXiv:2609.36927, 29 September 2026, Georgia Tech, Stanford, Simular): OSWorld Pass^1 53.6 vs 55.9 (GPT-5.6 Terra) and 72.9 vs 74.1 (Claude Opus 5); Pass^3 50.4 vs 34.6 and 72.0 vs 68.4. Break-even 3.1 to 26.8 runs. Step judge located 0 of 6 invisible failures; verifier passed 17 of 24 unsafe steps. phoneshell macros are unrefined and unmeasured.">
+<link rel="canonical" href="https://blolabel.ai/blog/learned-policies-win-repeats-not-first-tries/">
+<meta property="og:title" content="Learned computer-use policies win on repeats, not first tries: NSPI's OSWorld Pass^1 sits below the agent it was learned from on both models | Blolabel">
+<meta property="og:description" content="Neuro-Symbolic Computer Use (arXiv:2609.36927, 29 September 2026, Georgia Tech, Stanford, Simular): OSWorld Pass^1 53.6 vs 55.9 (GPT-5.6 Terra) and 72.9 vs 74.1 (Claude Opus 5); Pass^3 50.4 vs 34.6 and 72.0 vs 68.4. Break-even 3.1 to 26.8 runs. Step judge located 0 of 6 invisible failures; verifier passed 17 of 24 unsafe steps. phoneshell macros are unrefined and unmeasured.">
+<meta property="og:url" content="https://blolabel.ai/blog/learned-policies-win-repeats-not-first-tries/">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"Learned computer-use policies win on repeats, not first tries: NSPI's OSWorld Pass^1 sits below the agent it was learned from on both models","description":"Neuro-Symbolic Computer Use (arXiv:2609.36927, 29 September 2026, Georgia Tech, Stanford, Simular): OSWorld Pass^1 53.6 vs 55.9 (GPT-5.6 Terra) and 72.9 vs 74.1 (Claude Opus 5); Pass^3 50.4 vs 34.6 and 72.0 vs 68.4. Break-even 3.1 to 26.8 runs. Step judge located 0 of 6 invisible failures; verifier passed 17 of 24 unsafe steps. phoneshell macros are unrefined and unmeasured.",
+ "datePublished":"2026-10-01","dateModified":"2026-10-01",
+ "url":"https://blolabel.ai/blog/learned-policies-win-repeats-not-first-tries/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/learned-policies-win-repeats-not-first-tries/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"}}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "What is neuro-symbolic computer use?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "A method from arXiv:2609.36927 that turns one agent trajectory into a script with fixed control flow and model calls only for grounding and state checks, then refines it with judges and agent continuations, without seeing the benchmark evaluator."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Do learned computer-use policies beat the agent they come from?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "On repeats, yes: Pass^3 is higher in all four settings, for example 50.4% against 34.6% on OSWorld with GPT-5.6 Terra. On first tries, not on OSWorld: 53.6% against 55.9%, and 72.9% against 74.1% with Claude Opus 5."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How quickly does a learned policy pay for itself?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "After 3.1 to 26.8 runs in dollars and 8.6 to 16.9 runs in wall-clock time, per Table 3; per-run cost falls from $0.081 to $2.10 for the agent to under one cent for the policy."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Where do learned computer-use policies fail?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "On long tasks: on OSWorld-V2 they trailed the agent by 5.6 points strict and 18.5 partial credit, with 158-step trajectories becoming 970-line scripts. Their step judge also located 0 of 6 failures not visible on screen."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-01">01 October 2026</time>
+    <span>6 min read</span>
+  </div>
+  <h1>Learned computer-use policies win on repeats, not first tries: NSPI's OSWorld Pass^1 sits below the agent it was learned from on both models</h1>
+  <p class="standfirst">Neuro-Symbolic Policy Iteration turns one agent run into a refined script and beats the agent on Pass^3 in all four settings, at 15 to 217 times lower cost per run. On OSWorld its first-try success is 2.3 and 1.2 points lower. The gain is consistency, and its judges cannot see failures that never reach the screen.</p>
+
+  <p>Turning a computer-use agent's run into a refined script buys reliability across repeats, not first-try success. In Neuro-Symbolic Computer Use (arXiv:2609.36927, 29 September 2026), the learned policies win Pass^3 (solved in all three runs) in all four settings, but on OSWorld their first-try rate is below the agent they were learned from with both models: 53.6% against 55.9% on GPT-5.6 Terra, 72.9% against 74.1% on Claude Opus 5. What they remove is the drop between the first run and the third: 3.4 points on average, against 12.4 for the agent.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/learned-policies-win-repeats-not-first-tries-hero.png" alt="Abstract technical illustration of three parallel paths, one wandering and splitting, one straight and repeated identically three times" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="what-simular-s-researchers-released-on-29-september-2026">What Simular's researchers released on 29 September 2026</h2>
+
+<p>The paper is by Hyewon Suh, Thanh Minh Nguyen, Chih-Lun Lee, Darrow Hartman, Lizhao Liu, Xin Eric Wang, Ang Li and Jiachen Yang (Georgia Institute of Technology and Stanford University, work done at Simular). It proposes Neuro-Symbolic Policy Iteration (NSPI): start from one agent trajectory, convert it to a program in Simular's Simulang scripting language, replace pixel coordinates with element descriptions that a grounding model (UI-Venus-1.5-30B-A3B, consensus of three calls) resolves at run time, run it, judge it, let the agent continue from the point of failure, and have a coding model rewrite the script. The loop never sees the benchmark's evaluator until the end.</p>
+
+<p>The test set is 361 OSWorld-Verified tasks (Google Drive tasks excluded) and 169 ScienceBoard tasks, each run three times, with GPT-5.6 Terra and Claude Opus 5 as the base agents. Baselines are the base agent, Batch2Code (the same script format, no refinement loop) and ASI (an agent that calls learned skills).</p>
+
+<table>
+  <thead>
+    <tr><th>Setting</th><th>Agent Pass^1 / Pass^3</th><th>NSPI Pass^1 / Pass^3</th><th>Agent cost per run</th><th>NSPI cost per run</th><th>One-time build cost</th><th>Break-even runs</th><th>Source</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>ScienceBoard, GPT-5.6 Terra</td><td>27.0 / 13.6</td><td>29.2 / 26.0</td><td>$0.081</td><td>$0.0054</td><td>$2.03</td><td>26.8</td><td>Tables 1 and 3</td></tr>
+    <tr><td>ScienceBoard, Claude Opus 5</td><td>38.7 / 29.6</td><td>48.7 / 42.6</td><td>$0.52</td><td>$0.0079</td><td>$5.68</td><td>11.2</td><td>Tables 1 and 3</td></tr>
+    <tr><td>OSWorld, GPT-5.6 Terra</td><td>55.9 / 34.6</td><td>53.6 / 50.4</td><td>$0.48</td><td>$0.0072</td><td>$3.09</td><td>6.5</td><td>Tables 1 and 3</td></tr>
+    <tr><td>OSWorld, Claude Opus 5</td><td>74.1 / 68.4</td><td>72.9 / 72.0</td><td>$2.10</td><td>$0.0097</td><td>$6.45</td><td>3.1</td><td>Tables 1 and 3</td></tr>
+    <tr><td>OSWorld-V2 (long tasks)</td><td colspan="2">NSPI trails the agent by 5.6 points strict and 18.5 points partial credit</td><td colspan="3">not reported per run in the text</td><td>not reported</td><td>Section 4.5</td></tr>
+  </tbody>
+</table>
+
+<p>Break-even is the build cost divided by the per-run saving, and the table's values reproduce from its other columns (2.03 / (0.081 minus 0.0054) = 26.8). In wall-clock time the break-even is 8.6 to 16.9 runs.</p>
+
+<svg viewBox="0 0 760 400" style="width:100%;height:auto" role="img" aria-label="Grouped bar chart from Table 1 of arXiv 2609.36927. On ScienceBoard with GPT-5.6 Terra the base agent scores 27.0 Pass^1 and 13.6 Pass^3, the learned policy 29.2 and 26.0. With Claude Opus 5 on ScienceBoard the base agent scores 38.7 and 29.6, the policy 48.7 and 42.6. On OSWorld with GPT-5.6 Terra the base agent scores 55.9 and 34.6, the policy 53.6 and 50.4. On OSWorld with Claude Opus 5 the base agent scores 74.1 and 68.4, the policy 72.9 and 72.0. The policy wins Pass^3 in all four settings but its Pass^1 is below the base agent on both OSWorld settings.">
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Base agent vs learned policy (NSPI): first-try and all-three-runs success, %</text>
+<rect x="70" y="40" width="12" height="12" fill="#8a93a5"/>
+<text x="88" y="50" font-size="11" fill="#c4ccda">base Pass^1</text>
+<rect x="191" y="40" width="12" height="12" fill="#6f7b90"/>
+<text x="209" y="50" font-size="11" fill="#c4ccda">base Pass^3</text>
+<rect x="312" y="40" width="12" height="12" fill="#9fe3c6"/>
+<text x="330" y="50" font-size="11" fill="#c4ccda">NSPI Pass^1</text>
+<rect x="433" y="40" width="12" height="12" fill="#5ad1a0"/>
+<text x="451" y="50" font-size="11" fill="#c4ccda">NSPI Pass^3</text>
+<line x1="70" y1="330.0" x2="740" y2="330.0" stroke="#2a3140"/>
+<text x="62" y="334.0" font-size="10" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="70" y1="278.0" x2="740" y2="278.0" stroke="#2a3140"/>
+<text x="62" y="282.0" font-size="10" fill="#c4ccda" text-anchor="end">16</text>
+<line x1="70" y1="226.0" x2="740" y2="226.0" stroke="#2a3140"/>
+<text x="62" y="230.0" font-size="10" fill="#c4ccda" text-anchor="end">32</text>
+<line x1="70" y1="174.0" x2="740" y2="174.0" stroke="#2a3140"/>
+<text x="62" y="178.0" font-size="10" fill="#c4ccda" text-anchor="end">48</text>
+<line x1="70" y1="122.0" x2="740" y2="122.0" stroke="#2a3140"/>
+<text x="62" y="126.0" font-size="10" fill="#c4ccda" text-anchor="end">64</text>
+<line x1="70" y1="70.0" x2="740" y2="70.0" stroke="#2a3140"/>
+<text x="62" y="74.0" font-size="10" fill="#c4ccda" text-anchor="end">80</text>
+<text x="18" y="200" font-size="11" fill="#c4ccda" transform="rotate(-90 18 200)" text-anchor="middle">success rate, %</text>
+<rect x="85.8" y="242.2" width="31.0" height="87.8" fill="#8a93a5"/>
+<text x="101.2" y="238.2" font-size="9" fill="#8a93a5" text-anchor="middle">27</text>
+<rect x="119.8" y="285.8" width="31.0" height="44.2" fill="#6f7b90"/>
+<text x="135.2" y="281.8" font-size="9" fill="#6f7b90" text-anchor="middle">13.6</text>
+<rect x="153.8" y="235.1" width="31.0" height="94.9" fill="#9fe3c6"/>
+<text x="169.2" y="231.1" font-size="9" fill="#9fe3c6" text-anchor="middle">29.2</text>
+<rect x="187.8" y="245.5" width="31.0" height="84.5" fill="#5ad1a0"/>
+<text x="203.2" y="241.5" font-size="9" fill="#5ad1a0" text-anchor="middle">26</text>
+<text x="153.8" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">ScienceBoard</text>
+<text x="153.8" y="362" font-size="11" fill="#c4ccda" text-anchor="middle">GPT-5.6 Terra</text>
+<rect x="253.2" y="204.2" width="31.0" height="125.8" fill="#8a93a5"/>
+<text x="268.8" y="200.2" font-size="9" fill="#8a93a5" text-anchor="middle">38.7</text>
+<rect x="287.2" y="233.8" width="31.0" height="96.2" fill="#6f7b90"/>
+<text x="302.8" y="229.8" font-size="9" fill="#6f7b90" text-anchor="middle">29.6</text>
+<rect x="321.2" y="171.7" width="31.0" height="158.3" fill="#9fe3c6"/>
+<text x="336.8" y="167.7" font-size="9" fill="#9fe3c6" text-anchor="middle">48.7</text>
+<rect x="355.2" y="191.6" width="31.0" height="138.4" fill="#5ad1a0"/>
+<text x="370.8" y="187.6" font-size="9" fill="#5ad1a0" text-anchor="middle">42.6</text>
+<text x="321.2" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">ScienceBoard</text>
+<text x="321.2" y="362" font-size="11" fill="#c4ccda" text-anchor="middle">Claude Opus 5</text>
+<rect x="420.8" y="148.3" width="31.0" height="181.7" fill="#8a93a5"/>
+<text x="436.2" y="144.3" font-size="9" fill="#8a93a5" text-anchor="middle">55.9</text>
+<rect x="454.8" y="217.6" width="31.0" height="112.5" fill="#6f7b90"/>
+<text x="470.2" y="213.6" font-size="9" fill="#6f7b90" text-anchor="middle">34.6</text>
+<rect x="488.8" y="155.8" width="31.0" height="174.2" fill="#9fe3c6"/>
+<text x="504.2" y="151.8" font-size="9" fill="#9fe3c6" text-anchor="middle">53.6</text>
+<rect x="522.8" y="166.2" width="31.0" height="163.8" fill="#5ad1a0"/>
+<text x="538.2" y="162.2" font-size="9" fill="#5ad1a0" text-anchor="middle">50.4</text>
+<text x="488.8" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">OSWorld</text>
+<text x="488.8" y="362" font-size="11" fill="#c4ccda" text-anchor="middle">GPT-5.6 Terra</text>
+<rect x="588.2" y="89.2" width="31.0" height="240.8" fill="#8a93a5"/>
+<text x="603.8" y="85.2" font-size="9" fill="#8a93a5" text-anchor="middle">74.1</text>
+<rect x="622.2" y="107.7" width="31.0" height="222.3" fill="#6f7b90"/>
+<text x="637.8" y="103.7" font-size="9" fill="#6f7b90" text-anchor="middle">68.4</text>
+<rect x="656.2" y="93.1" width="31.0" height="236.9" fill="#9fe3c6"/>
+<text x="671.8" y="89.1" font-size="9" fill="#9fe3c6" text-anchor="middle">72.9</text>
+<rect x="690.2" y="96.0" width="31.0" height="234.0" fill="#5ad1a0"/>
+<text x="705.8" y="92.0" font-size="9" fill="#5ad1a0" text-anchor="middle">72</text>
+<text x="656.2" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">OSWorld</text>
+<text x="656.2" y="362" font-size="11" fill="#c4ccda" text-anchor="middle">Claude Opus 5</text>
+<text x="70" y="392" font-size="10" fill="#c4ccda">Source: Suh et al., arXiv:2609.36927 v1, Table 1. 169 ScienceBoard and 361 OSWorld tasks, three trials each.</text>
+</g></svg>
+
+
+<h2 id="the-gain-is-in-pass-3-and-on-osworld-with-opus-it-is-3-6-poi">The gain is in Pass^3, and on OSWorld with Opus it is 3.6 points</h2>
+
+<p>The abstract says the policies beat the base agent's Pass^3 by 3.6 to 15.8 points, which matches Table 1; the introduction says 4.5 to 13.9, which does not, so use the table. The spread matters. On ScienceBoard with GPT-5.6 Terra, where the agent solves only 13.6% of tasks three times out of three, the script nearly doubles it to 26.0%. On OSWorld with Claude Opus 5, the agent is already consistent (74.1% first try, 68.4% all three), and the script adds 3.6 points of Pass^3 while losing 1.2 of Pass^1. There the case for the script is cost: $0.0097 a run against $2.10, repaid after about three runs.</p>
+
+<p>Batch2Code separates the two effects. It uses the same script format with no refinement, and its curve is just as flat (OSWorld with Opus: 46.7 to 45.2), but it sits 3.3 to 33.1 points below NSPI on Pass^3. A script makes behaviour repeatable. Only the judge-and-heal loop makes it repeatably right. Without the loop, Batch2Code's OSWorld Pass^1 on Opus is 27.4 points below the agent's.</p>
+
+<p>Two results limit the method. On OSWorld-V2, where tasks take skilled humans over an hour, agent trajectories averaged 158 steps and the converted scripts averaged 970 lines, and NSPI trailed the agent by 5.6 points of strict success; the authors attribute it to scripts recomputing values the agent had read off the screen. And the reuse test is narrower than the name suggests: policies refined on generated variants reached 55.0% Pass^3 on held-out parameter changes (AutoRPA 37.5%) and 60.0% on changed starting states (AutoRPA 51.4%), over 40 and 35 task families.</p>
+
+<h2 id="two-checks-guard-the-loop-and-both-have-measured-blind-spots">Two checks guard the loop, and both have measured blind spots</h2>
+
+<svg viewBox="0 0 760 420" style="width:100%;height:auto" role="img" aria-label="Diagram of Neuro-Symbolic Policy Iteration from arXiv 2609.36927. One agent trajectory is converted to a Simulang script; the script runs up to k times; a dual judge evaluates each run; on failure the agent continues from the failed state and a coding model rewrites the script. Against the benchmark evaluator the judges reject 69.3 to 94.4 percent of unreliable policies but accept only 11.4 to 40.1 percent of reliable ones; on 19 human-annotated OSWorld policies the step judge located 9 of 10 failures visible on screen and 0 of 6 invisible ones. At deployment a pre-action verifier checks every state-changing step: Qwen3.6-35B-A3B wrongly blocks at most 8.4 percent of correct runs but passes 17 of 24 steps that should be blocked; Qwen3.8-27B wrongly blocks 9.4 to 25.0 percent and passes 6 of 24. phoneshell's macro replay checks an anchor text before each step and never checks an expected result, because none of its 7 recorder calls sets one.">
+  <g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="12">
+    <text x="20" y="26" font-size="14" font-weight="600">NSPI: learn a script, then guard it (arXiv:2609.36927)</text>
+    <rect x="20" y="50" width="140" height="56" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="32" y="74" font-weight="600">1 agent run</text>
+    <text x="32" y="92" fill="#c4ccda" font-size="11">success not required</text>
+    <line x1="160" y1="78" x2="184" y2="78" stroke="#6f7b90"/>
+    <rect x="184" y="50" width="150" height="56" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="196" y="74" font-weight="600">Simulang script</text>
+    <text x="196" y="92" fill="#c4ccda" font-size="11">coords become descriptions</text>
+    <line x1="334" y1="78" x2="358" y2="78" stroke="#6f7b90"/>
+    <rect x="358" y="50" width="120" height="56" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+    <text x="370" y="74" font-weight="600">run up to k</text>
+    <text x="370" y="92" fill="#c4ccda" font-size="11">fresh state each</text>
+    <line x1="478" y1="78" x2="502" y2="78" stroke="#6f7b90"/>
+    <rect x="502" y="50" width="238" height="56" rx="8" fill="#1d2330" stroke="#f2a65a"/>
+    <text x="514" y="72" font-weight="600" fill="#f2a65a">dual judge (no evaluator)</text>
+    <text x="514" y="90" fill="#c4ccda" font-size="11">end-state probe + step localizer</text>
+    <path d="M620 106 L620 140 L268 140 L268 106" fill="none" stroke="#6f7b90"/>
+    <text x="300" y="134" fill="#c4ccda" font-size="11">fail: agent continues, coding model rewrites the script</text>
+    <text x="20" y="176" font-size="13" font-weight="600" fill="#f2a65a">The judge, scored against the benchmark evaluator (Table 5, 6)</text>
+    <text x="20" y="198" fill="#c4ccda" font-size="11">rejects 69.3 to 94.4% of unreliable policies | accepts only 11.4 to 40.1% of reliable ones</text>
+    <text x="20" y="218" fill="#c4ccda" font-size="11">19 OSWorld policies, human labels: verdict 16 of 19 | failure visible on screen 9 of 10 | invisible 0 of 6</text>
+    <text x="20" y="258" font-size="13" font-weight="600" fill="#5ad1a0">The pre-action verifier at deployment (Section 4.6, 24 steps that should be blocked)</text>
+    <text x="20" y="280" fill="#c4ccda" font-size="11">Qwen3.6-35B-A3B: wrong blocks at most 8.4% of correct runs | wrong passes 17 of 24 (70.8%)</text>
+    <text x="20" y="300" fill="#c4ccda" font-size="11">Qwen3.8-27B: wrong blocks 9.4 to 25.0% | wrong passes 6 of 24 (25.0%)</text>
+    <line x1="20" y1="324" x2="740" y2="324" stroke="#2a3140"/>
+    <text x="20" y="350" font-size="13" font-weight="600">phoneshell macro replay, for comparison (phoneshell/agent/macros.py)</text>
+    <text x="20" y="372" fill="#c4ccda" font-size="11">before each step: anchor text must be on screen (string match, no model), else hand back to the agent</text>
+    <text x="20" y="392" fill="#c4ccda" font-size="11">after each step: an expect text is supported, but 0 of the 7 recorder calls in mcp_server.py set it</text>
+    <text x="20" y="412" fill="#c4ccda" font-size="11">no refinement loop, no variants, no repeated runs to measure Pass^3</text>
+  </g>
+</svg>
+
+<p>The judges are conservative by design, and that costs money rather than reliability: rejecting good policies means more healing rounds. The step judge's blind spot is sharper. On 19 OSWorld policies annotated by people, it located the first wrong step in 9 of 10 cases where the failure was visible on screen and 0 of 6 where it was not. A judge that only watches the screen cannot localize a wrong value written to a file.</p>
+
+<p>The deployment verifier shows the usual trade-off with numbers attached. The model that rarely blocks good runs (Qwen3.6-35B-A3B, at most 8.4% wrong blocks) let 17 of the 24 steps that should have been stopped go through. The one that caught more (Qwen3.8-27B, 6 of 24 passed) wrongly blocked up to a quarter of correct runs. Twenty-four positives is a small test, and the paper says so.</p>
+
+<h2 id="what-it-means-for-a-phone-agent-that-replays-macros">What it means for a phone agent that replays macros</h2>
+
+<p>phoneshell already has the symbolic half. <code>phoneshell/agent/macros.py</code> stores a recorded sequence of steps, each with an optional anchor (text that must be on screen before the step fires) and an optional expected text afterwards; replay stops and hands the screen back to the model when an anchor is missing. Three gaps separate it from NSPI. It has no refinement loop: a macro is saved once and never rewritten from its own failures. It does not check outcomes: the <code>expect</code> field exists, but none of the seven <code>recorder.record</code> calls in <code>phoneshell/mcp_server.py</code> passes one. And its claimed benefit is unmeasured: the module docstring says replay is "worth roughly twenty points of task success on repeat work", and no run in <code>FINDINGS.md</code> backs that number.</p>
+
+<p>The paper also says what to measure. phoneshell's largest sweep (9 September 2026, our local results file) ran each of 349 task and model pairs exactly once, so it reports Pass^1 only. NSPI's main effect would be invisible in that design: on OSWorld the scripts lose a point or two of Pass^1 and gain 3.6 to 15.8 points of Pass^3. A macro evaluation on the phone needs at least three runs per task, from a reset state, with the macro and without it.</p>
+
+<p>Our judgement on cost: on a physical iPhone the per-run saving is real but smaller than on a desktop VM, because phoneshell's wall clock is dominated by device calls (a tap is 550 ms on a light screen) rather than model calls. The dollar break-even of 3.1 to 26.8 runs would likely hold; the 3.4 to 5.1 times speed-up would not, and we have not measured it.</p>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<ul>
+  <li>The paper: <code>https://arxiv.org/abs/2609.36927</code>; Table 1 (Pass^1, Pass^3, cost multiples), Table 2 (variants), Table 3 (break-even), Section 4.5 (OSWorld-V2), Section 4.6 (verifier), Tables 5 and 6 (judges).</li>
+  <li>Recompute the break-even: <code>python3 -c "print([round(c/(a-p),1) for c,a,p in [(2.03,.081,.0054),(5.68,.52,.0079),(3.09,.48,.0072),(6.45,2.1,.0097)]])"</code> gives 26.8, 11.2, 6.5, 3.1.</li>
+  <li>Recompute the average Pass^1 to Pass^3 drop from Table 1: agent (13.4 + 9.1 + 21.3 + 5.7) / 4 = 12.4; NSPI (3.2 + 6.1 + 3.2 + 0.9) / 4 = 3.35.</li>
+  <li>phoneshell: <code>grep -n "recorder.record" phoneshell/mcp_server.py</code> shows seven calls and no <code>expect=</code>; <code>sed -n 1,15p phoneshell/agent/macros.py</code> shows the twenty-point claim; <code>grep -n "twenty" FINDINGS.md</code> shows no matching measurement.</li>
+</ul>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>By 31 March 2027 we will run 20 phoneshell tasks three times each from a reset state, once with a saved macro available and once without, on the same model. If macros raise Pass^1 by 10 points or more, the claim here that compiled routes mainly buy consistency rather than first-try success does not carry over to the phone. We expect Pass^1 to move by less than 5 points and Pass^3 by more than Pass^1. Separately, if a later version of the paper reports OSWorld Pass^1 for NSPI above the base agent with both models, the headline of this note no longer holds for that version.</p>
+
+  <section class="sources">
+    <h2>Sources</h2>
+    <ol>
+      <li><a href="https://arxiv.org/abs/2609.36927">Suh, Nguyen, Lee, Hartman, Liu, Wang, Li, Yang (Georgia Institute of Technology, Stanford University; work done at Simular), Neuro-Symbolic Computer Use: Learning Reusable Policies for Reliable and Efficient Execution, arXiv:2609.36927, 29 September 2026</a></li>
+      <li><a href="https://arxiv.org/html/2609.36927v1">HTML edition: Table 1 (reliability and cost), Table 2 (variants), Table 3 (amortization), Sections 4.5 to 4.7, Tables 5 and 6 (judges)</a></li>
+      <li><a href="https://github.com/simular-ai/simulang">Simulang, Simular AI's scripting language used for the policies</a></li>
+      <li><a href="https://arxiv.org/abs/2404.07972">Xie et al., OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks in Real Computer Environments, arXiv:2404.07972</a></li>
+      <li><a href="https://github.com/Blomega/phoneshell">phoneshell source: phoneshell/device.py, config.py, actions.py, mcp_server.py, agent/macros.py, agent/verify.py, bench/verify.py, environments/*.yaml, FINDINGS.md (read 1 October 2026)</a></li>
+    </ol>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
