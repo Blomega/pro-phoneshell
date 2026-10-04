@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rewriting only the code around a frozen GUI model added 10.16 held-out points on OSWorld; the 12.33 headline includes the tasks it was tuned on | Blolabel</title>
+<meta name="description" content="GUI-HARVEST (arXiv:2610.00948, 1 October 2026) edits the agent framework, not the model: Qwen3-VL-32B rose from 43.02% to 53.18% on 201 sealed OSWorld-Verified tasks. Test gains run 1.49 to 10.16 points across six backbones, smaller than the full-suite gains for all six. One run per task as evidence gives +4.42; three runs give +10.16. Baseline flip rates are 11.8 to 20.4%.">
+<link rel="canonical" href="https://blolabel.ai/blog/framework-edits-add-ten-held-out-points/">
+<meta property="og:title" content="Rewriting only the code around a frozen GUI model added 10.16 held-out points on OSWorld; the 12.33 headline includes the tasks it was tuned on | Blolabel">
+<meta property="og:description" content="GUI-HARVEST (arXiv:2610.00948, 1 October 2026) edits the agent framework, not the model: Qwen3-VL-32B rose from 43.02% to 53.18% on 201 sealed OSWorld-Verified tasks. Test gains run 1.49 to 10.16 points across six backbones, smaller than the full-suite gains for all six. One run per task as evidence gives +4.42; three runs give +10.16. Baseline flip rates are 11.8 to 20.4%.">
+<meta property="og:url" content="https://blolabel.ai/blog/framework-edits-add-ten-held-out-points/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/framework-edits-add-ten-held-out-points-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Rewriting only the code around a frozen GUI model added 10.16 held-out points on OSWorld; the 12.33 headline includes the tasks it was tuned on", "description": "GUI-HARVEST (arXiv:2610.00948, 1 October 2026) edits the agent framework, not the model: Qwen3-VL-32B rose from 43.02% to 53.18% on 201 sealed OSWorld-Verified tasks. Test gains run 1.49 to 10.16 points across six backbones, smaller than the full-suite gains for all six. One run per task as evidence gives +4.42; three runs give +10.16. Baseline flip rates are 11.8 to 20.4%.", "datePublished": "2026-10-03", "dateModified": "2026-10-03", "url": "https://blolabel.ai/blog/framework-edits-add-ten-held-out-points/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/framework-edits-add-ten-held-out-points/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/framework-edits-add-ten-held-out-points-hero.png", "citation": ["https://arxiv.org/abs/2610.00948", "https://arxiv.org/html/2610.00948v1", "https://github.com/GaryYang12345/GUI-HARVEST", "https://blolabel.ai/blog/screen-unchanged-notice-barely-stops-repeats/", "https://blolabel.ai/blog/leaderboard-that-cannot-rank/", "https://github.com/Blomega/phoneshell"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "How much can changing the agent framework improve a GUI agent without retraining the model?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "GUI-HARVEST (arXiv:2610.00948) raised six frozen backbones by 1.49 to 10.16 points on 201 sealed OSWorld-Verified tasks at 15 steps; Qwen3-VL-32B went from 43.02% to 53.18%."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Is the 12.33-point GUI-HARVEST gain held out?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Not entirely. 12.33 is on all 361 tasks, which include the 80 search and 80 validation tasks the optimizer used. The sealed test gain for Qwen3-VL-32B is 10.16."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How many runs per task does agent evaluation need?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "GUI-HARVEST found 11.8 to 20.4% of OSWorld tasks flip between zero and positive score across three runs of an unchanged agent, and its optimizer gained +4.42 points with one run per task as evidence versus +10.16 with three."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Did GUI-HARVEST release its optimized frameworks?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No, as of 3 October 2026. The repository holds the optimizer; its demo folder says the optimized versions are coming soon. The split seed is not stated in the paper."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-03">03 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>Rewriting only the code around a frozen GUI model added 10.16 held-out points on OSWorld; the 12.33 headline includes the tasks it was tuned on</h1>
+  <p class="standfirst">Six backbones, one optimizer that rewrites the code around them, and gains of 1.49 to 10.16 points on tasks it never saw. The two numbers that matter for anyone running their own evaluation: the same optimizer fed one run per task found less than half the gain, and 12 to 20% of tasks flipped between pass and fail across three runs of an unchanged agent.</p>
+
+<p>An optimizer that edits only the code around a frozen GUI model raised Qwen3-VL-32B from 43.02% to 53.18% on 201 sealed OSWorld-Verified tasks, a gain of 10.16 points (GUI-HARVEST, arXiv:2610.00948, 1 October 2026). Across six backbones the held-out gains run from 1.49 to 10.16 points. The abstract's 12.33 is measured on all 361 tasks, 160 of which the optimizer searched or selected on.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/framework-edits-add-ten-held-out-points-hero.png" alt="Abstract technical illustration of a fixed central core surrounded by a lattice of modular frames, with a few frames being replaced and realigned while the core stays still" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+
+<h2 id="gui-harvest-rewrites-the-agent-code-and-keeps-the-model-fixe">GUI-HARVEST rewrites the agent code and keeps the model fixed</h2>
+
+<p>The paper is by Geyi Yang, Zikun Qu, Xiang Li, Zhiyong Wang, Min Zhang, Shipei Zeng and Zhongxiang Dai (CUHK-Shenzhen, Tianjin University, Harbin Institute of Technology Shenzhen, East China Normal University, Shenzhen Research Institute of Big Data). The object it optimizes is the executable layer between model and computer: how observations are assembled, how actions run, and when the agent verifies, recovers or stops. The model weights never change.</p>
+
+<p>Each round runs every search task three times, lines up what the model said with what was executed and with screenshots before and after each action, clusters failures across tasks into recurring patterns, and turns a pattern into a bounded source-code edit with its expected effect written down before evaluation. An edit is promoted only if neither the search nor the validation split declines and one strictly improves. The loop stops after 10 rounds or when all 5 candidates in a round are rejected. All four optimizer roles run on Claude Sonnet 5. Qwen and the proprietary models start from Agent S3 with a UI-TARS-1.5-7B grounder; OpenCUA starts from its own runtime.</p>
+
+<table>
+  <thead><tr><th>Backbone</th><th>Start, test</th><th>GUI-HARVEST, test</th><th>Test gain</th><th>Full-suite gain</th><th>Updates promoted</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>Qwen3-VL-8B-Instruct</td><td>28.79</td><td>34.84</td><td>+6.05</td><td>+7.34</td><td>5</td><td>Table 1, App. D.2</td></tr>
+    <tr><td>Qwen3-VL-32B-Instruct</td><td>43.02</td><td>53.18</td><td>+10.16</td><td>+12.33</td><td>7</td><td>Table 1, App. D.2</td></tr>
+    <tr><td>OpenCUA-32B</td><td>32.82</td><td>34.31</td><td>+1.49</td><td>+3.53</td><td>2</td><td>Table 1, App. D.2</td></tr>
+    <tr><td>OpenCUA-72B</td><td>41.25</td><td>44.18</td><td>+2.93</td><td>+4.68</td><td>3</td><td>Table 1, App. D.2</td></tr>
+    <tr><td>Gemini 3.1 Pro</td><td>66.42</td><td>72.63</td><td>+6.20</td><td>+6.91</td><td>6</td><td>Table 1, App. D.2</td></tr>
+    <tr><td>GPT-5</td><td>56.35</td><td>61.86</td><td>+5.51</td><td>+7.22</td><td>5</td><td>Table 1, App. D.2</td></tr>
+    <tr><td>Qwen3-VL-32B, first prior optimizer in Table 2 (self-refinement)</td><td>43.02</td><td>45.02</td><td>+2.00</td><td>+3.47</td><td>not reported</td><td>Table 2</td></tr>
+    <tr><td>Qwen3-VL-32B, second prior optimizer in Table 2 (meta-optimization)</td><td>43.02</td><td>47.40</td><td>+4.38</td><td>+6.49</td><td>not reported</td><td>Table 2</td></tr>
+  </tbody>
+</table>
+
+<p>Scores are percent at 15 steps, averaged over three runs per task. No standard deviations or confidence intervals are given for these rows. The full-suite gain is larger than the test gain for all six backbones, which is what you would expect if part of the improvement is fitting the tasks the optimizer looked at. OpenCUA-32B's +1.49 on test is about 1.2 standard errors of a single 201-task mean (our estimate, scaling the paper's 0.93 point standard error over 361 tasks at K=3), so "consistent held-out gains" holds for five of the six. Moved to WindowsAgentArena with no further optimization, GPT-5's frozen result went from 50.88% to 64.75% at 50 steps.</p>
+
+<svg viewBox="0 0 760 400" style="width:100%;height:auto" role="img" aria-label="Grouped bar chart from GUI-HARVEST, arXiv 2610.00948, Table 1. Gain on the sealed 201-task test split versus the 361-task full suite that includes the 160 tasks used for search and validation. Qwen3-VL-8B 6.05 versus 7.34; Qwen3-VL-32B 10.16 versus 12.33; OpenCUA-32B 1.49 versus 3.53; OpenCUA-72B 2.93 versus 4.68; Gemini 3.1 Pro 6.20 versus 6.91; GPT-5 5.51 versus 7.22. The full-suite gain is larger for every backbone.">
+<rect x="0" y="0" width="760" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">GUI-HARVEST gain over the starting framework, OSWorld-Verified, 15 steps, K=3, points</text>
+<rect x="70" y="40" width="12" height="12" fill="#5ad1a0"/><text x="88" y="50" font-size="11" fill="#c4ccda">sealed test, 201 tasks</text>
+<rect x="272" y="40" width="12" height="12" fill="#6f7b90"/><text x="290" y="50" font-size="11" fill="#c4ccda">full suite, 361 tasks (includes the 160 tuned on)</text>
+<line x1="70" y1="330.0" x2="740" y2="330.0" stroke="#2a3140"/>
+<text x="62" y="334.0" font-size="10" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="70" y1="292.9" x2="740" y2="292.9" stroke="#2a3140"/>
+<text x="62" y="296.9" font-size="10" fill="#c4ccda" text-anchor="end">2</text>
+<line x1="70" y1="255.7" x2="740" y2="255.7" stroke="#2a3140"/>
+<text x="62" y="259.7" font-size="10" fill="#c4ccda" text-anchor="end">4</text>
+<line x1="70" y1="218.6" x2="740" y2="218.6" stroke="#2a3140"/>
+<text x="62" y="222.6" font-size="10" fill="#c4ccda" text-anchor="end">6</text>
+<line x1="70" y1="181.4" x2="740" y2="181.4" stroke="#2a3140"/>
+<text x="62" y="185.4" font-size="10" fill="#c4ccda" text-anchor="end">8</text>
+<line x1="70" y1="144.3" x2="740" y2="144.3" stroke="#2a3140"/>
+<text x="62" y="148.3" font-size="10" fill="#c4ccda" text-anchor="end">10</text>
+<line x1="70" y1="107.1" x2="740" y2="107.1" stroke="#2a3140"/>
+<text x="62" y="111.1" font-size="10" fill="#c4ccda" text-anchor="end">12</text>
+<line x1="70" y1="70.0" x2="740" y2="70.0" stroke="#2a3140"/>
+<text x="62" y="74.0" font-size="10" fill="#c4ccda" text-anchor="end">14</text>
+<text x="18" y="200" font-size="11" fill="#c4ccda" transform="rotate(-90 18 200)" text-anchor="middle">points over starting framework</text>
+<rect x="91.8" y="217.6" width="31.0" height="112.4" fill="#5ad1a0"/>
+<text x="107.3" y="213.6" font-size="9.5" fill="#5ad1a0" text-anchor="middle">6.05</text>
+<rect x="125.8" y="193.7" width="31.0" height="136.3" fill="#6f7b90"/>
+<text x="141.3" y="189.7" font-size="9.5" fill="#6f7b90" text-anchor="middle">7.34</text>
+<text x="125.8" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">Qwen3-VL-8B</text>
+<rect x="203.5" y="141.3" width="31.0" height="188.7" fill="#5ad1a0"/>
+<text x="219.0" y="137.3" font-size="9.5" fill="#5ad1a0" text-anchor="middle">10.16</text>
+<rect x="237.5" y="101.0" width="31.0" height="229.0" fill="#6f7b90"/>
+<text x="253.0" y="97.0" font-size="9.5" fill="#6f7b90" text-anchor="middle">12.33</text>
+<text x="237.5" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">Qwen3-VL-32B</text>
+<rect x="315.2" y="302.3" width="31.0" height="27.7" fill="#5ad1a0"/>
+<text x="330.7" y="298.3" font-size="9.5" fill="#5ad1a0" text-anchor="middle">1.49</text>
+<rect x="349.2" y="264.4" width="31.0" height="65.6" fill="#6f7b90"/>
+<text x="364.7" y="260.4" font-size="9.5" fill="#6f7b90" text-anchor="middle">3.53</text>
+<text x="349.2" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">OpenCUA-32B</text>
+<rect x="426.8" y="275.6" width="31.0" height="54.4" fill="#5ad1a0"/>
+<text x="442.3" y="271.6" font-size="9.5" fill="#5ad1a0" text-anchor="middle">2.93</text>
+<rect x="460.8" y="243.1" width="31.0" height="86.9" fill="#6f7b90"/>
+<text x="476.3" y="239.1" font-size="9.5" fill="#6f7b90" text-anchor="middle">4.68</text>
+<text x="460.8" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">OpenCUA-72B</text>
+<rect x="538.5" y="214.9" width="31.0" height="115.1" fill="#5ad1a0"/>
+<text x="554.0" y="210.9" font-size="9.5" fill="#5ad1a0" text-anchor="middle">6.2</text>
+<rect x="572.5" y="201.7" width="31.0" height="128.3" fill="#6f7b90"/>
+<text x="588.0" y="197.7" font-size="9.5" fill="#6f7b90" text-anchor="middle">6.91</text>
+<text x="572.5" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">Gemini 3.1 Pro</text>
+<rect x="650.2" y="227.7" width="31.0" height="102.3" fill="#5ad1a0"/>
+<text x="665.7" y="223.7" font-size="9.5" fill="#5ad1a0" text-anchor="middle">5.51</text>
+<rect x="684.2" y="195.9" width="31.0" height="134.1" fill="#6f7b90"/>
+<text x="699.7" y="191.9" font-size="9.5" fill="#6f7b90" text-anchor="middle">7.22</text>
+<text x="684.2" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">GPT-5</text>
+<text x="70" y="386" font-size="10" fill="#c4ccda">Source: Yang, Qu, Li, Wang, Zhang, Zeng, Dai, arXiv:2610.00948 v1, Table 1. No confidence intervals are reported.</text>
+</g></svg>
+
+<h2 id="the-optimizer-only-finds-the-gain-when-it-sees-each-task-run">The optimizer only finds the gain when it sees each task run three times</h2>
+
+<p>The ablations are where the method's own measurement lesson sits. With one run per task as evidence (K=1), the optimizer found +4.42 test points for Qwen3-VL-32B; with three it found +10.16 (Table 3). Without screenshots in the evidence it found +1.52. The reason is in Table 8: across three runs of the unchanged starting agent, 11.8% (OpenCUA-32B) to 20.4% (Qwen3-VL-32B) of tasks scored zero in one run and positive in another. A single run cannot tell an edit that helped from a task that happened to pass. Selecting the final framework, the paper reports 43.1% on the full suite scored at K=1 against 50.9% at K=3 and 49.7% at K=5.</p>
+
+<svg viewBox="0 0 760 400" style="width:100%;height:auto" role="img" aria-label="Bar chart from GUI-HARVEST Table 3, Qwen3-VL-32B, gain on the 201-task test split. Without visual evidence plus 1.52 points; without the cross-task clusterer plus 2.64; single-run evidence with K equal to 1 plus 4.42; hard gate only plus 6.34; full method plus 10.16.">
+<rect x="0" y="0" width="760" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Ablations on Qwen3-VL-32B: what each part of the optimizer is worth on the test split</text>
+<rect x="70" y="40" width="12" height="12" fill="#f2a65a"/><text x="88" y="50" font-size="11" fill="#c4ccda">test-split gain, points</text>
+<line x1="70" y1="330.0" x2="740" y2="330.0" stroke="#2a3140"/>
+<text x="62" y="334.0" font-size="10" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="70" y1="286.7" x2="740" y2="286.7" stroke="#2a3140"/>
+<text x="62" y="290.7" font-size="10" fill="#c4ccda" text-anchor="end">2</text>
+<line x1="70" y1="243.3" x2="740" y2="243.3" stroke="#2a3140"/>
+<text x="62" y="247.3" font-size="10" fill="#c4ccda" text-anchor="end">4</text>
+<line x1="70" y1="200.0" x2="740" y2="200.0" stroke="#2a3140"/>
+<text x="62" y="204.0" font-size="10" fill="#c4ccda" text-anchor="end">6</text>
+<line x1="70" y1="156.7" x2="740" y2="156.7" stroke="#2a3140"/>
+<text x="62" y="160.7" font-size="10" fill="#c4ccda" text-anchor="end">8</text>
+<line x1="70" y1="113.3" x2="740" y2="113.3" stroke="#2a3140"/>
+<text x="62" y="117.3" font-size="10" fill="#c4ccda" text-anchor="end">10</text>
+<line x1="70" y1="70.0" x2="740" y2="70.0" stroke="#2a3140"/>
+<text x="62" y="74.0" font-size="10" fill="#c4ccda" text-anchor="end">12</text>
+<text x="18" y="200" font-size="11" fill="#c4ccda" transform="rotate(-90 18 200)" text-anchor="middle">points over starting framework</text>
+<rect x="120.0" y="297.1" width="31.0" height="32.9" fill="#f2a65a"/>
+<text x="135.5" y="293.1" font-size="9.5" fill="#f2a65a" text-anchor="middle">+1.52</text>
+<text x="137.0" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">no visual evidence</text>
+<rect x="254.0" y="272.8" width="31.0" height="57.2" fill="#f2a65a"/>
+<text x="269.5" y="268.8" font-size="9.5" fill="#f2a65a" text-anchor="middle">+2.64</text>
+<text x="271.0" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">no cross-task clusterer</text>
+<rect x="388.0" y="234.2" width="31.0" height="95.8" fill="#f2a65a"/>
+<text x="403.5" y="230.2" font-size="9.5" fill="#f2a65a" text-anchor="middle">+4.42</text>
+<text x="405.0" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">one run per task (K=1)</text>
+<rect x="522.0" y="192.6" width="31.0" height="137.4" fill="#f2a65a"/>
+<text x="537.5" y="188.6" font-size="9.5" fill="#f2a65a" text-anchor="middle">+6.34</text>
+<text x="539.0" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">hard gate only</text>
+<rect x="656.0" y="109.9" width="31.0" height="220.1" fill="#f2a65a"/>
+<text x="671.5" y="105.9" font-size="9.5" fill="#f2a65a" text-anchor="middle">+10.16</text>
+<text x="673.0" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">full method</text>
+<text x="70" y="386" font-size="10" fill="#c4ccda">Source: arXiv:2610.00948 v1, Table 3. All variants evaluated at K=3.</text>
+</g></svg>
+
+<p>The edits that survived are concrete and mostly about stopping and looping. Qwen3-VL-8B's redundant action loops on search tasks fell from 42 to 27 after "loop rejection and fresh restart". That is the same direction as the Absorbed in Inertia result we covered on 1 October, where only a context reset broke repeat loops. Premature completion fell from 28 to 15 for Qwen3-VL-32B and from 20 to 10 for Gemini 3.1 Pro, through gates that withhold the first done. Infeasibility misjudgment recurred for all six backbones. On cost the edits were neutral or better for two of three models: GPT-5 went from $78.6 to $72.3 for the 361 tasks and Gemini 3.1 Pro from $140.0 to $92.4, while Qwen3-VL-32B rose from $27.3 to $34.2. The optimizer's own Claude spend is excluded and not reported.</p>
+
+<svg viewBox="0 0 760 440" style="width:100%;height:auto" role="img" aria-label="Diagram of how GUI-HARVEST splits OSWorld-Verified and loops. 361 tasks are split into 80 search tasks whose trajectories the optimizer reads, 80 validation tasks that contribute only aggregate scores, and 201 sealed test tasks. Each round runs every search task 3 times, aligns model output and executed actions with before and after screenshots, clusters failures across tasks into recurring patterns, writes a bounded source-code edit with a prediction recorded before evaluation, and promotes it only if search and validation do not decline and one strictly improves. At most 10 rounds of 5 candidates. Reported full-suite scores include the 160 search and validation tasks.">
+<rect x="0" y="0" width="760" height="440" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="11">
+<text x="20" y="26" font-size="14" font-weight="600">What the optimizer may see, and what the headline counts</text>
+<rect x="20" y="44" width="160" height="40" fill="#f2a65a" opacity="0.85"/>
+<text x="30" y="68" fill="#10131a" font-weight="600">Search: 80 tasks</text>
+<rect x="180" y="44" width="160" height="40" fill="#6f7b90"/>
+<text x="190" y="68" font-weight="600">Validation: 80</text>
+<rect x="340" y="44" width="400" height="40" fill="#5ad1a0" opacity="0.85"/>
+<text x="350" y="68" fill="#10131a" font-weight="600">Sealed test: 201 tasks (the held-out number)</text>
+<text x="30" y="102" font-size="10" fill="#c4ccda">trajectories read</text>
+<text x="190" y="102" font-size="10" fill="#c4ccda">aggregate scores only</text>
+<text x="350" y="102" font-size="10" fill="#c4ccda">never seen during optimization</text>
+<line x1="20" y1="118" x2="740" y2="118" stroke="#f2a65a" stroke-dasharray="5 4"/>
+<text x="20" y="134" font-size="10" fill="#f2a65a">"Full" = all 361 tasks: the abstract's +12.33 for Qwen3-VL-32B; the test-only gain is +10.16</text>
+<text x="20" y="170" font-size="12" font-weight="600" fill="#5ad1a0">One round (at most 10 rounds, 5 candidates each, optimizer roles run on Claude Sonnet 5)</text>
+<rect x="20" y="184" width="130" height="62" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+<text x="30" y="206">run each search</text><text x="30" y="222">task 3 times</text><text x="30" y="238" font-size="10" fill="#c4ccda">frozen backbone</text>
+<line x1="150" y1="215" x2="166" y2="215" stroke="#6f7b90"/>
+<rect x="166" y="184" width="136" height="62" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+<text x="176" y="206">align intent and</text><text x="176" y="222">action with before /</text><text x="176" y="238">after screenshots</text>
+<line x1="302" y1="215" x2="318" y2="215" stroke="#6f7b90"/>
+<rect x="318" y="184" width="130" height="62" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+<text x="328" y="206">cluster failures</text><text x="328" y="222">across tasks into</text><text x="328" y="238">recurring patterns</text>
+<line x1="448" y1="215" x2="464" y2="215" stroke="#6f7b90"/>
+<rect x="464" y="184" width="130" height="62" rx="8" fill="#1d2330" stroke="#f2a65a"/>
+<text x="474" y="206">bounded code edit</text><text x="474" y="222">+ prediction written</text><text x="474" y="238">before evaluation</text>
+<line x1="594" y1="215" x2="610" y2="215" stroke="#6f7b90"/>
+<rect x="610" y="184" width="130" height="62" rx="8" fill="#1d2330" stroke="#5ad1a0"/>
+<text x="620" y="206">promote only if no</text><text x="620" y="222">decline on search or</text><text x="620" y="238">val, one strictly up</text>
+<text x="20" y="282" font-size="12" font-weight="600" fill="#f2a65a">Edits that survived (Table 9, search-task failure counts before and after)</text>
+<text x="20" y="304">Qwen3-VL-8B: redundant action loops 42 to 27 (loop rejection and fresh restart)</text>
+<text x="20" y="322">Qwen3-VL-32B: premature completion 28 to 15 (save gate, completion adjudication)</text>
+<text x="20" y="340">GPT-5: redundant loops 22 to 10, inefficient strategy 27 to 10 (code routing, coordinate re-query)</text>
+<text x="20" y="358">OpenCUA-32B: zero-duration drags 33 to 28 (drag-duration normalisation)</text>
+<text x="20" y="376">Gemini 3.1 Pro: premature completion 20 to 10 (dry-run validation, Office-file normalisation)</text>
+<text x="20" y="406" font-size="10" fill="#c4ccda">Infeasibility misjudgment recurred for all six backbones. Promoted updates per backbone: 7, 5, 6, 5, 3, 2 (Appendix D.2).</text>
+<text x="20" y="426" font-size="10" fill="#c4ccda">Source: arXiv:2610.00948 v1, Section 4.1, Appendix G.7, Tables 9 and 10.</text>
+</g></svg>
+
+<h2 id="what-it-means-for-a-phone-agent-evaluation">What it means for a phone agent evaluation</h2>
+
+<p>On phoneshell's 9 September 2026 board, six frontier models span 89.7% to 96.6%, a 6.9 point spread, and none of the 15 pairs separates under McNemar. GUI-HARVEST's median test gain across six backbones is 5.78 points from code alone. Our judgement, across two different benchmarks: the framework is a lever about as large as the choice among frontier models, and it deserves the same evaluation discipline.</p>
+
+<p>That discipline is what our board lacks. It is one run per model and task (349 rows for 6 models and 58 tasks in run <code>xv2</code>). At the board's pooled pass rate of 92.3%, the binomial standard error of one model's score over 58 tasks is about 3.5 points, our arithmetic. A framework change scored the same way would need to move a model by roughly 7 points before a single run could show it, more than GUI-HARVEST found for five of its six backbones. Three decisions follow for phoneshell: score any framework change at three runs per task, keep a sealed split the change was not designed on, and write the expected effect into the commit before the run, which is the part of GUI-HARVEST's method that costs nothing.</p>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<ul>
+  <li>The paper: <code>https://arxiv.org/abs/2610.00948</code>. Table 1 (test and full per backbone), Table 4 (search and validation scores), Table 3 (ablations), Table 8 (baseline flip rates), Table 9 (failure counts before and after), Appendix G.7 (split: 80 / 80 / 201, 8 Google Drive tasks excluded).</li>
+  <li>The code: <code>https://github.com/GaryYang12345/GUI-HARVEST</code>, created 29 September 2026. The README in its demo folder says the optimized frameworks are "coming soon"; the split seed is passed as <code>--seed</code> and its value is not in the paper.</li>
+  <li>The in-sample share: Full counts 361 tasks, Test 201, so 160 of 361 (44%) of the full-suite tasks were visible to the search or selection.</li>
+  <li>phoneshell's run count: <code>wc -l runtime/bench/xv2.jsonl</code> on a phoneshell install with local results (349 lines); the board itself is in <code>site/results.json</code> under <code>board</code>.</li>
+</ul>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>If the optimized frameworks are released, an independent rerun of Qwen3-VL-32B on the 201 test tasks at K=3 and 15 steps should score at least 50.0%, which is seven points over the 43.02% starting point. We expect that to be reported by 31 March 2027. A rerun below 48.0% would mean most of the gain was specific to the authors' runs. On our side, by the same date we will score phoneshell's next framework change on one model at three runs per task over the 58 public tasks, with the predicted effect in the commit message, and report the flip rate of the unchanged framework. We predict that flip rate is between 5% and 15% of tasks.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ol>
+      <li><a href="https://arxiv.org/abs/2610.00948">Yang, Qu, Li, Wang, Zhang, Zeng, Dai, GUI-HARVEST, self-improving GUI agents through evidence-driven optimization of the agent framework, arXiv:2610.00948, 1 October 2026</a></li>
+      <li><a href="https://arxiv.org/html/2610.00948v1">HTML edition: Tables 1 to 4, 8 to 11; Appendices D.2, F, G</a></li>
+      <li><a href="https://github.com/GaryYang12345/GUI-HARVEST">GUI-HARVEST repository, created 29 September 2026 (read 3 October 2026)</a></li>
+      <li><a href="https://blolabel.ai/blog/screen-unchanged-notice-barely-stops-repeats/">Blolabel, A 'screen did not change' notice barely stops computer-use agents repeating themselves, 1 October 2026</a></li>
+      <li><a href="https://blolabel.ai/blog/leaderboard-that-cannot-rank/">Blolabel, Six frontier models scored 89.7% to 96.6% on 58 paired iPhone tasks; no pair separates</a></li>
+      <li><a href="https://github.com/Blomega/phoneshell">phoneshell source and site/results.json (read 3 October 2026)</a></li>
+    </ol>
+  </section>
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
