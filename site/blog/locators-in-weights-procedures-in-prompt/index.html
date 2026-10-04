@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Phone agents learn where buttons are from fine-tuning and how tasks go from the prompt: splitting experience beat both on MobileGym and AndroidWorld | Blolabel</title>
+<meta name="description" content="Component routing (arXiv:2610.01787, 1 October 2026): element locators gain +6.7 points in the weights vs +1.8 in the prompt, procedures +5.2 in the prompt vs +1.0 in the weights, pooled on MobileGym. A two-number rule recovers the destination in 24 of 24 held-out cells; routed agents reach 30.5 to 34.8% against 27.3 to 29.6% for either single destination. phoneshell stores no state facts.">
+<link rel="canonical" href="https://blolabel.ai/blog/locators-in-weights-procedures-in-prompt/">
+<meta property="og:title" content="Phone agents learn where buttons are from fine-tuning and how tasks go from the prompt: splitting experience beat both on MobileGym and AndroidWorld | Blolabel">
+<meta property="og:description" content="Component routing (arXiv:2610.01787, 1 October 2026): element locators gain +6.7 points in the weights vs +1.8 in the prompt, procedures +5.2 in the prompt vs +1.0 in the weights, pooled on MobileGym. A two-number rule recovers the destination in 24 of 24 held-out cells; routed agents reach 30.5 to 34.8% against 27.3 to 29.6% for either single destination. phoneshell stores no state facts.">
+<meta property="og:url" content="https://blolabel.ai/blog/locators-in-weights-procedures-in-prompt/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/locators-in-weights-procedures-in-prompt-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Phone agents learn where buttons are from fine-tuning and how tasks go from the prompt: splitting experience beat both on MobileGym and AndroidWorld", "description": "Component routing (arXiv:2610.01787, 1 October 2026): element locators gain +6.7 points in the weights vs +1.8 in the prompt, procedures +5.2 in the prompt vs +1.0 in the weights, pooled on MobileGym. A two-number rule recovers the destination in 24 of 24 held-out cells; routed agents reach 30.5 to 34.8% against 27.3 to 29.6% for either single destination. phoneshell stores no state facts.", "datePublished": "2026-10-03", "dateModified": "2026-10-03", "url": "https://blolabel.ai/blog/locators-in-weights-procedures-in-prompt/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/locators-in-weights-procedures-in-prompt/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/locators-in-weights-procedures-in-prompt-hero.png", "citation": ["https://arxiv.org/abs/2610.01787", "https://arxiv.org/html/2610.01787v1", "https://github.com/Blomega/phoneshell"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Should a GUI agent's experience go into fine-tuning or into the prompt?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "It depends on the kind of experience. In arXiv:2610.01787, element locators gained +6.7 points in the weights versus +1.8 in the prompt, and procedures +5.2 in the prompt versus +1.0 in the weights, pooled over three backbones on MobileGym."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How do you decide where a piece of agent experience belongs?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "The paper fits score = 11.29 r - 5.73 k - 1.28, where r is recurrence across unrelated tasks and k is state-conditionality. Positive goes to the weights. It recovered the destination for a held-out backbone family in 24 of 24 cells."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does routing experience beat putting it all in one place?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "On held-out MobileGym tasks routed agents scored 34.8, 30.5 and 34.3% against 29.6, 27.3 and 28.7% for all-in-prompt and 28.6, 28.0 and 27.3% for all-in-weights. On AndroidWorld with GUI-Owl it matched all-in-prompt (33.3 vs 33.6)."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What does a prompt-only phone agent lose?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "The weights route, which in the paper is best for locators and lessons. A tree-reading agent gets element positions from the accessibility tree each step, so the bigger loss is not storing state facts, which gained +4.6 to +5.4 points in the prompt."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-03">03 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>Phone agents learn where buttons are from fine-tuning and how tasks go from the prompt: splitting experience beat both on MobileGym and AndroidWorld</h1>
+  <p class="standfirst">Three small mobile agents, two Android-style environments, one pool of their own experience split four ways. Where a button sits belongs in the weights; what a task usually does next, and what must be true before an action works, belong in the prompt. A prompt-only phone agent such as phoneshell can only use half of that, and currently stores less than half.</p>
+
+<p>Where a button sits is learned better by fine-tuning; what a task usually does next is used better from the prompt. Pooled over three 7 to 8 billion parameter backbones on MobileGym, element locators from the agents' own trajectories gained 6.7 points of success when trained into the weights and 1.8 when written into the prompt, while recurring procedures gained 5.2 in the prompt and 1.0 in the weights (Wu, Ding and Huang, arXiv:2610.01787, 1 October 2026). Sending each kind to its better destination beat putting everything in either one.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/locators-in-weights-procedures-in-prompt-hero.png" alt="Abstract technical illustration of a stream of small geometric tokens splitting at a fork into two channels, one flowing into a dense layered block and the other into an open stack of thin sheets" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+
+<h2 id="the-paper-splits-a-trajectory-into-four-kinds-of-experience">The paper splits a trajectory into four kinds of experience</h2>
+
+<p>Beining Wu, Zihao Ding and Jun Huang (South Dakota State University) start from a disagreement in the self-improvement literature: some studies find that fine-tuning on an agent's own trajectories beats retrieving them into the prompt, others find the reverse. Their explanation is that a trajectory bundles items with different properties, so the answer depends on the mix. They split the pool into locators (a named element and where it sits), procedures (a run of three action targets that recurs within a task family), state facts (a precondition that must hold before an action succeeds, taken from a failed and a successful attempt at the same target) and lessons (an action that failed in a state, paired with the one that later worked there). On MobileGym that is 9,907 locators, 51,052 procedures, 3,980 state facts and 24,651 lessons.</p>
+
+<p>The environments are MobileGym, a simulated phone with 20 Chinese-language apps and 416 task templates, and AndroidWorld, 116 tasks on 20 apps in an emulator, with apps held out for testing in both. The backbones are GUI-Owl-1.5-8B, ScaleCUA-7B and Qwen3-VL-8B, three seeds each, with paired bootstrap intervals. Training is LoRA rank 16, with preference pairs for lessons and supervised fine-tuning for the rest. Code and data are not yet released.</p>
+
+<table>
+  <thead><tr><th>Held-out success, %</th><th>MobileGym: GUI-Owl / Qwen3-VL / ScaleCUA</th><th>AndroidWorld: GUI-Owl / Qwen3-VL / ScaleCUA</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>Base agent, no experience</td><td>21.6 / 16.7 / 19.2</td><td>23.6 / 17.8 / 24.0</td><td>Table 2</td></tr>
+    <tr><td>All experience in the prompt</td><td>29.6 / 27.3 / 28.7</td><td>33.6 / 28.0 / 29.0</td><td>Table 2</td></tr>
+    <tr><td>All experience in the weights</td><td>28.6 / 28.0 / 27.3</td><td>29.0 / 28.2 / 29.5</td><td>Table 2</td></tr>
+    <tr><td>Routed by component</td><td>34.8 / 30.5 / 34.3</td><td>33.3 / 33.2 / 32.6</td><td>Table 2</td></tr>
+    <tr><td>Routed the wrong way round</td><td>25.2 / 24.4 / 23.2</td><td>27.7 / 23.4 / 27.9</td><td>Table 2</td></tr>
+  </tbody>
+</table>
+
+<p>Against the better single destination for each backbone, routing adds 5.2, 2.5 and 5.6 points on MobileGym and minus 0.3, 5.0 and 3.2 on AndroidWorld, our subtraction from Table 2; the mean is the abstract's +3.5. The one cell where routing does not help, GUI-Owl on AndroidWorld, has an interval of minus 2.6 to plus 2.0. Routing the wrong way round is worse than either single destination in every cell, which is the strongest sign that the split is real rather than a tuning artefact.</p>
+
+<svg viewBox="0 0 760 400" style="width:100%;height:auto" role="img" aria-label="Bar chart from arXiv 2610.01787, Section 4.1. Route gain, the success gain from fine-tuning an experience component into the weights minus the gain from putting it in the prompt, pooled over GUI-Owl-1.5-8B, Qwen3-VL-8B and ScaleCUA-7B on MobileGym: locators plus 4.9 points, lessons plus 1.5, state facts minus 4.1, procedures minus 4.2. Positive means the weights win.">
+<rect x="0" y="0" width="760" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Weights minus prompt, by kind of experience, MobileGym, pooled over 3 backbones, points</text>
+<rect x="70" y="40" width="12" height="12" fill="#f2a65a"/><text x="88" y="50" font-size="11" fill="#c4ccda">weights gain minus prompt gain</text>
+<line x1="70" y1="330.0" x2="740" y2="330.0" stroke="#2a3140"/>
+<text x="62" y="334.0" font-size="10" fill="#c4ccda" text-anchor="end">-6</text>
+<line x1="70" y1="286.7" x2="740" y2="286.7" stroke="#2a3140"/>
+<text x="62" y="290.7" font-size="10" fill="#c4ccda" text-anchor="end">-4</text>
+<line x1="70" y1="243.3" x2="740" y2="243.3" stroke="#2a3140"/>
+<text x="62" y="247.3" font-size="10" fill="#c4ccda" text-anchor="end">-2</text>
+<line x1="70" y1="200.0" x2="740" y2="200.0" stroke="#2a3140"/>
+<text x="62" y="204.0" font-size="10" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="70" y1="156.7" x2="740" y2="156.7" stroke="#2a3140"/>
+<text x="62" y="160.7" font-size="10" fill="#c4ccda" text-anchor="end">2</text>
+<line x1="70" y1="113.3" x2="740" y2="113.3" stroke="#2a3140"/>
+<text x="62" y="117.3" font-size="10" fill="#c4ccda" text-anchor="end">4</text>
+<line x1="70" y1="70.0" x2="740" y2="70.0" stroke="#2a3140"/>
+<text x="62" y="74.0" font-size="10" fill="#c4ccda" text-anchor="end">6</text>
+<text x="18" y="200" font-size="11" fill="#c4ccda" transform="rotate(-90 18 200)" text-anchor="middle">points (positive: weights win)</text>
+<rect x="136.8" y="93.8" width="31.0" height="106.2" fill="#f2a65a"/>
+<text x="152.2" y="89.8" font-size="9.5" fill="#f2a65a" text-anchor="middle">+4.9</text>
+<text x="153.8" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">locators</text>
+<rect x="304.2" y="167.5" width="31.0" height="32.5" fill="#f2a65a"/>
+<text x="319.8" y="163.5" font-size="9.5" fill="#f2a65a" text-anchor="middle">+1.5</text>
+<text x="321.2" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">lessons</text>
+<rect x="471.8" y="200.0" width="31.0" height="88.8" fill="#f2a65a"/>
+<text x="487.2" y="300.8" font-size="9.5" fill="#f2a65a" text-anchor="middle">-4.1</text>
+<text x="488.8" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">state facts</text>
+<rect x="639.2" y="200.0" width="31.0" height="91.0" fill="#f2a65a"/>
+<text x="654.8" y="303.0" font-size="9.5" fill="#f2a65a" text-anchor="middle">-4.2</text>
+<text x="656.2" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">procedures</text>
+<text x="70" y="386" font-size="10" fill="#c4ccda">Source: Wu, Ding, Huang (South Dakota State University), arXiv:2610.01787 v1, Section 4.1 and Figure 4c.</text>
+</g></svg>
+
+<h2 id="two-numbers-measured-before-training-predict-the-destination">Two numbers measured before training predict the destination</h2>
+
+<p>The rule uses two properties of each component, both measured on the pool before any training. Recurrence is the share of unrelated tasks in the same app whose episodes contain the item. State-conditionality is how much the item's content changes when the screen state changes. The fitted score is 11.29 times recurrence minus 5.73 times state-conditionality minus 1.28; positive goes to the weights. Fitted on two backbone families and tested on the third, it recovered the destination in 24 of 24 cells, 19 of them with intervals clear of zero. Lessons are the soft spot: the abstract says they win in the weights, but 3 of their 6 cells have intervals that include zero.</p>
+
+<svg viewBox="0 0 760 420" style="width:100%;height:auto" role="img" aria-label="Scatter plot of the four experience components from arXiv 2610.01787, positioned by recurrence r on the x axis and state-conditionality kappa on the y axis, with the fitted boundary 11.29 r minus 5.73 kappa minus 1.28 equals zero. Locators at r 0.39 and kappa 0.10 score plus 2.52 and go to the weights. Lessons at 0.45 and 0.53 score plus 0.74, weights. State facts at 0.32 and 0.56 score minus 0.89 and procedures at 0.05 and 0.66 score minus 4.45, both to the prompt. The rule recovered the destination for a held-out backbone family in 24 of 24 cells.">
+<rect x="0" y="0" width="760" height="420" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">The routing rule: recurrent and state-free goes to the weights</text>
+<text x="20" y="46" font-size="11" fill="#c4ccda">score = 11.29 r - 5.73 k - 1.28 (full fit); above the line: weights, below: prompt</text>
+<line x1="90" y1="330.0" x2="690" y2="330.0" stroke="#2a3140"/><text x="82" y="334.0" font-size="10" fill="#c4ccda" text-anchor="end">0</text><line x1="90" y1="265.0" x2="690" y2="265.0" stroke="#2a3140"/><text x="82" y="269.0" font-size="10" fill="#c4ccda" text-anchor="end">0.2</text><line x1="90" y1="200.0" x2="690" y2="200.0" stroke="#2a3140"/><text x="82" y="204.0" font-size="10" fill="#c4ccda" text-anchor="end">0.4</text><line x1="90" y1="135.0" x2="690" y2="135.0" stroke="#2a3140"/><text x="82" y="139.0" font-size="10" fill="#c4ccda" text-anchor="end">0.6</text><line x1="90" y1="70.0" x2="690" y2="70.0" stroke="#2a3140"/><text x="82" y="74.0" font-size="10" fill="#c4ccda" text-anchor="end">0.8</text><text x="90.0" y="348" font-size="10" fill="#c4ccda" text-anchor="middle">0</text><text x="210.0" y="348" font-size="10" fill="#c4ccda" text-anchor="middle">0.1</text><text x="330.0" y="348" font-size="10" fill="#c4ccda" text-anchor="middle">0.2</text><text x="450.0" y="348" font-size="10" fill="#c4ccda" text-anchor="middle">0.3</text><text x="570.0" y="348" font-size="10" fill="#c4ccda" text-anchor="middle">0.4</text><text x="690.0" y="348" font-size="10" fill="#c4ccda" text-anchor="middle">0.5</text>
+<line x1="226.0" y1="330.0" x2="690.0" y2="82.4" stroke="#c4ccda" stroke-dasharray="6 4"/>
+<text x="654.0" y="104.4" font-size="10" fill="#c4ccda" text-anchor="end">boundary, score = 0</text>
+<text x="600" y="315" font-size="11" fill="#f2a65a">weights side</text>
+<text x="110" y="95" font-size="11" fill="#5ad1a0">prompt side</text>
+<circle cx="558.0" cy="297.5" r="7" fill="#f2a65a"/><text x="570.0" y="289.5" font-size="11" fill="#f2a65a" text-anchor="start">locators (r 0.39, k 0.1), score +2.52</text><circle cx="150.0" cy="115.5" r="7" fill="#5ad1a0"/><text x="162.0" y="107.5" font-size="11" fill="#5ad1a0" text-anchor="start">procedures (r 0.05, k 0.66), score -4.45</text><circle cx="474.0" cy="148.0" r="7" fill="#5ad1a0"/><text x="486.0" y="140.0" font-size="11" fill="#5ad1a0" text-anchor="start">state facts (r 0.32, k 0.56), score -0.89</text><circle cx="630.0" cy="157.8" r="7" fill="#f2a65a"/><text x="618.0" y="179.8" font-size="11" fill="#f2a65a" text-anchor="end">lessons (r 0.45, k 0.53), score +0.74</text>
+<text x="390" y="368" font-size="11" fill="#c4ccda" text-anchor="middle">recurrence r: share of unrelated tasks in the same app whose episodes contain the item</text>
+<text x="18" y="200" font-size="11" fill="#c4ccda" transform="rotate(-90 18 200)" text-anchor="middle">state-conditionality k</text>
+<text x="20" y="404" font-size="10" fill="#c4ccda">Source: arXiv:2610.01787 v1, Section 5.1 and Appendix D. Held-out backbone family: 24 of 24 cells, 19 with intervals clear of zero.</text>
+</g></svg>
+
+<p>Training also changes what the prompt is worth afterwards. Before fine-tuning, adding a note changed the agent's action on 42% of probed steps. After the same items were trained in, the rate fell to 16% for locators, 15% for lessons and 22% for procedures, and it fell most for the items that recur most (Spearman minus 0.92). The prompt route is cheap: 14.2k against 13.2k prompt tokens per episode, a ratio of 1.07. The weights route for everything cost 15.4 H100 hours; the routed version 6.1.</p>
+
+<h2 id="what-it-means-for-a-prompt-only-phone-agent">What it means for a prompt-only phone agent</h2>
+
+<p>phoneshell drives API models, so the weights route does not exist for it. Everything <code>phoneshell/memory.py</code> learns goes to the prompt through <code>hint()</code>: how many times the agent has been on this screen, up to eight lines of the form "control led to that screen, N times", and one free-text note per screen. The stored record (<code>ScreenMemory</code>) holds a layout fingerprint, controls with their outcomes, and the screen's measured settle time.</p>
+
+<p>Mapped onto the paper, that is a one-step version of procedures, no state facts and no lessons. Locators are mostly moot for us: the accessibility tree gives every element an index on every step, and the docstring says a remembered control is resolved against the live tree before it is tapped. Our judgement is that the paper's largest weights win, locators, is the component a tree-reading agent needs least, because the paper's agents act by coordinates on screenshots. The component the paper finds best served by the prompt and that phoneshell does not store at all is state facts, which gained 4.6 to 5.4 points in the prompt across the three backbones on MobileGym (Table 1). A state fact is cheap to capture from data phoneshell already has: the same target tried twice on one screen, failed then succeeded, with whatever differed between the two attempts.</p>
+
+<svg viewBox="0 0 760 400" style="width:100%;height:auto" role="img" aria-label="Diagram mapping the paper's four experience components to what phoneshell's memory.py stores. Locators: phoneshell does not store positions; the accessibility tree supplies element indexes every step and remembered controls are resolved against the live tree. Procedures: phoneshell stores one-step transitions, which control led to which screen and how often, and serves up to 8 of them as prompt lines. State facts: not stored. Lessons: not stored, beyond a free-text note per screen. The weights route is unavailable because phoneshell drives API models it cannot fine-tune. In the paper the prompt route is where procedures gain 5.1 to 5.3 points and state facts 4.6 to 5.4.">
+<rect x="0" y="0" width="760" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="11">
+<text x="20" y="26" font-size="14" font-weight="600">The paper's four components against phoneshell/memory.py</text>
+<text x="20" y="54" font-weight="600" fill="#c4ccda">component (paper's example)</text><text x="300" y="54" font-weight="600" fill="#c4ccda">best route in the paper</text><text x="480" y="54" font-weight="600" fill="#c4ccda">phoneshell today</text>
+<line x1="20" y1="64" x2="740" y2="64" stroke="#2a3140"/>
+<text x="20" y="90">Locator: 'City management' at (770, 84)</text><text x="300" y="90" fill="#f2a65a">weights, +4.9</text><text x="480" y="90">not needed as positions:</text><text x="480" y="106" font-size="10" fill="#c4ccda">the tree gives element indexes each step</text>
+<line x1="20" y1="120" x2="740" y2="120" stroke="#2a3140"/>
+<text x="20" y="146">Procedure: after A and B, next is C</text><text x="300" y="146" fill="#5ad1a0">prompt, -4.2 if trained</text><text x="480" y="146">one-step only: control to screen,</text><text x="480" y="162" font-size="10" fill="#c4ccda">with counts, up to 8 lines per screen</text>
+<line x1="20" y1="176" x2="740" y2="176" stroke="#2a3140"/>
+<text x="20" y="202">State fact: field must hold X before Submit</text><text x="300" y="202" fill="#5ad1a0">prompt, -4.1 if trained</text><text x="480" y="202" fill="#f2a65a">not stored</text>
+<line x1="20" y1="216" x2="740" y2="216" stroke="#2a3140"/>
+<text x="20" y="242">Lesson: here, not 'Fair' but 'Submit answer'</text><text x="300" y="242" font-size="10" fill="#f2a65a">weights, +1.5 (3 of 6 cells span 0)</text><text x="480" y="242" fill="#f2a65a">not stored</text><text x="480" y="258" font-size="10" fill="#c4ccda">(one free-text note field per screen)</text>
+<line x1="20" y1="272" x2="740" y2="272" stroke="#2a3140"/>
+<rect x="20" y="290" width="720" height="62" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+<text x="34" y="312">phoneshell drives API models, so the weights route does not exist for it. Everything it learns goes to the prompt,</text>
+<text x="34" y="330">which in the paper is the right home for procedures (+5.1 to +5.3) and state facts (+4.6 to +5.4), Table 1,</text>
+<text x="34" y="346">and phoneshell stores the first in a shorter form and the second not at all.</text>
+<text x="20" y="384" font-size="10" fill="#c4ccda">Sources: arXiv:2610.01787 v1, Section 3, Table 1, Table D.2; phoneshell/memory.py ScreenMemory and hint() (read 3 October 2026).</text>
+</g></svg>
+
+<p>Two caveats limit how far this travels. The environments are Android-style and one is simulated, the backbones are 8 billion parameters or smaller, and the absolute success rates are 17 to 35%; a frontier API model on a real iPhone starts far higher, and phoneshell's board sits at 89.7 to 96.6%. A prompt gain measured from a base of 20% may not survive a base of 90%. And the information gap result in Section 6.1 says prompt notes help most when the producer knew something the consumer did not (context gain rising from +0.2 to +11.3 across sixths of the gap), which favours notes written by a stronger model or a human over notes an agent writes for itself.</p>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<ul>
+  <li>The paper: <code>https://arxiv.org/abs/2610.01787</code>. Table 2 (held-out success by arm), Table 1 (prompt and weights gains for procedures and state facts), Table D.2 (route gain per cell with intervals), Section 5.1 and Appendix D (the rule and its 24 cells), Table E.4 (readout after training), Table H.1 (cost).</li>
+  <li>Routing against the better single arm: subtract max(all-in-prompt, all-in-weights) from routed in each column of Table 2.</li>
+  <li>phoneshell's memory: <code>grep -n "class ScreenMemory" -A12 phoneshell/memory.py</code> and <code>grep -n "def hint" -A28 phoneshell/memory.py</code>; nothing in the file records a precondition or a failed-then-succeeded pair.</li>
+</ul>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>Two predictions, dated 31 March 2027. When the code is released, a replication with a fourth backbone family on AndroidWorld will put locators in the weights and procedures in the prompt (the two large effects, route gains of +4.9 and minus 4.2), while lessons will come out on the prompt side in at least one of three seeds. And on phoneshell: we will add state-fact notes (target, screen, what differed between the failed and the successful attempt) and run the 58 public tasks three times with and without them on one model. Because the board starts above 89%, we predict the pass rate moves by less than 3 points, and turns per task fall by at least 10% on tasks where a state fact fired. If turns do not fall, prompt-side state facts do not carry over from a 20% base to a 90% one.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ol>
+      <li><a href="https://arxiv.org/abs/2610.01787">Wu, Ding, Huang (South Dakota State University), Not All Experience Belongs in the Weights: Component Routing for Self-Improving GUI Agents, arXiv:2610.01787, 1 October 2026</a></li>
+      <li><a href="https://arxiv.org/html/2610.01787v1">HTML edition: Tables 1, 2, A.1, D.1 to D.4, E.4, H.1; Sections 3 to 6</a></li>
+      <li><a href="https://blolabel.ai/blog/leaderboard-that-cannot-rank/">Blolabel, Six frontier models scored 89.7% to 96.6% on 58 paired iPhone tasks; no pair separates</a></li>
+      <li><a href="https://github.com/Blomega/phoneshell">phoneshell source: phoneshell/memory.py (read 3 October 2026)</a></li>
+    </ol>
+  </section>
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
