@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>xcuitest driver 12.14.1 stops trusting an empty tunnel list; phoneshell still reads a failed usbmux call as an unplugged cable | Blolabel</title>
+<meta name="description" content="appium-xcuitest-driver 12.14.1 (3 October 2026, 18:15 UTC, PR #2991) merges the RemoteXPC tunnel registry with the usbmux and devicectl list. Before it, a reachable but empty registry after a dropped tunnel failed every real-device session with Unknown device or simulator UDID (issue #2986, 22 September). 12.14.0 and 12.15.0 shipped the same day. phoneshell&#x27;s own discovery has the same flaw: reproduced.">
+<link rel="canonical" href="https://blolabel.ai/blog/empty-device-list-read-as-no-phone/">
+<meta property="og:title" content="xcuitest driver 12.14.1 stops trusting an empty tunnel list; phoneshell still reads a failed usbmux call as an unplugged cable | Blolabel">
+<meta property="og:description" content="appium-xcuitest-driver 12.14.1 (3 October 2026, 18:15 UTC, PR #2991) merges the RemoteXPC tunnel registry with the usbmux and devicectl list. Before it, a reachable but empty registry after a dropped tunnel failed every real-device session with Unknown device or simulator UDID (issue #2986, 22 September). 12.14.0 and 12.15.0 shipped the same day. phoneshell&#x27;s own discovery has the same flaw: reproduced.">
+<meta property="og:url" content="https://blolabel.ai/blog/empty-device-list-read-as-no-phone/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/empty-device-list-read-as-no-phone-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "xcuitest driver 12.14.1 stops trusting an empty tunnel list; phoneshell still reads a failed usbmux call as an unplugged cable", "description": "appium-xcuitest-driver 12.14.1 (3 October 2026, 18:15 UTC, PR #2991) merges the RemoteXPC tunnel registry with the usbmux and devicectl list. Before it, a reachable but empty registry after a dropped tunnel failed every real-device session with Unknown device or simulator UDID (issue #2986, 22 September). 12.14.0 and 12.15.0 shipped the same day. phoneshell's own discovery has the same flaw: reproduced.", "datePublished": "2026-10-03", "dateModified": "2026-10-03", "url": "https://blolabel.ai/blog/empty-device-list-read-as-no-phone/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/empty-device-list-read-as-no-phone/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/empty-device-list-read-as-no-phone-hero.png", "citation": ["https://github.com/appium/appium-xcuitest-driver/pull/2991", "https://github.com/appium/appium-xcuitest-driver/issues/2986", "https://github.com/appium/appium-xcuitest-driver/pull/2999", "https://github.com/appium/appium-xcuitest-driver/pull/3000", "https://github.com/appium/appium-xcuitest-driver/issues/2997", "https://registry.npmjs.org/appium-xcuitest-driver", "https://github.com/appium/appium-ios-device/pull/246", "https://github.com/Blomega/phoneshell"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Why does Appium say Unknown device or simulator UDID for a connected iPhone?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "On appium-xcuitest-driver 12.13.3 and earlier, if the RemoteXPC tunnel registry was reachable but listed no tunnels (for example after a long-running tunnel-creation process lost one), discovery returned that empty list and ignored usbmux and devicectl, then fell into the simulator path. Fixed in 12.14.1, 3 October 2026 (PR #2991)."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What changed in appium-xcuitest-driver 12.14.1?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Real-device discovery returns the case-insensitive union of tunnel registry and legacy usbmux/devicectl UDIDs, tunnel first, uses either lookup if the other fails, and throws only if both fail. It requires appium-ios-device ^3.1.24."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Can 12.14.1 pick a different iPhone than before?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes, without a udid capability. The PR notes that detectUdid is unchanged and takes the final UDID, so with devices in both sources a legacy-only device can be selected. Set udid explicitly."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does phoneshell have the same bug?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "A similar one. usbmux_devices() returns an empty list when pymobiledevice3 is missing or its output is not JSON, and diagnose() treats only usbmux as proof of a cable, so a wired phone that devicectl reports is diagnosed as No iPhone on the cable. Reproduced on 3 October 2026 with stubbed lookups."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind event">event</span>
+    <time datetime="2026-10-03">03 October 2026</time>
+    <span>7 min read</span>
+  </div>
+  <h1>xcuitest driver 12.14.1 stops trusting an empty tunnel list; phoneshell still reads a failed usbmux call as an unplugged cable</h1>
+  <p class="standfirst">Three xcuitest driver releases landed on 3 October 2026. The one that matters for real iPhones is 12.14.1: a tunnel registry that answered with an empty list used to win over a usbmux lookup that could see the phone. phoneshell does not run Appium, but its own bring-up makes the same mistake with usbmux, and tells the user to plug in a phone that is plugged in.</p>
+
+<p>appium-xcuitest-driver 12.14.1, published to npm on 3 October 2026 at 18:15 UTC, stops a reachable but empty RemoteXPC tunnel registry from overruling the usbmux and devicectl device list. Up to 12.13.3, once every tunnel had dropped, each new real-device session failed with "Unknown device or simulator UDID" while the phone sat on the cable, visible to usbmux (issue #2986, opened 22 September). The fix, PR #2991, returns the union of both lists.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/empty-device-list-read-as-no-phone-hero.png" alt="Abstract technical illustration of two parallel signal lines feeding a junction, one line carrying no pulses and the other carrying a steady pulse train that the junction ignores" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+
+<h2 id="three-driver-releases-on-3-october-one-of-them-about-real-de">Three driver releases on 3 October, one of them about real devices</h2>
+
+<table>
+  <thead><tr><th>Version</th><th>npm publish (UTC)</th><th>Change</th><th>Pull request, merged (UTC)</th><th>Real devices affected</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>12.13.3</td><td>28 Sep 14:49</td><td>bump WebDriverAgent for package creation with Xcode 26+</td><td>#2996</td><td>build only</td><td>CHANGELOG.md</td></tr>
+    <tr><td>12.14.0</td><td>3 Oct 05:47</td><td>support simulatorPasteboardAutomaticSync and the connect-hardware preference for Device Hub, by updating dependencies</td><td>#2999, 05:42</td><td>no (simulator)</td><td>CHANGELOG.md, PR #2999</td></tr>
+    <tr><td>12.14.1</td><td>3 Oct 18:15</td><td>merge tunnel and legacy device discovery</td><td>#2991, 18:08 (opened 23 Sep)</td><td>yes: discovery on iOS 17+ tunnels</td><td>CHANGELOG.md, PR #2991</td></tr>
+    <tr><td>12.15.0</td><td>3 Oct 21:44</td><td>support launching WebDriverAgent on the iPhone Duo simulator (issue #2997, Xcode 27.1 beta, preinstalled WDA)</td><td>#3000, 21:36</td><td>no (simulator)</td><td>CHANGELOG.md, PR #3000</td></tr>
+  </tbody>
+</table>
+
+<p>The bug report is precise. <code>getConnectedDevices()</code> in <code>lib/device/connected-devices-client.ts</code> runs the tunnel registry lookup and the legacy lookup in parallel with <code>Promise.allSettled</code>, then returned the tunnel result whenever that promise was fulfilled. A registry whose HTTP endpoint answers but lists zero tunnels is fulfilled with an empty array. That empty array went to <code>device-discovery.ts</code>, which concluded the UDID was not a real device and tried the simulator path, which threw. The reporter, from a CI device farm, put the consequence plainly: running the documented long-lived <code>tunnel-creation</code> process without reconnect retries was "strictly worse than not running it at all once a single tunnel drops", because before a registry existed the same devices resolved through the legacy path.</p>
+
+<p>The diff between the 12.13.3 and 12.15.0 npm tarballs shows the replacement. Tunnel UDIDs come first, then legacy-only UDIDs, de-duplicated case-insensitively with the registry's spelling kept. If one lookup fails, the driver warns and uses the other, including an empty result; it throws only when both fail, with both causes attached. The release also requires <code>appium-ios-device ^3.1.24</code> to exclude a <code>bplist-parser@0.5.0</code> import failure. The PR reports focused tests passing 15 of 15 and 15 of 18 functional CI jobs passing. The three failures (server startup on 26.4, a nested-iframe web test, Settings navigation on 16.4) passed in the nearest upstream run, and the author does not claim a macOS or iPhone hardware comparison.</p>
+
+<svg viewBox="0 0 760 400" style="width:100%;height:auto" role="img" aria-label="Flow diagram of real-device discovery in appium-xcuitest-driver. Both lookups, the RemoteXPC tunnel registry and the legacy usbmux and devicectl list, run in parallel. Up to 12.14.0, if the tunnel lookup resolved at all its list was returned, even when empty, and the legacy result was discarded; an empty registry after a dropped tunnel made the session fail with Unknown device or simulator UDID. From 12.14.1, published 3 October 2026 at 18:15 UTC, the two lists are merged with tunnel devices first and case-insensitive de-duplication, either successful lookup is used, and an error is thrown only if both fail.">
+<rect x="0" y="0" width="760" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="11">
+<text x="20" y="26" font-size="14" font-weight="600">getConnectedDevices(), before and after 12.14.1</text>
+<rect x="20" y="44" width="200" height="44" rx="8" fill="#1d2330" stroke="#6f7b90"/><text x="32" y="64">tunnel registry lookup</text><text x="32" y="80" font-size="10" fill="#c4ccda">RemoteXPC, iOS 17 and later</text>
+<rect x="20" y="100" width="200" height="44" rx="8" fill="#1d2330" stroke="#6f7b90"/><text x="32" y="120">legacy lookup</text><text x="32" y="136" font-size="10" fill="#c4ccda">usbmux / devicectl</text>
+<text x="20" y="162" font-size="10" fill="#c4ccda">both run in parallel (Promise.allSettled)</text>
+<text x="300" y="58" font-weight="600" fill="#f2a65a">12.13.3 and earlier</text>
+<rect x="300" y="66" width="440" height="78" rx="8" fill="#1d2330" stroke="#f2a65a"/>
+<text x="312" y="86">tunnel lookup resolved?  return its list (even [ ])</text>
+<text x="312" y="104">only if it rejected: use the legacy list</text>
+<text x="312" y="122" fill="#f2a65a">registry up, tunnel dropped: [ ] -> simulator path -></text>
+<text x="312" y="138" fill="#f2a65a">"Unknown device or simulator UDID", device still on usbmux</text>
+<text x="300" y="178" font-weight="600" fill="#5ad1a0">12.14.1 (PR #2991, fixes issue #2986)</text>
+<rect x="300" y="186" width="440" height="78" rx="8" fill="#1d2330" stroke="#5ad1a0"/>
+<text x="312" y="206">union: tunnel UDIDs first, then legacy-only UDIDs</text>
+<text x="312" y="224">de-duplicated case-insensitively, registry spelling kept</text>
+<text x="312" y="242">one lookup fails: warn, use the other (even [ ])</text>
+<text x="312" y="258">both fail: throw with both causes</text>
+<text x="20" y="300" font-weight="600">Side effect the PR states</text>
+<text x="20" y="320">detectUdid() is unchanged and takes the final UDID in the list, so with no udid capability and</text>
+<text x="20" y="338">devices in both sources, a legacy-only device can now be picked. Pin the udid capability.</text>
+<text x="20" y="372" font-size="10" fill="#c4ccda">Sources: lib/device/connected-devices-client.ts in appium-xcuitest-driver 12.13.3 and 12.15.0 (npm tarballs);</text>
+<text x="20" y="388" font-size="10" fill="#c4ccda">PR #2991 description; issue #2986 (opened 22 September 2026).</text>
+</g></svg>
+
+<h2 id="what-changes-for-anyone-running-real-iphones-through-appium">What changes for anyone running real iPhones through Appium</h2>
+
+<p>If you run <code>appium driver run xcuitest tunnel-creation</code> as a daemon, upgrade to 12.14.1 or set <code>--disconnect-retry-*</code>; on 12.13.3 and earlier a single dropped tunnel turns every subsequent session into a hard failure with a misleading error. After upgrading, set the <code>udid</code> capability on every real-device session. The PR says so itself: <code>detectUdid</code> is unchanged and selects the final UDID in the returned list, so with devices in both sources and no UDID given, a legacy-only device can now be picked where a tunnel device used to be. On a desk with two phones that is the wrong phone. The error message you used to see is also worth unlearning: on these versions "Unknown device or simulator UDID" did not mean the UDID was wrong.</p>
+
+<h2 id="phoneshell-makes-the-same-mistake-with-usbmux">phoneshell makes the same mistake with usbmux</h2>
+
+<p>phoneshell does not use Appium; it builds, launches and forwards WebDriverAgent itself. Its device discovery in <code>phoneshell/bringup.py</code> merges two lists the way 12.14.1 now does: <code>scan()</code> takes <code>pymobiledevice3 usbmux list</code> first, then adds devices from <code>xcrun devicectl list devices</code>. The flaw is one layer down. <code>usbmux_devices()</code> in <code>phoneshell/device.py</code> returns an empty list when the <code>pymobiledevice3</code> binary is missing or its output is not JSON, so a failed lookup and an empty desk look identical. Then <code>diagnose()</code> counts a phone as on the cable only if it came from usbmux. Its docstring says "no phone in usbmux -> the cable, always".</p>
+
+<p>We reproduced the consequence on 3 October 2026 by stubbing both lookups with the same UDID. With usbmux listing the phone, <code>diagnose()</code> returns state <code>no_tunnel</code>, "The phone is here but nothing is listening", which is right. With usbmux returning an empty list and devicectl reporting the phone as <code>wired</code> and connected, it returns <code>no_device</code>, "No iPhone on the cable", with the fix "Plug the phone in with a cable that carries data". The phone is plugged in. <code>pymobiledevice3==11.8.0</code> is in <code>requirements.txt</code>, so this needs an install that skipped it or a version whose output changed; it is a latent fault, not one we have seen on the rig.</p>
+
+<svg viewBox="0 0 760 400" style="width:100%;height:auto" role="img" aria-label="Diagram of phoneshell's device discovery in bringup.py. scan() merges pymobiledevice3 usbmux list with xcrun devicectl list devices, usbmux first. diagnose() counts a phone as on the cable only if it came from usbmux. usbmux_devices() returns an empty list when pymobiledevice3 is not installed or its output is not JSON, so a lookup failure looks the same as no phone. Reproduced on 3 October 2026 with both lookups stubbed: with usbmux listing the phone, the state is no_tunnel; with usbmux returning an empty list and devicectl reporting the same phone wired and connected, the state is no_device, titled No iPhone on the cable, and the fix it gives is to plug the phone in.">
+<rect x="0" y="0" width="760" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="11">
+<text x="20" y="26" font-size="14" font-weight="600">phoneshell bringup.py has the pre-12.14.1 shape, one layer down</text>
+<rect x="20" y="44" width="230" height="58" rx="8" fill="#1d2330" stroke="#6f7b90"/><text x="32" y="64">dev.usbmux_devices()</text><text x="32" y="80" font-size="10" fill="#c4ccda">pymobiledevice3 usbmux list</text><text x="32" y="94" font-size="10" fill="#f2a65a">binary missing or bad JSON: [ ]</text>
+<rect x="20" y="112" width="230" height="58" rx="8" fill="#1d2330" stroke="#6f7b90"/><text x="32" y="132">dev.list_devices()</text><text x="32" y="148" font-size="10" fill="#c4ccda">xcrun devicectl list devices</text><text x="32" y="162" font-size="10" fill="#c4ccda">transport wired / localNetwork</text>
+<line x1="250" y1="106" x2="280" y2="106" stroke="#6f7b90"/>
+<rect x="280" y="72" width="200" height="68" rx="8" fill="#1d2330" stroke="#6f7b90"/><text x="292" y="94">scan(): merge,</text><text x="292" y="110">usbmux first</text><text x="292" y="126" font-size="10" fill="#c4ccda">dedupe on exact UDID</text>
+<line x1="480" y1="106" x2="510" y2="106" stroke="#6f7b90"/>
+<rect x="510" y="62" width="230" height="88" rx="8" fill="#1d2330" stroke="#f2a65a"/><text x="522" y="84">diagnose(): "on the cable"</text><text x="522" y="100">= source is usbmux, only</text><text x="522" y="118" font-size="10" fill="#c4ccda">docstring: no phone in usbmux</text><text x="522" y="132" font-size="10" fill="#c4ccda">-> "the cable, always"</text>
+<text x="20" y="206" font-weight="600">Reproduced 3 October 2026, both lookups stubbed, same UDID</text>
+<rect x="20" y="218" width="720" height="44" rx="8" fill="#1d2330" stroke="#5ad1a0"/>
+<text x="32" y="238">usbmux lists the phone       -> scan [usbmux, USB]</text><text x="400" y="238" fill="#5ad1a0">state no_tunnel</text>
+<text x="32" y="254" font-size="10" fill="#c4ccda">"The phone is here but nothing is listening": correct, the next layer is checked</text>
+<rect x="20" y="272" width="720" height="44" rx="8" fill="#1d2330" stroke="#f2a65a"/>
+<text x="32" y="292">usbmux lookup returns [ ]    -> scan [devicectl, wired, connected]</text><text x="470" y="292" fill="#f2a65a">state no_device</text>
+<text x="32" y="308" font-size="10" fill="#c4ccda">"No iPhone on the cable ... Plug the phone in": wrong, the phone is plugged in and devicectl says so</text>
+<text x="20" y="346">Same class as issue #2986: a lookup that failed quietly is read as an authoritative "nothing here".</text>
+<text x="20" y="380" font-size="10" fill="#c4ccda">Sources: phoneshell/device.py usbmux_devices(), list_devices(); phoneshell/bringup.py scan(), diagnose() (read 3 October 2026).</text>
+</g></svg>
+
+<p>The fix has the same two parts as PR #2991: make <code>usbmux_devices()</code> return <code>None</code> on failure so the caller can tell "could not ask" from "asked, nothing there", and treat a devicectl entry with a wired transport and <code>connected=True</code> as on the cable when usbmux could not be asked. The rule underneath both bugs: an empty list from a lookup is a measurement only if the lookup is known to have worked.</p>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<ul>
+  <li>Publish times: <code>curl -s https://registry.npmjs.org/appium-xcuitest-driver | python3 -c "import json,sys;t=json.load(sys.stdin)['time'];[print(v,t[v]) for v in ['12.13.3','12.14.0','12.14.1','12.15.0']]"</code></li>
+  <li>The code change: <code>npm pack appium-xcuitest-driver@12.13.3 appium-xcuitest-driver@12.15.0</code>, extract both with <code>tar xzf</code>, and <code>diff</code> their <code>package/build/lib/device/connected-devices-client.js</code>.</li>
+  <li>The report and the fix: <code>https://github.com/appium/appium-xcuitest-driver/issues/2986</code> and <code>/pull/2991</code>.</li>
+  <li>phoneshell: <code>grep -n "def usbmux_devices" -A10 phoneshell/device.py</code>; <code>grep -n "cabled = " -B3 -A3 phoneshell/bringup.py</code>. To reproduce, replace <code>phoneshell.device.usbmux_devices</code> with a function returning <code>[]</code> and <code>phoneshell.device.list_devices</code> with one returning a <code>Device(..., transport="wired", connected=True)</code> for your configured UDID, then call <code>phoneshell.bringup.diagnose()</code>; the state is <code>no_device</code>.</li>
+</ul>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>If a session on appium-xcuitest-driver 12.14.1 or later, with a reachable registry that lists no tunnels and the device visible to usbmux, still fails with "Unknown device or simulator UDID", the fix did not cover the case it was written for. We expect no such report in the driver's issue tracker by 31 December 2026. For phoneshell, by the same date the stubbed reproduction above should return a state other than <code>no_device</code>; if it still says the cable is out, the fix described here was not made.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ol>
+      <li><a href="https://github.com/appium/appium-xcuitest-driver/issues/2986">maksymalferov-b2s, Real-device discovery treats a reachable-but-empty tunnel registry the same as a fully working one, appium-xcuitest-driver issue #2986, 22 September 2026</a></li>
+      <li><a href="https://github.com/appium/appium-xcuitest-driver/pull/2991">dlowzzxx, fix: merge tunnel and legacy device discovery, PR #2991, opened 23 September, merged 3 October 2026</a></li>
+      <li><a href="https://registry.npmjs.org/appium-xcuitest-driver">npm registry metadata for appium-xcuitest-driver: publish times for 12.13.3, 12.14.0, 12.14.1, 12.15.0 (read 3 October 2026)</a></li>
+      <li><a href="https://github.com/appium/appium-xcuitest-driver/pull/2999">KazuCocoa, Device Hub preferences, PR #2999, merged 3 October 2026</a></li>
+      <li><a href="https://github.com/appium/appium-xcuitest-driver/pull/3000">KazuCocoa, support launching WDA on Duo, PR #3000, merged 3 October 2026; issue #2997 (29 September 2026)</a></li>
+      <li><a href="https://github.com/appium/appium-ios-device/pull/246">appium-ios-device PR #246, plist import compatibility fix required via ^3.1.24</a></li>
+      <li><a href="https://blolabel.ai/blog/udid-case-five-tools-refuse-lowercase/">Blolabel, earlier note on UDID case handling across iOS tools</a></li>
+      <li><a href="https://github.com/Blomega/phoneshell">phoneshell source: phoneshell/device.py, phoneshell/bringup.py, requirements.txt (read 3 October 2026)</a></li>
+    </ol>
+  </section>
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
