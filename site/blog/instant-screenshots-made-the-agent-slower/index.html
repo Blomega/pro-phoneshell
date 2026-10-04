@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Instant screenshots made a computer-use agent 10.6% slower: it looked before the screen had redrawn | Blolabel</title>
+<meta name="description" content="cua-speedrun (arXiv:2609.40284, 30 September 2026): FastCUA cut environment time from 13.80 s to 5.08 s per OSWorld task, yet GPT-6 Astra took 99.02 s instead of 89.54 s and cost $0.908 instead of $0.531, because screenshots arrived before the UI updated. Gemini 3 Flash at medium effort was faster than at low. phoneshell&#x27;s 0.6 s settle plus 0.3 s stability gate has the same race on a longer fuse.">
+<link rel="canonical" href="https://blolabel.ai/blog/instant-screenshots-made-the-agent-slower/">
+<meta property="og:title" content="Instant screenshots made a computer-use agent 10.6% slower: it looked before the screen had redrawn | Blolabel">
+<meta property="og:description" content="cua-speedrun (arXiv:2609.40284, 30 September 2026): FastCUA cut environment time from 13.80 s to 5.08 s per OSWorld task, yet GPT-6 Astra took 99.02 s instead of 89.54 s and cost $0.908 instead of $0.531, because screenshots arrived before the UI updated. Gemini 3 Flash at medium effort was faster than at low. phoneshell&#x27;s 0.6 s settle plus 0.3 s stability gate has the same race on a longer fuse.">
+<meta property="og:url" content="https://blolabel.ai/blog/instant-screenshots-made-the-agent-slower/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/instant-screenshots-made-the-agent-slower-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Instant screenshots made a computer-use agent 10.6% slower: it looked before the screen had redrawn", "description": "cua-speedrun (arXiv:2609.40284, 30 September 2026): FastCUA cut environment time from 13.80 s to 5.08 s per OSWorld task, yet GPT-6 Astra took 99.02 s instead of 89.54 s and cost $0.908 instead of $0.531, because screenshots arrived before the UI updated. Gemini 3 Flash at medium effort was faster than at low. phoneshell's 0.6 s settle plus 0.3 s stability gate has the same race on a longer fuse.", "datePublished": "2026-10-03", "dateModified": "2026-10-03", "url": "https://blolabel.ai/blog/instant-screenshots-made-the-agent-slower/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/instant-screenshots-made-the-agent-slower/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/instant-screenshots-made-the-agent-slower-hero.png", "citation": ["https://arxiv.org/abs/2609.40284", "https://arxiv.org/html/2609.40284v1", "https://cuaspeedrun.com", "https://github.com/cua-speedrun/cua-speedrun", "https://github.com/Blomega/phoneshell"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Does a faster computer-use environment make agents faster?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Not by itself. In cua-speedrun (arXiv:2609.40284), FastCUA cut environment time from 13.80 s to 5.08 s per OSWorld task, but GPT-6 Astra (low) took 99.02 s instead of 89.54 s, because screenshots came back before the interface had redrawn and the agent spent extra turns re-checking."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Can more reasoning effort make a computer-use agent faster?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Sometimes. Gemini 3 Flash Preview on 50 OSWorld tasks scored 33.6% in 492.2 s at low effort and 57.6% in 268.0 s at medium, at $1.401 versus $0.592 per task; low effort produced repeated unsuccessful actions."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How long should a phone agent wait after an action before reading the screen?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "phoneshell sleeps 0.6 s, checks for a pixel change above 2%, then polls every 0.3 s until two frames differ by at most 1.2%, capped at 3.5 s. That is about 0.9 s minimum, and any app that starts responding later is reported as unchanged."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Is any model fastest, cheapest and most accurate on a real iPhone?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. On phoneshell's 58 paired tasks, GPT-5.1 was fastest at 37.7 s per task, Kimi K3 passed most at 96.6%, and DeepSeek V3.2 was cheapest at $0.1451 for all 58 tasks but slowest at 68.3 s."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-03">03 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>Instant screenshots made a computer-use agent 10.6% slower: it looked before the screen had redrawn</h1>
+  <p class="standfirst">cua-speedrun made the environment answer in milliseconds and the agent got slower: 89.54 to 99.02 seconds per task, with 40% more action batches, at the same score. A fast screenshot of a screen that has not redrawn is a wasted turn. phoneshell waits about 0.9 seconds before it looks, which avoids most of this and still loses the race to any app slower than that.</p>
+
+<p>Making a computer-use environment answer in milliseconds instead of seconds made the agent slower. In cua-speedrun, released on 30 September 2026, swapping the standard runtime for FastCUA cut environment time on 50 OSWorld tasks from 13.80 to 5.08 seconds, and GPT-6 Astra (low, via Codex) still took 99.02 seconds per task instead of 89.54, at a score of 90.42% against 90.82% (arXiv:2609.40284, Tables 4 and 11, five seeds). The screenshots came back before the interface had redrawn, so the agent spent turns asking again.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/instant-screenshots-made-the-agent-slower-hero.png" alt="Abstract technical illustration of a fast shutter capturing a blurred, half-drawn grid of panels while a slower shutter beside it captures the same grid fully formed" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+
+<h2 id="cua-speedrun-times-agents-on-one-setup-instead-of-many">cua-speedrun times agents on one setup instead of many</h2>
+
+<p>The paper is by Pranjal Aggarwal, Lawrence Keunho Jang, Sean Welleck, Daniel Fried, Ruslan Salakhutdinov and Jing Yu Koh. Its premise is that speed numbers from existing benchmarks cannot be compared, because every lab runs different machines and containers. cua-speedrun runs every agent through one interface (<code>observe</code>, <code>step(actions)</code>, <code>done</code>) against QEMU virtual machines on Modal at 1920x1080, starts the clock at the instruction and stops it at termination, and splits each task's time into agent time and environment time. Setup and verification are excluded. Infrastructure failures are retried; agent failures are scored.</p>
+
+<p>It covers four benchmarks, each cut to a subset: OSWorld (295 tasks to 50), OSWorld 2.0 (63 to 52), CUA-World (143 to 26) and MyPCBench (184 to 38). The subsets are chosen to keep the ranking of agents: on held-out agents, the 50-task OSWorld subset ranks them with a Spearman correlation of 0.983 on partial score and an error of 2.16 points, against 4.02 points for a random 50. The paper calls this preserving statistical power; it shows rank agreement and error, not a power calculation. The project site is <code>cuaspeedrun.com</code>; the GitHub repository it links was created on 1 October 2026, a day after submission, and carries no licence file.</p>
+
+<table>
+  <thead><tr><th>GPT-6 Astra (low) via Codex, 50 OSWorld tasks, 5 seeds</th><th>Standard runtime</th><th>FastCUA</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>Score</td><td>90.82 &plusmn; 1.79%</td><td>90.42 &plusmn; 1.79%</td><td>Tables 4, 11</td></tr>
+    <tr><td>Task time</td><td>89.54 &plusmn; 2.16 s</td><td>99.02 &plusmn; 3.87 s</td><td>Tables 4, 11</td></tr>
+    <tr><td>Agent time</td><td>75.74 s</td><td>93.94 s</td><td>Tables 4, 11</td></tr>
+    <tr><td>Environment time</td><td>13.80 s</td><td>5.08 s</td><td>Tables 4, 11</td></tr>
+    <tr><td>Waits the agent asked for</td><td>1.12 s</td><td>4.74 s</td><td>Tables 4, 11</td></tr>
+    <tr><td>Action batches per task</td><td>5.86</td><td>8.20</td><td>Tables 4, 11</td></tr>
+    <tr><td>Actions per task</td><td>19.10</td><td>27.10</td><td>Tables 5, 7</td></tr>
+    <tr><td>Cost per task</td><td>$0.531</td><td>$0.908</td><td>Tables 5, 7</td></tr>
+    <tr><td>Command to screenshot</td><td>about 2.5 to 3.5 s per action (fixed 2 s sleep)</td><td>13.55 to 39.06 ms</td><td>Tables 2, 3</td></tr>
+  </tbody>
+</table>
+
+<p>The environment saved 8.72 seconds per task; the agent spent 18.20 more. Batches rose 40% and cost 71%. The agents also asked for four times as much explicit waiting (4.74 against 1.12 seconds), which is the model rediscovering the sleep the runtime used to provide. The paper's example: after opening Save As, the first screenshot shows no dialog, and the agent asks for another one 5.8 seconds later. The authors estimate a wait of about 100 milliseconds would have done, and say current models cannot judge it.</p>
+
+<svg viewBox="0 0 760 400" style="width:100%;height:auto" role="img" aria-label="Grouped bar chart from cua-speedrun, arXiv 2609.40284, Tables 4 and 11. With the standard environment, agent time is 75.74 seconds and environment time 13.80 seconds, 89.54 seconds per task. With FastCUA, environment time falls to 5.08 seconds but agent time rises to 93.94 seconds, so the task takes 99.02 seconds. Score is 90.82 versus 90.42 percent.">
+<rect x="0" y="0" width="760" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Where an OSWorld task's time went, GPT-6 Astra (low) via Codex, mean of 5 seeds</text>
+<rect x="70" y="40" width="12" height="12" fill="#6f7b90"/><text x="88" y="50" font-size="11" fill="#c4ccda">agent time, s</text>
+<rect x="209" y="40" width="12" height="12" fill="#5ad1a0"/><text x="227" y="50" font-size="11" fill="#c4ccda">environment time, s</text>
+<rect x="390" y="40" width="12" height="12" fill="#f2a65a"/><text x="408" y="50" font-size="11" fill="#c4ccda">total task time, s</text>
+<line x1="70" y1="330.0" x2="740" y2="330.0" stroke="#2a3140"/>
+<text x="62" y="334.0" font-size="10" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="70" y1="278.0" x2="740" y2="278.0" stroke="#2a3140"/>
+<text x="62" y="282.0" font-size="10" fill="#c4ccda" text-anchor="end">20</text>
+<line x1="70" y1="226.0" x2="740" y2="226.0" stroke="#2a3140"/>
+<text x="62" y="230.0" font-size="10" fill="#c4ccda" text-anchor="end">40</text>
+<line x1="70" y1="174.0" x2="740" y2="174.0" stroke="#2a3140"/>
+<text x="62" y="178.0" font-size="10" fill="#c4ccda" text-anchor="end">60</text>
+<line x1="70" y1="122.0" x2="740" y2="122.0" stroke="#2a3140"/>
+<text x="62" y="126.0" font-size="10" fill="#c4ccda" text-anchor="end">80</text>
+<line x1="70" y1="70.0" x2="740" y2="70.0" stroke="#2a3140"/>
+<text x="62" y="74.0" font-size="10" fill="#c4ccda" text-anchor="end">100</text>
+<text x="18" y="200" font-size="11" fill="#c4ccda" transform="rotate(-90 18 200)" text-anchor="middle">seconds per task</text>
+<rect x="186.5" y="133.1" width="31.0" height="196.9" fill="#6f7b90"/>
+<text x="202.0" y="129.1" font-size="9.5" fill="#6f7b90" text-anchor="middle">75.74</text>
+<rect x="220.5" y="294.1" width="31.0" height="35.9" fill="#5ad1a0"/>
+<text x="236.0" y="290.1" font-size="9.5" fill="#5ad1a0" text-anchor="middle">13.8</text>
+<rect x="254.5" y="97.2" width="31.0" height="232.8" fill="#f2a65a"/>
+<text x="270.0" y="93.2" font-size="9.5" fill="#f2a65a" text-anchor="middle">89.54</text>
+<text x="237.5" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">standard I/O (score 90.82%)</text>
+<rect x="521.5" y="85.8" width="31.0" height="244.2" fill="#6f7b90"/>
+<text x="537.0" y="81.8" font-size="9.5" fill="#6f7b90" text-anchor="middle">93.94</text>
+<rect x="555.5" y="316.8" width="31.0" height="13.2" fill="#5ad1a0"/>
+<text x="571.0" y="312.8" font-size="9.5" fill="#5ad1a0" text-anchor="middle">5.08</text>
+<rect x="589.5" y="72.5" width="31.0" height="257.5" fill="#f2a65a"/>
+<text x="605.0" y="68.5" font-size="9.5" fill="#f2a65a" text-anchor="middle">99.02</text>
+<text x="572.5" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">FastCUA (score 90.42%)</text>
+<text x="70" y="386" font-size="10" fill="#c4ccda">Source: Aggarwal, Jang, Welleck, Fried, Salakhutdinov, Koh, arXiv:2609.40284 v1, Tables 4 and 11, 50 OSWorld tasks x 5 seeds.</text>
+</g></svg>
+
+<h2 id="more-reasoning-was-faster-for-one-model-and-slower-for-anoth">More reasoning was faster for one model and slower for another</h2>
+
+<p>The second result that runs against intuition: Gemini 3 Flash Preview on the 50 OSWorld tasks scored 33.6% in 492.2 seconds at low effort and 57.6% in 268.0 seconds at medium, and medium was also cheaper ($0.592 against $1.401 per task, Table 8). Low effort produced long runs of repeated failed actions, such as trying to enter spreadsheet text with key combinations. The text quotes this as 56.0 against 32.5 steps; those figures match the table's model responses column, while the column the appendix calls steps (action batches) reads 39.52 against 28.26.</p>
+
+<p>The effect does not generalise. Gemini 3.8 Flash scored 91.6% at both low and medium effort, and medium took 250.1 seconds against 127.1. On the harder OSWorld 2.0, going from medium to high bought 0.3 points (59.9 to 60.2%) for 49% more time. So the claim to carry away is narrow: reasoning effort and wall time are not monotone, and the direction depends on whether the cheap setting loops.</p>
+
+<svg viewBox="0 0 760 400" style="width:100%;height:auto" role="img" aria-label="Grouped bar chart from cua-speedrun Table 8. Gemini 3 Flash Preview at low reasoning effort scores 33.6 percent in 492.2 seconds per task; at medium it scores 57.6 percent in 268.0 seconds; at high 59.6 percent in 337.2 seconds. Cost per task is 1.401, 0.592 and 0.809 dollars.">
+<rect x="0" y="0" width="760" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Gemini 3 Flash Preview on 50 OSWorld tasks: more reasoning, less time</text>
+<rect x="70" y="40" width="12" height="12" fill="#5ad1a0"/><text x="88" y="50" font-size="11" fill="#c4ccda">score, %</text>
+<rect x="174" y="40" width="12" height="12" fill="#f2a65a"/><text x="192" y="50" font-size="11" fill="#c4ccda">time per task, s / 10</text>
+<rect x="369" y="40" width="12" height="12" fill="#6f7b90"/><text x="387" y="50" font-size="11" fill="#c4ccda">cost per task, US cents / 2</text>
+<line x1="70" y1="330.0" x2="740" y2="330.0" stroke="#2a3140"/>
+<text x="62" y="334.0" font-size="10" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="70" y1="265.0" x2="740" y2="265.0" stroke="#2a3140"/>
+<text x="62" y="269.0" font-size="10" fill="#c4ccda" text-anchor="end">20</text>
+<line x1="70" y1="200.0" x2="740" y2="200.0" stroke="#2a3140"/>
+<text x="62" y="204.0" font-size="10" fill="#c4ccda" text-anchor="end">40</text>
+<line x1="70" y1="135.0" x2="740" y2="135.0" stroke="#2a3140"/>
+<text x="62" y="139.0" font-size="10" fill="#c4ccda" text-anchor="end">60</text>
+<line x1="70" y1="70.0" x2="740" y2="70.0" stroke="#2a3140"/>
+<text x="62" y="74.0" font-size="10" fill="#c4ccda" text-anchor="end">80</text>
+<text x="18" y="200" font-size="11" fill="#c4ccda" transform="rotate(-90 18 200)" text-anchor="middle">value (see legend for unit)</text>
+<rect x="130.7" y="220.8" width="31.0" height="109.2" fill="#5ad1a0"/>
+<text x="146.2" y="216.8" font-size="9.5" fill="#5ad1a0" text-anchor="middle">33.6%</text>
+<rect x="164.7" y="170.0" width="31.0" height="160.0" fill="#f2a65a"/>
+<text x="180.2" y="166.0" font-size="9.5" fill="#f2a65a" text-anchor="middle">492.2 s</text>
+<rect x="198.7" y="102.3" width="31.0" height="227.7" fill="#6f7b90"/>
+<text x="214.2" y="98.3" font-size="9.5" fill="#6f7b90" text-anchor="middle">$1.401</text>
+<text x="181.7" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">low effort</text>
+<rect x="354.0" y="142.8" width="31.0" height="187.2" fill="#5ad1a0"/>
+<text x="369.5" y="138.8" font-size="9.5" fill="#5ad1a0" text-anchor="middle">57.6%</text>
+<rect x="388.0" y="242.9" width="31.0" height="87.1" fill="#f2a65a"/>
+<text x="403.5" y="238.9" font-size="9.5" fill="#f2a65a" text-anchor="middle">268.0 s</text>
+<rect x="422.0" y="233.8" width="31.0" height="96.2" fill="#6f7b90"/>
+<text x="437.5" y="229.8" font-size="9.5" fill="#6f7b90" text-anchor="middle">$0.592</text>
+<text x="405.0" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">medium effort</text>
+<rect x="577.3" y="136.3" width="31.0" height="193.7" fill="#5ad1a0"/>
+<text x="592.8" y="132.3" font-size="9.5" fill="#5ad1a0" text-anchor="middle">59.6%</text>
+<rect x="611.3" y="220.4" width="31.0" height="109.6" fill="#f2a65a"/>
+<text x="626.8" y="216.4" font-size="9.5" fill="#f2a65a" text-anchor="middle">337.2 s</text>
+<rect x="645.3" y="198.5" width="31.0" height="131.5" fill="#6f7b90"/>
+<text x="660.8" y="194.5" font-size="9.5" fill="#6f7b90" text-anchor="middle">$0.809</text>
+<text x="628.3" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">high effort</text>
+<text x="70" y="386" font-size="10" fill="#c4ccda">Source: arXiv:2609.40284 v1, Table 8. Bars scaled for one axis; labels give the reported values.</text>
+</g></svg>
+
+<h2 id="a-phone-agent-has-the-same-race-on-a-longer-fuse">A phone agent has the same race on a longer fuse</h2>
+
+<p>phoneshell never looks immediately. After an action, <code>_after</code> in <code>phoneshell/actions.py</code> sleeps 0.6 seconds and calls the action effective if more than 2% of pixels changed. The next observation then goes through <code>wait_until_stable</code> in <code>phoneshell/perception/screen.py</code>: screenshots every 0.3 seconds until two consecutive frames differ by at most 1.2%, capped at 3.5 seconds, then one accessibility tree read. The snapshot docstring gives the reason in numbers: a home-screen read 1.0 second after pressing home returned 6 elements, the same read at 2.0 seconds returned 12.</p>
+
+<p>That design avoids the FastCUA failure for anything that starts moving inside about 0.9 seconds. It does not avoid it for an app that waits on the network before redrawing. If the first two probes match because nothing has started yet, the gate closes on the old screen, the signature is unchanged, and <code>_act_and_report</code> in <code>phoneshell/mcp_server.py</code> tells the model "THE SCREEN DID NOT CHANGE ... try something different rather than repeating it". That is the paper's mechanism with a 0.9 second fuse instead of a 20 millisecond one, and it pushes the model to change course on an action that worked. This is our reading of the code; we have not measured how often it fires.</p>
+
+<svg viewBox="0 0 760 430" style="width:100%;height:auto" role="img" aria-label="Timeline diagram. In cua-speedrun's FastCUA runtime the screenshot comes back 13.55 to 39.06 milliseconds after a command, before the interface has redrawn, so the agent sees the old screen and asks again; in the paper's Save As example the second request came 5.8 seconds later, where about 100 milliseconds would have been enough. The standard runtime waits a fixed 2 seconds after every action. phoneshell sleeps 0.6 seconds after an action, checks whether more than 2 percent of pixels changed, then polls screenshots every 0.3 seconds until two frames differ by at most 1.2 percent, up to 3.5 seconds. A response that starts after the gate has closed is reported to the model as THE SCREEN DID NOT CHANGE.">
+<rect x="0" y="0" width="760" height="430" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="11">
+<text x="20" y="26" font-size="14" font-weight="600">When does the agent get to look? Three post-action waits</text>
+<line x1="150" y1="50" x2="740" y2="50" stroke="#2a3140"/>
+<text x="150" y="44" font-size="10" fill="#c4ccda">0 s</text><text x="297" y="44" font-size="10" fill="#c4ccda">0.5 s</text><text x="445" y="44" font-size="10" fill="#c4ccda">1.0 s</text><text x="740" y="44" font-size="10" fill="#c4ccda" text-anchor="end">2.0 s</text>
+<text x="20" y="88" fill="#5ad1a0" font-weight="600">FastCUA</text>
+<rect x="150" y="72" width="8" height="26" fill="#5ad1a0"/>
+<text x="166" y="84" font-size="10">screenshot after 13.55 to 39.06 ms</text>
+<text x="166" y="98" font-size="10" fill="#f2a65a">UI not redrawn yet: agent re-requests (5.8 s later in the Save As example)</text>
+<text x="20" y="140" fill="#c4ccda" font-weight="600">standard</text>
+<rect x="150" y="124" width="590" height="26" fill="#6f7b90" opacity="0.6"/>
+<text x="160" y="141" font-size="10">fixed 2 s post-action sleep, about 2.5 to 3.5 s per action in total</text>
+<text x="20" y="192" fill="#f2a65a" font-weight="600">phoneshell</text>
+<rect x="150" y="176" width="177" height="26" fill="#6f7b90"/>
+<text x="158" y="193" font-size="10">sleep 0.6 s</text>
+<rect x="327" y="176" width="20" height="26" fill="#f2a65a"/>
+<rect x="347" y="176" width="89" height="26" fill="#1d2330" stroke="#f2a65a"/>
+<text x="352" y="193" font-size="10">probe +0.3 s</text>
+<rect x="436" y="176" width="89" height="26" fill="#1d2330" stroke="#f2a65a" stroke-dasharray="4 3"/>
+<text x="441" y="193" font-size="10">probe +0.3 s</text>
+<text x="535" y="186" font-size="10" fill="#c4ccda">... until 2 frames differ</text>
+<text x="535" y="199" font-size="10" fill="#c4ccda">by at most 1.2%, cap 3.5 s</text>
+<text x="150" y="224" font-size="10" fill="#c4ccda">actions.py _after: pixel diff above 2% = "changed"; perception/screen.py wait_until_stable; then one tree read</text>
+<rect x="20" y="246" width="720" height="74" rx="8" fill="#1d2330" stroke="#f2a65a"/>
+<text x="34" y="268" fill="#f2a65a" font-weight="600">The race phoneshell still has</text>
+<text x="34" y="288" font-size="11">If the app has not started to respond by the first equal pair of frames (about 0.9 s after the tap),</text>
+<text x="34" y="306" font-size="11">the gate closes on the old screen and mcp_server.py replies "THE SCREEN DID NOT CHANGE". Same bug, longer fuse.</text>
+<text x="20" y="352" font-size="11" fill="#c4ccda">Per step on a real iPhone (memory.py docstring): tree read 159 ms, screenshot 72 ms, stability gate 504 ms,</text>
+<text x="20" y="370" font-size="11" fill="#c4ccda">fixed settle 600 to 800 ms, the model deciding 1 to 3 s.</text>
+<text x="20" y="404" font-size="10" fill="#c4ccda">Sources: arXiv:2609.40284 Tables 1 to 4 and Section 3.2; phoneshell actions.py, perception/screen.py, mcp_server.py, memory.py (read 3 Oct 2026).</text>
+</g></svg>
+
+<h2 id="what-it-means-for-anyone-timing-phone-agents">What it means for anyone timing phone agents</h2>
+
+<p>The per-step budget in the <code>phoneshell/memory.py</code> docstring, measured on a real iPhone, is a tree read of 159 ms, a screenshot of 72 ms, a stability gate of 504 ms, a fixed settle of 600 to 800 ms, and 1 to 3 seconds for the model. The device side is therefore 1.3 to 1.5 seconds a step, comparable to the model. cua-speedrun's result says shaving that side is only a win if the agent is told when the screen is ready. A cheaper wait that hands the model a stale screen moves the cost into turns, which are the expensive part.</p>
+
+<p>The paper's other claim, that no model family is best on score, time and cost at once, holds on our phone too. On the 9 September 2026 sweep (58 paired tasks, iPhone 14 Pro, iOS 26.3.1), GPT-5.1 was fastest at 37.7 seconds a task, Kimi K3 passed the most at 96.6%, and DeepSeek V3.2 was cheapest at $0.1451 for all 58 tasks and slowest at 68.3 seconds. Per turn, the six models range from 7.8 seconds (Qwen3 Max, 43.4 s over 5.6 turns) to 13.0 seconds (Kimi K3, 66.5 s over 5.1 turns), our division of the board averages. One run per model and task, so treat the order as an anecdote; none of the pairwise pass-rate differences on this board is significant, as an earlier note showed.</p>
+
+<svg viewBox="0 0 760 400" style="width:100%;height:auto" role="img" aria-label="Grouped bar chart of the phoneshell leaderboard, 9 September 2026 sweep, 58 paired tasks on an iPhone 14 Pro. Mean seconds per task: GPT-5.1 37.7, Qwen3 Max 43.4, Claude Opus 4.8 46.9, Gemini 3.1 Pro 47.0, Kimi K3 66.5, DeepSeek V3.2 68.3. Pass rates: 91.4, 89.7, 91.4, 93.1, 96.6 and 93.1 percent. The fastest model is not the most accurate and the cheapest, DeepSeek at 0.1451 dollars for all 58 tasks, is the slowest.">
+<rect x="0" y="0" width="760" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">phoneshell leaderboard, 58 paired tasks on a physical iPhone 14 Pro: no model wins all three</text>
+<rect x="70" y="40" width="12" height="12" fill="#f2a65a"/><text x="88" y="50" font-size="11" fill="#c4ccda">mean seconds per task</text>
+<rect x="265" y="40" width="12" height="12" fill="#5ad1a0"/><text x="283" y="50" font-size="11" fill="#c4ccda">pass rate, %</text>
+<line x1="70" y1="330.0" x2="740" y2="330.0" stroke="#2a3140"/>
+<text x="62" y="334.0" font-size="10" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="70" y1="278.0" x2="740" y2="278.0" stroke="#2a3140"/>
+<text x="62" y="282.0" font-size="10" fill="#c4ccda" text-anchor="end">20</text>
+<line x1="70" y1="226.0" x2="740" y2="226.0" stroke="#2a3140"/>
+<text x="62" y="230.0" font-size="10" fill="#c4ccda" text-anchor="end">40</text>
+<line x1="70" y1="174.0" x2="740" y2="174.0" stroke="#2a3140"/>
+<text x="62" y="178.0" font-size="10" fill="#c4ccda" text-anchor="end">60</text>
+<line x1="70" y1="122.0" x2="740" y2="122.0" stroke="#2a3140"/>
+<text x="62" y="126.0" font-size="10" fill="#c4ccda" text-anchor="end">80</text>
+<line x1="70" y1="70.0" x2="740" y2="70.0" stroke="#2a3140"/>
+<text x="62" y="74.0" font-size="10" fill="#c4ccda" text-anchor="end">100</text>
+<text x="18" y="200" font-size="11" fill="#c4ccda" transform="rotate(-90 18 200)" text-anchor="middle">seconds / percent</text>
+<rect x="91.8" y="232.0" width="31.0" height="98.0" fill="#f2a65a"/>
+<text x="107.3" y="228.0" font-size="9.5" fill="#f2a65a" text-anchor="middle">37.7</text>
+<rect x="125.8" y="92.4" width="31.0" height="237.6" fill="#5ad1a0"/>
+<text x="141.3" y="88.4" font-size="9.5" fill="#5ad1a0" text-anchor="middle">91.4</text>
+<text x="125.8" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">GPT-5.1</text>
+<rect x="203.5" y="217.2" width="31.0" height="112.8" fill="#f2a65a"/>
+<text x="219.0" y="213.2" font-size="9.5" fill="#f2a65a" text-anchor="middle">43.4</text>
+<rect x="237.5" y="96.8" width="31.0" height="233.2" fill="#5ad1a0"/>
+<text x="253.0" y="92.8" font-size="9.5" fill="#5ad1a0" text-anchor="middle">89.7</text>
+<text x="237.5" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">Qwen3 Max</text>
+<rect x="315.2" y="208.1" width="31.0" height="121.9" fill="#f2a65a"/>
+<text x="330.7" y="204.1" font-size="9.5" fill="#f2a65a" text-anchor="middle">46.9</text>
+<rect x="349.2" y="92.4" width="31.0" height="237.6" fill="#5ad1a0"/>
+<text x="364.7" y="88.4" font-size="9.5" fill="#5ad1a0" text-anchor="middle">91.4</text>
+<text x="349.2" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">Opus 4.8</text>
+<rect x="426.8" y="207.8" width="31.0" height="122.2" fill="#f2a65a"/>
+<text x="442.3" y="203.8" font-size="9.5" fill="#f2a65a" text-anchor="middle">47</text>
+<rect x="460.8" y="87.9" width="31.0" height="242.1" fill="#5ad1a0"/>
+<text x="476.3" y="83.9" font-size="9.5" fill="#5ad1a0" text-anchor="middle">93.1</text>
+<text x="460.8" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">Gemini 3.1 Pro</text>
+<rect x="538.5" y="157.1" width="31.0" height="172.9" fill="#f2a65a"/>
+<text x="554.0" y="153.1" font-size="9.5" fill="#f2a65a" text-anchor="middle">66.5</text>
+<rect x="572.5" y="78.8" width="31.0" height="251.2" fill="#5ad1a0"/>
+<text x="588.0" y="74.8" font-size="9.5" fill="#5ad1a0" text-anchor="middle">96.6</text>
+<text x="572.5" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">Kimi K3</text>
+<rect x="650.2" y="152.4" width="31.0" height="177.6" fill="#f2a65a"/>
+<text x="665.7" y="148.4" font-size="9.5" fill="#f2a65a" text-anchor="middle">68.3</text>
+<rect x="684.2" y="87.9" width="31.0" height="242.1" fill="#5ad1a0"/>
+<text x="699.7" y="83.9" font-size="9.5" fill="#5ad1a0" text-anchor="middle">93.1</text>
+<text x="684.2" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">DeepSeek V3.2</text>
+<text x="70" y="386" font-size="10" fill="#c4ccda">Source: site/results.json board (run xv2, 9 Sep 2026). Total cost for 58 tasks: $0.5079, $0.3823, $4.4039, $1.3326, $2.3851, $0.1451.</text>
+</g></svg>
+
+<p>Decisions that follow. Record agent time and device time separately per step; phoneshell's results file stores only <code>seconds</code> and <code>turns</code> per task, so today we cannot say how much of the 37.7 to 68.3 seconds is the phone. Treat the post-action wait as part of the action contract, not a tuning constant: an action should return when the screen is ready, or say that it timed out. And when comparing models on speed, compare at the same wait policy, because the wait changes the number of turns as much as the model does.</p>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<ul>
+  <li>The paper: <code>https://arxiv.org/abs/2609.40284</code>. Table 2 (standard per-action waits), Tables 1 and 3 (FastCUA latency), Table 4 (FastCUA runs), Table 11 (standard runs, five seeds), Tables 7 and 8 (OSWorld results with time and cost), Section 3.2 (Save As example), Table 14 (subset validation).</li>
+  <li>The code: <code>https://github.com/cua-speedrun/cua-speedrun</code>; licence status: <code>curl -s https://api.github.com/repos/cua-speedrun/cua-speedrun | grep -A2 license</code> returned <code>null</code> on 3 October 2026.</li>
+  <li>phoneshell's waits: <code>grep -n "def _after" -A8 phoneshell/actions.py</code> (0.6 s, 2%), <code>grep -n "def wait_until_stable" -A6 phoneshell/perception/screen.py</code> (0.3 s, 1.2%, 3.5 s), <code>grep -n "THE SCREEN DID NOT CHANGE" phoneshell/mcp_server.py</code>.</li>
+  <li>The leaderboard figures: <code>python3 -c "import json;b=json.load(open('site/results.json'))['board'];[print(m,v['avg_seconds'],v['avg_turns'],v['pass_rate'],v['total_cost_usd']) for m,v in b.items()]"</code> from the repository root.</li>
+</ul>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>By 31 March 2027 we will add per-step agent and device timing to phoneshell's results and log every "THE SCREEN DID NOT CHANGE" reply with the pixel difference measured 3 seconds later. We predict two things. First, device time will be at least 25% of task time for every one of the six models. Second, at least 1 in 20 unchanged replies will turn out to be late responses, where the screen did change within 3 seconds. If device time is under 25% for most models, the settle is not worth optimising; if fewer than 1 in 20 unchanged replies are late, the 0.9 second fuse is long enough for the apps we test.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ol>
+      <li><a href="https://arxiv.org/abs/2609.40284">Aggarwal, Jang, Welleck, Fried, Salakhutdinov, Koh, cua-speedrun: Standardized Benchmarking of the Speed of Computer-Use Agents, arXiv:2609.40284, 30 September 2026</a></li>
+      <li><a href="https://arxiv.org/html/2609.40284v1">HTML edition: Tables 1 to 5, 7, 8, 11, 13, 14; Section 3.2; Appendix A (limitations)</a></li>
+      <li><a href="https://cuaspeedrun.com">cua-speedrun project site (read 3 October 2026)</a></li>
+      <li><a href="https://github.com/cua-speedrun/cua-speedrun">cua-speedrun repository, created 1 October 2026, no licence file (read 3 October 2026)</a></li>
+      <li><a href="https://blolabel.ai/blog/leaderboard-that-cannot-rank/">Blolabel, Six frontier models scored 89.7% to 96.6% on 58 paired iPhone tasks; no pair separates</a></li>
+      <li><a href="https://github.com/Blomega/phoneshell">phoneshell source: actions.py, perception/screen.py, mcp_server.py, memory.py, site/results.json (read 3 October 2026)</a></li>
+    </ol>
+  </section>
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
