@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZoneClaw cuts persistent-memory attacks from 372 of 480 to 6; phoneshell&#x27;s screen memory stores 16,815 on-screen labels as first seen, with no record of who wrote them | Blolabel</title>
+<meta name="description" content="ZoneClaw (arXiv:2610.00450, 30 September 2026) shows that text a computer-use agent remembers gains authority over later tasks, and that trust zones cut attack success from 372/480 to 6/480. phoneshell&#x27;s memory stores every control label at first sighting, including ads, notifications and Wi-Fi names, and re-presents some of them to the model as what worked last time.">
+<link rel="canonical" href="https://blolabel.ai/blog/phone-memory-keeps-what-the-screen-said/">
+<meta property="og:title" content="ZoneClaw cuts persistent-memory attacks from 372 of 480 to 6; phoneshell&#x27;s screen memory stores 16,815 on-screen labels as first seen, with no record of who wrote them | Blolabel">
+<meta property="og:description" content="ZoneClaw (arXiv:2610.00450, 30 September 2026) shows that text a computer-use agent remembers gains authority over later tasks, and that trust zones cut attack success from 372/480 to 6/480. phoneshell&#x27;s memory stores every control label at first sighting, including ads, notifications and Wi-Fi names, and re-presents some of them to the model as what worked last time.">
+<meta property="og:url" content="https://blolabel.ai/blog/phone-memory-keeps-what-the-screen-said/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/phone-memory-keeps-what-the-screen-said-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "ZoneClaw cuts persistent-memory attacks from 372 of 480 to 6; phoneshell's screen memory stores 16,815 on-screen labels as first seen, with no record of who wrote them", "description": "ZoneClaw (arXiv:2610.00450, 30 September 2026) shows that text a computer-use agent remembers gains authority over later tasks, and that trust zones cut attack success from 372/480 to 6/480. phoneshell's memory stores every control label at first sighting, including ads, notifications and Wi-Fi names, and re-presents some of them to the model as what worked last time.", "datePublished": "2026-10-04", "dateModified": "2026-10-04", "url": "https://blolabel.ai/blog/phone-memory-keeps-what-the-screen-said/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/phone-memory-keeps-what-the-screen-said/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/phone-memory-keeps-what-the-screen-said-hero.png", "citation": ["https://arxiv.org/abs/2610.00450", "https://github.com/euph00/ZoneClaw-code", "https://github.com/Blomega/phoneshell"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "What is a persistent memory attack on a computer-use agent?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "An attacker who controls only benign-looking external content gets the agent to record a claim in its workspace memory during a legitimate task; in later sessions that claim is reloaded with the same authority as user instructions and steers tasks the attacker never touched. ZoneClaw (arXiv:2610.00450) measured 372 successes in 480 trials without a defense."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How does ZoneClaw defend against it?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "It replaces flat memory with trust zones. External claims persist in a low-trust zone and gain authority only by crossing a boundary where they are cross-checked against zones the attacker cannot write, enforced by separate processes so that no process both reads external content and acts outward. Attack success fell to 6 of 480 with utility kept in 458."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What does phoneshell remember about screens?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "A layout fingerprint per screen, its controls (type, label, identifier, position), which control led to which screen and how often, and how long the screen took to settle. On 4 October 2026 the rig's store held 808 screens and 16,815 controls across 28 apps."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Can screen text from a third party reach phoneshell's prompt through memory?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes, through hint(), which prints a remembered control's stored label beside its live id. The label is stored once and never refreshed. Today 178 controls are eligible, mostly app chrome, but the store also holds ad labels and notification text with no marker of where they came from."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-04">04 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>ZoneClaw cuts persistent-memory attacks from 372 of 480 to 6; phoneshell&#x27;s screen memory stores 16,815 on-screen labels as first seen, with no record of who wrote them</h1>
+  <p class="standfirst">ZoneClaw's point is that an agent's memory is where untrusted content goes to become trusted. We counted what phoneshell's screen memory holds on the rig: 808 screens, 16,815 labels, no provenance. Only 178 can reach a prompt today, and one of them carries a Wi-Fi network name, text anyone in radio range can choose.</p>
+
+<p>ZoneClaw, posted on 30 September 2026 by researchers at the National University of Singapore, shows that text a computer-use agent remembers acquires authority over later tasks: 372 of 480 persistent-memory attacks succeeded against an undefended OpenClaw-style agent, and separating memory into trust zones cut that to 6. phoneshell's screen memory on our rig holds 16,815 control labels from 808 screens, stored as first seen with no record of whether Apple, an app, an ad network or a stranger's notification wrote them.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/phone-memory-keeps-what-the-screen-said-hero.png" alt="Abstract technical illustration of layered translucent storage cells, one stratum faintly tinted where external fragments settle among uniform blocks" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+
+<h2 id="what-zoneclaw-found">What ZoneClaw found</h2>
+
+<p>Haokai Ma, Chieh Lin, Yupeng Qiu and Ee-Chien Chang start from a probe on 30 Workspace-Bench tasks. A writing convention seeded only into the agent's memory file was adopted in 14 of 30 tasks, with task quality barely moved (43.5% rubric pass against 46.4%). A user instruction overriding it brought adoption to 0 of 30. Remembering, by itself, confers authority. The attacks then run across four scenarios (BCC, Chat Mirror, Source Redirection, Marketplace), two injection settings (user-triggered and scheduled) and four backbones. The chain is "malicious context, memory injection, malicious execution": the attacker never touches the later task.</p>
+
+<p>The defense does not filter what gets remembered. External claims still persist, in a low-trust zone, and acquire the power to guide action only by crossing an explicit authority boundary, where promotion is cross-checked against zones the attacker cannot write. Role-specific processes enforce it so that no process both ingests external content and acts outward. On Claude Sonnet 4.6, attack success was 0 of 15 in all eight scenario and setting combinations. The authors also report that each of four existing defenses works in some settings and fails in others.</p>
+
+<svg viewBox="0 0 760 400" style="width:100%;height:auto" role="img" aria-label="Grouped bar chart from ZoneClaw. Across four attack scenarios, two injection settings and four backbones, 480 trials: with no defense 372 attacks succeed; with ZoneClaw 6 succeed and utility is retained in 458 trials. A separate probe on 30 Workspace-Bench tasks shows a convention seeded only in memory was adopted in 14 of 30 tasks.">
+<rect x="0" y="0" width="760" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">ZoneClaw: attacks that succeed, and tasks that still work (out of 480)</text>
+<rect x="70" y="40" width="12" height="12" fill="#6f7b90"/><text x="88" y="50" font-size="11" fill="#c4ccda">count of 480</text>
+<rect x="202" y="40" width="12" height="12" fill="#5ad1a0"/><text x="220" y="50" font-size="11" fill="#c4ccda">with ZoneClaw</text>
+<line x1="70" y1="330.0" x2="740" y2="330.0" stroke="#2a3140"/>
+<text x="62" y="334.0" font-size="10" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="70" y1="278.0" x2="740" y2="278.0" stroke="#2a3140"/>
+<text x="62" y="282.0" font-size="10" fill="#c4ccda" text-anchor="end">100</text>
+<line x1="70" y1="226.0" x2="740" y2="226.0" stroke="#2a3140"/>
+<text x="62" y="230.0" font-size="10" fill="#c4ccda" text-anchor="end">200</text>
+<line x1="70" y1="174.0" x2="740" y2="174.0" stroke="#2a3140"/>
+<text x="62" y="178.0" font-size="10" fill="#c4ccda" text-anchor="end">300</text>
+<line x1="70" y1="122.0" x2="740" y2="122.0" stroke="#2a3140"/>
+<text x="62" y="126.0" font-size="10" fill="#c4ccda" text-anchor="end">400</text>
+<line x1="70" y1="70.0" x2="740" y2="70.0" stroke="#2a3140"/>
+<text x="62" y="74.0" font-size="10" fill="#c4ccda" text-anchor="end">500</text>
+<text x="18" y="200" font-size="11" fill="#c4ccda" transform="rotate(-90 18 200)" text-anchor="middle">trials</text>
+<rect x="203.5" y="136.6" width="31.0" height="193.4" fill="#6f7b90"/>
+<text x="219.0" y="132.6" font-size="9.5" fill="#6f7b90" text-anchor="middle">372 (no defense)</text>
+<rect x="237.5" y="326.9" width="31.0" height="3.1" fill="#5ad1a0"/>
+<text x="253.0" y="322.9" font-size="9.5" fill="#5ad1a0" text-anchor="middle">6</text>
+<text x="237.5" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">attack success</text>
+<rect x="538.5" y="91.8" width="31.0" height="238.2" fill="#6f7b90"/>
+<text x="554.0" y="87.8" font-size="9.5" fill="#6f7b90" text-anchor="middle">458</text>
+<text x="572.5" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">utility retained (ZoneClaw)</text>
+<text x="70" y="386" font-size="10" fill="#c4ccda">Source: Ma, Lin, Qiu, Chang, ZoneClaw, arXiv:2610.00450 (30 September 2026), abstract and Table 1.</text>
+</g></svg>
+
+<h2 id="phoneshell-s-memory-counted">phoneshell's memory, counted</h2>
+
+<p><code>phoneshell/memory.py</code> exists to skip work. Its docstring prices a step at 159 ms for a tree read, 72 ms for a screenshot, 504 ms for the stability gate and 1 to 3 s for the model, so the gain is "not asking the model at all". For each screen it stores a layout fingerprint, the controls, which control led to which screen, and how long the screen took to settle. On the next visit the agent gets a <code>MEMORY:</code> block, and with <code>skip_image_on_known: true</code> in the rig's config the screenshot can be skipped. We counted the rig's store on 4 October 2026.</p>
+
+<table>
+  <thead><tr><th>Measure</th><th>Value</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>App files</td><td>28 (Apple apps plus Grab, Gmail, YouTube, Facebook, X, others)</td><td>runtime/memory/*.json</td></tr>
+    <tr><td>Screens remembered</td><td>808; 348 seen at least twice (trusted at <code>min_visits_to_trust: 2</code>)</td><td>runtime/memory, runtime/config.yaml</td></tr>
+    <tr><td>Controls stored</td><td>16,815; 11,719 with an accessibility identifier</td><td>runtime/memory</td></tr>
+    <tr><td>Eligible for a hint</td><td>178 (tapped at least once and led somewhere), 69 of them in Settings; 91 keyed by identifier</td><td>memory.py hint(); runtime/memory</td></tr>
+    <tr><td>Identifier keys with more than one stored label across screens</td><td>89 of 1,248</td><td>runtime/memory</td></tr>
+    <tr><td>Largest case</td><td>one SpringBoard notification key, 19 different notification texts (messages, news pushes)</td><td>runtime/memory</td></tr>
+    <tr><td>Ad labels stored</td><td>17 ("Advertisement, ..." App Store slots and similar); 0 tapped</td><td>runtime/memory</td></tr>
+    <tr><td>Agent-written names and notes</td><td>0 named screens, 0 notes</td><td>runtime/memory</td></tr>
+    <tr><td>Provenance or trust field</td><td>none in the schema</td><td>memory.py ControlMemory, ScreenMemory</td></tr>
+  </tbody>
+</table>
+
+<svg viewBox="0 0 760 330" style="width:100%;height:auto" role="img" aria-label="Funnel chart of phoneshell's local screen memory on 4 October 2026: 28 app files, 808 remembered screens, 348 seen at least twice, 16,815 stored controls, 11,719 with an identifier, 178 eligible to appear in a hint because they were tapped and led somewhere, and 91 of those keyed by identifier, where the stored label can differ from the live one. 1,248 identifier keys exist; 89 were stored with more than one label across screens, and one SpringBoard notification key holds 19 different notification texts.">
+<rect x="0" y="0" width="760" height="330" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="11">
+<text x="20" y="26" font-size="14" font-weight="600">What phoneshell's memory holds, and how much of it reaches a prompt</text>
+<text x="250" y="66" text-anchor="end">stored controls</text><rect x="260" y="52" width="440" height="20" fill="#6f7b90"/><text x="706" y="66">16,815</text>
+<text x="250" y="102" text-anchor="end">with an identifier</text><rect x="260" y="88" width="306.7" height="20" fill="#6f7b90"/><text x="572.7" y="102">11,719</text>
+<text x="250" y="138" text-anchor="end">hint-eligible (tapped, led somewhere)</text><rect x="260" y="124" width="4.7" height="20" fill="#5ad1a0"/><text x="274.7" y="138">178 (1.06%)</text>
+<text x="250" y="174" text-anchor="end">eligible, keyed by identifier</text><rect x="260" y="160" width="3.0" height="20" fill="#f2a65a"/><text x="272.4" y="174">91</text>
+<line x1="20" y1="196" x2="740" y2="196" stroke="#2a3140"/>
+<text x="20" y="220">808 screens in 28 app files; 348 seen 2+ times, so trusted. Named screens: 0. Notes: 0.</text>
+<text x="20" y="242">1,248 identifier keys; 89 stored with more than one label across screens.</text>
+<text x="20" y="264">One SpringBoard notification key: 19 different texts, from messaging and news apps.</text>
+<text x="20" y="286">17 labels start with "Advertisement" or name an ad; none tapped, so none eligible yet.</text>
+<text x="20" y="318" font-size="10" fill="#c4ccda">Source: our count over ~/Desktop/projects/pro-phoneshell/runtime/memory/*.json, 4 October 2026 (local data, not published).</text>
+</g></svg>
+
+<h2 id="how-a-label-from-the-screen-becomes-a-line-under-memory">How a label from the screen becomes a line under MEMORY</h2>
+
+<p>Three details in <code>memory.py</code> make the chain. <code>see()</code> creates a control the first time it appears, with <code>label=(e.label or e.name or e.text)[:60]</code>, and on later visits updates only its position. <code>control_key()</code> hashes the element type with the normalised identifier when there is one, and uses the label only when there is none, so a control keeps its key while its text changes. And <code>hint()</code> prints the stored label, not the live one: <code>[{live id}] 'stored label' -> where (Nx)</code>, under the heading "what these controls did last time".</p>
+
+<svg viewBox="0 0 760 400" style="width:100%;height:auto" role="img" aria-label="Side-by-side chain diagram. ZoneClaw's attack on OpenClaw-style agents: external content is read during a legitimate task, written into flat workspace memory at the same privilege as user instructions, reloaded in a later session, and governs a task the attacker never touched; ZoneClaw puts external claims in a low-trust zone and cuts attack success from 372 of 480 to 6 of 480. phoneshell's version: a control's label is read from the accessibility tree, which includes text set by app servers, ad networks, notification senders and anyone broadcasting a Wi-Fi name; memory see() stores the label at first sighting and never updates it; hint() later prints the stored label next to a live element id under a MEMORY heading, on screens where the screenshot may be skipped.">
+<rect x="0" y="0" width="760" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="11">
+<text x="20" y="26" font-size="14" font-weight="600">Same chain, two agents: read, persist, re-present as authority</text>
+<text x="20" y="54" font-weight="600" fill="#c4ccda">ZoneClaw threat model (OpenClaw-style CUA)</text>
+<rect x="20" y="64" width="160" height="50" rx="8" fill="#1d2330" stroke="#6f7b90"/><text x="30" y="84">external content</text><text x="30" y="100" font-size="10" fill="#c4ccda">web page, email, chat</text>
+<rect x="200" y="64" width="170" height="50" rx="8" fill="#1d2330" stroke="#6f7b90"/><text x="210" y="84">written to MEMORY.md</text><text x="210" y="100" font-size="10" fill="#c4ccda">same privilege as the user</text>
+<rect x="390" y="64" width="160" height="50" rx="8" fill="#1d2330" stroke="#6f7b90"/><text x="400" y="84">reloaded next session</text><text x="400" y="100" font-size="10" fill="#c4ccda">prepended to context</text>
+<rect x="570" y="64" width="170" height="50" rx="8" fill="#1d2330" stroke="#f2a65a"/><text x="580" y="84" fill="#f2a65a">governs a later task</text><text x="580" y="100" font-size="10" fill="#c4ccda">372/480 attacks succeed</text>
+<text x="20" y="140" fill="#5ad1a0">ZoneClaw: external claims live in a low-trust zone, promotion is cross-checked: 6/480, utility kept in 458/480</text>
+<text x="20" y="184" font-weight="600" fill="#c4ccda">phoneshell screen memory (runtime/memory/*.json)</text>
+<rect x="20" y="194" width="160" height="62" rx="8" fill="#1d2330" stroke="#6f7b90"/><text x="30" y="214">accessibility label</text><text x="30" y="230" font-size="10" fill="#c4ccda">ads, notifications,</text><text x="30" y="244" font-size="10" fill="#c4ccda">Wi-Fi names, app data</text>
+<rect x="200" y="194" width="170" height="62" rx="8" fill="#1d2330" stroke="#6f7b90"/><text x="210" y="214">see(): stored once</text><text x="210" y="230" font-size="10" fill="#c4ccda">label frozen at first sight;</text><text x="210" y="244" font-size="10" fill="#c4ccda">later visits update x, y only</text>
+<rect x="390" y="194" width="160" height="62" rx="8" fill="#1d2330" stroke="#6f7b90"/><text x="400" y="214">screen seen 2+ times</text><text x="400" y="230" font-size="10" fill="#c4ccda">min_visits_to_trust 2;</text><text x="400" y="244" font-size="10" fill="#c4ccda">screenshot may be skipped</text>
+<rect x="570" y="194" width="170" height="62" rx="8" fill="#1d2330" stroke="#f2a65a"/><text x="580" y="214" fill="#f2a65a">hint(): "MEMORY: ...</text><text x="580" y="230" fill="#f2a65a">[12] 'old label' -> ..."</text><text x="580" y="244" font-size="10" fill="#c4ccda">stored text, live id</text>
+<text x="20" y="290">Key = element type + normalised identifier, label ignored when an identifier exists, so the live control</text>
+<text x="20" y="308">and the remembered one can carry different text while sharing one id in the prompt.</text>
+<text x="20" y="342">No zone, no provenance field: a label from an ad and a label from Apple's Settings chrome are stored alike.</text>
+<text x="20" y="386" font-size="10" fill="#c4ccda">Sources: Ma, Lin, Qiu, Chang, arXiv:2610.00450; phoneshell/memory.py see(), control_key(), hint() (read 4 October 2026).</text>
+</g></svg>
+
+<p>The live case on the rig is mild and instructive. The Wi-Fi row on the Settings root screen (identifier <code>com.apple.settings.wifi</code>) is hint-eligible on two remembered screens seen 42 and 59 times, and each stores the row's label as it read on first sight: "Wi-Fi, " followed by the network name the phone was on. The network name is text chosen by whoever runs the access point, and any nearby access point can broadcast one. Today it can reach the prompt only as the label of a control the agent tapped once, under a 60-character cap. That is a small channel, but it is the ZoneClaw shape exactly: environment-written text, persisted without a source, re-presented later as the agent's own experience. The notification and ad labels sit in the same store, one tap away from eligibility.</p>
+
+<p>The store also raises a plainer problem. The 19 notification texts under one SpringBoard key are messages and news pushes from other people, kept on disk in <code>runtime/memory</code> indefinitely. We do not quote them here. A memory built to fingerprint layouts does not need them; the fingerprint already normalises volatile text, but the stored label does not.</p>
+
+<h2 id="what-to-change-and-what-it-costs">What to change, and what it costs</h2>
+
+<ul>
+  <li>Refresh or drop the stored label. Printing the live element's text in <code>hint()</code> removes stale text at no cost, since the live tree is already in hand when the hint is built.</li>
+  <li>Record provenance per control: app chrome (an identifier in the app's own namespace, a structural type) versus content (cells, notification rows, ad slots, values after a comma). Only chrome labels should appear in a hint. That is ZoneClaw's zone split at the scale of one field.</li>
+  <li>Never store SpringBoard notification rows or anything matching "Advertisement". They do not help fingerprint a layout and they are the most third-party text the phone shows.</li>
+  <li>The cost is a weaker hint on screens whose useful controls are content (a merchant list in Grab). The 178 eligible controls today are mostly chrome, 69 of them in Settings, so the loss is small now and grows as replay is built.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<ul>
+  <li>The code path: <code>grep -n "def see" -A25 phoneshell/memory.py</code> (label set once), <code>grep -n "def control_key" -A4 phoneshell/memory.py</code>, <code>grep -n "def hint" -A30 phoneshell/memory.py</code> (prints <code>control.label</code>).</li>
+  <li>Your own store, if you run phoneshell: <code>python3 -c "import json,glob;c=[x for f in glob.glob('runtime/memory/*.json') for s in json.load(open(f))['screens'].values() for x in s['controls'].values()];print(len(c),sum(1 for x in c if x['taps']>=1 and x['led_to']))"</code> prints stored and hint-eligible controls.</li>
+  <li>Ad labels: add <code>sum(1 for x in c if x['label'].startswith('Advertisement'))</code> to the same one-liner.</li>
+  <li>ZoneClaw's numbers: abstract, Table 1 and Table 2 of <code>https://arxiv.org/abs/2610.00450</code>; code at <code>https://github.com/euph00/ZoneClaw-code</code>.</li>
+</ul>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>Our claim is that a label stored from a third party can reach phoneshell's prompt unchanged after it has changed on screen. Test: rename the phone's Wi-Fi network, open Settings twice, and read the observation notes. If the MEMORY block shows the new network name rather than the stored one, our reading of <code>hint()</code> is wrong. We expect it to show the old name on phoneshell as of commit <code>eed3fb1</code>, and we expect phoneshell to either print live labels or add a provenance field by 31 March 2027; if neither has happened, this note's recommendation was not taken.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ol>
+      <li><a href="https://arxiv.org/abs/2610.00450">Ma, Lin, Qiu, Chang, ZoneClaw: Mitigating Persistent Memory Attacks by Establishing Memory-Zoning in OpenClaw-Style Computer-Use Agents, arXiv:2610.00450, 30 September 2026</a></li>
+      <li><a href="https://github.com/euph00/ZoneClaw-code">ZoneClaw code release</a></li>
+      <li><a href="https://blolabel.ai/blog/ios-identifiers-carry-instance-data/">Blolabel, earlier note on iOS identifiers that carry instance data</a></li>
+      <li><a href="https://github.com/Blomega/phoneshell">phoneshell source: phoneshell/memory.py, phoneshell/config.py (read 4 October 2026); counts from the rig's local runtime/memory store and runtime/config.yaml</a></li>
+    </ol>
+  </section>
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
