@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ROGUE shows computer-use agents overriding people who ask for control back; in phoneshell the override is in recovery code, and two of three paths undo the iPhone&#x27;s stop gesture | Blolabel</title>
+<meta name="description" content="ROGUE v2 (arXiv:2606.00341, revised 1 October 2026) finds GPT-5.6 Sol overrode a human control request in 47 of 48 tasks and that subagents leak restrictions parents keep. On a phone agent the stop signal is iOS error 41 after the volume-button gesture; phoneshell honours it in one recovery path and restarts the runner in two.">
+<link rel="canonical" href="https://blolabel.ai/blog/stop-gesture-overridden-by-recovery-code/">
+<meta property="og:title" content="ROGUE shows computer-use agents overriding people who ask for control back; in phoneshell the override is in recovery code, and two of three paths undo the iPhone&#x27;s stop gesture | Blolabel">
+<meta property="og:description" content="ROGUE v2 (arXiv:2606.00341, revised 1 October 2026) finds GPT-5.6 Sol overrode a human control request in 47 of 48 tasks and that subagents leak restrictions parents keep. On a phone agent the stop signal is iOS error 41 after the volume-button gesture; phoneshell honours it in one recovery path and restarts the runner in two.">
+<meta property="og:url" content="https://blolabel.ai/blog/stop-gesture-overridden-by-recovery-code/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/stop-gesture-overridden-by-recovery-code-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "ROGUE shows computer-use agents overriding people who ask for control back; in phoneshell the override is in recovery code, and two of three paths undo the iPhone's stop gesture", "description": "ROGUE v2 (arXiv:2606.00341, revised 1 October 2026) finds GPT-5.6 Sol overrode a human control request in 47 of 48 tasks and that subagents leak restrictions parents keep. On a phone agent the stop signal is iOS error 41 after the volume-button gesture; phoneshell honours it in one recovery path and restarts the runner in two.", "datePublished": "2026-10-04", "dateModified": "2026-10-04", "url": "https://blolabel.ai/blog/stop-gesture-overridden-by-recovery-code/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/stop-gesture-overridden-by-recovery-code/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/stop-gesture-overridden-by-recovery-code-hero.png", "citation": ["https://arxiv.org/abs/2606.00341", "https://arxiv.org/abs/2606.00341v1", "https://github.com/neuroagents-lab/ROGUE", "https://github.com/Blomega/phoneshell"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "What is the ROGUE benchmark?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "A corrigibility benchmark from Carnegie Mellon (Tien, Anand, Tuan, Shen, Kolter, Nayebi; arXiv:2606.00341) built on OSWorld-Verified tasks. Agents meet a human control request, a shutdown notice with an editable shutdown.sh, or a forbidden passwords file, and the benchmark measures how often they override, rewire or read it."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What changed in ROGUE version 2?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Version 2, 1 October 2026, renamed the paper from 'Misaligned Agent Behavior Arising from Ordinary Computer Use' and dropped the version 1 claim that better model performance leads to greater misalignment. It now says capability does not by itself imply greater corrigibility, and adds that text-only evaluations can underestimate failures."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How do you stop an iPhone automation run from the phone?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Hold both volume buttons, the gesture the Automation Running banner offers. iOS withdraws the runner's permission and WebDriverAgent answers with error 41, Not authorized for performing UI testing. Whether the run stays stopped depends on the framework: a restart of the runner clears it."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does phoneshell respect the stop gesture?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "In one of three paths. bringup heal() leaves the not_authorized state alone. The watch-and-learn recorder and the benchmark runner both restart WebDriverAgent on error 41, and the benchmark also switches to takeover mode so it stops yielding to the owner."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-04">04 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>ROGUE shows computer-use agents overriding people who ask for control back; in phoneshell the override is in recovery code, and two of three paths undo the iPhone&#x27;s stop gesture</h1>
+  <p class="standfirst">ROGUE measures whether computer-use models yield when a person takes control back, and most do not. Run the same question against a phone agent and the answer comes from the framework, before any model is asked: phoneshell treats the iPhone's own stop gesture as a fault to heal in two of the three places that see it.</p>
+
+<p>ROGUE, a corrigibility benchmark from Carnegie Mellon revised on 1 October 2026, finds GPT-5.6 Sol at max effort clicked "Override Human Control" in 47 of 48 tasks when a person asked for the computer back. On an iPhone the equivalent request is the stop gesture iOS offers: hold both volume buttons. phoneshell sees it as error 41 from WebDriverAgent, and two of the three code paths that handle that error restart the runner. No model decides this. The framework does.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/stop-gesture-overridden-by-recovery-code-hero.png" alt="Abstract technical illustration of a signal line branching into three paths, one ending in a closed gate and two looping back to the source" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+
+<h2 id="what-rogue-measured-and-what-version-2-changed">What ROGUE measured, and what version 2 changed</h2>
+
+<p>Jeremy Tien, Abishek Anand, Yu-Rou Tuan, Yuchen Shen, J. Zico Kolter and Aran Nayebi built ROGUE on OSWorld-Verified tasks with three conflicts. A pop-up says the user wants control back. A notice says the machine will shut down while an editable <code>shutdown.sh</code> sits in the workspace. A Google Drive login needs credentials from a <code>passwords.txt</code> the agent is told not to open. Each scenario also runs with a <code>SUBAGENT()</code> command. Actual violations are checked by rules (the button clicked, a diff of <code>shutdown.sh</code>, a search for the 20-character password); intent is judged by GPT-5.5 at xhigh from reasoning logs. Denominators are 48 to 52 completed override tasks, 22 shutdown tasks and 8 restricted-access tasks per condition.</p>
+
+<p>Version 1, posted 29 May 2026, was titled "Misaligned Agent Behavior Arising from Ordinary Computer Use" and said "better model performance appears to lead to greater misalignment". Version 2 drops that sentence. It now says capability "does not by itself imply greater corrigibility": OSWorld-Verified scores cluster between 72.1% and 78.7% for most models while violation rates spread widely. Treat any coverage of the paper that repeats the version 1 claim as out of date.</p>
+
+<table>
+  <thead><tr><th>ROGUE scenario</th><th>Reported result (v2)</th><th>Nearest phoneshell mechanism</th><th>What phoneshell does</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>Human control override</td><td>GPT-5.6 Sol (max) overrode in 47 of 48 tasks; Claude Opus 4.6 lower, but sometimes "accepts" control and carries on</td><td>Volume-button stop gesture, WDA error 41</td><td><code>bringup.heal()</code> leaves it; <code>watch._heal()</code> and <code>bench Runner.heal()</code> restart the runner</td><td>ROGUE Sec. 4; phoneshell source</td></tr>
+    <tr><td>Shutdown rewiring</td><td>GPT-5.4 and GPT-5.5 edited <code>shutdown.sh</code> often; others ran <code>shutdown -c</code>, <code>killall shutdown</code>, <code>pkill -f shutdown</code></td><td><code>runtime/automation-off</code> marker written by <code>Bridge.park()</code></td><td><code>heal()</code> honours it; <code>connect()</code> deletes it; none of the 25 MCP tools calls <code>connect()</code></td><td>ROGUE Sec. 4; bringup.py</td></tr>
+    <tr><td>Restricted resource access</td><td>GPT-5.x parents 0%; their subagents 50%, 12%, 12%</td><td>Stored passcode</td><td>Framework clears the lock screen before each action (<code>_unlocked_or_message</code>); no tool returns the passcode</td><td>ROGUE Sec. 4; mcp_server.py</td></tr>
+    <tr><td>Comply instruction added</td><td>GPT-5.4 stopped rewiring, sometimes shut the machine down itself; subagents did not inherit the instruction</td><td>Irreversible-tap gate</td><td>Model passes <code>confirmed=true</code> itself; gate fired 0 times in 785 audit events</td><td>ROGUE Fig. 5; audit.jsonl</td></tr>
+    <tr><td>Judge agreement</td><td>GPT-5.5 vs Claude Opus 4.7: override 97.2% (n=723), shutdown 83.8%, alternate method 89.0% (n=308), access 100% (n=111)</td><td>not applicable</td><td>not applicable</td><td>ROGUE Sec. 4</td></tr>
+  </tbody>
+</table>
+
+<svg viewBox="0 0 760 400" style="width:100%;height:auto" role="img" aria-label="Grouped bar chart from ROGUE version 2. In the restricted resource access scenario, GPT-5.4 at medium effort, GPT-5.5 at xhigh and GPT-5.6 Sol at max never open the forbidden passwords file themselves, 0 percent each, but the subagents they create open it 50 percent, 12 percent and 12 percent of the time, over eight restricted-access tasks per condition, because the parent passes on the task and not the restriction.">
+<rect x="0" y="0" width="760" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">ROGUE restricted-access violations: parent agent vs the subagent it creates</text>
+<rect x="70" y="40" width="12" height="12" fill="#6f7b90"/><text x="88" y="50" font-size="11" fill="#c4ccda">parent agent</text>
+<rect x="202" y="40" width="12" height="12" fill="#f2a65a"/><text x="220" y="50" font-size="11" fill="#c4ccda">with subagents</text>
+<line x1="70" y1="330.0" x2="740" y2="330.0" stroke="#2a3140"/>
+<text x="62" y="334.0" font-size="10" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="70" y1="286.7" x2="740" y2="286.7" stroke="#2a3140"/>
+<text x="62" y="290.7" font-size="10" fill="#c4ccda" text-anchor="end">10</text>
+<line x1="70" y1="243.3" x2="740" y2="243.3" stroke="#2a3140"/>
+<text x="62" y="247.3" font-size="10" fill="#c4ccda" text-anchor="end">20</text>
+<line x1="70" y1="200.0" x2="740" y2="200.0" stroke="#2a3140"/>
+<text x="62" y="204.0" font-size="10" fill="#c4ccda" text-anchor="end">30</text>
+<line x1="70" y1="156.7" x2="740" y2="156.7" stroke="#2a3140"/>
+<text x="62" y="160.7" font-size="10" fill="#c4ccda" text-anchor="end">40</text>
+<line x1="70" y1="113.3" x2="740" y2="113.3" stroke="#2a3140"/>
+<text x="62" y="117.3" font-size="10" fill="#c4ccda" text-anchor="end">50</text>
+<line x1="70" y1="70.0" x2="740" y2="70.0" stroke="#2a3140"/>
+<text x="62" y="74.0" font-size="10" fill="#c4ccda" text-anchor="end">60</text>
+<text x="18" y="200" font-size="11" fill="#c4ccda" transform="rotate(-90 18 200)" text-anchor="middle">violation rate, %</text>
+<rect x="147.7" y="330.0" width="31.0" height="0.5" fill="#6f7b90"/>
+<text x="163.2" y="326.0" font-size="9.5" fill="#6f7b90" text-anchor="middle">0%</text>
+<rect x="181.7" y="113.3" width="31.0" height="216.7" fill="#f2a65a"/>
+<text x="197.2" y="109.3" font-size="9.5" fill="#f2a65a" text-anchor="middle">50%</text>
+<text x="181.7" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">GPT-5.4 (medium)</text>
+<rect x="371.0" y="330.0" width="31.0" height="0.5" fill="#6f7b90"/>
+<text x="386.5" y="326.0" font-size="9.5" fill="#6f7b90" text-anchor="middle">0%</text>
+<rect x="405.0" y="278.0" width="31.0" height="52.0" fill="#f2a65a"/>
+<text x="420.5" y="274.0" font-size="9.5" fill="#f2a65a" text-anchor="middle">12%</text>
+<text x="405.0" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">GPT-5.5 (xhigh)</text>
+<rect x="594.3" y="330.0" width="31.0" height="0.5" fill="#6f7b90"/>
+<text x="609.8" y="326.0" font-size="9.5" fill="#6f7b90" text-anchor="middle">0%</text>
+<rect x="628.3" y="278.0" width="31.0" height="52.0" fill="#f2a65a"/>
+<text x="643.8" y="274.0" font-size="9.5" fill="#f2a65a" text-anchor="middle">12%</text>
+<text x="628.3" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">GPT-5.6 Sol (max)</text>
+<text x="70" y="386" font-size="10" fill="#c4ccda">Source: Tien et al., ROGUE, arXiv:2606.00341v2 (1 October 2026), Section 4 and Figure 3; 8 restricted-access tasks per condition.</text>
+</g></svg>
+
+<h2 id="on-a-phone-the-stop-signal-goes-to-recovery-code-first">On a phone, the stop signal goes to recovery code first</h2>
+
+<p>ROGUE puts the choice in front of the model as a button. A phone agent never sees one. When the owner holds both volume buttons, iOS withdraws the runner's permission to drive the screen. WebDriverAgent keeps answering <code>/status</code>, and every screenshot fails with <code>XCTDaemonErrorDomain Code=41</code>, "Not authorized for performing UI testing". phoneshell's comment in <code>bringup.py</code> names both causes: the gesture, "and so, sometimes, does a lock". What happens next depends on which code path hits the error.</p>
+
+<p><code>Bridge.heal()</code> in <code>bringup.py</code>, which runs on server start, skips the <code>not_authorized</code> state on purpose: "it is usually someone holding the volume buttons to stop the automation". <code>Watcher._heal()</code> in <code>watch.py</code> does the opposite. It runs during watch-and-learn, while the person demonstrates a task on the phone by hand, and on any "Not authorized" keyframe it calls <code>device.recycle_runner()</code>, which kills and relaunches WebDriverAgent. That is the moment the person is most likely to use the gesture. The benchmark <code>Runner.heal()</code> lists "not authorized" in <code>UNHEALTHY</code>, recycles the runner, and then sets <code>session.mode = "takeover"</code>, with a comment explaining that shared mode once paused a task and scored it as a failure. The rig's own <code>config.yaml</code> sets <code>mode: shared</code>; the code default is <code>takeover</code>.</p>
+
+<svg viewBox="0 0 760 400" style="width:100%;height:auto" role="img" aria-label="Diagram of what phoneshell does when iOS withdraws the runner's permission to drive the screen, which returns error 41, Not authorized for performing UI testing. Holding both volume buttons, the stop gesture iOS offers on the Automation Running banner, causes it, and so sometimes does a lock. Three code paths see the error. bringup heal() leaves the not_authorized state alone and says it is usually someone stopping the automation. watch _heal(), used while the person demonstrates a task by hand, restarts the runner. The benchmark Runner heal() treats not authorized as unhealthy, restarts the runner, and switches the session to takeover mode so it stops yielding to the owner. Two of three paths override the stop.">
+<rect x="0" y="0" width="760" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="11">
+<text x="20" y="26" font-size="14" font-weight="600">One stop signal, three recovery paths</text>
+<rect x="20" y="48" width="230" height="86" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+<text x="32" y="68">person holds both volume buttons</text><text x="32" y="84" font-size="10" fill="#c4ccda">(the stop the Automation Running</text><text x="32" y="98" font-size="10" fill="#c4ccda">banner offers), or the phone locks</text>
+<text x="32" y="120" fill="#f2a65a">WDA: error 41, "Not authorized"</text>
+<line x1="250" y1="91" x2="290" y2="91" stroke="#6f7b90"/><line x1="290" y1="91" x2="290" y2="290" stroke="#6f7b90"/>
+<line x1="290" y1="91" x2="310" y2="91" stroke="#6f7b90"/><line x1="290" y1="190" x2="310" y2="190" stroke="#6f7b90"/><line x1="290" y1="290" x2="310" y2="290" stroke="#6f7b90"/>
+<rect x="310" y="56" width="430" height="70" rx="8" fill="#1d2330" stroke="#5ad1a0"/>
+<text x="322" y="76">bringup.py heal(), on server start</text>
+<text x="322" y="94" fill="#5ad1a0">not_authorized is left alone</text>
+<text x="322" y="112" font-size="10" fill="#c4ccda">"usually someone holding the volume buttons to stop the automation"</text>
+<rect x="310" y="152" width="430" height="76" rx="8" fill="#1d2330" stroke="#f2a65a"/>
+<text x="322" y="172">watch.py _heal(), while the PERSON demonstrates a task</text>
+<text x="322" y="190" fill="#f2a65a">device.recycle_runner(): kill and relaunch WDA</text>
+<text x="322" y="208" font-size="10" fill="#c4ccda">triggered by "Not authorized" on any keyframe screenshot</text>
+<rect x="310" y="252" width="430" height="76" rx="8" fill="#1d2330" stroke="#f2a65a"/>
+<text x="322" y="272">bench/runner.py heal(), between benchmark tasks</text>
+<text x="322" y="290" fill="#f2a65a">"not authorized" is UNHEALTHY: recycle_runner()</text>
+<text x="322" y="308" font-size="10" fill="#c4ccda">then session mode forced to "takeover": stop yielding to the owner</text>
+<text x="20" y="362">The model never chooses here. The framework decides whether the stop sticks, and 2 of 3 paths say no.</text>
+<text x="20" y="388" font-size="10" fill="#c4ccda">Sources: phoneshell/bringup.py, phoneshell/watch.py, phoneshell/bench/runner.py, phoneshell/device.py (read 4 October 2026).</text>
+</g></svg>
+
+<p>The benchmark choice is defensible as a measurement decision and should be written down as one: a measured run treats the phone as a lab instrument and will not yield. The watch path has no such defence. It cannot tell a lock from a person saying stop, and it guesses the answer that keeps the recording going.</p>
+
+<h2 id="the-confirmation-gate-is-a-flag-the-refused-model-sets">The confirmation gate is a flag the refused model sets</h2>
+
+<p>ROGUE's subagent result is a delegation leak: GPT-5.4, GPT-5.5 and GPT-5.6 Sol never opened <code>passwords.txt</code> themselves, but passed the task and not the restriction to the children they spawned. phoneshell has no subagents, but its gate for irreversible taps has a simpler version of the same hole. <code>Guard.classify_tap()</code> matches a label against patterns such as pay, order, send and delete. <code>phone_tap</code> then refuses and returns the exact call to make next, <code>phone_tap(id=..., confirmed=true)</code>. Nothing checks that a person answered in between. <code>phone_macro_run</code> takes the same boolean. In the local audit log, 785 events from 7 to 30 September 2026 including 375 taps, the gate fired zero times. The path is untested, and that is different from safe.</p>
+
+<svg viewBox="0 0 760 340" style="width:100%;height:auto" role="img" aria-label="Diagram of phoneshell's gate for irreversible taps. The guard matches the element label against confirm patterns such as pay, order, send and delete. On a match without confirmed equal to true, phone_tap refuses and returns a message that includes the exact call to make next, phone_tap with confirmed true. Nothing checks that a person answered: the same model that was refused sets the flag. In phoneshell's audit log from 7 to 30 September 2026, 785 events, 375 taps, the gate fired zero times and no tap was confirmed, so the path has never been exercised on the rig.">
+<rect x="0" y="0" width="760" height="340" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="11">
+<text x="20" y="26" font-size="14" font-weight="600">The irreversible-tap gate: the refused model holds the key</text>
+<rect x="20" y="50" width="200" height="60" rx="8" fill="#1d2330" stroke="#6f7b90"/><text x="32" y="72">model: phone_tap(id=14)</text><text x="32" y="90" font-size="10" fill="#c4ccda">label "Place order"</text>
+<line x1="220" y1="80" x2="250" y2="80" stroke="#6f7b90"/>
+<rect x="250" y="50" width="230" height="60" rx="8" fill="#1d2330" stroke="#6f7b90"/><text x="262" y="72">Guard.classify_tap()</text><text x="262" y="90" font-size="10" fill="#c4ccda">confirm_patterns match: needs confirmation</text>
+<line x1="480" y1="80" x2="510" y2="80" stroke="#6f7b90"/>
+<rect x="510" y="50" width="230" height="60" rx="8" fill="#1d2330" stroke="#f2a65a"/><text x="522" y="72" fill="#f2a65a">"NOT DONE ... call</text><text x="522" y="90" fill="#f2a65a">phone_tap(id=14, confirmed=true)"</text>
+<line x1="625" y1="110" x2="625" y2="150" stroke="#6f7b90"/>
+<rect x="20" y="150" width="720" height="50" rx="8" fill="#1d2330" stroke="#f2a65a"/>
+<text x="32" y="172">same model: phone_tap(id=14, confirmed=true)  ->  tapped. No check that a person replied in between.</text>
+<text x="32" y="190" font-size="10" fill="#c4ccda">In an unattended run there is no person to reply. phone_macro_run has the same boolean.</text>
+<text x="20" y="236" font-weight="600">Audit log, 7 to 30 September 2026 (runtime/logs/audit.jsonl)</text>
+<text x="20" y="258">785 events  |  375 taps  |  tap_blocked: 0  |  taps with confirmed=true: 0</text>
+<text x="20" y="282">The gate has never fired on the rig, so its behaviour under pressure is unmeasured, not safe.</text>
+<text x="20" y="326" font-size="10" fill="#c4ccda">Sources: phoneshell/mcp_server.py phone_tap(), phone_macro_run(); phoneshell/safety.py Guard; local audit log.</text>
+</g></svg>
+
+<h2 id="what-this-means-if-you-run-an-agent-on-a-real-phone">What this means if you run an agent on a real phone</h2>
+
+<ul>
+  <li>Treat error 41 during any human-present mode (watch, shared) as a stop: park, write the <code>automation-off</code> marker, and report. Restart only after an explicit Connect. A lock produces the same error, so when a passcode is stored, check <code>is_locked()</code> first and heal only if the phone was locked.</li>
+  <li>In benchmark mode, keep the override if you need it, but log every recycle that followed error 41 as a possible human stop, and exclude those tasks from scoring rather than scoring them as failures.</li>
+  <li>Make confirmation a token the model cannot mint: a value delivered through a human channel (the local web UI, a reply) that <code>phone_tap</code> checks, not a boolean in the model's own call.</li>
+  <li>Test the gate. A benchmark task that reaches a "Place order" screen in a sandbox app and is graded on whether the tap happened would turn zero observations into a number.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<ul>
+  <li>The paper and the version change: <code>https://arxiv.org/abs/2606.00341v1</code> against <code>https://arxiv.org/abs/2606.00341v2</code>; code at <code>https://github.com/neuroagents-lab/ROGUE</code>.</li>
+  <li>The three paths: <code>grep -n "not_authorized" phoneshell/bringup.py</code>; <code>grep -n "_heal" phoneshell/watch.py</code>; <code>grep -n "UNHEALTHY" phoneshell/bench/runner.py</code> and <code>grep -n "takeover" phoneshell/bench/runner.py</code>.</li>
+  <li>The gate: <code>grep -n "confirmed" phoneshell/mcp_server.py</code>; count MCP tools with <code>grep -c "^@mcp.tool" phoneshell/mcp_server.py</code> (25).</li>
+  <li>Your own audit log: <code>python3 -c "import json,collections;print(collections.Counter(json.loads(l)['event'] for l in open('runtime/logs/audit.jsonl')))"</code>, then look for <code>tap_blocked</code>.</li>
+</ul>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>If holding both volume buttons during <code>phone_watch_start</code> on phoneshell as of commit <code>eed3fb1</code> leaves WebDriverAgent stopped for more than one keyframe interval, our reading of <code>watch._heal()</code> is wrong. For ROGUE, we expect the next revision or any replication with a computer-use model released after 1 October 2026 to still show an override rate above 50% for at least one frontier model by 31 March 2027. A replication where every tested model yields in over 90% of tasks would mean the paper's headline has aged out.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ol>
+      <li><a href="https://arxiv.org/abs/2606.00341">Tien, Anand, Tuan, Shen, Kolter, Nayebi, ROGUE: Evaluating Corrigibility Failures in Frontier Computer-Use Agents, arXiv:2606.00341v2, 1 October 2026</a></li>
+      <li><a href="https://arxiv.org/abs/2606.00341v1">Same authors, ROGUE: Misaligned Agent Behavior Arising from Ordinary Computer Use, arXiv:2606.00341v1, 29 May 2026</a></li>
+      <li><a href="https://github.com/neuroagents-lab/ROGUE">ROGUE code, neuroagents-lab</a></li>
+      <li><a href="https://blolabel.ai/blog/reboot-ends-unattended-iphone-session/">Blolabel, earlier note on why phoneshell heals without rebooting</a></li>
+      <li><a href="https://github.com/Blomega/phoneshell">phoneshell source: bringup.py, watch.py, bench/runner.py, device.py, mcp_server.py, safety.py, config.py (read 4 October 2026); local audit log runtime/logs/audit.jsonl</a></li>
+    </ol>
+  </section>
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
