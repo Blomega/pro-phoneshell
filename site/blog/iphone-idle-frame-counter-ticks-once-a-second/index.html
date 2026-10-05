@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>pymobiledevice3 11.22.0 reports when an iPhone stops drawing, once a second: too coarse and too strict to replace a phone agent&#x27;s settle wait | Blolabel</title>
+<meta name="description" content="pymobiledevice3 11.22.0 (4 October 2026, PR #1999) adds developer dvt fps: the Core Animation frame rate of the whole display, one sample about every 1.02 s whatever interval is asked for, 0 on a static screen. phoneshell&#x27;s screenshot gate settles in a measured 504 ms and tolerates the blinking cursors and countdowns a zero count cannot.">
+<link rel="canonical" href="https://blolabel.ai/blog/iphone-idle-frame-counter-ticks-once-a-second/">
+<meta property="og:title" content="pymobiledevice3 11.22.0 reports when an iPhone stops drawing, once a second: too coarse and too strict to replace a phone agent&#x27;s settle wait | Blolabel">
+<meta property="og:description" content="pymobiledevice3 11.22.0 (4 October 2026, PR #1999) adds developer dvt fps: the Core Animation frame rate of the whole display, one sample about every 1.02 s whatever interval is asked for, 0 on a static screen. phoneshell&#x27;s screenshot gate settles in a measured 504 ms and tolerates the blinking cursors and countdowns a zero count cannot.">
+<meta property="og:url" content="https://blolabel.ai/blog/iphone-idle-frame-counter-ticks-once-a-second/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/iphone-idle-frame-counter-ticks-once-a-second-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "pymobiledevice3 11.22.0 reports when an iPhone stops drawing, once a second: too coarse and too strict to replace a phone agent's settle wait", "description": "pymobiledevice3 11.22.0 (4 October 2026, PR #1999) adds developer dvt fps: the Core Animation frame rate of the whole display, one sample about every 1.02 s whatever interval is asked for, 0 on a static screen. phoneshell's screenshot gate settles in a measured 504 ms and tolerates the blinking cursors and countdowns a zero count cannot.", "datePublished": "2026-10-04", "dateModified": "2026-10-04", "url": "https://blolabel.ai/blog/iphone-idle-frame-counter-ticks-once-a-second/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/iphone-idle-frame-counter-ticks-once-a-second/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/iphone-idle-frame-counter-ticks-once-a-second-hero.png", "citation": ["https://github.com/doronz88/pymobiledevice3/pull/1999", "https://github.com/doronz88/pymobiledevice3/releases/tag/v11.22.0", "https://github.com/doronz88/pymobiledevice3/releases/tag/v11.21.0", "https://github.com/doronz88/pymobiledevice3/issues/871", "https://pypi.org/project/pymobiledevice3/", "https://github.com/Blomega/phoneshell"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "How do I read an iPhone's frame rate from a Mac?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "With pymobiledevice3 11.22.0 or later: pymobiledevice3 developer dvt fps. It prints one NDJSON record about every 1.02 seconds with the Core Animation frame rate of the whole display, and 0 while nothing on screen changes. It needs developer services on the device; it was tested on iOS 16.7 over usbmux, not on iOS 17 or later."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Can I change the sampling interval of dvt fps?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. The PR author passed 0, 0.25, 2 and 500 to startSamplingAtTimeInterval and the device sent a sample about every 1.02 s each time, so the command has no interval option."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Can a frame count of 0 tell a phone agent the screen has settled?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Only on fully static screens, and no sooner than one full sample window, about 1.02 s, often up to 2.04 s. phoneshell's screenshot gate settles in a measured 504 ms on average and tolerates up to 1.2% of pixels changing, which covers cursors, countdowns and spinners that keep a frame counter above zero."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does phoneshell use pymobiledevice3 dvt fps?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. phoneshell pins pymobiledevice3 11.8.0 and settles on screenshot differences. The counter fits a narrower job: confirming that nothing at all rendered after an action."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind event">event</span>
+    <time datetime="2026-10-04">04 October 2026</time>
+    <span>7 min read</span>
+  </div>
+  <h1>pymobiledevice3 11.22.0 reports when an iPhone stops drawing, once a second: too coarse and too strict to replace a phone agent&#x27;s settle wait</h1>
+  <p class="standfirst">A new pymobiledevice3 command reads the iPhone's own frame counter: 0 means nothing on the display rendered for about a second. For a phone agent that is tempting as a settle signal. The release's own numbers say it is twice as slow as the screenshot gate phoneshell already uses, and blind on the screens that gate was built for.</p>
+
+<p>pymobiledevice3 11.22.0, released on 4 October 2026 at 17:06 UTC, adds <code>developer dvt fps</code>: the iPhone's own Core Animation frame rate for the whole display, which reads 0 while nothing on screen changes. The device sends one sample about every 1.02 seconds and ignores the interval it is asked for. phoneshell's screenshot-based settle gate averages 504 ms, so the counter's fastest possible "nothing is moving" takes about twice as long as the check it might replace.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/iphone-idle-frame-counter-ticks-once-a-second-hero.png" alt="Abstract technical illustration of a slow pulse train sampled at wide regular intervals over a faster flickering signal that settles into a flat line" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+
+<h2 id="two-dvt-instruments-in-one-day-both-by-a-first-time-contribu">Two DVT instruments in one day, both by a first-time contributor</h2>
+
+<table>
+  <thead><tr><th>Item</th><th>Value</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>11.21.0 released</td><td>4 Oct 2026, 05:35 UTC: <code>developer dvt network-statistics</code>, per-process bytes and packets (PR #1998)</td><td>v11.21.0 release notes</td></tr>
+    <tr><td>11.22.0 released</td><td>4 Oct 2026, 17:06 UTC: <code>developer dvt fps</code> and <code>Graphics.fps()</code> (PR #1999)</td><td>v11.22.0 release notes</td></tr>
+    <tr><td>PR #1999 opened, merged</td><td>08:22 UTC, 17:06 UTC the same day, by Cassian433</td><td>PR #1999</td></tr>
+    <tr><td>Device channel</td><td><code>com.apple.instruments.server.services.graphics.opengl</code>, key <code>CoreAnimationFramesPerSecond</code>, already sent by <code>dvt graphics</code></td><td>PR #1999</td></tr>
+    <tr><td>Sample period</td><td>about 1.02 s; requested intervals 0, 0.25, 2 and 500 changed nothing</td><td>PR #1999</td></tr>
+    <tr><td>First sample</td><td>arrives about 15 ms after sampling starts, covers under a second, skipped by <code>fps()</code></td><td>PR #1999</td></tr>
+    <tr><td>Static screen</td><td>0; a 10-minute idle sample on an iPhone X read 0 throughout</td><td>PR #1999</td></tr>
+    <tr><td>Animating screen, iPhone 8</td><td>9, 22, 21, 10, 32 fps over five samples</td><td>PR #1999</td></tr>
+    <tr><td>Devices tested</td><td>iPhone X and iPhone 8, iOS 16.7.x, usbmux with the DeveloperDiskImage; not tested on iOS 17 or later</td><td>PR #1999</td></tr>
+    <tr><td>Timestamps</td><td>host receive time in UTC; the device sends only microseconds since sampling began</td><td>PR #1999</td></tr>
+    <tr><td>phoneshell pin</td><td><code>pymobiledevice3==11.8.0</code></td><td>requirements.txt</td></tr>
+  </tbody>
+</table>
+
+<p>The author is plain about the limits. It is one count per second, not per-frame timing, so frame time and jank cannot be derived from it and issue #871 stays open for those. It counts the whole display, so it reflects whatever is in the foreground, including system overlays. And no iPhone on iOS 17 or later was in the test set. Our phone runs iOS 26, where developer services go through the RemoteXPC tunnel, so whether the channel answers there is not established.</p>
+
+<h2 id="why-a-phone-agent-would-want-it-and-why-the-numbers-say-no">Why a phone agent would want it, and why the numbers say no</h2>
+
+<p>Every phoneshell step reads the screen only after it stops moving. A tree read taken mid-animation is a half-built screen: the docstring of <code>snapshot()</code> records a home-screen read with 6 elements at 1.0 s and 12 at 2.0 s. The current gate, <code>wait_until_stable()</code> in <code>phoneshell/perception/screen.py</code>, grabs a screenshot, waits 0.3 s (0.12 s on a screen memory already knows), grabs again, and accepts once two grabs differ by at most 1.2% of pixels, with a 3.5 s cap. <code>phoneshell/memory.py</code> records what this costs on a real iPhone: tree read 159 ms, screenshot 72 ms, stability gate 504 ms, fixed settle sleep 600 to 800 ms.</p>
+
+<p>A device-side "nothing rendered" signal looks like a cleaner answer than comparing pictures. The sample period rules it out as a replacement. A zero needs one whole window in which nothing was drawn, so the earliest verdict comes 1.02 s after a transition ends if it ends exactly on a window boundary, and close to 2.04 s if it ends just after one. In the worked example below, the gate is done at about 0.7 s and the counter at about 2.04 s.</p>
+
+<svg viewBox="0 0 760 360" style="width:100%;height:auto" role="img" aria-label="Timeline of one worked example: an iOS transition that stops drawing 0.4 seconds after a tap. phoneshell's screenshot gate grabs a frame, waits 0.3 seconds, grabs again and accepts the screen once two grabs differ by at most 1.2 percent of pixels, so it settles shortly after 0.7 seconds; the measured average for this gate is 504 milliseconds. The pymobiledevice3 11.22.0 frame counter reports once every 1.02 seconds whatever interval is requested, so the first window covering the tap reads above zero and the first zero arrives at about 2.04 seconds. The counter cannot say settled until a whole one-second window has rendered nothing.">
+<rect x="0" y="0" width="760" height="360" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="11">
+<text x="20" y="26" font-size="14" font-weight="600">Worked example: a transition that stops drawing at 0.4 s</text>
+<line x1="80" y1="70" x2="740" y2="70" stroke="#6f7b90"/>
+<text x="80" y="60" fill="#c4ccda">0 s</text><text x="290" y="60" fill="#c4ccda">0.7</text><text x="390" y="60" fill="#c4ccda">1.02</text><text x="690" y="60" fill="#c4ccda">2.04</text>
+<rect x="80" y="76" width="120" height="16" fill="#f2a65a" opacity="0.7"/><text x="210" y="89" fill="#f2a65a">animation, 0 to 0.4 s</text>
+<text x="20" y="130" font-weight="600">screenshot</text><text x="20" y="146" font-weight="600">gate</text>
+<circle cx="80" cy="134" r="5" fill="#c4ccda"/><circle cx="185" cy="134" r="5" fill="#c4ccda"/><circle cx="290" cy="134" r="5" fill="#5ad1a0"/>
+<text x="92" y="122" font-size="10" fill="#c4ccda">grab</text><text x="196" y="122" font-size="10" fill="#c4ccda">grab, still moving</text>
+<text x="300" y="138" fill="#5ad1a0">diff at most 1.2%: settled, about 0.7 s</text>
+<text x="80" y="162" font-size="10" fill="#c4ccda">0.3 s between grabs, 2 matching grabs, cap 3.5 s (phoneshell/perception/screen.py)</text>
+<text x="20" y="214" font-weight="600">dvt fps</text>
+<rect x="80" y="200" width="310" height="22" fill="#1d2330" stroke="#f2a65a"/><text x="92" y="216">window 1: frames drawn, fps above 0</text>
+<rect x="390" y="200" width="310" height="22" fill="#1d2330" stroke="#5ad1a0"/><text x="402" y="216" fill="#5ad1a0">window 2: nothing drawn, fps 0</text>
+<text x="80" y="244" font-size="10" fill="#c4ccda">one sample about every 1.02 s, intervals of 0, 0.25, 2 and 500 all ignored (PR #1999)</text>
+<text x="700" y="262" fill="#5ad1a0" text-anchor="end">first "settled" verdict: about 2.04 s</text>
+<text x="20" y="300">The counter answers a different question: "did anything render in the last second?"</text>
+<text x="20" y="318">A zero needs a full quiet window, so its earliest verdict lags the screen by 1.02 to 2.04 s.</text>
+<text x="20" y="346" font-size="10" fill="#c4ccda">Illustration built from the stated parameters, not a recording. Sources: pymobiledevice3 PR #1999; phoneshell wait_until_stable().</text>
+</g></svg>
+
+<svg viewBox="0 0 760 330" style="width:100%;height:auto" role="img" aria-label="Bar chart of time per step on a real iPhone, from phoneshell's memory.py measurements: tree read 159 milliseconds, screenshot 72 milliseconds, stability gate 504 milliseconds, fixed settle sleep 600 to 800 milliseconds, against the 1,020 millisecond minimum window of the pymobiledevice3 frame counter. The counter's shortest possible answer is about twice the measured stability gate.">
+<rect x="0" y="0" width="760" height="330" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="11">
+<text x="20" y="26" font-size="14" font-weight="600">Milliseconds per step on a real iPhone, and the counter's floor</text>
+<line x1="230" y1="44" x2="230" y2="280" stroke="#2a3140"/>
+<text x="220" y="70" text-anchor="end">screenshot</text><rect x="230" y="56" width="32.4" height="20" fill="#6f7b90"/><text x="268.4" y="70">72</text>
+<text x="220" y="110" text-anchor="end">tree read</text><rect x="230" y="96" width="71.5" height="20" fill="#6f7b90"/><text x="307.6" y="110">159</text>
+<text x="220" y="150" text-anchor="end">stability gate (measured)</text><rect x="230" y="136" width="226.8" height="20" fill="#5ad1a0"/><text x="462.8" y="150">504</text>
+<text x="220" y="190" text-anchor="end">fixed settle sleep</text><rect x="230" y="176" width="270.0" height="20" fill="#6f7b90"/><rect x="500.0" y="176" width="90.0" height="20" fill="#6f7b90" opacity="0.5"/><text x="596.0" y="190">600-800</text>
+<text x="220" y="230" text-anchor="end">dvt fps, one window</text><rect x="230" y="216" width="459.0" height="20" fill="#f2a65a"/><text x="695.0" y="230">1,020</text>
+<text x="230" y="300" font-size="10" fill="#c4ccda">0</text><text x="680.0" y="300" font-size="10" fill="#c4ccda" text-anchor="middle">1,000 ms</text>
+<line x1="680.0" y1="44" x2="680.0" y2="280" stroke="#2a3140" stroke-dasharray="3 3"/>
+<text x="20" y="322" font-size="10" fill="#c4ccda">Sources: phoneshell/memory.py module docstring (measured on a real iPhone); pymobiledevice3 PR #1999 (sample period about 1.02 s).</text>
+</g></svg>
+
+<p>The second problem is strictness. The gate tolerates 1.2% of pixels changing because, as its docstring says, "a countdown timer, a carousel, a spinner or a blinking cursor changes a handful of pixels every tick", and an exact-match test on Grab's "40% off flash deals 14:19" sheet never converged and turned a 2 s step into a 50 s one. A counter that must read 0 is an exact-match test at the compositor level. Core Animation counts every frame it renders, so a blinking cursor in a focused text field should keep the count above zero indefinitely. That is our expectation from how the counter is defined; we have not measured it.</p>
+
+<svg viewBox="0 0 760 330" style="width:100%;height:auto" role="img" aria-label="Comparison of two settle tests on four kinds of iPhone screen. phoneshell's screenshot gate accepts up to 1.2 percent of pixels changing, so it settles on a static screen, a blinking text cursor, a ticking countdown and a spinner, all of which its own docstring names. A frame counter that must read zero settles only on the static screen: any element Core Animation keeps redrawing keeps the count above zero. The cursor, countdown and spinner rows are our expectation from how the counter is defined, not a measurement.">
+<rect x="0" y="0" width="760" height="330" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="11">
+<text x="20" y="26" font-size="14" font-weight="600">Which screens can each test call settled?</text>
+<text x="300" y="56" font-weight="600" text-anchor="middle">screenshot gate, 1.2% tolerance</text>
+<text x="590" y="56" font-weight="600" text-anchor="middle">dvt fps reads 0</text>
+<text x="20" y="92">static screen</text><text x="300" y="92" fill="#5ad1a0" text-anchor="middle">settles</text><text x="590" y="92" fill="#5ad1a0" text-anchor="middle">settles (10 min idle read 0 throughout)</text>
+<text x="20" y="132">blinking text cursor</text><text x="300" y="132" fill="#5ad1a0" text-anchor="middle">settles</text><text x="590" y="132" fill="#f2a65a" text-anchor="middle">expected never</text>
+<text x="20" y="172">countdown banner ("14:19")</text><text x="300" y="172" fill="#5ad1a0" text-anchor="middle">settles</text><text x="590" y="172" fill="#f2a65a" text-anchor="middle">expected never</text>
+<text x="20" y="212">spinner or carousel</text><text x="300" y="212" fill="#5ad1a0" text-anchor="middle">settles</text><text x="590" y="212" fill="#f2a65a" text-anchor="middle">expected never</text>
+<line x1="20" y1="232" x2="740" y2="232" stroke="#2a3140"/>
+<text x="20" y="256">The gate was written for exactly these rows: an exact-match test on Grab's flash-deal sheet</text>
+<text x="20" y="274">never converged and turned a 2 s step into a 50 s one. Requiring fps 0 is an exact-match test.</text>
+<text x="20" y="314" font-size="10" fill="#c4ccda">Sources: phoneshell/perception/screen.py wait_until_stable() docstring; pymobiledevice3 PR #1999 ("A static screen reads 0").</text>
+</g></svg>
+
+<h2 id="what-it-is-good-for-on-a-phone-agent">What it is good for on a phone agent</h2>
+
+<p>It answers "did anything at all render" with no screenshot and no image comparison. That fits the check phoneshell makes after every action: <code>_after()</code> in <code>phoneshell/actions.py</code> sleeps 0.6 s (0.8 s after typing or opening an app, 0.7 s after a swipe), then calls a change real if more than 2% of pixels differ, and the MCP layer turns a "no" into the "THE SCREEN DID NOT CHANGE" notice. A tap that lights a button highlight for a few frames and then does nothing passes neither test cleanly. A zero across the sample after a tap would say that nothing was drawn at all, which is stronger evidence of a dead tap than a pixel threshold. A frame count above zero proves nothing, though, because a cursor or a clock also renders.</p>
+
+<p>The decision for anyone building on this: keep the screenshot gate for settling, consider the counter as a second witness on the "nothing happened" path, and budget a full second of latency wherever you read it. Pinning matters too. Going from 11.8.0 to 11.22.0 crosses fourteen minor releases, so phoneshell's bring-up checks would need a re-run after the bump.</p>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<ul>
+  <li>Release times: <code>curl -s https://pypi.org/pypi/pymobiledevice3/json | python3 -c "import json,sys;r=json.load(sys.stdin)['releases'];[print(v,r[v][0]['upload_time']) for v in ['11.21.0','11.22.0']]"</code></li>
+  <li>The device facts (1.02 s period, ignored intervals, iOS 16.7 only): the description of <code>https://github.com/doronz88/pymobiledevice3/pull/1999</code>.</li>
+  <li>On your own phone: <code>pip install pymobiledevice3==11.22.0</code>, then <code>pymobiledevice3 developer dvt fps</code> (on iOS 17 or later, start <code>sudo pymobiledevice3 remote tunneld</code> first). Leave the phone on a static screen, then focus a text field and watch whether the count returns to 0.</li>
+  <li>phoneshell's gate: <code>grep -n "def wait_until_stable" -A20 phoneshell/perception/screen.py</code>; the step timings are in the docstring at the top of <code>phoneshell/memory.py</code>; the after-action sleeps are <code>grep -n "settle=" phoneshell/actions.py</code>.</li>
+</ul>
+
+<p>We did not run the counter on our rig for this note. The rig's automation-off marker (<code>runtime/automation-off</code>) has been set since 17 September, and an unattended run does not wake a parked phone.</p>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>If <code>developer dvt fps</code> on an iOS 26 iPhone reads 0 within one sample while a text field with a blinking cursor is focused, our strictness argument is wrong. If a later pymobiledevice3 release samples faster than once a second on any iOS version, the latency argument falls. We expect neither by 31 March 2027: the 1.02 s period comes from the device, not from the library.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ol>
+      <li><a href="https://github.com/doronz88/pymobiledevice3/pull/1999">Cassian433, dvt: Add fps monitoring over the graphics channel, pymobiledevice3 PR #1999, opened and merged 4 October 2026</a></li>
+      <li><a href="https://github.com/doronz88/pymobiledevice3/releases/tag/v11.22.0">pymobiledevice3 v11.22.0 release notes, 4 October 2026, 17:06 UTC</a></li>
+      <li><a href="https://github.com/doronz88/pymobiledevice3/releases/tag/v11.21.0">pymobiledevice3 v11.21.0 release notes (dvt network-statistics, PR #1998), 4 October 2026, 05:35 UTC</a></li>
+      <li><a href="https://github.com/doronz88/pymobiledevice3/issues/871">pymobiledevice3 issue #871, frame rate and jank monitoring request (left open)</a></li>
+      <li><a href="https://pypi.org/project/pymobiledevice3/">PyPI metadata for pymobiledevice3 (read 4 October 2026)</a></li>
+      <li><a href="https://blolabel.ai/blog/instant-screenshots-made-the-agent-slower/">Blolabel, earlier note on how screen waits decide agent speed</a></li>
+      <li><a href="https://github.com/Blomega/phoneshell">phoneshell source: phoneshell/perception/screen.py, phoneshell/actions.py, phoneshell/memory.py, requirements.txt (read 4 October 2026)</a></li>
+    </ol>
+  </section>
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
