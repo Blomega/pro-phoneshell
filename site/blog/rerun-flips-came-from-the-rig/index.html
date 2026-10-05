@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A new paper puts 54% of agent outcome variance in repetition; our next-day rerun of 144 iPhone runs flipped 12, and 11 flipped the same way | Blolabel</title>
+<meta name="description" content="Wiedmann, Girrbach, Schmid and Akata (arXiv:2610.01618, 1 October 2026) repeat 432 agent configurations 5 times and find about 54% of score variance is run-to-run noise, with task information outranking the model. phoneshell&#x27;s only public repeat, 144 runs a day apart, flipped 12 outcomes, 11 from fail to pass (p = 0.0063): the rig changed, not the luck.">
+<link rel="canonical" href="https://blolabel.ai/blog/rerun-flips-came-from-the-rig/">
+<meta property="og:title" content="A new paper puts 54% of agent outcome variance in repetition; our next-day rerun of 144 iPhone runs flipped 12, and 11 flipped the same way | Blolabel">
+<meta property="og:description" content="Wiedmann, Girrbach, Schmid and Akata (arXiv:2610.01618, 1 October 2026) repeat 432 agent configurations 5 times and find about 54% of score variance is run-to-run noise, with task information outranking the model. phoneshell&#x27;s only public repeat, 144 runs a day apart, flipped 12 outcomes, 11 from fail to pass (p = 0.0063): the rig changed, not the luck.">
+<meta property="og:url" content="https://blolabel.ai/blog/rerun-flips-came-from-the-rig/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/rerun-flips-came-from-the-rig-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "A new paper puts 54% of agent outcome variance in repetition; our next-day rerun of 144 iPhone runs flipped 12, and 11 flipped the same way", "description": "Wiedmann, Girrbach, Schmid and Akata (arXiv:2610.01618, 1 October 2026) repeat 432 agent configurations 5 times and find about 54% of score variance is run-to-run noise, with task information outranking the model. phoneshell's only public repeat, 144 runs a day apart, flipped 12 outcomes, 11 from fail to pass (p = 0.0063): the rig changed, not the luck.", "datePublished": "2026-10-04", "dateModified": "2026-10-04", "url": "https://blolabel.ai/blog/rerun-flips-came-from-the-rig/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/rerun-flips-came-from-the-rig/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/rerun-flips-came-from-the-rig-hero.png", "citation": ["https://arxiv.org/abs/2610.01618", "https://github.com/lusxvr/rethinking-agent-evaluation", "https://huggingface.co/datasets/blolabel/phoneshell-bench", "https://github.com/Blomega/phoneshell"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "How much of an AI agent's benchmark score is run-to-run noise?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "In Wiedmann et al. (arXiv:2610.01618, October 2026), about 54% of score variance among runs that make a genuine attempt comes from repeating the same configuration, measured over 432 configurations run 5 times on each of four scientific tasks. Including all completed runs, configurations explain only 39.4% of variance."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Which configuration choice matters most for an agent?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "In that study, the information given to the agent: it ranked first on every task, with effect sizes of 1.925, 1.452 and 1.496 within-cell standard deviations, against 0.704, 0.170 and 1.253 for model size. Prompting the agent to verify ranked last."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Did phoneshell's iPhone results change when rerun?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Of 144 task-model pairs run on 8 and 9 September 2026, 132 kept their outcome and 12 flipped, 11 from fail to pass. Fourteen commits landed in between, including lock survival and changes to the grading code, and 5 of the 12 flips involved the phone being found on the home screen."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How many runs per task does a phone agent benchmark need?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "More than one. With single runs, noise, framework changes and device state cannot be separated from model differences. The paper uses 5 per cell and still reports wide confidence intervals."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAABOCAMAAAD4iTj8AAAAilBMVEVMaXFiXmJhXmEVieRkYGRiXmJiXmJEaZJiX2IWjehNaIJhXmEUjOcVjOdgXWBjX2MWjecUjOZiXmJiXmIUi+UVjehUoN7w9/33+/7q9Pzg7/p8gIlkYGQXjuj///9oZGgWk/JmY2YVjullYWUJh+dtaG0olumr1/dSq+7T6vo6n+tntfCMx/N7vvJEi25LAAAAHHRSTlMAakku/HusA/z7Eo+hwDL30nXizUnjHfvKolE8aPCOgAAAAAlwSFlzAAALEgAACxIB0t1+/AAAB35JREFUeJztmn1zsjoThwMCCaCg4EvbASFA1bZ3v//XO7MJeQFBwJ55nnNP85v+oSYB9mJ3k2yKkJGRkZGRkZGRkZGRkZGRkZGRkdHPhZXQ7xPuGH2P4Gk4P8L6P3slGCOEV7vderNZr3f7I/yEfpEwQqvd1i+FDpt90PWCwBKyF147kiOjxc8VzborvtdI++gV0Grtl2XuC1Vledhh5QQY2e8F17u3yASMQjnSXehVGFnaXReOxUvug3c+WJ9LMQbblbwpRnYdO6CYLgZA25HFEwAKddfxscdVX0eIaPnw6ueR2xw3ZaVZLxiU/k7cFSObkgzkFIsBFE478hkAYuw4AIzWld/TYbvetw6M0Ur69XZ4/GpbCvOrBiQQ5KUgMAeACjM95voAxoJxKH5nAyh7r6+qyrLacAcGAK095RAAjI7K/uZy+/q6fVYtAt8XBKYB6I89wwPu0tTQtZ4GkEMMl/4exkwBQHijhv85nUEfN+kELYFJABjhyA09L7QxQpEtFPQAoMCCTlakJVhucWDDcM9zoU363dMAcnj2A5/NHwLojL6ehb6ED1Q+c6QpABjZqUMhXdM0QuG7Q5lY3tcB2AnvFHuRPsUg24spaykojVMLuP0YQO6Xa3gxDwFgtJfpr/mW9p9Pl0oM2szwAIzcmhLiOA4hNI7CIiYgh3YAvFu2Q6ET62WpBBt4tMjYcN5WJHbrd0sB+FwiFRyC6RDQAuBDATh/d4PgMQAwkvDmLCM09age9QIAqcOklr1I0RLAKErUaDaM1DVLF8sBlEzSBao9ZJcHADDaqwT4qdl/vioA26kQYI3KAuKIL10AGXEcrReJWRSA/e2llYjD8CwHsGbypfvuJgEoB2huOoAPLZIYxocekN6ZMASgZ2R7IZwWyi3kpwzwLAewZ9j2/kwA0NbCyvPmSwcgkwBPJY8AqDb++p0HACDO5eestVFaXVMVImDxYgAVvCssX+sMADuVAUYBQCp5DMBTNlBKVUDfASAFLSQsUoRglPQeSB7KlQiBCHnGAxAKtjyz+9VqCsB6GgC/zKMQCGRuI5ln2558jf0cQJzQtmQzoSnGKIrl1xAj7EkcbOziHLADbVr72/T1aBbQ5oCxHNDOA6MAwAb5/l0gHgoj+gAoS/yyOUsCJCPAoSm7Wtrycdj257lZoOT255C9HgPABwWgupyGZoEZAOz2mUmdsCJCkAx6AKlTFqCyOcsiwNG20jACuVS72E/WAX6Vs1XsQwCBBiBv1ELwfL4tASAs5E+J0cg6gMe8aia1jZDyeS4REVkWPwFAU3XgCWECgLYNbj5PQw4wDUA9Zbt86W5/epsh3SUYgMFJEgBEPwKQ+5s9b57rAdpa+PT5/wDAl8Liy1Me4OtL4bJcT4UAVjthRuDPgP0DADrFNz0EpI+TIQBUNHcBCJ+vO8qeygGlvhb22yXM3FmgyS/N7eN0Pl0vzacqi8zIATJvpcAGYTEt9gC0zWrW5ElQTBlx0pX3xEpww5bCG7+NbLaKnbcOaKrb9eP01TSXz7zJr+ePP5+NXFHvdStpGukKkDaV1xZbvo1Ng5kNzSLPizQnr4uDIMBRFADDIAiCpxdCaN8ucPmGeM5KsLnxreD1dskv3+3nC3eC6nDsLHdJrKm2tIUQyWI3ilyxLLgHEFtRFIooh2kRoSiTCyHobMdJ6rk2cH1mN7jn4Sl/YRviGXsBEfwQ/yc5F3ywVOCXG30v0BVf26ipLCvieHwpTDIaO3LjyI3CqSKQul6cZVAYIUnq/cADkAhteHkdAHdnB6xnZwVw7q0G2h3FMACHAZA+DzYKe4Y3Q5DepQfwiNA2QwXAg8pIRuD44QkAGGLnuBOze+VrAPLK32o6MLugHqCXgro6XRqfQXzsAVpa6+K58wB9KIsAfSeRqXoBrxYsB3DgkiWRTgjkeVXq4gvFbakvgPq6Nv2K0AAAfUvLHl5Y2s8BtV42IZTVvTCyZQHl5wWRiksuCyB8NQDq6AuqxtywfaklgHt9VlvIR489AGHvXQuCRG5ougBqL5FOQMh7KJ7fqnUyjCBLiM8URX2tJNifBrtqC94wWq8F9vXdtMV1u26Llh3BLMB24F4BRVD2V9iuPNByO0djllU4bSen8LRjtwRqolKZXhSdPhrDY1Vh5gBTAKB68MD+81WeC4hjyq7eRWnTjYuC1jUtYqt3HKp/c+Oihk40sXQLAjehBaV1VlNoC1VZfMbhKB4GAE6+CaYBYHQcTwHn86u4beQOq63vYxRYXpokaRghZHda9W8oCqGTJyr/wgQU2CEMT1IvtNlT89/VXcePxzEAuFdV+uugezbYlTr1ehsn8DL7NJPBDAJ5qjPai3e6O0Djw1nToqNtxADcy9+u5dngQLOcBTiBl/H3r53mDUtrFw/fbez0lT/dmdH+1G2a8+81GO22m67Wu91K+BFGq82gttrZ9/F1yPzTG/qbhZf4Eb53gtMrbAH+DuHH/yQz4bttp7eXU8/8v8b+f0Ng6/Ht9YXp9fWN589fJTzx/TcIyw+/0XojIyMjIyMjIyMjIyMjIyP0n9Y/P2/lF8zxuoMAAAAASUVORK5CYII=" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-04">04 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>A new paper puts 54% of agent outcome variance in repetition; our next-day rerun of 144 iPhone runs flipped 12, and 11 flipped the same way</h1>
+  <p class="standfirst">Agents Are Systems, Not Models measures how much of an agent's score is just rolling again, and the answer is over half. We checked the one place our public iPhone data repeats itself. The flips are real but lopsided, and they trace to framework commits and a phone that kept leaving the app, an axis the paper's sandbox holds fixed.</p>
+
+<p>A paper posted on 1 October 2026 repeats every one of 432 agent configurations 5 times and finds that about 54% of score variance among genuine attempts is run-to-run noise, not configuration. phoneshell's public iPhone data has one repeat in it: 144 task-model pairs, run on 8 September and again on 9 September 2026. Twelve outcomes flipped, and 11 of them went from fail to pass, a split that symmetric noise produces with p = 0.0063.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/rerun-flips-came-from-the-rig-hero.png" alt="Abstract technical illustration of two rows of small square cells, most matching between rows, a few changed in the same direction, over a faint grid" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+
+<h2 id="what-agents-are-systems-not-models-measured">What Agents Are Systems, Not Models measured</h2>
+
+<p>Luis Wiedmann, Leander Girrbach, Cordelia Schmid and Zeynep Akata (TU Munich, Helmholtz Munich, Inria) give a coding agent four scientific tasks that each need a published specialist model: AstroCLIP for redshift, AstroSage-8B for MMLU-Astronomy (where the right move is to decline it), DNABERT-2 for promoter prediction and RiNALMo for RNA folding. They vary five axes over a full grid, 4 x 3 x 4 x 3 x 3 = 432 cells, run each cell 5 times, and get 2,160 runs per task and 8,640 in the main experiments. They release 18,240 trajectories in total.</p>
+
+<table>
+  <thead><tr><th>Axis</th><th>Levels</th><th>Effect, promoter</th><th>Effect, redshift</th><th>Effect, RNA</th><th>Mean rank</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>Information</td><td>none, identity, interface, protocol</td><td>1.925</td><td>1.452</td><td>1.496</td><td>1.00</td><td>Table 3</td></tr>
+    <tr><td>Model</td><td>Qwen3.5 35B-A3B, 122B-A10B, 397B-A17B</td><td>0.704</td><td>0.170</td><td>1.253</td><td>2.67</td><td>Table 3</td></tr>
+    <tr><td>Reasoning</td><td>act-only, think-act, ReAct</td><td>0.274</td><td>0.172</td><td>0.302</td><td>3.00</td><td>Table 3</td></tr>
+    <tr><td>Budget</td><td>5, 10, 20 min</td><td>0.142</td><td>0.201</td><td>0.255</td><td>3.33</td><td>Table 3</td></tr>
+    <tr><td>Verification</td><td>none, asked, reported, binding</td><td>0.131</td><td>0.130</td><td>0.077</td><td>5.00</td><td>Table 3</td></tr>
+    <tr><td colspan="6">Between-cell share of variance: 39.4% all completed runs, 46.1% hurdle-clearing runs. Outcome consistency 0.86 pooled, 0.73 redshift</td><td>Fig. 2, Table 2</td></tr>
+  </tbody>
+</table>
+
+<p>Effects are the range of mean gap closed across an axis's levels, divided by the within-cell standard deviation. Information ranks first in at least 99% of bootstrap samples. Asking the agent to verify barely changes whether it verifies; giving it a verification tool does. The finding that transfers to phones is the first one: a single run per configuration is mostly a draw.</p>
+
+<h2 id="the-one-place-our-data-repeats-itself">The one place our data repeats itself</h2>
+
+<p>phoneshell's published results on Hugging Face (<code>blolabel/phoneshell-bench</code>) hold a 24-task sweep across six models in <code>results/xv.jsonl</code>, run 14:05 to 16:59 UTC on 8 September, and a 59-task sweep in <code>results/xv2.jsonl</code>, run 05:06 to 12:28 UTC on 9 September. Every one of the 144 pairs in the first appears in the second. That overlap is the only repeated configuration in the public data: the 349 rows of <code>xv2</code> are one run per pair, and <code>xv-text.jsonl</code> is a copy of 48 <code>xv</code> rows with identical timestamps, not a rerun.</p>
+
+<p>Paired, the 144 give 118 passes both times, 14 failures both times, 11 fail-to-pass and 1 pass-to-fail. If the flips were noise, each direction would be a coin toss; 11 against 1 has a two-sided sign-test p of 0.0063. Something systematic changed overnight, and the git log says what: 14 commits between the runs, including <code>fd1798c</code> "Store the passcode, survive a lock", <code>f553248</code>, which makes a long run heal itself (clear the lock screen, restore the port forward, restart the runner), and edits to <code>bench/openrouter.py</code> and <code>bench/verify.py</code>, the grading code.</p>
+
+<svg viewBox="0 0 760 400" style="width:100%;height:auto" role="img" aria-label="Diagram of the 144 matched phoneshell runs, 24 tasks by 6 models, run on 8 September 2026 and again on 9 September. 118 passed both times, 14 failed both times, 11 went from fail to pass and 1 from pass to fail. A sign test on 11 against 1 gives p equal to 0.0063, so the flips are not symmetric noise. Between the two runs, 14 commits landed, touching bench/runner.py with lock survival and self-healing, bench/verify.py and bench/openrouter.py. Five of the 12 flips involved a check that found the phone on the SpringBoard home screen instead of the app; one was a 240 second budget, one ran out of turns, five were content checks.">
+<rect x="0" y="0" width="760" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="11">
+<text x="20" y="26" font-size="14" font-weight="600">Same 144 task-model pairs, two days, 14 commits in between</text>
+<rect x="20" y="46" width="300" height="140" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+<text x="32" y="66" font-weight="600">outcomes, 8 Sep vs 9 Sep</text>
+<text x="32" y="90">pass, pass</text><text x="300" y="90" text-anchor="end">118</text>
+<text x="32" y="110">fail, fail</text><text x="300" y="110" text-anchor="end">14</text>
+<text x="32" y="130" fill="#5ad1a0">fail, pass</text><text x="300" y="130" text-anchor="end" fill="#5ad1a0">11</text>
+<text x="32" y="150" fill="#f2a65a">pass, fail</text><text x="300" y="150" text-anchor="end" fill="#f2a65a">1</text>
+<text x="32" y="174" font-size="10" fill="#c4ccda">sign test 11 vs 1: p = 0.0063, two-sided</text>
+<rect x="350" y="46" width="390" height="140" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+<text x="362" y="66" font-weight="600">what changed between the runs</text>
+<text x="362" y="88">fd1798c store the passcode, survive a lock</text>
+<text x="362" y="106">f553248 long run heals itself: lock, forward, runner</text>
+<text x="362" y="124">da221c7, 30affa3 bench/openrouter.py</text>
+<text x="362" y="142">30affa3 bench/verify.py (grading code)</text>
+<text x="362" y="162" font-size="10" fill="#c4ccda">14 commits in all, 16:59 UTC 8 Sep to 05:06 UTC 9 Sep</text>
+<text x="20" y="222" font-weight="600">Why the 12 flipped rows had failed (or failed)</text>
+<rect x="20" y="236" width="290" height="28" fill="#f2a65a"/><text x="30" y="255">5: phone on SpringBoard</text>
+<rect x="310" y="236" width="290" height="28" fill="#6f7b90"/><text x="320" y="255">5: content check missed</text>
+<rect x="600" y="236" width="58" height="28" fill="#5ad1a0"/><text x="604" y="255" font-size="10">budget</text>
+<rect x="658" y="236" width="58" height="28" fill="#5ad1a0" opacity="0.6"/><text x="662" y="255" font-size="10">turns</text>
+<text x="20" y="292">"foreground is com.apple.springboard": the phone had left the app, the signature of a lock or a lost runner.</text>
+<text x="20" y="310">That is the rig, not the model, and the commits that fixed it landed between the two runs.</text>
+<text x="20" y="340">Per model: DeepSeek V3.2 5 flips, Gemini 3.1 Pro 3, Claude Opus 4.8 3, Qwen3-Max 1, GPT-5.1 0, Kimi K3 0.</text>
+<text x="20" y="386" font-size="10" fill="#c4ccda">Sources: huggingface.co/datasets/blolabel/phoneshell-bench results/xv.jsonl, results/xv2.jsonl; phoneshell git log.</text>
+</g></svg>
+
+<p>The failure details agree. Five of the 12 flipped rows had a check reading "foreground is com.apple.springboard": the phone was on the home screen when the agent should have been in Calculator, Settings, Notes or Safari. That includes the single pass-to-fail row, Claude Opus 4.8 on <code>notes.type_long</code>, whose own report says it saved the note. A phone that leaves the app mid-task is a lock or a lost runner, which is what the overnight commits addressed. One more flip was the 240 s budget, one ran out of turns, and five were content checks (Calculator results, timer text, a Settings row, a Safari page).</p>
+
+<h2 id="putting-a-number-on-it-with-the-caveats-in-the-number">Putting a number on it, with the caveats in the number</h2>
+
+<p>For pass-fail outcomes, a flip between two independent runs of the same cell happens with probability 2p(1-p), so half the flip rate estimates within-cell variance. Total variance over the 288 outcomes, at a pass rate of 248/288 = 86.1%, is 0.120. If all 12 flips were noise, within-cell variance is 12/288 = 0.042 and repetition is 34.8% of the total. If noise is symmetric and the one pass-to-fail flip is its whole share, there are about 2 noise flips and the share is 5.8%. The real figure sits between those, and the 11-to-1 direction argues for the low end. The paper's figure is 53.9% (100 minus 46.1) for genuine attempts. Ours is not comparable in kind: an 86% pass rate on short phone tasks leaves little variance to split, and the paper's tasks score in the middle where variance peaks (its Fig. 2 shows a Spearman rho of -0.79 between a cell's mean and its spread).</p>
+
+<svg viewBox="0 0 760 400" style="width:100%;height:auto" role="img" aria-label="Bar chart comparing within-configuration variance shares. Wiedmann and colleagues report 60.6 percent for all completed runs and about 54 percent for runs that clear the hurdle, from 432 configurations run 5 times on four scientific tasks. Our next-day rerun of 144 phoneshell runs on an iPhone gives a range: 5.8 percent if only the one pass-to-fail flip is treated as noise and mirrored, 34.8 percent if all 12 flips are treated as noise. Eleven of the twelve flips went from fail to pass, so the low end is closer.">
+<rect x="0" y="0" width="760" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Share of outcome variance that is repetition, not configuration</text>
+<rect x="70" y="40" width="12" height="12" fill="#f2a65a"/><text x="88" y="50" font-size="11" fill="#c4ccda">within-configuration share</text>
+<line x1="70" y1="330.0" x2="740" y2="330.0" stroke="#2a3140"/>
+<text x="62" y="334.0" font-size="10" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="70" y1="292.9" x2="740" y2="292.9" stroke="#2a3140"/>
+<text x="62" y="296.9" font-size="10" fill="#c4ccda" text-anchor="end">10</text>
+<line x1="70" y1="255.7" x2="740" y2="255.7" stroke="#2a3140"/>
+<text x="62" y="259.7" font-size="10" fill="#c4ccda" text-anchor="end">20</text>
+<line x1="70" y1="218.6" x2="740" y2="218.6" stroke="#2a3140"/>
+<text x="62" y="222.6" font-size="10" fill="#c4ccda" text-anchor="end">30</text>
+<line x1="70" y1="181.4" x2="740" y2="181.4" stroke="#2a3140"/>
+<text x="62" y="185.4" font-size="10" fill="#c4ccda" text-anchor="end">40</text>
+<line x1="70" y1="144.3" x2="740" y2="144.3" stroke="#2a3140"/>
+<text x="62" y="148.3" font-size="10" fill="#c4ccda" text-anchor="end">50</text>
+<line x1="70" y1="107.1" x2="740" y2="107.1" stroke="#2a3140"/>
+<text x="62" y="111.1" font-size="10" fill="#c4ccda" text-anchor="end">60</text>
+<line x1="70" y1="70.0" x2="740" y2="70.0" stroke="#2a3140"/>
+<text x="62" y="74.0" font-size="10" fill="#c4ccda" text-anchor="end">70</text>
+<text x="18" y="200" font-size="11" fill="#c4ccda" transform="rotate(-90 18 200)" text-anchor="middle">% of outcome variance</text>
+<rect x="136.8" y="104.9" width="31.0" height="225.1" fill="#f2a65a"/>
+<text x="152.2" y="100.9" font-size="9.5" fill="#f2a65a" text-anchor="middle">60.6%</text>
+<text x="153.8" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">paper: all completed</text>
+<rect x="304.2" y="129.8" width="31.0" height="200.2" fill="#f2a65a"/>
+<text x="319.8" y="125.8" font-size="9.5" fill="#f2a65a" text-anchor="middle">53.9%</text>
+<text x="321.2" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">paper: clears hurdle</text>
+<rect x="471.8" y="308.5" width="31.0" height="21.5" fill="#f2a65a"/>
+<text x="487.2" y="304.5" font-size="9.5" fill="#f2a65a" text-anchor="middle">5.8%</text>
+<text x="488.8" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">ours: symmetric noise</text>
+<rect x="639.2" y="200.7" width="31.0" height="129.3" fill="#f2a65a"/>
+<text x="654.8" y="196.7" font-size="9.5" fill="#f2a65a" text-anchor="middle">34.8%</text>
+<text x="656.2" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">ours: all 12 as noise</text>
+<text x="70" y="386" font-size="10" fill="#c4ccda">Sources: arXiv:2610.01618 Fig. 2 (ICC 39.4% and 46.1%); phoneshell xv.jsonl vs xv2.jsonl, 144 matched runs, our arithmetic.</text>
+</g></svg>
+
+<h2 id="what-this-means-for-anyone-ranking-phone-agents">What this means for anyone ranking phone agents</h2>
+
+<p>The paper treats the sandbox as fixed and asks which knobs move the score. On a physical phone the sandbox is the least fixed part. Framework code and device state change between runs, and they change outcomes in one direction at a time, which noise does not. A leaderboard built from one run per cell folds all three sources into each number. Our own leaderboard note on 10 September found that no pair of the six models separated across 58 tasks; this rerun adds that part of what did move was the rig.</p>
+
+<svg viewBox="0 0 760 330" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting what a configuration is in the paper and on a phone. The paper fixes a GPU sandbox and varies five axes: information, reasoning, verification, budget and model, each cell run 5 times. On a physical iPhone a configuration also includes the framework code and the device state, such as lock, runner health and app state. phoneshell's public data runs each cell once, so repetition noise, framework change and device state are all folded into a single outcome per cell.">
+<rect x="0" y="0" width="760" height="330" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="11">
+<text x="20" y="26" font-size="14" font-weight="600">What counts as "the same configuration"</text>
+<rect x="20" y="46" width="340" height="190" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+<text x="32" y="68" font-weight="600">Wiedmann et al., 2026</text>
+<text x="32" y="92">information (4 levels)</text><text x="32" y="112">reasoning (3)</text><text x="32" y="132">verification (4)</text><text x="32" y="152">budget: 5, 10, 20 min (3)</text><text x="32" y="172">model: Qwen3.5 35B, 122B, 397B (3)</text>
+<text x="32" y="198" fill="#5ad1a0">432 cells x 5 repeats per task</text>
+<text x="32" y="218" font-size="10" fill="#c4ccda">sandbox fixed: one GPU, prebuilt environment</text>
+<rect x="400" y="46" width="340" height="190" rx="8" fill="#1d2330" stroke="#f2a65a"/>
+<text x="412" y="68" font-weight="600">phoneshell on a physical iPhone</text>
+<text x="412" y="92">task prompt and tools</text><text x="412" y="112">model (6 vendors)</text><text x="412" y="132">budget: 240 s, turn cap</text>
+<text x="412" y="152" fill="#f2a65a">framework code (runner, verify)</text><text x="412" y="172" fill="#f2a65a">device: lock, runner, app state</text>
+<text x="412" y="198" fill="#f2a65a">1 run per cell in public data</text>
+<text x="412" y="218" font-size="10" fill="#c4ccda">xv2: iPhone 14 Pro, iOS 26.3.1, 346 of 349 rows</text>
+<text x="20" y="270">With one run per cell, noise, a framework fix and a locked phone all look like a model difference.</text>
+<text x="20" y="290">The 144-run overlap is the only repeat in the published set, and it is not a clean one.</text>
+<text x="20" y="318" font-size="10" fill="#c4ccda">Sources: arXiv:2610.01618 Sec. 3 and 4.1; phoneshell-bench results files; phoneshell/bench/runner.py.</text>
+</g></svg>
+
+<ul>
+  <li>Run each cell at least twice, interleaved by model, so a framework or device change lands on every model equally instead of on whoever ran last.</li>
+  <li>Freeze the commit for a sweep and record it in every result row. <code>xv2</code> rows carry <code>device_model</code> and <code>device_os</code> but no commit hash.</li>
+  <li>Report a "phone left the app" check separately from content checks. It identified 5 of 12 flips here and is the rig speaking.</li>
+  <li>If the paper's ranking carries over, the task prompt (what the agent is told) deserves more experiment budget than the model choice. phoneshell has not tested that.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<ul>
+  <li>Download <code>results/xv.jsonl</code> and <code>results/xv2.jsonl</code> from <code>https://huggingface.co/datasets/blolabel/phoneshell-bench</code>, then: <code>python3 -c "import json,collections;a={(r['task_id'],r['model']):r['passed'] for r in map(json.loads,open('xv.jsonl'))};b={(r['task_id'],r['model']):r['passed'] for r in map(json.loads,open('xv2.jsonl'))};print(collections.Counter((a[k],b[k]) for k in a))"</code>. Expect 118, 14, 11 and 1.</li>
+  <li>Sign test: <code>python3 -c "from math import comb;print(2*sum(comb(12,i) for i in range(2))/2**12)"</code> prints 0.00634.</li>
+  <li>The commits between runs: <code>git log --since=2026-09-08T16:59:00Z --until=2026-09-09T05:06:00Z --oneline</code> in the phoneshell repo (14 lines).</li>
+  <li>The paper's numbers: Table 2, Table 3 and Fig. 2 of <code>https://arxiv.org/abs/2610.01618</code>; trajectories at <code>https://github.com/lusxvr/rethinking-agent-evaluation</code>.</li>
+</ul>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>If phoneshell reruns the 144 pairs twice more on one frozen commit with auto-lock off, and the flips between those two runs are again lopsided (one direction 10 or more out of 12 or fewer), then the overnight commits did not cause the 9 September flips and something else on the device drifts by day. We expect a frozen-commit repeat to show fewer than 6 flips, split roughly evenly. We will publish that repeat, or say we did not run it, by 31 December 2026.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ol>
+      <li><a href="https://arxiv.org/abs/2610.01618">Wiedmann, Girrbach, Schmid, Akata, Agents Are Systems, Not Models: Rethinking Agentic Evaluation, arXiv:2610.01618v1, 1 October 2026</a></li>
+      <li><a href="https://github.com/lusxvr/rethinking-agent-evaluation">Benchmark and 18,240 trajectories released with the paper</a></li>
+      <li><a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">blolabel/phoneshell-bench on Hugging Face: results/xv.jsonl (8 September 2026), results/xv2.jsonl (9 September 2026)</a></li>
+      <li><a href="https://blolabel.ai/blog/leaderboard-that-cannot-rank/">Blolabel, earlier note: six models, 58 tasks, no pair separates</a></li>
+      <li><a href="https://github.com/Blomega/phoneshell">phoneshell source and git history, commits fd1798c, f553248, da221c7, 30affa3 (read 4 October 2026)</a></li>
+    </ol>
+  </section>
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
