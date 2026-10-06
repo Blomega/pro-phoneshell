@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>COBRA stops branch steering by bounding where each action may go; phoneshell&#x27;s confirm gate lets a tap on Send straight through | Blolabel</title>
+<meta name="description" content="Zingrillo, Foerster, Shumailov, Zhao and Mullins (arXiv:2610.03089, 2 October 2026) show planner-isolated computer-use agents still fall to attacks that pick a pre-approved branch (89.5%), and cut that to 0 of 199 by checking destinations and parameters at an HTTP proxy. A phone agent has no such proxy. phoneshell&#x27;s substitute, 14 label patterns on taps, misses Send, Unsubscribe and Erase All Content and Settings.">
+<link rel="canonical" href="https://blolabel.ai/blog/confirm-gate-lets-send-through/">
+<meta property="og:title" content="COBRA stops branch steering by bounding where each action may go; phoneshell&#x27;s confirm gate lets a tap on Send straight through | Blolabel">
+<meta property="og:description" content="Zingrillo, Foerster, Shumailov, Zhao and Mullins (arXiv:2610.03089, 2 October 2026) show planner-isolated computer-use agents still fall to attacks that pick a pre-approved branch (89.5%), and cut that to 0 of 199 by checking destinations and parameters at an HTTP proxy. A phone agent has no such proxy. phoneshell&#x27;s substitute, 14 label patterns on taps, misses Send, Unsubscribe and Erase All Content and Settings.">
+<meta property="og:url" content="https://blolabel.ai/blog/confirm-gate-lets-send-through/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/confirm-gate-lets-send-through-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "COBRA stops branch steering by bounding where each action may go; phoneshell's confirm gate lets a tap on Send straight through", "description": "Zingrillo, Foerster, Shumailov, Zhao and Mullins (arXiv:2610.03089, 2 October 2026) show planner-isolated computer-use agents still fall to attacks that pick a pre-approved branch (89.5%), and cut that to 0 of 199 by checking destinations and parameters at an HTTP proxy. A phone agent has no such proxy. phoneshell's substitute, 14 label patterns on taps, misses Send, Unsubscribe and Erase All Content and Settings.", "datePublished": "2026-10-05", "dateModified": "2026-10-05", "url": "https://blolabel.ai/blog/confirm-gate-lets-send-through/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/confirm-gate-lets-send-through/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/confirm-gate-lets-send-through-hero.png", "citation": ["https://arxiv.org/abs/2610.03089", "https://github.com/giuliozing/securing-cuas-against-branch-steering", "https://github.com/Blomega/phoneshell", "https://blolabel.ai/blog/agents-leak-then-say-nothing-was-shared/"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "What is a branch steering attack on a computer-use agent?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "An attacker supplies runtime data, such as a price or a review on a page, that satisfies a branch condition the trusted plan already allows, or that binds an action's parameters, so the agent takes an attacker-favourable path without any injected instruction. Zingrillo et al. (arXiv:2610.03089) measured 94.4% success against a ReAct agent and 89.5% against a vanilla Dual-LLM agent."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How does COBRA stop branch steering?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "It pairs the trusted branching plan with capability constraints fixed ahead of time: allowed destination domains, endpoints and parameter bounds for each branch, checked as typed predicates at HTTP and MCP proxies. On STEER-Bench it reduced attack success to 0 of 199 attack cells, with 4 false positives in 138 benign cells."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What does COBRA cost in task success?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "On OSWorld-MCP (361 tasks, pass@5), Sonnet-5 fell from 51.0% as a ReAct agent to 38.8% under COBRA, and kimi-k2.5 from 42.1% to 25.5%. Per-task cost for Sonnet-5 rose from $0.291 to $0.627."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does phoneshell ask before tapping Send?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. As of 5 October 2026 its confirm gate matches 14 patterns, including 'send money' but not 'send', and 'subscribe' with a word boundary that cannot match 'Unsubscribe'. Typing with submit=true, opening any URL and accepting alerts are not gated at all."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAABOCAMAAAD4iTj8AAAAilBMVEVMaXFiXmJhXmEVieRkYGRiXmJiXmJEaZJiX2IWjehNaIJhXmEUjOcVjOdgXWBjX2MWjecUjOZiXmJiXmIUi+UVjehUoN7w9/33+/7q9Pzg7/p8gIlkYGQXjuj///9oZGgWk/JmY2YVjullYWUJh+dtaG0olumr1/dSq+7T6vo6n+tntfCMx/N7vvJEi25LAAAAHHRSTlMAakku/HusA/z7Eo+hwDL30nXizUnjHfvKolE8aPCOgAAAAAlwSFlzAAALEgAACxIB0t1+/AAAB35JREFUeJztmn1zsjoThwMCCaCg4EvbASFA1bZ3v//XO7MJeQFBwJ55nnNP85v+oSYB9mJ3k2yKkJGRkZGRkZGRkZGRkZGRkZGRkdHPhZXQ7xPuGH2P4Gk4P8L6P3slGCOEV7vderNZr3f7I/yEfpEwQqvd1i+FDpt90PWCwBKyF147kiOjxc8VzborvtdI++gV0Grtl2XuC1Vledhh5QQY2e8F17u3yASMQjnSXehVGFnaXReOxUvug3c+WJ9LMQbblbwpRnYdO6CYLgZA25HFEwAKddfxscdVX0eIaPnw6ueR2xw3ZaVZLxiU/k7cFSObkgzkFIsBFE478hkAYuw4AIzWld/TYbvetw6M0Ur69XZ4/GpbCvOrBiQQ5KUgMAeACjM95voAxoJxKH5nAyh7r6+qyrLacAcGAK095RAAjI7K/uZy+/q6fVYtAt8XBKYB6I89wwPu0tTQtZ4GkEMMl/4exkwBQHijhv85nUEfN+kELYFJABjhyA09L7QxQpEtFPQAoMCCTlakJVhucWDDcM9zoU363dMAcnj2A5/NHwLojL6ehb6ED1Q+c6QpABjZqUMhXdM0QuG7Q5lY3tcB2AnvFHuRPsUg24spaykojVMLuP0YQO6Xa3gxDwFgtJfpr/mW9p9Pl0oM2szwAIzcmhLiOA4hNI7CIiYgh3YAvFu2Q6ET62WpBBt4tMjYcN5WJHbrd0sB+FwiFRyC6RDQAuBDATh/d4PgMQAwkvDmLCM09age9QIAqcOklr1I0RLAKErUaDaM1DVLF8sBlEzSBao9ZJcHADDaqwT4qdl/vioA26kQYI3KAuKIL10AGXEcrReJWRSA/e2llYjD8CwHsGbypfvuJgEoB2huOoAPLZIYxocekN6ZMASgZ2R7IZwWyi3kpwzwLAewZ9j2/kwA0NbCyvPmSwcgkwBPJY8AqDb++p0HACDO5eestVFaXVMVImDxYgAVvCssX+sMADuVAUYBQCp5DMBTNlBKVUDfASAFLSQsUoRglPQeSB7KlQiBCHnGAxAKtjyz+9VqCsB6GgC/zKMQCGRuI5ln2558jf0cQJzQtmQzoSnGKIrl1xAj7EkcbOziHLADbVr72/T1aBbQ5oCxHNDOA6MAwAb5/l0gHgoj+gAoS/yyOUsCJCPAoSm7Wtrycdj257lZoOT255C9HgPABwWgupyGZoEZAOz2mUmdsCJCkAx6AKlTFqCyOcsiwNG20jACuVS72E/WAX6Vs1XsQwCBBiBv1ELwfL4tASAs5E+J0cg6gMe8aia1jZDyeS4REVkWPwFAU3XgCWECgLYNbj5PQw4wDUA9Zbt86W5/epsh3SUYgMFJEgBEPwKQ+5s9b57rAdpa+PT5/wDAl8Liy1Me4OtL4bJcT4UAVjthRuDPgP0DADrFNz0EpI+TIQBUNHcBCJ+vO8qeygGlvhb22yXM3FmgyS/N7eN0Pl0vzacqi8zIATJvpcAGYTEt9gC0zWrW5ElQTBlx0pX3xEpww5bCG7+NbLaKnbcOaKrb9eP01TSXz7zJr+ePP5+NXFHvdStpGukKkDaV1xZbvo1Ng5kNzSLPizQnr4uDIMBRFADDIAiCpxdCaN8ucPmGeM5KsLnxreD1dskv3+3nC3eC6nDsLHdJrKm2tIUQyWI3ilyxLLgHEFtRFIooh2kRoSiTCyHobMdJ6rk2cH1mN7jn4Sl/YRviGXsBEfwQ/yc5F3ywVOCXG30v0BVf26ipLCvieHwpTDIaO3LjyI3CqSKQul6cZVAYIUnq/cADkAhteHkdAHdnB6xnZwVw7q0G2h3FMACHAZA+DzYKe4Y3Q5DepQfwiNA2QwXAg8pIRuD44QkAGGLnuBOze+VrAPLK32o6MLugHqCXgro6XRqfQXzsAVpa6+K58wB9KIsAfSeRqXoBrxYsB3DgkiWRTgjkeVXq4gvFbakvgPq6Nv2K0AAAfUvLHl5Y2s8BtV42IZTVvTCyZQHl5wWRiksuCyB8NQDq6AuqxtywfaklgHt9VlvIR489AGHvXQuCRG5ougBqL5FOQMh7KJ7fqnUyjCBLiM8URX2tJNifBrtqC94wWq8F9vXdtMV1u26Llh3BLMB24F4BRVD2V9iuPNByO0djllU4bSen8LRjtwRqolKZXhSdPhrDY1Vh5gBTAKB68MD+81WeC4hjyq7eRWnTjYuC1jUtYqt3HKp/c+Oihk40sXQLAjehBaV1VlNoC1VZfMbhKB4GAE6+CaYBYHQcTwHn86u4beQOq63vYxRYXpokaRghZHda9W8oCqGTJyr/wgQU2CEMT1IvtNlT89/VXcePxzEAuFdV+uugezbYlTr1ehsn8DL7NJPBDAJ5qjPai3e6O0Djw1nToqNtxADcy9+u5dngQLOcBTiBl/H3r53mDUtrFw/fbez0lT/dmdH+1G2a8+81GO22m67Wu91K+BFGq82gttrZ9/F1yPzTG/qbhZf4Eb53gtMrbAH+DuHH/yQz4bttp7eXU8/8v8b+f0Ng6/Ht9YXp9fWN589fJTzx/TcIyw+/0XojIyMjIyMjIyMjIyMjIyP0n9Y/P2/lF8zxuoMAAAAASUVORK5CYII=" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-05">05 October 2026</time>
+    <span>9 min read</span>
+  </div>
+  <h1>COBRA stops branch steering by bounding where each action may go; phoneshell&#x27;s confirm gate lets a tap on Send straight through</h1>
+  <p class="standfirst">Branch steering does not inject an instruction. It feeds the agent data that makes a branch it was already allowed to take look right. The paper's fix lives at the network boundary. We checked what a phone agent has in its place, and tested the gate on ten labels.</p>
+
+<p>A paper posted on 2 October 2026 shows that splitting a computer-use agent into a trusted planner and a quarantined reader does not stop an attacker who only supplies data: 89.5% of branch-steering attacks still succeeded against a vanilla Dual-LLM agent. Bounding each branch's destinations and parameters at an HTTP and MCP proxy brought it to 0 of 199. A phone agent has no such proxy, and phoneshell's substitute, a list of 14 label patterns checked on taps, lets a tap on "Send" through without asking.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/confirm-gate-lets-send-through-hero.png" alt="Abstract technical illustration of a branching path diagram where one branch is highlighted and a narrow gate sits off to the side of the path" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+
+<h2 id="what-the-paper-measured">What the paper measured</h2>
+
+<p>Giulio Zingrillo, Hanna Foerster, Ilia Shumailov, Yiren Zhao and Robert Mullins (arXiv:2610.03089) build STEER-Bench: 101 tasks in nine attack suites, run as 199 attack cells and 138 benign cells over web pages in four layout families plus MCP tools. The planner is gpt-5; the quarantined reader is a locally served UI-TARS-1.5-7B. The attacks never tell the agent to do anything. A changed field value keeps the approved action and destination (suite S1, WIRE); a redirect sends a valid action to another host (S2, DEST). Their example from the WASP benchmark: the plan authorises <code>GET /{group}/{project}/-/issues/*</code> and <code>POST .../-/notes</code>, and the injection issues <code>POST /byteblaze/dotfiles/-/deploy_keys</code>.</p>
+
+<svg viewBox="0 0 760 400" style="width:100%;height:auto" role="img" aria-label="Bar chart of attack success rates from Zingrillo and colleagues. A ReAct computer-use agent on UI-TARS-1.5-7B: 94.4 percent. A vanilla Dual-LLM agent with gpt-5 planning: 89.5 percent. COBRA with its capability constraints switched off: 87.6 percent. Full COBRA: 0 percent over 199 attack cells. The planning split alone barely helps; the constraints on parameters and destinations do the work.">
+<rect x="0" y="0" width="760" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Branch-steering attack success on STEER-Bench, by architecture</text>
+<rect x="70" y="40" width="12" height="12" fill="#f2a65a"/><text x="88" y="50" font-size="11" fill="#c4ccda">attack success rate</text>
+<line x1="70" y1="330.0" x2="740" y2="330.0" stroke="#2a3140"/>
+<text x="62" y="334.0" font-size="10" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="70" y1="278.0" x2="740" y2="278.0" stroke="#2a3140"/>
+<text x="62" y="282.0" font-size="10" fill="#c4ccda" text-anchor="end">20</text>
+<line x1="70" y1="226.0" x2="740" y2="226.0" stroke="#2a3140"/>
+<text x="62" y="230.0" font-size="10" fill="#c4ccda" text-anchor="end">40</text>
+<line x1="70" y1="174.0" x2="740" y2="174.0" stroke="#2a3140"/>
+<text x="62" y="178.0" font-size="10" fill="#c4ccda" text-anchor="end">60</text>
+<line x1="70" y1="122.0" x2="740" y2="122.0" stroke="#2a3140"/>
+<text x="62" y="126.0" font-size="10" fill="#c4ccda" text-anchor="end">80</text>
+<line x1="70" y1="70.0" x2="740" y2="70.0" stroke="#2a3140"/>
+<text x="62" y="74.0" font-size="10" fill="#c4ccda" text-anchor="end">100</text>
+<text x="18" y="200" font-size="11" fill="#c4ccda" transform="rotate(-90 18 200)" text-anchor="middle">% of attack cells</text>
+<rect x="136.8" y="84.6" width="31.0" height="245.4" fill="#f2a65a"/>
+<text x="152.2" y="80.6" font-size="9.5" fill="#f2a65a" text-anchor="middle">94.4%</text>
+<text x="153.8" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">ReAct</text>
+<rect x="304.2" y="97.3" width="31.0" height="232.7" fill="#f2a65a"/>
+<text x="319.8" y="93.3" font-size="9.5" fill="#f2a65a" text-anchor="middle">89.5%</text>
+<text x="321.2" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">Dual-LLM</text>
+<rect x="471.8" y="102.2" width="31.0" height="227.8" fill="#f2a65a"/>
+<text x="487.2" y="98.2" font-size="9.5" fill="#f2a65a" text-anchor="middle">87.6%</text>
+<text x="488.8" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">COBRA, constraints off</text>
+<rect x="639.2" y="330.0" width="31.0" height="0.5" fill="#f2a65a"/>
+<text x="654.8" y="326.0" font-size="9.5" fill="#f2a65a" text-anchor="middle">0% (0/199)</text>
+<text x="656.2" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">COBRA</text>
+<text x="70" y="386" font-size="10" fill="#c4ccda">Source: arXiv:2610.03089 Table 1. Baselines are cell-weighted over 74 generic cells; COBRA rows over 199.</text>
+</g></svg>
+
+<table>
+  <thead><tr><th>Suite</th><th>Attack cells</th><th>COBRA</th><th>COBRA, constraints off</th><th>Dual-LLM</th><th>ReAct</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>S1 WIRE (field value)</td><td>26</td><td>0%</td><td>100%</td><td>96%</td><td>96%</td><td>Table 1</td></tr>
+    <tr><td>S2 DEST (destination)</td><td>24</td><td>0%</td><td>100%</td><td>88%</td><td>92%</td><td>Table 1</td></tr>
+    <tr><td>S3 MCP</td><td>15</td><td>0%</td><td>67%</td><td>not run</td><td>not run</td><td>Table 1</td></tr>
+    <tr><td>S4 cross-channel</td><td>72</td><td>0%</td><td>100%</td><td>89%</td><td>100%</td><td>Table 1</td></tr>
+    <tr><td>S5 PROV</td><td>33</td><td>0%</td><td>55%</td><td>100%</td><td>100%</td><td>Table 1</td></tr>
+    <tr><td>S6 TRUST</td><td>5</td><td>0%</td><td>80%</td><td>not run</td><td>not run</td><td>Table 1</td></tr>
+    <tr><td>S7 CFI</td><td>9</td><td>0%</td><td>67%</td><td>89%</td><td>89%</td><td>Table 1</td></tr>
+    <tr><td>S8 STEP</td><td>10</td><td>0%</td><td>100%</td><td>40%</td><td>40%</td><td>Table 1</td></tr>
+    <tr><td>S9 ULTRA</td><td>5</td><td>0%</td><td>80%</td><td>100%</td><td>100%</td><td>Table 1</td></tr>
+    <tr><td colspan="6">Benign cells: 4 false positives in 138 (3 in S8, 1 in S9). OSWorld-MCP pass@5, 361 tasks: Sonnet-5 51.0% ReAct vs 38.8% COBRA; kimi-k2.5 42.1% vs 25.5%</td><td>Sec. 5, Table 2</td></tr>
+  </tbody>
+</table>
+
+<p>Three things in the numbers matter for anyone copying the design. The constraints do the work: COBRA with them off is 87.6%, within two points of the Dual-LLM baseline. The 0% has no confidence interval in the paper; by the rule of three, 0 of 199 bounds the true rate below about 1.5% at 95%, for this benchmark. And the defence costs capability on strong models, 12.2 points for Sonnet-5 and 16.6 for kimi-k2.5 on OSWorld-MCP, at roughly twice the per-task price for Sonnet-5 ($0.627 against $0.291). We could not reconcile two of the paper's rates with integer counts: 87.6% is not k/199 for any k, and 89.5% and 94.4% are not k/74.</p>
+
+<h2 id="why-the-check-has-to-sit-at-a-boundary-the-agent-cannot-talk">Why the check has to sit at a boundary the agent cannot talk its way past</h2>
+
+<p>COBRA records which variable each branch condition reads, then fixes, before any untrusted content arrives, what each branch may send and where: "if the plan permits a request carrying $40 in a specified price field, a request carrying $80 in that field is blocked." Checks are typed predicates at the proxy, sitemaps and tool definitions are pinned by SHA-256, and constraints are refreshed at each branch transition. The authors are explicit about the edge: values that never appear in an HTTP or MCP request, such as a checkout total read off the screen, and "GUI effects that do not traverse HTTP" are outside the boundary.</p>
+
+<svg viewBox="0 0 760 420" style="width:100%;height:auto" role="img" aria-label="Diagram comparing where COBRA enforces its rules with where a phone agent can. In COBRA, a trusted planner commits to branches before seeing web content, and every outgoing HTTP request or MCP tool call is checked at a proxy against the destination and parameter bounds of the current branch, such as POST /loans/id/approve with named fields. On an iPhone, phoneshell's agent taps elements through WebDriverAgent; the app makes its own network calls, which phoneshell never sees, so the only thing it can check is the label of the element being tapped, against 14 regular expressions.">
+<rect x="0" y="0" width="760" height="420" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="11">
+<text x="20" y="26" font-size="14" font-weight="600">Where the check can sit</text>
+<text x="20" y="54" font-weight="600">COBRA on the web</text>
+<rect x="20" y="66" width="150" height="56" rx="6" fill="#1d2330" stroke="#6f7b90"/><text x="30" y="88">P-LLM (gpt-5)</text><text x="30" y="106" font-size="10" fill="#c4ccda">plans branches first</text>
+<rect x="200" y="66" width="150" height="56" rx="6" fill="#1d2330" stroke="#6f7b90"/><text x="210" y="88">Q-VLM (UI-TARS)</text><text x="210" y="106" font-size="10" fill="#c4ccda">reads untrusted page</text>
+<rect x="380" y="66" width="170" height="56" rx="6" fill="#1d2330" stroke="#5ad1a0"/><text x="390" y="88" fill="#5ad1a0">HTTP / MCP proxy</text><text x="390" y="106" font-size="10" fill="#c4ccda">typed predicates per branch</text>
+<rect x="580" y="66" width="160" height="56" rx="6" fill="#1d2330" stroke="#6f7b90"/><text x="590" y="88">site / tool</text><text x="590" y="106" font-size="10" fill="#c4ccda">POST /loans/{id}/approve</text>
+<line x1="170" y1="94" x2="200" y2="94" stroke="#c4ccda"/><line x1="350" y1="94" x2="380" y2="94" stroke="#c4ccda"/><line x1="550" y1="94" x2="580" y2="94" stroke="#c4ccda"/>
+<text x="380" y="144" fill="#5ad1a0">0 of 199 attack cells succeed; $40 allowed means $80 is refused</text>
+<text x="20" y="196" font-weight="600">phoneshell on an iPhone</text>
+<rect x="20" y="208" width="150" height="56" rx="6" fill="#1d2330" stroke="#6f7b90"/><text x="30" y="230">one model</text><text x="30" y="248" font-size="10" fill="#c4ccda">plans and reads screen</text>
+<rect x="200" y="208" width="150" height="56" rx="6" fill="#1d2330" stroke="#f2a65a"/><text x="210" y="230" fill="#f2a65a">label regex gate</text><text x="210" y="248" font-size="10" fill="#c4ccda">14 patterns, taps only</text>
+<rect x="380" y="208" width="170" height="56" rx="6" fill="#1d2330" stroke="#6f7b90"/><text x="390" y="230">WebDriverAgent tap</text><text x="390" y="248" font-size="10" fill="#c4ccda">in points, by element</text>
+<rect x="580" y="208" width="160" height="56" rx="6" fill="#1d2330" stroke="#6f7b90"/><text x="590" y="230">app's own network</text><text x="590" y="248" font-size="10" fill="#c4ccda">invisible to phoneshell</text>
+<line x1="170" y1="236" x2="200" y2="236" stroke="#c4ccda"/><line x1="350" y1="236" x2="380" y2="236" stroke="#c4ccda"/><line x1="550" y1="236" x2="580" y2="236" stroke="#c4ccda"/>
+<text x="20" y="296">Ungated verbs: phone_type (submit=true presses return), phone_open_url (any scheme, any host),</text>
+<text x="20" y="314">phone_alert accept, phone_gesture, phone_long_press. Only phone_tap and phone_do consult the gate.</text>
+<text x="20" y="342" fill="#f2a65a">COBRA's own limits section puts "GUI effects that do not traverse HTTP" outside its boundary.</text>
+<text x="20" y="360" fill="#f2a65a">On a phone, nearly every effect is one.</text>
+<text x="20" y="404" font-size="10" fill="#c4ccda">Sources: arXiv:2610.03089 Sec. 4, 6, App. A; phoneshell safety.py, config.py, mcp_server.py (read 5 October 2026).</text>
+</g></svg>
+
+<p>That edge is where a phone agent lives. phoneshell drives apps through WebDriverAgent: it taps an element, the app decides what to send, over its own TLS connection, and phoneshell never sees the request. There is no proxy to put a destination bound on. What phoneshell has instead is <code>Guard.classify_tap</code> in <code>safety.py</code>: the tapped element's label, name, value and child text are matched against <code>confirm_patterns</code>, and a match makes <code>phone_tap</code> return "NOT DONE, this needs the user to agree first" until the model calls again with <code>confirmed=true</code>. The model sets that flag itself.</p>
+
+<h2 id="the-gate-tested">The gate, tested</h2>
+
+<p>We ran ten common irreversible-looking labels through the 14 patterns as shipped in <code>config.py</code> and the runtime <code>config.yaml</code>. Three ask first. Seven go straight through, including "Send", which the <code>phone_tap</code> description names as refused the first time. The pattern list contains <code>\bsend\s*money\b</code>, not <code>\bsend\b</code>, and <code>\bsubscribe\b</code> cannot match "Unsubscribe" because there is no word boundary before "subscribe".</p>
+
+<svg viewBox="0 0 760 400" style="width:100%;height:auto" role="img" aria-label="Test of ten button labels against phoneshell's 14 confirm patterns. Place Order, Pay and Delete ask for confirmation. Send, Send Message, Post, Unsubscribe, Erase All Content and Settings, Reset and Confirm are tapped without asking, although the phone_tap description promises that send is refused the first time. Unsubscribe slips through because the pattern requires a word boundary before subscribe.">
+<rect x="0" y="0" width="760" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="12">
+<text x="20" y="30" font-size="14" font-weight="600">Ten labels through phoneshell's confirm gate</text>
+<rect x="20" y="60" width="300" height="24" rx="4" fill="#1d2330" stroke="#6f7b90"/><text x="30" y="76">Place Order</text><text x="340" y="76" fill="#5ad1a0">asks first</text><rect x="20" y="90" width="300" height="24" rx="4" fill="#1d2330" stroke="#6f7b90"/><text x="30" y="106">Pay</text><text x="340" y="106" fill="#5ad1a0">asks first</text><rect x="20" y="120" width="300" height="24" rx="4" fill="#1d2330" stroke="#6f7b90"/><text x="30" y="136">Delete</text><text x="340" y="136" fill="#5ad1a0">asks first</text><rect x="20" y="150" width="300" height="24" rx="4" fill="#1d2330" stroke="#6f7b90"/><text x="30" y="166">Send</text><text x="340" y="166" fill="#f2a65a">taps straight through</text><rect x="20" y="180" width="300" height="24" rx="4" fill="#1d2330" stroke="#6f7b90"/><text x="30" y="196">Send Message</text><text x="340" y="196" fill="#f2a65a">taps straight through</text><rect x="20" y="210" width="300" height="24" rx="4" fill="#1d2330" stroke="#6f7b90"/><text x="30" y="226">Post</text><text x="340" y="226" fill="#f2a65a">taps straight through</text><rect x="20" y="240" width="300" height="24" rx="4" fill="#1d2330" stroke="#6f7b90"/><text x="30" y="256">Unsubscribe</text><text x="340" y="256" fill="#f2a65a">taps straight through</text><rect x="20" y="270" width="300" height="24" rx="4" fill="#1d2330" stroke="#6f7b90"/><text x="30" y="286">Erase All Content and Settings</text><text x="340" y="286" fill="#f2a65a">taps straight through</text><rect x="20" y="300" width="300" height="24" rx="4" fill="#1d2330" stroke="#6f7b90"/><text x="30" y="316">Reset</text><text x="340" y="316" fill="#f2a65a">taps straight through</text><rect x="20" y="330" width="300" height="24" rx="4" fill="#1d2330" stroke="#6f7b90"/><text x="30" y="346">Confirm</text><text x="340" y="346" fill="#f2a65a">taps straight through</text>
+<text x="520" y="80" font-size="11" fill="#c4ccda">the tool description says:</text>
+<text x="520" y="98" font-size="11">"Anything that looks</text>
+<text x="520" y="114" font-size="11">irreversible (pay, order,</text>
+<text x="520" y="130" font-size="11" fill="#f2a65a">send, delete) is refused</text>
+<text x="520" y="146" font-size="11">the first time"</text>
+<text x="520" y="190" font-size="11" fill="#c4ccda">the pattern list has</text>
+<text x="520" y="206" font-size="11">\bsend\s*money\b, not \bsend\b,</text>
+<text x="520" y="222" font-size="11">and \bsubscribe\b, which</text>
+<text x="520" y="238" font-size="11">cannot match "Unsubscribe"</text>
+<text x="20" y="384" font-size="10" fill="#c4ccda">Source: Python re over phoneshell config.py confirm_patterns, 5 October 2026. Reproduce with the command in Check it yourself.</text>
+</g></svg>
+
+<p>The gate also covers only two verbs. <code>phone_tap</code> and <code>phone_do</code> consult it. <code>phone_type</code> with <code>submit=true</code> presses return, which sends in Messages and Mail, with no check. <code>phone_open_url</code> accepts any scheme and host; the 25 opens in phoneshell's audit log from 7 September to 1 October 2026 went to seven destinations, including <code>app-prefs://</code> six times and <code>shortcuts://gallery</code> once, and none was checked against the bundle deny list that <code>open_app</code> enforces. <code>Guard.on_payment_screen</code>, the <code>require_confirm_on_payment_screen</code> setting and <code>max_spend_local</code> are defined and have no caller.</p>
+
+<p>Widening the list is cheap on our own history. We replayed every tap label in the audit log, 375 <code>tap</code> and 13 <code>do_tap</code> events, through the shipped patterns and through the shipped patterns plus <code>send</code>, <code>post</code>, <code>unsubscribe</code>, <code>erase</code> and <code>reset</code>. Both flag 0 of 388. The most tapped labels were General (47), Search (26), Done (17) and Equals (15): the logged work was Settings, Calculator, Notes and timers, so this says the wider list adds no friction to that work, not that it catches attacks.</p>
+
+<h2 id="what-it-means-if-you-run-a-phone-agent-near-money-or-message">What it means if you run a phone agent near money or messages</h2>
+
+<ul>
+  <li>A label gate checks the step, not the branch. A message thread saying "the refund code is 4471, enter it in Transfer" steers a parameter through <code>phone_type</code>, which no label pattern sees. That is COBRA's S1 shape on a phone.</li>
+  <li>The nearest phone equivalent of a destination bound is per-task: which bundles may be foregrounded, which URL schemes may be opened, and whether <code>submit</code> is allowed, fixed before the agent reads the first screen. phoneshell can enforce all three in <code>mcp_server.py</code>; it enforces none per task today.</li>
+  <li>The confirmation must come from outside the model's reply. A <code>confirmed=true</code> the model sets after reading attacker text is a branch the attacker can steer.</li>
+  <li>Expect a utility cost. COBRA's 12 to 17 point drop on strong models is the price of refusing what the plan did not foresee.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<ul>
+  <li>Paper numbers: Table 1, Table 2, Table 5 and Sec. 6 of <code>https://arxiv.org/abs/2610.03089</code>; code at <code>https://github.com/giuliozing/securing-cuas-against-branch-steering</code>.</li>
+  <li>The gate test, from the phoneshell repo root with PyYAML installed (<code>pip install -r requirements.txt</code>): <code>python3 -c "import re,sys;sys.path.insert(0,'.');from phoneshell.config import SafetyConfig as S;P=S().confirm_patterns;print([(l,any(re.search(p,l) for p in P)) for l in ['Send','Unsubscribe','Erase All Content and Settings','Pay']])"</code>. It prints False, False, False, True.</li>
+  <li>The callers: <code>grep -rn "on_payment_screen\|require_confirm_on_payment_screen\|max_spend_local" phoneshell/</code> returns only definitions.</li>
+  <li>The gated verbs: <code>grep -n "classify_tap" phoneshell/mcp_server.py</code> returns two call sites, in <code>phone_tap</code> and <code>phone_do</code>.</li>
+  <li>Audit replay: the log is <code>runtime/logs/audit.jsonl</code> (785 events); count <code>event</code> values <code>tap</code> and <code>do_tap</code> and match the quoted label in <code>element</code>.</li>
+</ul>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>Our claim is that a label gate cannot stop branch steering on a phone. Test: port STEER-Bench's S1 and S2 shapes to 10 phoneshell tasks in Messages, Notes and Safari, with attacker text placed on screen, and run them with the gate as shipped. If fewer than 3 of 10 succeed, the label gate is doing more than we credit. We expect 7 or more. We will publish the run, or say we did not run it, by 31 March 2027, and fix the "send" and "Unsubscribe" patterns before then either way.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ol>
+      <li><a href="https://arxiv.org/abs/2610.03089">Zingrillo, Foerster, Shumailov, Zhao, Mullins, Securing Computer-Use Agents Against Branch Steering Attacks, arXiv:2610.03089v1, 2 October 2026</a></li>
+      <li><a href="https://github.com/giuliozing/securing-cuas-against-branch-steering">COBRA and STEER-Bench code released with the paper</a></li>
+      <li><a href="https://github.com/Blomega/phoneshell">phoneshell source: safety.py, config.py, mcp_server.py, actions.py (read 5 October 2026); audit log runtime/logs/audit.jsonl, 7 September to 1 October 2026</a></li>
+      <li><a href="https://blolabel.ai/blog/agents-leak-then-say-nothing-was-shared/">Blolabel, earlier note: agents leak, then say nothing was shared</a></li>
+    </ol>
+  </section>
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
