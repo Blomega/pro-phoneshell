@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WebFovea gained 26 points without changing its model; phoneshell&#x27;s live agent still gets a 235 x 512 picture of the phone | Blolabel</title>
+<meta name="description" content="A vision web agent rose from 31.0 to 57.0 in the WebRetriever Challenge 2026 with the same claude-opus-4-6 throughout (arXiv:2610.03036, 2 October 2026), by fixing the code between model and browser. Checked stage by stage, phoneshell avoids the coordinate bug that cost WebFovea most, but its MCP server shrinks the iPhone screen to 235 x 512 and its no-change notice has no budget behind it.">
+<link rel="canonical" href="https://blolabel.ai/blog/same-model-gained-26-points/">
+<meta property="og:title" content="WebFovea gained 26 points without changing its model; phoneshell&#x27;s live agent still gets a 235 x 512 picture of the phone | Blolabel">
+<meta property="og:description" content="A vision web agent rose from 31.0 to 57.0 in the WebRetriever Challenge 2026 with the same claude-opus-4-6 throughout (arXiv:2610.03036, 2 October 2026), by fixing the code between model and browser. Checked stage by stage, phoneshell avoids the coordinate bug that cost WebFovea most, but its MCP server shrinks the iPhone screen to 235 x 512 and its no-change notice has no budget behind it.">
+<meta property="og:url" content="https://blolabel.ai/blog/same-model-gained-26-points/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/same-model-gained-26-points-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "WebFovea gained 26 points without changing its model; phoneshell's live agent still gets a 235 x 512 picture of the phone", "description": "A vision web agent rose from 31.0 to 57.0 in the WebRetriever Challenge 2026 with the same claude-opus-4-6 throughout (arXiv:2610.03036, 2 October 2026), by fixing the code between model and browser. Checked stage by stage, phoneshell avoids the coordinate bug that cost WebFovea most, but its MCP server shrinks the iPhone screen to 235 x 512 and its no-change notice has no budget behind it.", "datePublished": "2026-10-05", "dateModified": "2026-10-05", "url": "https://blolabel.ai/blog/same-model-gained-26-points/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/same-model-gained-26-points/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/same-model-gained-26-points-hero.png", "citation": ["https://arxiv.org/abs/2610.03036", "https://arxiv.org/abs/2607.06118", "https://mininglamp-ai.github.io/WebRetriever_Challenge/", "https://github.com/Blomega/phoneshell", "https://blolabel.ai/blog/screen-unchanged-notice-barely-stops-repeats/"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "How much can harness changes improve a GUI agent without changing the model?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "In WebFovea (arXiv:2610.03036), the WebRetriever Challenge 2026 hidden-set score rose from 31.0 to 57.0 over four submissions between 29 August and 2 September 2026, with claude-opus-4-6 in every one. Each submission bundled several fixes, so single components cannot be credited from the official scores."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Why did WebFovea's clicks land at three quarters of their target?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "The model API downscaled the 1920 x 1080 screenshot to about 1440 x 810 before the model saw it, so its coordinates were in the smaller image while the code treated them as full-resolution pixels. Across 1,312 clicks none landed right of or below three quarters of the screen. Sending 1440 x 810 and scaling by the measured ratio fixed it."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does phoneshell have the coordinate problem?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. phoneshell's tools take element ids from the accessibility tree and WebDriverAgent taps in points, so the model never supplies a coordinate. Its live MCP path does shrink the screenshot to a 512-pixel long edge, 235 x 512 for an iPhone 17 Pro Max, which limits what vision can read."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Do no-change notices stop a GUI agent from repeating an action?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Not on their own. WebFovea added notes saying an action had no detectable effect; 10 idle-looping tasks stayed at 0 of 10 with the same 400 steps. Limits enforced by the executor did stop the repeats."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-05">05 October 2026</time>
+    <span>9 min read</span>
+  </div>
+  <h1>WebFovea gained 26 points without changing its model; phoneshell&#x27;s live agent still gets a 235 x 512 picture of the phone</h1>
+  <p class="standfirst">Jiangang Han's WebFovea report is the cleanest measurement yet of how much of an agent's score lives outside the model. We ran its four-stage checklist over phoneshell's own code. Two of the four stages are fine. The other two carry the same failure shapes the paper measured.</p>
+
+<p>WebFovea, a vision-based web agent, went from 31.0 to 57.0 out of 100 on the WebRetriever Challenge 2026 hidden set in four submissions between 29 August and 2 September 2026, and used claude-opus-4-6 for every one. The largest single fault it fixed was not reasoning: the model API was shrinking screenshots, so every click landed at three quarters of its target. phoneshell cannot make that mistake, because its agent taps element ids, but its live MCP server shrinks the iPhone screen to 235 x 512 pixels on purpose.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/same-model-gained-26-points-hero.png" alt="Abstract technical illustration of a signal passing through four connected rectangular stages, one stage narrowing the beam to a thin line" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+
+<h2 id="what-webfovea-changed-and-on-which-date">What WebFovea changed, and on which date</h2>
+
+<p>Jiangang Han, an independent researcher, posted the report as arXiv:2610.03036 on 2 October 2026. The challenge, run by Mininglamp Technology, scores Protocol III of the WebRetriever benchmark (arXiv:2607.06118): start from an entry URL on a live website, operate the site, return one exactly checkable answer, no partial credit, with a manual review of trajectories. Teams got one hidden-set run a day for seven days and an aggregate score only. Models had to come from an approved list, and the newest Anthropic model on it was Claude 4.6. WebFovea placed 2nd.</p>
+
+<svg viewBox="0 0 760 400" style="width:100%;height:auto" role="img" aria-label="Bar chart of WebFovea's four official WebRetriever Challenge 2026 scores, all with claude-opus-4-6: 31.0 on 29 August, 41.0 on 31 August, 46.0 on 1 September and 57.0 on 2 September. The 26 point rise came from changes to the code between the model and the browser, not from the model.">
+<rect x="0" y="0" width="760" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">WebFovea official hidden-set score, same model every time</text>
+<rect x="70" y="40" width="12" height="12" fill="#f2a65a"/><text x="88" y="50" font-size="11" fill="#c4ccda">score out of 100</text>
+<line x1="70" y1="330.0" x2="740" y2="330.0" stroke="#2a3140"/>
+<text x="62" y="334.0" font-size="10" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="70" y1="286.7" x2="740" y2="286.7" stroke="#2a3140"/>
+<text x="62" y="290.7" font-size="10" fill="#c4ccda" text-anchor="end">10</text>
+<line x1="70" y1="243.3" x2="740" y2="243.3" stroke="#2a3140"/>
+<text x="62" y="247.3" font-size="10" fill="#c4ccda" text-anchor="end">20</text>
+<line x1="70" y1="200.0" x2="740" y2="200.0" stroke="#2a3140"/>
+<text x="62" y="204.0" font-size="10" fill="#c4ccda" text-anchor="end">30</text>
+<line x1="70" y1="156.7" x2="740" y2="156.7" stroke="#2a3140"/>
+<text x="62" y="160.7" font-size="10" fill="#c4ccda" text-anchor="end">40</text>
+<line x1="70" y1="113.3" x2="740" y2="113.3" stroke="#2a3140"/>
+<text x="62" y="117.3" font-size="10" fill="#c4ccda" text-anchor="end">50</text>
+<line x1="70" y1="70.0" x2="740" y2="70.0" stroke="#2a3140"/>
+<text x="62" y="74.0" font-size="10" fill="#c4ccda" text-anchor="end">60</text>
+<text x="18" y="200" font-size="11" fill="#c4ccda" transform="rotate(-90 18 200)" text-anchor="middle">hidden-set score (100 tasks)</text>
+<rect x="136.8" y="195.7" width="31.0" height="134.3" fill="#f2a65a"/>
+<text x="152.2" y="191.7" font-size="9.5" fill="#f2a65a" text-anchor="middle">31.0</text>
+<text x="153.8" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">29 Aug</text>
+<rect x="304.2" y="152.3" width="31.0" height="177.7" fill="#f2a65a"/>
+<text x="319.8" y="148.3" font-size="9.5" fill="#f2a65a" text-anchor="middle">41.0</text>
+<text x="321.2" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">31 Aug</text>
+<rect x="471.8" y="130.7" width="31.0" height="199.3" fill="#f2a65a"/>
+<text x="487.2" y="126.7" font-size="9.5" fill="#f2a65a" text-anchor="middle">46.0</text>
+<text x="488.8" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">1 Sep</text>
+<rect x="639.2" y="83.0" width="31.0" height="247.0" fill="#f2a65a"/>
+<text x="654.8" y="79.0" font-size="9.5" fill="#f2a65a" text-anchor="middle">57.0</text>
+<text x="656.2" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">2 Sep</text>
+<text x="70" y="386" font-size="10" fill="#c4ccda">Source: Han, arXiv:2610.03036, Table 4. One run per submission on live websites.</text>
+</g></svg>
+
+<p>Each submission shipped several changes, so the paper does not credit the official gains to single components. It does break down the second jump: the 29 August run finished only 79 of 100 tasks before its time limit, at 39.2% accuracy on those. Finishing 97, as the next run did, would have scored about 38, so roughly 7 of the 10 points came from finishing tasks and 3 from answering better. Per-component evidence comes from small paired sets on the 100 public tasks, which the author labels as direction, not significance.</p>
+
+<h2 id="the-model-was-right-and-the-click-was-wrong">The model was right and the click was wrong</h2>
+
+<p>The organisers' template mapped model coordinates with UI-TARS's <code>smart_resize</code> rule, which for a 1920 x 1080 screenshot is nearly the identity. Across 1,312 clicks in the first full run, no click fell right of or below three quarters of the screen. A calibration image with six known markers showed why: the API downscaled the image before the model saw it, and coordinates needed a correction of 1.324 in x and 1.350 in y. Sending 1440 x 810 directly brought the factor to 1.010 and 0.993. On a paired set of 24 tasks the version with this fix went from 8 to 20 passes, 12 fixed and 0 broken, and the share of tasks hitting the step limit fell from 67% to 4%. Three targets on a real page that had been missed by 122 to 189 pixels were hit within 1 to 5.</p>
+
+<table>
+  <thead><tr><th>Stage</th><th>What broke in WebFovea</th><th>Measured</th><th>phoneshell today</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>Parsing</td><td>Self-generated chat-template tokens typed into search boxes</td><td>15 of 305 episodes (4.9%); 7.7% success vs 41.7% clean; fix changed 551 of 7,705 steps, 0 clean ones</td><td>Not exposed: actions are typed MCP tool calls; the bench uses <code>tool_calls</code></td><td>2610.03036 Sec. 4.2; <code>bench/openrouter.py</code></td></tr>
+    <tr><td>Execution</td><td>API downscaled the image, clicks at 3/4 of target</td><td>8 to 20 of 24 tasks; step-limit share 67% to 4%</td><td>Not exposed: <code>phone_tap(id)</code>, taps in points via <code>Geometry</code></td><td>Sec. 4.3, Table 5; <code>wda/client.py</code></td></tr>
+    <tr><td>Execution</td><td>Prompt promised Enter on a trailing newline, executor never sent it</td><td>79 of 356 type calls (22%)</td><td>Return is sent, but <code>_confirm_typed</code> returns early when <code>submit=True</code>, so submitted text is never read back</td><td>Sec. 4.3; <code>actions.py</code> type_text</td></tr>
+    <tr><td>Execution</td><td>Native dropdown never shows in the screenshot</td><td>One task: same dropdown clicked 9 times</td><td>Has a dedicated verb: <code>phone_set_picker</code> sets wheels by value</td><td>Sec. 4.3; <code>mcp_server.py</code></td></tr>
+    <tr><td>Feedback</td><td>"No detectable change" notes alone</td><td>10 looping tasks: 0 of 10 before and after, 400 steps both times</td><td>Same design: "THE SCREEN DID NOT CHANGE" text; <code>StuckDetector</code> has no caller; only a 60-step cap</td><td>Sec. 5.4; <code>mcp_server._act_and_report</code>, <code>agent/verify.py</code></td></tr>
+    <tr><td>Observation</td><td>Image resampled before the model saw it</td><td>Fixed by capping at 1440 x 810</td><td>MCP path: <code>screenshot_max_edge: 512</code>, 235 x 512 on a 1320 x 2868 screen; bench path: 1536</td><td>Sec. 4.5; <code>config.py</code>, <code>bench/openrouter.py</code></td></tr>
+    <tr><td>Guardrails</td><td><code>goto(url)</code> shortcuts to data APIs and search engines</td><td>692 calls in dev70; 58% of correct answers came from shortcuts</td><td><code>phone_open_url</code> is offered as "the fastest way to reach a known screen"; device-state grading accepts the shortcut</td><td>Sec. 4.6; <code>mcp_server.py</code></td></tr>
+  </tbody>
+</table>
+
+<h2 id="how-the-four-stages-map-onto-a-phone-agent">How the four stages map onto a phone agent</h2>
+
+<p>The paper's checklist is model-agnostic: for any failure, ask whether the reply was parsed as meant, whether the action took effect, whether the result was reported truthfully, and whether the model was shown what it needed. phoneshell's design already closes the first two for most actions. Structured tool calls have no free text to contaminate, and the model picks an element by id from the accessibility tree, so the coordinate conversion lives entirely in phoneshell's <code>Geometry</code> class (pixels divided by the device scale, 3 on current iPhones). That is the stage where WebFovea lost the most, and it is a design choice, not luck.</p>
+
+<svg viewBox="0 0 760 430" style="width:100%;height:auto" role="img" aria-label="Diagram of the four-stage round trip from WebFovea, parsing, execution, feedback and observation, with what each stage broke in the paper and where phoneshell stands. Parsing: chat-template tokens in 4.9 percent of episodes; phoneshell uses typed MCP tool calls. Execution: every click at three quarters of its target; phoneshell taps element ids, not coordinates. Feedback: a no-change notice alone left 10 looping tasks at 0 of 10; phoneshell relies on the same kind of notice and its StuckDetector has no caller. Observation: the API shrank screenshots before the model saw them; phoneshell's own MCP path shrinks an iPhone screen to 235 by 512 pixels.">
+<rect x="0" y="0" width="760" height="430" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="11">
+<text x="20" y="26" font-size="14" font-weight="600">Four places a correct decision gets lost, and phoneshell at each</text>
+<rect x="20" y="44" width="350" height="160" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+<text x="32" y="64" font-weight="600">1 Parsing</text>
+<text x="32" y="86">WebFovea: &lt;|eot_id|&gt; typed into search boxes,</text>
+<text x="32" y="102">15 of 305 episodes (4.9%); fix touched 551 of 7,705 steps</text>
+<text x="32" y="130" fill="#5ad1a0">phoneshell: typed JSON tool calls over MCP,</text>
+<text x="32" y="146" fill="#5ad1a0">no free text to parse into an action</text>
+<text x="32" y="186" font-size="10" fill="#c4ccda">status: not exposed</text>
+<rect x="390" y="44" width="350" height="160" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+<text x="402" y="64" font-weight="600">2 Execution</text>
+<text x="402" y="86">WebFovea: clicks at 3/4 of target, 1.324 / 1.350 factor;</text>
+<text x="402" y="102">fix took a 24-task set from 8 to 20 passes</text>
+<text x="402" y="130" fill="#5ad1a0">phoneshell: phone_tap(id), WDA taps in points,</text>
+<text x="402" y="146" fill="#5ad1a0">the model never supplies a coordinate</text>
+<text x="402" y="166" fill="#f2a65a">but type + submit skips the read-back</text>
+<text x="402" y="186" font-size="10" fill="#c4ccda">status: mostly not exposed, one gap</text>
+<rect x="20" y="220" width="350" height="160" rx="8" fill="#1d2330" stroke="#f2a65a"/>
+<text x="32" y="240" font-weight="600">3 Feedback</text>
+<text x="32" y="262">WebFovea: "no detectable change" notes alone:</text>
+<text x="32" y="278">10 looping tasks stayed 0 of 10, same 400 steps</text>
+<text x="32" y="306" fill="#f2a65a">phoneshell: "THE SCREEN DID NOT CHANGE" notice,</text>
+<text x="32" y="322" fill="#f2a65a">no executor-enforced repeat budget;</text>
+<text x="32" y="338" fill="#f2a65a">StuckDetector exists with no caller</text>
+<text x="32" y="362" font-size="10" fill="#c4ccda">status: exposed</text>
+<rect x="390" y="220" width="350" height="160" rx="8" fill="#1d2330" stroke="#f2a65a"/>
+<text x="402" y="240" font-weight="600">4 Observation</text>
+<text x="402" y="262">WebFovea: API shrank 1920 x 1080 before the model</text>
+<text x="402" y="278">saw it; fix: send at most 1440 x 810 yourself</text>
+<text x="402" y="306" fill="#f2a65a">phoneshell MCP: max edge 512, so an iPhone 17 Pro</text>
+<text x="402" y="322" fill="#f2a65a">Max screen arrives as 235 x 512 (3.2% of pixels);</text>
+<text x="402" y="338" fill="#f2a65a">the bench path sends 706 x 1535</text>
+<text x="402" y="362" font-size="10" fill="#c4ccda">status: exposed on the live path</text>
+<text x="20" y="412" font-size="10" fill="#c4ccda">Sources: arXiv:2610.03036 Sec. 4 and 5.4; phoneshell config.py, mcp_server.py, actions.py, agent/verify.py, bench/openrouter.py.</text>
+</g></svg>
+
+<p>The other two stages are where the paper's findings land on our code. WebFovea's most useful negative result is that a correct "nothing changed" note did not change behaviour: the model acknowledged the note in its own reasoning and repeated the action anyway, across 10 tasks and 400 steps. Only budgets enforced by the executor, which refuse the call with an explanation, stopped the loops. phoneshell's live loop guard is exactly the note: <code>_act_and_report</code> returns "THE SCREEN DID NOT CHANGE ... try something different rather than repeating it". The class built to enforce a limit, <code>StuckDetector</code> in <code>agent/verify.py</code>, has no caller in the package. Our earlier note on the Inertia paper found the same pattern from the other side: <a href="/blog/screen-unchanged-notice-barely-stops-repeats/">a screen-unchanged notice barely stops repeats</a>.</p>
+
+<h2 id="the-picture-the-live-agent-gets">The picture the live agent gets</h2>
+
+<p>WebFovea found its observation bug because an outside API was resampling its images. phoneshell resamples its own. <code>Config.brain.screenshot_max_edge</code> defaults to 512, both in <code>config.py</code> and in the runtime <code>config.yaml</code>, and <code>observation.py</code> passes it to <code>downscale()</code> before JPEG encoding at quality 70. An iPhone 17 Pro Max screenshot of 1320 x 2868 becomes 235 x 512, 3.2% of the original pixels. The benchmark runner overrides the value to 1536 (706 x 1535, 28.6% of the pixels), so published bench results do not use the small image, and a person driving the phone through Claude Code or another MCP client does.</p>
+
+<svg viewBox="0 0 760 420" style="width:100%;height:auto" role="img" aria-label="Scale drawing of the images involved, at one tenth size. An iPhone 17 Pro Max screenshot is 1320 by 2868 pixels. phoneshell's benchmark path sends it at 706 by 1535. phoneshell's MCP server, the path a live agent uses, sends 235 by 512, the same size that made an earlier phoneshell vision experiment worthless before it was retracted. WebFovea's browser viewport was 1920 by 1080 and it now sends at most 1440 by 810 so the model API does not shrink it again.">
+<rect x="0" y="0" width="760" height="420" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">What the model is shown, drawn at 1/10 scale</text>
+<rect x="30" y="50" width="132" height="287" fill="none" stroke="#6f7b90" stroke-width="2"/><text x="30" y="353" font-size="11" fill="#6f7b90">iPhone 17 Pro Max</text><text x="30" y="367" font-size="10" fill="#c4ccda">1320 x 2868 px, scale 3</text>
+<rect x="200" y="183" width="71" height="154" fill="none" stroke="#5ad1a0" stroke-width="2"/><text x="200" y="353" font-size="11" fill="#5ad1a0">bench path</text><text x="200" y="367" font-size="10" fill="#c4ccda">706 x 1535</text>
+<rect x="310" y="286" width="24" height="51" fill="none" stroke="#f2a65a" stroke-width="2"/><text x="310" y="353" font-size="11" fill="#f2a65a">MCP path</text><text x="310" y="367" font-size="10" fill="#c4ccda">235 x 512</text>
+<rect x="400" y="50" width="192" height="108" fill="none" stroke="#6f7b90" stroke-width="2"/><text x="400" y="174" font-size="11" fill="#6f7b90">WebFovea viewport</text><text x="400" y="188" font-size="10" fill="#c4ccda">1920 x 1080 CDP</text>
+<rect x="400" y="210" width="144" height="81" fill="none" stroke="#5ad1a0" stroke-width="2"/><text x="400" y="307" font-size="11" fill="#5ad1a0">WebFovea sends</text><text x="400" y="321" font-size="10" fill="#c4ccda">at most 1440 x 810</text>
+<text x="400" y="364" font-size="11" fill="#e9ecf2">The API had been shrinking 1920 x 1080 to about 1440 x 810</text>
+<text x="400" y="380" font-size="11" fill="#e9ecf2">behind WebFovea's back. phoneshell does it to itself, on purpose,</text>
+<text x="400" y="396" font-size="11" fill="#e9ecf2">to 3.2% of the pixels.</text>
+<text x="30" y="410" font-size="10" fill="#c4ccda">Sources: arXiv:2610.03036 Sec. 4.3; phoneshell config.py screenshot_max_edge, perception/screen.py downscale().</text>
+</g></svg>
+
+<p>We have measured what that size does. phoneshell's own site records that an earlier version of the vision experiment reported vision as worth nothing because "the image had been downscaled to 235&times;512", and that result was retracted before the pre-registered run that found 100% with the image and 0% without on pixels-only answers. The MCP default is the retracted configuration. Judgement: for a labelled Settings screen it costs nothing, because the tree carries the answer; for a chart, a map tile or text drawn into an image, the live agent is running the experiment we threw out.</p>
+
+<h2 id="what-this-means-if-you-build-or-run-a-phone-agent">What this means if you build or run a phone agent</h2>
+
+<ul>
+  <li>Measure the image the model receives, not the one you captured. WebFovea's fix started with a synthetic target of six markers; the phone equivalent is a screenshot with known glyphs at known points, read back through the real path.</li>
+  <li>Move loop limits out of the prompt and into the executor. WebFovea's data says a note is read and ignored. A refusal after N identical actions on an unchanged screen is a few lines in <code>_act_and_report</code>.</li>
+  <li>Read back after typing even when submitting: read the field before pressing return, the way WebFovea's <code>fill</code> reads back the value and leaves Enter to a separate step.</li>
+  <li>Decide whether shortcuts count. The challenge banned <code>goto</code> because answers must come through the site's own interface. phoneshell grades end state, so a deep link that reaches the right screen passes. That is a defensible rule, but a score built on it is not comparable with one that forbids it.</li>
+  <li>Budget for live-site drift if you compare against WebFovea: 13 of the 100 public reference answers no longer matched the live sites, and 16 sites were unreachable from the author's network.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<ul>
+  <li>Scores and dates: Table 4 of <code>https://arxiv.org/abs/2610.03036</code>. Coordinate numbers: Sec. 4.3 and Table 5. Feedback negative result: Sec. 5.4.</li>
+  <li>The default: <code>grep -n screenshot_max_edge phoneshell/config.py phoneshell/bench/openrouter.py</code> in the phoneshell repo shows 512 for the live config and 1536 for the bench.</li>
+  <li>The arithmetic: <code>python3 -c "r=512/2868;print(int(1320*r),int(2868*r),round(int(1320*r)*int(2868*r)/(1320*2868)*100,1))"</code> prints <code>235 512 3.2</code>.</li>
+  <li>The unused detector: <code>grep -rn StuckDetector phoneshell/</code> returns only its definition in <code>agent/verify.py</code>.</li>
+  <li>The skipped read-back: in <code>phoneshell/actions.py</code>, <code>_confirm_typed</code> starts with <code>if submit: return result</code>.</li>
+  <li>The retraction text: <code>grep -n "235&amp;times;512" phoneshell/bench/site.py</code>.</li>
+</ul>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>The claim is that 235 x 512 is too small for pixels-only answers on the live path. Test: run the 10 pre-registered pixels-only pages through the MCP server twice, once at the default 512 and once at 1536, interleaved. If the 512 run solves 8 or more of 10, the default is adequate and this note overstates the problem. We expect 3 or fewer at 512 and 8 or more at 1536. We will publish the paired run, or say we did not run it, by 31 December 2026.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ol>
+      <li><a href="https://arxiv.org/abs/2610.03036">Jiangang Han, WebFovea: When the Model Is Right but the Click Is Wrong, arXiv:2610.03036v1, 2 October 2026</a></li>
+      <li><a href="https://arxiv.org/abs/2607.06118">Dong et al., WebRetriever: a large-scale comprehensive benchmark for efficient web agent evaluation, arXiv:2607.06118, 2026</a></li>
+      <li><a href="https://mininglamp-ai.github.io/WebRetriever_Challenge/">Mininglamp Technology, WebRetriever Challenge 2026 rules and results page</a></li>
+      <li><a href="https://github.com/Blomega/phoneshell">phoneshell source: config.py, mcp_server.py, actions.py, agent/verify.py, agent/observation.py, bench/openrouter.py, bench/site.py (read 5 October 2026)</a></li>
+      <li><a href="https://blolabel.ai/blog/screen-unchanged-notice-barely-stops-repeats/">Blolabel, earlier note: a screen-unchanged notice barely stops repeats</a></li>
+    </ol>
+  </section>
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
