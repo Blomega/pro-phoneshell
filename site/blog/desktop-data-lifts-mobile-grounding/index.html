@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Desktop-only training data lifted Qwen3.5-4B&#x27;s mobile grounding by 10.8 points; phoneshell&#x27;s crawler keeps centre points that cannot score a click | Blolabel</title>
+<meta name="description" content="DeskForge (arXiv:2610.02320, 1 October 2026) composes 19 Linux apps into 1.2M annotated desktop observations. Fine-tuning Qwen3.5-4B on 200K examples raised ScreenSpot-v2&#x27;s mobile split from 82.44 to 93.21 with no phone screens in the data, and long-horizon WebArena-Infinity tasks from 31 to 50 of 119. phoneshell&#x27;s own crawler records 113 iPhone screens with centre points and no boxes or per-element effects.">
+<link rel="canonical" href="https://blolabel.ai/blog/desktop-data-lifts-mobile-grounding/">
+<meta property="og:title" content="Desktop-only training data lifted Qwen3.5-4B&#x27;s mobile grounding by 10.8 points; phoneshell&#x27;s crawler keeps centre points that cannot score a click | Blolabel">
+<meta property="og:description" content="DeskForge (arXiv:2610.02320, 1 October 2026) composes 19 Linux apps into 1.2M annotated desktop observations. Fine-tuning Qwen3.5-4B on 200K examples raised ScreenSpot-v2&#x27;s mobile split from 82.44 to 93.21 with no phone screens in the data, and long-horizon WebArena-Infinity tasks from 31 to 50 of 119. phoneshell&#x27;s own crawler records 113 iPhone screens with centre points and no boxes or per-element effects.">
+<meta property="og:url" content="https://blolabel.ai/blog/desktop-data-lifts-mobile-grounding/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/desktop-data-lifts-mobile-grounding-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Desktop-only training data lifted Qwen3.5-4B's mobile grounding by 10.8 points; phoneshell's crawler keeps centre points that cannot score a click", "description": "DeskForge (arXiv:2610.02320, 1 October 2026) composes 19 Linux apps into 1.2M annotated desktop observations. Fine-tuning Qwen3.5-4B on 200K examples raised ScreenSpot-v2's mobile split from 82.44 to 93.21 with no phone screens in the data, and long-horizon WebArena-Infinity tasks from 31 to 50 of 119. phoneshell's own crawler records 113 iPhone screens with centre points and no boxes or per-element effects.", "datePublished": "2026-10-05", "dateModified": "2026-10-05", "url": "https://blolabel.ai/blog/desktop-data-lifts-mobile-grounding/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/desktop-data-lifts-mobile-grounding/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/desktop-data-lifts-mobile-grounding-hero.png", "citation": ["https://arxiv.org/abs/2610.02320", "https://saidgurbuz.github.io/deskforge/", "https://github.com/Blomega/phoneshell", "https://blolabel.ai/blog/render-gap-ocr-vs-accessibility-tree/"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Does desktop GUI training data help mobile grounding?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "In DeskForge (arXiv:2610.02320), fine-tuning Qwen3.5-4B on 200K desktop grounding examples, with no mobile screens, raised ScreenSpot-v2 mobile accuracy from 82.44% to 93.21%. UI-R1-3B, already a GUI model, moved from 88.42% to 89.02%."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What is DeskForge-1M?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "1,207,368 annotated Linux desktop observations with 159,723,780 element instances, built by composing 19 real applications under 7 appearance presets and 7 resolutions, fusing screenshots, accessibility trees and window geometry, and recording the effect of 917,211 clicks."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How accurate are DeskForge's annotations?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Automated audits rejected 59,103 of 1,266,471 captures (4.7%). A human audit found 99.84% of 16,487 elements correct on 140 uniformly sampled screens. Applications were admitted only if their accessibility tree exposed their main content, so these rates describe pre-screened apps."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Can phoneshell's crawl data train or evaluate a grounding model?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Not as stored. Its 11 manifests hold 113 iPhone screens and 1,922 controls with a label, type and centre point but no box, so a predicted click cannot be scored as inside or outside the element, and its 237 edges record which screen a tap led to but not what changed on it."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-05">05 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>Desktop-only training data lifted Qwen3.5-4B&#x27;s mobile grounding by 10.8 points; phoneshell&#x27;s crawler keeps centre points that cannot score a click</h1>
+  <p class="standfirst">The dataset is desktop-only, built from apps chosen because their accessibility trees are good. The gain still shows up on phone screenshots. We compared what DeskForge stores for each observation with what phoneshell's crawler stores for each iPhone screen.</p>
+
+<p>Fine-tuning Qwen3.5-4B on 200,000 grounding examples drawn from Linux desktops raised its ScreenSpot-v2 mobile accuracy from 82.44% to 93.21%, a 10.77-point gain from a dataset that, in its authors' words, "contains no mobile screens". The same model, used as the action model under a fixed planner, solved 50 of 119 WebArena-Infinity tasks instead of 31. DeskForge was posted on 1 October 2026. phoneshell's crawler collects the same kind of data on an iPhone, and stores it in a form that could not have produced either number.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/desktop-data-lifts-mobile-grounding-hero.png" alt="Abstract technical illustration of overlapping translucent window rectangles with thin outlined boxes around small elements, next to a single tall narrow rectangle" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+
+<h2 id="what-deskforge-built">What DeskForge built</h2>
+
+<p>A. Said Gurbuz, Ahmed Nassar, Sunghwan Hong, Marc Pollefeys and Peter W. J. Staar (ETH Zurich, IBM Research Zurich, Microsoft; arXiv:2610.02320) compose real applications into controlled desktop scenes: 19 Linux apps from GNOME Calculator to VS Code, 7 appearance presets including four macOS-inspired and one Windows-inspired theme, all on a Linux backend, and 7 resolutions from 1366 x 768 to 3840 x 2160. They vary app state, staged content, window layout and stacking. Each observation fuses the screenshot, the accessibility tree and window geometry: boxes are clipped against ancestors, the viewport, higher windows and overlays, visible area is stored as a union of rectangles, and displayed text is separated from accessibility names so an icon's name is not taken for on-screen text. Each click records what happened to every element: appeared, disappeared, moved, text or state changed, newly occluded, revealed.</p>
+
+<table>
+  <thead><tr><th>Measure</th><th>DeskForge-1M</th><th>phoneshell crawls</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>Observations / screens</td><td>1,207,368</td><td>113 screens, 120 shots</td><td>2610.02320 App. A; <code>manifest.json</code> x 11</td></tr>
+    <tr><td>Elements</td><td>159,723,780 (mean 132.29 per observation)</td><td>1,922 controls (17.0 per screen)</td><td>App. A; manifests</td></tr>
+    <tr><td>Element geometry</td><td>Box plus visible area</td><td>Centre point only</td><td>Sec. 3; manifest <code>controls</code> keys</td></tr>
+    <tr><td>Actions recorded</td><td>917,211 clicks with per-element effects</td><td>248 taps, 237 edges: from, to, tap or no-op</td><td>Table 5; manifest <code>edges</code></td></tr>
+    <tr><td>Apps</td><td>19, admitted only if the accessibility tree exposes main content</td><td>2 (Settings, Talika)</td><td>App. B.1; manifests</td></tr>
+    <tr><td>Quality check</td><td>4.7% of captures rejected; 99.84% of 16,487 elements correct (one reviewer)</td><td>not measured</td><td>App. B.3, Table 10</td></tr>
+    <tr><td>Per-action success label</td><td>none, change only</td><td>none, change only</td><td>Sec. 3.3; manifests</td></tr>
+    <tr><td>Mobile screens</td><td>0</td><td>113 (iPhone, iOS 18.4 and 26.6.1)</td><td>App. A; manifests</td></tr>
+  </tbody>
+</table>
+
+<h2 id="the-mobile-gain-and-who-it-went-to">The mobile gain, and who it went to</h2>
+
+<p>Four vision-language models were LoRA-tuned (rank 8, one epoch) on 200,000 examples and tested on five external grounding benchmarks; all four improved on all five. Qwen3.5-4B gained 11.51 points on ScreenSpot-Pro (30.17 to 41.68) and 10.11 on OSWorld-G (51.24 to 61.35). The per-domain ScreenSpot-v2 split, in the paper's Table 11, is where phones come in. Qwen's mobile score rose about as much as its web score and less than its desktop score. UI-R1-3B, a model already trained for GUI grounding, gained 0.6 on mobile. Judgement: the transfer is real for a general model with weak GUI grounding and close to nothing for one that already has it.</p>
+
+<svg viewBox="0 0 760 400" style="width:100%;height:auto" role="img" aria-label="Grouped bar chart of ScreenSpot-v2 grounding accuracy. Qwen3.5-4B: desktop 77.25 to 91.62, mobile 82.44 to 93.21, web 79.63 to 86.04. UI-R1-3B: desktop 78.14 to 83.83, mobile 88.42 to 89.02, web 77.35 to 78.26. DeskForge-1M contains no mobile screens, yet Qwen's mobile split rose 10.77 points; UI-R1, already trained on GUI data, gained 0.6.">
+<rect x="0" y="0" width="760" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">ScreenSpot-v2 accuracy by domain, before and after DeskForge-1M</text>
+<rect x="70" y="40" width="12" height="12" fill="#6f7b90"/><text x="88" y="50" font-size="11" fill="#c4ccda">base</text>
+<rect x="146" y="40" width="12" height="12" fill="#f2a65a"/><text x="164" y="50" font-size="11" fill="#c4ccda">+ DeskForge-1M</text>
+<line x1="70" y1="330.0" x2="740" y2="330.0" stroke="#2a3140"/>
+<text x="62" y="334.0" font-size="10" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="70" y1="278.0" x2="740" y2="278.0" stroke="#2a3140"/>
+<text x="62" y="282.0" font-size="10" fill="#c4ccda" text-anchor="end">20</text>
+<line x1="70" y1="226.0" x2="740" y2="226.0" stroke="#2a3140"/>
+<text x="62" y="230.0" font-size="10" fill="#c4ccda" text-anchor="end">40</text>
+<line x1="70" y1="174.0" x2="740" y2="174.0" stroke="#2a3140"/>
+<text x="62" y="178.0" font-size="10" fill="#c4ccda" text-anchor="end">60</text>
+<line x1="70" y1="122.0" x2="740" y2="122.0" stroke="#2a3140"/>
+<text x="62" y="126.0" font-size="10" fill="#c4ccda" text-anchor="end">80</text>
+<line x1="70" y1="70.0" x2="740" y2="70.0" stroke="#2a3140"/>
+<text x="62" y="74.0" font-size="10" fill="#c4ccda" text-anchor="end">100</text>
+<text x="18" y="200" font-size="11" fill="#c4ccda" transform="rotate(-90 18 200)" text-anchor="middle">accuracy (%)</text>
+<rect x="91.8" y="129.2" width="31.0" height="200.8" fill="#6f7b90"/>
+<text x="107.3" y="125.2" font-size="9.5" fill="#6f7b90" text-anchor="middle">77.25</text>
+<rect x="125.8" y="91.8" width="31.0" height="238.2" fill="#f2a65a"/>
+<text x="141.3" y="87.8" font-size="9.5" fill="#f2a65a" text-anchor="middle">91.62</text>
+<text x="125.8" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">Qwen desktop</text>
+<rect x="203.5" y="115.7" width="31.0" height="214.3" fill="#6f7b90"/>
+<text x="219.0" y="111.7" font-size="9.5" fill="#6f7b90" text-anchor="middle">82.44</text>
+<rect x="237.5" y="87.7" width="31.0" height="242.3" fill="#f2a65a"/>
+<text x="253.0" y="83.7" font-size="9.5" fill="#f2a65a" text-anchor="middle">93.21</text>
+<text x="237.5" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">Qwen mobile</text>
+<rect x="315.2" y="123.0" width="31.0" height="207.0" fill="#6f7b90"/>
+<text x="330.7" y="119.0" font-size="9.5" fill="#6f7b90" text-anchor="middle">79.63</text>
+<rect x="349.2" y="106.3" width="31.0" height="223.7" fill="#f2a65a"/>
+<text x="364.7" y="102.3" font-size="9.5" fill="#f2a65a" text-anchor="middle">86.04</text>
+<text x="349.2" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">Qwen web</text>
+<rect x="426.8" y="126.8" width="31.0" height="203.2" fill="#6f7b90"/>
+<text x="442.3" y="122.8" font-size="9.5" fill="#6f7b90" text-anchor="middle">78.14</text>
+<rect x="460.8" y="112.0" width="31.0" height="218.0" fill="#f2a65a"/>
+<text x="476.3" y="108.0" font-size="9.5" fill="#f2a65a" text-anchor="middle">83.83</text>
+<text x="460.8" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">UI-R1 desktop</text>
+<rect x="538.5" y="100.1" width="31.0" height="229.9" fill="#6f7b90"/>
+<text x="554.0" y="96.1" font-size="9.5" fill="#6f7b90" text-anchor="middle">88.42</text>
+<rect x="572.5" y="98.5" width="31.0" height="231.5" fill="#f2a65a"/>
+<text x="588.0" y="94.5" font-size="9.5" fill="#f2a65a" text-anchor="middle">89.02</text>
+<text x="572.5" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">UI-R1 mobile</text>
+<rect x="650.2" y="128.9" width="31.0" height="201.1" fill="#6f7b90"/>
+<text x="665.7" y="124.9" font-size="9.5" fill="#6f7b90" text-anchor="middle">77.35</text>
+<rect x="684.2" y="126.5" width="31.0" height="203.5" fill="#f2a65a"/>
+<text x="699.7" y="122.5" font-size="9.5" fill="#f2a65a" text-anchor="middle">78.26</text>
+<text x="684.2" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">UI-R1 web</text>
+<text x="70" y="386" font-size="10" fill="#c4ccda">Source: Gurbuz et al., arXiv:2610.02320, Table 11.</text>
+</g></svg>
+
+<p>The long-horizon test changes only the action model under a fixed Qwen3.6-27B planner, with success decided by each environment's own state checks. On a custom 119-task WebArena-Infinity panel Gemma4-E4B went from 5 to 40 solved, Qwen3.5-4B from 31 to 50, InternVL3.5-8B and UI-R1-3B each gained 7. On the 100-task OpenApps longer-horizon set Qwen went from 3 to 15. The fine-tuning used single grounding examples, not trajectories.</p>
+
+<svg viewBox="0 0 760 400" style="width:100%;height:auto" role="img" aria-label="Grouped bar chart of WebArena-Infinity tasks solved out of 119 when only the action model changes. Gemma4-E4B 5 to 40, UI-R1-3B 30 to 37, InternVL3.5-8B 37 to 44, Qwen3.5-4B 31 to 50. On OpenApps, out of 100, Qwen rose from 3 to 15.">
+<rect x="0" y="0" width="760" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Long-horizon tasks solved with a fixed Qwen3.6-27B planner</text>
+<rect x="70" y="40" width="12" height="12" fill="#6f7b90"/><text x="88" y="50" font-size="11" fill="#c4ccda">base action model</text>
+<rect x="237" y="40" width="12" height="12" fill="#f2a65a"/><text x="255" y="50" font-size="11" fill="#c4ccda">+ DeskForge-1M</text>
+<line x1="70" y1="330.0" x2="740" y2="330.0" stroke="#2a3140"/>
+<text x="62" y="334.0" font-size="10" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="70" y1="286.7" x2="740" y2="286.7" stroke="#2a3140"/>
+<text x="62" y="290.7" font-size="10" fill="#c4ccda" text-anchor="end">10</text>
+<line x1="70" y1="243.3" x2="740" y2="243.3" stroke="#2a3140"/>
+<text x="62" y="247.3" font-size="10" fill="#c4ccda" text-anchor="end">20</text>
+<line x1="70" y1="200.0" x2="740" y2="200.0" stroke="#2a3140"/>
+<text x="62" y="204.0" font-size="10" fill="#c4ccda" text-anchor="end">30</text>
+<line x1="70" y1="156.7" x2="740" y2="156.7" stroke="#2a3140"/>
+<text x="62" y="160.7" font-size="10" fill="#c4ccda" text-anchor="end">40</text>
+<line x1="70" y1="113.3" x2="740" y2="113.3" stroke="#2a3140"/>
+<text x="62" y="117.3" font-size="10" fill="#c4ccda" text-anchor="end">50</text>
+<line x1="70" y1="70.0" x2="740" y2="70.0" stroke="#2a3140"/>
+<text x="62" y="74.0" font-size="10" fill="#c4ccda" text-anchor="end">60</text>
+<text x="18" y="200" font-size="11" fill="#c4ccda" transform="rotate(-90 18 200)" text-anchor="middle">WebArena-Infinity tasks (of 119)</text>
+<rect x="119.8" y="308.3" width="31.0" height="21.7" fill="#6f7b90"/>
+<text x="135.2" y="304.3" font-size="9.5" fill="#6f7b90" text-anchor="middle">5</text>
+<rect x="153.8" y="156.7" width="31.0" height="173.3" fill="#f2a65a"/>
+<text x="169.2" y="152.7" font-size="9.5" fill="#f2a65a" text-anchor="middle">40</text>
+<text x="153.8" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">Gemma4-E4B</text>
+<rect x="287.2" y="200.0" width="31.0" height="130.0" fill="#6f7b90"/>
+<text x="302.8" y="196.0" font-size="9.5" fill="#6f7b90" text-anchor="middle">30</text>
+<rect x="321.2" y="169.7" width="31.0" height="160.3" fill="#f2a65a"/>
+<text x="336.8" y="165.7" font-size="9.5" fill="#f2a65a" text-anchor="middle">37</text>
+<text x="321.2" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">UI-R1-3B</text>
+<rect x="454.8" y="169.7" width="31.0" height="160.3" fill="#6f7b90"/>
+<text x="470.2" y="165.7" font-size="9.5" fill="#6f7b90" text-anchor="middle">37</text>
+<rect x="488.8" y="139.3" width="31.0" height="190.7" fill="#f2a65a"/>
+<text x="504.2" y="135.3" font-size="9.5" fill="#f2a65a" text-anchor="middle">44</text>
+<text x="488.8" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">InternVL3.5-8B</text>
+<rect x="622.2" y="195.7" width="31.0" height="134.3" fill="#6f7b90"/>
+<text x="637.8" y="191.7" font-size="9.5" fill="#6f7b90" text-anchor="middle">31</text>
+<rect x="656.2" y="113.3" width="31.0" height="216.7" fill="#f2a65a"/>
+<text x="671.8" y="109.3" font-size="9.5" fill="#f2a65a" text-anchor="middle">50</text>
+<text x="656.2" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">Qwen3.5-4B</text>
+<text x="70" y="386" font-size="10" fill="#c4ccda">Source: arXiv:2610.02320 Table 4 and Sec. 5; base values from the text.</text>
+</g></svg>
+
+<h2 id="why-phoneshell-s-crawl-data-cannot-do-this-yet">Why phoneshell's crawl data cannot do this yet</h2>
+
+<p>phoneshell's <code>crawl.py</code> walks an app, taps what it judges safe, and writes a <code>manifest.json</code> per run. The 11 manifests on the rig, all from 11 September 2026, hold 113 screens from Settings and Talika. For each control they keep the label, the accessibility type, a key, the centre point and a skip reason. They do not keep width, height or a box, so a model's predicted click cannot be scored as inside or outside the element, which is how ScreenSpot-style benchmarks grade. Each edge records the screen a tap left, the screen it reached and whether it was a tap or a no-op. Nothing records what changed on the screen. The crawler's caution shows in the skips: 54 switches, skipped because a switch changes a setting, and 29 "dictate" controls were never tapped, so state changes are exactly what the data lacks.</p>
+
+<svg viewBox="0 0 760 410" style="width:100%;height:auto" role="img" aria-label="Diagram comparing what DeskForge records per desktop observation with what phoneshell's crawler records per iPhone screen. DeskForge composes 19 Linux apps under 7 themes and 7 resolutions, fuses screenshot, accessibility tree and window geometry into boxes with visible area, rejects 4.7 percent of captures in automated audits, and records per-element effects for each of 917,211 click transitions, over 1,207,368 observations. phoneshell's 11 crawl manifests hold 113 screens in 2 apps, 1,922 controls with label, type and centre point but no box, and 237 edges that record only from-screen, to-screen and tap or no-op.">
+<rect x="0" y="0" width="760" height="410" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="11">
+<text x="20" y="26" font-size="14" font-weight="600">One observation, as each pipeline stores it</text>
+<rect x="20" y="44" width="350" height="300" rx="8" fill="#1d2330" stroke="#5ad1a0"/>
+<text x="32" y="66" font-weight="600" fill="#5ad1a0">DeskForge-1M (Linux desktop)</text>
+<text x="32" y="92">19 apps, 7 themes, 7 resolutions</text>
+<text x="32" y="110">1366 x 768 up to 3840 x 2160</text>
+<text x="32" y="134">fused: screenshot + a11y tree + window geometry</text>
+<text x="32" y="152">per element: role, name, displayed text, box,</text>
+<text x="32" y="170">visible area as a union of rectangles</text>
+<text x="32" y="194">132.29 elements per observation (mean)</text>
+<text x="32" y="218">per click: appeared, disappeared, moved,</text>
+<text x="32" y="236">text or state changed, occluded, revealed</text>
+<text x="32" y="260">audit: 59,103 of 1,266,471 captures dropped (4.7%)</text>
+<text x="32" y="278">human check: 99.84% of 16,487 elements correct</text>
+<text x="32" y="306" fill="#5ad1a0">1,207,368 observations, 917,211 clicks</text>
+<text x="32" y="328" font-size="10" fill="#c4ccda">no per-action success label</text>
+<rect x="390" y="44" width="350" height="300" rx="8" fill="#1d2330" stroke="#f2a65a"/>
+<text x="402" y="66" font-weight="600" fill="#f2a65a">phoneshell crawl manifests (iPhone)</text>
+<text x="402" y="92">2 apps: Settings (63 screens), Talika (50)</text>
+<text x="402" y="110">iOS 18.4 and 26.6.1, WDA 16.12.4</text>
+<text x="402" y="134">stored: shots, structural and textual hash</text>
+<text x="402" y="152">per control: label, type, key, centre x, y,</text>
+<text x="402" y="170" fill="#f2a65a">skip reason; no width, height or box</text>
+<text x="402" y="194">17.0 controls per screen (1,922 / 113)</text>
+<text x="402" y="218">per edge: from screen, to screen, label,</text>
+<text x="402" y="236" fill="#f2a65a">kind tap or no-op; no element effects</text>
+<text x="402" y="260">54 switches and 29 'dictate' controls skipped</text>
+<text x="402" y="278">as state-changing or irreversible</text>
+<text x="402" y="306" fill="#f2a65a">113 screens, 248 taps, 237 edges</text>
+<text x="402" y="328" font-size="10" fill="#c4ccda">11 manifests, 11 September 2026, 1,610 s</text>
+<text x="20" y="394" font-size="10" fill="#c4ccda">Sources: arXiv:2610.02320 Sec. 3, 4, App. A, B.3, Table 5, Table 10; phoneshell runtime/crawls/*/manifest.json (read 5 October 2026).</text>
+</g></svg>
+
+<p>The grounding question matters to phoneshell even though its agent taps element ids. When the accessibility tree is thin, <code>perception/blind.py</code> recovers elements from pixels with OCR and an icon proposer, and those elements are only as good as their boxes. DeskForge's admission rule is a warning for anyone copying its recipe to phones: apps whose trees did not expose content were rejected before collection, so its 99.84% element correctness describes apps chosen for good trees. The apps where a phone agent most needs pixel grounding are the ones that rule removes.</p>
+
+<h2 id="what-it-means-if-you-collect-phone-gui-data">What it means if you collect phone GUI data</h2>
+
+<ul>
+  <li>Store the box, not the centre. The centre is derivable from the box; the reverse is not, and every grounding benchmark scores against the box.</li>
+  <li>Record per-element effects on each action, the six DeskForge categories at minimum. A from-to screen pair cannot say whether a toggle flipped.</li>
+  <li>Report how many captures your audits reject and why. DeskForge's 4.7% is the only published reference rate we know of; it gives no breakdown by cause.</li>
+  <li>Do not assume desktop data is a substitute for phone data on a model already trained for GUIs. UI-R1's 0.6-point mobile gain is the counterexample in the same table.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<ul>
+  <li>Domain split: Table 11 of <code>https://arxiv.org/abs/2610.02320</code>; long-horizon: Table 4 and Sec. 5; dataset statistics: App. A; audits: App. B.3 and Table 10. Code, data and model: <code>https://saidgurbuz.github.io/deskforge/</code>.</li>
+  <li>phoneshell crawl fields: open any <code>runtime/crawls/&lt;run&gt;/manifest.json</code> and list the keys of <code>screens[0].controls[0]</code>: <code>label, type, key, x, y, skip</code>.</li>
+  <li>Totals: <code>python3 -c "import json,glob;m=[json.load(open(f)) for f in glob.glob('runtime/crawls/*/manifest.json')];print(len(m),sum(x['summary']['screens'] for x in m),sum(len(s['controls']) for x in m for s in x['screens']),sum(x['summary']['edges'] for x in m))"</code> prints <code>11 113 1922 237</code> on the rig.</li>
+</ul>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>Our reading is that DeskForge's mobile gain is transfer to a weak GUI model, not evidence that desktop data substitutes for phone data. Test: score the released DeskForge-tuned Qwen3.5-4B and its base on phoneshell's 113 crawled iPhone screens, after adding element boxes, on point-in-box accuracy for every labelled control. If the tuned model gains 8 points or more there, desktop data transfers to real iPhone screens as well as it did on ScreenSpot-v2 and our caution is wrong. We expect a gain under 5 points. We will publish the run, or say we did not run it, by 31 March 2027.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ol>
+      <li><a href="https://arxiv.org/abs/2610.02320">Gurbuz, Nassar, Hong, Pollefeys, Staar, DeskForge: Dense Supervision from Desktop Environments for Computer-Use Agents, arXiv:2610.02320v1, 1 October 2026</a></li>
+      <li><a href="https://saidgurbuz.github.io/deskforge/">DeskForge project page: framework code, DeskForge-1M and fine-tuned model</a></li>
+      <li><a href="https://github.com/Blomega/phoneshell">phoneshell source: crawl.py, perception/blind.py (read 5 October 2026); crawl manifests in runtime/crawls on the rig</a></li>
+      <li><a href="https://blolabel.ai/blog/render-gap-ocr-vs-accessibility-tree/">Blolabel, earlier note: the render gap between OCR and the accessibility tree</a></li>
+    </ol>
+  </section>
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
