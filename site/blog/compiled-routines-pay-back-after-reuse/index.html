@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A compiled GUI routine repays itself after 1.4 to 15.5 uses, and failed compiles took two thirds of the tokens; phoneshell records macros for free and has replayed one once | Blolabel</title>
+<meta name="description" content="PACE (arXiv:2610.02932, 2 October 2026) measures when turning a repeated computer-use task into a program pays: 11 of 20 compilations passed, payback ran 1.39 to 15.5 uses, and failed attempts used 67.7% of compile tokens. phoneshell skips compilation by recording sessions as macros at zero model cost, but saves them unverified, and its one stored macro has empty expect checks and one run in 785 audit events.">
+<link rel="canonical" href="https://blolabel.ai/blog/compiled-routines-pay-back-after-reuse/">
+<meta property="og:title" content="A compiled GUI routine repays itself after 1.4 to 15.5 uses, and failed compiles took two thirds of the tokens; phoneshell records macros for free and has replayed one once | Blolabel">
+<meta property="og:description" content="PACE (arXiv:2610.02932, 2 October 2026) measures when turning a repeated computer-use task into a program pays: 11 of 20 compilations passed, payback ran 1.39 to 15.5 uses, and failed attempts used 67.7% of compile tokens. phoneshell skips compilation by recording sessions as macros at zero model cost, but saves them unverified, and its one stored macro has empty expect checks and one run in 785 audit events.">
+<meta property="og:url" content="https://blolabel.ai/blog/compiled-routines-pay-back-after-reuse/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/compiled-routines-pay-back-after-reuse-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "A compiled GUI routine repays itself after 1.4 to 15.5 uses, and failed compiles took two thirds of the tokens; phoneshell records macros for free and has replayed one once", "description": "PACE (arXiv:2610.02932, 2 October 2026) measures when turning a repeated computer-use task into a program pays: 11 of 20 compilations passed, payback ran 1.39 to 15.5 uses, and failed attempts used 67.7% of compile tokens. phoneshell skips compilation by recording sessions as macros at zero model cost, but saves them unverified, and its one stored macro has empty expect checks and one run in 785 audit events.", "datePublished": "2026-10-05", "dateModified": "2026-10-05", "url": "https://blolabel.ai/blog/compiled-routines-pay-back-after-reuse/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/compiled-routines-pay-back-after-reuse/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/compiled-routines-pay-back-after-reuse-hero.png", "citation": ["https://arxiv.org/abs/2610.02932", "https://github.com/myl7/computer-use", "https://github.com/Blomega/phoneshell", "https://blolabel.ai/blog/shortcut-catalogs-help-until-they-grow/"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "When does compiling a computer-use agent's task into a program pay off?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "In PACE (arXiv:2610.02932), a verified program cost 0.33K to 0.72K weighted tokens per use against 10.8K to 647K for the agent, so savings per use were 93.6% to 99.9%. Repaying compilation took 1.39 to 15.5 uses, or 4.4 to 18.7 counting the agent runs that produced the source traces, and those counts exclude failed compilation attempts."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How often does compiling a GUI routine fail?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "11 of 20 first attempts in PACE passed verification on 3 of 3 source tasks; only 3 passed before repair. Failed attempts used 18,743K of 27,667K weighted tokens, 67.7%. OsmAnd marker never produced a verified program for any model."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Did PACE always save money?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. On recorded task-arrival traces it saved in 9 of 12 conditions and cost more than never compiling in all 3 Sepsis-log conditions. The headline 17.3% saving against ReAct is an average of ratios across the 12."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How does phoneshell reuse a phone task?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "It records the steps an agent took and saves them as a YAML macro with no model call. Each step may carry an anchor that must be on screen before it fires and an expect checked afterwards. The one saved macro in phoneshell's runtime has all expect fields empty and has been run once."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-05">05 October 2026</time>
+    <span>9 min read</span>
+  </div>
+  <h1>A compiled GUI routine repays itself after 1.4 to 15.5 uses, and failed compiles took two thirds of the tokens; phoneshell records macros for free and has replayed one once</h1>
+  <p class="standfirst">Ming, Xu, Wu and Jia put a price on the idea that a phone agent should stop re-deriving routes it already found. The per-use saving is near total. The cost is in the compiles that fail and the routines nobody reuses. We compared it with phoneshell's own answer, which costs nothing to make and checks less.</p>
+
+<p>Turning a repeated GUI task into a program saves 93.6% to 99.9% of the agent's tokens on every later use, but the first program takes 1.39 to 15.5 uses to repay, and 9 of 20 compilation attempts produced nothing usable while consuming 67.7% of the compilation tokens. That is the measurement in PACE, posted on 2 October 2026. phoneshell avoids the compile cost entirely by recording sessions as macros. Its runtime holds one, with no post-step checks, replayed once in 785 logged actions.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/compiled-routines-pay-back-after-reuse-hero.png" alt="Abstract technical illustration of a looping path being straightened into a short direct line, with faint discarded loops around it" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+
+<h2 id="what-pace-measured">What PACE measured</h2>
+
+<p>Yulong Ming, Jie Xu, Zihan Wu and Xiaohua Jia (City University of Hong Kong, arXiv:2610.02932) take seven task families: four from AndroidWorld (Contacts add, Markor delete, Calendar add event, OsmAnd marker), LibreOffice Calc and Writer tasks in an OSWorld-based container, and a WebArena Reddit comment. Three models, GLM-5.3-flash, DeepSeek-V4-flash-vision-exp and Qwen3.8-flash, each try to compile each family into a program from successful agent traces, giving 20 cells with records (Qwen's provider refused the web task). A program counts only if it passes 3 of 3 source tasks, with up to 3 refinements per task. Costs are in weighted tokens: one unit per uncached input token at the model's reference price.</p>
+
+<table>
+  <thead><tr><th>Program</th><th>Compile cost (K)</th><th>Agent per use (K)</th><th>Program per use (K)</th><th>Payback, compile only</th><th>Payback, with source runs</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>GLM, Contacts</td><td>137</td><td>98.7</td><td>0.425</td><td>1.39</td><td>4.4</td><td>Tables 1, 5</td></tr>
+    <tr><td>Qwen, Contacts</td><td>138</td><td>39.2</td><td>0.552</td><td>3.7</td><td>6.85</td><td>Tables 1, 5</td></tr>
+    <tr><td>GLM, Markor delete</td><td>144</td><td>33.7</td><td>0.332</td><td>4.31</td><td>7.34</td><td>Tables 1, 5</td></tr>
+    <tr><td>DeepSeek, Markor delete</td><td>156</td><td>10.8</td><td>0.331</td><td>15.5</td><td>18.7</td><td>Tables 1, 5</td></tr>
+    <tr><td>Qwen, Markor delete</td><td>212</td><td>21.5</td><td>0.388</td><td>10</td><td>13.1</td><td>Tables 1, 5</td></tr>
+    <tr><td>GLM, Calendar</td><td>3,424</td><td>314</td><td>0.640</td><td>10.9</td><td>13.9</td><td>Tables 1, 5</td></tr>
+    <tr><td>DeepSeek, Calc table</td><td>3,057</td><td>647</td><td>0.677</td><td>4.73</td><td>7.74</td><td>Tables 1, 5</td></tr>
+    <tr><td>GLM, Writer memo</td><td>473</td><td>70.2</td><td>0.596</td><td>6.8</td><td>9.82</td><td>Tables 1, 5</td></tr>
+    <tr><td>DeepSeek, Writer memo</td><td>259</td><td>50.7</td><td>0.692</td><td>5.18</td><td>8.22</td><td>Tables 1, 5</td></tr>
+    <tr><td>Qwen, Writer memo</td><td>487</td><td>37.0</td><td>0.724</td><td>13.4</td><td>16.5</td><td>Tables 1, 5</td></tr>
+    <tr><td>GLM, Reddit comment</td><td>437</td><td>124</td><td>0.716</td><td>3.55</td><td>6.57</td><td>Tables 1, 5</td></tr>
+    <tr><td colspan="6">Failed: DeepSeek Contacts 605; DeepSeek and Qwen Calendar 2,872 and 1,936; OsmAnd 3,082, 1,701, 1,552 (no model); GLM and Qwen Calc 2,544 and 3,054; DeepSeek Reddit 1,397 (lower bound)</td><td>Table 1</td></tr>
+  </tbody>
+</table>
+
+<p>The payback column is short because the per-use saving is nearly total. DeepSeek on Markor needs the most uses, 15.5, because its agent was already cheap at 10.8K a run. GLM on Calendar is expensive to compile, 3,424K, and still repays in 10.9 uses because the agent burns 314K per run. Compiled programs were also more reliable in the matched Android replays: GLM Calendar's agent succeeded 14 of 30 times against the program's 30 of 30. In a live OpenApps Calendar study the agent succeeded 7 of 12 times with mean cost bounded between 8.142 and 21.590 milli-USD; program plus fallback succeeded 11 of 12 between 1.202 and 4.564, and all 8 runs on a changed interface fell back to the agent, 7 successfully.</p>
+
+<svg viewBox="0 0 900 400" style="width:100%;height:auto" role="img" aria-label="Bar chart of compile-only payback for the 11 programs that passed verification in PACE, from 1.39 uses for GLM on Contacts to 15.5 uses for DeepSeek on Markor delete: GLM Reddit 3.55, Qwen Contacts 3.7, GLM Markor 4.31, DeepSeek Calc 4.73, DeepSeek Writer 5.18, GLM Writer 6.8, Qwen Markor 10, GLM Calendar 10.9, Qwen Writer 13.4. These counts exclude the 9 failed attempts, which used 67.7 percent of compilation tokens.">
+<rect x="0" y="0" width="900" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Uses needed before a compiled program repays its compilation</text>
+<rect x="70" y="40" width="12" height="12" fill="#f2a65a"/><text x="88" y="50" font-size="11" fill="#c4ccda">compile-only payback (uses)</text>
+<line x1="70" y1="330.0" x2="880" y2="330.0" stroke="#2a3140"/>
+<text x="62" y="334.0" font-size="10" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="70" y1="265.0" x2="880" y2="265.0" stroke="#2a3140"/>
+<text x="62" y="269.0" font-size="10" fill="#c4ccda" text-anchor="end">4</text>
+<line x1="70" y1="200.0" x2="880" y2="200.0" stroke="#2a3140"/>
+<text x="62" y="204.0" font-size="10" fill="#c4ccda" text-anchor="end">8</text>
+<line x1="70" y1="135.0" x2="880" y2="135.0" stroke="#2a3140"/>
+<text x="62" y="139.0" font-size="10" fill="#c4ccda" text-anchor="end">12</text>
+<line x1="70" y1="70.0" x2="880" y2="70.0" stroke="#2a3140"/>
+<text x="62" y="74.0" font-size="10" fill="#c4ccda" text-anchor="end">16</text>
+<text x="18" y="200" font-size="11" fill="#c4ccda" transform="rotate(-90 18 200)" text-anchor="middle">uses to break even</text>
+<rect x="89.8" y="307.4" width="31.0" height="22.6" fill="#f2a65a"/>
+<text x="105.3" y="303.4" font-size="9.5" fill="#f2a65a" text-anchor="middle">1.39</text>
+<text x="106.8" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">GLM Cont.</text>
+<rect x="163.5" y="272.3" width="31.0" height="57.7" fill="#f2a65a"/>
+<text x="179.0" y="268.3" font-size="9.5" fill="#f2a65a" text-anchor="middle">3.55</text>
+<text x="180.5" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">GLM Redd.</text>
+<rect x="237.1" y="269.9" width="31.0" height="60.1" fill="#f2a65a"/>
+<text x="252.6" y="265.9" font-size="9.5" fill="#f2a65a" text-anchor="middle">3.7</text>
+<text x="254.1" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">Qwen Cont.</text>
+<rect x="310.7" y="260.0" width="31.0" height="70.0" fill="#f2a65a"/>
+<text x="326.2" y="256.0" font-size="9.5" fill="#f2a65a" text-anchor="middle">4.31</text>
+<text x="327.7" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">GLM Mark.</text>
+<rect x="384.4" y="253.1" width="31.0" height="76.9" fill="#f2a65a"/>
+<text x="399.9" y="249.1" font-size="9.5" fill="#f2a65a" text-anchor="middle">4.73</text>
+<text x="401.4" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">DS Calc</text>
+<rect x="458.0" y="245.8" width="31.0" height="84.2" fill="#f2a65a"/>
+<text x="473.5" y="241.8" font-size="9.5" fill="#f2a65a" text-anchor="middle">5.18</text>
+<text x="475.0" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">DS Writ.</text>
+<rect x="531.6" y="219.5" width="31.0" height="110.5" fill="#f2a65a"/>
+<text x="547.1" y="215.5" font-size="9.5" fill="#f2a65a" text-anchor="middle">6.8</text>
+<text x="548.6" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">GLM Writ.</text>
+<rect x="605.3" y="167.5" width="31.0" height="162.5" fill="#f2a65a"/>
+<text x="620.8" y="163.5" font-size="9.5" fill="#f2a65a" text-anchor="middle">10</text>
+<text x="622.3" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">Qwen Mark.</text>
+<rect x="678.9" y="152.9" width="31.0" height="177.1" fill="#f2a65a"/>
+<text x="694.4" y="148.9" font-size="9.5" fill="#f2a65a" text-anchor="middle">10.9</text>
+<text x="695.9" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">GLM Cal.</text>
+<rect x="752.5" y="112.2" width="31.0" height="217.8" fill="#f2a65a"/>
+<text x="768.0" y="108.2" font-size="9.5" fill="#f2a65a" text-anchor="middle">13.4</text>
+<text x="769.5" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">Qwen Writ.</text>
+<rect x="826.2" y="78.1" width="31.0" height="251.9" fill="#f2a65a"/>
+<text x="841.7" y="74.1" font-size="9.5" fill="#f2a65a" text-anchor="middle">15.5</text>
+<text x="843.2" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">DS Mark.</text>
+<text x="70" y="386" font-size="10" fill="#c4ccda">Source: Ming, Xu, Wu, Jia, arXiv:2610.02932, Table 1. Excludes failed attempts and replacement after drift.</text>
+</g></svg>
+
+<h2 id="the-cost-the-payback-column-leaves-out">The cost the payback column leaves out</h2>
+
+<p>Only 3 programs passed before repair. Summing Table 1, successful first attempts used 8,924K weighted tokens and failed ones 18,743K. The paper's payback counts exclude that failed two thirds by construction, and a team choosing which families to compile does not know in advance which third it will land in: OsmAnd marker failed for all three models. PACE's online algorithm exists for exactly this, weighing estimated savings against compile cost including failures, inside a cumulative budget, and on recorded arrival traces it saved in 9 of 12 conditions. It lost to never compiling on all three Sepsis-log conditions. The headline figures, 17.3% against ReAct and 24.9% against an AutoRPA adaptation, are averages of ratios across those 12. The ToolPro figure equals the ReAct one because ToolPro never compiled in any tested condition.</p>
+
+<svg viewBox="0 0 760 400" style="width:100%;height:auto" role="img" aria-label="Bar chart of PACE's first-attempt compilation spend. The 11 attempts that produced a verified program used 8,924 thousand weighted tokens; the 9 that failed used 18,743 thousand, 67.7 percent of the 27,667 thousand total. The payback counts in the paper exclude the failed share.">
+<rect x="0" y="0" width="760" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Where PACE's compilation tokens went (first attempts, 20 cells)</text>
+<rect x="70" y="40" width="12" height="12" fill="#5ad1a0"/><text x="88" y="50" font-size="11" fill="#c4ccda">thousand weighted tokens</text>
+<line x1="70" y1="330.0" x2="740" y2="330.0" stroke="#2a3140"/>
+<text x="62" y="334.0" font-size="10" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="70" y1="265.0" x2="740" y2="265.0" stroke="#2a3140"/>
+<text x="62" y="269.0" font-size="10" fill="#c4ccda" text-anchor="end">5000</text>
+<line x1="70" y1="200.0" x2="740" y2="200.0" stroke="#2a3140"/>
+<text x="62" y="204.0" font-size="10" fill="#c4ccda" text-anchor="end">10000</text>
+<line x1="70" y1="135.0" x2="740" y2="135.0" stroke="#2a3140"/>
+<text x="62" y="139.0" font-size="10" fill="#c4ccda" text-anchor="end">15000</text>
+<line x1="70" y1="70.0" x2="740" y2="70.0" stroke="#2a3140"/>
+<text x="62" y="74.0" font-size="10" fill="#c4ccda" text-anchor="end">20000</text>
+<text x="18" y="200" font-size="11" fill="#c4ccda" transform="rotate(-90 18 200)" text-anchor="middle">K weighted tokens</text>
+<rect x="220.5" y="214.0" width="31.0" height="116.0" fill="#5ad1a0"/>
+<text x="236.0" y="210.0" font-size="9.5" fill="#5ad1a0" text-anchor="middle">8,924K (32.3%)</text>
+<text x="237.5" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">succeeded (11 attempts)</text>
+<rect x="555.5" y="86.3" width="31.0" height="243.7" fill="#5ad1a0"/>
+<text x="571.0" y="82.3" font-size="9.5" fill="#5ad1a0" text-anchor="middle">18,743K (67.7%)</text>
+<text x="572.5" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">failed (9 attempts)</text>
+<text x="70" y="386" font-size="10" fill="#c4ccda">Source: arXiv:2610.02932 Table 1, our sum. DeepSeek Reddit (1,397K) is a lower bound.</text>
+</g></svg>
+
+<h2 id="phoneshell-compiles-for-free-and-checks-less">phoneshell compiles for free and checks less</h2>
+
+<p>phoneshell's answer to the same problem is in <code>agent/macros.py</code>. A <code>Recorder</code> keeps the last 200 steps of a session; <code>phone_macro_save</code> writes them to YAML with no model call, so compilation costs zero tokens and payback starts at the first reuse, if the replay works. Each step can carry an <code>anchor</code>, text that must be on screen before it fires, and an <code>expect</code>, text that must be on screen after. A missing anchor stops the replay and hands the screen back to the model, which is PACE's fallback in another form.</p>
+
+<svg viewBox="0 0 760 400" style="width:100%;height:auto" role="img" aria-label="Diagram comparing PACE with phoneshell's macro recorder. In PACE a model writes a program from successful agent traces, which must pass 3 of 3 source tasks; 11 of 20 first attempts passed and 9 failed, and only 3 passed before repair. Deployed programs fall back to the agent when they fail. phoneshell records the steps of a session and saves them as a macro with no model call and no verification run; each step can carry an anchor checked before it fires and an expect checked after, and in the one saved macro all three expect fields are empty.">
+<rect x="0" y="0" width="760" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="11">
+<text x="20" y="26" font-size="14" font-weight="600">Two ways to turn a repeated phone task into a routine</text>
+<text x="20" y="54" font-weight="600">PACE (compile)</text>
+<rect x="20" y="64" width="160" height="62" rx="6" fill="#1d2330" stroke="#6f7b90"/><text x="30" y="86">agent runs the task</text><text x="30" y="104" font-size="10" fill="#c4ccda">trace kept</text>
+<rect x="200" y="64" width="170" height="62" rx="6" fill="#1d2330" stroke="#f2a65a"/><text x="210" y="86">model writes a program</text><text x="210" y="104" font-size="10" fill="#c4ccda">137K to 3,424K tokens</text><text x="210" y="118" font-size="10" fill="#c4ccda">up to 9 repairs</text>
+<rect x="390" y="64" width="160" height="62" rx="6" fill="#1d2330" stroke="#5ad1a0"/><text x="400" y="86" fill="#5ad1a0">verify: 3 of 3</text><text x="400" y="104" font-size="10" fill="#c4ccda">11 of 20 pass</text>
+<rect x="570" y="64" width="170" height="62" rx="6" fill="#1d2330" stroke="#6f7b90"/><text x="580" y="86">run, else fall back</text><text x="580" y="104" font-size="10" fill="#c4ccda">0.33K to 0.72K per use</text>
+<line x1="180" y1="95" x2="200" y2="95" stroke="#c4ccda"/><line x1="370" y1="95" x2="390" y2="95" stroke="#c4ccda"/><line x1="550" y1="95" x2="570" y2="95" stroke="#c4ccda"/>
+<text x="20" y="176" font-weight="600">phoneshell (record)</text>
+<rect x="20" y="186" width="160" height="62" rx="6" fill="#1d2330" stroke="#6f7b90"/><text x="30" y="208">agent runs the task</text><text x="30" y="226" font-size="10" fill="#c4ccda">Recorder keeps 200 steps</text>
+<rect x="200" y="186" width="170" height="62" rx="6" fill="#1d2330" stroke="#5ad1a0"/><text x="210" y="208" fill="#5ad1a0">phone_macro_save</text><text x="210" y="226" font-size="10" fill="#c4ccda">0 model tokens</text>
+<rect x="390" y="186" width="160" height="62" rx="6" fill="#1d2330" stroke="#f2a65a"/><text x="400" y="208" fill="#f2a65a">no verification run</text><text x="400" y="226" font-size="10" fill="#c4ccda">saved as YAML</text>
+<rect x="570" y="186" width="170" height="62" rx="6" fill="#1d2330" stroke="#6f7b90"/><text x="580" y="208">replay, stop if the</text><text x="580" y="226">anchor is missing</text>
+<line x1="180" y1="217" x2="200" y2="217" stroke="#c4ccda"/><line x1="370" y1="217" x2="390" y2="217" stroke="#c4ccda"/><line x1="550" y1="217" x2="570" y2="217" stroke="#c4ccda"/>
+<text x="20" y="290">about-screen.yaml, the one saved macro: open_app Settings, tap General, tap About.</text>
+<text x="20" y="308">anchors: "", "Settings", "Settings".  expect: "", "", "".  runs: 1, failures: 0.</text>
+<text x="20" y="326" fill="#f2a65a">With every expect empty, a replay that ends on the wrong screen reports success.</text>
+<text x="20" y="384" font-size="10" fill="#c4ccda">Sources: arXiv:2610.02932 Sec. 3, Table 1; phoneshell agent/macros.py, runtime/macros/about-screen.yaml.</text>
+</g></svg>
+
+<p>What phoneshell does not do is PACE's verification. Nothing replays a macro against fresh inputs before it is saved, and the recorder fills <code>expect</code> only when a caller passes one. In the runtime directory on 5 October 2026 there is one macro, <code>about-screen.yaml</code>: open Settings, tap General, tap About, with anchors "", "Settings", "Settings" and three empty expects, <code>runs: 1</code>, <code>failures: 0</code>. The audit log from 7 September to 1 October 2026 holds 785 events, two macro names saved (about-screen, and an 8-step test-grab-order learned from a demonstration on 30 September, which is no longer in the directory) and one <code>macro_run</code>. The module's docstring says replay is "worth roughly twenty points of task success" and "cuts token use by most of an order of magnitude". It cites nothing. PACE's per-use saving supports the token half. Our usage supports neither, because the macros are not being reused.</p>
+
+<h2 id="what-it-means-if-you-are-deciding-what-to-automate-on-a-phon">What it means if you are deciding what to automate on a phone</h2>
+
+<ul>
+  <li>Count arrivals before building anything. With per-use savings above 93%, the only number that decides payback is how many times the task recurs before the app changes. A routine run once, like ours, never pays for any compile.</li>
+  <li>Budget for failed compiles as the main cost. In PACE they were two thirds of spend, and the cheapest predictor of failure was the family, not the model.</li>
+  <li>Recording is the cheap end of the curve, and it is only safe with a post-step check. With <code>expect</code> empty, a replay that lands on the wrong screen counts as a success. PACE notes the same risk from the program side: some drift failures reach a wrong state silently, which breaks the assumption that failures are detected.</li>
+  <li>Keep the fallback. PACE's live study shows every changed-interface run handed back to the agent; phoneshell's anchor stop does the same thing and should stay.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<ul>
+  <li>Payback and costs: Table 1 and Table 5 of <code>https://arxiv.org/abs/2610.02932</code>; measurement records and policies at <code>https://github.com/myl7/computer-use</code>.</li>
+  <li>The two-thirds figure: sum the 11 successful and 9 failed attempt costs in Table 1, <code>python3 -c "s=[137,138,144,156,212,3424,3057,473,259,487,437];f=[605,2872,1936,3082,1701,1552,2544,3054,1397];print(sum(s),sum(f),round(sum(f)/(sum(s)+sum(f))*100,1))"</code> prints <code>8924 18743 67.7</code>.</li>
+  <li>Where PACE lost: Table 3, Sepsis rows, where ReAct cost over PACE cost is below 1.</li>
+  <li>phoneshell's macro format: <code>phoneshell/agent/macros.py</code>, classes <code>Step</code>, <code>Recorder</code> and function <code>replay</code>.</li>
+  <li>Usage: <code>grep -c macro_run runtime/logs/audit.jsonl</code> prints 1; <code>ls runtime/macros</code> lists <code>about-screen.yaml</code>. The runtime directory is local to the rig, not in the repo.</li>
+</ul>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>Our claim is that a recorded macro without post-step checks will sometimes succeed on paper and fail on the phone. Test: fill <code>expect</code> for every step from the recorded post-step screen, replay each saved phoneshell macro 30 times with varied inputs, and compare the expect verdict with the result recorded when <code>expect</code> is empty. If the two never disagree in 30 runs of any macro with an input slot, the missing check costs nothing in practice and this note is wrong about it. We expect at least one disagreement. We will publish the run, or say we did not run it, by 31 March 2027.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ol>
+      <li><a href="https://arxiv.org/abs/2610.02932">Ming, Xu, Wu, Jia, When to Compile a Computer-Use Agent? Measuring Payback and Making Compilation Decisions for Token Efficiency, arXiv:2610.02932v1, 2 October 2026</a></li>
+      <li><a href="https://github.com/myl7/computer-use">PACE measurement records, policies and paired outcomes, released with the paper</a></li>
+      <li><a href="https://github.com/Blomega/phoneshell">phoneshell source: agent/macros.py, mcp_server.py (read 5 October 2026); runtime/macros and runtime/logs/audit.jsonl on the rig</a></li>
+      <li><a href="https://blolabel.ai/blog/shortcut-catalogs-help-until-they-grow/">Blolabel, earlier note: shortcut catalogs help until they grow</a></li>
+    </ol>
+  </section>
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
