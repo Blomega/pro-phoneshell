@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Human review recovered up to 8.49 points WebArena-Lite&#x27;s evaluator missed; phoneshell&#x27;s 52 failed cross-model runs kept nothing a reviewer could check | Blolabel</title>
+<meta name="description" content="Gan et al. (arXiv:2610.01491) re-reviewed every WebArena-Lite failure for GPT-5.5 and recovered 9 to 14 successes per setting that the evaluator rejected. phoneshell&#x27;s two public cross-model rounds have 52 failures; 33 end with the model claiming success, 16 of them on two tasks where only the outcome check failed. No screenshot or screen tree was kept, so none can be audited.">
+<link rel="canonical" href="https://blolabel.ai/blog/failed-runs-leave-nothing-to-review/">
+<meta property="og:title" content="Human review recovered up to 8.49 points WebArena-Lite&#x27;s evaluator missed; phoneshell&#x27;s 52 failed cross-model runs kept nothing a reviewer could check | Blolabel">
+<meta property="og:description" content="Gan et al. (arXiv:2610.01491) re-reviewed every WebArena-Lite failure for GPT-5.5 and recovered 9 to 14 successes per setting that the evaluator rejected. phoneshell&#x27;s two public cross-model rounds have 52 failures; 33 end with the model claiming success, 16 of them on two tasks where only the outcome check failed. No screenshot or screen tree was kept, so none can be audited.">
+<meta property="og:url" content="https://blolabel.ai/blog/failed-runs-leave-nothing-to-review/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/failed-runs-leave-nothing-to-review-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Human review recovered up to 8.49 points WebArena-Lite's evaluator missed; phoneshell's 52 failed cross-model runs kept nothing a reviewer could check", "description": "Gan et al. (arXiv:2610.01491) re-reviewed every WebArena-Lite failure for GPT-5.5 and recovered 9 to 14 successes per setting that the evaluator rejected. phoneshell's two public cross-model rounds have 52 failures; 33 end with the model claiming success, 16 of them on two tasks where only the outcome check failed. No screenshot or screen tree was kept, so none can be audited.", "datePublished": "2026-10-06", "dateModified": "2026-10-06", "url": "https://blolabel.ai/blog/failed-runs-leave-nothing-to-review/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/failed-runs-leave-nothing-to-review/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/failed-runs-leave-nothing-to-review-hero.png", "citation": ["https://arxiv.org/abs/2610.01491", "https://arxiv.org/abs/2610.04800", "https://huggingface.co/datasets/blolabel/phoneshell-bench", "https://github.com/Blomega/phoneshell", "https://blolabel.ai/blog/agents-report-success-device-disagrees/"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "How often do automatic web agent evaluators reject runs that succeeded?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "In a human audit of all 165 WebArena-Lite tasks (arXiv:2610.01491), review recovered 9 to 14 GPT-5.5 successes per setting, 5.45 to 8.49 points and 15.5% to 24.6% of the corrected successes. Causes included correct answers in the wrong format, state changes the final rule missed, and valid results followed by a bad stop action."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does workflow progress predict task success for GUI agents?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Not in MedImageOSWorld (arXiv:2610.04800): open-weight agents completed 21.5 to 74.5 percent of the console workflow but succeeded on 3.0 to 25.0. Claude Opus 5.5 restored full coverage in all 12 renal MR defect cells and passed none, because it fixed the image through the wrong setting."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How many of phoneshell's failed runs end with the model claiming success?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "33 of 52 in the xv and xv2 rounds (493 scored runs). Eleven are on clock.timer.set and five on reminders.create, where the right app was open and only the outcome check failed. Two others reported 52 for (12 + 8) x 5, which is wrong."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Can phoneshell's failed runs be audited after the fact?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. Each result row keeps the pass flag, one detail line per check, turns, time and cost, plus the model's final reply privately. It keeps no final screenshot, accessibility tree or action list, and the phone's state is gone once the next task's setup runs."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-06">06 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>Human review recovered up to 8.49 points WebArena-Lite&#x27;s evaluator missed; phoneshell&#x27;s 52 failed cross-model runs kept nothing a reviewer could check</h1>
+  <p class="standfirst">Two papers this week treat the evaluator's verdict as a first draft. One audits it by hand, the other refuses to collapse outcome and progress into one number. phoneshell grades from device state precisely to avoid trusting the model, and that only holds if its own checks can be checked.</p>
+
+<p>A human audit of WebArena-Lite, posted on 1 October 2026, found the automatic evaluator had rejected 9 to 14 of GPT-5.5's successes in each of four settings, between 15.5% and 24.6% of the true successes. phoneshell's two public cross-model rounds on an iPhone contain 52 failed runs. In 33 the model said it had succeeded, and 16 of those sit on two tasks where the right app was open and only the final check failed. We cannot say how many were checker misses, because phoneshell kept nothing from the end of any run that a person could look at.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/failed-runs-leave-nothing-to-review-hero.png" alt="Abstract technical illustration of a row of sealed opaque boxes, a few with faint light leaking from their seams, next to one open transparent box" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+
+<h2 id="what-the-webarena-lite-audit-found">What the WebArena-Lite audit found</h2>
+
+<p>Chengguang Gan, Zimeng He, Yoshihiro Tsujii, Ken-ichiro Kobayashi, Hiroki Itoh and Kotaro Funakoshi (arXiv:2610.01491) ran all 165 WebArena-Lite tasks under six conditions: GPT-5.5 with a memory-and-analysis module (MASM), with and without task guides, at 15 and 25 steps, plus an untrained Qwen3.5-9B. They kept the evaluator's verdict, then had reviewers look at every failure through the actions, before and after screenshots, URL changes and final response. Review recovered 47 successes over the four GPT-5.5 settings. The causes were ordinary: a correct answer in a format the rule rejected, a state change the final rule did not look for, a correct result followed by an invalid stop.</p>
+
+<svg viewBox="0 0 760 400" style="width:100%;height:auto" role="img" aria-label="Grouped bar chart of WebArena-Lite success for GPT-5.5 over 165 tasks, as scored by the automatic evaluator and after human review. MASM at 15 steps: 29.70 to 35.15. Guide Text plus MASM at 15 steps: 29.70 to 36.97. MASM at 25 steps: 26.06 to 34.55. Guide Text plus MASM at 25 steps: 30.91 to 38.18. Review recovered 9, 12, 14 and 12 tasks, 5.45 to 8.49 points.">
+<rect x="0" y="0" width="760" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">WebArena-Lite success before and after human review, GPT-5.5</text>
+<rect x="70" y="40" width="12" height="12" fill="#6f7b90"/><text x="88" y="50" font-size="11" fill="#c4ccda">evaluator</text>
+<rect x="181" y="40" width="12" height="12" fill="#f2a65a"/><text x="199" y="50" font-size="11" fill="#c4ccda">after human review</text>
+<line x1="70" y1="330.0" x2="740" y2="330.0" stroke="#2a3140"/>
+<text x="62" y="334.0" font-size="10" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="70" y1="278.0" x2="740" y2="278.0" stroke="#2a3140"/>
+<text x="62" y="282.0" font-size="10" fill="#c4ccda" text-anchor="end">10</text>
+<line x1="70" y1="226.0" x2="740" y2="226.0" stroke="#2a3140"/>
+<text x="62" y="230.0" font-size="10" fill="#c4ccda" text-anchor="end">20</text>
+<line x1="70" y1="174.0" x2="740" y2="174.0" stroke="#2a3140"/>
+<text x="62" y="178.0" font-size="10" fill="#c4ccda" text-anchor="end">30</text>
+<line x1="70" y1="122.0" x2="740" y2="122.0" stroke="#2a3140"/>
+<text x="62" y="126.0" font-size="10" fill="#c4ccda" text-anchor="end">40</text>
+<line x1="70" y1="70.0" x2="740" y2="70.0" stroke="#2a3140"/>
+<text x="62" y="74.0" font-size="10" fill="#c4ccda" text-anchor="end">50</text>
+<text x="18" y="200" font-size="11" fill="#c4ccda" transform="rotate(-90 18 200)" text-anchor="middle">success on 165 tasks (%)</text>
+<rect x="119.8" y="175.6" width="31.0" height="154.4" fill="#6f7b90"/>
+<text x="135.2" y="171.6" font-size="9.5" fill="#6f7b90" text-anchor="middle">29.70</text>
+<rect x="153.8" y="147.2" width="31.0" height="182.8" fill="#f2a65a"/>
+<text x="169.2" y="143.2" font-size="9.5" fill="#f2a65a" text-anchor="middle">35.15</text>
+<text x="153.8" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">MASM, 15 steps</text>
+<rect x="287.2" y="175.6" width="31.0" height="154.4" fill="#6f7b90"/>
+<text x="302.8" y="171.6" font-size="9.5" fill="#6f7b90" text-anchor="middle">29.70</text>
+<rect x="321.2" y="137.8" width="31.0" height="192.2" fill="#f2a65a"/>
+<text x="336.8" y="133.8" font-size="9.5" fill="#f2a65a" text-anchor="middle">36.97</text>
+<text x="321.2" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">Guide + MASM, 15</text>
+<rect x="454.8" y="194.5" width="31.0" height="135.5" fill="#6f7b90"/>
+<text x="470.2" y="190.5" font-size="9.5" fill="#6f7b90" text-anchor="middle">26.06</text>
+<rect x="488.8" y="150.3" width="31.0" height="179.7" fill="#f2a65a"/>
+<text x="504.2" y="146.3" font-size="9.5" fill="#f2a65a" text-anchor="middle">34.55</text>
+<text x="488.8" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">MASM, 25 steps</text>
+<rect x="622.2" y="169.3" width="31.0" height="160.7" fill="#6f7b90"/>
+<text x="637.8" y="165.3" font-size="9.5" fill="#6f7b90" text-anchor="middle">30.91</text>
+<rect x="656.2" y="131.5" width="31.0" height="198.5" fill="#f2a65a"/>
+<text x="671.8" y="127.5" font-size="9.5" fill="#f2a65a" text-anchor="middle">38.18</text>
+<text x="656.2" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">Guide + MASM, 25</text>
+<text x="70" y="386" font-size="10" fill="#c4ccda">Source: Gan et al., arXiv:2610.01491, Table 1.</text>
+</g></svg>
+
+<p>The audit also tested the model's own account. Of 102 failures in the strongest setting, 18 claimed at least 80% completion in memory and 7 claimed 100%. Among the 40 that ran out of steps, the mean verified progress was 56.2% and none had verifiably finished. So review cut both ways: it found successes the evaluator missed, and it refused successes the agent asserted. Scroll oscillation was the largest single failure cause, 32 of 102.</p>
+
+<h2 id="medimageosworld-keeps-outcome-and-progress-apart">MedImageOSWorld keeps outcome and progress apart</h2>
+
+<p>MedImageOSWorld (Long, Li, Xing, Yang and others; arXiv:2610.04800, 3 October 2026) runs agents on simulated CT, MR and ultrasound consoles and scores three things it never merges: success, workflow progress in quarters, and acquisition quality against hidden anatomy. Eleven open-weight agents reached 21.5 to 74.5 on progress and 3.0 to 25.0 on success. GPT-6 Sol and Claude Opus 5.5 reached about 34 success, with progress only 9 to 11 points above the best open model (85.5 and 83.4 against 74.5) but acquisition quality about 19 points higher (61.1 and 61.3 against 42.0). Its gates also check cause: on renal MR, Opus 5.5 restored full coverage in all 12 translation-defect cells and passed none, because it fixed the image through a setting other than the one at fault. In 360 CT recovery episodes from two models, no agent corrected the clipped range before closing the study.</p>
+
+<table>
+  <thead><tr><th>Item</th><th>WebArena-Lite audit</th><th>MedImageOSWorld</th><th>phoneshell xv + xv2</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>Tasks / runs</td><td>165 tasks x 6 conditions</td><td>49 tasks, 13 agents</td><td>80-task pool; 144 + 349 scored runs, 6 models</td><td>2610.01491 Sec. 4; 2610.04800 Sec. 6.1; HF results</td></tr>
+    <tr><td>Headline score</td><td>GPT-5.5 26.06% to 30.91% raw</td><td>open-weight SR 3.0 to 25.0; proprietary about 34</td><td>82.6% (xv), 92.3% (xv2)</td><td>Table 1; Fig. 3; HF results</td></tr>
+    <tr><td>Evaluator misses found</td><td>9 to 14 per setting (+5.45 to +8.49 pts)</td><td>not reported</td><td>cannot be measured</td><td>Table 1</td></tr>
+    <tr><td>Failed runs claiming success</td><td>7 of 102 claim 100%; 0 of 40 verified</td><td>not reported</td><td>33 of 52</td><td>Table 7; agent_said on the rig</td></tr>
+    <tr><td>Progress measure</td><td>verified subgoals per step</td><td>workflow stages, 0 to 1 in quarters</td><td>none</td><td>Sec. 3; Sec. 5</td></tr>
+    <tr><td>State kept for review</td><td>screenshots, URLs, actions, memory, reply</td><td>recorded trajectories</td><td>check details, private 400-character reply</td><td>Sec. 3; abstract; <code>runner.py</code></td></tr>
+  </tbody>
+</table>
+
+<h2 id="phoneshell-s-52-failures">phoneshell's 52 failures</h2>
+
+<p>The xv round (144 runs, 24 tasks, 6 models, 8 September 2026) and the xv2 round (349 runs, iPhone 14 Pro on iOS 26.3.1, 9 September) are on Hugging Face as <code>blolabel/phoneshell-bench</code>. Each task is graded by checks run against the phone after the agent stops: the foreground app, an element that must exist, or a regular expression over the text of the accessibility elements. We split the 52 failures by the model's final reply: 33 claimed success, 11 ran out of time or turns, 7 said they could not finish, 1 left no reply.</p>
+
+<svg viewBox="0 0 760 400" style="width:100%;height:auto" role="img" aria-label="Diagram of phoneshell's 52 failed runs in its two public cross-model rounds, xv with 144 runs and xv2 with 349. 33 ended with the model saying it had succeeded, 11 ran out of time or turns, 7 said they could not, 1 left no reply. Of the 33 success claims, 11 are on clock.timer.set and 5 on reminders.create; in all 16 the right app was in the foreground and only the outcome check failed. Two other claims are wrong on their face, reporting 52 for 12 plus 8 times 5. The stored evidence per run is a pass flag and a one-line detail per check, plus a 400-character reply kept off the public dataset.">
+<rect x="0" y="0" width="760" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="11">
+<text x="20" y="26" font-size="14" font-weight="600">52 failed runs in xv and xv2, and what each one left behind</text>
+<rect x="20" y="46" width="160" height="70" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+<text x="32" y="70" font-weight="600">493 scored runs</text>
+<text x="32" y="90" fill="#c4ccda">6 models, 2 rounds</text>
+<text x="32" y="106" fill="#f2a65a">52 failed</text>
+<line x1="180" y1="82" x2="220" y2="82" stroke="#6f7b90" stroke-width="2"/>
+<rect x="220" y="46" width="250" height="150" rx="8" fill="#1d2330" stroke="#f2a65a"/>
+<text x="232" y="70" font-weight="600" fill="#f2a65a">how the model ended</text>
+<text x="232" y="94">33  said it succeeded</text>
+<text x="232" y="114">11  ran out of time or turns</text>
+<text x="232" y="134">7   said it could not</text>
+<text x="232" y="154">1   no reply, no error</text>
+<text x="232" y="180" font-size="10" fill="#c4ccda">split by keywords in agent_said, then read</text>
+<line x1="470" y1="94" x2="510" y2="94" stroke="#f2a65a" stroke-width="2"/>
+<rect x="510" y="46" width="230" height="150" rx="8" fill="#1d2330" stroke="#f2a65a"/>
+<text x="522" y="70" font-weight="600" fill="#f2a65a">of the 33 claims</text>
+<text x="522" y="94">11  clock.timer.set</text>
+<text x="522" y="114">5   reminders.create</text>
+<text x="522" y="134" fill="#c4ccda">app check passed in all 16;</text>
+<text x="522" y="150" fill="#c4ccda">only the outcome check failed</text>
+<text x="522" y="174">2   reported 52 for (12 + 8) x 5</text>
+<text x="522" y="190" font-size="10" fill="#c4ccda">wrong on their face</text>
+<rect x="20" y="220" width="720" height="140" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+<text x="32" y="244" font-weight="600">What a reviewer would have, per run</text>
+<text x="32" y="268">kept: task_id, model, passed, turns, seconds, cost, and per check {kind, passed, detail}</text>
+<text x="32" y="288">e.g. "pattern '0?[34]:\d\d|0?5:00' did not match", "'collect parcel' not found anywhere"</text>
+<text x="32" y="308">kept privately: agent_said, the final reply, first 400 characters</text>
+<text x="32" y="332" fill="#f2a65a">not kept: final screenshot, final accessibility tree, the actions taken, the step-by-step text</text>
+<text x="32" y="350" font-size="10" fill="#c4ccda">the device has moved on; the run cannot be re-inspected</text>
+<text x="20" y="388" font-size="10" fill="#c4ccda">Sources: huggingface.co/datasets/blolabel/phoneshell-bench results/xv.jsonl, xv2.jsonl; agent_said from the rig's copies; phoneshell bench/runner.py.</text>
+</g></svg>
+
+<p>Two tasks hold half of the claims. On <code>clock.timer.set</code>, 11 of 12 runs failed across six models, every one with the Clock app in front and every reply describing a running five-minute timer, two quoting a countdown at 04:59. The check wants <code>0?[34]:\d\d|0?5:00</code> somewhere in the element text; the task file records that an earlier pattern had already failed a correct run, and the widened one still failed 11. On <code>reminders.create</code> in xv2, 5 of 6 models failed with Reminders in front and replies saying "collect parcel" had been added; one said the list count went from 7 to 8. These look like the WebArena-Lite pattern: a state the rule did not see. They could also be agents describing what they meant to do. The calculator replies show the second case is real: two runs reported 52 for (12 + 8) x 5.</p>
+
+<p>If all 16 were checker misses, xv would read 86.8% instead of 82.6% and xv2 95.1% instead of 92.3%. That is an upper bound for two tasks, not a correction, and we cannot tighten it: the bench writes one result row per run, the runner never saves the final screenshot or accessibility tree, and the next task's setup changes the phone.</p>
+
+<svg viewBox="0 0 760 330" style="width:100%;height:auto" role="img" aria-label="Diagram comparing three ways of scoring a GUI agent run. WebArena-Lite audit: an evaluator score plus a human review of before and after screenshots, URL changes, actions and the final reply, which recovered 47 successes across four settings, and verified progress per subgoal. MedImageOSWorld: three separate numbers, success rate, workflow progress in quarters and acquisition quality from hidden ground truth, never merged; success 3.0 to 25.0 against progress 21.5 to 74.5 for open-weight agents. phoneshell: one pass or fail from device checks, with no stored state for review and no progress measure.">
+<rect x="0" y="0" width="760" height="330" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="11">
+<text x="20" y="26" font-size="14" font-weight="600">Three ways to score a run, and what each keeps for a second look</text>
+<rect x="20" y="46" width="230" height="240" rx="8" fill="#1d2330" stroke="#5ad1a0"/>
+<text x="32" y="68" font-weight="600" fill="#5ad1a0">WebArena-Lite audit</text>
+<text x="32" y="92">evaluator score, kept as is</text>
+<text x="32" y="112">+ human review of before and</text>
+<text x="32" y="130">  after screenshots, URLs,</text>
+<text x="32" y="148">  actions, memory, final reply</text>
+<text x="32" y="172">+ first consequential error</text>
+<text x="32" y="192">+ verified progress per subgoal</text>
+<text x="32" y="222" fill="#5ad1a0">47 successes recovered</text>
+<text x="32" y="240" fill="#5ad1a0">across 4 GPT-5.5 settings</text>
+<text x="32" y="268" font-size="10" fill="#c4ccda">165 tasks, arXiv:2610.01491</text>
+<rect x="265" y="46" width="230" height="240" rx="8" fill="#1d2330" stroke="#5ad1a0"/>
+<text x="277" y="68" font-weight="600" fill="#5ad1a0">MedImageOSWorld</text>
+<text x="277" y="92">success rate (SR)</text>
+<text x="277" y="112">workflow progress (PR),</text>
+<text x="277" y="130">  0, 0.25, 0.5, 0.75 or 1</text>
+<text x="277" y="148">acquisition quality (AQ) from</text>
+<text x="277" y="166">  hidden ground truth</text>
+<text x="277" y="190">reported side by side, never merged</text>
+<text x="277" y="222" fill="#5ad1a0">open-weight SR 3.0 to 25.0,</text>
+<text x="277" y="240" fill="#5ad1a0">PR 21.5 to 74.5</text>
+<text x="277" y="268" font-size="10" fill="#c4ccda">49 tasks, arXiv:2610.04800</text>
+<rect x="510" y="46" width="230" height="240" rx="8" fill="#1d2330" stroke="#f2a65a"/>
+<text x="522" y="68" font-weight="600" fill="#f2a65a">phoneshell bench</text>
+<text x="522" y="92">checks read from the device:</text>
+<text x="522" y="112">  foreground app, element exists,</text>
+<text x="522" y="130">  regex over element text</text>
+<text x="522" y="154">passed only if every check passes</text>
+<text x="522" y="178">no stored final state</text>
+<text x="522" y="198">no progress measure</text>
+<text x="522" y="222" fill="#f2a65a">xv 82.6% (119 of 144)</text>
+<text x="522" y="240" fill="#f2a65a">xv2 92.3% (322 of 349)</text>
+<text x="522" y="268" font-size="10" fill="#c4ccda">80 tasks, iPhone</text>
+<text x="20" y="314" font-size="10" fill="#c4ccda">Sources: arXiv:2610.01491 Sec. 3 and Table 1; arXiv:2610.04800 Sec. 5 and 6.2; phoneshell bench/verify.py and public results.</text>
+</g></svg>
+
+<h2 id="what-it-means-if-you-grade-agents-from-device-state">What it means if you grade agents from device state</h2>
+
+<ul>
+  <li>Device-state grading removes the model's self-report from the score. It does not remove the checker's errors, and those are now invisible unless the final state is saved.</li>
+  <li>Save the final screenshot and element tree for every failed run, and every run where the reply claims success. On phoneshell that is one <code>phone.snapshot()</code> call before teardown, the call the checks already make, with the screenshot switched on.</li>
+  <li>When one task fails across every model with the same claim, audit the check first. Eleven identical failures on one timer are more likely a pattern than six independent mistakes repeated twice.</li>
+  <li>Report raw and corrected scores side by side, as both papers do, and keep progress separate from success. MedImageOSWorld's gap between 74.5 progress and 25.0 success is the information a single number throws away.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<ul>
+  <li>WebArena-Lite: Table 1 (raw, corrected, recovered), Table 6 (failure modes), Table 7 (claimed vs verified progress) of <code>https://arxiv.org/abs/2610.01491</code>.</li>
+  <li>MedImageOSWorld: Section 5 (metrics) and 6.2 (results) of <code>https://arxiv.org/abs/2610.04800</code>; prompts and run configurations are announced for Hugging Face.</li>
+  <li>phoneshell failures: download <code>results/xv.jsonl</code> and <code>results/xv2.jsonl</code> from <code>huggingface.co/datasets/blolabel/phoneshell-bench</code> and count <code>passed == false and not skipped</code>: 25 and 27. Filter <code>task_id == "clock.timer.set"</code> for the 11 failures and their check details. The success-claim split needs <code>agent_said</code>, which is on the rig only and not published, by design.</li>
+  <li>Checks: <code>environments/clock_timer_set.yaml</code> and <code>environments/reminders_create.yaml</code>; how a regex check reads the screen: <code>phoneshell/bench/verify.py</code>, which joins <code>e.text</code> over the snapshot's elements.</li>
+</ul>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>Our expectation is that at least half of the 16 same-task failures were checker misses. Test: rerun <code>clock.timer.set</code> and <code>reminders.create</code> 5 times each with two models, saving the final screenshot and element tree, and have a person grade every run from the saved state alone. If fewer than half of the runs the checks fail and the person passes appear, the checks were right and the agents were overclaiming, and we are wrong. We will publish the saved states and the grades by 31 December 2026, or say we did not run it.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ol>
+      <li><a href="https://arxiv.org/abs/2610.01491">Gan, He, Tsujii, Kobayashi, Itoh, Funakoshi, Auditing Web Agent Evaluation on WebArena-Lite: Human Review of Outcomes and Trajectories, arXiv:2610.01491v1, 1 October 2026</a></li>
+      <li><a href="https://arxiv.org/abs/2610.04800">Long, Li, Xing, Yang et al., MedImageOSWorld: Benchmarking GUI Agents for Medical Image Consoles, arXiv:2610.04800v1, 3 October 2026</a></li>
+      <li><a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">blolabel/phoneshell-bench on Hugging Face: results/xv.jsonl and results/xv2.jsonl (last modified 9 September 2026)</a></li>
+      <li><a href="https://github.com/Blomega/phoneshell">phoneshell source: bench/runner.py, bench/verify.py, environments/*.yaml (read 6 October 2026)</a></li>
+      <li><a href="https://blolabel.ai/blog/agents-report-success-device-disagrees/">Blolabel, earlier note: agents report success, the device disagrees</a></li>
+    </ol>
+  </section>
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
