@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>nanoMuse gives its personal agent hands on Android but not on the iPhone; phoneshell&#x27;s iPhone hands come from a Mac, and its gate misses two steps nanoMuse&#x27;s catches | Blolabel</title>
+<meta name="description" content="nanoMuse (arXiv:2610.08699, 6 October 2026, v0.1.40) runs one open personal agent on every device but leaves its iOS app without hands, because iOS lets no app operate another. phoneshell drives an iPhone from a Mac through an XCUITest runner and scores 322 of 349 device-graded runs. nanoMuse&#x27;s Sentinel gates a Send tap and a typing step that submits; phoneshell&#x27;s gate stops neither.">
+<link rel="canonical" href="https://blolabel.ai/blog/iphone-hands-come-from-outside/">
+<meta property="og:title" content="nanoMuse gives its personal agent hands on Android but not on the iPhone; phoneshell&#x27;s iPhone hands come from a Mac, and its gate misses two steps nanoMuse&#x27;s catches | Blolabel">
+<meta property="og:description" content="nanoMuse (arXiv:2610.08699, 6 October 2026, v0.1.40) runs one open personal agent on every device but leaves its iOS app without hands, because iOS lets no app operate another. phoneshell drives an iPhone from a Mac through an XCUITest runner and scores 322 of 349 device-graded runs. nanoMuse&#x27;s Sentinel gates a Send tap and a typing step that submits; phoneshell&#x27;s gate stops neither.">
+<meta property="og:url" content="https://blolabel.ai/blog/iphone-hands-come-from-outside/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/iphone-hands-come-from-outside-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "nanoMuse gives its personal agent hands on Android but not on the iPhone; phoneshell's iPhone hands come from a Mac, and its gate misses two steps nanoMuse's catches", "description": "nanoMuse (arXiv:2610.08699, 6 October 2026, v0.1.40) runs one open personal agent on every device but leaves its iOS app without hands, because iOS lets no app operate another. phoneshell drives an iPhone from a Mac through an XCUITest runner and scores 322 of 349 device-graded runs. nanoMuse's Sentinel gates a Send tap and a typing step that submits; phoneshell's gate stops neither.", "datePublished": "2026-10-07", "dateModified": "2026-10-07", "url": "https://blolabel.ai/blog/iphone-hands-come-from-outside/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/iphone-hands-come-from-outside/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/iphone-hands-come-from-outside-hero.png", "citation": ["https://arxiv.org/abs/2610.08699", "https://github.com/nano-muse/nanoMuse", "https://github.com/Blomega/phoneshell", "https://huggingface.co/datasets/blolabel/phoneshell-bench", "https://matthewcassinelli.com/wwdc26-sessions-app-intents-siri-ai-apple-developer", "https://blolabel.ai/blog/confirm-gate-lets-send-through/", "https://blolabel.ai/blog/checks-pass-before-the-agent-picks/"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Can nanoMuse operate apps on an iPhone?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. Its report says the iPhone app has everything but the hands, since iOS lets no app operate another, so no agent has a phone screen there. The iOS app ships through TestFlight with the conversation, memory and Sentinel. On Android and the desktop the same agent can operate the screen."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How does phoneshell control an iPhone?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "From a Mac. It builds and signs Appium's WebDriverAgent with a free Apple developer account, installs it on the phone as an XCUITest runner, and drives it over a cable or the same wifi. That needs Developer Mode and the Enable UI Automation toggle on the phone, and a person must enter the passcode on the phone after any reboot."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How reliable is an AI agent on a real iPhone?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "On phoneshell's 9 September 2026 run, six frontier models passed 322 of 349 device-graded runs on an iPhone 14 Pro, 92.3%. Twelve of those tasks have checks that pass before the agent chooses anything; without them it is 251 of 277, 90.6%. nanoMuse reports no success rate for its hands."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Which phone actions should an agent ask permission for?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "nanoMuse's Sentinel treats taps whose label contains confirm payment, transfer, place order, send or delete as sensitive, also any typing step that submits in one go, and warns on unlabelled buttons. phoneshell's gate matches 14 patterns on tapped labels; it does not include send and does not gate typing."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind comparison">comparison</span>
+    <time datetime="2026-10-07">07 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>nanoMuse gives its personal agent hands on Android but not on the iPhone; phoneshell&#x27;s iPhone hands come from a Mac, and its gate misses two steps nanoMuse&#x27;s catches</h1>
+  <p class="standfirst">An open personal agent that runs on every device stops short at one of them. The iPhone gets the conversation and not the hands. phoneshell is the other answer, hands from outside the phone, and the two projects' safety rules can be compared step by step.</p>
+
+<p>nanoMuse, an open-source personal agent posted on 6 October 2026, runs on Android, iOS, the desktop and the web. It has hands on every one of them except the iPhone, "since iOS lets no app operate another". phoneshell puts the hands outside the phone. A Mac drives an XCUITest runner over a cable, and six frontier models passed 322 of 349 device-graded iPhone runs through it. The two projects also gate dangerous steps differently. nanoMuse's Sentinel stops a tap on Send and a typing step that presses return. phoneshell's confirm gate stops neither.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/iphone-hands-come-from-outside-hero.png" alt="Abstract technical illustration of a sealed glass tile with a single cable entering it from outside, light flowing along the cable" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+
+<h2 id="what-nanomuse-shipped">What nanoMuse shipped</h2>
+
+<p>Guangyi Liu, Yong Liu and Jiangning Zhang (Zhejiang University; arXiv:2610.08699) describe nanoMuse as the open counterpart to Meta's Muse, under GPL-3.0. The first release came on 25 September, the report describes v0.1.40, and v0.1.41 followed on 7 October. The Android app is a modified OpenMinis with a sandboxed Alpine Linux and a shell. The desktop app is an Electron shell. The iOS app ships through TestFlight. Hands are the last rung of a ladder: skill or CLI or MCP server first, then a page fetched with the person's login, then the browser, then the device screen, off by default. The screen rung is a one-action-per-screenshot loop: the model returns a thought, a sentence saying what it is about to press, and one gesture.</p>
+
+<p>The report is plain about two gaps. On the iPhone, Table 1's note says, "no agent has a phone screen there". On every device it says: "We have no success rate and no count of human take-overs to report." The Sentinel is described as a policy boundary in the same trust domain as the agent, not a privilege boundary.</p>
+
+<table>
+  <thead><tr><th></th><th>nanoMuse on Android</th><th>nanoMuse on iPhone</th><th>phoneshell on iPhone</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>Where the agent runs</td><td>on the phone, in the app</td><td>on the phone, in the app</td><td>on a Mac, model through MCP</td><td>2610.08699 Sec. 5; phoneshell README</td></tr>
+    <tr><td>Can operate other apps</td><td>yes, screenshot loop plus accessibility text</td><td>no</td><td>yes, accessibility tree plus optional screenshot</td><td>same</td></tr>
+    <tr><td>Extra hardware</td><td>none</td><td>none</td><td>a Mac, a cable or the same wifi</td><td>phoneshell README</td></tr>
+    <tr><td>Phone settings needed</td><td>not reported</td><td>none</td><td>Developer Mode, Enable UI Automation</td><td>phoneshell README</td></tr>
+    <tr><td>After a reboot</td><td>not reported</td><td>not applicable</td><td>a person must enter the passcode on the phone before the runner can start</td><td>FINDINGS.md sec. 24</td></tr>
+    <tr><td>Gate on a "Send" tap</td><td>yes, committing word</td><td>no hands</td><td>no (only "send money")</td><td>Sec. 5; config.py</td></tr>
+    <tr><td>Gate on typing that submits</td><td>yes</td><td>no hands</td><td>no, audit line only</td><td>Sec. 5; mcp_server.py</td></tr>
+    <tr><td>Measured success</td><td>"no success rate"</td><td>none</td><td>322 of 349 (92.3%) on an iPhone 14 Pro, 6 models, 9 Sep 2026</td><td>Sec. 7; phoneshell-bench xv2</td></tr>
+  </tbody>
+</table>
+
+<h2 id="how-the-hands-reach-an-iphone-from-outside">How the hands reach an iPhone from outside</h2>
+
+<p>iOS gives an App Store or TestFlight app no API to read or tap another app. The route that does exist is the testing stack. An XCUITest runner, signed by a developer account and started through the phone's developer services, can read the accessibility tree of whatever app is in front and synthesise touches. phoneshell builds Appium's WebDriverAgent at the pinned tag v16.12.4, signs it with a free Apple developer account, installs it, and talks to it over HTTP bound to the phone's loopback. Its bring-up code names 16 checks, from <code>xcode</code> and <code>developer-mode</code> to <code>wda-launch</code> and <code>wda-source</code>, and <code>bin/phoneshell doctor</code> reports the ones that fail. Two phone toggles cannot be set from the Mac: Developer Mode, and Settings &gt; Developer &gt; Enable UI Automation. Without the second, the README warns, "everything installs, launches and silently does nothing".</p>
+
+<svg viewBox="0 0 800 400" style="width:100%;height:auto" role="img" aria-label="Diagram of two places an agent's hands can sit for an iPhone. Inside the phone, nanoMuse's iOS app, distributed through TestFlight, runs in its own sandbox and cannot read or tap another app, so its iPhone agent has everything but the hands. Outside the phone, phoneshell runs on a Mac connected by cable or the same wifi, reaches the phone's developer services, starts an XCUITest runner, WebDriverAgent 16.12.4, and through it reads the accessibility tree of whatever app is in front and taps by coordinates. That path needs Developer Mode, Enable UI Automation, a signing team, and a person to enter the passcode after any reboot.">
+<rect x="0" y="0" width="800" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="11">
+<text x="20" y="26" font-size="14" font-weight="600">Where an agent's hands can sit on an iPhone</text>
+<rect x="20" y="46" width="300" height="300" rx="10" fill="#1d2330" stroke="#6f7b90"/>
+<text x="34" y="70" font-weight="600">iPhone</text>
+<rect x="34" y="84" width="130" height="80" rx="6" fill="#262d3d" stroke="#f2a65a"/>
+<text x="44" y="104" fill="#f2a65a">nanoMuse iOS app</text><text x="44" y="122" font-size="10" fill="#c4ccda">TestFlight, v0.1.40</text><text x="44" y="140" font-size="10" fill="#c4ccda">chat, memory, Sentinel</text><text x="44" y="156" font-size="10" fill="#f2a65a">no hands</text>
+<rect x="176" y="84" width="130" height="80" rx="6" fill="#262d3d"/>
+<text x="186" y="104">other apps</text><text x="186" y="122" font-size="10" fill="#c4ccda">Settings, Mail, Maps</text>
+<text x="166" y="128" fill="#f2a65a">&#215;</text>
+<text x="34" y="186" font-size="10" fill="#c4ccda">sandbox: "iOS lets no app operate another"</text>
+<rect x="34" y="204" width="272" height="76" rx="6" fill="#1f3329" stroke="#5ad1a0"/>
+<text x="44" y="224" fill="#5ad1a0">XCUITest runner (WebDriverAgent 16.12.4)</text><text x="44" y="242" font-size="10" fill="#c4ccda">reads any foreground app's accessibility tree</text><text x="44" y="258" font-size="10" fill="#c4ccda">taps by coordinates, types, swipes</text><text x="44" y="274" font-size="10" fill="#c4ccda">needs Developer Mode + Enable UI Automation</text>
+<text x="34" y="306" font-size="10" fill="#c4ccda">after a reboot: BFU state, developer services</text>
+<text x="34" y="322" font-size="10" fill="#c4ccda">withheld until a person enters the passcode</text>
+<rect x="480" y="46" width="300" height="300" rx="10" fill="#1d2330" stroke="#6f7b90"/>
+<text x="494" y="70" font-weight="600">Mac</text>
+<rect x="494" y="84" width="272" height="80" rx="6" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="504" y="104" fill="#5ad1a0">phoneshell bridge + MCP server</text><text x="504" y="122" font-size="10" fill="#c4ccda">model of your choice through MCP</text><text x="504" y="140" font-size="10" fill="#c4ccda">confirm gate on taps, audit log</text><text x="504" y="156" font-size="10" fill="#c4ccda">device-graded benchmark, 80 tasks</text>
+<rect x="494" y="182" width="272" height="64" rx="6" fill="#262d3d"/>
+<text x="504" y="202">Xcode tools, pymobiledevice3</text><text x="504" y="220" font-size="10" fill="#c4ccda">build, sign (free Apple developer account),</text><text x="504" y="236" font-size="10" fill="#c4ccda">install and launch the runner</text>
+<text x="494" y="272" font-size="10" fill="#c4ccda">bring-up code names 16 checks,</text>
+<text x="494" y="288" font-size="10" fill="#c4ccda">from xcode and developer-mode to wda-source</text>
+<line x1="320" y1="242" x2="480" y2="214" stroke="#5ad1a0" stroke-width="2"/>
+<text x="336" y="214" font-size="10" fill="#5ad1a0">USB cable or same wifi</text>
+<text x="336" y="262" font-size="10" fill="#c4ccda">HTTP to the runner on :8100,</text>
+<text x="336" y="276" font-size="10" fill="#c4ccda">bound to loopback</text>
+<text x="20" y="378" font-size="10" fill="#c4ccda">Sources: Liu, Liu and Zhang, arXiv:2610.08699, Table 1 note a and Sec. 5; phoneshell README (Get started), device.py, FINDINGS.md section 24.</text>
+</g></svg>
+
+<p>The price shows up in operations. After a cold boot the phone sits in BFU, the state before the passcode is first entered, and developer services do not come up until a person types the passcode on the phone. WebDriverAgent is what would type the passcode, and WebDriverAgent cannot start. phoneshell's findings call this a security property rather than a bug. Their rule for unattended runs is that a reboot ends the session. Apple's own route is narrower and in-process: apps expose App Intents, which Siri can call with awareness of what is on screen, the subject of a WWDC26 session on 8 June 2026. That reaches only the actions an app's developer chose to expose.</p>
+
+<h2 id="the-two-gates-step-by-step">The two gates, step by step</h2>
+
+<p>nanoMuse's Sentinel runs a fixed order: denied tools, the person's own rules, the always-allow and always-ask lists, taint, risk against the chosen mode, and last a set of warnings no list can wave through. For the screen rung it judges the model's sentence and the label at the landing point. On Android it also reads the accessibility text under the finger, and the stricter reading decides. A label with a committing word (confirm payment, transfer, place order, send, delete) makes the step sensitive, approved every time. "A typing step that submits in one go is sensitive, because Enter in a messenger is a send." A step whose target has no label carries a warning.</p>
+
+<p>phoneshell's gate is 14 regular expressions in <code>config.py</code>, applied to the tapped element's label by <code>phone_tap</code> and <code>phone_do</code>. They cover order, pay, checkout, buy, purchase, send money, transfer, book, subscribe, delete, remove, log out and sign out. <code>phone_type</code> with <code>submit=True</code> writes an audit line and presses return, with no gate. The README says actions that look irreversible, naming "send", are refused the first time. The pattern list does not contain send. We found the same gap with different data on 5 October.</p>
+
+<svg viewBox="0 0 800 330" style="width:100%;height:auto" role="img" aria-label="Diagram comparing what nanoMuse's Sentinel and phoneshell's confirm gate do with three phone steps. A tap on a button labelled Send: nanoMuse treats send as a committing word, so the step is sensitive and approved every time; phoneshell's 14 patterns include send money but not send, so the tap goes through. Typing a message with submit, which presses return: nanoMuse marks a typing step that submits as sensitive; phoneshell's phone_type writes an audit line and types, with no gate. A tap on an icon with no label: nanoMuse attaches a warning that no mode can wave through; phoneshell has no label to match, so the tap goes through.">
+<rect x="0" y="0" width="800" height="330" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="11">
+<text x="20" y="26" font-size="14" font-weight="600">Three steps, two gates</text>
+<text x="300" y="56" font-weight="600" fill="#c4ccda">nanoMuse Sentinel (v0.1.40)</text>
+<text x="560" y="56" font-weight="600" fill="#c4ccda">phoneshell confirm gate</text>
+<rect x="20" y="70" width="760" height="70" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+<text x="34" y="98" font-weight="600">tap a button labelled "Send"</text>
+<text x="34" y="118" font-size="10" fill="#c4ccda">messenger, mail</text>
+<text x="300" y="98" fill="#f2a65a">sensitive: approve every time</text><text x="300" y="118" font-size="10" fill="#c4ccda">"send" is a committing word</text>
+<text x="560" y="98" fill="#5ad1a0">goes through</text><text x="560" y="118" font-size="10" fill="#c4ccda">only "send money" is a pattern</text>
+<rect x="20" y="152" width="760" height="70" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+<text x="34" y="180" font-weight="600">type a message, submit = return</text>
+<text x="34" y="200" font-size="10" fill="#c4ccda">"Enter in a messenger is a send"</text>
+<text x="300" y="180" fill="#f2a65a">sensitive</text><text x="300" y="200" font-size="10" fill="#c4ccda">a typing step that submits in one go</text>
+<text x="560" y="180" fill="#5ad1a0">goes through</text><text x="560" y="200" font-size="10" fill="#c4ccda">phone_type: audit line, no gate</text>
+<rect x="20" y="234" width="760" height="70" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+<text x="34" y="262" font-weight="600">tap an icon with no label</text>
+<text x="34" y="282" font-size="10" fill="#c4ccda">unlabelled button</text>
+<text x="300" y="262" fill="#f2a65a">warning, once-only grant</text><text x="300" y="282" font-size="10" fill="#c4ccda">no mode or list can wave it through</text>
+<text x="560" y="262" fill="#5ad1a0">goes through</text><text x="560" y="282" font-size="10" fill="#c4ccda">nothing to match</text>
+<text x="20" y="322" font-size="10" fill="#c4ccda">Sources: arXiv:2610.08699 Sec. 5 (Sentinel, Hands); phoneshell config.py confirm_patterns, mcp_server.py phone_tap and phone_type, read 7 October 2026.</text>
+</g></svg>
+
+<h2 id="what-it-means-if-you-want-an-agent-to-use-someone-s-iphone">What it means if you want an agent to use someone's iPhone</h2>
+
+<ul>
+  <li>There are three routes, and each costs something different. App Intents covers only what each app exposes. The XCUITest route covers every app with labelled controls, but needs a computer tethered to the phone, developer settings and a person after reboots. Android lets the agent live on the phone.</li>
+  <li>An agent that "runs on every device" has an asymmetric surface on iOS. nanoMuse's design of peers that use each other as tools fits this: a desktop peer could hold iPhone hands through the testing stack. On our reading of the report that is not built.</li>
+  <li>Gate the step that commits, whatever its form. On a phone that includes return in a text field and unlabelled icons, not only buttons whose label says pay. nanoMuse's list covers both. phoneshell's covers neither and should.</li>
+  <li>Report the number, and report what the number can see. phoneshell's 92.3% comes from the device rather than the model. Twelve of its tasks pass before the agent chooses anything, and without them the run scores 90.6%. nanoMuse's honest "no success rate" is better than a number nobody checked, and it leaves its hands unranked.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># nanoMuse: the iPhone note and the gate rules
+https://arxiv.org/abs/2610.08699      (Table 1, note a; Sec. 5, "Sentinel" and "Hands")
+gh api repos/nano-muse/nanoMuse/releases --jq '.[0:3][] | .tag_name+" "+.published_at'
+
+# phoneshell: the route, the toggles, the gate
+sed -n '/## Get started/,/### Watch/p' README.md
+grep -oh 'Check("[a-z-]*"' phoneshell/device.py phoneshell/bringup.py | sort -u | wc -l   # 16 named checks
+grep -n -A16 "confirm_patterns" phoneshell/config.py
+sed -n '/def phone_type/,/return _act_and_report/p' phoneshell/mcp_server.py   # audit, no gate
+sed -n '/## 24. A reboot/,/## 25/p' FINDINGS.md
+
+# the measured number
+curl -sLO https://huggingface.co/datasets/blolabel/phoneshell-bench/resolve/main/results/xv2.jsonl
+python3 -c "import json;R=[json.loads(l) for l in open('xv2.jsonl')];print(sum(r['passed'] for r in R),len(R))"   # 322 349</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>Our claim is that iPhone hands for a third-party agent come only from outside the phone. By 31 March 2027 we expect nanoMuse's iOS app still to have no screen rung, and any iPhone hands it gains to run from a desktop peer through XCUITest or a similar testing route. If a TestFlight or App Store build of nanoMuse, or of any third-party agent, taps inside another app with no computer attached and no developer settings, the constraint as we state it is wrong. On our side, by 31 December 2026 phoneshell's gate will cover send and typing with submit. Rerun on the 388 audited taps from our earlier note, the widened list should flag at least one step the current one passes.</p>
+
+<h2 id="sources">Sources</h2>
+
+<ul>
+  <li>Guangyi Liu, Yong Liu, Jiangning Zhang, "<a href="https://arxiv.org/abs/2610.08699">nanoMuse: An Open-Source Personal Agent for Every Device You Own</a>", arXiv:2610.08699, 6 October 2026; code at <a href="https://github.com/nano-muse/nanoMuse">github.com/nano-muse/nanoMuse</a> (GPL-3.0, v0.1.41 on 7 October 2026).</li>
+  <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: README, <code>config.py</code>, <code>mcp_server.py</code>, <code>device.py</code>, FINDINGS.md section 24, read 7 October 2026.</li>
+  <li>Blolabel, <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">phoneshell-bench</a>, <code>results/xv2.jsonl</code>, 9 September 2026.</li>
+  <li>Matthew Cassinelli, "<a href="https://matthewcassinelli.com/wwdc26-sessions-app-intents-siri-ai-apple-developer">WWDC26 sessions on App Intents, Siri and AI</a>", on the App Intents onscreen awareness session of 8 June 2026.</li>
+  <li>Blolabel, "<a href="https://blolabel.ai/blog/confirm-gate-lets-send-through/">COBRA and phoneshell's confirm gate</a>", 5 October 2026, and "<a href="https://blolabel.ai/blog/checks-pass-before-the-agent-picks/">12 of phoneshell's 80 checks pass before the agent picks</a>", 7 October 2026.</li>
+</ul>
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
