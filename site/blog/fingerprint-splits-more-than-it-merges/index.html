@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Action-conditioned bisimulation stops GUI memories merging look-alike screens; phoneshell&#x27;s layout fingerprint mostly splits them, 60 keys for 29 screens | Blolabel</title>
+<meta name="description" content="A merge rule that ignores how screens look and compares what their actions do lifted a frozen Qwen3-8B from 72.3% to 78.2% on ten MiniWoB++ tasks (arXiv:2609.38778), where merging by appearance scored 70.8%. On phoneshell&#x27;s eleven crawls of 11 September 2026, its appearance-only fingerprint gave 29 titled screens 60 keys, 14 for Settings alone, while only 4 of 38 repeated taps behaved differently, all on promotional rows.">
+<link rel="canonical" href="https://blolabel.ai/blog/fingerprint-splits-more-than-it-merges/">
+<meta property="og:title" content="Action-conditioned bisimulation stops GUI memories merging look-alike screens; phoneshell&#x27;s layout fingerprint mostly splits them, 60 keys for 29 screens | Blolabel">
+<meta property="og:description" content="A merge rule that ignores how screens look and compares what their actions do lifted a frozen Qwen3-8B from 72.3% to 78.2% on ten MiniWoB++ tasks (arXiv:2609.38778), where merging by appearance scored 70.8%. On phoneshell&#x27;s eleven crawls of 11 September 2026, its appearance-only fingerprint gave 29 titled screens 60 keys, 14 for Settings alone, while only 4 of 38 repeated taps behaved differently, all on promotional rows.">
+<meta property="og:url" content="https://blolabel.ai/blog/fingerprint-splits-more-than-it-merges/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/fingerprint-splits-more-than-it-merges-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Action-conditioned bisimulation stops GUI memories merging look-alike screens; phoneshell's layout fingerprint mostly splits them, 60 keys for 29 screens", "description": "A merge rule that ignores how screens look and compares what their actions do lifted a frozen Qwen3-8B from 72.3% to 78.2% on ten MiniWoB++ tasks (arXiv:2609.38778), where merging by appearance scored 70.8%. On phoneshell's eleven crawls of 11 September 2026, its appearance-only fingerprint gave 29 titled screens 60 keys, 14 for Settings alone, while only 4 of 38 repeated taps behaved differently, all on promotional rows.", "datePublished": "2026-10-07", "dateModified": "2026-10-07", "url": "https://blolabel.ai/blog/fingerprint-splits-more-than-it-merges/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/fingerprint-splits-more-than-it-merges/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/fingerprint-splits-more-than-it-merges-hero.png", "citation": ["https://arxiv.org/abs/2609.38778", "https://arxiv.org/abs/2609.39547", "https://github.com/Blomega/phoneshell", "https://blolabel.ai/blog/phone-memory-keeps-what-the-screen-said/", "https://blolabel.ai/blog/imagined-rollouts-thin-out-by-step-ten/"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "What is action-conditioned bisimulation for GUI agent memory?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "A rule for deciding when two visited pages count as the same state: they merge only when the actions they share lead to agreeing outcomes and agreeing successor blocks. Appearance never enters it. Swapped into an outcome-value memory on ten MiniWoB++ tasks with a frozen Qwen3-8B, it raised success from 0.723 to 0.782, while merging by observation similarity scored 0.708."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How does phoneshell decide two iPhone screens are the same?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "memory.fingerprint hashes the app's bundle id with the type, label and 32-point grid cell of every button, tab, switch, text field and link, plus their count divided by four. It is a layout key and ignores what the controls do. The crawler uses the same key to avoid tapping a control twice on one layout."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does phoneshell's fingerprint merge screens that behave differently?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Rarely, in its own crawls. Of 38 layout-and-control pairs tapped more than once on 11 September 2026, 4 behaved differently, and all four were promotional or banner rows whose effect changed between runs. The bigger error is splitting: scrolling moves rows to new grid cells, so the Settings screen alone received 14 fingerprints."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Why do promotional rows break GUI agent memory?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Their label and position stay put while what they do changes with the campaign or account state. SAGE (arXiv:2609.39547) gives such regions zero exploration budget, and found only 44% of 176 tasks kept identical trajectories across app versions."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-07">07 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>Action-conditioned bisimulation stops GUI memories merging look-alike screens; phoneshell&#x27;s layout fingerprint mostly splits them, 60 keys for 29 screens</h1>
+  <p class="standfirst">The paper's warning is about merging too eagerly. We checked phoneshell's screen memory against its own crawl records and found the opposite error dominates, with one family of exceptions that a second paper this week tells explorers to skip.</p>
+
+<p>Merging GUI states by what their actions do, instead of by how they look, raised a frozen Qwen3-8B from 72.3% to 78.2% success on ten MiniWoB++ tasks. Merging by appearance scored 70.8%. That is the result of a paper posted on 30 September 2026. phoneshell's screen memory merges by appearance. On its own eleven crawls of 11 September, the appearance key mostly erred the other way: 29 titled screens received 60 keys, 14 of them for Settings. Only 4 of 38 repeated taps behaved differently, and every one of the four was a promotional or banner row.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/fingerprint-splits-more-than-it-merges-hero.png" alt="Abstract technical illustration of a graph of nodes where several near-identical nodes sit apart and two dissimilar edges leave one node" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+
+<h2 id="what-the-two-papers-found">What the two papers found</h2>
+
+<p>Hongbo Zhang, Liuyang Song, Quanquan Li, Daqian Yang, Yan Wen and Zhengtao Yao (arXiv:2609.38778, "Action Conditioned Bisimulation For GUI Agent Memory", 30 September 2026) start from a specific failure: GUIs are full of pages that look alike and answer the same click differently, two tabs of one widget or two rows of one menu. Their rule merges two states only when shared actions lead to agreeing outcomes and successor blocks. It replaces only the merge rule of an existing outcome-value memory, so their ablation ladder isolates it. Each rung changes one thing and keeps the model, prompt, call budget and exploration detours fixed.</p>
+
+<table>
+  <thead><tr><th>System (MiniWoB++, 10 tasks, frozen Qwen3-8B, 400 paired cells)</th><th>Success rate</th><th>Change vs ReAct</th><th>95% CI</th><th>p</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>ReAct, no memory</td><td>0.723</td><td>-</td><td>-</td><td>-</td><td>Table 1</td></tr>
+    <tr><td>Shortlist control (same detours, keeps nothing)</td><td>0.723</td><td>+0.000</td><td>[+0.000, +0.000]</td><td>1.000</td><td>Table 1</td></tr>
+    <tr><td>Memory, successor-representation merge</td><td>0.728</td><td>+0.005</td><td>[-0.007, +0.018]</td><td>0.727</td><td>Table 1</td></tr>
+    <tr><td>Memory, observation-similarity merge</td><td>0.708</td><td>-0.015</td><td>[-0.033, +0.003]</td><td>0.180</td><td>Table 1</td></tr>
+    <tr><td>Memory, action-conditioned bisimulation</td><td>0.782</td><td>+0.060</td><td>[+0.033, +0.090]</td><td>0.001</td><td>Table 1</td></tr>
+  </tbody>
+</table>
+
+<p>It is one seed, one model and web widgets, and the authors say so. The second paper is SAGE (Bo Han, Qianyi Wang, Shuai Liu and colleagues, arXiv:2609.39547, 30 September 2026). It argues that self-collected priors drift with app updates, promotions, ads, A/B tests and personalisation. Across 176 tasks in 20 apps with paired old and new versions, only 44% kept identical trajectories after an update. Its explorer assigns advertisements and promotional cards zero interaction budget.</p>
+
+<h2 id="phoneshell-s-fingerprint-on-its-own-crawl-records">phoneshell's fingerprint on its own crawl records</h2>
+
+<p><code>memory.fingerprint</code> in phoneshell hashes the bundle id with the type, label and 32-point grid cell of every Button, Tab, Switch, text field, Link and similar control, plus the count of those controls divided by four. The crawler (<code>crawl.py</code>, line 918) stores the same hash as each screen's <code>structural</code> key and uses (structural key, control key) to decide that a control has been tried. The agent's memory uses it to decide when a screen is known. After two visits, <code>observe()</code> stops sending the screenshot, and the hint tells the model what each control "did last time".</p>
+
+<p>The crawler's manifests record every tap with the before and after screen. Eleven crawls with manifests ran on 11 September 2026, eight of Settings and three of the Talika app: 113 screens and 237 edges, of which 193 taps reached another screen, 41 changed nothing and 3 left the app. Within one crawl a control is tapped once per layout, so repeated taps come from different crawls of the same screen. That makes it a test of the merge rule across time. We grouped edges by (source fingerprint, control) and compared what happened. Behaviour means the destination app and title, or no-op, or left the app.</p>
+
+<table>
+  <thead><tr><th>Measure</th><th>Value</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>Crawls with a manifest, 11 Sep 2026</td><td>11 (8 Settings, 3 Talika); 5 report iOS 18.4, 6 report iOS 26.6.1; WDA 16.12.4</td><td>manifest.device</td></tr>
+    <tr><td>Screens, edges</td><td>113 screens; 237 edges: 193 tap, 41 no-op, 3 crossing</td><td>our count</td></tr>
+    <tr><td>Layout fingerprints vs titled screens</td><td>60 fingerprints, 29 distinct (app, title) screens; 1 fingerprint under two titles</td><td>our count</td></tr>
+    <tr><td>Screen titled "Settings"</td><td>14 fingerprints (9 on iOS 18.4 crawls, 5 on iOS 26.6.1)</td><td>our count</td></tr>
+    <tr><td>(fingerprint, control) pairs tapped more than once</td><td>38 pairs, 133 edges</td><td>our count</td></tr>
+    <tr><td>Same behaviour, same destination fingerprint</td><td>26</td><td>our count</td></tr>
+    <tr><td>Same behaviour, different destination fingerprint</td><td>8 (Apple Account once, Talika tabs seven times)</td><td>our count</td></tr>
+    <tr><td>Different behaviour</td><td>4: storage-limit banner, Apple Music offer, Talika "Tap to discover how much" card, Talika header</td><td>our count</td></tr>
+  </tbody>
+</table>
+
+<svg viewBox="0 0 760 360" style="width:100%;height:auto" role="img" aria-label="Bar chart of 38 pairs of phoneshell layout fingerprint and control that were tapped more than once across eleven crawls of Settings and the Talika app on 11 September 2026, 133 tap edges in all. 26 pairs led to the same screen with the same fingerprint every time. 8 led to the same screen but under a different destination fingerprint. 4 behaved differently: a different screen, leaving the app, or nothing happening.">
+<rect x="0" y="0" width="760" height="360" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">38 layout-and-control pairs tapped more than once in the 11 September crawls</text>
+<rect x="70" y="40" width="12" height="12" fill="#f2a65a"/><text x="88" y="50" font-size="11" fill="#c4ccda">pairs</text>
+<line x1="70" y1="290.0" x2="740" y2="290.0" stroke="#2a3140"/>
+<text x="62" y="294.0" font-size="10" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="70" y1="253.3" x2="740" y2="253.3" stroke="#2a3140"/>
+<text x="62" y="257.3" font-size="10" fill="#c4ccda" text-anchor="end">5</text>
+<line x1="70" y1="216.7" x2="740" y2="216.7" stroke="#2a3140"/>
+<text x="62" y="220.7" font-size="10" fill="#c4ccda" text-anchor="end">10</text>
+<line x1="70" y1="180.0" x2="740" y2="180.0" stroke="#2a3140"/>
+<text x="62" y="184.0" font-size="10" fill="#c4ccda" text-anchor="end">15</text>
+<line x1="70" y1="143.3" x2="740" y2="143.3" stroke="#2a3140"/>
+<text x="62" y="147.3" font-size="10" fill="#c4ccda" text-anchor="end">20</text>
+<line x1="70" y1="106.7" x2="740" y2="106.7" stroke="#2a3140"/>
+<text x="62" y="110.7" font-size="10" fill="#c4ccda" text-anchor="end">25</text>
+<line x1="70" y1="70.0" x2="740" y2="70.0" stroke="#2a3140"/>
+<text x="62" y="74.0" font-size="10" fill="#c4ccda" text-anchor="end">30</text>
+<text x="18" y="180" font-size="11" fill="#c4ccda" transform="rotate(-90 18 180)" text-anchor="middle">pairs</text>
+<rect x="164.7" y="99.3" width="31.0" height="190.7" fill="#f2a65a"/>
+<text x="180.2" y="95.3" font-size="9.5" fill="#f2a65a" text-anchor="middle">26</text>
+<text x="181.7" y="308" font-size="11" fill="#c4ccda" text-anchor="middle">same screen, same fingerprint</text>
+<rect x="388.0" y="231.3" width="31.0" height="58.7" fill="#f2a65a"/>
+<text x="403.5" y="227.3" font-size="9.5" fill="#f2a65a" text-anchor="middle">8</text>
+<text x="405.0" y="308" font-size="11" fill="#c4ccda" text-anchor="middle">same screen, new fingerprint</text>
+<rect x="611.3" y="260.7" width="31.0" height="29.3" fill="#f2a65a"/>
+<text x="626.8" y="256.7" font-size="9.5" fill="#f2a65a" text-anchor="middle">4</text>
+<text x="628.3" y="308" font-size="11" fill="#c4ccda" text-anchor="middle">different behaviour</text>
+<text x="70" y="346" font-size="10" fill="#c4ccda">Source: runtime/crawls/*/manifest.json on our rig, 11 crawls with manifests, 237 edges; our count.</text>
+</g></svg>
+
+<p>The four disagreements are the paper's failure, but not in the paper's form. They are not two look-alike screens. They are one screen whose promotional row changed its effect between runs: the "You've reached your storage limit" banner left Settings in one crawl and stayed put in the next. "3 Months of Apple Music Included" opened "Services Included with Purchase" once and left the agent on a screen still titled Settings once. The Talika earnings card and header changed the screen in two taps of four and did nothing in the other two. An action-conditioned rule would refuse those merges. It would also learn nothing stable about them, which is SAGE's reason for not tapping them at all.</p>
+
+<svg viewBox="0 0 800 420" style="width:100%;height:auto" role="img" aria-label="Diagram comparing two rules for deciding that two screens are the same. phoneshell's fingerprint hashes the bundle id with the type, label and 32-point grid position of every button, tab, switch, field and link, plus the count of those elements divided by four. Scrolling a list moves every row to a new grid cell, so the screen titled Settings received 14 fingerprints. A promotional row keeps its label and position while its effect changes, so it stays merged: the storage-limit banner left the app in one run and stayed in Settings in another. Action-conditioned bisimulation merges two states only when the actions they share lead to agreeing outcomes, so it would keep scroll positions together and split the promotional row's two behaviours.">
+<rect x="0" y="0" width="800" height="420" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="11">
+<text x="20" y="26" font-size="14" font-weight="600">Two rules for "same screen", and where each one errs</text>
+<rect x="20" y="44" width="760" height="70" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+<text x="34" y="66" font-weight="600">phoneshell memory.fingerprint (also the crawler's "structural" key)</text>
+<text x="34" y="86" fill="#c4ccda">sha1( bundle id :: sorted[ type | label or id | round(x/32),round(y/32) ] for Button, Tab, Switch, Field, Link... :: count // 4 )</text>
+<text x="34" y="104" fill="#c4ccda">Only what the screen looks like. What its controls do never enters the key.</text>
+<rect x="20" y="128" width="370" height="200" rx="8" fill="#1d2330" stroke="#f2a65a"/>
+<text x="34" y="150" font-weight="600" fill="#f2a65a">Splits: same screen, new key</text>
+<text x="34" y="174">Scroll the Settings list by one row:</text>
+<text x="34" y="192">every row moves to another 32-pt cell</text>
+<text x="34" y="216">"Settings": 14 fingerprints</text>
+<text x="34" y="234">(9 on the iOS 18.4 crawls, 5 on iOS 26.6.1)</text>
+<text x="34" y="258">8 repeated taps reached the same screen</text>
+<text x="34" y="276">under a different destination key</text>
+<text x="34" y="306" font-size="10" fill="#c4ccda">cost: memory resets, screenshots resent</text>
+<rect x="410" y="128" width="370" height="200" rx="8" fill="#1d2330" stroke="#f2a65a"/>
+<text x="424" y="150" font-weight="600" fill="#f2a65a">Merges: same key, different effect</text>
+<text x="424" y="174">"You've reached your storage limit"</text>
+<text x="424" y="192" fill="#c4ccda">run 1: left the app; run 2: stayed in Settings</text>
+<text x="424" y="216">"3 Months of Apple Music Included"</text>
+<text x="424" y="234" fill="#c4ccda">run 1: opened a page; run 2: stayed on Settings</text>
+<text x="424" y="258">Talika "Tap to discover how much" card</text>
+<text x="424" y="276" fill="#c4ccda">2 of 4 taps did nothing, 2 changed the screen</text>
+<text x="424" y="306" font-size="10" fill="#c4ccda">cost: a confident hint that is wrong half the time</text>
+<rect x="20" y="342" width="760" height="50" rx="8" fill="#1d2330" stroke="#5ad1a0"/>
+<text x="34" y="362" fill="#5ad1a0">Action-conditioned bisimulation (arXiv:2609.38778): merge s and t only if shared actions lead to agreeing outcomes</text>
+<text x="34" y="380" fill="#c4ccda">and agreeing successor blocks. Scroll offsets would merge; the banners' two behaviours would not.</text>
+<text x="20" y="412" font-size="10" fill="#c4ccda">Sources: phoneshell memory.py fingerprint(), crawl.py line 918; crawl manifests of 11 September 2026; Zhang et al., arXiv:2609.38778, Sec. 2.</text>
+</g></svg>
+
+<p>The larger error is splitting. A one-row scroll moves every row into another 32-point cell, and a list that grows by four controls changes the count term. So the screen a person calls Settings carried 14 keys, and 8 of the 38 repeated pairs landed on the same screen under a new destination key. The bisimulation rule would merge those, since their actions agree. For phoneshell, a split costs a memory that starts again from zero visits, so the screenshot keeps being sent and the hint stays empty. The paper's gain came from a memory that pooled evidence across episodes. A key that fragments the same screen pools less.</p>
+
+<svg viewBox="0 0 760 360" style="width:100%;height:auto" role="img" aria-label="Bar chart of how many distinct phoneshell layout fingerprints each titled screen produced across the 11 September crawls. The screen titled Settings produced 14, untitled screens 7, Talika's Explore 4, Line 3, and General, Apple Intelligence and Siri, Camera, StandBy, Game Center, Apple Account, Talika and Studio 2 each. The other 17 screens produced 1 each. 60 fingerprints for 29 titled screens.">
+<rect x="0" y="0" width="760" height="360" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Layout fingerprints per titled screen, same crawls</text>
+<rect x="70" y="40" width="12" height="12" fill="#6f7b90"/><text x="88" y="50" font-size="11" fill="#c4ccda">fingerprints per screen</text>
+<line x1="70" y1="290.0" x2="740" y2="290.0" stroke="#2a3140"/>
+<text x="62" y="294.0" font-size="10" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="70" y1="235.0" x2="740" y2="235.0" stroke="#2a3140"/>
+<text x="62" y="239.0" font-size="10" fill="#c4ccda" text-anchor="end">4</text>
+<line x1="70" y1="180.0" x2="740" y2="180.0" stroke="#2a3140"/>
+<text x="62" y="184.0" font-size="10" fill="#c4ccda" text-anchor="end">8</text>
+<line x1="70" y1="125.0" x2="740" y2="125.0" stroke="#2a3140"/>
+<text x="62" y="129.0" font-size="10" fill="#c4ccda" text-anchor="end">12</text>
+<line x1="70" y1="70.0" x2="740" y2="70.0" stroke="#2a3140"/>
+<text x="62" y="74.0" font-size="10" fill="#c4ccda" text-anchor="end">16</text>
+<text x="18" y="180" font-size="11" fill="#c4ccda" transform="rotate(-90 18 180)" text-anchor="middle">fingerprints</text>
+<rect x="108.8" y="97.5" width="31.0" height="192.5" fill="#6f7b90"/>
+<text x="124.3" y="93.5" font-size="9.5" fill="#6f7b90" text-anchor="middle">14</text>
+<text x="125.8" y="308" font-size="11" fill="#c4ccda" text-anchor="middle">Settings</text>
+<rect x="220.5" y="193.8" width="31.0" height="96.2" fill="#6f7b90"/>
+<text x="236.0" y="189.8" font-size="9.5" fill="#6f7b90" text-anchor="middle">7</text>
+<text x="237.5" y="308" font-size="11" fill="#c4ccda" text-anchor="middle">(untitled)</text>
+<rect x="332.2" y="235.0" width="31.0" height="55.0" fill="#6f7b90"/>
+<text x="347.7" y="231.0" font-size="9.5" fill="#6f7b90" text-anchor="middle">4</text>
+<text x="349.2" y="308" font-size="11" fill="#c4ccda" text-anchor="middle">Explore</text>
+<rect x="443.8" y="248.8" width="31.0" height="41.2" fill="#6f7b90"/>
+<text x="459.3" y="244.8" font-size="9.5" fill="#6f7b90" text-anchor="middle">3</text>
+<text x="460.8" y="308" font-size="11" fill="#c4ccda" text-anchor="middle">Line</text>
+<rect x="555.5" y="262.5" width="31.0" height="27.5" fill="#6f7b90"/>
+<text x="571.0" y="258.5" font-size="9.5" fill="#6f7b90" text-anchor="middle">2 each</text>
+<text x="572.5" y="308" font-size="11" fill="#c4ccda" text-anchor="middle">8 screens</text>
+<rect x="667.2" y="276.2" width="31.0" height="13.8" fill="#6f7b90"/>
+<text x="682.7" y="272.2" font-size="9.5" fill="#6f7b90" text-anchor="middle">1 each</text>
+<text x="684.2" y="308" font-size="11" fill="#c4ccda" text-anchor="middle">17 screens</text>
+<text x="70" y="346" font-size="10" fill="#c4ccda">Source: as above. '8 screens' = General, Apple Intelligence & Siri, Camera, StandBy, Game Center, Apple Account, Talika, Studio.</text>
+</g></svg>
+
+<h2 id="what-it-means-if-your-phone-agent-remembers-screens">What it means if your phone agent remembers screens</h2>
+
+<ul>
+  <li>Check both directions on your own logs before choosing a merge rule. Here the split rate (60 keys for 29 screens) was the bigger problem, and the over-merges were 4 of 38 and confined to one kind of row.</li>
+  <li>Make the key invariant to scroll offset for list rows: keep the label, drop the y cell. On these crawls that would collapse most of the 14 Settings keys. The risk is merging a list with its own detail view when both show the same labels, which the action-conditioned test catches.</li>
+  <li>Record behaviour per control, and mark a control unstable when its outcomes disagree. phoneshell's <code>ControlMemory.led_to</code> already counts destinations. <code>best_outcome()</code> reports the most frequent one as if it were certain, so a banner seen twice two ways prints a confident route.</li>
+  <li>Give promotional and account-state rows no memory and no exploration budget, as SAGE does. On a personal phone they are the rows most likely to change between Tuesday and Thursday.</li>
+  <li>Withholding the screenshot on a "known" screen should depend on the key being stable as well as on two visits.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># the key and how memory uses it
+sed -n '/def fingerprint/,/hexdigest/p' phoneshell/memory.py
+grep -n "min_visits_to_trust\|skip_image_on_known" phoneshell/actions.py phoneshell/config.py
+grep -n "structural = fingerprint" phoneshell/crawl.py
+
+# crawl your own phone, then group edges
+bin/phoneshell collect Settings      # writes runtime/crawls/&lt;stamp&gt;-settings/manifest.json
+# for each edge: key = (screens[frm].structural, edge.key)
+#                behaviour = 'no-op' | 'left app' | (screens[to].bundle_id, screens[to].title)
+# a pair disagrees when its edges carry more than one behaviour</code></pre>
+
+<p>Our eleven manifests are not published. They carry the phone owner's account name and network name on the Settings root. The counts above come from a 40-line script over <code>screens</code> and <code>edges</code> in each manifest, using the fields named in the comment. The papers' numbers are in Table 1 of arXiv:2609.38778 and Section 1 of arXiv:2609.39547.</p>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>By 31 March 2027 we will rerun the Settings and Talika crawls on the same phone and compare them with the 11 September set. Two predictions. A scroll-invariant fingerprint (list rows keyed by label without the y cell) will give the Settings screen at most 4 keys instead of 14, without merging any (fingerprint, control) pair whose behaviours disagree. At least 3 of today's 4 disagreeing rows will still disagree or will have vanished, because they are promotions and account banners. If the scroll-invariant key creates new disagreements outside promotional rows, appearance was carrying information we have thrown away, and the bisimulation test belongs in the crawler rather than in a tidier key.</p>
+
+<h2 id="sources">Sources</h2>
+
+<ul>
+  <li>Hongbo Zhang, Liuyang Song, Quanquan Li, Daqian Yang, Yan Wen, Zhengtao Yao, "<a href="https://arxiv.org/abs/2609.38778">Action Conditioned Bisimulation For GUI Agent Memory</a>", arXiv:2609.38778, 30 September 2026.</li>
+  <li>Bo Han, Qianyi Wang, Shuai Liu and others, "<a href="https://arxiv.org/abs/2609.39547">Learning Reliable GUI Agents under Imperfect Priors</a>", arXiv:2609.39547, 30 September 2026.</li>
+  <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>memory.py</code>, <code>crawl.py</code>, <code>actions.py</code>, read 7 October 2026; crawl manifests of 11 September 2026 on our rig.</li>
+  <li>Blolabel, "<a href="https://blolabel.ai/blog/phone-memory-keeps-what-the-screen-said/">phone memory keeps what the screen said</a>" and "<a href="https://blolabel.ai/blog/imagined-rollouts-thin-out-by-step-ten/">imagined rollouts thin out by step ten</a>", earlier notes on the same memory store and crawls.</li>
+</ul>
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
