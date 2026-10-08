@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DIBench and PAIR grade which item a phone agent picked; 12 of phoneshell&#x27;s 80 checks pass before the agent has picked anything | Blolabel</title>
+<meta name="description" content="DIBench (arXiv:2610.06898) shows deceptive UI content lifting a mobile agent&#x27;s completion from 42.0% to 72.4% while steering 45.8% of its choices; PAIR (arXiv:2610.07972, 6 October 2026) finds subgoal success 7.0 to 15.4 points lower where the screen depends on the user. No phoneshell task asks an agent to commit to one item, and 12 checks pass on the opened app or the typed query. On the 9 September run those 12 tasks gave 71 of 322 passes.">
+<link rel="canonical" href="https://blolabel.ai/blog/checks-pass-before-the-agent-picks/">
+<meta property="og:title" content="DIBench and PAIR grade which item a phone agent picked; 12 of phoneshell&#x27;s 80 checks pass before the agent has picked anything | Blolabel">
+<meta property="og:description" content="DIBench (arXiv:2610.06898) shows deceptive UI content lifting a mobile agent&#x27;s completion from 42.0% to 72.4% while steering 45.8% of its choices; PAIR (arXiv:2610.07972, 6 October 2026) finds subgoal success 7.0 to 15.4 points lower where the screen depends on the user. No phoneshell task asks an agent to commit to one item, and 12 checks pass on the opened app or the typed query. On the 9 September run those 12 tasks gave 71 of 322 passes.">
+<meta property="og:url" content="https://blolabel.ai/blog/checks-pass-before-the-agent-picks/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/checks-pass-before-the-agent-picks-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "DIBench and PAIR grade which item a phone agent picked; 12 of phoneshell's 80 checks pass before the agent has picked anything", "description": "DIBench (arXiv:2610.06898) shows deceptive UI content lifting a mobile agent's completion from 42.0% to 72.4% while steering 45.8% of its choices; PAIR (arXiv:2610.07972, 6 October 2026) finds subgoal success 7.0 to 15.4 points lower where the screen depends on the user. No phoneshell task asks an agent to commit to one item, and 12 checks pass on the opened app or the typed query. On the 9 September run those 12 tasks gave 71 of 322 passes.", "datePublished": "2026-10-07", "dateModified": "2026-10-07", "url": "https://blolabel.ai/blog/checks-pass-before-the-agent-picks/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/checks-pass-before-the-agent-picks/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/checks-pass-before-the-agent-picks-hero.png", "citation": ["https://arxiv.org/abs/2610.06898", "https://arxiv.org/abs/2610.07972", "https://anonymous.4open.science/r/DIBench-5432", "https://github.com/Blomega/phoneshell", "https://huggingface.co/datasets/blolabel/phoneshell-bench", "https://blolabel.ai/blog/eighty-tasks-five-checks/"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "What is in-task goal deviation in mobile agents?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "DIBench's term for an agent that completes a selection task but picks an attacker's target, possibly breaking a constraint such as cheapest or highest-rated, with no overt hijack. On commercial app screens with Qwen2.5-VL, a combined injection raised AppAgent's completion from 42.0% to 72.4% while 45.8% of its choices went to the attacker's target."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Do mobile GUI agents fail more on personalised screens?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "In PAIR, yes. Across six agents and ten personas, subgoal achievement was 7.0 to 15.4 points lower where the visible content depends on the user than where it does not, and the gap widens for personal targets. The common failure is selecting another item instead of the intended one, most often before the target has scrolled into view."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Can phoneshell's benchmark detect a wrong-item choice?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. None of its 80 tasks asks the agent to commit to one candidate from a set, and its text checks are substring matches that also read a search field's value. Seven checks are satisfied by the Settings root screen on the crawled phone and five by the query the agent typed. Those 12 tasks passed 71 of 72 runs on 9 September."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How do you make a device-graded check measure a selection?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Grade the destination rather than any matching text: require the navigation bar title of the page that should open, exclude search-field values from text matches, and run a null agent that only opens the app so any task it passes is flagged. For selection tasks, record the chosen item and its attributes, as DIBench does with its acceptable set."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-07">07 October 2026</time>
+    <span>9 min read</span>
+  </div>
+  <h1>DIBench and PAIR grade which item a phone agent picked; 12 of phoneshell&#x27;s 80 checks pass before the agent has picked anything</h1>
+  <p class="standfirst">Two papers this week score the choice a phone agent makes, not whether it finished. We audited phoneshell's 80 device-graded tasks for the same question and found the suite cannot see a choice at all.</p>
+
+<p>Two mobile-agent papers posted this week grade the item an agent picked rather than whether it finished. DIBench shows deceptive screen content raising an agent's completion rate from 42.0% to 72.4% while steering 45.8% of its choices to the attacker's target. PAIR shows subgoal success 7.0 to 15.4 points lower wherever the screen depends on whose phone it is. phoneshell's 80 device-graded tasks never ask an agent to commit to one item. Twelve of its checks pass on the screen the app opens to, or on the query the agent typed. In the 9 September run those twelve tasks passed 71 of 72 times, 71 of the 322 passes.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/checks-pass-before-the-agent-picks-hero.png" alt="Abstract technical illustration of a row of identical tiles with one tile lit, and a measuring gauge that reads the row rather than the lit tile" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+
+<h2 id="what-the-two-papers-measured">What the two papers measured</h2>
+
+<p><strong>DIBench</strong> (Li Hu, Kanghua Mo, Yingbin Jin, Qingqing Ye and Haibo Hu, Hong Kong Polytechnic University; arXiv:2610.06898, dated 29 September 2026, listed 7 October) builds 1,000 clean and 36,672 injected selection tasks across 7 commercial and 3 simulated apps. Each task has an instruction, a candidate set and an acceptable set (the cheapest item, the highest-rated, an exact match). It scores three things separately: task completion rate (did the agent commit to any candidate), correct selection rate (was the choice acceptable), and attack success rate (did it pick the attacker's target while its paired clean run did not). Under the combined attack, completion went up for all four frameworks tested with Qwen2.5-VL on commercial screens, which is the paper's point: a completion score reads an attack as an improvement.</p>
+
+<p><strong>PAIR</strong> (Yeji Park, Jaeyun Shim and Taesik Gong, UNIST; arXiv:2610.07972, 6 October 2026) renders the same ten apps differently for ten personas drawn from PersonaLens, 120 tasks per persona, 1,200 in the test set. It labels each subgoal as user-agnostic (shared navigation) or user-conditioned (content that varies by user), and compares six agents. Task success across personas ranged from 43.8% to 53.1%. In user-conditioned contexts the typical failure was "selecting another item instead of the intended target", most often before the target had scrolled into view. RePAIR, its training method, raised user-conditioned subgoal success by 5.87 points and task success by 9.42 over its fine-tuned parent on unseen users.</p>
+
+<svg viewBox="0 0 800 400" style="width:100%;height:auto" role="img" aria-label="Grouped bar chart from DIBench, arXiv 2610.06898, Table 3, Commerce apps with Qwen2.5-VL. Task completion rate with no attack and under the combined attack, and attack success rate. AppAgent 42.0, 72.4, 45.8. Mobile-Agent-V2 71.1, 84.5, 42.9. Mobile-Agent-E 38.6, 52.4, 30.6. Mobile-Agent-V3 51.3, 67.1, 32.5.">
+<rect x="0" y="0" width="800" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">DIBench Commerce, Qwen2.5-VL: completion goes up under attack while the choice is steered</text>
+<rect x="70" y="40" width="12" height="12" fill="#6f7b90"/><text x="88" y="50" font-size="11" fill="#c4ccda">completion, no attack (%)</text>
+<rect x="293" y="40" width="12" height="12" fill="#5ad1a0"/><text x="311" y="50" font-size="11" fill="#c4ccda">completion, combined attack (%)</text>
+<rect x="558" y="40" width="12" height="12" fill="#f2a65a"/><text x="576" y="50" font-size="11" fill="#c4ccda">steered to attacker's target (%)</text>
+<line x1="70" y1="330.0" x2="780" y2="330.0" stroke="#2a3140"/>
+<text x="62" y="334.0" font-size="10" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="70" y1="278.0" x2="780" y2="278.0" stroke="#2a3140"/>
+<text x="62" y="282.0" font-size="10" fill="#c4ccda" text-anchor="end">20</text>
+<line x1="70" y1="226.0" x2="780" y2="226.0" stroke="#2a3140"/>
+<text x="62" y="230.0" font-size="10" fill="#c4ccda" text-anchor="end">40</text>
+<line x1="70" y1="174.0" x2="780" y2="174.0" stroke="#2a3140"/>
+<text x="62" y="178.0" font-size="10" fill="#c4ccda" text-anchor="end">60</text>
+<line x1="70" y1="122.0" x2="780" y2="122.0" stroke="#2a3140"/>
+<text x="62" y="126.0" font-size="10" fill="#c4ccda" text-anchor="end">80</text>
+<line x1="70" y1="70.0" x2="780" y2="70.0" stroke="#2a3140"/>
+<text x="62" y="74.0" font-size="10" fill="#c4ccda" text-anchor="end">100</text>
+<text x="18" y="200" font-size="11" fill="#c4ccda" transform="rotate(-90 18 200)" text-anchor="middle">percent</text>
+<rect x="107.8" y="220.8" width="31.0" height="109.2" fill="#6f7b90"/>
+<text x="123.2" y="216.8" font-size="9.5" fill="#6f7b90" text-anchor="middle">42</text>
+<rect x="141.8" y="141.8" width="31.0" height="188.2" fill="#5ad1a0"/>
+<text x="157.2" y="137.8" font-size="9.5" fill="#5ad1a0" text-anchor="middle">72.4</text>
+<rect x="175.8" y="210.9" width="31.0" height="119.1" fill="#f2a65a"/>
+<text x="191.2" y="206.9" font-size="9.5" fill="#f2a65a" text-anchor="middle">45.8</text>
+<text x="158.8" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">AppAgent</text>
+<rect x="285.2" y="145.1" width="31.0" height="184.9" fill="#6f7b90"/>
+<text x="300.8" y="141.1" font-size="9.5" fill="#6f7b90" text-anchor="middle">71.1</text>
+<rect x="319.2" y="110.3" width="31.0" height="219.7" fill="#5ad1a0"/>
+<text x="334.8" y="106.3" font-size="9.5" fill="#5ad1a0" text-anchor="middle">84.5</text>
+<rect x="353.2" y="218.5" width="31.0" height="111.5" fill="#f2a65a"/>
+<text x="368.8" y="214.5" font-size="9.5" fill="#f2a65a" text-anchor="middle">42.9</text>
+<text x="336.2" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">Mobile-Agent-V2</text>
+<rect x="462.8" y="229.6" width="31.0" height="100.4" fill="#6f7b90"/>
+<text x="478.2" y="225.6" font-size="9.5" fill="#6f7b90" text-anchor="middle">38.6</text>
+<rect x="496.8" y="193.8" width="31.0" height="136.2" fill="#5ad1a0"/>
+<text x="512.2" y="189.8" font-size="9.5" fill="#5ad1a0" text-anchor="middle">52.4</text>
+<rect x="530.8" y="250.4" width="31.0" height="79.6" fill="#f2a65a"/>
+<text x="546.2" y="246.4" font-size="9.5" fill="#f2a65a" text-anchor="middle">30.6</text>
+<text x="513.8" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">Mobile-Agent-E</text>
+<rect x="640.2" y="196.6" width="31.0" height="133.4" fill="#6f7b90"/>
+<text x="655.8" y="192.6" font-size="9.5" fill="#6f7b90" text-anchor="middle">51.3</text>
+<rect x="674.2" y="155.5" width="31.0" height="174.5" fill="#5ad1a0"/>
+<text x="689.8" y="151.5" font-size="9.5" fill="#5ad1a0" text-anchor="middle">67.1</text>
+<rect x="708.2" y="245.5" width="31.0" height="84.5" fill="#f2a65a"/>
+<text x="723.8" y="241.5" font-size="9.5" fill="#f2a65a" text-anchor="middle">32.5</text>
+<text x="691.2" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">Mobile-Agent-V3</text>
+<text x="70" y="386" font-size="10" fill="#c4ccda">Source: Hu, Mo, Jin, Ye and Hu, arXiv:2610.06898, Table 3 (Commerce, Qwen2.5-VL, Combined Attack row).</text>
+</g></svg>
+
+<svg viewBox="0 0 800 400" style="width:100%;height:auto" role="img" aria-label="Grouped bar chart from PAIR, arXiv 2610.07972, Table 2. User-agnostic versus user-conditioned subgoal achievement rate. UI-TARS-1.5 7B 79.7 versus 65.4. Qwen3-VL 30B-A3B 79.3 versus 67.2. Qwen3-VL 8B 74.6 versus 67.6. AutoGLM-Phone 9B 85.3 versus 69.9. MAI-UI 8B 86.2 versus 71.0. GUI-Owl-1.5-Think 8B 77.4 versus 69.1. The gap runs from 7.0 to 15.4 points.">
+<rect x="0" y="0" width="800" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">PAIR: subgoal achievement where the screen is the same for every user, and where it is not</text>
+<rect x="70" y="40" width="12" height="12" fill="#6f7b90"/><text x="88" y="50" font-size="11" fill="#c4ccda">user-agnostic SAR (%)</text>
+<rect x="265" y="40" width="12" height="12" fill="#f2a65a"/><text x="283" y="50" font-size="11" fill="#c4ccda">user-conditioned SAR (%)</text>
+<line x1="70" y1="330.0" x2="780" y2="330.0" stroke="#2a3140"/>
+<text x="62" y="334.0" font-size="10" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="70" y1="278.0" x2="780" y2="278.0" stroke="#2a3140"/>
+<text x="62" y="282.0" font-size="10" fill="#c4ccda" text-anchor="end">20</text>
+<line x1="70" y1="226.0" x2="780" y2="226.0" stroke="#2a3140"/>
+<text x="62" y="230.0" font-size="10" fill="#c4ccda" text-anchor="end">40</text>
+<line x1="70" y1="174.0" x2="780" y2="174.0" stroke="#2a3140"/>
+<text x="62" y="178.0" font-size="10" fill="#c4ccda" text-anchor="end">60</text>
+<line x1="70" y1="122.0" x2="780" y2="122.0" stroke="#2a3140"/>
+<text x="62" y="126.0" font-size="10" fill="#c4ccda" text-anchor="end">80</text>
+<line x1="70" y1="70.0" x2="780" y2="70.0" stroke="#2a3140"/>
+<text x="62" y="74.0" font-size="10" fill="#c4ccda" text-anchor="end">100</text>
+<text x="18" y="200" font-size="11" fill="#c4ccda" transform="rotate(-90 18 200)" text-anchor="middle">percent</text>
+<rect x="95.2" y="122.8" width="31.0" height="207.2" fill="#6f7b90"/>
+<text x="110.7" y="118.8" font-size="9.5" fill="#6f7b90" text-anchor="middle">79.7</text>
+<rect x="129.2" y="160.0" width="31.0" height="170.0" fill="#f2a65a"/>
+<text x="144.7" y="156.0" font-size="9.5" fill="#f2a65a" text-anchor="middle">65.4</text>
+<text x="129.2" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">UI-TARS-1.5</text>
+<rect x="213.5" y="123.8" width="31.0" height="206.2" fill="#6f7b90"/>
+<text x="229.0" y="119.8" font-size="9.5" fill="#6f7b90" text-anchor="middle">79.3</text>
+<rect x="247.5" y="155.3" width="31.0" height="174.7" fill="#f2a65a"/>
+<text x="263.0" y="151.3" font-size="9.5" fill="#f2a65a" text-anchor="middle">67.2</text>
+<text x="247.5" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">Qwen3-VL 30B</text>
+<rect x="331.8" y="136.0" width="31.0" height="194.0" fill="#6f7b90"/>
+<text x="347.3" y="132.0" font-size="9.5" fill="#6f7b90" text-anchor="middle">74.6</text>
+<rect x="365.8" y="154.2" width="31.0" height="175.8" fill="#f2a65a"/>
+<text x="381.3" y="150.2" font-size="9.5" fill="#f2a65a" text-anchor="middle">67.6</text>
+<text x="365.8" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">Qwen3-VL 8B</text>
+<rect x="450.2" y="108.2" width="31.0" height="221.8" fill="#6f7b90"/>
+<text x="465.7" y="104.2" font-size="9.5" fill="#6f7b90" text-anchor="middle">85.3</text>
+<rect x="484.2" y="148.3" width="31.0" height="181.7" fill="#f2a65a"/>
+<text x="499.7" y="144.3" font-size="9.5" fill="#f2a65a" text-anchor="middle">69.9</text>
+<text x="484.2" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">AutoGLM-Phone</text>
+<rect x="568.5" y="105.9" width="31.0" height="224.1" fill="#6f7b90"/>
+<text x="584.0" y="101.9" font-size="9.5" fill="#6f7b90" text-anchor="middle">86.2</text>
+<rect x="602.5" y="145.4" width="31.0" height="184.6" fill="#f2a65a"/>
+<text x="618.0" y="141.4" font-size="9.5" fill="#f2a65a" text-anchor="middle">71</text>
+<text x="602.5" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">MAI-UI</text>
+<rect x="686.8" y="128.8" width="31.0" height="201.2" fill="#6f7b90"/>
+<text x="702.3" y="124.8" font-size="9.5" fill="#6f7b90" text-anchor="middle">77.4</text>
+<rect x="720.8" y="150.3" width="31.0" height="179.7" fill="#f2a65a"/>
+<text x="736.3" y="146.3" font-size="9.5" fill="#f2a65a" text-anchor="middle">69.1</text>
+<text x="720.8" y="348" font-size="11" fill="#c4ccda" text-anchor="middle">GUI-Owl-1.5</text>
+<text x="70" y="386" font-size="10" fill="#c4ccda">Source: Park, Shim and Gong, arXiv:2610.07972 (6 October 2026), Table 2. Ten personas, 1,200 test tasks.</text>
+</g></svg>
+
+<h2 id="auditing-phoneshell-s-80-checks-for-a-choice">Auditing phoneshell's 80 checks for a choice</h2>
+
+<p>phoneshell grades from the device: each task in <code>environments/*.yaml</code> lists checks that read the phone after the agent stops. The text checks use <code>find_by_text</code> in <code>perception/tree.py</code>, a lower-cased substring match over an element's label, name, <em>value</em>, identifier and child text. Value is where a search field keeps the typed query. We read all 80 tasks and asked of each one what is the earliest screen that satisfies every check. For Settings we could answer from the crawler's record of the root screen on the owner's iPhone (iOS 26.6.1, WebDriverAgent 16.12.4, 11 September), which lists the controls visible on load.</p>
+
+<table>
+  <thead><tr><th>Task</th><th>Check text</th><th>Earliest screen that satisfies it</th><th>Passed on 9 Sep</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>settings.search.wifi, settings.wifi.switch_visible</td><td>Wi-Fi</td><td>Settings root ("Wi-Fi, (network name)")</td><td>12 of 12</td><td>crawl, xv2</td></tr>
+    <tr><td>settings.search.bluetooth, settings.bluetooth.reach</td><td>Bluetooth</td><td>Settings root ("Bluetooth, On")</td><td>11 of 12</td><td>crawl, xv2</td></tr>
+    <tr><td>settings.search.battery</td><td>Battery</td><td>Settings root ("Battery")</td><td>6 of 6</td><td>crawl, xv2</td></tr>
+    <tr><td>settings.search.storage</td><td>Storage</td><td>Settings root, only because of an iCloud banner, "You've reached your storage limit"</td><td>6 of 6</td><td>crawl, xv2</td></tr>
+    <tr><td>settings.accessibility.reach</td><td>Accessibility</td><td>Settings root ("Accessibility")</td><td>6 of 6</td><td>crawl, xv2</td></tr>
+    <tr><td>books.search</td><td>Moby</td><td>search field after typing "Moby Dick"</td><td>6 of 6</td><td>code, xv2</td></tr>
+    <tr><td>maps.search_place</td><td>Eiffel Tower</td><td>search field after typing the query</td><td>6 of 6</td><td>code, xv2</td></tr>
+    <tr><td>notes.search</td><td>phoneshell benchmark</td><td>search field after typing the query</td><td>6 of 6</td><td>code, xv2</td></tr>
+    <tr><td>safari.search.web</td><td>iso.?8601</td><td>address bar after typing the query</td><td>6 of 6</td><td>code, xv2</td></tr>
+    <tr><td>contacts.search</td><td>search, cancel, results or no results</td><td>Contacts list (the search field's own text)</td><td>6 of 6</td><td>code, xv2</td></tr>
+    <tr><td>All 12</td><td></td><td></td><td>71 of 72</td><td>xv2</td></tr>
+    <tr><td>The other 47 tasks in that run</td><td></td><td></td><td>251 of 277</td><td>xv2</td></tr>
+  </tbody>
+</table>
+
+<p>The four <code>settings.search.*</code> tasks say "open the page from the results". Their checks are satisfied twice over before that: by the root list, and by the query sitting in the search field. The five search tasks outside Settings ask for results to show, and their checks match the text the agent typed, so a search that returned nothing would pass. Not one of the 80 tasks hands the agent a candidate set and grades which candidate it took. In DIBench's vocabulary, phoneshell's checks sit below task completion: they cannot register a correct selection, a wrong one, or a steered one.</p>
+
+<svg viewBox="0 0 800 420" style="width:100%;height:auto" role="img" aria-label="Diagram of how settings.search.storage passes without the agent choosing a search result. The task asks the agent to search Settings for Storage and open the Storage page from the results. The check is element_exists Storage, a case-insensitive substring match over each element's label, name, value, identifier and child text. Route one: the Settings root screen on the crawled iPhone already shows a banner reading You've reached your storage limit, so the check passes as soon as Settings opens. Route two: after typing Storage into the search field, the field's value is Storage, so the check passes before any result is tapped. Only route three, tapping the result and landing on the Storage page, is the task as written.">
+<rect x="0" y="0" width="800" height="420" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="11">
+<text x="20" y="26" font-size="14" font-weight="600">settings.search.storage: three screens that satisfy one check</text>
+<rect x="20" y="44" width="760" height="54" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+<text x="34" y="66">Task: "search for Storage using the search field, and open the Storage page from the results"</text>
+<text x="34" y="86" fill="#c4ccda">Check: foreground is com.apple.Preferences AND element_exists "Storage" (substring of label, name, value, identifier or child text, any case)</text>
+<rect x="20" y="114" width="240" height="210" rx="8" fill="#1d2330" stroke="#f2a65a"/>
+<text x="34" y="136" font-weight="600" fill="#f2a65a">1. Settings opens</text>
+<text x="34" y="160">Root list, crawled 11 Sep:</text>
+<text x="34" y="180" fill="#c4ccda">"Wi-Fi, (network name)"</text>
+<text x="34" y="198" fill="#c4ccda">"Bluetooth, On"</text>
+<text x="34" y="216" fill="#c4ccda">"Battery"</text>
+<text x="34" y="234" fill="#f2a65a">"You've reached your</text>
+<text x="34" y="250" fill="#f2a65a"> storage limit"</text>
+<text x="34" y="280">PASS after 0 navigation</text>
+<text x="34" y="300" font-size="10" fill="#c4ccda">only on a phone showing that banner</text>
+<rect x="280" y="114" width="240" height="210" rx="8" fill="#1d2330" stroke="#f2a65a"/>
+<text x="294" y="136" font-weight="600" fill="#f2a65a">2. Query typed</text>
+<text x="294" y="160">SearchField value:</text>
+<text x="294" y="180" fill="#f2a65a">"Storage"</text>
+<text x="294" y="210" fill="#c4ccda">results listed, none tapped</text>
+<text x="294" y="280">PASS before any choice</text>
+<text x="294" y="300" font-size="10" fill="#c4ccda">on any phone</text>
+<rect x="540" y="114" width="240" height="210" rx="8" fill="#1d2330" stroke="#5ad1a0"/>
+<text x="554" y="136" font-weight="600" fill="#5ad1a0">3. Result opened</text>
+<text x="554" y="160">Navigation bar: the</text>
+<text x="554" y="178">Storage page</text>
+<text x="554" y="210" fill="#c4ccda">the task as written</text>
+<text x="554" y="280">PASS</text>
+<text x="554" y="300" font-size="10" fill="#c4ccda">indistinguishable from 1 and 2</text>
+<text x="264" y="222" fill="#c4ccda">&#8594;</text><text x="524" y="222" fill="#c4ccda">&#8594;</text>
+<text x="20" y="352">DIBench's terms: phoneshell's check measures less than task completion (did the agent commit to a candidate),</text>
+<text x="20" y="370">so neither correct selection nor a steered one can show up in its score.</text>
+<text x="20" y="404" font-size="10" fill="#c4ccda">Sources: phoneshell settings_search_storage.yaml, tree.py find_by_text, verify.py; Settings crawl of 11 Sep 2026.</text>
+</g></svg>
+
+<p>The storage banner is the PAIR effect turned around. PAIR finds agents failing on content that depends on the user. Here the grader passes on content that depends on the user: an account that has filled its iCloud plan puts the word "storage" on the root screen. The xv2 rows ran on an iPhone 14 Pro whose root screen we have not crawled, so for that phone the storage check passed through the typed query at least. The headline of that run, 322 of 349 or 92.3%, is 251 of 277 or 90.6% without the twelve. The order of the six models does not change.</p>
+
+<h2 id="what-it-means-if-you-grade-phone-agents-from-the-device">What it means if you grade phone agents from the device</h2>
+
+<ul>
+  <li>Grade the destination, not a word. A Settings page has a navigation bar title. "The navigation bar says Storage" is a claim about where the agent ended. "Storage appears somewhere" is not.</li>
+  <li>Exclude editable fields from text checks, or the agent's own typing grades itself. That costs one line in <code>find_by_text</code> for graders (skip <code>SearchField</code> and <code>TextField</code> values) and keeps it for the agent's own lookups.</li>
+  <li>Run a null agent before trusting a task. One that only opens the target app, and one that only types the query, would have flagged all twelve tasks for the price of two short runs per task.</li>
+  <li>Selection tasks need an acceptable set, as DIBench's do. On a phone that means recording the chosen item and its attributes (price, rating, title) at the moment of commitment. The phone's state after a tap rarely carries them.</li>
+  <li>A personal phone is a persona of one. PAIR's 9.31-point spread across ten personas is the size of error a single-device suite cannot see, in either direction.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># the matcher and the checks
+sed -n '/def find_by_text/,/return hits/p' phoneshell/perception/tree.py
+grep -A3 "^checks:" environments/settings_search_storage.yaml environments/books_search.yaml
+
+# the run (task_id, passed)
+curl -sLO https://huggingface.co/datasets/blolabel/phoneshell-bench/resolve/main/results/xv2.jsonl
+python3 -c "import json;R=[json.loads(l) for l in open('xv2.jsonl')];S=('settings.search.wifi', 'settings.wifi.switch_visible', 'settings.search.battery', 'settings.search.bluetooth', 'settings.bluetooth.reach', 'settings.search.storage', 'settings.accessibility.reach', 'books.search', 'maps.search_place', 'notes.search', 'safari.search.web', 'contacts.search');a=[r for r in R if r['task_id'] in S];b=[r for r in R if r['task_id'] not in S];print(sum(r['passed'] for r in a),len(a),sum(r['passed'] for r in b),len(b))"
+# expect: 71 72 251 277
+
+# the papers
+https://arxiv.org/abs/2610.06898   (Table 3, Commerce)
+https://arxiv.org/abs/2610.07972   (Table 2)</code></pre>
+
+<p>The Settings root screen comes from the crawler's manifest on our rig (<code>runtime/crawls/20260911-121256-settings/manifest.json</code>, screen s001). It is not published, because it carries the owner's account name and network name. The controls quoted above are copied from it.</p>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>By 31 December 2026 we will run a null agent, which opens the target app and stops, over all 80 tasks on two iPhones, the owner's and a freshly reset one. Our prediction: it passes at least the 7 Settings tasks above on the owner's phone and at least 6 on the reset phone (no storage banner). A second null agent that types the instruction's quoted query and stops will pass all 9 search tasks. If either passes fewer, our reading of the matcher or of the root screen is wrong. We also predict that once the twelve checks grade the navigation bar title, at least one of the six models drops a task it passes today.</p>
+
+<h2 id="sources">Sources</h2>
+
+<ul>
+  <li>Li Hu, Kanghua Mo, Yingbin Jin, Qingqing Ye, Haibo Hu, "<a href="https://arxiv.org/abs/2610.06898">DIBench: Benchmarking Decision Integrity of GUI-based Mobile Agents Under Deceptive Injections</a>", arXiv:2610.06898, 29 September 2026; code at <a href="https://anonymous.4open.science/r/DIBench-5432">anonymous.4open.science/r/DIBench-5432</a>.</li>
+  <li>Yeji Park, Jaeyun Shim, Taesik Gong, "<a href="https://arxiv.org/abs/2610.07972">Can Agents Work for Everyone? Cross-User Reliability for Mobile GUI Agents in Personalized User Interfaces</a>", arXiv:2610.07972, 6 October 2026.</li>
+  <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>environments/</code>, <code>perception/tree.py</code>, <code>bench/verify.py</code>, read 7 October 2026.</li>
+  <li>Blolabel, <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">phoneshell-bench</a>, <code>results/xv2.jsonl</code>, six models, 9 September 2026.</li>
+  <li>Blolabel, "<a href="https://blolabel.ai/blog/eighty-tasks-five-checks/">Eighty iPhone tasks assert five things</a>", on the seven tasks that check only the foreground app.</li>
+</ul>
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
