@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WebDriverAgent 16.14.1 stops sending its idle check to WebKit; phoneshell had the check on for 189 web runs and its grader still read the page in 29 of 30 | Blolabel</title>
+<meta name="description" content="WebDriverAgent 16.14.1 (7 October 2026) exempts com.apple.WebKit processes from the accessibilityDeadline idle check, which crashed WKWebView content and left pages blank (issue #1290). phoneshell has run with the setting at 10 s on 16.12.4 since 8 September. In 189 published web-content runs its grader found the page heading in the tree 29 of 30 times, and the text probes passed 30 of 30 with no screenshot.">
+<link rel="canonical" href="https://blolabel.ai/blog/idle-check-never-reached-webkit/">
+<meta property="og:title" content="WebDriverAgent 16.14.1 stops sending its idle check to WebKit; phoneshell had the check on for 189 web runs and its grader still read the page in 29 of 30 | Blolabel">
+<meta property="og:description" content="WebDriverAgent 16.14.1 (7 October 2026) exempts com.apple.WebKit processes from the accessibilityDeadline idle check, which crashed WKWebView content and left pages blank (issue #1290). phoneshell has run with the setting at 10 s on 16.12.4 since 8 September. In 189 published web-content runs its grader found the page heading in the tree 29 of 30 times, and the text probes passed 30 of 30 with no screenshot.">
+<meta property="og:url" content="https://blolabel.ai/blog/idle-check-never-reached-webkit/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/idle-check-never-reached-webkit-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "WebDriverAgent 16.14.1 stops sending its idle check to WebKit; phoneshell had the check on for 189 web runs and its grader still read the page in 29 of 30", "description": "WebDriverAgent 16.14.1 (7 October 2026) exempts com.apple.WebKit processes from the accessibilityDeadline idle check, which crashed WKWebView content and left pages blank (issue #1290). phoneshell has run with the setting at 10 s on 16.12.4 since 8 September. In 189 published web-content runs its grader found the page heading in the tree 29 of 30 times, and the text probes passed 30 of 30 with no screenshot.", "datePublished": "2026-10-07", "dateModified": "2026-10-07", "url": "https://blolabel.ai/blog/idle-check-never-reached-webkit/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/idle-check-never-reached-webkit/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/idle-check-never-reached-webkit-hero.png", "citation": ["https://github.com/appium/WebDriverAgent/releases/tag/v16.14.1", "https://github.com/appium/WebDriverAgent/issues/1290", "https://github.com/appium/WebDriverAgent/pull/1293", "https://github.com/appium/WebDriverAgent/pull/1214", "https://github.com/appium/WebDriverAgent/releases/tag/v16.12.4", "https://github.com/Blomega/phoneshell", "https://huggingface.co/datasets/blolabel/phoneshell-bench"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "What did WebDriverAgent 16.14.1 fix?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "With accessibilityDeadline above 0, WebDriverAgent checks that an app's run loop is idle before each accessibility snapshot. For elements inside a WKWebView it sent that check to the com.apple.WebKit.WebContent process, which does not implement the action and aborts, so the page goes blank. 16.14.1, released 7 October 2026, skips the check for processes whose bundle id starts with com.apple.WebKit."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Which WebDriverAgent versions have the accessibilityDeadline crash?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "The idle check arrived in 16.8.0 on 24 August 2026 and was unchanged up to 16.14.0. It only runs when accessibilityDeadline is set above 0, which is off by default. The report used 16.12.11 on an iOS 18.3.1 simulator; the fix was validated on an iOS 27.0 simulator, not on a physical device."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Is phoneshell affected by the accessibilityDeadline WebKit crash?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "It runs WebDriverAgent 16.12.4 with accessibilityDeadline 10.0, so the faulty code is present. In 189 published web-content runs on iOS 26 iPhones the grader found the page heading in the accessibility tree in 29 of 30 checks. phoneshell reads the screen with one /source request on the app root and taps by coordinates, which on our reading never aims the check at a web element."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Should I turn accessibilityDeadline off?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Not necessarily. It exists so an unresponsive app cannot block WebDriverAgent forever (issue #1210). If your tests look up elements inside web views and you run 16.8.0 to 16.14.0 with the deadline on, upgrade to 16.14.1. If you read through /source and tap coordinates, our data shows no sign of the crash."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind event">event</span>
+    <time datetime="2026-10-07">07 October 2026</time>
+    <span>7 min read</span>
+  </div>
+  <h1>WebDriverAgent 16.14.1 stops sending its idle check to WebKit; phoneshell had the check on for 189 web runs and its grader still read the page in 29 of 30</h1>
+  <p class="standfirst">The bug needs two things: the deadline turned on, and a snapshot request aimed at an element that lives in WebKit's process. phoneshell has the first. Its published runs suggest it does not make the second, and its code says why.</p>
+
+<p>WebDriverAgent 16.14.1, released on 7 October 2026, stops sending its accessibility idle check to WebKit's content process, which the check had been crashing, leaving web pages blank. phoneshell has run the affected code since 8 September: WebDriverAgent 16.12.4 with <code>accessibilityDeadline</code> set to 10 seconds. In the 189 web-content runs it has published since that setting, the grader found "Example Domain" in the accessibility tree 29 times out of 30. With no screenshot sent at all, the text probes passed 30 of 30.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/idle-check-never-reached-webkit-hero.png" alt="Abstract technical illustration of two parallel signal paths, one ending in a broken node and one passing through to a lit node" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+
+<h2 id="what-changed-on-7-october">What changed on 7 October</h2>
+
+<p>The setting arrived in WebDriverAgent 16.8.0 on 24 August 2026 (PR #1214). It is off by default. When it is above zero, a swizzle on <code>requestSnapshotForElement</code> first asks the target app, through the private <code>notifyWhenEventLoopIsIdleForApplication:</code> call, whether its run loop is alive, and aborts the snapshot if no answer comes inside the deadline. The point was to stop one hung app from blocking the whole server (issue #1210).</p>
+
+<p>The target app is resolved from the element's own process id. On 5 October, GitHub user bddsko reported (issue #1290) that elements inside a WKWebView are remote accessibility elements owned by <code>com.apple.WebKit.WebContent</code>, so the idle-check action went there. WebContent does not implement it, throws an unrecognized-selector exception and aborts about 1.5 seconds into the page load. WebKit reloads once, crashes again, and gives up; every lookup on the page then times out. The report used Appium 3.8.0, xcuitest driver 12.13.3, WebDriverAgent 16.12.11 and an iOS 18.3.1 simulator with the deadline at 30.</p>
+
+<p>The fix (PR #1293, shipped in 16.14.1 at 03:49 UTC) adds eight lines: when the resolved process's bundle id starts with <code>com.apple.WebKit.</code>, call the original snapshot and skip the check. Its author validated it on an iPhone 17 simulator on iOS 27.0, with a negative control that returns a nil snapshot without the fix, and says the original iOS 18.3.1 crash environment was not available. No physical device was tested. The same release also fixes screen geometry on the selected display (#1291), and xcuitest driver 12.15.1 and 12.15.2 followed the same day.</p>
+
+<svg viewBox="0 0 800 250" style="width:100%;height:auto" role="img" aria-label="Timeline of the accessibilityDeadline setting. WebDriverAgent 16.8.0 on 24 August 2026 adds it, disabled by default. 16.12.4 on 6 September is the tag phoneshell pins. phoneshell sets it to 10 seconds on 8 September at 04:53 UTC; the published cross-model runs follow on 8 and 9 September. Issue 1290 is opened on 5 October. 16.14.1 ships the fix on 7 October at 03:49 UTC.">
+<rect x="0" y="0" width="800" height="250" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="11">
+<text x="20" y="26" font-size="14" font-weight="600">accessibilityDeadline, from setting to fix</text>
+<line x1="40" y1="120" x2="770" y2="120" stroke="#6f7b90" stroke-width="2"/>
+<circle cx="95" cy="120" r="6" fill="#6f7b90"/><text x="95" y="96" text-anchor="middle">24 Aug</text><text x="95" y="148" text-anchor="middle" font-size="10" fill="#c4ccda">WDA 16.8.0</text><text x="95" y="162" text-anchor="middle" font-size="10" fill="#c4ccda">adds the setting (#1214)</text>
+<circle cx="230" cy="120" r="6" fill="#6f7b90"/><text x="230" y="96" text-anchor="middle">6 Sep</text><text x="230" y="148" text-anchor="middle" font-size="10" fill="#c4ccda">WDA 16.12.4</text><text x="230" y="162" text-anchor="middle" font-size="10" fill="#c4ccda">phoneshell's pinned tag</text>
+<circle cx="330" cy="120" r="6" fill="#f2a65a"/><text x="330" y="76" text-anchor="middle">8 Sep 04:53 UTC</text><text x="330" y="92" text-anchor="middle" font-size="10" fill="#c4ccda">phoneshell sets 10.0 (f0c538d)</text>
+<rect x="330" y="112" width="40" height="16" fill="#f2a65a" opacity="0.5"/><text x="350" y="188" text-anchor="middle" font-size="10" fill="#c4ccda">8 to 9 Sep</text><text x="350" y="202" text-anchor="middle" font-size="10" fill="#c4ccda">189 web runs</text>
+<circle cx="640" cy="120" r="6" fill="#6f7b90"/><text x="640" y="96" text-anchor="middle">5 Oct</text><text x="640" y="148" text-anchor="middle" font-size="10" fill="#c4ccda">issue #1290</text><text x="640" y="162" text-anchor="middle" font-size="10" fill="#c4ccda">WebContent crash</text>
+<circle cx="740" cy="120" r="6" fill="#5ad1a0"/><text x="740" y="96" text-anchor="middle">7 Oct</text><text x="740" y="148" text-anchor="middle" font-size="10" fill="#5ad1a0">WDA 16.14.1</text><text x="740" y="162" text-anchor="middle" font-size="10" fill="#5ad1a0">fix (#1293)</text>
+<text x="20" y="236" font-size="10" fill="#c4ccda">Sources: GitHub releases of appium/WebDriverAgent; phoneshell git history (config.py); published result timestamps. Axis not to scale.</text>
+</g></svg>
+
+<h2 id="phoneshell-s-web-runs-with-the-check-switched-on">phoneshell's web runs with the check switched on</h2>
+
+<p>phoneshell pins WebDriverAgent at <code>v16.12.4</code> (<code>WDA_TAG</code> in <code>device.py</code>), and the vendored copy carries the swizzle exactly as the issue describes it. Its session settings in <code>config.py</code> set <code>accessibilityDeadline: 10.0</code>, added in commit f0c538d at 04:53 UTC on 8 September. Every cross-model run published on the Hugging Face dataset came after that. We counted the web-content tasks in those files: the Safari tasks, the twenty probe pages on blolabel.ai, and <code>resilience.deep_start</code>, which ends on example.com.</p>
+
+<table>
+  <thead><tr><th>What had to come out of a web page</th><th>Runs</th><th>Passed</th><th>What the failures were</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>Grader finds "Example Domain" in the tree</td><td>30</td><td>29</td><td>1: <code>resilience.deep_start</code>, Claude Opus 4.8, 4 turns, cause not recorded</td><td>xv, xv2, v4, xv-text, xv-novision</td></tr>
+    <tr><td>Grader matches "iso 8601" on screen</td><td>7</td><td>7</td><td>none</td><td>same</td></tr>
+    <tr><td>Text probe, no screenshot sent</td><td>30</td><td>30</td><td>none</td><td>exp2-n</td></tr>
+    <tr><td>Text probe, screenshot sent</td><td>30</td><td>29</td><td>1: Safari not in front</td><td>exp2-v and others</td></tr>
+    <tr><td>Picture probe, screenshot sent</td><td>30</td><td>30</td><td>none</td><td>exp2-v</td></tr>
+    <tr><td>Picture probe, no screenshot sent</td><td>30</td><td>0</td><td>30: the word exists only as pixels, by design</td><td>exp2-n</td></tr>
+    <tr><td>All web-content runs</td><td>189</td><td>155</td><td>30 pixel-only answers, 3 Safari not in front, 1 heading not found</td><td>our count</td></tr>
+  </tbody>
+</table>
+
+<p>A blank page would show up in three places at once: the "Example Domain" checks, which are a WebDriverAgent tree read by the grader itself rather than anything the model says; the text probes run without a screenshot, where the tree is the only channel the model has; and the turn counts. The first two came back at 29 of 30 and 30 of 30. The one heading miss is a run that started three levels deep in Settings, and nothing in the row says whether the page was blank or never loaded. One run, so treat it as unexplained rather than as a sighting of the bug.</p>
+
+<svg viewBox="0 0 800 410" style="width:100%;height:auto" role="img" aria-label="Bar chart of 189 published phoneshell-bench runs on Safari and web probe tasks after 8 September 2026, when accessibilityDeadline was set to 10 seconds on WebDriverAgent 16.12.4. The grader found Example Domain in the accessibility tree in 29 of 30 checks. The iso 8601 check passed 7 of 7. Text probes passed 30 of 30 with no screenshot and 29 of 30 with one. Picture probes passed 30 of 30 with a screenshot and 0 of 30 without, because that word exists only as pixels.">
+<rect x="0" y="0" width="800" height="410" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Web-content runs after accessibilityDeadline was set to 10 s, by what had to be read</text>
+<rect x="70" y="40" width="12" height="12" fill="#5ad1a0"/><text x="88" y="50" font-size="11" fill="#c4ccda">passed</text>
+<rect x="160" y="40" width="12" height="12" fill="#f2a65a"/><text x="178" y="50" font-size="11" fill="#c4ccda">failed</text>
+<line x1="70" y1="340.0" x2="780" y2="340.0" stroke="#2a3140"/>
+<text x="62" y="344.0" font-size="10" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="70" y1="272.5" x2="780" y2="272.5" stroke="#2a3140"/>
+<text x="62" y="276.5" font-size="10" fill="#c4ccda" text-anchor="end">8</text>
+<line x1="70" y1="205.0" x2="780" y2="205.0" stroke="#2a3140"/>
+<text x="62" y="209.0" font-size="10" fill="#c4ccda" text-anchor="end">16</text>
+<line x1="70" y1="137.5" x2="780" y2="137.5" stroke="#2a3140"/>
+<text x="62" y="141.5" font-size="10" fill="#c4ccda" text-anchor="end">24</text>
+<line x1="70" y1="70.0" x2="780" y2="70.0" stroke="#2a3140"/>
+<text x="62" y="74.0" font-size="10" fill="#c4ccda" text-anchor="end">32</text>
+<text x="18" y="205" font-size="11" fill="#c4ccda" transform="rotate(-90 18 205)" text-anchor="middle">runs</text>
+<rect x="95.2" y="95.3" width="31.0" height="244.7" fill="#5ad1a0"/>
+<text x="110.7" y="91.3" font-size="9.5" fill="#5ad1a0" text-anchor="middle">29</text>
+<rect x="129.2" y="331.6" width="31.0" height="8.4" fill="#f2a65a"/>
+<text x="144.7" y="327.6" font-size="9.5" fill="#f2a65a" text-anchor="middle">1</text>
+<text x="129.2" y="358" font-size="11" fill="#c4ccda" text-anchor="middle">Example Domain</text>
+<rect x="213.5" y="280.9" width="31.0" height="59.1" fill="#5ad1a0"/>
+<text x="229.0" y="276.9" font-size="9.5" fill="#5ad1a0" text-anchor="middle">7</text>
+<rect x="247.5" y="340.0" width="31.0" height="0.5" fill="#f2a65a"/>
+<text x="263.0" y="336.0" font-size="9.5" fill="#f2a65a" text-anchor="middle">0</text>
+<text x="247.5" y="358" font-size="11" fill="#c4ccda" text-anchor="middle">iso 8601</text>
+<rect x="331.8" y="86.9" width="31.0" height="253.1" fill="#5ad1a0"/>
+<text x="347.3" y="82.9" font-size="9.5" fill="#5ad1a0" text-anchor="middle">30</text>
+<rect x="365.8" y="340.0" width="31.0" height="0.5" fill="#f2a65a"/>
+<text x="381.3" y="336.0" font-size="9.5" fill="#f2a65a" text-anchor="middle">0</text>
+<text x="365.8" y="358" font-size="11" fill="#c4ccda" text-anchor="middle">text, no image</text>
+<rect x="450.2" y="95.3" width="31.0" height="244.7" fill="#5ad1a0"/>
+<text x="465.7" y="91.3" font-size="9.5" fill="#5ad1a0" text-anchor="middle">29</text>
+<rect x="484.2" y="331.6" width="31.0" height="8.4" fill="#f2a65a"/>
+<text x="499.7" y="327.6" font-size="9.5" fill="#f2a65a" text-anchor="middle">1</text>
+<text x="484.2" y="358" font-size="11" fill="#c4ccda" text-anchor="middle">text, image</text>
+<rect x="568.5" y="86.9" width="31.0" height="253.1" fill="#5ad1a0"/>
+<text x="584.0" y="82.9" font-size="9.5" fill="#5ad1a0" text-anchor="middle">30</text>
+<rect x="602.5" y="340.0" width="31.0" height="0.5" fill="#f2a65a"/>
+<text x="618.0" y="336.0" font-size="9.5" fill="#f2a65a" text-anchor="middle">0</text>
+<text x="602.5" y="358" font-size="11" fill="#c4ccda" text-anchor="middle">picture, image</text>
+<rect x="686.8" y="340.0" width="31.0" height="0.5" fill="#5ad1a0"/>
+<text x="702.3" y="336.0" font-size="9.5" fill="#5ad1a0" text-anchor="middle">0</text>
+<rect x="720.8" y="86.9" width="31.0" height="253.1" fill="#f2a65a"/>
+<text x="736.3" y="82.9" font-size="9.5" fill="#f2a65a" text-anchor="middle">30</text>
+<text x="720.8" y="358" font-size="11" fill="#c4ccda" text-anchor="middle">picture, no image</text>
+<text x="70" y="396" font-size="10" fill="#c4ccda">First two bars are grader checks; the rest are probe answers. Source: phoneshell-bench results/*.jsonl after 2026-09-08T04:53:29Z.</text>
+</g></svg>
+
+<h2 id="why-the-check-never-reached-webkit-here">Why the check never reached WebKit here</h2>
+
+<p>The crash needs a snapshot request aimed at an element whose process is WebContent. phoneshell perceives the screen with one <code>GET /source</code> per observation, which snapshots the application root: the process id is MobileSafari's, Safari answers the idle check, and the web subtree comes back inside that one snapshot. Taps go to <code>/wda/tap</code> as coordinates. The only element lookups in the action layer (<code>actions.py</code>, around line 974) find a text field to type into, and in these tasks that field is Safari's own address bar. That is our reading of the code, not a trace from the phone, which has been parked under <code>runtime/automation-off</code> since 17 September.</p>
+
+<svg viewBox="0 0 800 430" style="width:100%;height:auto" role="img" aria-label="Diagram of two ways a WebDriverAgent snapshot request reaches the idle check added in version 16.8.0. Path one, a lookup on an element inside a web view: the element's process id belongs to com.apple.WebKit.WebContent, the idle-check accessibility action goes to WebContent, which does not implement it, raises an unrecognized selector and aborts about 1.5 seconds into the page load; WebKit reloads once, crashes again and leaves the page blank. Version 16.14.1 sends WebKit processes straight to the original snapshot. Path two, phoneshell: one GET /source per observation snapshots the Safari application root, the idle check goes to MobileSafari, which answers, and the web subtree comes back inside the same snapshot; taps go to coordinates through /wda/tap.">
+<rect x="0" y="0" width="800" height="430" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="11">
+<text x="20" y="26" font-size="14" font-weight="600">Where WebDriverAgent 16.8.0 to 16.14.0 sends the idle check, by request shape</text>
+<rect x="20" y="46" width="760" height="170" rx="8" fill="#1d2330" stroke="#f2a65a"/>
+<text x="34" y="68" font-weight="600" fill="#f2a65a">Element lookup inside a web view (issue #1290)</text>
+<rect x="34" y="82" width="150" height="46" rx="6" fill="#262d3d"/><text x="44" y="101">find / attribute on</text><text x="44" y="117">a web element</text>
+<rect x="214" y="82" width="170" height="46" rx="6" fill="#262d3d"/><text x="224" y="101">pid = element's process</text><text x="224" y="117">com.apple.WebKit.WebContent</text>
+<rect x="414" y="82" width="170" height="46" rx="6" fill="#262d3d"/><text x="424" y="101">idle-check AX action</text><text x="424" y="117">sent to WebContent</text>
+<rect x="614" y="82" width="150" height="46" rx="6" fill="#3a2a22"/><text x="624" y="101" fill="#f2a65a">unrecognized selector</text><text x="624" y="117" fill="#f2a65a">SIGABRT at ~1.5 s</text>
+<text x="188" y="110" fill="#c4ccda">&#8594;</text><text x="388" y="110" fill="#c4ccda">&#8594;</text><text x="588" y="110" fill="#c4ccda">&#8594;</text>
+<text x="34" y="156">WebKit reloads the page once, the process crashes again, WebKit gives up: blank page, every lookup times out.</text>
+<text x="34" y="180" fill="#5ad1a0">16.14.1 (#1293): if the bundle id starts with com.apple.WebKit., skip the idle check and use the original snapshot.</text>
+<text x="34" y="200" font-size="10" fill="#c4ccda">Reported on an iOS 18.3.1 simulator with WDA 16.12.11 and accessibilityDeadline 30. Fix validated on an iOS 27.0 simulator only.</text>
+<rect x="20" y="232" width="760" height="160" rx="8" fill="#1d2330" stroke="#5ad1a0"/>
+<text x="34" y="254" font-weight="600" fill="#5ad1a0">phoneshell on 16.12.4 with accessibilityDeadline 10.0</text>
+<rect x="34" y="268" width="150" height="46" rx="6" fill="#262d3d"/><text x="44" y="287">GET /source</text><text x="44" y="303">once per observation</text>
+<rect x="214" y="268" width="170" height="46" rx="6" fill="#262d3d"/><text x="224" y="287">pid = Safari app root</text><text x="224" y="303">com.apple.mobilesafari</text>
+<rect x="414" y="268" width="170" height="46" rx="6" fill="#262d3d"/><text x="424" y="287">idle check answered</text><text x="424" y="303">by Safari's run loop</text>
+<rect x="614" y="268" width="150" height="46" rx="6" fill="#1f3329"/><text x="624" y="287" fill="#5ad1a0">web subtree returned</text><text x="624" y="303" fill="#5ad1a0">in the same snapshot</text>
+<text x="188" y="296" fill="#c4ccda">&#8594;</text><text x="388" y="296" fill="#c4ccda">&#8594;</text><text x="588" y="296" fill="#c4ccda">&#8594;</text>
+<text x="34" y="342">Taps: POST /wda/tap at element centre coordinates. Element lookups only to find a text field to type into.</text>
+<text x="34" y="362">Result in the published runs: the grader read "Example Domain" from the tree in 29 of 30 checks.</text>
+<text x="34" y="382" font-size="10" fill="#c4ccda">Our reading of client.py and actions.py, not a device trace. The phone has been under runtime/automation-off since 17 September.</text>
+<text x="20" y="418" font-size="10" fill="#c4ccda">Sources: appium/WebDriverAgent issue #1290, PR #1293, XCAXClient_iOS+FBSnapshotReqParams.m at v16.12.4; phoneshell wda/client.py, actions.py.</text>
+</g></svg>
+
+<p>The rows also say less than we would like about the hardware. The xv2 rows record an iPhone 14 Pro on iOS 26.3.1. The other files record no device. The issue was an iOS 18.3.1 simulator, the fix was tested on an iOS 27.0 simulator, and nobody in the thread reports a physical phone. So the evidence is two-sided and partial: the bug is real on a simulator, absent from 189 iOS 26 hardware runs that never made the triggering request.</p>
+
+<h2 id="what-it-means-if-you-run-webdriveragent-with-a-deadline">What it means if you run WebDriverAgent with a deadline</h2>
+
+<ul>
+  <li>The exposure is a combination: 16.8.0 to 16.14.0, <code>accessibilityDeadline</code> above zero, and element-level requests inside a web view (find by link text, read a web element's rect or value, hybrid tests that stay in the native context). If all three hold, upgrade to 16.14.1.</li>
+  <li>Setting the deadline back to zero removes the crash and brings back the problem it was added for: one app that stops answering accessibility requests can block the server indefinitely. phoneshell keeps 10 seconds for that reason.</li>
+  <li>An agent that reads through <code>/source</code> and taps coordinates sends far fewer per-element requests than a test script does. That is why one class of WebDriverAgent bug passes it by. It is also why its timing numbers are not comparable with Appium element-based suites.</li>
+  <li>A deterministic tree check on the grader side is what makes this question answerable after the fact. Model-reported success would have hidden a blank page that the model guessed around.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># the fix and the code it changes
+gh api repos/appium/WebDriverAgent/pulls/1293/files --jq '.[0].patch'
+curl -s https://raw.githubusercontent.com/appium/WebDriverAgent/v16.12.4/WebDriverAgentLib/Categories/XCAXClient_iOS+FBSnapshotReqParams.m | grep -n "processIdentifier\|notifyWhenEventLoopIsIdle"
+
+# phoneshell's settings and pin
+grep -n "accessibilityDeadline" phoneshell/config.py
+grep -n "WDA_TAG" phoneshell/device.py
+grep -n "def source\|/wda/tap" phoneshell/wda/client.py
+
+# the published runs
+for f in exp2-n exp2-v v4 xv-novision xv-text xv xv2; do
+  curl -sLO https://huggingface.co/datasets/blolabel/phoneshell-bench/resolve/main/results/$f.jsonl; done
+# keep rows with started_at &gt;= 1788843209 (2026-09-08T04:53:29Z) and task_id starting
+# safari., probe., or equal to resilience.deep_start; group failures by the first failing check</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>By 31 December 2026 we will run the six Safari tasks twice on an iOS 26 iPhone, once on 16.12.4 and once on 16.14.1, both with the deadline at 10 seconds, adding one element lookup on the example.com link before each tap. Our prediction: on 16.12.4 the lookup blanks the page in at least half the runs, and on 16.14.1 in none. If 16.12.4 survives the lookups as well, the crash is specific to the simulator or to iOS 18, and the fix matters less on current hardware than the issue suggests. If <code>/source</code> alone ever produces a blank page on 16.12.4, our explanation of why phoneshell escaped is wrong.</p>
+
+<h2 id="sources">Sources</h2>
+
+<ul>
+  <li>appium/WebDriverAgent, <a href="https://github.com/appium/WebDriverAgent/releases/tag/v16.14.1">release v16.14.1</a>, 7 October 2026; <a href="https://github.com/appium/WebDriverAgent/pull/1293">PR #1293</a>, "skip accessibility idle checks for WebKit services".</li>
+  <li>bddsko, <a href="https://github.com/appium/WebDriverAgent/issues/1290">issue #1290</a>, "accessibilityDeadline crashes WKWebView's WebContent process", 5 October 2026.</li>
+  <li>appium/WebDriverAgent, <a href="https://github.com/appium/WebDriverAgent/pull/1214">PR #1214</a>, "bound accessibility snapshot requests to avoid indefinite hangs", merged 24 August 2026, released in 16.8.0; <a href="https://github.com/appium/WebDriverAgent/releases/tag/v16.12.4">v16.12.4</a>, 6 September 2026.</li>
+  <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/config.py</code>, <code>device.py</code>, <code>wda/client.py</code>, <code>actions.py</code>, read 7 October 2026.</li>
+  <li>Blolabel, <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">phoneshell-bench</a>, <code>results/</code>, runs of 8 and 9 September 2026.</li>
+</ul>
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>

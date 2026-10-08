@@ -41,6 +41,14 @@
 <div class="wrap">
   <ul class="postlist" id="posts">
   <!-- POSTS:START -->
+  <li><a class="row" href="/blog/idle-check-never-reached-webkit/">
+    <span class="when">07 October 2026</span>
+    <span>
+      <h3>WebDriverAgent 16.14.1 stops sending its idle check to WebKit; phoneshell had the check on for 189 web runs and its grader still read the page in 29 of 30</h3>
+      <p>WebDriverAgent 16.14.1 (7 October 2026) exempts com.apple.WebKit processes from the accessibilityDeadline idle check, which crashed WKWebView content and left pages blank (issue #1290). phoneshell has run with the setting at 10 s on 16.12.4 since 8 September. In 189 published web-content runs its grader found the page heading in the tree 29 of 30 times, and the text probes passed 30 of 30 with no screenshot.</p>
+      <span class="meta"><span class="kind event">event</span><span>7 min read</span></span>
+    </span>
+  </a></li>
   <li><a class="row" href="/blog/failed-runs-leave-nothing-to-review/">
     <span class="when">06 October 2026</span>
     <span>
