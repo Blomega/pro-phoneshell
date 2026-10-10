@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AgentHorizon builds failures by swapping instructions; 11 of phoneshell&#x27;s 80 device checks pass a sibling task&#x27;s finish | Blolabel</title>
+<meta name="description" content="AgentHorizon (arXiv:2610.11050, 8 October 2026) pairs each recording with a related instruction it does not satisfy; the best judge, GPT-5.5 in Codex, reaches 80.9% balanced accuracy. Run the same swap over phoneshell&#x27;s 80 task files: 46 task pairs are implied by check text alone, 40 of them wrong answers, across 11 tasks that passed 66 of 66 runs on 9 September.">
+<link rel="canonical" href="https://blolabel.ai/blog/swapped-instructions-pass-device-checks/">
+<meta property="og:title" content="AgentHorizon builds failures by swapping instructions; 11 of phoneshell&#x27;s 80 device checks pass a sibling task&#x27;s finish | Blolabel">
+<meta property="og:description" content="AgentHorizon (arXiv:2610.11050, 8 October 2026) pairs each recording with a related instruction it does not satisfy; the best judge, GPT-5.5 in Codex, reaches 80.9% balanced accuracy. Run the same swap over phoneshell&#x27;s 80 task files: 46 task pairs are implied by check text alone, 40 of them wrong answers, across 11 tasks that passed 66 of 66 runs on 9 September.">
+<meta property="og:url" content="https://blolabel.ai/blog/swapped-instructions-pass-device-checks/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/swapped-instructions-pass-device-checks-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "AgentHorizon builds failures by swapping instructions; 11 of phoneshell's 80 device checks pass a sibling task's finish", "description": "AgentHorizon (arXiv:2610.11050, 8 October 2026) pairs each recording with a related instruction it does not satisfy; the best judge, GPT-5.5 in Codex, reaches 80.9% balanced accuracy. Run the same swap over phoneshell's 80 task files: 46 task pairs are implied by check text alone, 40 of them wrong answers, across 11 tasks that passed 66 of 66 runs on 9 September.", "datePublished": "2026-10-09", "dateModified": "2026-10-09", "url": "https://blolabel.ai/blog/swapped-instructions-pass-device-checks/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/swapped-instructions-pass-device-checks/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/swapped-instructions-pass-device-checks-hero.png", "citation": ["https://arxiv.org/abs/2610.11050", "https://github.com/ServiceNow/agenthorizon", "https://github.com/Blomega/phoneshell", "https://huggingface.co/datasets/blolabel/phoneshell-bench", "https://blolabel.ai/blog/checks-pass-before-the-agent-picks/", "https://blolabel.ai/blog/agents-report-success-device-disagrees/"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "What is AgentHorizon?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "A benchmark of 1,373 computer-use judging tasks from 166 hours of human recordings on Windows, Linux and macOS (Lu et al., ServiceNow Research and Mila, arXiv:2610.11050, 8 October 2026). Annotators wrote two closely related instructions and recorded each; pairing a recording with the other instruction gives 850 negatives. The best judge, GPT-5.5 in the Codex agent, scores 80.9% balanced accuracy on the hard AH split."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Can a device-state grader be fooled the same way as an LLM judge?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes, where the check does not look at what separates two instructions. In phoneshell's 80 iPhone tasks, 46 ordered task pairs have checks such that any end state passing one passes the other. In 40 of them the second task never does what the first asks: a detour through Safari, the Settings search field, Spotlight, an answer to a question, or finding instead of creating a note."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Which phoneshell tasks cannot tell a sibling's finish apart?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "multi.three_apps, multi.app_switch, multi.return_after_detour, system.spotlight.find_app, safari.read.heading, settings.about.serial, notes.search, notes.create_titled, settings.search.wifi, settings.search.bluetooth and settings.search.storage. They passed 66 of 66 runs on 9 September 2026; without them the run scores 256 of 283."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How do you fix a check that cannot see the path?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Grade the path from the bridge's own action log, not from the model's summary: the apps opened in order, whether the search field received text, whether Spotlight was the launcher. For information tasks, add an answer check with fixed ground truth, which phoneshell already uses for its 20 probe tasks."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-09">09 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>AgentHorizon builds failures by swapping instructions; 11 of phoneshell&#x27;s 80 device checks pass a sibling task&#x27;s finish</h1>
+  <p class="standfirst">A judge that reads a trajectory can be fooled by a coherent finish to the wrong request. A grader that reads the phone can be too, and the swap test finds where without recording anything.</p>
+
+<p>AgentHorizon, posted on 8 October 2026, tests judges of computer-use agents with a simple trick: record a task done right, then pair the recording with a closely related instruction it does not satisfy. The strongest judge, GPT-5.5 running inside OpenAI's Codex agent, reaches 80.9% balanced accuracy on the hard split. We ran the same swap over phoneshell's own 80 iPhone tasks, which are graded from device state rather than by a model. In 46 ordered task pairs, any finish that passes one task passes the other on check text alone. In 40 of those the instructions disagree. The 11 tasks involved passed 66 of 66 runs on 9 September 2026.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/swapped-instructions-pass-device-checks-hero.png" alt="Abstract technical illustration of two parallel paths of light that cross and exchange endpoints over a dark grid" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+
+<h2 id="what-agenthorizon-measured-and-how-the-negatives-were-built">What AgentHorizon measured, and how the negatives were built</h2>
+
+<p>Xing Han Lù and eleven co-authors at ServiceNow Research, Mila and McGill (arXiv:2610.11050) collected 166 hours of human screen recordings on Windows, Linux and macOS. Annotators wrote two instructions that differ in one requirement and recorded a demonstration of each. Matched pairs are positive candidates. Crossed pairs, recording B judged against instruction A, are negatives by construction: "a very coherent execution, but it is paired with a request that the execution does not satisfy." After review the benchmark holds 1,373 items, 523 positive and 850 negative, with a median of 121 steps per item. Negatives are typed as Critical Mistake, Bad Side Effect or Misunderstanding.</p>
+
+<p>Eleven judges were run directly and as coding agents inside five agent tools (Claude Code, Codex, Gemini CLI, OpenHands, OpenCode). Judges with similar balanced accuracy make opposite errors. Qwen 3.6 27B as a direct judge accepts 93.8% of valid work and rejects only 61.5% of swapped work. GPT-5.5 in Codex rejects 90.0% of swaps and accepts only 71.8% of valid runs. Given no instruction at all, Qwen 3.6 27B calls 98.9% of both classes successful, which is the paper's evidence that a finished-looking trajectory carries almost no signal by itself. Bad Side Effect had the lowest recall of the three types.</p>
+
+<svg viewBox="0 0 760 410" style="width:100%;height:auto" role="img" aria-label="Bar chart of class-specific accuracy on AgentHorizon's 528-item AH split. GPT-5.5 in Codex accepts 71.8% of valid trajectories and rejects 90.0% of swapped ones. Gemini 3.1 Pro in Gemini CLI: 65.6 and 89.7. Claude Opus 4.7 in Claude Code: 76.7 and 75.4. Qwen 3.6 27B as a direct judge: 93.8 and 61.5. Qwen 3.6 27B in OpenCode: 75.3 and 65.4. The judges with the best balanced accuracy differ mainly in which error they make.">
+<rect x="0" y="0" width="760" height="410" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">AgentHorizon (AH split): accept valid work vs reject a swapped request</text>
+<rect x="70" y="40" width="12" height="12" fill="#5ad1a0"/><text x="88" y="50" font-size="11" fill="#c4ccda">accepts valid (Pos %)</text>
+<rect x="265" y="40" width="12" height="12" fill="#f2a65a"/><text x="283" y="50" font-size="11" fill="#c4ccda">rejects swapped (Neg %)</text>
+<line x1="70" y1="340.0" x2="740" y2="340.0" stroke="#2a3140"/>
+<text x="62" y="344.0" font-size="10" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="70" y1="286.0" x2="740" y2="286.0" stroke="#2a3140"/>
+<text x="62" y="290.0" font-size="10" fill="#c4ccda" text-anchor="end">20</text>
+<line x1="70" y1="232.0" x2="740" y2="232.0" stroke="#2a3140"/>
+<text x="62" y="236.0" font-size="10" fill="#c4ccda" text-anchor="end">40</text>
+<line x1="70" y1="178.0" x2="740" y2="178.0" stroke="#2a3140"/>
+<text x="62" y="182.0" font-size="10" fill="#c4ccda" text-anchor="end">60</text>
+<line x1="70" y1="124.0" x2="740" y2="124.0" stroke="#2a3140"/>
+<text x="62" y="128.0" font-size="10" fill="#c4ccda" text-anchor="end">80</text>
+<line x1="70" y1="70.0" x2="740" y2="70.0" stroke="#2a3140"/>
+<text x="62" y="74.0" font-size="10" fill="#c4ccda" text-anchor="end">100</text>
+<text x="18" y="205" font-size="11" fill="#c4ccda" transform="rotate(-90 18 205)" text-anchor="middle">class accuracy, %</text>
+<rect x="103.0" y="146.1" width="31.0" height="193.9" fill="#5ad1a0"/>
+<text x="118.5" y="142.1" font-size="9.5" fill="#5ad1a0" text-anchor="middle">71.8</text>
+<rect x="137.0" y="97.0" width="31.0" height="243.0" fill="#f2a65a"/>
+<text x="152.5" y="93.0" font-size="9.5" fill="#f2a65a" text-anchor="middle">90</text>
+<text x="137.0" y="358" font-size="11" fill="#c4ccda" text-anchor="middle">GPT-5.5 Codex</text>
+<rect x="237.0" y="162.9" width="31.0" height="177.1" fill="#5ad1a0"/>
+<text x="252.5" y="158.9" font-size="9.5" fill="#5ad1a0" text-anchor="middle">65.6</text>
+<rect x="271.0" y="97.8" width="31.0" height="242.2" fill="#f2a65a"/>
+<text x="286.5" y="93.8" font-size="9.5" fill="#f2a65a" text-anchor="middle">89.7</text>
+<text x="271.0" y="358" font-size="11" fill="#c4ccda" text-anchor="middle">Gemini 3.1 Pro CLI</text>
+<rect x="371.0" y="132.9" width="31.0" height="207.1" fill="#5ad1a0"/>
+<text x="386.5" y="128.9" font-size="9.5" fill="#5ad1a0" text-anchor="middle">76.7</text>
+<rect x="405.0" y="136.4" width="31.0" height="203.6" fill="#f2a65a"/>
+<text x="420.5" y="132.4" font-size="9.5" fill="#f2a65a" text-anchor="middle">75.4</text>
+<text x="405.0" y="358" font-size="11" fill="#c4ccda" text-anchor="middle">Opus 4.7 Claude Code</text>
+<rect x="505.0" y="86.7" width="31.0" height="253.3" fill="#5ad1a0"/>
+<text x="520.5" y="82.7" font-size="9.5" fill="#5ad1a0" text-anchor="middle">93.8</text>
+<rect x="539.0" y="173.9" width="31.0" height="166.1" fill="#f2a65a"/>
+<text x="554.5" y="169.9" font-size="9.5" fill="#f2a65a" text-anchor="middle">61.5</text>
+<text x="539.0" y="358" font-size="11" fill="#c4ccda" text-anchor="middle">Qwen 3.6 27B direct</text>
+<rect x="639.0" y="136.7" width="31.0" height="203.3" fill="#5ad1a0"/>
+<text x="654.5" y="132.7" font-size="9.5" fill="#5ad1a0" text-anchor="middle">75.3</text>
+<rect x="673.0" y="163.4" width="31.0" height="176.6" fill="#f2a65a"/>
+<text x="688.5" y="159.4" font-size="9.5" fill="#f2a65a" text-anchor="middle">65.4</text>
+<text x="673.0" y="358" font-size="11" fill="#c4ccda" text-anchor="middle">Qwen 3.6 27B OpenCode</text>
+<text x="70" y="396" font-size="10" fill="#c4ccda">Source: Lu et al., arXiv:2610.11050, Table 2 (8 October 2026). Balanced accuracy is the mean of the two bars.</text>
+</g></svg>
+
+<h2 id="the-same-swap-applied-to-a-grader-that-reads-the-phone">The same swap, applied to a grader that reads the phone</h2>
+
+<p>phoneshell's checks are assertions run against the phone after the agent stops: which app is in front, whether a text appears in the accessibility tree, whether a regular expression matches the screen, and for 20 probe tasks whether the answer contains a fixed word. Element matching is a case-insensitive substring over label, name, value and identifier (<code>find_by_text</code> in <code>perception/tree.py</code>). That makes implication between two tasks decidable from the YAML. Task A is implied by task B when every check in A is the same as a check in B, or, for element checks, is a substring of one. If A is implied by B, any phone state that passes B passes A. No recording is needed.</p>
+
+<svg viewBox="0 0 800 420" style="width:100%;height:auto" role="img" aria-label="Diagram of the swap test. AgentHorizon records a trajectory for each of two closely related instructions and pairs each recording with the other instruction, which always yields a failure. Applied to phoneshell's own task files, the same swap needs no recording: if every check of task A is implied by the checks of task B, a run that passes B also passes A. Three examples: multi.app_switch asks for Calculator, then Safari, then back, and checks only that Calculator is in front, so a direct calculator.arithmetic run passes it. settings.search.storage asks for the search field and checks only for the text Storage, so a settings.storage.reach run that tapped through General passes it. notes.search and notes.create_titled check the same two things, so creating a note passes the search task and the reverse.">
+<rect x="0" y="0" width="800" height="420" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="11">
+<text x="20" y="26" font-size="14" font-weight="600">The swap test, from AgentHorizon to phoneshell's task files</text>
+<rect x="20" y="44" width="360" height="150" rx="10" fill="#1d2330" stroke="#6f7b90"/>
+<text x="34" y="66" font-weight="600">AgentHorizon (arXiv:2610.11050)</text>
+<text x="34" y="90" fill="#c4ccda">instruction A  + recording A  = positive</text>
+<text x="34" y="110" fill="#c4ccda">instruction B  + recording B  = positive</text>
+<text x="34" y="134" fill="#f2a65a">instruction A  + recording B  = negative</text>
+<text x="34" y="154" fill="#f2a65a">instruction B  + recording A  = negative</text>
+<text x="34" y="180" font-size="10" fill="#c4ccda">425 pairs, 850 negatives, all kept after review</text>
+<rect x="420" y="44" width="360" height="150" rx="10" fill="#1d2330" stroke="#6f7b90"/>
+<text x="434" y="66" font-weight="600">phoneshell, no recording needed</text>
+<text x="434" y="90" fill="#c4ccda">checks(A) all implied by checks(B)</text>
+<text x="434" y="110" fill="#c4ccda">so any end state that passes B passes A</text>
+<text x="434" y="134" fill="#f2a65a">46 ordered pairs among 80 tasks</text>
+<text x="434" y="154" fill="#f2a65a">40 of them ask for something B never does</text>
+<text x="434" y="180" font-size="10" fill="#c4ccda">11 tasks accept at least one sibling's finish</text>
+<rect x="20" y="212" width="760" height="54" rx="8" fill="#262d3d"/>
+<text x="34" y="234" font-weight="600">multi.app_switch</text><text x="200" y="234" fill="#c4ccda">Calculator, then Safari, then back to Calculator</text>
+<text x="34" y="254" font-size="10" fill="#5ad1a0">check: foreground_app = com.apple.calculator</text><text x="420" y="254" font-size="10" fill="#f2a65a">passed by calculator.arithmetic (no Safari)</text>
+<rect x="20" y="276" width="760" height="54" rx="8" fill="#262d3d"/>
+<text x="34" y="298" font-weight="600">settings.search.storage</text><text x="200" y="298" fill="#c4ccda">use the search field, open the Storage page</text>
+<text x="34" y="318" font-size="10" fill="#5ad1a0">check: Settings in front, element "Storage"</text><text x="420" y="318" font-size="10" fill="#f2a65a">passed by settings.storage.reach ("iPhone Storage")</text>
+<rect x="20" y="340" width="760" height="54" rx="8" fill="#262d3d"/>
+<text x="34" y="362" font-weight="600">notes.search</text><text x="200" y="362" fill="#c4ccda">use search to find the note "phoneshell benchmark"</text>
+<text x="34" y="382" font-size="10" fill="#5ad1a0">check: Notes in front, element "phoneshell benchmark"</text><text x="420" y="382" font-size="10" fill="#f2a65a">passed by notes.create_titled (makes a new note)</text>
+<text x="20" y="412" font-size="10" fill="#c4ccda">Sources: arXiv:2610.11050 Sec. 3.2; phoneshell environments/*.yaml and bench/verify.py, read 9 October 2026.</text>
+</g></svg>
+
+<p>Over the 80 files the test finds 46 ordered pairs. We read each pair's two instructions. In 6, B's finish does satisfy A's instruction: a <code>settings.about.serial</code> run does reach the page <code>settings.about.reach</code> asks for. In the other 40, it does not. Those are AgentHorizon negatives that phoneshell's grader would score as passes.</p>
+
+<table>
+  <thead><tr><th>Task A (checks too weak)</th><th>What A asks that the check cannot see</th><th>Sibling finishes it accepts</th><th>9 Sep passes</th><th>AgentHorizon type (our judgement)</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>multi.three_apps</td><td>Calculator, then Clock, then Settings</td><td>20 (every Settings task)</td><td>6 of 6</td><td>Critical Mistake</td><td>environments/multi_three_apps.yaml</td></tr>
+    <tr><td>multi.app_switch</td><td>a detour through Safari</td><td>4</td><td>6 of 6</td><td>Critical Mistake</td><td>multi_app_switch.yaml</td></tr>
+    <tr><td>multi.return_after_detour</td><td>a detour through Notes</td><td>4</td><td>6 of 6</td><td>Critical Mistake</td><td>multi_return_after_detour.yaml</td></tr>
+    <tr><td>system.spotlight.find_app</td><td>launching from Spotlight</td><td>4</td><td>6 of 6</td><td>Misunderstanding</td><td>system_spotlight_find_app.yaml</td></tr>
+    <tr><td>settings.search.wifi, .bluetooth, .storage</td><td>using the Settings search field</td><td>1 each</td><td>18 of 18</td><td>Misunderstanding</td><td>settings_search_*.yaml</td></tr>
+    <tr><td>safari.read.heading</td><td>saying the heading</td><td>2</td><td>6 of 6</td><td>Critical Mistake</td><td>safari_read_heading.yaml</td></tr>
+    <tr><td>settings.about.serial</td><td>saying the model number</td><td>1</td><td>6 of 6</td><td>Critical Mistake</td><td>settings_about_serial.yaml</td></tr>
+    <tr><td>notes.search</td><td>finding the note, not making one</td><td>1 (notes.create_titled)</td><td>6 of 6</td><td>Bad Side Effect</td><td>notes_search.yaml</td></tr>
+    <tr><td>notes.create_titled</td><td>making a new note</td><td>1 (notes.search)</td><td>6 of 6</td><td>Critical Mistake</td><td>notes_create_titled.yaml</td></tr>
+    <tr><td>Total</td><td></td><td>40 pairs; 35 path, 3 answer, 2 create or find</td><td>66 of 66</td><td></td><td>xv2.jsonl, 9 Sep 2026</td></tr>
+  </tbody>
+</table>
+
+<svg viewBox="0 0 800 396" style="width:100%;height:auto" role="img" aria-label="Horizontal bar chart of the 11 phoneshell tasks whose checks are implied by a sibling task's checks, with the number of incompatible siblings each accepts. multi.three_apps accepts 20 Settings tasks. multi.app_switch, multi.return_after_detour and system.spotlight.find_app accept 4 each. safari.read.heading accepts 2. settings.about.serial, notes.search, notes.create_titled, settings.search.wifi, settings.search.bluetooth and settings.search.storage accept 1 each. Total 40: 35 skip a required path, 3 skip a required answer, 2 swap creating a note for finding one.">
+<rect x="0" y="0" width="800" height="396" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">40 swapped finishes phoneshell's checks would pass, by task</text>
+<text x="250" y="46" font-size="10" fill="#c4ccda">sibling tasks whose passing end state also passes this task's checks</text>
+<text x="240" y="75" font-size="11" text-anchor="end">multi.three_apps</text>
+<rect x="250" y="63" width="408.3" height="17" fill="#f2a65a"/>
+<text x="664.3" y="76" font-size="10.5" fill="#f2a65a">20  (path)</text>
+<text x="240" y="101" font-size="11" text-anchor="end">multi.app_switch</text>
+<rect x="250" y="89" width="81.7" height="17" fill="#f2a65a"/>
+<text x="337.7" y="102" font-size="10.5" fill="#f2a65a">4  (path)</text>
+<text x="240" y="127" font-size="11" text-anchor="end">multi.return_after_detour</text>
+<rect x="250" y="115" width="81.7" height="17" fill="#f2a65a"/>
+<text x="337.7" y="128" font-size="10.5" fill="#f2a65a">4  (path)</text>
+<text x="240" y="153" font-size="11" text-anchor="end">system.spotlight.find_app</text>
+<rect x="250" y="141" width="81.7" height="17" fill="#f2a65a"/>
+<text x="337.7" y="154" font-size="10.5" fill="#f2a65a">4  (path)</text>
+<text x="240" y="179" font-size="11" text-anchor="end">safari.read.heading</text>
+<rect x="250" y="167" width="40.8" height="17" fill="#f2a65a"/>
+<text x="296.8" y="180" font-size="10.5" fill="#f2a65a">2  (answer)</text>
+<text x="240" y="205" font-size="11" text-anchor="end">settings.about.serial</text>
+<rect x="250" y="193" width="20.4" height="17" fill="#f2a65a"/>
+<text x="276.4" y="206" font-size="10.5" fill="#f2a65a">1  (answer)</text>
+<text x="240" y="231" font-size="11" text-anchor="end">notes.search</text>
+<rect x="250" y="219" width="20.4" height="17" fill="#f2a65a"/>
+<text x="276.4" y="232" font-size="10.5" fill="#f2a65a">1  (create for find)</text>
+<text x="240" y="257" font-size="11" text-anchor="end">notes.create_titled</text>
+<rect x="250" y="245" width="20.4" height="17" fill="#f2a65a"/>
+<text x="276.4" y="258" font-size="10.5" fill="#f2a65a">1  (find for create)</text>
+<text x="240" y="283" font-size="11" text-anchor="end">settings.search.wifi</text>
+<rect x="250" y="271" width="20.4" height="17" fill="#f2a65a"/>
+<text x="276.4" y="284" font-size="10.5" fill="#f2a65a">1  (path)</text>
+<text x="240" y="309" font-size="11" text-anchor="end">settings.search.bluetooth</text>
+<rect x="250" y="297" width="20.4" height="17" fill="#f2a65a"/>
+<text x="276.4" y="310" font-size="10.5" fill="#f2a65a">1  (path)</text>
+<text x="240" y="335" font-size="11" text-anchor="end">settings.search.storage</text>
+<rect x="250" y="323" width="20.4" height="17" fill="#f2a65a"/>
+<text x="276.4" y="336" font-size="10.5" fill="#f2a65a">1  (path)</text>
+<text x="20" y="382" font-size="10" fill="#c4ccda">Source: our implication test over phoneshell environments/*.yaml (80 tasks), 9 October 2026. Script under Check it yourself.</text>
+</g></svg>
+
+<h2 id="where-the-device-stops-being-the-witness">Where the device stops being the witness</h2>
+
+<p>The 11 tasks are not failing. All 66 runs on 9 September passed, six models on an iPhone 14 Pro. Read the models' own summaries and they say the right things: all six <code>settings.about.serial</code> answers give MQ163LL/A, all six <code>safari.read.heading</code> answers say "Example Domain", every Spotlight run says it used Spotlight. The problem is where that evidence comes from. On these 11 tasks the part that separates the instruction from its sibling is confirmed only by the model's account, which is the source phoneshell exists to replace. On the same run, the models' summaries claimed success on 16 of 27 device-graded failures.</p>
+
+<p>The three mechanisms are different. A path requirement (35 pairs) is invisible to any end-state check: Calculator in front looks the same with or without a trip through Safari. An answer requirement (3 pairs) is a missing check: phoneshell already has <code>answer_contains</code> and uses it on its 20 probe tasks, where the grader rejects swaps between the image word and the text word on the same page. A create-or-find pair (2) is a side effect: a model asked to search Notes can type a new note titled "phoneshell benchmark" and pass. Two of the six notes.search summaries say they found "multiple notes"; our guess, not checked on the phone, is that earlier create runs left them there.</p>
+
+<p>Without the 11 tasks the 9 September run scores 256 of 283, 90.5%, against 322 of 349, 92.3%, with them. The 7 October note found 12 checks that pass on the opened app before any choice. The two lists measure different weaknesses, and we have not merged them.</p>
+
+<h2 id="what-it-means-for-anyone-grading-agents-on-phones">What it means for anyone grading agents on phones</h2>
+
+<ul>
+  <li>Run the swap over your own task file before trusting a pass rate. For script graders it costs one loop over the checks and finds every pair the grader cannot separate. For LLM judges it costs one recording per sibling, which is what AgentHorizon paid for.</li>
+  <li>A path requirement needs a path check. phoneshell's bridge already writes app launches, taps and typing to <code>audit.jsonl</code>, though without a run id yet (our 6 October note); grading "opened Safari between two Calculator states" or "typed into the Settings search field" from that log keeps the device as the witness. The model's summary should not be the evidence.</li>
+  <li>Count what a check cannot reject, not only what it passes. AgentHorizon's split of Pos and Neg accuracy applies to script graders too. On these 40 pairs phoneshell's negative accuracy is 0 by construction.</li>
+  <li>Side effects need their own checks. The notes pair is AgentHorizon's weakest category, Bad Side Effect, reproduced in a grader with no model in it. A check that the number of notes titled "phoneshell benchmark" did not change would catch it.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># AgentHorizon: construction (Sec. 3.2), Table 1 counts, Table 2 judges
+https://arxiv.org/abs/2610.11050
+git clone https://github.com/ServiceNow/agenthorizon
+
+# phoneshell: the implication test over the 80 task files (needs PyYAML)
+python3 - &lt;&lt;'EOF'
+import yaml, glob
+T = {}
+for f in glob.glob("environments/*.yaml"):
+    d = yaml.safe_load(open(f))
+    T[d["id"]] = [(c["kind"], str(c.get("text", c.get("value", ""))), bool(c.get("negate"))) for c in d["checks"]]
+EL = ("element_exists", "element_exists_anywhere")
+def implied(c, B):
+    k, t, n = c
+    for k2, t2, n2 in B:
+        if n != n2: continue
+        if n: 
+            if k == k2 and t2.lower() in t.lower(): return True
+            continue
+        if (k, t) == (k2, t2): return True
+        if k in EL and k2 in EL and t.lower() in t2.lower() and not (k == EL[0] and k2 == EL[1]): return True
+        if k == k2 == "answer_contains" and t.lower() in t2.lower(): return True
+    return False
+P = [(a, b) for a in T for b in T if a != b and all(implied(c, T[b]) for c in T[a])]
+print(len(T), len(P))          # 80 46
+for a, b in sorted(P): print(a, "&lt;=", b)
+EOF
+
+# the 9 September run
+curl -sLO https://huggingface.co/datasets/blolabel/phoneshell-bench/resolve/main/results/xv2.jsonl
+python3 -c "import json;R=[json.loads(l) for l in open('xv2.jsonl')];S={'multi.three_apps','multi.app_switch','multi.return_after_detour','system.spotlight.find_app','safari.read.heading','settings.about.serial','notes.search','notes.create_titled','settings.search.wifi','settings.search.bluetooth','settings.search.storage'};x=[r for r in R if r['task_id'] in S];print(sum(r['passed'] for r in x),len(x))"   # 66 66</code></pre>
+
+<p>The six pairs we marked compatible, and the AgentHorizon type in the table, are our reading of the instructions. Everything else follows from the files.</p>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>Our claim is that 40 swapped finishes pass phoneshell's checks. It is wrong if any of them fails on the phone. The cheapest test is <code>multi.app_switch</code> graded on the end state of a <code>calculator.arithmetic</code> run, and <code>notes.search</code> graded after a fresh <code>notes.create_titled</code> run. By 31 December 2026 we expect phoneshell to grade the path for the 8 path tasks from its action log, and to add answer checks to <code>safari.read.heading</code> and <code>settings.about.serial</code>. Rerun after those changes, the implication test should report 6 pairs, all compatible. For AgentHorizon we expect, by 30 June 2027, no judge on the AH split above 90% balanced accuracy with both class accuracies above 85%.</p>
+
+<h2 id="sources">Sources</h2>
+
+<ul>
+  <li>Xing Han Lù, Dheeraj Vattikonda, Sina Hajimiri, Fatemeh Pesaran Zadeh, Parishad BehnamGhader, Ghazwa Darwiche, Amirhossein Kazemnejad, Christopher Pal, Alexandre Drouin, Siva Reddy, "<a href="https://arxiv.org/abs/2610.11050">AgentHorizon: Evaluating Agentic Judges for Long-Horizon Computer-Use Tasks</a>", arXiv:2610.11050, 8 October 2026; code and data at <a href="https://github.com/ServiceNow/agenthorizon">github.com/ServiceNow/agenthorizon</a>.</li>
+  <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>environments/*.yaml</code>, <code>phoneshell/bench/verify.py</code>, <code>phoneshell/perception/tree.py</code>, read 9 October 2026.</li>
+  <li>Blolabel, <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">phoneshell-bench</a>, <code>results/xv2.jsonl</code>, run of 9 September 2026 on an iPhone 14 Pro, iOS 26.3.1.</li>
+  <li>Blolabel, "<a href="https://blolabel.ai/blog/agents-report-success-device-disagrees/">Agents report success, the device disagrees</a>", 15 September 2026, and "<a href="https://blolabel.ai/blog/checks-pass-before-the-agent-picks/">12 checks pass before the agent picks</a>", 7 October 2026.</li>
+</ul>
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
