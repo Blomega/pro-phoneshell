@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WebDriverAgent 16.15.0 fixes apps bouncing back after launch; phoneshell's open_app already works around the same symptom by never calling it | Blolabel</title>
+<meta name="description" content="WebDriverAgent 16.15.0 (12 October 2026, PR appium/WebDriverAgent#1289) adds an asAppUnderTest flag because an app launched without it gets no quiescence wait, no crash detection and no alert redirect: 3 of 3 post-launch lookups failed without the flag, 0 of 3 failed with it. phoneshell's open_app() already avoids the endpoint with a three-step fallback; the newly public iPhone Use avoids it too, by a different route.">
+<link rel="canonical" href="https://blolabel.ai/blog/open-app-tries-three-paths-before-launch/">
+<meta property="og:title" content="WebDriverAgent 16.15.0 fixes apps bouncing back after launch; phoneshell's open_app already works around the same symptom by never calling it | Blolabel">
+<meta property="og:description" content="WebDriverAgent 16.15.0 (12 October 2026, PR appium/WebDriverAgent#1289) adds an asAppUnderTest flag because an app launched without it gets no quiescence wait, no crash detection and no alert redirect: 3 of 3 post-launch lookups failed without the flag, 0 of 3 failed with it. phoneshell's open_app() already avoids the endpoint with a three-step fallback; the newly public iPhone Use avoids it too, by a different route.">
+<meta property="og:url" content="https://blolabel.ai/blog/open-app-tries-three-paths-before-launch/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/open-app-tries-three-paths-before-launch-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "WebDriverAgent 16.15.0 fixes apps bouncing back after launch; phoneshell's open_app already works around the same symptom by never calling it", "description": "WebDriverAgent 16.15.0 (12 October 2026, PR appium/WebDriverAgent#1289) adds an asAppUnderTest flag because an app launched without it gets no quiescence wait, no crash detection and no alert redirect: 3 of 3 post-launch lookups failed without the flag, 0 of 3 failed with it. phoneshell's open_app() already avoids the endpoint with a three-step fallback; the newly public iPhone Use avoids it too, by a different route.", "datePublished": "2026-10-13", "dateModified": "2026-10-13", "url": "https://blolabel.ai/blog/open-app-tries-three-paths-before-launch/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/open-app-tries-three-paths-before-launch/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/open-app-tries-three-paths-before-launch-hero.png", "citation": ["https://github.com/appium/WebDriverAgent/pull/1289", "https://github.com/appium/WebDriverAgent/releases/tag/v16.15.0", "https://github.com/zhongerxin/iPhone-use", "https://github.com/Blomega/phoneshell", "https://github.com/appium/appium/issues/22889"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "What does WebDriverAgent's asAppUnderTest flag fix?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Before WebDriverAgent 16.15.0 (12 October 2026, PR #1289), an app opened with POST /wda/apps/launch during a session that had no application under test never became one. That meant no default quiescence wait, no crash detection if the app later died, and no redirect to a system alert covering it. The PR's own validation found every post-launch element lookup failing in 3 of 3 runs without the flag and succeeding in 3 of 3 runs with asAppUnderTest:true set."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does phoneshell use the endpoint the fix touches?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Rarely. phoneshell's open_app() tries three ways to bring an app forward in order: /wda/apps/launchUnattached (no session at all, via LSApplicationWorkspace), then /wda/apps/activate, then /wda/apps/launch only as a last resort. A code comment in actions.py says launchUnattached is tried first because switching the app under test used to bounce the phone back to the home screen seconds after launch, which is the same testedApplication mechanism the new flag addresses."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Is the newly public iPhone Use project exposed to the same gap?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No, by a different route. iPhone Use (github.com/zhongerxin/iPhone-use, created 6 October 2026) creates its WebDriverAgent session without a bundle ID and opens apps only through POST /wda/apps/activate, never through /wda/apps/launch. activateApplicationWithBundleId in WebDriverAgent's own source calls [app activate] and returns; it never touches the session's testedApplication property, with or without the new flag."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-13">13 October 2026</time>
+    <span>9 min read</span>
+  </div>
+  <h1>WebDriverAgent 16.15.0 fixes apps bouncing back after launch; phoneshell's open_app already works around the same symptom by never calling it</h1>
+  <p class="standfirst">A session with no application under test gets no quiescence wait, no crash detection and no alert redirect from WebDriverAgent's own machinery. The fix that shipped this week patches one endpoint. Two independently built iPhone agents barely touch it.</p>
+
+<p>WebDriverAgent 16.15.0, released 12 October 2026, adds an <code>asAppUnderTest</code> flag to <code>POST /wda/apps/launch</code> (PR <a href="https://github.com/appium/WebDriverAgent/pull/1289">appium/WebDriverAgent#1289</a>, merged 02:54 UTC that day). Without it, an app launched into a session that has no application under test never becomes one: no default quiescence wait, no crash watch, no redirect to a system alert covering it. The PR's own end-to-end test found every post-launch element lookup failing in 3 of 3 runs without the flag and succeeding in 3 of 3 runs with it. We checked the two iPhone-driving agents we have source access to, this project and the newly public iPhone Use, and neither relies on the endpoint the fix touches.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/open-app-tries-three-paths-before-launch-hero.png" alt="Abstract technical illustration of three luminous signal paths branching from one source across a dark circuit grid, one passing through a glowing checkpoint gate and emerging reinforced, the other two bypassing the gate and fading unchecked into darker blue" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="what-changed-and-when">What changed, and when</h2>
+
+<p>The issue report, <a href="https://github.com/appium/appium/issues/22889">appium/appium#22889</a>, describes a session created with <code>appium:autoLaunch: false</code>: no app launches at session startup, so the session starts with no application under test. A later <code>mobile: launchApp</code> call (which maps to <code>POST /wda/apps/launch</code>) opens an app, but <code>FBSession</code>'s <code>testedApplication</code> property stays nil, because only two things ever set it: passing a <code>bundleId</code> in the session's startup capabilities, or, as of this PR, passing <code>asAppUnderTest: true</code> to <code>/wda/apps/launch</code>. The PR's description names three concrete consequences of staying nil: the launched app does not wait for quiescence unless the request asks for it, is not watched for system alerts even with <code>respectSystemAlerts</code> on, and is not checked for crashes. The author's own words: "in our UI test suite this made taps land during screen transitions."</p>
+
+<p>16.15.0 is the fifth WebDriverAgent release in nine days. 16.14.0 (4 October) added Surface Duo hinge control; 16.14.1 (7 October) stopped sending the idle check to WebKit services, which we covered <a href="https://blolabel.ai/blog/idle-check-never-reached-webkit/">on 7 October</a>; 16.14.2 (8 October) fixed Duo scroll actions. None of those three touch <code>testedApplication</code>. 16.15.0 does, and it is the one that matters for anything driving a real iPhone through an app-launch call.</p>
+
+<table>
+  <thead><tr><th>Version</th><th>Date</th><th>Change</th><th>Touches testedApplication</th></tr></thead>
+  <tbody>
+    <tr><td>16.13.6</td><td>2026-09-30</td><td>Restore stability wait settings when quiescence throws</td><td>No</td></tr>
+    <tr><td>16.14.0</td><td>2026-10-04</td><td>Duo hinge control and secondary display capture</td><td>No</td></tr>
+    <tr><td>16.14.1</td><td>2026-10-07</td><td>Skip accessibility idle checks for WebKit services</td><td>No</td></tr>
+    <tr><td>16.14.2</td><td>2026-10-08</td><td>Align Duo W3C actions and scrolling</td><td>No</td></tr>
+    <tr><td>16.15.0</td><td>2026-10-12</td><td>Add <code>asAppUnderTest</code> to <code>/wda/apps/launch</code> (PR #1289)</td><td>Yes, when the caller opts in</td></tr>
+  </tbody>
+</table>
+<p style="font-size:.85em;color:var(--muted,#8893a8)">Source: <a href="https://registry.npmjs.org/appium-webdriveragent">registry.npmjs.org/appium-webdriveragent</a> version timestamps and <a href="https://api.github.com/repos/appium/WebDriverAgent/releases">github.com/appium/WebDriverAgent releases</a>, read 13 October 2026.</p>
+
+<h2 id="the-mechanism-three-ways-to-open-an-app">The mechanism: three ways to open an app, one of them protected</h2>
+
+<p>WebDriverAgent exposes three different endpoints that bring an app to the foreground, and they are not interchangeable underneath. <code>/wda/apps/launchUnattached</code> runs outside any session, through Apple's <code>LSApplicationWorkspace</code>, and cannot touch <code>testedApplication</code> because no <code>FBSession</code> object is involved at all (confirmed by reading <code>FBCustomCommands.m</code>: the route is declared <code>.withoutSession</code>). <code>/wda/apps/activate</code> calls <code>XCUIApplication activate</code> and returns the app; <code>FBSession</code>'s own <code>activateApplicationWithBundleId:</code> is four lines and never assigns <code>testedApplication</code>. Only <code>/wda/apps/launch</code> can set it, and before 16.15.0 only by being the app a <code>bundleId</code> at session creation already pointed to.</p>
+
+<svg viewBox="0 0 820 440" style="width:100%;height:auto" role="img" aria-label="Diagram of three WebDriverAgent endpoints that open an app. wda/apps/launchUnattached runs outside any session through LSApplicationWorkspace and never sets testedApplication. wda/apps/activate calls XCUIApplication activate and also never sets testedApplication. wda/apps/launch is the only endpoint that can set testedApplication, and before version 16.15.0 only did so for the app a bundleId already pointed to at session creation. When testedApplication is nil, WebDriverAgent's activeApplication getter skips its quiescence wait, crash detection and system alert redirect entirely.">
+<rect x="0" y="0" width="820" height="440" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Three endpoints that open an app, one path to protection</text>
+<rect x="20" y="46" width="240" height="140" rx="10" fill="#1d2330" stroke="#6f7b90"/>
+<text x="34" y="68" font-size="12" font-weight="600">/wda/apps/launchUnattached</text>
+<text x="34" y="90" font-size="10.5" fill="#c4ccda">LSApplicationWorkspace</text>
+<text x="34" y="106" font-size="10.5" fill="#c4ccda">.withoutSession route</text>
+<text x="34" y="130" font-size="10.5" fill="#f2a65a">no FBSession object touched</text>
+<text x="34" y="150" font-size="10.5" fill="#f2a65a">testedApplication: never set</text>
+<text x="34" y="172" font-size="10" fill="#8893a8">used by: phoneshell, 1st try</text>
+<rect x="290" y="46" width="240" height="140" rx="10" fill="#1d2330" stroke="#6f7b90"/>
+<text x="304" y="68" font-size="12" font-weight="600">/wda/apps/activate</text>
+<text x="304" y="90" font-size="10.5" fill="#c4ccda">XCUIApplication activate</text>
+<text x="304" y="106" font-size="10.5" fill="#c4ccda">4-line FBSession method</text>
+<text x="304" y="130" font-size="10.5" fill="#f2a65a">returns the app, nothing more</text>
+<text x="304" y="150" font-size="10.5" fill="#f2a65a">testedApplication: never set</text>
+<text x="304" y="172" font-size="10" fill="#8893a8">used by: phoneshell 2nd try, iPhone Use only try</text>
+<rect x="560" y="46" width="240" height="140" rx="10" fill="#1d2330" stroke="#6f7b90"/>
+<text x="574" y="68" font-size="12" font-weight="600">/wda/apps/launch</text>
+<text x="574" y="90" font-size="10.5" fill="#c4ccda">XCUIApplication launch</text>
+<text x="574" y="106" font-size="10.5" fill="#c4ccda">the only one that can set it</text>
+<text x="574" y="130" font-size="10.5" fill="#5ad1a0">testedApplication: set if</text>
+<text x="574" y="148" font-size="10.5" fill="#5ad1a0">asAppUnderTest:true (16.15.0+)</text>
+<text x="574" y="172" font-size="10" fill="#8893a8">used by: phoneshell's last resort, no flag sent</text>
+<line x1="140" y1="186" x2="400" y2="250" stroke="#6f7b90" stroke-width="1.5"/>
+<line x1="410" y1="186" x2="400" y2="250" stroke="#6f7b90" stroke-width="1.5"/>
+<line x1="680" y1="186" x2="430" y2="250" stroke="#6f7b90" stroke-width="1.5"/>
+<rect x="210" y="250" width="400" height="60" rx="8" fill="#262d3d"/>
+<text x="230" y="275" font-size="12" font-weight="600" text-anchor="start">testedApplication == nil?</text>
+<text x="230" y="296" font-size="10.5" fill="#c4ccda">decided by which of the three paths opened the app</text>
+<line x1="320" y1="310" x2="260" y2="350" stroke="#6f7b90" stroke-width="1.5"/>
+<line x1="500" y1="310" x2="560" y2="350" stroke="#6f7b90" stroke-width="1.5"/>
+<rect x="40" y="350" width="440" height="70" rx="8" fill="#1d2330" stroke="#f2a65a"/>
+<text x="56" y="373" font-size="11.5" fill="#f2a65a" font-weight="600">nil: activeApplication getter skips all three</text>
+<text x="56" y="394" font-size="10.5" fill="#c4ccda">no quiescence wait, no crash exception, no alert redirect</text>
+<rect x="520" y="350" width="260" height="70" rx="8" fill="#1d2330" stroke="#5ad1a0"/>
+<text x="536" y="373" font-size="11.5" fill="#5ad1a0" font-weight="600">set: all three apply</text>
+<text x="536" y="394" font-size="10.5" fill="#c4ccda">FBSession.m lines 353-378</text>
+</g></svg>
+
+<h2 id="what-the-prs-own-test-measured">What the PR's own test measured</h2>
+
+<p>The PR includes an end-to-end run against <code>appium-xcuitest-driver</code> (Appium 3.8.0, UIKitCatalog app, <code>appium:autoLaunch: false</code>, then <code>mobile: launchApp</code>, then two taps that each open a new screen followed immediately by an element lookup on it, three runs each way). Without the flag, WebDriverAgent logged "Quiescence checks are disabled for &hellip;" eight times per run, and the lookup right after the second tap failed in every run; the launched app also kept running after the session ended. With <code>asAppUnderTest: true</code>, it logged "set as the application under test" once, then "Waiting up to 10s until &hellip; is in idle state" ten times per run, every lookup succeeded, and after the test killed the app with <code>simctl terminate</code> WebDriverAgent correctly reported it "not running, possibly crashed."</p>
+
+<svg viewBox="0 0 760 380" style="width:100%;height:auto" role="img" aria-label="Bar chart of the PR's own three-runs-each validation. Without the asAppUnderTest flag: 8 quiescence-disabled log lines per run, 3 of 3 post-tap lookups failed, 0 quiescence-wait log lines per run. With the flag: 0 quiescence-disabled log lines, 0 of 3 lookups failed, 10 quiescence-wait log lines per run.">
+<rect x="0" y="0" width="760" height="380" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Without the flag vs with it, 3 runs each (PR #1289's own validation)</text>
+<rect x="70" y="38" width="12" height="12" fill="#f2a65a"/><text x="88" y="48" font-size="11" fill="#c4ccda">without asAppUnderTest</text>
+<rect x="300" y="38" width="12" height="12" fill="#5ad1a0"/><text x="318" y="48" font-size="11" fill="#c4ccda">with asAppUnderTest:true</text>
+<line x1="70" y1="340" x2="740" y2="340" stroke="#2a3140"/><text x="62" y="344" font-size="10" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="70" y1="280" x2="740" y2="280" stroke="#2a3140"/><text x="62" y="284" font-size="10" fill="#c4ccda" text-anchor="end">2</text>
+<line x1="70" y1="220" x2="740" y2="220" stroke="#2a3140"/><text x="62" y="224" font-size="10" fill="#c4ccda" text-anchor="end">4</text>
+<line x1="70" y1="160" x2="740" y2="160" stroke="#2a3140"/><text x="62" y="164" font-size="10" fill="#c4ccda" text-anchor="end">6</text>
+<line x1="70" y1="100" x2="740" y2="100" stroke="#2a3140"/><text x="62" y="104" font-size="10" fill="#c4ccda" text-anchor="end">8</text>
+<line x1="70" y1="40" x2="740" y2="40" stroke="#2a3140"/><text x="62" y="44" font-size="10" fill="#c4ccda" text-anchor="end">10</text>
+<rect x="103" y="100" width="31" height="240" fill="#f2a65a"/><text x="118.5" y="94" font-size="10.5" fill="#f2a65a" text-anchor="middle">8</text>
+<rect x="138" y="340" width="31" height="0" fill="#5ad1a0"/><text x="153.5" y="334" font-size="10.5" fill="#5ad1a0" text-anchor="middle">0</text>
+<text x="136" y="358" font-size="11" fill="#c4ccda" text-anchor="middle">"quiescence disabled" logs / run</text>
+<rect x="305" y="250" width="31" height="90" fill="#f2a65a"/><text x="320.5" y="244" font-size="10.5" fill="#f2a65a" text-anchor="middle">3</text>
+<rect x="340" y="340" width="31" height="0" fill="#5ad1a0"/><text x="355.5" y="334" font-size="10.5" fill="#5ad1a0" text-anchor="middle">0</text>
+<text x="338" y="358" font-size="11" fill="#c4ccda" text-anchor="middle">post-tap lookups failed, of 3 runs</text>
+<rect x="507" y="340" width="31" height="0" fill="#f2a65a"/><text x="522.5" y="334" font-size="10.5" fill="#f2a65a" text-anchor="middle">0</text>
+<rect x="542" y="40" width="31" height="300" fill="#5ad1a0"/><text x="557.5" y="34" font-size="10.5" fill="#5ad1a0" text-anchor="middle">10</text>
+<text x="540" y="358" font-size="11" fill="#c4ccda" text-anchor="middle">"quiescence wait" logs / run</text>
+<text x="20" y="376" font-size="10" fill="#c4ccda">Source: github.com/appium/WebDriverAgent PR #1289 description, "Validation" section, read 13 October 2026.</text>
+</g></svg>
+
+<h2 id="where-phoneshell-and-iphone-use-sit">Where phoneshell and iPhone Use sit</h2>
+
+<p>phoneshell's <code>WDAClient.create_session()</code> is normally called with no <code>bundleId</code> at all: "Passing no bundleId means WDA attaches to whatever is on screen instead of launching something, which is what we want for a phone the human also uses" (<code>phoneshell/wda/client.py</code>). Its <code>open_app()</code> then tries three calls in order, <code>launch_unattached</code>, <code>activate_app</code>, <code>launch_app</code>, polling <code>/wda/activeAppInfo</code> for up to four seconds after each before moving to the next (<code>phoneshell/actions.py:860-872</code>). A comment at that exact spot: "launchUnattached first: it is session-free, so it cannot make WDA switch its app-under-test, which is what used to bounce the phone back to the home screen a couple of seconds after every launch." That is phoneshell's own authors describing a symptom consistent with the gap PR #1289 documents, found and worked around by avoiding the endpoint rather than by a flag that did not exist yet. <code>launch_app()</code> is still reached when the first two calls fail to bring the app forward, and it still does not send <code>asAppUnderTest</code>: that parameter is not in <code>WDAClient.launch_app()</code>'s signature at all.</p>
+
+<p>iPhone Use (<a href="https://github.com/zhongerxin/iPhone-use">github.com/zhongerxin/iPhone-use</a>, created 6 October 2026, MIT licensed, 3,582 stars as of this writing) takes a narrower path to the same place. Its session is created the same way, no <code>bundleId</code> in <code>alwaysMatch</code> (<code>server/wda_client.py:194-196</code>), and its <code>pua_launch_app</code> tool opens apps with exactly one call: <code>self.post("/wda/apps/activate", {"bundleId": bundle_id}, timeout=45)</code> (<code>server/wda_controller.py:594-603</code>). No fallback, no <code>/wda/apps/launch</code> at all. Its foreground check, like phoneshell's, polls the session-free <code>/wda/activeAppInfo</code> (<code>server/wda_controller.py:227-232</code>) rather than asking WebDriverAgent's session for its <code>activeApplication</code>.</p>
+
+<table>
+  <thead><tr><th>Tool</th><th>Session bundleId at creation</th><th>App-open call(s) actually used</th><th>Ever sets testedApplication</th><th>Foreground check relied on</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>phoneshell (this repo)</td><td>none, attaches to foreground</td><td>launchUnattached &rarr; activate &rarr; launch, in order</td><td>only via the 3rd, last-resort call, and no asAppUnderTest sent</td><td>own app_state() polling + activeAppInfo</td><td>phoneshell/wda/client.py; actions.py:860-872</td></tr>
+    <tr><td>iPhone Use</td><td>none</td><td>activate only</td><td>never</td><td>own active_app() over activeAppInfo</td><td>server/wda_client.py:194; wda_controller.py:227,594-603</td></tr>
+    <tr><td>appium-xcuitest-driver fixture (PR #1289's own test)</td><td>none (autoLaunch:false)</td><td>launch, via mobile:launchApp</td><td>not before 16.15.0; yes if the caller opts in now</td><td>WDA's own activeApplication/testedApplication</td><td>github.com/appium/WebDriverAgent PR #1289</td></tr>
+  </tbody>
+</table>
+
+<h2 id="what-it-means-for-anyone-driving-a-phone-through-wda">What it means for anyone driving a phone through WDA</h2>
+
+<ul>
+  <li>Reading WebDriverAgent's release notes for your own tool means checking which of the three app-open endpoints it calls, not just whether a version number moved. 16.15.0 is a real fix, and it is irrelevant to any tool that never reaches <code>/wda/apps/launch</code>.</li>
+  <li>Avoiding an endpoint is not the same as understanding why it broke. phoneshell's comment names the symptom, bouncing back to the home screen, that matches what PR #1289 explains mechanically; neither we nor the comment's author confirmed the two are the identical root cause rather than two WDA behaviors with the same visible effect. We are stating the match, not the proof.</li>
+  <li>A tool that polls its own foreground state (<code>/wda/activeAppInfo</code>, session-free) instead of trusting WebDriverAgent's <code>activeApplication</code> getter does not need <code>testedApplication</code> to be right. Both phoneshell and iPhone Use made that choice independently.</li>
+  <li>phoneshell's last-resort <code>launch_app()</code> call is the one path in its own fallback chain that is exposed to the pre-16.15.0 gap today, because it still does not send the new flag. It is reached only when the two cheaper calls both fail to bring the app forward within four seconds each, which our own run logs do not currently count separately from a successful <code>activate</code>.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># WebDriverAgent's own release history and the fix
+curl -s https://api.github.com/repos/appium/WebDriverAgent/releases?per_page=10
+curl -s https://api.github.com/repos/appium/WebDriverAgent/pulls/1289
+git clone --depth 1 --branch v16.15.0 https://github.com/appium/WebDriverAgent.git
+grep -n "activateApplicationWithBundleId" -A6 WebDriverAgent/WebDriverAgentLib/Routing/FBSession.m
+grep -n "withoutSession" -B2 WebDriverAgent/WebDriverAgentLib/Commands/FBCustomCommands.m | grep -i launchunattached
+
+# phoneshell: the escalating fallback and its one unprotected last resort
+grep -n "launch_unattached, self.wda.activate_app, self.wda.launch_app" phoneshell/actions.py
+sed -n '376,392p' phoneshell/wda/client.py   # launch_app() has no asAppUnderTest parameter
+
+# iPhone Use: the session it creates and the one call its launch tool makes
+curl -s https://raw.githubusercontent.com/zhongerxin/iPhone-use/main/server/wda_client.py | sed -n '188,200p'
+curl -s https://raw.githubusercontent.com/zhongerxin/iPhone-use/main/server/wda_controller.py | grep -n "apps/activate\|apps/launch"</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim phoneshell's three-call fallback keeps its risky path, <code>launch_app()</code> without <code>asAppUnderTest</code>, as a rare last resort rather than the common case. That is wrong if <code>launchUnattached</code> or <code>activate</code> fail to bring an app forward often enough that <code>launch_app()</code> fires on a meaningful fraction of real runs; nothing in this repo currently logs which of the three calls succeeded. By 31 December 2026 we expect <code>open_app()</code> to log which attempt won, and, separately, for <code>WDAClient.launch_app()</code> to still not expose <code>asAppUnderTest</code>, since no open issue in this repo references it today. Both are checkable by grepping <code>runtime/logs</code> and <code>phoneshell/wda/client.py</code> on that date.</p>
+
+<h2 id="sources">Sources</h2>
+
+<ul>
+  <li>Appium project, "<a href="https://github.com/appium/WebDriverAgent/pull/1289">feat: add asAppUnderTest flag to /wda/apps/launch</a>", PR #1289, merged 12 October 2026; issue <a href="https://github.com/appium/appium/issues/22889">appium/appium#22889</a>; driver-side <a href="https://github.com/appium/appium-xcuitest-driver/pull/3004">appium-xcuitest-driver#3004</a>.</li>
+  <li>Appium project, <a href="https://github.com/appium/WebDriverAgent/releases">WebDriverAgent releases</a> and <a href="https://registry.npmjs.org/appium-webdriveragent">npm version history</a>, read 13 October 2026.</li>
+  <li>zhongerxin, <a href="https://github.com/zhongerxin/iPhone-use">iPhone Use</a>, created 6 October 2026, MIT license, <code>server/wda_client.py</code> and <code>server/wda_controller.py</code>, read 13 October 2026.</li>
+  <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/wda/client.py</code>, <code>phoneshell/actions.py</code>, read 13 October 2026.</li>
+  <li>Blolabel, "<a href="https://blolabel.ai/blog/idle-check-never-reached-webkit/">WebDriverAgent 16.14.1 stops sending its idle check to WebKit</a>", 7 October 2026.</li>
+</ul>
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>

@@ -41,6 +41,14 @@
 <div class="wrap">
   <ul class="postlist" id="posts">
   <!-- POSTS:START -->
+  <li><a class="row" href="/blog/open-app-tries-three-paths-before-launch/">
+    <span class="when">13 October 2026</span>
+    <span>
+      <h3>WebDriverAgent 16.15.0 fixes apps bouncing back after launch; phoneshell's open_app already works around the same symptom by never calling it</h3>
+      <p>WebDriverAgent 16.15.0 (12 October 2026, PR appium/WebDriverAgent#1289) adds an asAppUnderTest flag because an app launched without it gets no quiescence wait, crash detection or alert redirect; the PR's own test found 3 of 3 post-launch lookups failing without the flag and 0 of 3 failing with it. phoneshell's open_app() already tries launchUnattached and activate before ever calling the endpoint the fix touches, and a code comment names the exact symptom this was built to dodge.</p>
+      <span class="meta"><span class="kind analysis">analysis</span><span>9 min read</span></span>
+    </span>
+  </a></li>
   <li><a class="row" href="/blog/swapped-instructions-pass-device-checks/">
     <span class="when">09 October 2026</span>
     <span>
