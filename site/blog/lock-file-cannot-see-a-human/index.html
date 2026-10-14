@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>phoneshell polls every 0.8 seconds for a human taking the phone back; iPhone Use's one lock file cannot see one at all | Blolabel</title>
+<meta name="description" content="iOS has one interactive display, so an agent and its owner cannot both drive the phone at once. phoneshell's Coexistence watchdog samples the foreground app and a screenshot every 0.8 seconds and waits 6.0 seconds of quiet before resuming. The newly public iPhone Use (github.com/zhongerxin/iPhone-use) serializes its own calls with a single fcntl lock that only ever sees another AI process, never a person.">
+<link rel="canonical" href="https://blolabel.ai/blog/lock-file-cannot-see-a-human/">
+<meta property="og:title" content="phoneshell polls every 0.8 seconds for a human taking the phone back; iPhone Use's one lock file cannot see one at all | Blolabel">
+<meta property="og:description" content="iOS has one interactive display, so an agent and its owner cannot both drive the phone at once. phoneshell's Coexistence watchdog samples the foreground app and a screenshot every 0.8 seconds and waits 6.0 seconds of quiet before resuming. The newly public iPhone Use (github.com/zhongerxin/iPhone-use) serializes its own calls with a single fcntl lock that only ever sees another AI process, never a person.">
+<meta property="og:url" content="https://blolabel.ai/blog/lock-file-cannot-see-a-human/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/lock-file-cannot-see-a-human-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "phoneshell polls every 0.8 seconds for a human taking the phone back; iPhone Use's one lock file cannot see one at all", "description": "iOS has one interactive display, so an agent and its owner cannot both drive the phone at once. phoneshell's Coexistence watchdog samples the foreground app and a screenshot every 0.8 seconds and waits 6.0 seconds of quiet before resuming. The newly public iPhone Use (github.com/zhongerxin/iPhone-use) serializes its own calls with a single fcntl lock that only ever sees another AI process, never a person.", "datePublished": "2026-10-13", "dateModified": "2026-10-13", "url": "https://blolabel.ai/blog/lock-file-cannot-see-a-human/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/lock-file-cannot-see-a-human/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/lock-file-cannot-see-a-human-hero.png", "citation": ["https://github.com/Blomega/phoneshell", "https://github.com/zhongerxin/iPhone-use"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Why does an iPhone agent need to detect its human owner at all?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "iOS 26 has one interactive display and one digitizer, verified from the SDK headers: UIWindowScene.h declares only a non-interactive external-display role, and interactive external displays were deprecated in iOS 16. An agent that shares a phone with the person who owns it cannot run in the background in any literal sense; it has to notice when that person picks the phone up and get out of the way."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How does phoneshell detect a human taking the phone back?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "A background thread in phoneshell/coexist.py samples the foreground app and a screenshot every 0.8 seconds. Anything that changes outside a window the agent explicitly claimed, either the foreground app or a screenshot differing by more than 3% (visual_difference > 0.03), is read as a human. The agent then waits for 6.0 seconds of continued quiet (the grace period) before resuming, up to a 120-second timeout."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does iPhone Use have an equivalent?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. iPhone Use (github.com/zhongerxin/iPhone-use) holds a single fcntl file lock, operation.lock, only while one of its own tool calls is running, and returns a device_busy error to a second concurrent call. Nothing runs while no call is in flight. Its only drift check, a comparison against a cached observation id, fires reactively on the agent's next action and only if that action happens to reference stale coordinates; it has no concept of a human owner."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind comparison">comparison</span>
+    <time datetime="2026-10-13">13 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>phoneshell polls every 0.8 seconds for a human taking the phone back; iPhone Use's one lock file cannot see one at all</h1>
+  <p class="standfirst">Two agents, two different answers to the same fact: an iPhone has one screen and one owner. One watches for that owner continuously. The other only knows another of its own processes exists.</p>
+
+<p>iOS 26 has one interactive display and one digitizer, so a phone's owner and an agent driving it cannot act at once. phoneshell's <code>Coexistence</code> watchdog (<code>phoneshell/coexist.py</code>) runs a background thread that samples the foreground app and a screenshot every 0.8 seconds, reads a change outside its own claimed window as the owner picking the phone up, and waits 6.0 seconds of continued quiet before resuming. The newly public iPhone Use (<a href="https://github.com/zhongerxin/iPhone-use">github.com/zhongerxin/iPhone-use</a>, created 6 October 2026) solves a narrower problem: a single <code>fcntl</code> file lock stops two of its own AI callers from acting at once. Nothing in it runs while no call is in flight, so a person is invisible to it until the agent's next action happens to reference stale coordinates.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/lock-file-cannot-see-a-human-hero.png" alt="Abstract technical illustration on a dark grid: a pulsing radar-like sweep continuously circling a small glowing device icon on the left, beside a single static closed padlock icon on the right with no motion around it, cool blues with one amber accent" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="the-hardware-fact-neither-tool-can-get-around">The hardware fact neither tool can get around</h2>
+
+<p>phoneshell's own code comment states the constraint and its source: "verified from the iOS 26.4 SDK headers, not assumed: UIWindowScene.h declares only UIWindowSceneSessionRoleExternalDisplayNonInteractive, and the interactive external-display role was deprecated in iOS 16." The device enumerates seven display slots, but everything past the built-in one mirrors and cannot be touched. So "running in the background" can only mean one thing for a phone its owner still uses day to day: the agent gets out of the way the instant a person picks the phone up, and resumes where it left off once they put it down. That is a scheduling problem, and the two tools schedule it differently because they are built for different situations: phoneshell for Sam Shamsan's own iPhone, which he also uses; iPhone Use for a developer's iPhone wired to a Mac for the length of a session.</p>
+
+<h2 id="two-mechanisms-one-continuous-one-reactive">Two mechanisms: one continuous, one reactive</h2>
+
+<p>phoneshell's watchdog runs on its own thread (<code>Coexistence._run</code>), sampling every <code>poll</code> seconds regardless of whether the agent is doing anything. Each sample checks two cheap signals, measured on the project's own rig: <code>/wda/activeAppInfo</code> at about 100ms and <code>/screenshot</code> at 90 to 130ms; the full accessibility tree at roughly 2.2 seconds is named in the same comment as "far too slow to poll, never used here." The agent brackets its own actions with <code>claim(seconds=2.5)</code>, so a change inside that window is attributed to itself, not the owner. Outside a claim, a foreground-app change or a screenshot differing by more than 3% (<code>visual_difference(...) > 0.03</code>) sets <code>Presence.human_active</code>. <code>wait_for_turn()</code> then blocks new agent actions until the owner has been inactive for <code>grace</code>, 6.0 seconds, or until a 120-second timeout gives up.</p>
+
+<p>iPhone Use has no background thread and no polling loop at all. Every tool call passes through <code>_dispatch()</code> in <code>server/iphone_use.py</code>, which opens <code>operation.lock</code> under the session's state directory and takes an exclusive, non-blocking <code>fcntl</code> lock. A second call that arrives while the first is still running gets <code>BlockingIOError</code>, turned into <code>WDAError("device_busy", "Another iPhone Use operation is running. Wait for it to finish before continuing; no action was executed.")</code>. That is the entire concurrency model: it serializes this tool's own callers, for example two Codex MCP processes sharing one runtime, and says nothing about what else might be touching the phone. The nearest thing to a presence check is <code>snapshot()</code> and <code>guard()</code> in <code>wda_controller.py</code>, which compare the cached <code>app</code> and <code>viewport</code> of a specific earlier observation id against a fresh read, and raise <code>foreground_changed</code> or <code>viewport_changed</code> if they differ. That check only runs when a later tool call supplies that observation id, which happens only when the agent is about to act on remembered coordinates; it never runs on its own, and it has no owner, grace period or wait.</p>
+
+<svg viewBox="0 0 820 400" style="width:100%;height:auto" role="img" aria-label="Diagram of phoneshell's Coexistence watchdog loop. A background thread samples the foreground app and a screenshot every 0.8 seconds. Inside a claimed window the sample becomes the new baseline. Outside a claimed window, a changed foreground app or a screenshot differing by more than 3 percent sets human_active true and records the reason. wait_for_turn then blocks new agent actions until the phone has been quiet for 6.0 seconds, up to a 120 second timeout.">
+<rect x="0" y="0" width="820" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">phoneshell's Coexistence watchdog, one cycle every 0.8s</text>
+<rect x="20" y="46" width="200" height="90" rx="10" fill="#1d2330" stroke="#6f7b90"/>
+<text x="34" y="68" font-size="12" font-weight="600">_sample()</text>
+<text x="34" y="88" font-size="10.5" fill="#c4ccda">activeAppInfo ~100ms</text>
+<text x="34" y="106" font-size="10.5" fill="#c4ccda">screenshot 90-130ms</text>
+<rect x="260" y="46" width="220" height="90" rx="10" fill="#1d2330" stroke="#6f7b90"/>
+<text x="274" y="68" font-size="12" font-weight="600">inside self.ours (claim)?</text>
+<text x="274" y="92" font-size="10.5" fill="#5ad1a0">yes: this sample becomes</text>
+<text x="274" y="110" font-size="10.5" fill="#5ad1a0">the new baseline, not a signal</text>
+<rect x="540" y="46" width="260" height="110" rx="10" fill="#1d2330" stroke="#f2a65a"/>
+<text x="554" y="68" font-size="12" font-weight="600">no: app changed, or</text>
+<text x="554" y="86" font-size="11" fill="#c4ccda">visual_difference &gt; 0.03</text>
+<text x="554" y="108" font-size="10.5" fill="#f2a65a">Presence.human_active = True</text>
+<text x="554" y="126" font-size="10.5" fill="#f2a65a">last_human_at = now</text>
+<text x="554" y="144" font-size="10.5" fill="#f2a65a">last_reason recorded</text>
+<rect x="540" y="200" width="260" height="90" rx="10" fill="#262d3d"/>
+<text x="554" y="222" font-size="12" font-weight="600">wait_for_turn(timeout=120)</text>
+<text x="554" y="244" font-size="10.5" fill="#c4ccda">blocks new agent actions</text>
+<text x="554" y="262" font-size="10.5" fill="#c4ccda">until 6.0s quiet, or gives up</text>
+<rect x="260" y="200" width="220" height="70" rx="10" fill="#262d3d"/>
+<text x="274" y="222" font-size="12" font-weight="600">yields += 1</text>
+<text x="274" y="242" font-size="10.5" fill="#c4ccda">"the phone is free again,</text>
+<text x="274" y="258" font-size="10.5" fill="#c4ccda">carrying on"</text>
+<line x1="120" y1="136" x2="370" y2="136" stroke="#6f7b90" stroke-width="1.5"/>
+<line x1="480" y1="100" x2="540" y2="100" stroke="#6f7b90" stroke-width="1.5"/>
+<line x1="670" y1="156" x2="670" y2="200" stroke="#6f7b90" stroke-width="1.5"/>
+<line x1="540" y1="245" x2="480" y2="235" stroke="#6f7b90" stroke-width="1.5"/>
+<text x="20" y="330" font-size="10.5" fill="#c4ccda">This loop runs on its own thread the entire time the bridge is up, whether or not an agent action is pending.</text>
+<text x="20" y="350" font-size="10.5" fill="#c4ccda">iPhone Use has no equivalent: its only check runs inside a tool call, and only when that call supplies an observation id.</text>
+<text x="20" y="380" font-size="10" fill="#8893a8">Source: phoneshell/coexist.py, read 13 October 2026.</text>
+</g></svg>
+
+<table>
+  <thead><tr><th>Signal</th><th>phoneshell (Coexistence)</th><th>iPhone Use (operation.lock)</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>Runs while idle, no call pending</td><td>yes, background thread, every 0.8s</td><td>no, the lock exists only during a call</td><td>coexist.py start()/_run(); iphone_use.py _dispatch()</td></tr>
+    <tr><td>Detects the owner mid-task</td><td>yes: unclaimed app change or screenshot diff &gt; 3%</td><td>no mechanism; absence confirmed by reading the dispatch path</td><td>coexist.py _sample()</td></tr>
+    <tr><td>What "busy" means</td><td>the phone is in the owner's hands</td><td>another of this tool's own processes is mid-call</td><td>Presence.human_active vs device_busy</td></tr>
+    <tr><td>Wait before resuming</td><td>6.0s of continued quiet, 120s timeout</td><td>none; the second caller errors immediately</td><td>coexist.py grace=6.0, wait_for_turn(); iphone_use.py BlockingIOError path</td></tr>
+    <tr><td>Reactive drift check tied to one action</td><td>not needed; the watchdog already ran</td><td>yes: foreground_changed / viewport_changed, only if the next call cites a stale observation id</td><td>wda_controller.py snapshot(), guard()</td></tr>
+  </tbody>
+</table>
+
+<svg viewBox="0 0 760 380" style="width:100%;height:auto" role="img" aria-label="Bar chart of phoneshell's four Coexistence timing constants against iPhone Use's equivalents, which are all zero because it has no such constants. Poll interval 0.8 seconds vs none. Settle after the agent's own action 1.2 seconds vs none. Claim window 2.5 seconds vs none. Grace period before resuming 6.0 seconds vs none.">
+<rect x="0" y="0" width="760" height="380" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">phoneshell's own coexistence timing constants, seconds</text>
+<rect x="70" y="38" width="12" height="12" fill="#5ad1a0"/><text x="88" y="48" font-size="11" fill="#c4ccda">phoneshell (coexist.py)</text>
+<rect x="300" y="38" width="12" height="12" fill="#f2a65a"/><text x="318" y="48" font-size="11" fill="#c4ccda">iPhone Use: no equivalent</text>
+<line x1="70" y1="340" x2="740" y2="340" stroke="#2a3140"/><text x="62" y="344" font-size="10" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="70" y1="290" x2="740" y2="290" stroke="#2a3140"/><text x="62" y="294" font-size="10" fill="#c4ccda" text-anchor="end">1</text>
+<line x1="70" y1="240" x2="740" y2="240" stroke="#2a3140"/><text x="62" y="244" font-size="10" fill="#c4ccda" text-anchor="end">2</text>
+<line x1="70" y1="190" x2="740" y2="190" stroke="#2a3140"/><text x="62" y="194" font-size="10" fill="#c4ccda" text-anchor="end">3</text>
+<line x1="70" y1="140" x2="740" y2="140" stroke="#2a3140"/><text x="62" y="144" font-size="10" fill="#c4ccda" text-anchor="end">4</text>
+<line x1="70" y1="90" x2="740" y2="90" stroke="#2a3140"/><text x="62" y="94" font-size="10" fill="#c4ccda" text-anchor="end">5</text>
+<line x1="70" y1="40" x2="740" y2="40" stroke="#2a3140"/><text x="62" y="44" font-size="10" fill="#c4ccda" text-anchor="end">6</text>
+<rect x="100" y="300" width="28" height="40" fill="#5ad1a0"/><text x="114" y="294" font-size="10.5" fill="#5ad1a0" text-anchor="middle">0.8</text>
+<rect x="132" y="340" width="28" height="0" fill="#f2a65a"/><text x="146" y="334" font-size="10.5" fill="#f2a65a" text-anchor="middle">0</text>
+<text x="130" y="358" font-size="11" fill="#c4ccda" text-anchor="middle">poll interval</text>
+<rect x="260" y="280" width="28" height="60" fill="#5ad1a0"/><text x="274" y="274" font-size="10.5" fill="#5ad1a0" text-anchor="middle">1.2</text>
+<rect x="292" y="340" width="28" height="0" fill="#f2a65a"/><text x="306" y="334" font-size="10.5" fill="#f2a65a" text-anchor="middle">0</text>
+<text x="290" y="358" font-size="11" fill="#c4ccda" text-anchor="middle">settle after own action</text>
+<rect x="420" y="215" width="28" height="125" fill="#5ad1a0"/><text x="434" y="209" font-size="10.5" fill="#5ad1a0" text-anchor="middle">2.5</text>
+<rect x="452" y="340" width="28" height="0" fill="#f2a65a"/><text x="466" y="334" font-size="10.5" fill="#f2a65a" text-anchor="middle">0</text>
+<text x="450" y="358" font-size="11" fill="#c4ccda" text-anchor="middle">claim window</text>
+<rect x="580" y="40" width="28" height="300" fill="#5ad1a0"/><text x="594" y="34" font-size="10.5" fill="#5ad1a0" text-anchor="middle">6.0</text>
+<rect x="612" y="340" width="28" height="0" fill="#f2a65a"/><text x="626" y="334" font-size="10.5" fill="#f2a65a" text-anchor="middle">0</text>
+<text x="610" y="358" font-size="11" fill="#c4ccda" text-anchor="middle">grace before resuming</text>
+<text x="20" y="376" font-size="10" fill="#8893a8">Source: phoneshell/coexist.py defaults, read 13 October 2026. iPhone Use has no comparable constant in server/.</text>
+</g></svg>
+
+<h2 id="what-it-means-for-anyone-building-a-phone-agent">What it means for anyone building a phone agent</h2>
+
+<ul>
+  <li>Whether a tool needs a continuous presence watchdog depends on who else has physical access to the device, not on how capable the agent is. A phone wired to a Mac for one development session has no owner competing for the screen; a daily-driver iPhone always does.</li>
+  <li>A lock file solves a real problem, two of your own processes racing, but it is not a substitute for presence detection and was not built to be one. Calling <code>device_busy</code> a safety mechanism against a human picking up the phone would be a category error; it only ever sees another instance of itself.</li>
+  <li>phoneshell's reason string (<code>last_reason</code>, e.g. "the foreground app changed to Messages") is cheap because the two signals it polls are cheap: about 100ms and 90 to 130ms. A watchdog built on the accessibility tree (~2.2s per read, per the same file's own comment) could not run at 0.8-second intervals without competing with the agent for the same channel.</li>
+  <li>iPhone Use's <code>foreground_changed</code> / <code>viewport_changed</code> checks still catch a specific failure mode well: a coordinate computed from an old screenshot being used after the phone rotated or an app switched. That is a different problem than noticing a person is standing there, and solving it does not require solving the other one.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># phoneshell's watchdog: constants, the sample loop, and the wait
+sed -n '1,20p' phoneshell/coexist.py        # the SDK-header justification and measured costs
+grep -n "poll: float = 0.8\|grace: float = 6.0\|settle_after_action: float = 1.2" phoneshell/coexist.py
+grep -n "def claim\|def wait_for_turn\|def _sample" -A8 phoneshell/coexist.py
+
+# iPhone Use: the lock, and the only drift check it has
+curl -s https://raw.githubusercontent.com/zhongerxin/iPhone-use/main/server/iphone_use.py | grep -n "operation.lock\|device_busy\|LOCK_EX"
+curl -s https://raw.githubusercontent.com/zhongerxin/iPhone-use/main/server/wda_controller.py | grep -n "def snapshot\|def guard\b" -A8</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim iPhone Use has no mechanism that notices a person touching the phone while no tool call is running. That is wrong if any file in the repo starts a background thread, a timer, or a polling loop outside <code>_dispatch()</code>; our read of <code>server/</code> on 13 October 2026 found none. It is also wrong if a future release adds one: iPhone Use shipped five point releases between 9 and 13 October 2026, so the surface area is changing fast. We will treat a <code>CHANGELOG.md</code> entry mentioning presence, ownership, or a background watcher, by 31 December 2026, as the signal that this comparison no longer holds.</p>
+
+<h2 id="sources">Sources</h2>
+
+<ul>
+  <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/coexist.py</code>, read 13 October 2026.</li>
+  <li>zhongerxin, <a href="https://github.com/zhongerxin/iPhone-use">iPhone Use</a>, created 6 October 2026, MIT license: <code>server/iphone_use.py</code>, <code>server/wda_controller.py</code>, read 13 October 2026.</li>
+  <li>Apple, iOS 26.4 SDK, <code>UIWindowScene.h</code>, cited via phoneshell/coexist.py's own docstring, read 13 October 2026.</li>
+</ul>
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
