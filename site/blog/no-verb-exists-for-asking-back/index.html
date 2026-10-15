@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AmbiBench's non-interactive agents score zero on ambiguous instructions; phoneshell can't ask back | Blolabel</title>
+<meta name="description" content="AmbiBench (arXiv:2602.11750) finds Task Success Rate falls to 0% for AutoGLM-9B and MobileAgentV2 on its most ambiguous mobile instruction tier, with Information Gain Rate as low as 2.4%. All 80 of phoneshell's tasks sit at the benchmark's most explicit tier, and nothing in its tool set lets an agent ask a clarifying question.">
+<link rel="canonical" href="https://blolabel.ai/blog/no-verb-exists-for-asking-back/">
+<meta property="og:title" content="AmbiBench's non-interactive agents score zero on ambiguous instructions; phoneshell can't ask back | Blolabel">
+<meta property="og:description" content="AmbiBench (arXiv:2602.11750) finds Task Success Rate falls to 0% for AutoGLM-9B and MobileAgentV2 on its most ambiguous mobile instruction tier, with Information Gain Rate as low as 2.4%. All 80 of phoneshell's tasks sit at the benchmark's most explicit tier, and nothing in its tool set lets an agent ask a clarifying question.">
+<meta property="og:url" content="https://blolabel.ai/blog/no-verb-exists-for-asking-back/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/no-verb-exists-for-asking-back-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "AmbiBench's non-interactive agents score zero on ambiguous instructions; phoneshell can't ask back", "description": "AmbiBench (arXiv:2602.11750) finds Task Success Rate falls to 0% for AutoGLM-9B and MobileAgentV2 on its most ambiguous mobile instruction tier, with Information Gain Rate as low as 2.4%. All 80 of phoneshell's tasks sit at the benchmark's most explicit tier, and nothing in its tool set lets an agent ask a clarifying question.", "datePublished": "2026-10-14", "dateModified": "2026-10-14", "url": "https://blolabel.ai/blog/no-verb-exists-for-asking-back/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/no-verb-exists-for-asking-back/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/no-verb-exists-for-asking-back-hero.png", "citation": ["https://arxiv.org/abs/2602.11750", "https://arxiv.org/html/2602.11750v1", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-14">14 October 2026</time>
+    <span>6 min read</span>
+  </div>
+  <h1>AmbiBench's non-interactive agents score zero on ambiguous instructions; phoneshell can&#x27;t ask back</h1>
+  <p class="standfirst">Two tested agents finish zero tasks on AmbiBench's most underspecified tier. phoneshell's 80 tasks all sit at the benchmark's most explicit tier instead, and its only confirmation gate checks for risk, never comprehension.</p>
+
+<p>On AmbiBench's most underspecified instruction tier, two of seven tested mobile agents finish zero tasks: AutoGLM-9B and MobileAgentV2 (GPT-4o) both score a Task Success Rate of 0% on Ambiguous-level instructions (Fudan University, arXiv:2602.11750, submitted 12 February 2026). The paper's own metric for whether an agent even tries to close that gap by asking, Information Gain Rate, is 2.4% for Qwen-3-VL-8B. phoneshell cannot be placed anywhere on this scale: every one of its 80 tasks is written at AmbiBench's most explicit tier, and nothing in its tool set lets an agent ask a clarifying question at all.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/no-verb-exists-for-asking-back-hero.png" alt="Abstract technical illustration of a one-way arrow pointing from a question mark toward a locked gate, with no return path drawn back to the question mark" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="what-ambibench-measured-and-when">What AmbiBench measured, and when</h2>
+
+<p>AmbiBench organises 240 ecologically valid tasks across 25 applications into four clarity tiers grounded in Cognitive Gap theory: Detailed, Standard, Incomplete, and Ambiguous. Its evaluator, MUSE, is an MLLM-as-judge system scoring three dimensions: Outcome (Requirement Coverage Rate, Task Success Rate), Execution (Key Step Hit Rate, Action Redundancy Rate, Error Termination Rate), and Interaction (Dialogue Compliance Rate, Information Gain Rate, the share of the task's information gap an agent's questions actually close). Seven agents were tested: UI-TARS-7B, AutoGLM-9B, Qwen-3-VL-8B, AppAgent and MobileAgentV2 (both GPT-4o), and two configurations of Fairy (GPT-4o paired with Gemini-3-Flash or with UI-TARS-7B).</p>
+
+<table>
+  <thead><tr><th>Agent</th><th>TSR (avg, all tiers)</th><th>ARR, invalid actions</th><th>IGR, gap closed by asking</th><th>DCR, valid clarifications</th></tr></thead>
+  <tbody>
+    <tr><td>UI-TARS-7B</td><td>21.7%</td><td>4.3%</td><td>12.0%</td><td>87.2%</td></tr>
+    <tr><td>AutoGLM-9B</td><td>35.4%</td><td>28.0%</td><td>not reported</td><td>not reported</td></tr>
+    <tr><td>Qwen-3-VL-8B</td><td>10.0%</td><td>53.5%</td><td>2.4%</td><td>88.9%</td></tr>
+    <tr><td>AppAgent (GPT-4o)</td><td>10.8%</td><td>36.9%</td><td>not reported</td><td>not reported</td></tr>
+    <tr><td>MobileAgentV2 (GPT-4o)</td><td>20.4%</td><td>1.3%</td><td>not reported</td><td>not reported</td></tr>
+    <tr><td>Fairy (GPT-4o + Gemini-3-Flash)</td><td>40.4%</td><td>2.0%</td><td>17.7%</td><td>73.7%</td></tr>
+    <tr><td>Fairy (GPT-4o + UI-TARS-7B)</td><td>29.2%</td><td>7.4%</td><td>6.7%</td><td>68.6%</td></tr>
+  </tbody>
+</table>
+
+<p>These are averages across all four tiers (Table 2 of the paper). The level-specific numbers are starker: AutoGLM reaches a 65.2% Task Success Rate on Detailed instructions but a 0% Task Success Rate on Ambiguous ones, with no interaction in between to recover. A mini-ablation on Fairy, restricted to Incomplete-tier tasks it had already solved, turned its interaction off: Task Success Rate fell from 100% to 0% and Requirement Coverage Rate fell to 23.8%. The paper's reading is that non-interactive agents do not fail by stopping, they fail by guessing: several keep a respectable Key Step Hit Rate on Ambiguous tasks while Task Success Rate sits at zero, meaning they execute a plausible-looking path toward the wrong, invented requirement.</p>
+
+<svg viewBox="0 0 760 340" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting AmbiBench's four instruction clarity tiers, Detailed, Standard, Incomplete and Ambiguous, where Task Success Rate for non-interactive agents collapses toward zero as clarity drops, against phoneshell's own 80 tasks, which are all written at the Detailed tier by construction, so the benchmark never exercises the regime where the paper's findings apply.">
+<rect x="0" y="0" width="760" height="340" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="12">
+<text x="20" y="26" font-size="14" font-weight="600">AmbiBench's four tiers, and where phoneshell's 80 tasks sit on them</text>
+<rect x="30" y="50" width="150" height="110" rx="8" fill="#1d2330" stroke="#5ad1a0"/>
+<text x="40" y="72" font-weight="600" fill="#5ad1a0">Detailed</text>
+<text x="40" y="92" font-size="10" fill="#c4ccda">complete,</text>
+<text x="40" y="106" font-size="10" fill="#c4ccda">unambiguous</text>
+<text x="40" y="128" font-size="10" fill="#5ad1a0">AutoGLM TSR 65.2%</text>
+<text x="40" y="144" font-size="11" fill="#f2a65a" font-weight="600">all 80 phoneshell</text>
+<text x="40" y="158" font-size="11" fill="#f2a65a" font-weight="600">tasks live here</text>
+<rect x="200" y="50" width="150" height="110" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+<text x="210" y="72" font-weight="600">Standard</text>
+<text x="210" y="128" font-size="10" fill="#c4ccda">no phoneshell task</text>
+<text x="210" y="144" font-size="10" fill="#c4ccda">reaches this tier</text>
+<rect x="370" y="50" width="150" height="110" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+<text x="380" y="72" font-weight="600">Incomplete</text>
+<text x="380" y="92" font-size="10" fill="#c4ccda">Fairy: 100% TSR</text>
+<text x="380" y="106" font-size="10" fill="#c4ccda">with asking,</text>
+<text x="380" y="120" font-size="10" fill="#c4ccda">0% without</text>
+<text x="380" y="144" font-size="10" fill="#c4ccda">no phoneshell task</text>
+<rect x="540" y="50" width="150" height="110" rx="8" fill="#1d2330" stroke="#f2a65a"/>
+<text x="550" y="72" font-weight="600" fill="#f2a65a">Ambiguous</text>
+<text x="550" y="92" font-size="10" fill="#f2a65a">AutoGLM TSR 0%</text>
+<text x="550" y="106" font-size="10" fill="#f2a65a">MobileAgentV2 0%</text>
+<text x="550" y="144" font-size="10" fill="#c4ccda">no phoneshell task</text>
+<text x="30" y="200" font-size="12" fill="#e9ecf2">Every phoneshell instruction names the app, the exact text or value, and the end state</text>
+<text x="30" y="218" font-size="12" fill="#e9ecf2">("add a new reminder called 'collect parcel'", "start a timer for 5 minutes"). None asks</text>
+<text x="30" y="236" font-size="12" fill="#e9ecf2">the agent to infer which app, which value, or which of several valid interpretations is meant.</text>
+<text x="30" y="266" font-size="12" fill="#f2a65a">So phoneshell's 55-of-58 leaderboard says nothing about the regime where this paper's</text>
+<text x="30" y="284" font-size="12" fill="#f2a65a">agents go to zero. It was never tested there, in either direction.</text>
+<text x="30" y="320" font-size="10" fill="#c4ccda">Sources: arXiv:2602.11750 Table 2 and body text; phoneshell environments/*.yaml instruction fields.</text>
+</g></svg>
+
+<h2 id="phoneshell-has-no-verb-for-this">phoneshell has a confirmation gate. It is not a clarification gate</h2>
+
+<p>phoneshell does have a mechanism that pauses and reports back to a human mid-task: <code>phone_tap</code> and <code>phone_macro_run</code> both accept a <code>confirmed</code> flag, and refuse to proceed the first time without it. But what triggers that refusal is <code>Guard.classify_tap</code> (<code>safety.py:33</code>), which runs the tapped element's visible label text through a list of regex patterns for words like "delete," "send," "pay," or "order," and returns <code>needs_confirmation</code> only when one matches. It has no concept of whether the agent correctly understood the instruction. A model that misread "collect parcel" as "collect package" and typed the wrong text would sail through this gate, because nothing about that action looks irreversible. AmbiBench's Dialogue Compliance Rate and Information Gain Rate measure a different event entirely: a model recognising that it does not have enough information and generating a genuine question, rather than guessing. <code>grep -rn "clarify\|ask_user\|needs_clarification" phoneshell/</code> returns nothing, because that verb does not exist in the tool set at all, under any name.</p>
+
+<svg viewBox="0 0 760 300" style="width:100%;height:auto" role="img" aria-label="Decision-flow diagram of phoneshell's one pause-and-ask mechanism. phone_tap classifies the tapped element's label text against a list of risk regex patterns for words like delete, send, pay or order. If one matches, the call returns NOT DONE and asks a human to confirm. If none matches, the tap proceeds regardless of whether the agent understood the instruction correctly. There is no branch anywhere that asks whether the instruction itself was ambiguous or underspecified; that branch does not exist in the code.">
+<rect x="0" y="0" width="760" height="300" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="12">
+<text x="20" y="26" font-size="14" font-weight="600">phoneshell's only pause-and-ask branch, traced from phone_tap</text>
+<rect x="30" y="50" width="200" height="60" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+<text x="42" y="74" font-weight="600">Agent calls phone_tap(id)</text>
+<text x="42" y="92" font-size="10" fill="#c4ccda">mcp_server.py:263</text>
+<text x="240" y="85" fill="#6f7b90">&#8594;</text>
+<rect x="270" y="50" width="220" height="60" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+<text x="282" y="74" font-weight="600">Guard.classify_tap(element)</text>
+<text x="282" y="92" font-size="10" fill="#c4ccda">safety.py:33, regex on label text</text>
+<text x="500" y="85" fill="#6f7b90">&#8594;</text>
+<rect x="530" y="50" width="200" height="60" rx="8" fill="#1d2330" stroke="#f2a65a"/>
+<text x="542" y="74" font-weight="600" fill="#f2a65a">Pattern matched?</text>
+<text x="542" y="92" font-size="10" fill="#c4ccda">"delete", "send", "pay", "order" ...</text>
+<rect x="420" y="140" width="200" height="70" rx="8" fill="#1d2330" stroke="#5ad1a0"/>
+<text x="432" y="164" fill="#5ad1a0" font-weight="600">YES: NOT DONE</text>
+<text x="432" y="182" font-size="10" fill="#c4ccda">ask the human, wait for</text>
+<text x="432" y="196" font-size="10" fill="#c4ccda">confirmed=true</text>
+<rect x="140" y="140" width="200" height="70" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+<text x="152" y="164" font-weight="600">NO: tap proceeds</text>
+<text x="152" y="182" font-size="10" fill="#c4ccda">whether or not the agent</text>
+<text x="152" y="196" font-size="10" fill="#c4ccda">understood the instruction</text>
+<text x="30" y="250" font-size="12" fill="#f2a65a">No third branch exists for "the instruction itself might mean two different things."</text>
+<text x="30" y="270" font-size="12" fill="#f2a65a">AmbiBench's Dialogue Compliance Rate and Information Gain Rate measure agents taking</text>
+<text x="30" y="286" font-size="12" fill="#f2a65a">exactly that branch; phoneshell's tool set has nowhere for an agent to take it.</text>
+</g></svg>
+
+<h2 id="what-it-means">What it means for anyone benchmarking a phone agent</h2>
+
+<ul>
+  <li>A high pass rate on a Detailed-only task suite says nothing about what happens when an instruction is merely Standard, let alone Incomplete or Ambiguous. AmbiBench's own data shows the drop is not gradual for several agents: Task Success Rate can hold in the 60s on Detailed and hit zero on Ambiguous with nothing in between.</li>
+  <li>A safety confirmation gate and a comprehension clarification gate are not the same mechanism and do not substitute for each other. phoneshell has shipped the first; the paper is measuring agents that at least attempt the second.</li>
+  <li>If you want phoneshell's leaderboard to say anything about the Ambiguous tier, the task files need instructions that genuinely underspecify something (which contact, which of three identically-named reminders, which of two installed timer apps), and the tool set needs a verb an agent can call to ask back, with a <code>needs_confirmation</code>-style refusal path distinct from the safety one.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<ul>
+  <li>The paper's Table 2 and level-specific Task Success Rate figures: <code>https://arxiv.org/abs/2602.11750</code>, Fudan University, submitted 12 February 2026.</li>
+  <li>No ambiguity-resolution verb exists: <code>grep -rn "clarify\|ask_user\|needs_clarification" phoneshell/</code> returns nothing.</li>
+  <li>The confirmation gate is risk-only: <code>sed -n '1,40p' phoneshell/safety.py</code>, specifically <code>classify_tap</code>'s regex match against <code>cfg.safety.confirm_patterns</code>.</li>
+  <li>Instruction completeness: <code>grep "^instruction:" environments/*.yaml</code> across all 80 files; every one names the app, the target value, and the end state explicitly.</li>
+</ul>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>The claim is that phoneshell's agent will never ask a clarifying question because it has no way to, not because its current tasks never need one. Test: write five new tasks that genuinely underspecify something a human would ask about (for example, three identically-titled reminders, "delete the one about the meeting"), and run them. If the agent asks a sensible clarifying question through any existing channel, that channel exists and this note is wrong about the tool set. We expect it to guess, pick one, and report success regardless of which one it picked. We will publish the five tasks and the transcripts, or say we did not run it, by 15 November 2026.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ol>
+      <li><a href="https://arxiv.org/abs/2602.11750">AmbiBench: Benchmarking Mobile GUI Agents Beyond One-Shot Instructions in the Wild, arXiv:2602.11750, Fudan University, submitted 12 February 2026</a></li>
+      <li><a href="https://arxiv.org/html/2602.11750v1">AmbiBench HTML full text, Table 2 and Section on the MUSE evaluation metrics</a></li>
+      <li><a href="https://github.com/Blomega/phoneshell">phoneshell source: safety.py (Guard.classify_tap), mcp_server.py (phone_tap, phone_macro_run), environments/*.yaml instruction fields (read 14 October 2026)</a></li>
+    </ol>
+  </section>
+
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
