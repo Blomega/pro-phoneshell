@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WebDriverAgent can hand a second app crash detection now; phoneshell's open_app never asks for it | Blolabel</title>
+<meta name="description" content="WebDriverAgent 16.15.0 (12 October 2026) added an opt-in flag so a later app launch can become the session's tracked application under test, gaining crash detection it would otherwise lack. phoneshell's two session-creation call sites never name a bundle id and its open_app never sets the flag, so WDA's crash signal, the one protection phoneshell does not already duplicate itself, is never claimed.">
+<link rel="canonical" href="https://blolabel.ai/blog/second-app-launch-skips-app-under-test/">
+<meta property="og:title" content="WebDriverAgent can hand a second app crash detection now; phoneshell's open_app never asks for it | Blolabel">
+<meta property="og:description" content="WebDriverAgent 16.15.0 (12 October 2026) added an opt-in flag so a later app launch can become the session's tracked application under test, gaining crash detection it would otherwise lack. phoneshell's two session-creation call sites never name a bundle id and its open_app never sets the flag, so WDA's crash signal, the one protection phoneshell does not already duplicate itself, is never claimed.">
+<meta property="og:url" content="https://blolabel.ai/blog/second-app-launch-skips-app-under-test/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/second-app-launch-skips-app-under-test-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "WebDriverAgent can hand a second app crash detection now; phoneshell's open_app never asks for it", "description": "WebDriverAgent 16.15.0 (12 October 2026) added an opt-in flag so a later app launch can become the session's tracked application under test, gaining crash detection it would otherwise lack. phoneshell's two session-creation call sites never name a bundle id and its open_app never sets the flag, so WDA's crash signal, the one protection phoneshell does not already duplicate itself, is never claimed.", "datePublished": "2026-10-14", "dateModified": "2026-10-14", "url": "https://blolabel.ai/blog/second-app-launch-skips-app-under-test/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/second-app-launch-skips-app-under-test/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/second-app-launch-skips-app-under-test-hero.png", "citation": ["https://github.com/appium/WebDriverAgent/commit/f5c068873ff6dcd1ce444d26246c102cc379d5bf", "https://github.com/appium/WebDriverAgent/blob/master/CHANGELOG.md", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-14">14 October 2026</time>
+    <span>6 min read</span>
+  </div>
+  <h1>WebDriverAgent can hand a second app crash detection now; phoneshell&#x27;s open_app never asks for it</h1>
+  <p class="standfirst">WDA 16.15.0 added a flag so a later launch can claim the session's "application under test" status, with its quiescence inheritance, alert monitoring and crash detection. phoneshell already duplicates the first two itself. It has nothing for the third, and never sets the flag.</p>
+
+<p>WebDriverAgent 16.15.0, released 12 October 2026, added an opt-in flag, <code>asAppUnderTest</code>, so a later <code>/wda/apps/launch</code> call can make its app the one WDA tracks as the application under test. phoneshell's two session-creation call sites never pass a bundle id on purpose, and its three-attempt <code>open_app</code> never passes the new flag either. The app WDA considers "under test" during a phoneshell run is not the app the agent is looking at. It is whatever was in front the last time a stale session got rebuilt.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/second-app-launch-skips-app-under-test-hero.png" alt="Abstract technical illustration of a tracking beam that locks onto one object in a cluster while two other identical objects drift past unlit" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="what-wda-1615-0-changed">What WDA 16.15.0 changed, and on which date</h2>
+
+<p>PR #1289, merged 12 October 2026 as commit <code>f5c0688</code>, adds <code>asAppUnderTest</code> to the <code>/wda/apps/launch</code> route. Before this release, a session's application under test could only be set once, at session creation, by passing a <code>bundleId</code> capability. Every later <code>/wda/apps/launch</code> call started a new app without ever replacing that designation. The PR description states the three things being application-under-test buys an app: later launches inherit its quiescence setting, system alerts over it are respected, and its unexpected termination is reported as a crash (an <code>FBApplicationCrashedException</code>) rather than read as an ordinary state change. The flag defaults to <code>false</code>, so WDA's own authors describe existing behaviour as unchanged unless a caller opts in.</p>
+
+<svg viewBox="0 0 760 380" style="width:100%;height:auto" role="img" aria-label="Flow diagram of a phoneshell run: a session is created with no bundle id, so WDA has no application under test. open_app tries launchUnattached, then activate_app, then launch_app, none of which pass the new asAppUnderTest flag, so the application under test stays unset for the whole run, except when a stale-session recovery happens to carry over whatever app was on screen at that moment.">
+<rect x="0" y="0" width="760" height="380" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="12">
+<text x="20" y="26" font-size="14" font-weight="600">Where asAppUnderTest could plug in, and where phoneshell never reaches for it</text>
+<rect x="20" y="50" width="220" height="70" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+<text x="32" y="74" font-weight="600">POST /session</text>
+<text x="32" y="92" font-size="11">bundleId: none</text>
+<text x="32" y="106" font-size="11" fill="#c4ccda">wda/client.py:248</text>
+<text x="260" y="90" fill="#6f7b90">&#8594;</text>
+<rect x="290" y="50" width="220" height="70" rx="8" fill="#1d2330" stroke="#f2a65a"/>
+<text x="302" y="74" font-weight="600" fill="#f2a65a">testedApplication = nil</text>
+<text x="302" y="92" font-size="11">no bundleId was given</text>
+<text x="302" y="106" font-size="11" fill="#c4ccda">FBSession.m launch path</text>
+<rect x="20" y="150" width="720" height="210" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+<text x="32" y="174" font-weight="600">open_app(target), actions.py:845</text>
+<rect x="32" y="190" width="210" height="60" rx="6" fill="#151a24" stroke="#5ad1a0"/>
+<text x="42" y="212" font-size="11" fill="#5ad1a0">1 launch_unattached</text>
+<text x="42" y="228" font-size="10" fill="#c4ccda">session-free, cannot touch it</text>
+<rect x="265" y="190" width="210" height="60" rx="6" fill="#151a24" stroke="#5ad1a0"/>
+<text x="275" y="212" font-size="11" fill="#5ad1a0">2 activate_app</text>
+<text x="275" y="228" font-size="10" fill="#c4ccda">no asAppUnderTest param at all</text>
+<rect x="498" y="190" width="210" height="60" rx="6" fill="#151a24" stroke="#f2a65a"/>
+<text x="508" y="212" font-size="11" fill="#f2a65a">3 launch_app(bundle)</text>
+<text x="508" y="228" font-size="10" fill="#f2a65a">asAppUnderTest never sent, defaults false</text>
+<text x="32" y="278" font-size="11">Exception: a stale-session recovery (wda/client.py:190-197, "happens routinely")</text>
+<text x="32" y="296" font-size="11">reads the real foreground app and sets default_bundle_id to it, so the NEXT</text>
+<text x="32" y="314" font-size="11">create_session() carries that bundle id in. Whichever app that happened to be</text>
+<text x="32" y="332" font-size="11" fill="#f2a65a">is "the" application under test, not necessarily the one the agent is using now.</text>
+</g></svg>
+
+<p>phoneshell's <code>create_session</code> (<code>wda/client.py:248</code>) resolves its bundle id as <code>bundle_id or self.default_bundle_id</code>, and both call sites (lines 208 and 234) pass neither. <code>default_bundle_id</code> starts at <code>None</code>. It only ever gets set inside the stale-session recovery branch (lines 190-197), whose own comment explains why it does not simply press home and re-attach: "a session created with no bundleId makes WDA switch the app under test, which sends the phone to the home screen and closes whatever was just opened." So the mechanism that occasionally gives phoneshell a tracked application under test is a side-effect workaround for a different WDA behaviour, not a deliberate choice, and it carries over whatever was in front at the moment of recovery, which can be stale by the time the agent has moved three apps further into a task.</p>
+
+<h2 id="three-things-asappundertest-buys-and-what-phoneshell-already-has">Three things the flag buys, checked against phoneshell's own code</h2>
+
+<table>
+  <thead><tr><th>Protection tied to "application under test"</th><th>What WDA does with it</th><th>phoneshell's own mechanism</th><th>Gap</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>Quiescence inheritance</td><td>A later launch with no explicit setting copies the tracked app's wait-for-idle policy</td><td>Every phoneshell launch call sends <code>shouldWaitForQuiescence</code> explicitly (<code>actions.py</code> fallback loop, <code>wda/client.py:380</code>); inheritance is never consulted</td><td>None: already overridden on every call</td><td>wda/client.py launch_app</td></tr>
+    <tr><td>System alert monitoring</td><td>WDA's <code>FBAlertsMonitor</code> watches for alerts over the tracked app specifically</td><td>Alerts are read from the accessibility tree snapshot on every step regardless of which app is foreground (<code>actions.py:179-187</code>)</td><td>None: already app-agnostic</td><td>actions.py snapshot</td></tr>
+    <tr><td>Crash detection</td><td>Unexpected termination of the tracked app raises <code>FBApplicationCrashedException</code>, distinct from a normal state change</td><td><code>app_state()</code> returns the same code, 1 ("not running"), for a crash, a clean quit, or an app never launched (<code>wda/client.py</code> app_state; <code>actions.py:891</code>)</td><td>Real: nothing in phoneshell distinguishes a crash from a quiet exit</td><td>actions.py:891-894</td></tr>
+  </tbody>
+</table>
+
+<p>The first two rows are not gaps. phoneshell was built around the assumption, stated directly in <code>open_app</code>'s own docstring, that "WebDriverAgent returns success for activate and launch whether or not the app actually comes forward," so it never trusted WDA's bookkeeping for either of those two things to begin with: it polls <code>active_app_info()</code> itself with a 4-second, 0.4-second-interval wait, and it reads alerts out of whatever snapshot it already took. The third row is different. There is no code path, anywhere in <code>actions.py</code> or <code>wda/client.py</code>, that asks whether a now-missing app crashed versus was cleanly terminated versus was never running at all. Those three situations produce the identical string: "not running."</p>
+
+<svg viewBox="0 0 760 300" style="width:100%;height:auto" role="img" aria-label="Bar-style diagram showing phoneshell's 80 task environment files, of which 6, about 7.5 percent, require the agent to switch between two or three apps inside one task: multi.app_switch, multi.three_apps, multi.return_after_detour, resilience.deep_start, resilience.wrong_app and system.spotlight_find_app. Each additional open_app call inside those tasks still never sets asAppUnderTest.">
+<rect x="0" y="0" width="760" height="300" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Where a second launch_app call actually happens: 6 of 80 task files</text>
+<rect x="30" y="50" width="700" height="36" fill="#1d2330" stroke="#2a3140"/>
+<rect x="30" y="50" width="52.5" height="36" fill="#f2a65a"/>
+<text x="56" y="73" font-size="12" text-anchor="middle" fill="#151a24" font-weight="600">6</text>
+<text x="400" y="73" font-size="12" fill="#c4ccda" text-anchor="middle">74 single-app tasks: one launch_app call, the question never comes up</text>
+<text x="30" y="106" font-size="11" fill="#f2a65a">multi.app_switch, multi.three_apps, multi.return_after_detour,</text>
+<text x="30" y="122" font-size="11" fill="#f2a65a">resilience.deep_start, resilience.wrong_app, system.spotlight_find_app</text>
+<text x="30" y="150" font-size="11" fill="#c4ccda">Each of these 6 calls open_app two or three times in sequence. Every call after the</text>
+<text x="30" y="166" font-size="11" fill="#c4ccda">first still goes through the same fallback loop, still never sets asAppUnderTest, so</text>
+<text x="30" y="182" font-size="11" fill="#c4ccda">WDA's own tracked "application under test" (if any) is left pointing at whichever</text>
+<text x="30" y="198" font-size="11" fill="#c4ccda">app was in front at the last stale-session recovery, not the current one.</text>
+<text x="30" y="230" font-size="11" fill="#e9ecf2">If one of those apps crashes mid-switch, app_state() reports "not running,"</text>
+<text x="30" y="246" font-size="11" fill="#e9ecf2">the same string a clean quit or a never-launched app produces. Nothing upstream</text>
+<text x="30" y="262" font-size="11" fill="#e9ecf2">asks WDA's crash-specific signal, because nothing ever claimed the app as tested.</text>
+<text x="30" y="286" font-size="10" fill="#c4ccda">Source: environments/*.yaml (80 files, grepped for a second com.apple.* bundle); actions.py open_app, app_state.</text>
+</g></g></svg>
+
+<h2 id="what-it-means">What it means if you run a WDA-backed phone agent</h2>
+
+<ul>
+  <li>Do not assume "application under test" tracks your agent's actual focus unless you deliberately set it. phoneshell's history shows a session with no claimed app is a reasonable default: it sidesteps a documented WDA behaviour (home-screen bounce on re-attach) that cost more than the bookkeeping was worth.</li>
+  <li>If you want WDA's crash signal, you now have a cheap way to get it without the create-session tradeoff: pass <code>asAppUnderTest: true</code> on the specific <code>/wda/apps/launch</code> call for the app you actually want watched, mid-session, without touching how the session itself was created.</li>
+  <li>If your own harness already polls foreground state and reads alerts itself, as phoneshell does, two of the flag's three benefits are redundant. Check the third before assuming you are covered: can your code currently tell a crash apart from a clean exit? phoneshell's answer today is no.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<ul>
+  <li>The commit: <code>https://github.com/appium/WebDriverAgent/commit/f5c068873ff6dcd1ce444d26246c102cc379d5bf</code>, PR #1289, merged into 16.15.0.</li>
+  <li>phoneshell never sends the flag: <code>grep -rn asAppUnderTest phoneshell/</code> returns nothing.</li>
+  <li>Neither session call names a bundle: <code>grep -n "create_session()" phoneshell/wda/client.py</code> shows both call sites with no argument.</li>
+  <li>The workaround comment: <code>sed -n '188,206p' phoneshell/wda/client.py</code>.</li>
+  <li>The crash/quit/never-ran conflation: <code>sed -n '885,895p' phoneshell/actions.py</code>; the state map has no fifth value for "crashed."</li>
+  <li>The multi-app task count: <code>grep -L "^app: com.apple" environments/*.yaml | wc -l</code> plus manual check of which files reference a second bundle id, listed above.</li>
+</ul>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>The claim is that phoneshell cannot currently tell a crashed app from a cleanly closed one. Test: launch any installed app with <code>asAppUnderTest: true</code> directly against a phoneshell-managed WDA instance, force-kill it from Springboard, and read <code>/wda/activeAppInfo</code>. If phoneshell's existing code path surfaces a distinct error for that case today, this is wrong. We expect it to report the same "not running" string <code>app_state()</code> already returns for every other kind of absence. We will publish the result, or say we did not run it, by 15 November 2026.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ol>
+      <li><a href="https://github.com/appium/WebDriverAgent/commit/f5c068873ff6dcd1ce444d26246c102cc379d5bf">WebDriverAgent, commit f5c0688, "feat: add asAppUnderTest flag to /wda/apps/launch" (PR #1289), merged into v16.15.0, 12 October 2026</a></li>
+      <li><a href="https://github.com/appium/WebDriverAgent/blob/master/CHANGELOG.md">WebDriverAgent CHANGELOG.md, v16.15.0 through v16.13.0 (read 14 October 2026)</a></li>
+      <li><a href="https://github.com/Blomega/phoneshell">phoneshell source: actions.py (open_app, app_state usage), wda/client.py (create_session, launch_app, stale-session recovery), environments/*.yaml (read 14 October 2026)</a></li>
+    </ol>
+  </section>
+
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
