@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>pymobiledevice3 shipped 59 releases since phoneshell's pin, including a macOS 27 tunnel fix | Blolabel</title>
+<meta name="description" content="pymobiledevice3 fixed a macOS 27 kernel regression that broke its default developer-service tunnel in v11.13.0, 16 September 2026. phoneshell's requirements.txt pins v11.8.0, nine days older than the fix and 59 releases behind as of 14 October 2026, across two bring-up checks that fall in the affected command family.">
+<link rel="canonical" href="https://blolabel.ai/blog/pin-predates-the-tunnel-fix/">
+<meta property="og:title" content="pymobiledevice3 shipped 59 releases since phoneshell's pin, including a macOS 27 tunnel fix | Blolabel">
+<meta property="og:description" content="pymobiledevice3 fixed a macOS 27 kernel regression that broke its default developer-service tunnel in v11.13.0, 16 September 2026. phoneshell's requirements.txt pins v11.8.0, nine days older than the fix and 59 releases behind as of 14 October 2026, across two bring-up checks that fall in the affected command family.">
+<meta property="og:url" content="https://blolabel.ai/blog/pin-predates-the-tunnel-fix/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/pin-predates-the-tunnel-fix-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "pymobiledevice3 shipped 59 releases since phoneshell's pin, including a macOS 27 tunnel fix", "description": "pymobiledevice3 fixed a macOS 27 kernel regression that broke its default developer-service tunnel in v11.13.0, 16 September 2026. phoneshell's requirements.txt pins v11.8.0, nine days older than the fix and 59 releases behind as of 14 October 2026, across two bring-up checks that fall in the affected command family.", "datePublished": "2026-10-14", "dateModified": "2026-10-14", "url": "https://blolabel.ai/blog/pin-predates-the-tunnel-fix/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/pin-predates-the-tunnel-fix/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/pin-predates-the-tunnel-fix-hero.png", "citation": ["https://github.com/doronz88/pymobiledevice3/releases/tag/v11.13.0", "https://github.com/doronz88/pymobiledevice3/releases/tag/v11.19.0", "https://github.com/doronz88/pymobiledevice3/releases", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-14">14 October 2026</time>
+    <span>6 min read</span>
+  </div>
+  <h1>pymobiledevice3 shipped 59 releases since phoneshell&#x27;s pin, including a macOS 27 tunnel fix</h1>
+  <p class="standfirst">A kernel change on macOS 27 broke a default tunnel for every developer-service command; a fix shipped nine days after phoneshell's pinned version. The claim is a version comparison, not a reproduction: this checkout has the right macOS and no phone to test it on.</p>
+
+<p>pymobiledevice3 shipped 59 releases between 7 September and 14 October 2026, including a fix, in v11.13.0 on 16 September, for a macOS 27 kernel change that broke its default tunnel discovery for every developer-service command. phoneshell's <code>requirements.txt</code> pins <code>pymobiledevice3==11.8.0</code>, nine days older than that fix and 23 version numbers behind the latest. The checkout this note was written from is itself running macOS 27.0, the exact version the regression targets, but has no phone attached and no pymobiledevice3 installed, so the claim below is a version comparison, not a reproduced failure.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/pin-predates-the-tunnel-fix-hero.png" alt="Abstract technical illustration of a pinned marker sitting on a timeline well before a highlighted repair point further along the same line" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="what-broke-and-what-fixed-it">What broke on macOS 27, and what fixed it</h2>
+
+<p>pymobiledevice3's default way to reach an iOS developer service on macOS, the <code>--native</code> tunnel, works by finding <code>remoted</code>'s existing RSD connection to the device through the kernel's <code>net.inet.tcp.pcblist*</code> sysctls, then attaching to it without needing Xcode or a password prompt beyond the one the tunnel itself needs. Starting with macOS 27, that sysctl family answers with only the calling process's own sockets unless the caller runs as root, so the lookup came back empty and every <code>--native</code> command failed with "could not find remoted's RSD connection to the tunnel address." Release v11.13.0, 16 September 2026 (commit <code>dce8f604</code>, PR #1952), replaced the sysctl read with a single sample from <code>nettop</code>, which is Apple-signed with the <code>com.apple.private.network.statistics</code> entitlement and so sees every process's sockets regardless of caller privilege. The fix needs no root and no Xcode, and the release notes report it costs about 0.1 seconds.</p>
+
+<svg viewBox="0 0 760 260" style="width:100%;height:auto" role="img" aria-label="Timeline from 7 September 2026, when pymobiledevice3 11.8.0 was released, the version phoneshell's requirements.txt still pins, through 16 September, when version 11.13.0 fixed the macOS 27 native tunnel regression, to 14 October 2026 and version 11.31.0, the latest at the time of writing. 59 releases separate the pinned version from the latest.">
+<rect x="0" y="0" width="760" height="260" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">59 releases since the version phoneshell pins</text>
+<line x1="60" y1="140" x2="700" y2="140" stroke="#6f7b90" stroke-width="2"/>
+<circle cx="90" cy="140" r="7" fill="#f2a65a"/>
+<text x="90" y="118" font-size="12" text-anchor="middle" fill="#f2a65a" font-weight="600">v11.8.0</text>
+<text x="90" y="168" font-size="11" text-anchor="middle" fill="#c4ccda">7 Sep 2026</text>
+<text x="90" y="184" font-size="10" text-anchor="middle" fill="#f2a65a">phoneshell's pin</text>
+<circle cx="260" cy="140" r="7" fill="#5ad1a0"/>
+<text x="260" y="118" font-size="12" text-anchor="middle" fill="#5ad1a0" font-weight="600">v11.13.0</text>
+<text x="260" y="168" font-size="11" text-anchor="middle" fill="#c4ccda">16 Sep 2026</text>
+<text x="260" y="184" font-size="10" text-anchor="middle" fill="#5ad1a0">native tunnel fix</text>
+<circle cx="670" cy="140" r="7" fill="#6f7b90"/>
+<text x="670" y="118" font-size="12" text-anchor="middle">v11.31.0</text>
+<text x="670" y="168" font-size="11" text-anchor="middle" fill="#c4ccda">14 Oct 2026</text>
+<text x="670" y="184" font-size="10" text-anchor="middle" fill="#c4ccda">latest at writing</text>
+<text x="380" y="210" font-size="12" text-anchor="middle" fill="#e9ecf2">59 releases, 37 days, between the pin and the latest</text>
+<text x="380" y="232" font-size="10" text-anchor="middle" fill="#c4ccda">Source: GitHub releases API, doronz88/pymobiledevice3 (read 14 October 2026)</text>
+</g></svg>
+
+<svg viewBox="0 0 760 320" style="width:100%;height:auto" role="img" aria-label="Mechanism diagram of the macOS 27 regression and its fix. Before: the native tunnel asked the kernel's net.inet.tcp.pcblist sysctl family for every socket, to find remoted's existing RSD connection to the device. From macOS 27 the kernel answers with only the caller's own sockets unless the caller is root, so an unprivileged caller gets an empty list and the tunnel fails with could not find remoted's RSD connection to the tunnel address. After, in pymobiledevice3 11.13.0: the tool takes one sample from nettop instead, a utility that is Apple-signed with the com.apple.private.network.statistics entitlement and so sees every process's sockets regardless of the caller's own privilege level, at a cost of about 0.1 seconds and no root requirement.">
+<rect x="0" y="0" width="760" height="320" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2" font-size="12">
+<text x="20" y="26" font-size="14" font-weight="600">How the native tunnel finds remoted's RSD port, before and after v11.13.0</text>
+<rect x="20" y="50" width="340" height="230" rx="8" fill="#1d2330" stroke="#f2a65a"/>
+<text x="32" y="74" font-weight="600" fill="#f2a65a">Before: net.inet.tcp.pcblist* sysctl</text>
+<text x="32" y="100">1. Caller asks the kernel for the full</text>
+<text x="32" y="116">socket table over all processes</text>
+<text x="32" y="140">2. On macOS 27, non-root callers get</text>
+<text x="32" y="156">back only their OWN sockets</text>
+<text x="32" y="180">3. remoted's socket to the device is</text>
+<text x="32" y="196">never in that list</text>
+<text x="32" y="224" fill="#f2a65a">Result: "could not find remoted's</text>
+<text x="32" y="240" fill="#f2a65a">RSD connection to the tunnel address"</text>
+<text x="32" y="262" font-size="10" fill="#c4ccda">every --native command fails</text>
+<rect x="400" y="50" width="340" height="230" rx="8" fill="#1d2330" stroke="#5ad1a0"/>
+<text x="412" y="74" font-weight="600" fill="#5ad1a0">After, v11.13.0: one nettop sample</text>
+<text x="412" y="100">1. Caller runs Apple-signed nettop,</text>
+<text x="412" y="116">entitlement com.apple.private.network.statistics</text>
+<text x="412" y="140">2. nettop sees every process's sockets</text>
+<text x="412" y="156">regardless of the caller's own privilege</text>
+<text x="412" y="180">3. RSD port is read from that one sample</text>
+<text x="412" y="204" fill="#5ad1a0">Result: tunnel builds normally, about</text>
+<text x="412" y="220" fill="#5ad1a0">0.1 seconds, no root, no Xcode</text>
+<text x="412" y="242" font-size="10" fill="#c4ccda">commit dce8f604, PR #1952</text>
+<text x="20" y="310" font-size="10" fill="#c4ccda">Source: pymobiledevice3 release v11.13.0 notes, 16 September 2026.</text>
+</g></svg>
+
+<h2 id="which-of-phoneshells-own-calls-touch-this">Which of phoneshell's own calls sit in the affected path</h2>
+
+<p>phoneshell does not import pymobiledevice3's tunnel machinery directly. It shells out to the installed CLI for two bring-up checks, both in <code>device.py</code>: <code>developer_mode_check</code> runs <code>pymobiledevice3 amfi developer-mode-status</code>, and <code>ddi_check</code> runs <code>pymobiledevice3 mounter list</code>, with its suggested fix command being <code>mounter auto-mount</code>. Both are developer-service commands of the kind the release note describes as defaulting to <code>--native</code> on macOS. A separate pymobiledevice3 release, v11.19.0, documents that from iOS 17.4 onward <code>auto_mount()</code> specifically needs an RSD tunnel to install the Cryptex1 DDI a modern device requires, and that the CLI "sets up a no-root tunnel and retries by itself" when a library caller is not already holding one. phoneshell's bench results describe a physical iPhone 17 Pro Max running iOS 26.6, well past that 17.4 line.</p>
+
+<table>
+  <thead><tr><th>phoneshell call site</th><th>CLI command</th><th>Needs a developer-service tunnel</th><th>Affected by the pinned version</th></tr></thead>
+  <tbody>
+    <tr><td><code>developer_mode_check</code>, device.py:293</td><td><code>amfi developer-mode-status</code></td><td>Developer-service command; whether it reaches for <code>--native</code> specifically is not documented in the commands we read</td><td>Unverified: no device attached in this checkout to test against</td></tr>
+    <tr><td><code>ddi_check</code>, device.py:321</td><td><code>mounter list</code> / <code>auto-mount</code></td><td>Confirmed by v11.19.0's own notes for iOS 17.4+, which phoneshell's target device is well past</td><td>Unverified: same limitation</td></tr>
+    <tr><td><code>phone_lan_ip</code>, device.py:364</td><td><code>lockdown info</code></td><td>Plain lockdown, not a developer service; not described as needing RSD in any release note read</td><td>Not affected, on current evidence</td></tr>
+  </tbody>
+</table>
+
+<p>The honest state of this claim is a version comparison, not a reproduction. The macOS 27 regression is specific to the root-requiring <code>--native</code> tunnel mode; pymobiledevice3's own CLI is documented elsewhere as falling back to a no-root userspace tunnel when it does not already hold one, and whether phoneshell's two checks, run without <code>sudo</code>, ever reach the broken code path or always take the fallback is not something we could determine by reading the release notes or phoneshell's code alone. What is verifiable without a device is simpler: the pin predates the fix, and it has predated every one of the 59 releases since.</p>
+
+<h2 id="what-it-means">What it means for pinning a device-automation dependency</h2>
+
+<ul>
+  <li>A security-relevant pin still needs a floor, not just a ceiling. Exact-version pins (<code>==</code>, as phoneshell uses throughout <code>requirements.txt</code>) buy reproducibility, but they also freeze in any bug that existed when the pin was set, including ones tied to a host OS version newer than the pin itself.</li>
+  <li>Read a dependency's release notes for your own host OS by name, not just your target device OS. This fix was never about the iPhone's iOS version; it was about the Mac doing the automating moving to macOS 27, which phoneshell's own bring-up checks do not query or warn about.</li>
+  <li>Before trusting a version-gap argument like this one, get a repro. We could not, in this checkout: no device, no pymobiledevice3 binary. The next person running phoneshell's actual bench, on an actual macOS 27 Mac with a cable-connected phone, can settle it in one command.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<ul>
+  <li>The regression and fix: pymobiledevice3 release v11.13.0, 16 September 2026, commit <code>dce8f604</code>, <code>https://github.com/doronz88/pymobiledevice3/releases/tag/v11.13.0</code>.</li>
+  <li>The pin: <code>grep pymobiledevice3 requirements.txt</code> in the phoneshell repo shows <code>==11.8.0</code>.</li>
+  <li>Release count since the pin: <code>gh api repos/doronz88/pymobiledevice3/releases --paginate | jq -r .[].tag_name</code>, counting tags between <code>v11.8.0</code> and the current latest.</li>
+  <li>The call sites: <code>sed -n '287,330p' phoneshell/device.py</code> for <code>developer_mode_check</code> and <code>ddi_check</code>.</li>
+  <li>The reproduction this note could not run: on a macOS 27 Mac with an iPhone attached over USB, <code>pip install pymobiledevice3==11.8.0 &amp;&amp; pymobiledevice3 mounter list</code>, compared against the same command on the current release.</li>
+</ul>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>The claim is that phoneshell's pinned version, run on a macOS 27 Mac, hits the broken native-tunnel path for at least one of its two developer-service checks. Test: run <code>developer_mode_check</code> and <code>ddi_check</code> against <code>pymobiledevice3==11.8.0</code> on a macOS 27 Mac with a real device attached, then again against the latest release. If both succeed identically on 11.8.0, the checks take the no-root fallback and this note overstates the exposure. We expect at least one to fail on 11.8.0 and succeed after an upgrade. We will publish the comparison, or say we did not run it, by 15 November 2026.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ol>
+      <li><a href="https://github.com/doronz88/pymobiledevice3/releases/tag/v11.13.0">pymobiledevice3 release v11.13.0, 16 September 2026 (native tunnel / RSD port discovery fix, commit dce8f604, PR #1952)</a></li>
+      <li><a href="https://github.com/doronz88/pymobiledevice3/releases/tag/v11.19.0">pymobiledevice3 release v11.19.0 (auto_mount RSD tunnel requirement from iOS 17.4, RSDRequiredError)</a></li>
+      <li><a href="https://github.com/doronz88/pymobiledevice3/releases">pymobiledevice3 GitHub releases index, v11.8.0 through v11.31.0 (read 14 October 2026)</a></li>
+      <li><a href="https://github.com/Blomega/phoneshell">phoneshell source: requirements.txt, device.py (developer_mode_check, ddi_check, phone_lan_ip) (read 14 October 2026)</a></li>
+    </ol>
+  </section>
+
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
