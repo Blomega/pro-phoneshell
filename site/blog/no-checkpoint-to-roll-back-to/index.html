@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rollback-Induced Reflection rolls an agent back up to 1.3 times a task; phoneshell has no checkpoint to roll back to - Blolabel</title>
+<meta name="description" content="A new recovery method for long-horizon LLM agents restores execution to an earlier checkpoint and keeps what the failed attempt learned, gaining up to 8.86 points on three text-based benchmarks. phoneshell's only response to a stuck agent is a hard stop at its max_steps budget, with nothing saved and no state to return to.">
+<link rel="canonical" href="https://blolabel.ai/blog/no-checkpoint-to-roll-back-to/">
+<meta property="og:title" content="Rollback-Induced Reflection rolls an agent back up to 1.3 times a task; phoneshell has no checkpoint to roll back to - Blolabel">
+<meta property="og:description" content="A new recovery method for long-horizon LLM agents restores execution to an earlier checkpoint and keeps what the failed attempt learned, gaining up to 8.86 points on three text-based benchmarks. phoneshell's only response to a stuck agent is a hard stop at its max_steps budget, with nothing saved and no state to return to.">
+<meta property="og:url" content="https://blolabel.ai/blog/no-checkpoint-to-roll-back-to/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/no-checkpoint-to-roll-back-to-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Rollback-Induced Reflection rolls an agent back up to 1.3 times a task; phoneshell has no checkpoint to roll back to", "description": "A new recovery method for long-horizon LLM agents restores execution to an earlier checkpoint and keeps what the failed attempt learned, gaining up to 8.86 points on three text-based benchmarks. phoneshell's only response to a stuck agent is a hard stop at its max_steps budget, with nothing saved and no state to return to.", "datePublished": "2026-10-15", "dateModified": "2026-10-15", "url": "https://blolabel.ai/blog/no-checkpoint-to-roll-back-to/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/no-checkpoint-to-roll-back-to/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/no-checkpoint-to-roll-back-to-hero.png", "citation": ["https://arxiv.org/abs/2609.18304", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-15">15 October 2026</time>
+    <span>6 min read</span>
+  </div>
+  <h1>Rollback-Induced Reflection rolls an agent back up to 1.3 times a task; phoneshell has no checkpoint to roll back to</h1>
+  <p class="standfirst">A method published 16 September 2026 restores a long-horizon agent to an earlier state and keeps what the failed attempt learned. phoneshell's only answer to a task that goes wrong is to let it run out of steps and call that a failure, with nothing kept and nowhere to go back to.</p>
+
+<p>Rollback-Induced Reflection (RIR), submitted to arXiv on 16 September 2026 by Yi Yu, Liuyi Yao, Yaliang Li, Enshu Wang and Libing Wu, beats the strongest baseline on three long-horizon agent benchmarks by 3.09 to 6.57 percentage points, averaged per backbone model, by restoring execution to a chosen earlier state when a trajectory goes wrong and carrying forward what that failed attempt learned. phoneshell (<a href="https://github.com/Blomega/phoneshell">github.com/Blomega/phoneshell</a>), the harness that runs this site's benchmark, has no equivalent of any kind. Its only reaction to an agent that cannot finish a task is <code>error_max_turns</code>: a hard stop at a fixed step count, scored as an outright failure, with no saved state and no path back to one.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/no-checkpoint-to-roll-back-to-hero.png" alt="Abstract technical illustration on a dark grid: a glowing path with several marked checkpoint nodes behind the leading edge, one checkpoint lit up and a faint ghost trail looping back to it, beside a second plain straight line that simply stops dead at a wall with no markers on it at all, cool blues with one amber accent" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="what-rir-actually-decides">What RIR actually decides, and when</h2>
+
+<p>The paper frames recovery as a "rollback-boundary control problem": three decisions, not one. When to intervene. Where to resume. What to keep. Most prior methods pick one side of this and lose on the other, the authors argue: fixing the context without repairing the environment's actual state leaves the agent reasoning about a world that no longer matches what it sees, while restoring an earlier state the plain way throws away everything the failed attempt was worth. RIR's trigger condition is explicit in the paper's own notation: a review happens when the agent calls a <code>rollback</code> tool, or when a review horizon <code>L_t</code> has elapsed since the last review, whichever comes first (<code>ReviewEvent_t = I[a_t = rollback] &or; I[t &minus; t_rev &ge; L_t]</code>), with a default horizon of 4 to 8 steps. Calling the tool does not roll anything back by itself; it only requests a review. An LLM reviewer then returns a verdict, and a rollback executes only if that verdict is "Rollback" and the method's own rollback budget for the episode has not run out.</p>
+
+<p>Where it resumes is the second decision. Rollback depth is defined as <code>k = t &minus; r</code>, the distance from the current step back to the restore point <code>r</code>. Rather than always jumping back a fixed number of steps, RIR's restore rule looks for the latest checkpoint inside a localized interval that removes the condition that caused the failure, so a shallow mistake gets a shallow rollback. What survives the rollback is the third decision: not nothing, and not the full trajectory either. A "structured reflection memory" distilled from the abandoned attempt is carried forward to guide the next try, which is the paper's actual innovation over plain state-restoration: on ScienceWorld, RIR executes an average of about 0.9 to 1.3 rollbacks per task, each one keeping a piece of what the discarded path learned rather than erasing it.</p>
+
+<svg viewBox="0 0 820 420" style="width:100%;height:auto" role="img" aria-label="Diagram of Rollback-Induced Reflection's rollback-boundary loop. A review triggers when the agent calls the rollback tool or when 4 to 8 steps have elapsed since the last review. An LLM reviewer returns a Continue or Rollback verdict. On Continue the agent keeps going. On Rollback, if the rollback budget is not exhausted, execution restores to the latest checkpoint that removes the failure condition, at depth k equal to the current step minus the restore point, and a structured reflection memory distilled from the abandoned attempt carries forward into the next try.">
+<rect x="0" y="0" width="820" height="420" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Rollback-Induced Reflection: one review cycle</text>
+<rect x="20" y="48" width="230" height="100" rx="10" fill="#1d2330" stroke="#6f7b90"/>
+<text x="34" y="70" font-size="12" font-weight="600">ReviewEvent trigger</text>
+<text x="34" y="92" font-size="10.5" fill="#c4ccda">agent calls rollback tool, OR</text>
+<text x="34" y="110" font-size="10.5" fill="#c4ccda">4-8 steps since last review</text>
+<text x="34" y="130" font-size="10.5" fill="#8893a8">(default horizon L=4,8)</text>
+<rect x="300" y="48" width="220" height="100" rx="10" fill="#1d2330" stroke="#6f7b90"/>
+<text x="314" y="70" font-size="12" font-weight="600">LLM reviewer verdict</text>
+<text x="314" y="92" font-size="10.5" fill="#5ad1a0">Continue: agent proceeds,</text>
+<text x="314" y="110" font-size="10.5" fill="#5ad1a0">no state change</text>
+<text x="314" y="130" font-size="10.5" fill="#f2a65a">Rollback: see below</text>
+<rect x="570" y="20" width="230" height="110" rx="10" fill="#262d3d" stroke="#f2a65a"/>
+<text x="584" y="42" font-size="12" font-weight="600">budget check</text>
+<text x="584" y="64" font-size="10.5" fill="#c4ccda">rollback executes only if the</text>
+<text x="584" y="82" font-size="10.5" fill="#c4ccda">episode's rollback budget</text>
+<text x="584" y="100" font-size="10.5" fill="#c4ccda">is not exhausted</text>
+<text x="584" y="120" font-size="10.5" fill="#8893a8">else: verdict is ignored</text>
+<rect x="570" y="170" width="230" height="110" rx="10" fill="#262d3d" stroke="#f2a65a"/>
+<text x="584" y="192" font-size="12" font-weight="600">restore to checkpoint r</text>
+<text x="584" y="214" font-size="10.5" fill="#c4ccda">depth k = t &minus; r, the latest</text>
+<text x="584" y="232" font-size="10.5" fill="#c4ccda">checkpoint that removes the</text>
+<text x="584" y="250" font-size="10.5" fill="#c4ccda">failure condition</text>
+<rect x="300" y="300" width="300" height="100" rx="10" fill="#262d3d"/>
+<text x="314" y="322" font-size="12" font-weight="600">structured reflection memory</text>
+<text x="314" y="344" font-size="10.5" fill="#c4ccda">distilled from the abandoned</text>
+<text x="314" y="362" font-size="10.5" fill="#c4ccda">attempt, carried into the next try</text>
+<text x="314" y="382" font-size="10.5" fill="#8893a8">~0.9-1.3 rollbacks/task, ScienceWorld</text>
+<line x1="250" y1="98" x2="300" y2="98" stroke="#6f7b90" stroke-width="1.5"/>
+<line x1="520" y1="80" x2="570" y2="75" stroke="#f2a65a" stroke-width="1.5"/>
+<line x1="685" y1="130" x2="685" y2="170" stroke="#f2a65a" stroke-width="1.5"/>
+<line x1="650" y1="280" x2="500" y2="320" stroke="#f2a65a" stroke-width="1.5"/>
+<line x1="450" y1="400" x2="135" y2="400" stroke="#6f7b90" stroke-width="1.5"/>
+<line x1="135" y1="400" x2="135" y2="148" stroke="#6f7b90" stroke-width="1.5"/>
+<text x="20" y="400" font-size="10" fill="#8893a8">next attempt resumes from r with the reflection memory available</text>
+</g></svg>
+
+<h2 id="phoneshells-only-exit-is-down">phoneshell's only exit is down</h2>
+
+<p>phoneshell's step budget is a single config field: <code>max_steps: int = 60</code> in <code>phoneshell/config.py</code>, labelled in the code's own comment as "Hard cap on agent steps per task, and on money." Each task file can set a lower per-task ceiling through <code>Task.max_steps</code> in <code>phoneshell/bench/schema.py</code>, which defaults to 25. <code>runner.py</code> hands that number straight to the model under test, either as <code>max_steps</code> on the OpenRouter path or as <code>--max-turns</code> on the Claude Code CLI path. There is no reviewer, no horizon, and no budget for a second chance: once the count is reached, the CLI exits 0 with <code>{"subtype":"error_max_turns","is_error":true}</code> and, per the code's own comment, "usually no result text." <code>runner.py</code> treats that exactly like a wall-clock timeout, setting <code>timed_out = True</code>, and the comment beside that line states the policy outright: "A model that runs out of time has FAILED the task... scoring it from whatever the phone happens to look like afterwards credits work it never finished." Nothing is salvaged. No earlier screen state is kept to return to, because none was ever recorded as a checkpoint in the first place; the only persisted record of the attempt is the row in <code>results.json</code>, which keeps the outcome (<code>passed</code>, <code>turns</code>, <code>seconds</code>, <code>checks</code>) and nothing about what the agent tried along the way.</p>
+
+<table>
+  <thead><tr><th>Dimension</th><th>Rollback-Induced Reflection</th><th>phoneshell</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>What a budget overrun means</td><td>a reviewable event, not an automatic failure</td><td>an automatic failure (<code>error_max_turns</code> &rarr; <code>timed_out</code>)</td><td>arXiv:2609.18304 &sect;3; runner.py</td></tr>
+    <tr><td>State kept from a bad attempt</td><td>structured reflection memory, distilled</td><td>none; only the pass/fail row survives</td><td>arXiv:2609.18304 &sect;3; results.json schema</td></tr>
+    <tr><td>Where execution resumes</td><td>latest checkpoint that removes the failure condition (depth k = t&minus;r)</td><td>nowhere; the task ends</td><td>arXiv:2609.18304 &sect;3; bench/runner.py</td></tr>
+    <tr><td>Decision authority</td><td>a second LLM call (the reviewer) judges Continue vs Rollback</td><td>none; the step count alone decides</td><td>arXiv:2609.18304 &sect;3; config.py max_steps</td></tr>
+    <tr><td>Typical intervention rate</td><td>~0.9-1.3 rollbacks per task (ScienceWorld)</td><td>not applicable, no intervention exists</td><td>arXiv:2609.18304 &sect;4</td></tr>
+  </tbody>
+</table>
+
+<h2 id="the-gain-is-real-but-not-free">The gain is real, but it is not free, and it is not mobile</h2>
+
+<p>RIR's reported edge holds across three different model backbones on three benchmarks that have nothing to do with phones: ALFWorld (embodied household interaction), ScienceWorld (text-based scientific experimentation) and GAIA (open-domain tool use). Averaged per backbone, RIR beats the strongest baseline by 3.09 points on Qwen3-14B, 6.57 points on DeepSeek-V3, and 3.04 points on Qwen3.8-27B. Those are real, model-specific, benchmark-specific gains, not a universal multiplier, and none of the three backbones are the GUI-grounded models phoneshell evaluates (the OpenRouter and Claude Code CLI paths it drives today). Nothing in the paper claims a GUI or mobile result; it is cross-listed only to cs.CL and cs.RO.</p>
+
+<svg viewBox="0 0 760 340" style="width:100%;height:auto" role="img" aria-label="Bar chart of Rollback-Induced Reflection's point gain over the strongest baseline, averaged per backbone model across three long-horizon benchmarks. Qwen3-14B gains 3.09 percentage points. DeepSeek-V3 gains 6.57 percentage points. Qwen3.8-27B gains 3.04 percentage points.">
+<rect x="0" y="0" width="760" height="340" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">RIR's gain over the strongest baseline, averaged per backbone (pp)</text>
+<line x1="70" y1="290" x2="700" y2="290" stroke="#2a3140"/><text x="62" y="294" font-size="10" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="70" y1="230" x2="700" y2="230" stroke="#2a3140"/><text x="62" y="234" font-size="10" fill="#c4ccda" text-anchor="end">2</text>
+<line x1="70" y1="170" x2="700" y2="170" stroke="#2a3140"/><text x="62" y="174" font-size="10" fill="#c4ccda" text-anchor="end">4</text>
+<line x1="70" y1="110" x2="700" y2="110" stroke="#2a3140"/><text x="62" y="114" font-size="10" fill="#c4ccda" text-anchor="end">6</text>
+<line x1="70" y1="50" x2="700" y2="50" stroke="#2a3140"/><text x="62" y="54" font-size="10" fill="#c4ccda" text-anchor="end">8</text>
+<rect x="150" y="197" width="90" height="93" fill="#5ad1a0"/><text x="195" y="188" font-size="12" fill="#5ad1a0" text-anchor="middle">+3.09</text>
+<text x="195" y="310" font-size="11" fill="#c4ccda" text-anchor="middle">Qwen3-14B</text>
+<rect x="335" y="93" width="90" height="197" fill="#5ad1a0"/><text x="380" y="84" font-size="12" fill="#5ad1a0" text-anchor="middle">+6.57</text>
+<text x="380" y="310" font-size="11" fill="#c4ccda" text-anchor="middle">DeepSeek-V3</text>
+<rect x="520" y="199" width="90" height="91" fill="#5ad1a0"/><text x="565" y="190" font-size="12" fill="#5ad1a0" text-anchor="middle">+3.04</text>
+<text x="565" y="310" font-size="11" fill="#c4ccda" text-anchor="middle">Qwen3.8-27B</text>
+<text x="20" y="330" font-size="10" fill="#8893a8">Source: arXiv:2609.18304, abstract and Section 4, read 15 October 2026. Benchmarks: ALFWorld, ScienceWorld, GAIA.</text>
+</g></svg>
+
+<h2 id="what-it-means-for-anyone-grading-a-phone-agent">What it means for anyone grading a phone agent</h2>
+
+<ul>
+  <li>phoneshell's choice to score a budget overrun as a flat failure is deliberate, not an oversight: the comment in <code>runner.py</code> explains it is there to stop a harness fault from being read as a model capability, by refusing to credit a task state the model never finished reaching. That is the right call for a benchmark whose product is a trustworthy pass/fail number.</li>
+  <li>It is also a different question from whether an agent COULD have recovered. RIR's result says a reviewable rollback, not a hard stop, is worth 3 to 6.6 points on three unrelated long-horizon benchmarks. Nothing in phoneshell's current task set measures whether that would hold on a phone, because nothing in phoneshell ever gives an agent the chance to try.</li>
+  <li>A rollback boundary presupposes a checkpoint to roll back to. phoneshell's <code>Snapshot</code> objects in <code>actions.py</code> exist to compare screens before and after one action, not to serve as restore points; none of them are retained once an action completes, so there is currently nothing in the codebase a rollback mechanism could restore to even if one were added.</li>
+  <li>The review horizon RIR defaults to, 4 to 8 steps, sits well inside phoneshell's own per-task budget of 25 to 60 steps, so there would be room for several review cycles within a single phoneshell task before the hard cap is reached, if such a mechanism existed.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># phoneshell's step budget and its only failure path
+grep -n "max_steps: int = 60" phoneshell/config.py
+grep -n "max_steps: int = 25" phoneshell/bench/schema.py
+grep -n "max-turns\|error_max_turns\|timed_out = True" phoneshell/bench/runner.py -A2 -B2
+
+# confirm there is no rollback, checkpoint or restore concept anywhere in the codebase
+grep -rniE "rollback|checkpoint|restore_state" phoneshell/ || echo "no matches"
+
+# RIR's own trigger rule and reported numbers
+curl -s https://arxiv.org/abs/2609.18304 | grep -i "rollback\|percentage point"
+# full method and Table 1: https://arxiv.org/html/2609.18304v3</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim phoneshell has no mechanism that preserves any state from a failed attempt or resumes execution from one. That is wrong if a future version of <code>bench/runner.py</code> or <code>actions.py</code> retains a <code>Snapshot</code> across actions, or if any task file gains a field for a partial-credit or retry state. We also claim RIR's reported gains, while real on ALFWorld, ScienceWorld and GAIA, have not been shown to transfer to GUI or mobile agents. That claim is falsified the moment RIR, or a method built on its rollback-boundary framing, is evaluated on a mobile GUI benchmark (iOSWorld, AndroidWorld, DAC-Bench or phoneshell's own 80 tasks) and the result is published. We will treat either event, checked by 31 March 2027, as grounds to revisit this comparison.</p>
+
+<h2 id="sources">Sources</h2>
+
+<ul>
+  <li>Yu, Yao, Li, Wang, Wu, <a href="https://arxiv.org/abs/2609.18304">Rollback the World, Keep the Reflection: Rollback-Induced Reflection for Long-Horizon LLM Agents</a>, arXiv:2609.18304, submitted 16 September 2026, revised 22 September 2026 (v3), read 15 October 2026.</li>
+  <li>Full text and Table 1: <a href="https://arxiv.org/html/2609.18304v3">arxiv.org/html/2609.18304v3</a>.</li>
+  <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/config.py</code>, <code>phoneshell/bench/schema.py</code>, <code>phoneshell/bench/runner.py</code>, read 15 October 2026.</li>
+</ul>
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
