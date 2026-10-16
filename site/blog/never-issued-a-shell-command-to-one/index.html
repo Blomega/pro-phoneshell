@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Qwen-UI-Agent runs bash commands from its GUI action space on 100+ real phones; phoneshell has never issued a shell command to one - Blolabel</title>
+<meta name="description" content="Qwen-UI-Agent's technical report adds cli_command, direct bash execution, to the same action space as its GUI taps, trained across more than 100 physical devices and up to 10,000 parallel sandboxes on trajectories over 100 turns. Every action phoneshell's actions.py exposes to an agent is a WDA touch, type or swipe call; none of them opens a shell.">
+<link rel="canonical" href="https://blolabel.ai/blog/never-issued-a-shell-command-to-one/">
+<meta property="og:title" content="Qwen-UI-Agent runs bash commands from its GUI action space on 100+ real phones; phoneshell has never issued a shell command to one - Blolabel">
+<meta property="og:description" content="Qwen-UI-Agent's technical report adds cli_command, direct bash execution, to the same action space as its GUI taps, trained across more than 100 physical devices and up to 10,000 parallel sandboxes on trajectories over 100 turns. Every action phoneshell's actions.py exposes to an agent is a WDA touch, type or swipe call; none of them opens a shell.">
+<meta property="og:url" content="https://blolabel.ai/blog/never-issued-a-shell-command-to-one/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/never-issued-a-shell-command-to-one-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Qwen-UI-Agent runs bash commands from its GUI action space on 100+ real phones; phoneshell has never issued a shell command to one", "description": "Qwen-UI-Agent's technical report adds cli_command, direct bash execution, to the same action space as its GUI taps, trained across more than 100 physical devices and up to 10,000 parallel sandboxes on trajectories over 100 turns. Every action phoneshell's actions.py exposes to an agent is a WDA touch, type or swipe call; none of them opens a shell.", "datePublished": "2026-10-15", "dateModified": "2026-10-15", "url": "https://blolabel.ai/blog/never-issued-a-shell-command-to-one/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/never-issued-a-shell-command-to-one/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/never-issued-a-shell-command-to-one-hero.png", "citation": ["https://arxiv.org/abs/2607.28227", "https://arxiv.org/abs/2605.27761", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-15">15 October 2026</time>
+    <span>6 min read</span>
+  </div>
+  <h1>Qwen-UI-Agent runs bash commands from its GUI action space on 100+ real phones; phoneshell has never issued a shell command to one</h1>
+  <p class="standfirst">One action in Qwen-UI-Agent's tool set drops straight to a bash shell. phoneshell's entire action module, read line by line, never leaves the accessibility tree and the touchscreen. The gap is not capability, it is scope: one project is a foundation agent for four environments, the other is a grading harness for one phone.</p>
+
+<p>Qwen-UI-Agent's technical report, submitted to arXiv on 30 July 2026 by Hanzhang Zhou and 15 co-authors, gives its agent a <code>cli_command</code> action, described in the paper as enabling "direct bash command execution" from the same unified action space as its GUI taps and batched actions. That action space trains across what the report calls "a real-device mobile environment comprising over 100 physical devices" plus "up to 10,000 isolated sandbox environments running in parallel," on trajectories the authors say exceed 100 interaction steps under online reinforcement learning. phoneshell's own action module, <code>phoneshell/actions.py</code>, defines roughly thirty methods an agent can call, every one of them a WDA call: <code>tap_element</code>, <code>type_text</code>, <code>swipe</code>, <code>press_key</code>, <code>open_app</code>, <code>open_url</code>, and so on. None of them opens a shell, because phoneshell drives exactly one device and was built to measure what a model can do through the screen alone.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/never-issued-a-shell-command-to-one-hero.png" alt="Abstract technical illustration on a dark grid: a single glowing action-space node splitting into two parallel paths, one labelled with a touchscreen-tap glyph and one with a terminal-prompt glyph, both feeding into a wide fan of many small device icons and a dense grid of sandbox squares, beside a single narrow path with only a touchscreen-tap glyph feeding one small device icon, cool blues with one amber accent" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="one-action-space-two-execution-surfaces">One action space, two execution surfaces</h2>
+
+<p>The report's own framing is that Qwen-UI-Agent is "a foundation GUI agent for mobile, computer-use, web, and DeepSearch environments," and the unified action space is what lets one model move between them: GUI operations for tapping and typing, <code>cli_command</code> for anything better expressed as a shell call, and batched actions for issuing several steps at once. The paper gives no example syntax for <code>cli_command</code> beyond naming it, but it is explicit that the action executes in "the active CLI environment," meaning the model can choose, mid-task, whether the next step is a tap or a command. Training that action space at scale needed two kinds of rollout capacity: sandboxes, up to 10,000 running in parallel, with virtual screens the authors say increase throughput "approximately 20x" relative to the same cluster without them, and the real-device runtime itself, over 100 physical phones used for "trajectory collection, online reinforcement learning, and evaluation on real devices," with a VLM-based judge checking each completed trajectory before validated ones are kept for training. Online RL was then scaled to trajectories the report says exceed 100 interaction steps, an order of magnitude past what a single phoneshell task is allowed to take.</p>
+
+<p>Nothing in phoneshell's <code>actions.py</code> has a shell-adjacent equivalent. The closest thing to a non-GUI action in the whole module is <code>open_url</code>, which opens a deeplink through the existing GUI session rather than executing anything outside it; <code>runner.py</code> does call <code>subprocess.run</code>, but only to launch the Claude Code CLI harness itself, not as an action the agent under test can choose to invoke. Every one of the roughly thirty callable methods in <code>actions.py</code>, from <code>tap_point</code> to <code>scroll_to_text</code> to <code>set_picker</code>, bottoms out in a WebDriverAgent call against the one iPhone phoneshell has open. There is no step in any phoneshell task where the model can decide to do anything other than touch the glass.</p>
+
+<svg viewBox="0 0 820 400" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting Qwen-UI-Agent's unified action space with phoneshell's. Qwen-UI-Agent's action space offers GUI operations, cli_command for direct bash execution, and batched actions, feeding both a 10,000-sandbox training fleet, with virtual screens giving about 20x throughput, and a real-device runtime of over 100 physical phones, on trajectories exceeding 100 turns. phoneshell's actions.py exposes about thirty methods, all WebDriverAgent calls such as tap_element, type_text and swipe, with no shell-executing action, running on exactly one physical iPhone.">
+<rect x="0" y="0" width="820" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Qwen-UI-Agent's unified action space vs phoneshell's</text>
+<rect x="20" y="46" width="230" height="110" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+<text x="34" y="68" font-size="11.5" font-weight="600">Qwen-UI-Agent action space</text>
+<text x="34" y="88" font-size="10" fill="#c4ccda">GUI operations</text>
+<text x="34" y="104" font-size="10" fill="#f2a65a">cli_command: direct bash execution</text>
+<text x="34" y="120" font-size="10" fill="#c4ccda">batched actions</text>
+<rect x="290" y="30" width="250" height="60" rx="8" fill="#262d3d" stroke="#f2a65a"/>
+<text x="304" y="52" font-size="10.5" font-weight="600">up to 10,000 parallel sandboxes</text>
+<text x="304" y="70" font-size="10" fill="#c4ccda">virtual screens: &asymp;20x throughput</text>
+<rect x="290" y="105" width="250" height="60" rx="8" fill="#262d3d" stroke="#f2a65a"/>
+<text x="304" y="127" font-size="10.5" font-weight="600">100+ real physical devices</text>
+<text x="304" y="145" font-size="10" fill="#c4ccda">trajectories exceed 100 turns, online RL</text>
+<rect x="580" y="68" width="220" height="60" rx="8" fill="#1d2330"/>
+<text x="594" y="90" font-size="10.5" font-weight="600">VLM judge validates</text>
+<text x="594" y="108" font-size="10" fill="#c4ccda">trajectories retained for training</text>
+<line x1="250" y1="80" x2="290" y2="60" stroke="#6f7b90" stroke-width="1.5"/>
+<line x1="250" y1="110" x2="290" y2="135" stroke="#6f7b90" stroke-width="1.5"/>
+<line x1="540" y1="90" x2="580" y2="95" stroke="#6f7b90" stroke-width="1.5"/>
+<line x1="20" y1="195" x2="800" y2="195" stroke="#6f7b90" stroke-dasharray="4,4"/>
+<rect x="20" y="220" width="400" height="130" rx="8" fill="#1d2330" stroke="#5ad1a0"/>
+<text x="34" y="244" font-size="11.5" font-weight="600">phoneshell/actions.py (~30 methods)</text>
+<text x="34" y="266" font-size="10" fill="#c4ccda">tap_element, tap_point, long_press, type_text</text>
+<text x="34" y="284" font-size="10" fill="#c4ccda">swipe, scroll_to_text, press_key, set_picker</text>
+<text x="34" y="302" font-size="10" fill="#c4ccda">open_app, open_url, accept_alert, wait_for_text</text>
+<text x="34" y="324" font-size="10" fill="#5ad1a0">every one is a WebDriverAgent call; no shell action</text>
+<rect x="460" y="250" width="200" height="60" rx="8" fill="#262d3d"/>
+<text x="474" y="272" font-size="10.5" font-weight="600">one iPhone 17 Pro Max</text>
+<text x="474" y="290" font-size="10" fill="#c4ccda">iOS 26.6, max_steps &le; 60</text>
+<line x1="420" y1="280" x2="460" y2="280" stroke="#6f7b90" stroke-width="1.5"/>
+<text x="20" y="375" font-size="10" fill="#8893a8">Source: arXiv:2607.28227 &sect;2.1.2, &sect;3; phoneshell/actions.py, read 15 October 2026.</text>
+</g></svg>
+
+<table>
+  <thead><tr><th>Dimension</th><th>Qwen-UI-Agent</th><th>phoneshell</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>Action types available to the agent</td><td>GUI ops, <code>cli_command</code> (bash), batched actions</td><td>GUI ops only (WDA tap/type/swipe/picker, ~30 methods)</td><td>arXiv:2607.28227 &sect;2.1.2; phoneshell/actions.py</td></tr>
+    <tr><td>Real physical devices</td><td>over 100</td><td>1 (iPhone 17 Pro Max, iOS 26.6)</td><td>arXiv:2607.28227 &sect;3; phoneshell houseFacts</td></tr>
+    <tr><td>Parallel sandbox capacity</td><td>up to 10,000, &asymp;20x throughput via virtual screens</td><td>0; tasks run sequentially against the one rig</td><td>arXiv:2607.28227 &sect;3; phoneshell/bench/runner.py</td></tr>
+    <tr><td>Trajectory length trained on</td><td>exceeds 100 interaction steps (online RL)</td><td>capped at 60 (config.py), default 25 per task</td><td>arXiv:2607.28227 &sect;3; phoneshell/config.py</td></tr>
+    <tr><td>Project purpose</td><td>train a foundation agent across 4 environments</td><td>grade a supplied model on one iPhone</td><td>arXiv:2607.28227 abstract; phoneshell README</td></tr>
+  </tbody>
+</table>
+
+<h2 id="the-scores-it-reports">The scores it reports, and the one we can check independently</h2>
+
+<p>Qwen-UI-Agent's abstract reports seven benchmark figures: 82.1% on MobileWorld, 92.2% on MobileWorld-Real, 97.5% on AndroidDaily, 79.5% on OSWorld-Verified, 40.0% partial progress on OSWorld-v2, 73.6% on WebArena, and 81.5% on ScreenSpot-Pro. Of those seven, AndroidDaily is the one this site has already independently sourced: AndroidDaily (arXiv:2605.27761) is a verifiable benchmark for mobile GUI agents on real-world closed-source applications, released 26 May 2026, and already carries a grade-A entry in the Blomega registry. That does not independently confirm Qwen-UI-Agent's 97.5% score on it, which still rests on the report's own self-reported number, but it does confirm AndroidDaily itself is a real, checkable benchmark rather than an invented one, which is more than can be said for several figures in papers this site has had to discount in past entries.</p>
+
+<svg viewBox="0 0 780 340" style="width:100%;height:auto" role="img" aria-label="Bar chart of Qwen-UI-Agent's seven self-reported benchmark scores. MobileWorld 82.1 percent. MobileWorld-Real 92.2 percent. AndroidDaily 97.5 percent, the one benchmark independently verified in the Blomega registry. OSWorld-Verified 79.5 percent. OSWorld-v2 40.0 percent partial progress. WebArena 73.6 percent. ScreenSpot-Pro 81.5 percent.">
+<rect x="0" y="0" width="780" height="340" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Qwen-UI-Agent's seven self-reported scores</text>
+<line x1="60" y1="290" x2="750" y2="290" stroke="#2a3140"/><text x="52" y="294" font-size="9.5" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="60" y1="230" x2="750" y2="230" stroke="#2a3140"/><text x="52" y="234" font-size="9.5" fill="#c4ccda" text-anchor="end">25</text>
+<line x1="60" y1="170" x2="750" y2="170" stroke="#2a3140"/><text x="52" y="174" font-size="9.5" fill="#c4ccda" text-anchor="end">50</text>
+<line x1="60" y1="110" x2="750" y2="110" stroke="#2a3140"/><text x="52" y="114" font-size="9.5" fill="#c4ccda" text-anchor="end">75</text>
+<line x1="60" y1="50" x2="750" y2="50" stroke="#2a3140"/><text x="52" y="54" font-size="9.5" fill="#c4ccda" text-anchor="end">100</text>
+<rect x="85" y="192" width="70" height="98" fill="#5ad1a0"/><text x="120" y="183" font-size="10.5" fill="#5ad1a0" text-anchor="middle">82.1</text><text x="120" y="308" font-size="9" fill="#c4ccda" text-anchor="middle">MobileWorld</text>
+<rect x="175" y="156" width="70" height="134" fill="#5ad1a0"/><text x="210" y="147" font-size="10.5" fill="#5ad1a0" text-anchor="middle">92.2</text><text x="210" y="308" font-size="9" fill="#c4ccda" text-anchor="middle">MobileWorld-Real</text>
+<rect x="265" y="114" width="70" height="176" fill="#f2a65a"/><text x="300" y="105" font-size="10.5" fill="#f2a65a" text-anchor="middle">97.5</text><text x="300" y="308" font-size="9" fill="#f2a65a" text-anchor="middle">AndroidDaily&#9733;</text>
+<rect x="355" y="196" width="70" height="94" fill="#5ad1a0"/><text x="390" y="187" font-size="10.5" fill="#5ad1a0" text-anchor="middle">79.5</text><text x="390" y="308" font-size="9" fill="#c4ccda" text-anchor="middle">OSWorld-Verified</text>
+<rect x="445" y="242" width="70" height="48" fill="#5ad1a0"/><text x="480" y="233" font-size="10.5" fill="#5ad1a0" text-anchor="middle">40.0</text><text x="480" y="308" font-size="9" fill="#c4ccda" text-anchor="middle">OSWorld-v2</text>
+<rect x="535" y="202" width="70" height="88" fill="#5ad1a0"/><text x="570" y="193" font-size="10.5" fill="#5ad1a0" text-anchor="middle">73.6</text><text x="570" y="308" font-size="9" fill="#c4ccda" text-anchor="middle">WebArena</text>
+<rect x="625" y="193" width="70" height="97" fill="#5ad1a0"/><text x="660" y="184" font-size="10.5" fill="#5ad1a0" text-anchor="middle">81.5</text><text x="660" y="308" font-size="9" fill="#c4ccda" text-anchor="middle">ScreenSpot-Pro</text>
+<text x="20" y="328" font-size="9.5" fill="#8893a8">Source: arXiv:2607.28227 abstract, read 15 October 2026. &#9733; AndroidDaily (arXiv:2605.27761) is independently grade-A in the Blomega registry; the 97.5% score itself is self-reported.</text>
+</g></svg>
+
+<h2 id="what-it-means-for-anyone-sizing-up-a-gap">What it means for anyone sizing up a gap</h2>
+
+<ul>
+  <li>Adding a shell-executing action is a scope decision, not a difficulty upgrade. phoneshell's lack of one is not a gap it failed to close; its entire purpose is to measure what a model can do through the screen a person actually sees, and a <code>cli_command</code> action would let a model route around that screen entirely, which would stop measuring the thing phoneshell is for.</li>
+  <li>The 100+ device fleet and 10,000-sandbox training capacity exist to generate enough rollouts to move a 16-author, multi-environment foundation model's weights. phoneshell's one device exists to generate a trustworthy score for whichever already-trained model a user points at it. The device-count gap is a direct consequence of that purpose gap, not evidence that phoneshell's methodology is thin.</li>
+  <li>Trajectories "exceeding 100 interaction steps" under online RL are a training-time property; nothing says Qwen-UI-Agent's deployed inference calls run anywhere near that long. phoneshell's own 60-step hard cap is an evaluation-time property, bounding how long a model gets to finish one of its 80 tasks. The two numbers answer different questions and should not be read as "phoneshell gives models 40% less room."</li>
+  <li>Only one of the seven reported scores, AndroidDaily, lands on a benchmark this site has independently sourced as real. The other six, MobileWorld, MobileWorld-Real, OSWorld-Verified, OSWorld-v2, WebArena and ScreenSpot-Pro, are all established benchmarks elsewhere in the literature, but Qwen-UI-Agent's specific scores on them are, as far as this check went, self-reported figures from the paper's own abstract.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># every action phoneshell exposes to an agent, and confirm none executes a shell
+grep -nE "^    def [a-z_]+\(" phoneshell/actions.py
+grep -rliE "subprocess|os\.system|shell=True" phoneshell/actions.py || echo "no shell execution in actions.py"
+grep -n "subprocess.run" phoneshell/bench/runner.py   # infra only, not an agent-callable action
+
+# phoneshell's hard step cap, for comparison against Qwen-UI-Agent's >100-turn RL trajectories
+grep -n "max_steps" phoneshell/config.py phoneshell/bench/schema.py
+
+# Qwen-UI-Agent's own numbers
+curl -s https://arxiv.org/abs/2607.28227 | grep -i "cli_command\|physical devices\|interaction steps"
+# full report with examples: https://arxiv.org/html/2607.28227</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim phoneshell's action module has no action that executes outside the GUI, specifically nothing that opens a shell or runs an arbitrary command. That is wrong if any method added to <code>phoneshell/actions.py</code> wraps <code>subprocess</code>, <code>os.system</code>, or an equivalent, and is exposed as a callable action rather than internal plumbing. We also report Qwen-UI-Agent's seven benchmark scores as self-reported from its own abstract; that framing is wrong, in Qwen-UI-Agent's favor, if an independent third party reproduces those scores on the cited benchmarks and publishes matching numbers. We will check both, phoneshell's own commit history and any independent reproduction of Qwen-UI-Agent's results, by 30 April 2027.</p>
+
+<h2 id="sources">Sources</h2>
+
+<ul>
+  <li>Zhou, Tong, Zhang, Kong, Cai, Xia, Zhang, Zhang, Li, Chen, Wang, Dai, Li, Chen, Wang, Hoi, <a href="https://arxiv.org/abs/2607.28227">Qwen-UI-Agent Technical Report: Toward Next-Generation Real-World Centric Foundation GUI Agents</a>, arXiv:2607.28227, submitted 30 July 2026, read 15 October 2026.</li>
+  <li>Full text: <a href="https://arxiv.org/html/2607.28227">arxiv.org/html/2607.28227</a>.</li>
+  <li>AndroidDaily benchmark, arXiv:2605.27761, released 26 May 2026, independently graded in the Blomega registry: <a href="https://arxiv.org/abs/2605.27761">arxiv.org/abs/2605.27761</a>.</li>
+  <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/actions.py</code>, <code>phoneshell/config.py</code>, <code>phoneshell/bench/schema.py</code>, <code>phoneshell/bench/runner.py</code>, read 15 October 2026.</li>
+</ul>
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
