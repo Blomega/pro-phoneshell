@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DAC-Bench's branching tasks fall below 5% success past six steps; phoneshell's task schema has no branch to take - Blolabel</title>
+<meta name="description" content="DAC-Bench, an ACL 2026 benchmark of 830 episodes across 35 Android and iOS apps, finds seven agents' success rate collapsing below 5% on 6-8 step branching tasks, with branch accuracy averaging 38%. phoneshell's own 80 tasks, read from their schema, cannot express a branch at all: every one is a single straight line from setup to checks.">
+<link rel="canonical" href="https://blolabel.ai/blog/phoneshell-has-no-branch-to-take/">
+<meta property="og:title" content="DAC-Bench's branching tasks fall below 5% success past six steps; phoneshell's task schema has no branch to take - Blolabel">
+<meta property="og:description" content="DAC-Bench, an ACL 2026 benchmark of 830 episodes across 35 Android and iOS apps, finds seven agents' success rate collapsing below 5% on 6-8 step branching tasks, with branch accuracy averaging 38%. phoneshell's own 80 tasks, read from their schema, cannot express a branch at all: every one is a single straight line from setup to checks.">
+<meta property="og:url" content="https://blolabel.ai/blog/phoneshell-has-no-branch-to-take/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/phoneshell-has-no-branch-to-take-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "DAC-Bench's branching tasks fall below 5% success past six steps; phoneshell's task schema has no branch to take", "description": "DAC-Bench, an ACL 2026 benchmark of 830 episodes across 35 Android and iOS apps, finds seven agents' success rate collapsing below 5% on 6-8 step branching tasks, with branch accuracy averaging 38%. phoneshell's own 80 tasks, read from their schema, cannot express a branch at all: every one is a single straight line from setup to checks.", "datePublished": "2026-10-15", "dateModified": "2026-10-15", "url": "https://blolabel.ai/blog/phoneshell-has-no-branch-to-take/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/phoneshell-has-no-branch-to-take/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/phoneshell-has-no-branch-to-take-hero.png", "citation": ["https://aclanthology.org/2026.acl-long.2064/", "https://github.com/YuqingZhangMirror12/DAC-Bench", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-15">15 October 2026</time>
+    <span>6 min read</span>
+  </div>
+  <h1>DAC-Bench's branching tasks fall below 5% success past six steps; phoneshell's task schema has no branch to take</h1>
+  <p class="standfirst">An ACL 2026 benchmark built 830 episodes around four task structures, one of them branching, and watched seven agents collapse on the branching ones. We read phoneshell's own task format to see where its 80 tasks would land. They would not land anywhere on that map: the format has no field for a branch at all.</p>
+
+<p>DAC-Bench, published at ACL 2026 (pages 44578-44598 of the Long Papers volume) by Yuqing Zhang, Honghui Sheng, Xueyu Hu, Shengyu Zhang and Fei Wu, tests seven agents on 830 episodes and 11,345 action steps across 35 Android and iOS apps, built around four task structures: Sequential, Conjunctive, Conditional and Hierarchical. On the Conditional and Hierarchical tasks, success rate drops below 5% once a task reaches 6 to 8 steps, and branch accuracy, a new metric the paper introduces, averages 38% across all seven agents. phoneshell's own 80-task suite, read directly from <code>environments/*.yaml</code>, has no mechanism to pose a conditional or branching task at all. Every one of its tasks is Sequential in DAC-Bench's own taxonomy, because the schema that defines a phoneshell task has nowhere to put anything else.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/phoneshell-has-no-branch-to-take-hero.png" alt="Abstract technical illustration on a dark grid: a branching tree structure with several forking glowing paths and small diamond decision nodes at the forks, beside a single unbroken straight line with no forks at all, cool blues with one amber accent marking where the straight line simply ends" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="four-structures-one-cliff">Four structures, one cliff</h2>
+
+<p>DAC-Bench's stated complaint about prior mobile GUI benchmarks is that they mostly test "short, linear workflows and step-level accuracy," which rewards an agent for getting each individual tap right without ever checking whether it chose correctly between two valid paths. Its four task structures are designed to force that choice: Sequential tasks are a fixed order of steps with no decision point, Conjunctive tasks require satisfying multiple independent sub-goals, Conditional tasks require the agent to read the screen and pick between branches whose correct outcome depends on what it finds there, and Hierarchical tasks nest these inside one another. The paper's new scoring metric, a weighted longest common subsequence, is built to separate two different kinds of partial credit: how far an agent progressed along a correct branch (length-sensitive progress) from whether it picked the correct branch in the first place (branch accuracy). Averaged across seven agents, branch accuracy lands at 38%, and overall task success for tasks that run 6 to 8 steps falls under 5%, a result the authors attribute specifically to conditional decision-making rather than to step count alone.</p>
+
+<p>That distinction matters for reading the number correctly. DAC-Bench's own data shows plenty of 6-to-8-step Sequential tasks that do not collapse to under 5%; the cliff belongs to tasks that also branch. A benchmark made entirely of long Sequential tasks would not be expected to hit that floor. Which is exactly phoneshell's situation: every one of its tasks is long enough to have steps in that range, but none of them branch.</p>
+
+<h2 id="what-a-phoneshell-task-can-say">What a phoneshell task can say</h2>
+
+<p>A phoneshell task is defined by three dataclasses in <code>phoneshell/bench/schema.py</code>: <code>Step</code> (one deterministic action, used for setup and teardown), <code>Check</code> (one assertion run after the agent finishes), and <code>Task</code> itself, which holds exactly one <code>instruction</code> string, one flat list of <code>setup</code> steps, and one flat list of <code>checks</code>. There is no field anywhere in any of the three for a branch, a condition, or an alternative outcome; the module's own docstring describes the whole format as three parts, run once, in order: "setup... instruct... checks." A real example, <code>environments/clock_timer_set_hm.yaml</code>, asks the agent to "set the timer to 1 hour and 30 minutes," with two checks that must both pass, which is Conjunctive at most in DAC-Bench's taxonomy and not Conditional: nothing about the task changes based on what the agent observes on screen. Searching every task file in the suite for anything resembling a decision point returns nothing: <code>grep -lE "^(if|branch|condition)" environments/*.yaml</code> matches zero of the 80 files, because the YAML format they are written in was never given the keys to express one.</p>
+
+<svg viewBox="0 0 820 400" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting DAC-Bench's four task structures with phoneshell's one. DAC-Bench: Sequential is a fixed-order chain. Conjunctive requires multiple independent sub-goals. Conditional forks on what the agent observes on screen. Hierarchical nests these inside one another. phoneshell's Task dataclass has exactly one instruction string, one flat setup list and one flat checks list, with no field in the schema for a branch or a condition, so every phoneshell task is Sequential at most.">
+<rect x="0" y="0" width="820" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">DAC-Bench's four task structures vs phoneshell's Task dataclass</text>
+<rect x="20" y="46" width="170" height="60" rx="8" fill="#1d2330" stroke="#6f7b90"/><text x="105" y="70" font-size="11" text-anchor="middle" font-weight="600">Sequential</text><text x="105" y="88" font-size="9.5" fill="#c4ccda" text-anchor="middle">fixed-order chain</text>
+<rect x="210" y="46" width="170" height="60" rx="8" fill="#1d2330" stroke="#6f7b90"/><text x="295" y="70" font-size="11" text-anchor="middle" font-weight="600">Conjunctive</text><text x="295" y="88" font-size="9.5" fill="#c4ccda" text-anchor="middle">multiple sub-goals</text>
+<rect x="400" y="46" width="200" height="60" rx="8" fill="#262d3d" stroke="#f2a65a"/><text x="500" y="70" font-size="11" text-anchor="middle" font-weight="600">Conditional</text><text x="500" y="88" font-size="9.5" fill="#f2a65a" text-anchor="middle">forks on what the screen shows</text>
+<rect x="620" y="46" width="180" height="60" rx="8" fill="#262d3d" stroke="#f2a65a"/><text x="710" y="70" font-size="11" text-anchor="middle" font-weight="600">Hierarchical</text><text x="710" y="88" font-size="9.5" fill="#f2a65a" text-anchor="middle">nests the above</text>
+<text x="400" y="135" font-size="10.5" fill="#f2a65a">&lt;5% success past 6-8 steps; branch accuracy 38% avg, 7 agents</text>
+<line x1="20" y1="160" x2="800" y2="160" stroke="#6f7b90" stroke-dasharray="4,4"/>
+<rect x="20" y="190" width="300" height="130" rx="10" fill="#1d2330" stroke="#5ad1a0"/>
+<text x="34" y="214" font-size="12" font-weight="600">phoneshell Task dataclass</text>
+<text x="34" y="236" font-size="10.5" fill="#c4ccda">instruction: str  (one string)</text>
+<text x="34" y="256" font-size="10.5" fill="#c4ccda">setup: list[Step]  (flat)</text>
+<text x="34" y="276" font-size="10.5" fill="#c4ccda">checks: list[Check]  (flat)</text>
+<text x="34" y="296" font-size="10.5" fill="#5ad1a0">no field for a branch or condition</text>
+<text x="360" y="255" font-size="12" fill="#c4ccda">&#8658; every phoneshell task is</text>
+<text x="360" y="275" font-size="12" font-weight="600" fill="#5ad1a0">Sequential, by construction</text>
+<text x="20" y="355" font-size="10" fill="#8893a8">Source: aclanthology.org/2026.acl-long.2064; phoneshell/bench/schema.py, read 15 October 2026.</text>
+<text x="20" y="375" font-size="10" fill="#8893a8">grep -lE "^(if|branch|condition)" environments/*.yaml matches 0 of 80 files.</text>
+</g></svg>
+
+<table>
+  <thead><tr><th>Measure</th><th>DAC-Bench</th><th>phoneshell</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>Episodes / tasks</td><td>830 episodes</td><td>80 tasks</td><td>ACL 2026 abstract; environments/*.yaml count</td></tr>
+    <tr><td>Action steps</td><td>11,345</td><td>not reported as a total; avg_turns 4.4-6.7 per model</td><td>ACL 2026 abstract; site/results.json board</td></tr>
+    <tr><td>Applications</td><td>35, Android and iOS</td><td>built-in iOS apps only (Clock, Settings, Notes, Safari, etc.)</td><td>ACL 2026 abstract; environments/*.yaml</td></tr>
+    <tr><td>Task structures present</td><td>Sequential, Conjunctive, Conditional, Hierarchical</td><td>Sequential (and Conjunctive via multiple checks) only</td><td>ACL 2026 abstract; phoneshell/bench/schema.py</td></tr>
+    <tr><td>Success rate, 6-8 step tasks</td><td>&lt;5% (branching tasks specifically)</td><td>not applicable; no branching tasks exist to test</td><td>ACL 2026 abstract</td></tr>
+    <tr><td>Branch accuracy</td><td>38% average, 7 agents</td><td>not applicable</td><td>ACL 2026 abstract</td></tr>
+  </tbody>
+</table>
+
+<svg viewBox="0 0 760 330" style="width:100%;height:auto" role="img" aria-label="Bar chart of average turns per task across six models on phoneshell's own leaderboard, all of them below DAC-Bench's reported 6 to 8 step cliff for branching tasks. Kimi K3 5.1 turns. GPT-5.1 4.8 turns. Claude Opus 4.8 4.4 turns. Qwen3-Max 5.6 turns. Gemini 3.1 Pro Preview 4.8 turns. DeepSeek V3.2 6.7 turns.">
+<rect x="0" y="0" width="760" height="330" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Average turns per task, phoneshell leaderboard (all Sequential tasks)</text>
+<line x1="60" y1="270" x2="730" y2="270" stroke="#2a3140"/><text x="52" y="274" font-size="10" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="60" y1="210" x2="730" y2="210" stroke="#2a3140"/><text x="52" y="214" font-size="10" fill="#c4ccda" text-anchor="end">2</text>
+<line x1="60" y1="150" x2="730" y2="150" stroke="#2a3140"/><text x="52" y="154" font-size="10" fill="#c4ccda" text-anchor="end">4</text>
+<line x1="60" y1="90" x2="730" y2="90" stroke="#2a3140"/><text x="52" y="94" font-size="10" fill="#c4ccda" text-anchor="end">6</text>
+<line x1="60" y1="60" x2="730" y2="60" stroke="#f2a65a" stroke-dasharray="4,3"/><text x="735" y="64" font-size="9.5" fill="#f2a65a">DAC-Bench cliff starts (6 steps)</text>
+<rect x="85" y="113" width="60" height="157" fill="#5ad1a0"/><text x="115" y="104" font-size="11" fill="#5ad1a0" text-anchor="middle">5.1</text><text x="115" y="288" font-size="9.5" fill="#c4ccda" text-anchor="middle">Kimi K3</text>
+<rect x="175" y="126" width="60" height="144" fill="#5ad1a0"/><text x="205" y="117" font-size="11" fill="#5ad1a0" text-anchor="middle">4.8</text><text x="205" y="288" font-size="9.5" fill="#c4ccda" text-anchor="middle">GPT-5.1</text>
+<rect x="265" y="138" width="60" height="132" fill="#5ad1a0"/><text x="295" y="129" font-size="11" fill="#5ad1a0" text-anchor="middle">4.4</text><text x="295" y="288" font-size="9.5" fill="#c4ccda" text-anchor="middle">Claude Opus 4.8</text>
+<rect x="355" y="99" width="60" height="171" fill="#5ad1a0"/><text x="385" y="90" font-size="11" fill="#5ad1a0" text-anchor="middle">5.6</text><text x="385" y="288" font-size="9.5" fill="#c4ccda" text-anchor="middle">Qwen3-Max</text>
+<rect x="445" y="126" width="60" height="144" fill="#5ad1a0"/><text x="475" y="117" font-size="11" fill="#5ad1a0" text-anchor="middle">4.8</text><text x="475" y="288" font-size="9.5" fill="#c4ccda" text-anchor="middle">Gemini 3.1 Pro</text>
+<rect x="535" y="68" width="60" height="202" fill="#5ad1a0"/><text x="565" y="59" font-size="11" fill="#5ad1a0" text-anchor="middle">6.7</text><text x="565" y="288" font-size="9.5" fill="#c4ccda" text-anchor="middle">DeepSeek V3.2</text>
+<text x="20" y="315" font-size="10" fill="#8893a8">Source: site/results.json board, read 15 October 2026. These are Sequential tasks only; DAC-Bench's cliff applies to branching tasks.</text>
+</g></svg>
+
+<h2 id="what-it-means-for-anyone-building-a-task-set">What it means for anyone building a task set</h2>
+
+<ul>
+  <li>phoneshell's own step counts, 4.4 to 6.7 turns averaged per model, already sit near the bottom of DAC-Bench's 6-to-8-step danger zone, on tasks that never branch. Adding a single conditional fork to a task that already takes six turns would place it squarely inside the range where DAC-Bench measured a collapse, for a population of models it has not yet tried that fork on.</li>
+  <li>phoneshell's <code>Check</code> objects already support multiple checks per task (DAC-Bench's Conjunctive structure), which is why the timer task above satisfies two independent assertions. Getting to Conditional would require a new field, something like a check or a setup step whose outcome determines which of two subsequent check lists applies, and nothing in <code>schema.py</code> today reads a screen state to pick between two paths before scoring.</li>
+  <li>DAC-Bench's weighted longest common subsequence metric solves a scoring problem phoneshell does not currently have, because phoneshell's checks are binary pass/fail per assertion, not a measure of how far along a branch the agent got before choosing wrong. A phoneshell task set that added branching would need an equivalent partial-credit metric, not just a new YAML key.</li>
+  <li>The 38% branch-accuracy average is itself the headline, not the 5% success floor: it says that even when branching tasks are scored generously for partial progress, picking the right branch is close to a coin flip across all seven agents DAC-Bench tested, none of which is a model phoneshell's own leaderboard currently runs.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># confirm phoneshell has no branching or conditional structure
+grep -n "class Task\|class Step\|class Check" -A10 phoneshell/bench/schema.py
+grep -lE "^(if|branch|condition)" environments/*.yaml; echo "matches: $?"
+ls environments/*.yaml | wc -l          # 80
+
+# phoneshell's own step counts, for comparison against DAC-Bench's 6-8 step cliff
+python3 -c "import json; d=json.load(open('site/results.json')); [print(k, v['avg_turns']) for k,v in d['board'].items()]"
+
+# DAC-Bench's own numbers and code
+curl -s https://aclanthology.org/2026.acl-long.2064.pdf -o /tmp/dacbench.pdf   # abstract and Table 1
+# code and data: https://github.com/YuqingZhangMirror12/DAC-Bench</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim phoneshell's task schema cannot express a Conditional or Hierarchical task today. That is wrong the moment <code>phoneshell/bench/schema.py</code> gains a field that lets a check or setup step branch on an observed screen state, or the moment any task file encodes two alternative outcomes for the same instruction. We also claim phoneshell's current 80 tasks are all Sequential or, at most, Conjunctive in DAC-Bench's taxonomy. That is wrong if a close reading of any task file turns up a branch we missed; our own check was a plain grep for <code>if</code>, <code>branch</code> and <code>condition</code> across all 80 files on 15 October 2026, which is a necessary but not fully sufficient test for the absence of branching logic. We will re-run that check, and look for it by hand once more, if phoneshell's task count passes 120 or if a maintainer states that a branching task has been added, whichever comes first, and treat either as grounds to revisit this comparison.</p>
+
+<h2 id="sources">Sources</h2>
+
+<ul>
+  <li>Zhang, Sheng, Hu, Zhang, Wu, <a href="https://aclanthology.org/2026.acl-long.2064/">DAC-Bench: A Decision-Aware Benchmark for Compositional Mobile GUI Tasks</a>, Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), San Diego, pages 44578-44598, ACL 2026, read 15 October 2026.</li>
+  <li>Code and data: <a href="https://github.com/YuqingZhangMirror12/DAC-Bench">github.com/YuqingZhangMirror12/DAC-Bench</a>.</li>
+  <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/bench/schema.py</code>, <code>environments/*.yaml</code> (80 files), <code>site/results.json</code>, read 15 October 2026.</li>
+</ul>
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
