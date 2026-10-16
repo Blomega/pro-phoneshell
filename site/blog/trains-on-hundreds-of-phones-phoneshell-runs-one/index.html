@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BlueLM-GUI trains on hundreds of real phones and 5,000 labelled failure samples; phoneshell runs one - Blolabel</title>
+<meta name="description" content="BlueLM-GUI's technical report describes a fleet of hundreds of real phones feeding a continual pre-training, fine-tuning and reinforcement learning pipeline, with roughly 5,000 targeted anomalous-state samples across 14 classes folded back into training. phoneshell runs on one real iPhone and keeps only a pass or fail row for every attempt; nothing it records ever retrains anything.">
+<link rel="canonical" href="https://blolabel.ai/blog/trains-on-hundreds-of-phones-phoneshell-runs-one/">
+<meta property="og:title" content="BlueLM-GUI trains on hundreds of real phones and 5,000 labelled failure samples; phoneshell runs one - Blolabel">
+<meta property="og:description" content="BlueLM-GUI's technical report describes a fleet of hundreds of real phones feeding a continual pre-training, fine-tuning and reinforcement learning pipeline, with roughly 5,000 targeted anomalous-state samples across 14 classes folded back into training. phoneshell runs on one real iPhone and keeps only a pass or fail row for every attempt; nothing it records ever retrains anything.">
+<meta property="og:url" content="https://blolabel.ai/blog/trains-on-hundreds-of-phones-phoneshell-runs-one/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/trains-on-hundreds-of-phones-phoneshell-runs-one-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "BlueLM-GUI trains on hundreds of real phones and 5,000 labelled failure samples; phoneshell runs one", "description": "BlueLM-GUI's technical report describes a fleet of hundreds of real phones feeding a continual pre-training, fine-tuning and reinforcement learning pipeline, with roughly 5,000 targeted anomalous-state samples across 14 classes folded back into training. phoneshell runs on one real iPhone and keeps only a pass or fail row for every attempt; nothing it records ever retrains anything.", "datePublished": "2026-10-15", "dateModified": "2026-10-15", "url": "https://blolabel.ai/blog/trains-on-hundreds-of-phones-phoneshell-runs-one/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/trains-on-hundreds-of-phones-phoneshell-runs-one/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/trains-on-hundreds-of-phones-phoneshell-runs-one-hero.png", "citation": ["https://arxiv.org/abs/2609.12394", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-15">15 October 2026</time>
+    <span>5 min read</span>
+  </div>
+  <h1>BlueLM-GUI trains on hundreds of real phones and 5,000 labelled failure samples; phoneshell runs one</h1>
+  <p class="standfirst">Both projects agree that a simulator is not enough. BlueLM-GUI's answer is a fleet feeding a model. phoneshell's answer is a single iPhone feeding a leaderboard. Neither is a smaller version of the other; they keep different things from the same conviction.</p>
+
+<p>The BlueLM-GUI technical report, submitted to arXiv on 11 September 2026 by Tong Ye and 42 co-authors, describes training a 35B-A3B mobile GUI agent on rollouts from "hundreds of real phones," with roughly 5,000 targeted samples covering 14 classes of anomalous device state folded back into training by what the paper calls an Error Correction and Derivation Module. phoneshell drives exactly one physical device, an iPhone 17 Pro Max on iOS 26.6, and keeps one row per attempt in <code>site/results.json</code>: a pass/fail verdict, a turn count, a cost, and the checks that ran. No phoneshell run has ever fed back into training anything, because phoneshell does not train a model at all. The two projects share a premise, real hardware over simulation, and solve nothing like the same problem with it.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/trains-on-hundreds-of-phones-phoneshell-runs-one-hero.png" alt="Abstract technical illustration on a dark grid: a wide fan of many small glowing device icons on the left feeding into a single central processing node that loops back and widens into an upgraded output, beside one single small glowing device icon on the right connected only to a short line ending in a plain filing-tray icon with no loop back, cool blues with one amber accent" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="three-principles-one-loop">Three principles, one loop</h2>
+
+<p>BlueLM-GUI's authors organize the system around three stated principles. "Every Sample Matters" is a dual-track data pipeline with multi-system evaluation, built around the Error Correction and Derivation Module: rather than discarding a trajectory where the agent failed, the module turns it into usable training signal, including the roughly 5,000 samples across 14 anomalous-state classes cited above. "Every Rollout Is Real" is the training recipe itself: continual pre-training, supervised fine-tuning, and agentic reinforcement learning, run, in the paper's words, on "hundreds of real phones," which the authors contrast with sandbox training on the grounds that a sandbox causes "a distribution mismatch with production environments." "Every Query Evolves" is the evaluation side: a benchmark the authors describe as "quota-driven" across three axes, scored by what they call "Heterogeneous Triple-System Consensus," designed to be upgraded as the model improves rather than saturate the way a fixed benchmark does. The result the report leads with is MobileGUI-VBench at 87.4, which it says surpasses the best closed-source model by 5.1 points, putting that closed-source figure at roughly 82.3, plus AndroidWorld at 84.9, described as the best score among open-source models.</p>
+
+<p>Read end to end, the loop is: real device rollout, in bulk, across a fleet; failure classified into one of 14 known anomaly types rather than thrown away; that classified failure becomes training data for the next model version; the benchmark used to measure the next model version is itself allowed to get harder. Nothing about phoneshell's own real-device methodology does any of that, and nothing in phoneshell's stated purpose calls for it to.</p>
+
+<svg viewBox="0 0 820 380" style="width:100%;height:auto" role="img" aria-label="Diagram of BlueLM-GUI's real-device training flywheel. Hundreds of real phones generate rollouts. The Error Correction and Derivation Module classifies failures into one of 14 anomaly classes, drawing on roughly 5,000 targeted samples. Classified trajectories feed continual pre-training, supervised fine-tuning and agentic reinforcement learning. The resulting model is scored on a quota-driven benchmark that is upgraded as the model improves, and the loop repeats.">
+<rect x="0" y="0" width="820" height="380" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">BlueLM-GUI's real-device-centric flywheel</text>
+<rect x="20" y="48" width="190" height="80" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+<text x="34" y="70" font-size="11.5" font-weight="600">hundreds of real phones</text>
+<text x="34" y="90" font-size="10" fill="#c4ccda">generate rollouts</text>
+<text x="34" y="108" font-size="10" fill="#c4ccda">"every rollout is real"</text>
+<rect x="240" y="48" width="230" height="100" rx="8" fill="#262d3d" stroke="#f2a65a"/>
+<text x="254" y="70" font-size="11.5" font-weight="600">Error Correction &amp;</text>
+<text x="254" y="86" font-size="11.5" font-weight="600">Derivation Module</text>
+<text x="254" y="106" font-size="10" fill="#f2a65a">~5,000 samples, 14 classes</text>
+<text x="254" y="124" font-size="10" fill="#c4ccda">of anomalous device state</text>
+<text x="254" y="142" font-size="10" fill="#c4ccda">failure becomes training data</text>
+<rect x="500" y="48" width="300" height="100" rx="8" fill="#1d2330" stroke="#6f7b90"/>
+<text x="514" y="70" font-size="11.5" font-weight="600">continual pre-train &rarr; SFT &rarr; agentic RL</text>
+<text x="514" y="92" font-size="10" fill="#c4ccda">MobileGUI-VBench 87.4 (+5.1 over</text>
+<text x="514" y="110" font-size="10" fill="#c4ccda">best closed-source, &asymp;82.3)</text>
+<text x="514" y="128" font-size="10" fill="#c4ccda">AndroidWorld 84.9</text>
+<rect x="240" y="220" width="300" height="80" rx="8" fill="#262d3d"/>
+<text x="254" y="242" font-size="11.5" font-weight="600">quota-driven benchmark</text>
+<text x="254" y="262" font-size="10" fill="#c4ccda">Heterogeneous Triple-System</text>
+<text x="254" y="280" font-size="10" fill="#c4ccda">Consensus; upgraded as model improves</text>
+<line x1="210" y1="88" x2="240" y2="98" stroke="#6f7b90" stroke-width="1.5"/>
+<line x1="470" y1="98" x2="500" y2="98" stroke="#f2a65a" stroke-width="1.5"/>
+<line x1="650" y1="148" x2="390" y2="220" stroke="#6f7b90" stroke-width="1.5"/>
+<line x1="390" y1="300" x2="115" y2="300" stroke="#6f7b90" stroke-width="1.5"/>
+<line x1="115" y1="300" x2="115" y2="128" stroke="#6f7b90" stroke-width="1.5"/>
+<text x="20" y="340" font-size="10" fill="#8893a8">Source: arXiv:2609.12394, read 15 October 2026. The loop repeats: each model version's failures feed the next one's data.</text>
+</g></svg>
+
+<h2 id="what-phoneshell-keeps">What phoneshell keeps from a run</h2>
+
+<p>phoneshell's own real-device methodology runs one iPhone 17 Pro Max on iOS 26.6 through its 80-task suite and records exactly the fields visible in <code>site/results.json</code>: <code>task_id</code>, <code>model</code>, <code>passed</code>, <code>skipped</code>, <code>skip_reason</code>, <code>turns</code>, <code>seconds</code>, <code>cost_usd</code>, <code>checks</code>, <code>scaffold</code>, <code>started_at</code>. There is no field for a screenshot trail, no raw action log, and no classification of why a failed task failed beyond whatever a human reads off the <code>checks</code> array by hand. A failed phoneshell task is not an anomaly sample; it is a line in a leaderboard. Nothing downstream of that line retrains a model, because phoneshell does not ship a model, it grades whichever one a user points at the phone. That is a complete and defensible design for an evaluation harness, and it is also the reason the comparison with BlueLM-GUI is not "phoneshell is smaller," it is "phoneshell and BlueLM-GUI keep different things on purpose."</p>
+
+<table>
+  <thead><tr><th>Dimension</th><th>BlueLM-GUI</th><th>phoneshell</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>Purpose of the real-device data</td><td>train and retrain a model (35B-A3B)</td><td>grade whichever model a user supplies</td><td>arXiv:2609.12394 abstract; phoneshell/bench/runner.py</td></tr>
+    <tr><td>Device fleet</td><td>"hundreds of real phones"</td><td>one, iPhone 17 Pro Max, iOS 26.6</td><td>arXiv:2609.12394 &sect;3; phoneshell houseFacts</td></tr>
+    <tr><td>What a failed trajectory becomes</td><td>one of 14 classified anomaly types, ~5,000 samples, used as training data</td><td>a <code>passed: false</code> row with whatever <code>checks</code> ran</td><td>arXiv:2609.12394 &sect;3; site/results.json schema</td></tr>
+    <tr><td>Benchmark used to measure progress</td><td>"quota-driven," upgraded as the model improves</td><td>fixed 80-task suite, counted from environments/*.yaml</td><td>arXiv:2609.12394 &sect;4; environments/*.yaml</td></tr>
+    <tr><td>Headline scores</td><td>MobileGUI-VBench 87.4; AndroidWorld 84.9</td><td>not comparable; different benchmarks, different purpose</td><td>arXiv:2609.12394 abstract</td></tr>
+  </tbody>
+</table>
+
+<svg viewBox="0 0 700 300" style="width:100%;height:auto" role="img" aria-label="Bar chart of BlueLM-GUI's three reported benchmark figures. MobileGUI-VBench 87.4. The best closed-source model on the same benchmark, derived from the stated 5.1 point gap, approximately 82.3. AndroidWorld 84.9.">
+<rect x="0" y="0" width="700" height="300" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">BlueLM-GUI's reported scores</text>
+<line x1="60" y1="250" x2="660" y2="250" stroke="#2a3140"/><text x="52" y="254" font-size="10" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="60" y1="190" x2="660" y2="190" stroke="#2a3140"/><text x="52" y="194" font-size="10" fill="#c4ccda" text-anchor="end">20</text>
+<line x1="60" y1="130" x2="660" y2="130" stroke="#2a3140"/><text x="52" y="134" font-size="10" fill="#c4ccda" text-anchor="end">40</text>
+<line x1="60" y1="70" x2="660" y2="70" stroke="#2a3140"/><text x="52" y="74" font-size="10" fill="#c4ccda" text-anchor="end">60</text>
+<line x1="60" y1="10" x2="660" y2="10" stroke="#2a3140"/><text x="52" y="14" font-size="10" fill="#c4ccda" text-anchor="end">80</text>
+<rect x="110" y="39" width="80" height="211" fill="#5ad1a0"/><text x="150" y="30" font-size="12" fill="#5ad1a0" text-anchor="middle">87.4</text><text x="150" y="268" font-size="10.5" fill="#c4ccda" text-anchor="middle">MobileGUI-VBench</text>
+<rect x="290" y="68" width="80" height="182" fill="#f2a65a"/><text x="330" y="59" font-size="12" fill="#f2a65a" text-anchor="middle">&asymp;82.3</text><text x="330" y="268" font-size="10.5" fill="#c4ccda" text-anchor="middle">best closed-source</text>
+<rect x="470" y="51" width="80" height="199" fill="#5ad1a0"/><text x="510" y="42" font-size="12" fill="#5ad1a0" text-anchor="middle">84.9</text><text x="510" y="268" font-size="10.5" fill="#c4ccda" text-anchor="middle">AndroidWorld</text>
+<text x="20" y="288" font-size="10" fill="#8893a8">Source: arXiv:2609.12394 abstract, read 15 October 2026. 82.3 is derived from the stated 5.1-point gap, not stated directly.</text>
+</g></svg>
+
+<h2 id="what-it-means-for-anyone-reading-a-fleet-number">What it means for anyone reading a fleet number</h2>
+
+<ul>
+  <li>"Hundreds of real phones" and "one real iPhone" answer different questions. BlueLM-GUI's fleet exists to generate enough rollouts, including enough failures, to move model weights. phoneshell's single device exists to generate a trustworthy pass/fail number for whichever model is already trained. Neither fleet size tells you anything about the other project's rigor.</li>
+  <li>The 14-class anomaly taxonomy is the part phoneshell most conspicuously lacks, and the part most worth borrowing regardless of scale: even on one device, grouping phoneshell's own failures by cause, rather than leaving each as an unlabelled <code>passed: false</code> row, would turn its results.json into something closer to a diagnosis than a scoreboard.</li>
+  <li>A "quota-driven benchmark" that upgrades as the model improves is the opposite design choice from phoneshell's fixed 80-task suite. That is appropriate for BlueLM-GUI, where the benchmark exists to keep pace with a model under active development, and appropriate for phoneshell, where the benchmark exists to let the same 80 tasks compare different models on equal footing over time.</li>
+  <li>Readers should not average the 87.4 and the phoneshell leaderboard's own pass rates into a single "how good is mobile AI" number. They are not measuring the same thing, were not run on the same tasks, and in BlueLM-GUI's case were not run against models phoneshell's leaderboard currently includes.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># what a phoneshell run actually records
+python3 -c "import json; d=json.load(open('site/results.json')); print(list(d['runs'][2].keys()))"
+grep -n "houseFacts" -A10 content-engine/ios-agents.json
+
+# confirm phoneshell has nothing resembling a training or retraining step
+grep -rliE "fine.?tun|reinforcement learning|training data|checkpoint.pt" phoneshell/ || echo "no matches"
+
+# BlueLM-GUI's own numbers
+curl -s https://arxiv.org/abs/2609.12394 | grep -i "hundreds of real phones\|MobileGUI-VBench\|AndroidWorld"
+# full report: https://arxiv.org/html/2609.12394</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim phoneshell records no information from a run that could feed back into retraining any model, and that it runs on exactly one physical device. The first is wrong if any future commit to <code>phoneshell/bench/runner.py</code> or its results schema adds a field for a classified failure cause or a stored trajectory; the second is wrong if the project's houseFacts are updated to describe more than one physical rig. We also derived BlueLM-GUI's "best closed-source" figure of approximately 82.3 from its stated 5.1-point gap rather than reading it directly off a table; that derivation is wrong if the full paper states a different closed-source baseline score. We will check <code>content-engine/ios-agents.json</code>'s houseFacts and the BlueLM-GUI repository, if one is published, by 31 January 2027 and revise this comparison if either has changed.</p>
+
+<h2 id="sources">Sources</h2>
+
+<ul>
+  <li>Ye et al. (43 authors), <a href="https://arxiv.org/abs/2609.12394">BlueLM-GUI Technical Report: A Real-Device-Centric Flywheel for Self-Improving Mobile GUI Agents</a>, arXiv:2609.12394, submitted 11 September 2026, revised 15 September 2026 (v3), read 15 October 2026.</li>
+  <li>Full text: <a href="https://arxiv.org/html/2609.12394">arxiv.org/html/2609.12394</a>.</li>
+  <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>site/results.json</code>, <code>content-engine/ios-agents.json</code>, read 15 October 2026.</li>
+</ul>
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
