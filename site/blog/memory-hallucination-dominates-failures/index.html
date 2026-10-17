@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Memory hallucination causes 58.9% of MemGUI-Bench's non-timeout failures; phoneshell's screen memory is re-checked against the live tree before every tap, so it cannot hallucinate the same way - Blolabel</title>
+<meta name="description" content="MemGUI-Bench finds five named memory-hallucination failure modes dominating 11 agents' non-timeout failures, and a 20-point pass@3 drop when long-term memory is removed from Agent-S2. phoneshell persists its own screen memory across runs but never trusts it blindly: a remembered control is re-resolved against the live tree before every tap.">
+<link rel="canonical" href="https://blolabel.ai/blog/memory-hallucination-dominates-failures/">
+<meta property="og:title" content="Memory hallucination causes 58.9% of MemGUI-Bench's non-timeout failures; phoneshell's screen memory is re-checked against the live tree before every tap, so it cannot hallucinate the same way - Blolabel">
+<meta property="og:description" content="MemGUI-Bench finds five named memory-hallucination failure modes dominating 11 agents' non-timeout failures, and a 20-point pass@3 drop when long-term memory is removed from Agent-S2. phoneshell persists its own screen memory across runs but never trusts it blindly: a remembered control is re-resolved against the live tree before every tap.">
+<meta property="og:url" content="https://blolabel.ai/blog/memory-hallucination-dominates-failures/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/memory-hallucination-dominates-failures-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Memory hallucination causes 58.9% of MemGUI-Bench's non-timeout failures; phoneshell's screen memory is re-checked against the live tree before every tap, so it cannot hallucinate the same way", "description": "MemGUI-Bench finds five named memory-hallucination failure modes dominating 11 agents' non-timeout failures, and a 20-point pass@3 drop when long-term memory is removed from Agent-S2. phoneshell persists its own screen memory across runs but never trusts it blindly: a remembered control is re-resolved against the live tree before every tap.", "datePublished": "2026-10-16", "dateModified": "2026-10-16", "url": "https://blolabel.ai/blog/memory-hallucination-dominates-failures/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/memory-hallucination-dominates-failures/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/memory-hallucination-dominates-failures-hero.png", "citation": ["https://arxiv.org/abs/2602.06075", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-16">16 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>Memory hallucination causes 58.9% of MemGUI-Bench's non-timeout failures; phoneshell's screen memory is re-checked against the live tree before every tap, so it cannot hallucinate the same way</h1>
+  <p class="standfirst">MemGUI-Bench names five distinct memory-hallucination failure modes and finds they account for 58.9% of its 11 evaluated agents' non-timeout failures on average, with Agent-S2's multi-attempt success falling 20 points when its long-term memory is removed. phoneshell persists its own cross-run screen memory to disk, but by design never acts on it until the remembered element is found again in the live accessibility tree.</p>
+
+<p>MemGUI-Bench (arXiv:2602.06075), first posted 3 February 2026 and last revised 27 August 2026 by Guangyi Liu, Pengxiang Zhao and 13 coauthors, argues that mobile GUI agent benchmarks have mostly ignored memory: across existing benchmarks, only 5.2 to 11.8% of tasks require remembering anything from earlier in a session or a prior one, and none test cross-session learning at all. Their benchmark corrects for that directly: 128 tasks across 26 apps, arranged as 64 mirror pairs, with 89.8% of all tasks requiring retention across time or across a different part of the app than where the needed fact was shown. Eleven agents across five architectures were run through it with a three-stage "Progressive Scrutiny" evaluation pipeline and seven hierarchical metrics covering memory fidelity, learning effectiveness, and execution efficiency.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/memory-hallucination-dominates-failures-hero.png" alt="Abstract technical illustration on a dark grid: a glowing node labelled as a remembered fact with five thin fracture lines radiating from it into dim, broken fragments representing different hallucination failure modes, beside a second, separate closed loop where a similar node is shown looping back through a verification gate before reaching a stable, brighter endpoint, cool blues and teals with one amber accent" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="five-named-ways-to-misremember-a-screen">Five named ways to misremember a screen</h2>
+
+<p>The paper's failure-mode taxonomy gives memory failure five separate names rather than treating it as one undifferentiated bucket: Partial Memory Hallucination (PMH), Process Memory Hallucination (ProcMH), Output Memory Hallucination (OMH), Knowledge Deficiency (KD), and Intent Misunderstanding (IM). Averaged across the 11 agents tested, memory hallucination (the PMH/ProcMH/OMH group) accounts for 58.9% of every failure that was not a plain timeout. The gap this produces against a memory-light benchmark is largest for the smaller, GUI-specialised models: Agent-S2 falls from 54.3% on AndroidWorld to 27.3% on MemGUI-Bench, GUI-Owl-7B falls from 66.4% to 6.2%, and UI-Venus-7B falls from 49.1% to 5.5%. The paper's clearest controlled test of what long-term memory is worth comes from a 40-task ablation subset (its Table 3): removing Agent-S2's long-term memory entirely drops its three-attempt success rate (pass@3) from 45.0% to 25.0%, a 20-point fall, holding everything else about the agent fixed.</p>
+
+<table>
+  <thead><tr><th>Agent</th><th>pass@1</th><th>pass@3</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>M3A</td><td>32.8%</td><td>47.7%</td><td>arXiv:2602.06075 Table 2</td></tr>
+    <tr><td>Agent-S2</td><td>27.3%</td><td>49.2%</td><td>arXiv:2602.06075 Table 2</td></tr>
+    <tr><td>T3A</td><td>22.7%</td><td>42.2%</td><td>arXiv:2602.06075 Table 2</td></tr>
+    <tr><td>GUI-Owl-7B</td><td>6.2%</td><td>10.2%</td><td>arXiv:2602.06075 Table 2</td></tr>
+    <tr><td>Mobile-Agent-E</td><td>5.5%</td><td>10.2%</td><td>arXiv:2602.06075 Table 2</td></tr>
+    <tr><td>UI-Venus-7B</td><td>5.5%</td><td>7.8%</td><td>arXiv:2602.06075 Table 2</td></tr>
+    <tr><td>CogAgent</td><td>0.0%</td><td>0.0%</td><td>arXiv:2602.06075 Table 2</td></tr>
+    <tr><td>Agent-S2, long-term memory removed (40-task subset)</td><td>not reported</td><td>25.0% (from 45.0%)</td><td>arXiv:2602.06075 Table 3</td></tr>
+  </tbody>
+</table>
+
+<svg viewBox="0 0 900 460" style="width:100%;height:auto" role="img" aria-label="Grouped bar chart of MemGUI-Bench's Table 2 pass at 1 and pass at 3 success rates for seven mobile GUI agents: M3A 32.8 percent rising to 47.7 percent, Agent-S2 27.3 percent rising to 49.2 percent, T3A 22.7 percent rising to 42.2 percent, GUI-Owl-7B 6.2 percent rising to 10.2 percent, Mobile-Agent-E 5.5 percent rising to 10.2 percent, UI-Venus-7B 5.5 percent rising to 7.8 percent, CogAgent at 0.0 percent for both.">
+<rect x="0" y="0" width="900" height="460" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">MemGUI-Bench Table 2: pass@1 vs pass@3 across seven agents</text>
+<line x1="50" y1="360" x2="860" y2="360" stroke="#3d4458" stroke-width="1"/>
+<line x1="50" y1="296" x2="860" y2="296" stroke="#2a3040" stroke-width="1"/>
+<line x1="50" y1="232" x2="860" y2="232" stroke="#2a3040" stroke-width="1"/>
+<line x1="50" y1="168" x2="860" y2="168" stroke="#2a3040" stroke-width="1"/>
+<line x1="50" y1="104" x2="860" y2="104" stroke="#2a3040" stroke-width="1"/>
+<line x1="50" y1="40" x2="860" y2="40" stroke="#2a3040" stroke-width="1"/>
+<text x="42" y="364" font-size="10" fill="#8893a8" text-anchor="end">0%</text>
+<text x="42" y="300" font-size="10" fill="#8893a8" text-anchor="end">10%</text>
+<text x="42" y="236" font-size="10" fill="#8893a8" text-anchor="end">20%</text>
+<text x="42" y="172" font-size="10" fill="#8893a8" text-anchor="end">30%</text>
+<text x="42" y="108" font-size="10" fill="#8893a8" text-anchor="end">40%</text>
+<text x="42" y="44" font-size="10" fill="#8893a8" text-anchor="end">50%</text>
+<rect x="60" y="150.08" width="30" height="209.92" fill="#3d4a63"/>
+<text x="75" y="144.08" font-size="10.5" fill="#c4ccda" text-anchor="middle">32.8%</text>
+<rect x="94" y="54.72" width="30" height="305.28" fill="#f2a65a"/>
+<text x="109" y="48.72" font-size="10.5" fill="#f2a65a" text-anchor="middle">47.7%</text>
+<text x="92" y="378" font-size="10.5" fill="#c4ccda" text-anchor="end" transform="rotate(-35 92 378)">M3A</text>
+<rect x="170" y="185.28" width="30" height="174.72" fill="#3d4a63"/>
+<text x="185" y="179.28" font-size="10.5" fill="#c4ccda" text-anchor="middle">27.3%</text>
+<rect x="204" y="45.12" width="30" height="314.88" fill="#f2a65a"/>
+<text x="219" y="39.12" font-size="10.5" fill="#f2a65a" text-anchor="middle">49.2%</text>
+<text x="202" y="378" font-size="10.5" fill="#c4ccda" text-anchor="end" transform="rotate(-35 202 378)">Agent-S2</text>
+<rect x="280" y="214.72" width="30" height="145.28" fill="#3d4a63"/>
+<text x="295" y="208.72" font-size="10.5" fill="#c4ccda" text-anchor="middle">22.7%</text>
+<rect x="314" y="89.92" width="30" height="270.08" fill="#f2a65a"/>
+<text x="329" y="83.92" font-size="10.5" fill="#f2a65a" text-anchor="middle">42.2%</text>
+<text x="312" y="378" font-size="10.5" fill="#c4ccda" text-anchor="end" transform="rotate(-35 312 378)">T3A</text>
+<rect x="390" y="320.32" width="30" height="39.68" fill="#3d4a63"/>
+<text x="405" y="314.32" font-size="10.5" fill="#c4ccda" text-anchor="middle">6.2%</text>
+<rect x="424" y="294.72" width="30" height="65.28" fill="#f2a65a"/>
+<text x="439" y="288.72" font-size="10.5" fill="#f2a65a" text-anchor="middle">10.2%</text>
+<text x="422" y="378" font-size="10.5" fill="#c4ccda" text-anchor="end" transform="rotate(-35 422 378)">GUI-Owl-7B</text>
+<rect x="500" y="324.80" width="30" height="35.20" fill="#3d4a63"/>
+<text x="515" y="318.80" font-size="10.5" fill="#c4ccda" text-anchor="middle">5.5%</text>
+<rect x="534" y="294.72" width="30" height="65.28" fill="#f2a65a"/>
+<text x="549" y="288.72" font-size="10.5" fill="#f2a65a" text-anchor="middle">10.2%</text>
+<text x="532" y="378" font-size="10.5" fill="#c4ccda" text-anchor="end" transform="rotate(-35 532 378)">Mobile-Agent-E</text>
+<rect x="610" y="324.80" width="30" height="35.20" fill="#3d4a63"/>
+<text x="625" y="318.80" font-size="10.5" fill="#c4ccda" text-anchor="middle">5.5%</text>
+<rect x="644" y="310.08" width="30" height="49.92" fill="#f2a65a"/>
+<text x="659" y="304.08" font-size="10.5" fill="#f2a65a" text-anchor="middle">7.8%</text>
+<text x="642" y="378" font-size="10.5" fill="#c4ccda" text-anchor="end" transform="rotate(-35 642 378)">UI-Venus-7B</text>
+<rect x="720" y="359.00" width="30" height="1.00" fill="#3d4a63"/>
+<text x="735" y="353.00" font-size="10.5" fill="#c4ccda" text-anchor="middle">0.0%</text>
+<rect x="754" y="359.00" width="30" height="1.00" fill="#f2a65a"/>
+<text x="769" y="353.00" font-size="10.5" fill="#f2a65a" text-anchor="middle">0.0%</text>
+<text x="752" y="378" font-size="10.5" fill="#c4ccda" text-anchor="end" transform="rotate(-35 752 378)">CogAgent</text>
+<rect x="660" y="56" width="14" height="14" fill="#3d4a63"/>
+<text x="680" y="67" font-size="10.5" fill="#c4ccda">pass@1</text>
+<rect x="750" y="56" width="14" height="14" fill="#f2a65a"/>
+<text x="770" y="67" font-size="10.5" fill="#f2a65a">pass@3</text>
+<text x="20" y="440" font-size="10" fill="#8893a8">Source: arXiv:2602.06075, Table 2, read 16 October 2026.</text>
+</g></svg>
+
+<svg viewBox="0 0 820 400" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting MemGUI-Bench's memory model with phoneshell's. MemGUI-Bench's agents store a remembered fact and act on it directly from a generative recall step, which the paper finds produces Partial, Process, or Output Memory Hallucination in 58.9 percent of non-timeout failures. phoneshell's memory.py instead stores a structural fingerprint and control locations learned on first visit, writes them to disk keyed by app bundle id, and on a later run resolves a remembered control against the live accessibility tree before every tap, only using the remembered shortcut if the live tree still confirms it.">
+<rect x="0" y="0" width="820" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Two ways to use a remembered fact</text>
+<rect x="20" y="50" width="360" height="300" rx="10" fill="#1d2330" stroke="#6f7b90"/>
+<text x="36" y="76" font-size="12" font-weight="600">MemGUI-Bench's agents (generative recall)</text>
+<text x="36" y="100" font-size="10.5" fill="#c4ccda">1. agent recalls a fact from memory</text>
+<text x="36" y="120" font-size="10.5" fill="#c4ccda">2. agent acts on the recalled fact directly</text>
+<text x="36" y="140" font-size="10.5" fill="#c4ccda">3. no required re-check against live state</text>
+<text x="36" y="168" font-size="10.5" fill="#f2a65a">58.9% of non-timeout failures: PMH, ProcMH, or OMH</text>
+<text x="36" y="188" font-size="10.5" fill="#8893a8">(Partial / Process / Output Memory Hallucination)</text>
+<text x="36" y="212" font-size="10.5" fill="#c4ccda">Agent-S2 pass@3 without long-term memory:</text>
+<text x="36" y="232" font-size="12" fill="#f2a65a" font-weight="600">45.0% &rarr; 25.0% (40-task subset)</text>
+<rect x="420" y="50" width="380" height="300" rx="10" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="436" y="76" font-size="12" font-weight="600">phoneshell's memory.py (re-verified recall)</text>
+<text x="436" y="100" font-size="10.5" fill="#c4ccda">1. first visit: full perception, screen fingerprinted</text>
+<text x="436" y="120" font-size="10.5" fill="#c4ccda">2. control locations, labels, transitions saved</text>
+<text x="436" y="140" font-size="10.5" fill="#c4ccda">3. persisted to disk, keyed by app bundle id</text>
+<text x="436" y="160" font-size="10.5" fill="#c4ccda">4. later run: fingerprint re-loaded on sight</text>
+<text x="436" y="188" font-size="10.5" fill="#5ad1a0" font-weight="600">5. remembered control is resolved against the</text>
+<text x="436" y="206" font-size="10.5" fill="#5ad1a0" font-weight="600">live tree before it is ever tapped</text>
+<text x="436" y="230" font-size="10.5" fill="#c4ccda">6. a transition that stops holding decays out</text>
+<text x="436" y="254" font-size="10.5" fill="#8893a8">structurally excludes PMH/ProcMH/OMH-style</text>
+<text x="436" y="272" font-size="10.5" fill="#8893a8">hallucination; cannot act on an unverified recall</text>
+<text x="20" y="384" font-size="10" fill="#8893a8">Sources: arXiv:2602.06075 Tables 2-3; phoneshell/memory.py, read 16 October 2026.</text>
+</g></svg>
+
+<h2 id="phoneshell-remembers-differently">phoneshell remembers differently, and it is not attempting MemGUI-Bench's task</h2>
+
+<p>phoneshell's (<a href="https://github.com/Blomega/phoneshell">github.com/Blomega/phoneshell</a>) own memory system, <code>phoneshell/memory.py</code>, is not ephemeral. It writes a JSON file per app bundle ID to a persistent store (<code>STORE = RUNTIME / "memory"</code>), loaded fresh at the start of a run through <code>_load(bundle_id)</code> and written back through <code>save(bundle_id)</code>, so what one run learns about an app's screens is still there on the next run, on a different day, started by a different task. What gets stored is narrow by design: a structural fingerprint of a screen (hashed after stripping volatile text like prices, timestamps, and the UUIDs and MAC addresses iOS bakes into some accessibility identifiers), the location and label of its controls, which action led to which screen and how reliably, and how long that screen takes to settle. The module's own docstring states the rule that governs all of it: "Nothing here is trusted blindly: a remembered control is still resolved against the live tree before it is tapped, and a transition that stops holding decays."</p>
+
+<p>That rule is the structural difference from the failure mode MemGUI-Bench documents. Partial, Process, and Output Memory Hallucination, by the paper's own framing, are failures of an agent acting on a RECALLED fact that turns out not to match the current state. phoneshell's design makes that category close to impossible to trigger by construction, because a remembered control is never the basis for an action; it is only a candidate that still has to be found and confirmed in the live tree before anything happens. The tradeoff is scope, not correctness: phoneshell's memory only ever stores procedural, navigational facts about how a screen behaves, never declarative facts about what a user said, preferred, or was told earlier in a conversation. None of phoneshell's 80 tasks ask an agent to recall a preference stated three screens ago or in a previous session, the exact shape of MemGUI-Bench's 89.8% memory-intensive task pool. phoneshell would not hallucinate on that task category. It has never been asked to attempt it.</p>
+
+<h2 id="what-it-means-for-anyone-building-agent-memory">What it means for anyone building agent memory into a phone agent</h2>
+
+<ul>
+  <li>The hallucination failure mode MemGUI-Bench documents is specifically a risk of acting on a model's generative recall of a fact. A memory system that stores structured, re-verifiable state (a fingerprint, a label, a coordinate) and requires a fresh match against ground truth before use is a different design, not a smaller version of the same one, and it is not eligible for the same failure.</li>
+  <li>That design has a real cost: it cannot do what MemGUI-Bench actually measures, remembering a user's stated preference or an instruction given earlier, because it was never built to store that kind of fact at all. Adding declarative, cross-session preference memory to a tree-verified system like phoneshell's would require a second memory path, not an extension of the existing one.</li>
+  <li>Agent-S2's 20-point pass@3 drop without long-term memory is the paper's most direct evidence that persistence itself, not just better single-shot reasoning, is doing real work. A system that resets its understanding of an app on every run is giving up a specific, measured amount of performance for the simplicity of starting clean.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># phoneshell's own memory persistence and its re-verification rule
+sed -n '1,30p' phoneshell/memory.py
+grep -n "resolved against the live tree\|decays" phoneshell/memory.py
+
+# confirm it persists across runs, keyed by app, not per-session
+grep -n "STORE\|_load\|def save" phoneshell/memory.py
+
+# MemGUI-Bench's own failure-mode taxonomy and tables
+curl -s https://arxiv.org/html/2602.06075 | grep -i "hallucination"
+# full tables: https://arxiv.org/html/2602.06075 (Table 2, Table 3, appendix A.8.1)</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim phoneshell's memory design structurally cannot produce Partial, Process, or Output Memory Hallucination because it never acts on a remembered fact without re-matching it against the live accessibility tree first. That claim is falsified if a future version of <code>phoneshell/memory.py</code> adds a code path that acts on a cached fact without a live re-check, or if an audit of a real run finds a tap executed against a stale, unverified memory record. We also claim phoneshell has no equivalent of MemGUI-Bench's cross-session preference or instruction recall. That is wrong the moment a phoneshell task asks an agent to recall something stated in an earlier, separate run and scores it. We will treat either event, checked by 31 March 2027, as grounds to revisit this comparison.</p>
+
+<h2 id="sources">Sources</h2>
+
+<ul>
+  <li>Liu, Zhao, et al., <a href="https://arxiv.org/abs/2602.06075">MemGUI-Bench: Benchmarking Memory of Mobile GUI Agents</a>, arXiv:2602.06075, submitted 3 February 2026, revised 27 August 2026 (v3), read 16 October 2026.</li>
+  <li>Full tables (Table 2 agent scores, Table 3 long-term memory ablation, Appendix A.8.1 failure-mode definitions): <a href="https://arxiv.org/html/2602.06075">arxiv.org/html/2602.06075</a>.</li>
+  <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/memory.py</code>, read 16 October 2026.</li>
+</ul>
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
