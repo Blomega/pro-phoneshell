@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VenusBench-Mobile's best agent holds 15% of its tasks stable under a theme or language change, most hold 0%; phoneshell has run its 80 tasks only one way - Blolabel</title>
+<meta name="description" content="VenusBench-Mobile (ICML 2026) retests each task four ways: translated, paraphrased, in dark theme, and on a tablet. Every agent's Stability Pass Rate across all four collapses toward zero. phoneshell has never varied theme, language, or device shape across any of its 80 tasks.">
+<link rel="canonical" href="https://blolabel.ai/blog/screen-changes-shape-stability-collapses/">
+<meta property="og:title" content="VenusBench-Mobile's best agent holds 15% of its tasks stable under a theme or language change, most hold 0%; phoneshell has run its 80 tasks only one way - Blolabel">
+<meta property="og:description" content="VenusBench-Mobile (ICML 2026) retests each task four ways: translated, paraphrased, in dark theme, and on a tablet. Every agent's Stability Pass Rate across all four collapses toward zero. phoneshell has never varied theme, language, or device shape across any of its 80 tasks.">
+<meta property="og:url" content="https://blolabel.ai/blog/screen-changes-shape-stability-collapses/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/screen-changes-shape-stability-collapses-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "VenusBench-Mobile's best agent holds 15% of its tasks stable under a theme or language change, most hold 0%; phoneshell has run its 80 tasks only one way", "description": "VenusBench-Mobile (ICML 2026) retests each task four ways: translated, paraphrased, in dark theme, and on a tablet. Every agent's Stability Pass Rate across all four collapses toward zero. phoneshell has never varied theme, language, or device shape across any of its 80 tasks.", "datePublished": "2026-10-16", "dateModified": "2026-10-16", "url": "https://blolabel.ai/blog/screen-changes-shape-stability-collapses/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/screen-changes-shape-stability-collapses/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/screen-changes-shape-stability-collapses-hero.png", "citation": ["https://arxiv.org/abs/2604.06182", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-16">16 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>VenusBench-Mobile's best agent holds 15% of its tasks stable under a theme or language change, most hold 0%; phoneshell has run its 80 tasks only one way</h1>
+  <p class="standfirst">VenusBench-Mobile retests each of its 149 base tasks four more ways: in Chinese, in a paraphrased English instruction, in dark theme, and on a tablet screen. Its Stability Pass Rate, the share of tasks an agent gets right in every one of those variants, reaches 15% for the best model tested and 0% for most. None of phoneshell's 80 environment files vary theme, language, or device shape at all.</p>
+
+<p>VenusBench-Mobile, accepted as an ICML 2026 oral and posted to arXiv on 6 February 2026 by Yichen Gong, Zhuohan Cai, Sunhao Dai, Yuqi Zhou, Zhangxuan Gu, Changhua Meng and Shuheng Shen (Tsinghua University and Ant Group), scores two different things per task. One is whether an agent completes a task at all. The other, Stability Pass Rate (SPR), is whether it completes the SAME task again under four perturbations the paper adds on top of its 149-task primary pool: a Chinese translation of the instruction, a semantically equivalent English rewrite, a dark-theme render of the same screens, and the same app on a tablet at 2560x1600 in landscape. Twenty instances of each, drawn from the same base tasks, give a 100-instance subset (20 originals plus 80 variants) built specifically to measure whether a pass was luck or competence.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/screen-changes-shape-stability-collapses-hero.png" alt="Abstract technical illustration on a dark grid: four identical glowing rectangular frames arranged around a central success marker, each frame rendered in a different tint representing a different condition, with thin connecting lines fraying and dimming toward three of the four frames while one stays bright, cool blues and teals with one amber accent" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="what-spr-actually-penalises">What SPR actually penalises, and what it does not</h2>
+
+<p>SPR is unforgiving by construction: an agent only earns credit for a base task if it also passes all four of that task's perturbed variants. Table 3 of the paper gives per-model total success rate on the full 149-task pool. The best single-model result is UI-Venus-72B at 15.4%. The best result of any kind is a planner-executor pairing, Gemini-3-Pro as planner with UI-Venus-72B as the grounding executor, at 36.9%, with GPT-5.1 paired the same way reaching 26.9%. Every other model tested, run alone, falls between 6.7% and 12.8%. The paper's own text states the perturbation result plainly: most models reach an SPR of 0%, and even the best-performing model reaches only 15%. Visual layout changes, the tablet condition specifically, produce the largest drop of the four perturbation types for every model tested. The paper's diagnosis is that failures are dominated by perception and memory deficiencies that a coarse, pass/fail-only evaluation would never surface, because a model that happens to pass the one version of a task it was shown looks identical, on that metric alone, to a model that would pass it under any phrasing.</p>
+
+<table>
+  <thead><tr><th>Model</th><th>Total success (149 tasks)</th><th>Setup</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>Gemini-3-Pro + UI-Venus-72B</td><td>36.9%</td><td>planner-executor pair</td><td>arXiv:2604.06182 Table 3</td></tr>
+    <tr><td>GPT-5.1 + UI-Venus-72B</td><td>26.9%</td><td>planner-executor pair</td><td>arXiv:2604.06182 Table 3</td></tr>
+    <tr><td>UI-Venus-72B</td><td>15.4%</td><td>single model</td><td>arXiv:2604.06182 Table 3</td></tr>
+    <tr><td>MAI-UI-8B</td><td>12.8%</td><td>single model</td><td>arXiv:2604.06182 Table 3</td></tr>
+    <tr><td>Mobile-Agent-v3 (GUI-Owl-7B)</td><td>12.1%</td><td>agentic framework</td><td>arXiv:2604.06182 Table 3</td></tr>
+    <tr><td>UI-Venus-7B</td><td>8.1%</td><td>single model</td><td>arXiv:2604.06182 Table 3</td></tr>
+    <tr><td>Qwen3-VL-30B-A3B</td><td>8.7%</td><td>single model</td><td>arXiv:2604.06182 Table 3</td></tr>
+    <tr><td>Qwen3-VL-8B / GUI-Owl-7B</td><td>6.7%</td><td>single model</td><td>arXiv:2604.06182 Table 3</td></tr>
+    <tr><td>Best model, Stability Pass Rate</td><td>15%</td><td>all 4 perturbations must hold</td><td>arXiv:2604.06182 &sect;5</td></tr>
+    <tr><td>Most models, Stability Pass Rate</td><td>0%</td><td>all 4 perturbations must hold</td><td>arXiv:2604.06182 &sect;5</td></tr>
+  </tbody>
+</table>
+
+<svg viewBox="0 0 820 400" style="width:100%;height:auto" role="img" aria-label="Horizontal bar chart of VenusBench-Mobile total success rate on the 149-task pool by model or pairing: Gemini-3-Pro plus UI-Venus-72B planner-executor pair 36.9 percent, GPT-5.1 plus UI-Venus-72B pair 26.9 percent, UI-Venus-72B alone 15.4 percent, MAI-UI-8B 12.8 percent, Mobile-Agent-v3 with GUI-Owl-7B 12.1 percent, Qwen3-VL-30B-A3B 8.7 percent, UI-Venus-7B 8.1 percent, and Qwen3-VL-8B with GUI-Owl-7B 6.7 percent; the two planner-executor pairings score more than double the best single model.">
+<rect x="0" y="0" width="820" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif">
+<text x="20" y="26" font-size="14" font-weight="600" fill="#e9ecf2">Total success rate on VenusBench-Mobile's 149-task pool</text>
+<line x1="260" y1="40" x2="260" y2="334" stroke="#6f7b90" stroke-width="1"/>
+<rect x="260" y="50" width="516.6" height="24" rx="4" fill="#f2a65a"/>
+<text x="250" y="67" font-size="11" fill="#c4ccda" text-anchor="end">Gemini-3-Pro + UI-Venus-72B (pair)</text>
+<text x="784.6" y="67" font-size="11" fill="#e9ecf2">36.9%</text>
+<rect x="260" y="86" width="376.6" height="24" rx="4" fill="#f2a65a"/>
+<text x="250" y="103" font-size="11" fill="#c4ccda" text-anchor="end">GPT-5.1 + UI-Venus-72B (pair)</text>
+<text x="644.6" y="103" font-size="11" fill="#e9ecf2">26.9%</text>
+<rect x="260" y="122" width="215.6" height="24" rx="4" fill="#3d4a63"/>
+<text x="250" y="139" font-size="11" fill="#c4ccda" text-anchor="end">UI-Venus-72B</text>
+<text x="483.6" y="139" font-size="11" fill="#e9ecf2">15.4%</text>
+<rect x="260" y="158" width="179.2" height="24" rx="4" fill="#3d4a63"/>
+<text x="250" y="175" font-size="11" fill="#c4ccda" text-anchor="end">MAI-UI-8B</text>
+<text x="447.2" y="175" font-size="11" fill="#e9ecf2">12.8%</text>
+<rect x="260" y="194" width="169.4" height="24" rx="4" fill="#3d4a63"/>
+<text x="250" y="211" font-size="11" fill="#c4ccda" text-anchor="end">Mobile-Agent-v3 (GUI-Owl-7B)</text>
+<text x="437.4" y="211" font-size="11" fill="#e9ecf2">12.1%</text>
+<rect x="260" y="230" width="121.8" height="24" rx="4" fill="#3d4a63"/>
+<text x="250" y="247" font-size="11" fill="#c4ccda" text-anchor="end">Qwen3-VL-30B-A3B</text>
+<text x="389.8" y="247" font-size="11" fill="#e9ecf2">8.7%</text>
+<rect x="260" y="266" width="113.4" height="24" rx="4" fill="#3d4a63"/>
+<text x="250" y="283" font-size="11" fill="#c4ccda" text-anchor="end">UI-Venus-7B</text>
+<text x="381.4" y="283" font-size="11" fill="#e9ecf2">8.1%</text>
+<rect x="260" y="302" width="93.8" height="24" rx="4" fill="#3d4a63"/>
+<text x="250" y="319" font-size="11" fill="#c4ccda" text-anchor="end">Qwen3-VL-8B / GUI-Owl-7B</text>
+<text x="361.8" y="319" font-size="11" fill="#e9ecf2">6.7%</text>
+<text x="20" y="384" font-size="10" fill="#8893a8">Source: arXiv:2604.06182, Table 3, read 16 October 2026.</text>
+</g></svg>
+
+<svg viewBox="0 0 820 400" style="width:100%;height:auto" role="img" aria-label="Diagram of VenusBench-Mobile's stability check. One base task sits at the centre. Four arrows lead to its variants: a Chinese translation of the instruction, a paraphrased English instruction, the same screens rendered in dark theme, and the same app run on a 2560 by 1600 tablet in landscape. Twenty instances of each variant exist. An agent only earns Stability Pass Rate credit for the base task if it also passes every one of the four variants; the best model tested clears this bar on 15 percent of tasks, most models clear it on 0 percent.">
+<rect x="0" y="0" width="820" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">VenusBench-Mobile: one base task, four ways to fail it again</text>
+<rect x="330" y="160" width="160" height="80" rx="10" fill="#262d3d" stroke="#f2a65a"/>
+<text x="344" y="186" font-size="12" font-weight="600">base task</text>
+<text x="344" y="206" font-size="10.5" fill="#c4ccda">149-task primary pool</text>
+<text x="344" y="224" font-size="10.5" fill="#8893a8">1 of 20 in this subset</text>
+<rect x="60" y="30" width="200" height="90" rx="10" fill="#1d2330" stroke="#6f7b90"/>
+<text x="74" y="52" font-size="12" font-weight="600">Chinese</text>
+<text x="74" y="72" font-size="10.5" fill="#c4ccda">instruction translated</text>
+<text x="74" y="92" font-size="10.5" fill="#8893a8">20 instances</text>
+<rect x="560" y="30" width="200" height="90" rx="10" fill="#1d2330" stroke="#6f7b90"/>
+<text x="574" y="52" font-size="12" font-weight="600">Variation</text>
+<text x="574" y="72" font-size="10.5" fill="#c4ccda">instruction paraphrased</text>
+<text x="574" y="92" font-size="10.5" fill="#8893a8">20 instances</text>
+<rect x="60" y="280" width="200" height="90" rx="10" fill="#1d2330" stroke="#6f7b90"/>
+<text x="74" y="302" font-size="12" font-weight="600">Dark</text>
+<text x="74" y="322" font-size="10.5" fill="#c4ccda">screens in dark theme</text>
+<text x="74" y="342" font-size="10.5" fill="#8893a8">20 instances</text>
+<rect x="560" y="280" width="200" height="90" rx="10" fill="#262d3d" stroke="#f2a65a"/>
+<text x="574" y="302" font-size="12" font-weight="600">Pad</text>
+<text x="574" y="322" font-size="10.5" fill="#c4ccda">tablet, 2560x1600, landscape</text>
+<text x="574" y="342" font-size="10.5" fill="#f2a65a">largest drop of all 4 types</text>
+<line x1="260" y1="75" x2="330" y2="175" stroke="#6f7b90" stroke-width="1.5"/>
+<line x1="560" y1="75" x2="490" y2="175" stroke="#6f7b90" stroke-width="1.5"/>
+<line x1="260" y1="325" x2="330" y2="225" stroke="#6f7b90" stroke-width="1.5"/>
+<line x1="560" y1="325" x2="490" y2="225" stroke="#f2a65a" stroke-width="1.5"/>
+<text x="330" y="270" font-size="10.5" fill="#8893a8">Stability Pass Rate = fraction of base tasks where</text>
+<text x="330" y="286" font-size="10.5" fill="#8893a8">ALL four variants also pass, not just the base task</text>
+<text x="20" y="384" font-size="10" fill="#8893a8">Source: arXiv:2604.06182, Table 3 and section 5, read 16 October 2026.</text>
+</g></svg>
+
+<h2 id="phoneshell-has-never-asked-the-question">phoneshell has never asked the question this benchmark asks</h2>
+
+<p>None of phoneshell's (<a href="https://github.com/Blomega/phoneshell">github.com/Blomega/phoneshell</a>) 80 environment files in <code>environments/</code> reference device orientation, dark mode, appearance, locale, or a second device shape. A grep for those terms across every YAML task file returns zero matches. Every run reported on this site uses one physical iPhone 17 Pro Max, in whatever appearance and language it happened to be set to that day, and each task is attempted exactly once per model per run; <code>results.json</code> keeps a single pass/fail row per attempt, with no field for a second, varied attempt at the same instruction. A model that passes "Open the Calculator, then open Safari, then go back to the Calculator" (<code>environments/multi_app_switch.yaml</code>) is scored as having solved that task, full stop. Nothing in the harness asks whether it would still pass if the instruction were rephrased, the phone were in dark mode, or the task ran on an iPad instead.</p>
+
+<p>This is not a flaw unique to phoneshell. iOSWorld (arXiv:2606.09764), PhoneWorld (arXiv:2605.29486) and MobileGUI-VBench (arXiv:2609.12394), the other benchmarks this site has covered in depth, score the same way: one instruction, one environment, one attempt, one pass/fail outcome. VenusBench-Mobile's contribution is showing what that design choice hides. A model's reported success rate is not just an estimate of how often it succeeds; on this evidence, it may be close to an estimate of how often it succeeds specifically on the exact phrasing and exact rendering it happened to be tested with. The planner-executor result makes this concrete: a system that plans and grounds separately, Gemini-3-Pro paired with UI-Venus-72B, beats single models by more than double on the base task set (36.9% against a next-best single-model score of 15.4%), but the paper does not report that pair's own SPR, so whether its advantage on the base task survives a dark-theme render or a Chinese translation is, as far as this source goes, not reported.</p>
+
+<h2 id="what-it-means-for-anyone-grading-a-phone-agent">What it means for anyone grading a phone agent</h2>
+
+<ul>
+  <li>A single pass/fail number per task, which is what phoneshell, iOSWorld, and most mobile agent benchmarks report, cannot distinguish a model that understood the screen from one that memorised the exact phrasing and rendering it was shown. VenusBench-Mobile's SPR exists specifically to separate those two things, and on its evidence the gap between them is large: a 15.4% single-model success rate on the base task corresponds to an SPR of 15% or less for the best model and 0% for most.</li>
+  <li>The single largest perturbation effect in the paper is the device-shape change, tablet versus phone, not the language change. For anyone building an iOS-specific benchmark, that is a reason to treat "the task passed on an iPhone" and "the task would pass on an iPad" as two separate claims, not one.</li>
+  <li>Adding a stability check to an existing 80-task suite does not require new tasks, only repeated runs of the existing ones under a controlled variation: same instruction translated, same screens re-themed, same app on a different device. phoneshell has the infrastructure to repeat a task (the <code>setup</code>/<code>checks</code>/<code>teardown</code> structure in every environment YAML already supports multiple runs); it has simply never been pointed at the same task twice with one variable changed.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># confirm no phoneshell task varies theme, locale, or device shape
+grep -rliE "orientation|dark.?mode|locale|appearance|ipad|tablet" environments/*.yaml || echo "no matches"
+
+# confirm every task is scored from a single run, not paired variants
+grep -n "passed\|turns\|seconds\|checks" phoneshell/bench/schema.py | head -10
+
+# VenusBench-Mobile's own numbers
+curl -s https://arxiv.org/abs/2604.06182 | grep -i "stability\|perturbation"
+# full results table (Table 3) and the SPR definition (section 5):
+# https://arxiv.org/html/2604.06182</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim phoneshell has never tested any of its 80 tasks under a language, theme, or device-shape variation. That is wrong the moment a future run adds a second rendering of an existing task's instruction or runs the suite on an iPad, and either is reflected in <code>results.json</code>. We also claim VenusBench-Mobile's Stability Pass Rate, not its base success rate, is the more informative number for judging whether a model generalises. That claim is falsified if a later version of VenusBench-Mobile, or an independent replication, finds a model whose SPR tracks its base success rate closely (within a few points) rather than collapsing toward it. We will treat either event, checked by 31 March 2027, as grounds to revisit this comparison.</p>
+
+<h2 id="sources">Sources</h2>
+
+<ul>
+  <li>Gong, Cai, Dai, Zhou, Gu, Meng, Shen, <a href="https://arxiv.org/abs/2604.06182">VenusBench-Mobile: A Challenging and User-Centric Benchmark for Mobile GUI Agents with Capability Diagnostics</a>, arXiv:2604.06182, submitted 6 February 2026, accepted ICML 2026 (PMLR 306:35862-35887), read 16 October 2026.</li>
+  <li>Full text, Table 3, and the Stability Pass Rate definition: <a href="https://arxiv.org/html/2604.06182">arxiv.org/html/2604.06182</a>.</li>
+  <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>environments/</code>, <code>phoneshell/bench/schema.py</code>, read 16 October 2026.</li>
+</ul>
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
