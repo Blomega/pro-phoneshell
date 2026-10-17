@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Doubling the step budget from 50 to 100 buys UI-Venus-2-9B 9.4 points on MobileWorld; every one of phoneshell's 80 tasks runs at a quarter of that budget, untested - Blolabel</title>
+<meta name="description" content="UI-Venus-2's own technical report scores MobileWorld twice per model, at 50 steps and at 100 steps. UI-Venus-2-9B gains 9.4 points, UI-Venus-2-27B gains 6.8, Qwen-UI-Agent-27B gains 3.4. phoneshell caps every one of its 80 tasks at the schema default of 25 steps and has never run the same task at a second budget.">
+<link rel="canonical" href="https://blolabel.ai/blog/double-the-steps-nine-points-on-mobileworld/">
+<meta property="og:title" content="Doubling the step budget from 50 to 100 buys UI-Venus-2-9B 9.4 points on MobileWorld; every one of phoneshell's 80 tasks runs at a quarter of that budget, untested - Blolabel">
+<meta property="og:description" content="UI-Venus-2's own technical report scores MobileWorld twice per model, at 50 steps and at 100 steps. UI-Venus-2-9B gains 9.4 points, UI-Venus-2-27B gains 6.8, Qwen-UI-Agent-27B gains 3.4. phoneshell caps every one of its 80 tasks at the schema default of 25 steps and has never run the same task at a second budget.">
+<meta property="og:url" content="https://blolabel.ai/blog/double-the-steps-nine-points-on-mobileworld/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/double-the-steps-nine-points-on-mobileworld-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Doubling the step budget from 50 to 100 buys UI-Venus-2-9B 9.4 points on MobileWorld; every one of phoneshell's 80 tasks runs at a quarter of that budget, untested", "description": "UI-Venus-2's own technical report scores MobileWorld twice per model, at 50 steps and at 100 steps. UI-Venus-2-9B gains 9.4 points, UI-Venus-2-27B gains 6.8, Qwen-UI-Agent-27B gains 3.4. phoneshell caps every one of its 80 tasks at the schema default of 25 steps and has never run the same task at a second budget.", "datePublished": "2026-10-16", "dateModified": "2026-10-16", "url": "https://blolabel.ai/blog/double-the-steps-nine-points-on-mobileworld/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/double-the-steps-nine-points-on-mobileworld/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/double-the-steps-nine-points-on-mobileworld-hero.png", "citation": ["https://arxiv.org/abs/2609.00028", "https://arxiv.org/abs/2512.19432", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAABOCAMAAAD4iTj8AAAAilBMVEVMaXFiXmJhXmEVieRkYGRiXmJiXmJEaZJiX2IWjehNaIJhXmEUjOcVjOdgXWBjX2MWjecUjOZiXmJiXmIUi+UVjehUoN7w9/33+/7q9Pzg7/p8gIlkYGQXjuj///9oZGgWk/JmY2YVjullYWUJh+dtaG0olumr1/dSq+7T6vo6n+tntfCMx/N7vvJEi25LAAAAHHRSTlMAakku/HusA/z7Eo+hwDL30nXizUnjHfvKolE8aPCOgAAAAAlwSFlzAAALEgAACxIB0t1+/AAAB35JREFUeJztmn1zsjoThwMCCaCg4EvbASFA1bZ3v//XO7MJeQFBwJ55nnNP85v+oSYB9mJ3k2yKkJGRkZGRkZGRkZGRkZGRkZGRkdHPhZXQ7xPuGH2P4Gk4P8L6P3slGCOEV7vderNZr3f7I/yEfpEwQqvd1i+FDpt90PWCwBKyF147kiOjxc8VzborvtdI++gV0Grtl2XuC1Vledhh5QQY2e8F17u3yASMQjnSXehVGFnaXReOxUvug3c+WJ9LMQbblbwpRnYdO6CYLgZA25HFEwAKddfxscdVX0eIaPnw6ueR2xw3ZaVZLxiU/k7cFSObkgzkFIsBFE478hkAYuw4AIzWld/TYbvetw6M0Ur69XZ4/GpbCvOrBiQQ5KUgMAeACjM95voAxoJxKH5nAyh7r6+qyrLacAcGAK095RAAjI7K/uZy+/q6fVYtAt8XBKYB6I89wwPu0tTQtZ4GkEMMl/4exkwBQHijhv85nUEfN+kELYFJABjhyA09L7QxQpEtFPQAoMCCTlakJVhucWDDcM9zoU363dMAcnj2A5/NHwLojL6ehb6ED1Q+c6QpABjZqUMhXdM0QuG7Q5lY3tcB2AnvFHuRPsUg24spaykojVMLuP0YQO6Xa3gxDwFgtJfpr/mW9p9Pl0oM2szwAIzcmhLiOA4hNI7CIiYgh3YAvFu2Q6ET62WpBBt4tMjYcN5WJHbrd0sB+FwiFRyC6RDQAuBDATh/d4PgMQAwkvDmLCM09age9QIAqcOklr1I0RLAKErUaDaM1DVLF8sBlEzSBao9ZJcHADDaqwT4qdl/vioA26kQYI3KAuKIL10AGXEcrReJWRSA/e2llYjD8CwHsGbypfvuJgEoB2huOoAPLZIYxocekN6ZMASgZ2R7IZwWyi3kpwzwLAewZ9j2/kwA0NbCyvPmSwcgkwBPJY8AqDb++p0HACDO5eestVFaXVMVImDxYgAVvCssX+sMADuVAUYBQCp5DMBTNlBKVUDfASAFLSQsUoRglPQeSB7KlQiBCHnGAxAKtjyz+9VqCsB6GgC/zKMQCGRuI5ln2558jf0cQJzQtmQzoSnGKIrl1xAj7EkcbOziHLADbVr72/T1aBbQ5oCxHNDOA6MAwAb5/l0gHgoj+gAoS/yyOUsCJCPAoSm7Wtrycdj257lZoOT255C9HgPABwWgupyGZoEZAOz2mUmdsCJCkAx6AKlTFqCyOcsiwNG20jACuVS72E/WAX6Vs1XsQwCBBiBv1ELwfL4tASAs5E+J0cg6gMe8aia1jZDyeS4REVkWPwFAU3XgCWECgLYNbj5PQw4wDUA9Zbt86W5/epsh3SUYgMFJEgBEPwKQ+5s9b57rAdpa+PT5/wDAl8Liy1Me4OtL4bJcT4UAVjthRuDPgP0DADrFNz0EpI+TIQBUNHcBCJ+vO8qeygGlvhb22yXM3FmgyS/N7eN0Pl0vzacqi8zIATJvpcAGYTEt9gC0zWrW5ElQTBlx0pX3xEpww5bCG7+NbLaKnbcOaKrb9eP01TSXz7zJr+ePP5+NXFHvdStpGukKkDaV1xZbvo1Ng5kNzSLPizQnr4uDIMBRFADDIAiCpxdCaN8ucPmGeM5KsLnxreD1dskv3+3nC3eC6nDsLHdJrKm2tIUQyWI3ilyxLLgHEFtRFIooh2kRoSiTCyHobMdJ6rk2cH1mN7jn4Sl/YRviGXsBEfwQ/yc5F3ywVOCXG30v0BVf26ipLCvieHwpTDIaO3LjyI3CqSKQul6cZVAYIUnq/cADkAhteHkdAHdnB6xnZwVw7q0G2h3FMACHAZA+DzYKe4Y3Q5DepQfwiNA2QwXAg8pIRuD44QkAGGLnuBOze+VrAPLK32o6MLugHqCXgro6XRqfQXzsAVpa6+K58wB9KIsAfSeRqXoBrxYsB3DgkiWRTgjkeVXq4gvFbakvgPq6Nv2K0AAAfUvLHl5Y2s8BtV42IZTVvTCyZQHl5wWRiksuCyB8NQDq6AuqxtywfaklgHt9VlvIR489AGHvXQuCRG5ougBqL5FOQMh7KJ7fqnUyjCBLiM8URX2tJNifBrtqC94wWq8F9vXdtMV1u26Llh3BLMB24F4BRVD2V9iuPNByO0djllU4bSen8LRjtwRqolKZXhSdPhrDY1Vh5gBTAKB68MD+81WeC4hjyq7eRWnTjYuC1jUtYqt3HKp/c+Oihk40sXQLAjehBaV1VlNoC1VZfMbhKB4GAE6+CaYBYHQcTwHn86u4beQOq63vYxRYXpokaRghZHda9W8oCqGTJyr/wgQU2CEMT1IvtNlT89/VXcePxzEAuFdV+uugezbYlTr1ehsn8DL7NJPBDAJ5qjPai3e6O0Djw1nToqNtxADcy9+u5dngQLOcBTiBl/H3r53mDUtrFw/fbez0lT/dmdH+1G2a8+81GO22m67Wu91K+BFGq82gttrZ9/F1yPzTG/qbhZf4Eb53gtMrbAH+DuHH/yQz4bttp7eXU8/8v8b+f0Ng6/Ht9YXp9fWN589fJTzx/TcIyw+/0XojIyMjIyMjIyMjIyMjIyP0n9Y/P2/lF8zxuoMAAAAASUVORK5CYII=" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-16">16 October 2026</time>
+    <span>7 min read</span>
+  </div>
+  <h1>Doubling the step budget from 50 to 100 buys UI-Venus-2-9B 9.4 points on MobileWorld; every one of phoneshell's 80 tasks runs at a quarter of that budget, untested</h1>
+  <p class="standfirst">UI-Venus-2's technical report scores every model it tests on MobileWorld twice: once capped at 50 steps, once at 100. The smaller model gains 9.4 percentage points from the extra room, the larger model gains 6.8, and Qwen-UI-Agent-27B gains 3.4. phoneshell has never run that experiment: every one of its 80 tasks is capped at 25 steps, and no task file has ever asked what a second, larger budget would change.</p>
+
+<p>The UI-Venus-2 Technical Report, posted to arXiv on 27 August 2026 (arXiv:2609.00028) by the inclusionAI team, evaluates its 9B and 27B models, and several competitors, on MobileWorld (arXiv:2512.19432, Tongyi Lab), a 201-task, 20-app benchmark built because AndroidWorld's leaderboard had reached the high 90s and stopped discriminating between frontier agents. On MobileWorld's GUI-only setting, a 117-task subset that excludes its MCP-augmented and agent-user-interactive variants, UI-Venus-2's own table reports every model's success rate at two separate step ceilings, 50 and 100, rather than picking one and moving on.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/double-the-steps-nine-points-on-mobileworld-hero.png" alt="Abstract technical illustration on a dark grid: two parallel glowing paths of dots representing agent steps, one path half the length of the other and ending at a lower marker, the longer path continuing to a higher marker, with a faint diminishing-returns curve traced behind both paths, cool blues and teals with one amber accent" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="the-same-model-scored-twice">The same model, scored twice, ten weeks apart in the same table</h2>
+
+<p>The gain from doubling the budget is real on every model UI-Venus-2's table reports it for, and it shrinks as the baseline rises. UI-Venus-2-9B moves from 65.8% at 50 steps to 75.2% at 100, a gain of 9.4 points. UI-Venus-2-27B moves from 76.1% to 82.9%, a gain of 6.8 points. Qwen-UI-Agent-27B, the strongest model in the comparison, moves from 82.1% to 85.5%, a gain of 3.4 points. The pattern across all three is the same direction (more steps, higher score) but a shrinking size: the model that starts lowest gains the most from the extra budget, and the model that starts highest gains the least. The table's other models, Kimi-K3 (74.4%), Seed-2.1-Pro (73.2%), GPT-5.6-Sol (70.1%) and Kimi-K2.6 (55.6%), are reported only at 50 steps, so whether the same pattern holds for them is not reported.</p>
+
+<table>
+  <thead><tr><th>Model</th><th>50-step success</th><th>100-step success</th><th>Gain</th></tr></thead>
+  <tbody>
+    <tr><td>UI-Venus-2-9B</td><td>65.8%</td><td>75.2%</td><td>+9.4 pp</td></tr>
+    <tr><td>UI-Venus-2-27B</td><td>76.1%</td><td>82.9%</td><td>+6.8 pp</td></tr>
+    <tr><td>Qwen-UI-Agent-27B</td><td>82.1%</td><td>85.5%</td><td>+3.4 pp</td></tr>
+    <tr><td>Kimi-K3</td><td>74.4%</td><td>not reported</td><td>not reported</td></tr>
+    <tr><td>Seed-2.1-Pro</td><td>73.2%</td><td>not reported</td><td>not reported</td></tr>
+    <tr><td>GPT-5.6-Sol</td><td>70.1%</td><td>not reported</td><td>not reported</td></tr>
+    <tr><td>Kimi-K2.6</td><td>55.6%</td><td>not reported</td><td>not reported</td></tr>
+  </tbody>
+</table>
+
+<svg viewBox="0 0 760 360" style="width:100%;height:auto" role="img" aria-label="Bar chart comparing MobileWorld GUI-only success rate at a 50-step budget against a 100-step budget for three models. UI-Venus-2-9B rises from 65.8 percent to 75.2 percent, a gain of 9.4 points. UI-Venus-2-27B rises from 76.1 percent to 82.9 percent, a gain of 6.8 points. Qwen-UI-Agent-27B rises from 82.1 percent to 85.5 percent, a gain of 3.4 points. The gain shrinks as the 50-step baseline rises.">
+<rect x="0" y="0" width="760" height="360" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">MobileWorld GUI-only success: 50 steps vs 100 steps</text>
+<line x1="70" y1="300" x2="720" y2="300" stroke="#2a3140"/><text x="62" y="304" font-size="10" fill="#c4ccda" text-anchor="end">0%</text>
+<line x1="70" y1="235" x2="720" y2="235" stroke="#2a3140"/><text x="62" y="239" font-size="10" fill="#c4ccda" text-anchor="end">25%</text>
+<line x1="70" y1="170" x2="720" y2="170" stroke="#2a3140"/><text x="62" y="174" font-size="10" fill="#c4ccda" text-anchor="end">50%</text>
+<line x1="70" y1="105" x2="720" y2="105" stroke="#2a3140"/><text x="62" y="109" font-size="10" fill="#c4ccda" text-anchor="end">75%</text>
+<line x1="70" y1="40" x2="720" y2="40" stroke="#2a3140"/><text x="62" y="44" font-size="10" fill="#c4ccda" text-anchor="end">100%</text>
+<rect x="110" y="129" width="55" height="171" fill="#6f7b90"/><text x="137" y="121" font-size="11" fill="#c4ccda" text-anchor="middle">65.8</text>
+<rect x="170" y="104" width="55" height="196" fill="#5ad1a0"/><text x="197" y="96" font-size="11" fill="#5ad1a0" text-anchor="middle">75.2</text>
+<text x="167" y="320" font-size="11" fill="#c4ccda" text-anchor="middle">UI-Venus-2-9B</text>
+<rect x="310" y="102" width="55" height="198" fill="#6f7b90"/><text x="337" y="94" font-size="11" fill="#c4ccda" text-anchor="middle">76.1</text>
+<rect x="370" y="84" width="55" height="216" fill="#5ad1a0"/><text x="397" y="76" font-size="11" fill="#5ad1a0" text-anchor="middle">82.9</text>
+<text x="367" y="320" font-size="11" fill="#c4ccda" text-anchor="middle">UI-Venus-2-27B</text>
+<rect x="510" y="87" width="55" height="213" fill="#6f7b90"/><text x="537" y="79" font-size="11" fill="#c4ccda" text-anchor="middle">82.1</text>
+<rect x="570" y="78" width="55" height="222" fill="#5ad1a0"/><text x="597" y="70" font-size="11" fill="#5ad1a0" text-anchor="middle">85.5</text>
+<text x="567" y="320" font-size="11" fill="#c4ccda" text-anchor="middle">Qwen-UI-Agent-27B</text>
+<rect x="640" y="50" width="14" height="14" fill="#6f7b90"/><text x="660" y="62" font-size="11" fill="#c4ccda">50 steps</text>
+<rect x="640" y="72" width="14" height="14" fill="#5ad1a0"/><text x="660" y="84" font-size="11" fill="#c4ccda">100 steps</text>
+<text x="20" y="344" font-size="10" fill="#8893a8">Source: arXiv:2609.00028, MobileWorld GUI-only table (117 tasks), read 16 October 2026.</text>
+</g></svg>
+
+<h2 id="phoneshells-25-step-ceiling">phoneshell's ceiling has never moved in either direction</h2>
+
+<p>phoneshell's (<a href="https://github.com/Blomega/phoneshell">github.com/Blomega/phoneshell</a>) per-task step ceiling is set once, in <code>phoneshell/bench/schema.py</code>: <code>max_steps: int = 25</code>, the value every <code>Task</code> gets unless its YAML file overrides it. None of the 80 files in <code>environments/</code> do; a grep for the field across every task returns nothing, so all 80 run at the schema default of 25 steps, a number <code>runner.py</code> passes straight through as <code>max_steps</code> on the OpenRouter path or <code>--max-turns</code> on the Claude Code CLI path. That sits well under the 50-step floor UI-Venus-2 used as its LOWER budget on MobileWorld, and at a fifth of its upper one. <code>phoneshell/config.py</code> separately sets a global hard cap, <code>max_steps: int = 60</code>, labelled in the code's own comment as "Hard cap on agent steps per task, and on money," but that ceiling has never been reached by a per-task budget that stops at 25 first.</p>
+
+<svg viewBox="0 0 820 420" style="width:100%;height:auto" role="img" aria-label="Flow diagram of phoneshell's step budget: all 80 environment YAML files leave max_steps unset, so schema.py's default of 25 steps is passed by runner.py into every run, well under config.py's global hard cap of 60 steps, which has never been reached; a number line below places that 25-step default against UI-Venus-2's MobileWorld budgets of 50 steps and 100 steps.">
+<rect x="0" y="0" width="820" height="420" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">How phoneshell's 25-step default reaches every task, and the cap it never hits</text>
+
+<rect x="20" y="60" width="170" height="92" rx="10" fill="#1d2330" stroke="#6f7b90"/>
+<text x="34" y="82" font-size="12" font-weight="600">environments/*.yaml</text>
+<text x="34" y="102" font-size="10.5" fill="#c4ccda">80 task files</text>
+<text x="34" y="120" font-size="10.5" fill="#c4ccda">0 set max_steps</text>
+
+<rect x="225" y="60" width="170" height="92" rx="10" fill="#262d3d" stroke="#f2a65a"/>
+<text x="239" y="82" font-size="12" font-weight="600">schema.py</text>
+<text x="239" y="102" font-size="10.5" fill="#c4ccda">max_steps: int = 25</text>
+<text x="239" y="120" font-size="10.5" fill="#f2a65a">default used by all 80</text>
+
+<rect x="430" y="60" width="170" height="92" rx="10" fill="#1d2330" stroke="#6f7b90"/>
+<text x="444" y="82" font-size="12" font-weight="600">runner.py</text>
+<text x="444" y="102" font-size="10.5" fill="#c4ccda">max_steps (OpenRouter)</text>
+<text x="444" y="120" font-size="10.5" fill="#c4ccda">--max-turns (Claude CLI)</text>
+
+<rect x="630" y="60" width="170" height="92" rx="10" fill="#1d2330" stroke="#6f7b90"/>
+<text x="644" y="82" font-size="12" font-weight="600">config.py</text>
+<text x="644" y="102" font-size="10.5" fill="#c4ccda">hard cap = 60</text>
+<text x="644" y="120" font-size="10.5" fill="#8893a8">never reached</text>
+
+<line x1="190" y1="106" x2="225" y2="106" stroke="#6f7b90" stroke-width="1.5"/>
+<line x1="395" y1="106" x2="430" y2="106" stroke="#6f7b90" stroke-width="1.5"/>
+<line x1="600" y1="106" x2="630" y2="106" stroke="#6f7b90" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+<text x="20" y="200" font-size="12" font-weight="600" fill="#c4ccda">Same 0-100 scale, UI-Venus-2's MobileWorld step budgets</text>
+<line x1="40" y1="330" x2="780" y2="330" stroke="#3d4a63" stroke-width="2"/>
+<circle cx="225" cy="330" r="6" fill="#f2a65a"/>
+<text x="225" y="300" font-size="11" fill="#f2a65a" text-anchor="middle">25</text>
+<text x="225" y="356" font-size="10" fill="#c4ccda" text-anchor="middle">phoneshell default</text>
+<line x1="410" y1="324" x2="410" y2="272" stroke="#3d4a63" stroke-width="1"/>
+<circle cx="410" cy="330" r="6" fill="#5ad1a0"/>
+<text x="410" y="256" font-size="11" fill="#5ad1a0" text-anchor="middle">50</text>
+<text x="410" y="238" font-size="10" fill="#c4ccda" text-anchor="middle">MobileWorld floor</text>
+<circle cx="484" cy="330" r="6" fill="#6f7b90"/>
+<text x="484" y="300" font-size="11" fill="#c4ccda" text-anchor="middle">60</text>
+<text x="484" y="356" font-size="10" fill="#8893a8" text-anchor="middle">phoneshell hard cap</text>
+<circle cx="780" cy="330" r="6" fill="#5ad1a0"/>
+<text x="780" y="300" font-size="11" fill="#5ad1a0" text-anchor="middle">100</text>
+<text x="755" y="356" font-size="10" fill="#c4ccda" text-anchor="middle">MobileWorld ceiling</text>
+
+<text x="20" y="400" font-size="10" fill="#8893a8">Source: phoneshell/bench/schema.py, phoneshell/config.py, environments/*.yaml; arXiv:2609.00028, read 16 October 2026.</text>
+</g></svg>
+
+<p>No phoneshell result reported on this site has ever been re-run at a different step ceiling on the same task. The harness has the mechanism for it, since <code>max_steps</code> is a per-task YAML field already read by <code>schema.py</code>, but every one of the 80 files leaves it at the implicit default rather than setting it explicitly, and no run has repeated a task at two values to see whether the result changes. UI-Venus-2's own numbers do not say whether phoneshell's specific tasks are budget-constrained. They do say that for three different models on a benchmark built from real app tasks, the step ceiling alone, with nothing else about the model or the task changed, moved the score by 3.4 to 9.4 points. Whether phoneshell's 25-step default is closer to the 50-step line or the 100-step line for its own 80 tasks is a question the harness, as it stands, cannot answer about itself.</p>
+
+<h2 id="what-it-means-for-anyone-grading-a-phone-agent">What it means for anyone grading a phone agent</h2>
+
+<ul>
+  <li>A step budget is a parameter of the benchmark, not just the model. Two harnesses that report different success rates on the same underlying task family can differ because of step ceiling alone, before any difference in the model being tested.</li>
+  <li>The gain from a larger budget was not uniform. It fell as the 50-step baseline rose (9.4 points at a 65.8% baseline, 3.4 points at an 82.1% baseline), consistent with a model running out of easy gains near the ceiling of what more steps alone can buy on this benchmark.</li>
+  <li>A credible claim that a step budget is "enough" for a given task set needs the same comparison phoneshell has never run: the same tasks, the same model, two different ceilings, scored both ways. Without that, a 25-step cap is an assumption carried forward from the schema default, not a measured property of the 80 tasks it is applied to.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># confirm every phoneshell task runs at the schema default of 25 steps
+grep -n "max_steps" phoneshell/bench/schema.py
+grep -c "max_steps" environments/*.yaml | grep -v ":0$" || echo "no task overrides max_steps"
+
+# the global hard cap, separate from the per-task default
+grep -n "Hard cap on agent steps" -A1 phoneshell/config.py
+
+# UI-Venus-2's own 50-step vs 100-step MobileWorld table
+curl -s https://arxiv.org/html/2609.00028 | grep -i "mobileworld"
+# full table: https://arxiv.org/html/2609.00028 (Table 1, Mobile GUI benchmarks)
+# MobileWorld itself: https://arxiv.org/abs/2512.19432</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim none of phoneshell's 80 tasks have ever been run at more than one step ceiling. That is wrong the moment a future run sets a non-default <code>max_steps</code> in any environment YAML and <code>results.json</code> records a second score for the same task at a different budget. We also claim the gain from a larger step budget shrinks as the baseline success rate rises, based on three data points in one table. That pattern is falsified if a model with a 50-step baseline above 85% on MobileWorld's GUI-only setting is later shown to gain more than 3.4 points at 100 steps, or if a model with a baseline near UI-Venus-2-9B's 65.8% gains less than a few points from doubling its budget. We will treat either event, checked by 31 March 2027, as grounds to revisit this comparison.</p>
+
+<h2 id="sources">Sources</h2>
+
+<ul>
+  <li>inclusionAI, <a href="https://arxiv.org/abs/2609.00028">UI-Venus-2 Technical Report</a>, arXiv:2609.00028, submitted 27 August 2026, read 16 October 2026.</li>
+  <li>Full results table (Table 1, Mobile GUI benchmarks, including the 50-step and 100-step MobileWorld columns): <a href="https://arxiv.org/html/2609.00028">arxiv.org/html/2609.00028</a>.</li>
+  <li>Tongyi Lab (Alibaba Group), <a href="https://arxiv.org/abs/2512.19432">MobileWorld: Benchmarking Autonomous Mobile Agents in Agent-User Interactive and MCP-Augmented Environments</a>, arXiv:2512.19432, first submitted 22 December 2025.</li>
+  <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/bench/schema.py</code>, <code>phoneshell/config.py</code>, <code>environments/</code>, read 16 October 2026.</li>
+</ul>
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
