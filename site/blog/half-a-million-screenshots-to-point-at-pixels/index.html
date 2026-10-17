@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GroundGUI needed 586,000 screenshots and a two-stage training pipeline to reach 95.2% on ScreenSpot-V2; phoneshell's fallback icon matcher needs zero training images and was never a model - Blolabel</title>
+<meta name="description" content="Posted 13 October 2026, GroundGUI pairs a 586K-screenshot dataset with a new distillation-to-reinforcement-learning method to train an 8B grounding model. phoneshell only reaches for that problem when its primary path, reading the iOS accessibility tree, finds nothing, and its fallback is a zero-shot template correlator, not a trained model.">
+<link rel="canonical" href="https://blolabel.ai/blog/half-a-million-screenshots-to-point-at-pixels/">
+<meta property="og:title" content="GroundGUI needed 586,000 screenshots and a two-stage training pipeline to reach 95.2% on ScreenSpot-V2; phoneshell's fallback icon matcher needs zero training images and was never a model - Blolabel">
+<meta property="og:description" content="Posted 13 October 2026, GroundGUI pairs a 586K-screenshot dataset with a new distillation-to-reinforcement-learning method to train an 8B grounding model. phoneshell only reaches for that problem when its primary path, reading the iOS accessibility tree, finds nothing, and its fallback is a zero-shot template correlator, not a trained model.">
+<meta property="og:url" content="https://blolabel.ai/blog/half-a-million-screenshots-to-point-at-pixels/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/half-a-million-screenshots-to-point-at-pixels-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "GroundGUI needed 586,000 screenshots and a two-stage training pipeline to reach 95.2% on ScreenSpot-V2; phoneshell's fallback icon matcher needs zero training images and was never a model", "description": "Posted 13 October 2026, GroundGUI pairs a 586K-screenshot dataset with a new distillation-to-reinforcement-learning method to train an 8B grounding model. phoneshell only reaches for that problem when its primary path, reading the iOS accessibility tree, finds nothing, and its fallback is a zero-shot template correlator, not a trained model.", "datePublished": "2026-10-16", "dateModified": "2026-10-16", "url": "https://blolabel.ai/blog/half-a-million-screenshots-to-point-at-pixels/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/half-a-million-screenshots-to-point-at-pixels/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/half-a-million-screenshots-to-point-at-pixels-hero.png", "citation": ["https://arxiv.org/abs/2610.19100", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind event">event</span>
+    <time datetime="2026-10-16">16 October 2026</time>
+    <span>7 min read</span>
+  </div>
+  <h1>GroundGUI needed 586,000 screenshots and a two-stage training pipeline to reach 95.2% on ScreenSpot-V2; phoneshell's fallback icon matcher needs zero training images and was never a model</h1>
+  <p class="standfirst">GroundGUI, posted to arXiv on 13 October 2026, pairs a new 586,000-screenshot grounding dataset with a training method called distillation-to-reinforcement learning to teach an 8B model where to tap on a screen. phoneshell's own fallback for screens with no accessibility tree is a zero-training template correlator; its primary path never needs to point at pixels at all.</p>
+
+<p>GroundGUI (arXiv:2610.19100), submitted 13 October 2026 by Qingsong Xie, Jiahao Tian, Jiacheng Tang, Zhifeng Li, Madalina Ciobanu, Navan Preet Singh, Qingqing Mao and Ritankar Das, targets GUI grounding: given a screenshot and a natural-language description of a control ("the share icon", "the field labelled Email"), return its location. The paper's starting premise is that high-fidelity training data for this exact problem is scarce across desktop, web, and mobile, despite how many benchmarks now measure it. Their fix is two contributions bundled together: ScreenRef, a dataset of 586,000 screenshots paired with 633,000-plus referring-expression instances covering text recognition, visual matching, spatial understanding, and refusal (recognising when no matching element exists), and Distillation-to-Reinforcement Learning (D2RL), a training method meant to fix two separate known weaknesses at once, poor generalisation from supervised fine-tuning alone and sparse reward signal in reinforcement learning alone. Trained sequentially with SFT then D2RL on top of Qwen3-VL-8B-Instruct, the resulting model, GroundGUI-8B, is reported at 95.2% on ScreenSpot-V2.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/half-a-million-screenshots-to-point-at-pixels-hero.png" alt="Abstract technical illustration on a dark grid: a dense cloud of hundreds of small glowing dots representing a large training dataset, funnelling through two sequential processing gates into a single trained node, positioned beside a second, much simpler diagram where a small set of pre-rendered glyph templates slides directly over a raw screen with a correlation score, no funnel and no training gates at all, cool blues and teals with one amber accent" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="what-it-cost-to-reach-952">What it cost to reach 95.2%, and what that bought on harder benchmarks</h2>
+
+<p>GroundGUI-8B's reported scores vary sharply by how far the target benchmark sits from ScreenSpot-V2's conditions. On ScreenSpot-V2 itself, a comparatively easy, well-covered grounding benchmark, it reaches 95.2%. On ScreenSpot-Pro, a harder, higher-resolution professional-software benchmark, it falls to 63.9%. On OSWorld-G, a grounding-specific slice of the OSWorld desktop benchmark, 65.4%. On MMBench-GUI's L2 tier, 86.8%. On UI-Vision, the paper's hardest reported benchmark, 38.3%. The spread, from 95.2% down to 38.3% across five benchmarks for the same trained model, is itself informative: a grounding model's score is a property of the specific benchmark's difficulty and visual domain, not a single fixed capability number, which is exactly the scarcity-of-coverage problem the paper opens by describing.</p>
+
+<table>
+  <thead><tr><th>Benchmark</th><th>GroundGUI-8B score</th><th>What it tests</th></tr></thead>
+  <tbody>
+    <tr><td>ScreenSpot-V2</td><td>95.2%</td><td>general GUI element grounding</td></tr>
+    <tr><td>MMBench-GUI (L2)</td><td>86.8%</td><td>hierarchical multi-platform grounding</td></tr>
+    <tr><td>OSWorld-G</td><td>65.4%</td><td>grounding slice of OSWorld desktop tasks</td></tr>
+    <tr><td>ScreenSpot-Pro</td><td>63.9%</td><td>high-resolution professional software</td></tr>
+    <tr><td>UI-Vision</td><td>38.3%</td><td>hardest benchmark reported in the paper</td></tr>
+  </tbody>
+</table>
+
+<svg viewBox="0 0 820 400" style="width:100%;height:auto" role="img" aria-label="Horizontal bar chart of GroundGUI-8B's score across five grounding benchmarks: ScreenSpot-V2 95.2 percent, MMBench-GUI L2 tier 86.8 percent, OSWorld-G 65.4 percent, ScreenSpot-Pro 63.9 percent, and UI-Vision 38.3 percent, a 56.9 point spread for the same trained model.">
+<rect x="0" y="0" width="820" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif">
+<text x="20" y="26" font-size="14" font-weight="600" fill="#e9ecf2">GroundGUI-8B's score, same model, five benchmarks</text>
+<line x1="260" y1="40" x2="260" y2="340" stroke="#6f7b90" stroke-width="1"/>
+<line x1="780" y1="40" x2="780" y2="340" stroke="#3d4a63" stroke-width="1" stroke-dasharray="3,3"/>
+<text x="780" y="356" font-size="10" fill="#8893a8" text-anchor="end">100%</text>
+<rect x="260" y="54" width="495.0" height="28" rx="4" fill="#f2a65a"/>
+<text x="250" y="73" font-size="11" fill="#c4ccda" text-anchor="end">ScreenSpot-V2</text>
+<text x="763" y="73" font-size="11" fill="#e9ecf2">95.2%</text>
+<rect x="260" y="94" width="451.4" height="28" rx="4" fill="#3d4a63"/>
+<text x="250" y="113" font-size="11" fill="#c4ccda" text-anchor="end">MMBench-GUI (L2)</text>
+<text x="719.4" y="113" font-size="11" fill="#e9ecf2">86.8%</text>
+<rect x="260" y="134" width="340.1" height="28" rx="4" fill="#3d4a63"/>
+<text x="250" y="153" font-size="11" fill="#c4ccda" text-anchor="end">OSWorld-G</text>
+<text x="608.1" y="153" font-size="11" fill="#e9ecf2">65.4%</text>
+<rect x="260" y="174" width="332.3" height="28" rx="4" fill="#3d4a63"/>
+<text x="250" y="193" font-size="11" fill="#c4ccda" text-anchor="end">ScreenSpot-Pro</text>
+<text x="600.3" y="193" font-size="11" fill="#e9ecf2">63.9%</text>
+<rect x="260" y="214" width="199.2" height="28" rx="4" fill="#3d4a63"/>
+<text x="250" y="233" font-size="11" fill="#c4ccda" text-anchor="end">UI-Vision</text>
+<text x="467.2" y="233" font-size="11" fill="#e9ecf2">38.3%</text>
+<text x="260" y="270" font-size="11" fill="#8893a8">Spread: 56.9 points on one trained model (GroundGUI-8B,</text>
+<text x="260" y="288" font-size="11" fill="#8893a8">Qwen3-VL-8B base), depending only on which benchmark is asked.</text>
+<text x="20" y="384" font-size="10" fill="#8893a8">Source: arXiv:2610.19100, results tables, read 16 October 2026.</text>
+</g></svg>
+
+<svg viewBox="0 0 800 380" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting GroundGUI's training pipeline with phoneshell's fallback grounding. GroundGUI combines 586 thousand screenshots and 633 thousand referring expressions into supervised fine-tuning followed by distillation-to-reinforcement learning, producing GroundGUI-8B, scoring between 38.3 and 95.2 percent depending on the benchmark. phoneshell's icons.py instead renders a small set of glyph templates such as heart, send, and close, matches them against the raw screen with normalised cross-correlation, requires zero training images, and is used only as a fallback when the accessibility tree returns nothing, never as the primary grounding path.">
+<rect x="0" y="0" width="800" height="380" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Two ways to find a control on a screen with no help from a tree</text>
+<rect x="20" y="50" width="360" height="290" rx="10" fill="#1d2330" stroke="#6f7b90"/>
+<text x="36" y="76" font-size="12" font-weight="600">GroundGUI (learned grounding)</text>
+<text x="36" y="102" font-size="10.5" fill="#c4ccda">586K screenshots + 633K referring</text>
+<text x="36" y="120" font-size="10.5" fill="#c4ccda">expressions (ScreenRef dataset)</text>
+<text x="36" y="148" font-size="10.5" fill="#c4ccda">stage 1: supervised fine-tuning</text>
+<text x="36" y="168" font-size="10.5" fill="#c4ccda">stage 2: distillation-to-RL (D2RL)</text>
+<text x="36" y="196" font-size="10.5" fill="#5ad1a0" font-weight="600">GroundGUI-8B (Qwen3-VL-8B base)</text>
+<text x="36" y="222" font-size="10.5" fill="#c4ccda">95.2% ScreenSpot-V2</text>
+<text x="36" y="240" font-size="10.5" fill="#c4ccda">38.3% UI-Vision (hardest reported)</text>
+<text x="36" y="268" font-size="10.5" fill="#8893a8">needs a GPU-trained model before</text>
+<text x="36" y="286" font-size="10.5" fill="#8893a8">it can locate a single control</text>
+<rect x="420" y="50" width="360" height="290" rx="10" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="436" y="76" font-size="12" font-weight="600">phoneshell's icons.py (fallback only)</text>
+<text x="436" y="102" font-size="10.5" fill="#c4ccda">reached only when the accessibility</text>
+<text x="436" y="120" font-size="10.5" fill="#c4ccda">tree returns nothing for a control</text>
+<text x="436" y="148" font-size="10.5" fill="#c4ccda">rendered glyph templates: heart, send,</text>
+<text x="436" y="166" font-size="10.5" fill="#c4ccda">x, drawn at the screen's own size</text>
+<text x="436" y="194" font-size="10.5" fill="#5ad1a0" font-weight="600">normalised cross-correlation match</text>
+<text x="436" y="212" font-size="10.5" fill="#c4ccda">polarity ignored, score plus a</text>
+<text x="436" y="230" font-size="10.5" fill="#c4ccda">"this is a guess" label on every hit</text>
+<text x="436" y="258" font-size="10.5" fill="#8893a8">zero training images, zero GPU,</text>
+<text x="436" y="276" font-size="10.5" fill="#8893a8">never an oracle: a candidate generator only</text>
+<text x="20" y="364" font-size="10" fill="#8893a8">Sources: arXiv:2610.19100 abstract and results; phoneshell/perception/icons.py, read 16 October 2026.</text>
+</g></svg>
+
+<h2 id="phoneshells-primary-path-skips-the-problem">phoneshell's primary path skips the problem GroundGUI exists to solve</h2>
+
+<p>phoneshell's (<a href="https://github.com/Blomega/phoneshell">github.com/Blomega/phoneshell</a>) default grounding path, <code>phoneshell/perception/tree.py</code>, never looks at pixels. It reads elements straight from the WebDriverAgent accessibility tree: type, label, identifier, and on-screen coordinates, already resolved by the operating system before phoneshell sees them. A tap targets an element by that identity, not by a learned prediction of where a glyph probably is. This is the same design fact an earlier survey on this site established directly: across thirteen real iPhone screens, every word macOS Vision OCR could read was already present in the accessibility tree on eleven of them (<a href="/blog/render-gap-ocr-vs-accessibility-tree/">render-gap-ocr-vs-accessibility-tree</a>), with Maps and Books, where labels are drawn into map tiles or printed on cover art, the only exceptions.</p>
+
+<p>GroundGUI's entire contribution, a 586,000-screenshot dataset and a new two-stage training method, exists to solve a problem phoneshell's primary path never encounters: deciding where a control is from pixels alone, with no tree to read. phoneshell only reaches for anything resembling that problem through <code>phoneshell/perception/icons.py</code>, used "when the tree gives us nothing," per the module's own docstring. Its method is not a trained model at all: a small set of rendered glyph templates (a heart for like, a paper plane for send, an x for close) are matched against the live screen with normalised cross-correlation, polarity ignored so a white heart on a dark background and a black heart on a white one score the same. It needs no training images, no GPU, and no dataset, because it is not learning a general visual grounding capability, only matching a handful of known shapes that happen to be common contracts between an app and its user. The module states its own limit directly: "This is a candidate generator, never an oracle. Every hit carries its score and is labelled as a guess."</p>
+
+<h2 id="what-it-means-for-anyone-choosing-a-grounding-strategy">What it means for anyone choosing a grounding strategy</h2>
+
+<ul>
+  <li>GroundGUI's 586K-screenshot dataset and two-stage training pipeline are the right scale of investment for a platform where the accessibility tree is unreliable or absent, which is closer to the reality on many Android apps and most desktop software than on first-party iOS apps. The problem it solves does not disappear on iOS; it mostly disappears for the eleven of thirteen first-party screen types this site has already measured as fully covered by the tree.</li>
+  <li>A trained grounding model's score is not one number. GroundGUI-8B's own results span 38.3% to 95.2% across five benchmarks, so a single headline figure from any grounding paper, including this one, should be read as a result on a specific benchmark's distribution, not a general capability claim.</li>
+  <li>Zero-training template matching is a narrower tool than a learned grounding model by design: it only finds shapes it already has a template for, and it says so explicitly in its own output. For an icon vocabulary that is small and stable (common first-party action glyphs), that narrowness is a reasonable trade against GroundGUI's cost in data and compute. For arbitrary referring expressions in unfamiliar third-party apps, the tradeoff would likely reverse.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># phoneshell's primary grounding path never touches pixels
+grep -n "class Element\|identifier\|label" phoneshell/perception/tree.py | head -10
+
+# the fallback is explicitly zero-training and explicitly a guess
+sed -n '1,20p' phoneshell/perception/icons.py
+
+# GroundGUI's own dataset size and per-benchmark spread
+curl -s https://arxiv.org/abs/2610.19100 | grep -i "screenref\|screenspot"
+# full paper: https://arxiv.org/pdf/2610.19100
+
+# the earlier tree-vs-OCR survey this article's claim about iOS screens relies on
+# https://blolabel.ai/blog/render-gap-ocr-vs-accessibility-tree/</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim phoneshell's primary grounding path never requires a trained visual grounding model because the accessibility tree already supplies element identity and position on the vast majority of first-party iOS screens. That is wrong the moment a widely-used iOS app is found whose tree is empty or unreliable on screens outside the Maps/Books-style raster-text exception already documented, at a rate that would require something like GroundGUI's approach rather than the existing OCR and icon fallbacks. We also claim a trained grounding model's reported score varies by tens of points depending on the target benchmark, based on GroundGUI's own five-benchmark spread. That pattern is falsified if a future grounding model is shown to hold within a few points of its best score across benchmarks of clearly different difficulty. We will treat either event, checked by 31 March 2027, as grounds to revisit this comparison.</p>
+
+<h2 id="sources">Sources</h2>
+
+<ul>
+  <li>Xie, Tian, Tang, Li, Ciobanu, Singh, Mao, Das, <a href="https://arxiv.org/abs/2610.19100">GroundGUI: GUI Grounding by High-Quality Data and Distillation-to-Reinforcement Learning</a>, arXiv:2610.19100, submitted 13 October 2026, read 16 October 2026.</li>
+  <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/perception/tree.py</code>, <code>phoneshell/perception/icons.py</code>, read 16 October 2026.</li>
+  <li>Blolabel, <a href="https://blolabel.ai/blog/render-gap-ocr-vs-accessibility-tree/">OCR read thirteen iPhone screens and the accessibility tree already had everything on eleven of them</a>, 16 September 2026.</li>
+</ul>
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
