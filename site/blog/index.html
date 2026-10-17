@@ -681,8 +681,16 @@
 
 <script>
 (function(){
-  var l=document.getElementById('posts');
-  if(l && l.querySelector('li')) document.getElementById('empty').remove();
+  function hidEmpty(){
+    var l=document.getElementById('posts');
+    var e=document.getElementById('empty');
+    if(l && e && l.querySelector('li')) e.remove();
+  }
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',hidEmpty);
+  }else{
+    hidEmpty();
+  }
 })();
 </script>
 <footer><div class="wrap">
