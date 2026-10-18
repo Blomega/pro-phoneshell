@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MAS-Bench's shortcuts lift cross-app success from 17.0% to 61.7%; phoneshell's agent has one shortcut type of the three MAS-Bench tests - Blolabel</title>
+<meta name="description" content="MAS-Bench pairs 139 mobile tasks with 88 predefined shortcuts, 11 APIs, 70 deep links, 7 RPA scripts, and finds hybrid agents beat GUI-only agents by as much as 44.7 points on cross-app tasks. phoneshell's action space exposes exactly one shortcut, a deep-link opener, and no API calls, no RPA scripts, and no shortcut knowledge base at all.">
+<link rel="canonical" href="https://blolabel.ai/blog/three-shortcut-types-phoneshell-has-one/">
+<meta property="og:title" content="MAS-Bench's shortcuts lift cross-app success from 17.0% to 61.7%; phoneshell's agent has one shortcut type of the three MAS-Bench tests - Blolabel">
+<meta property="og:description" content="MAS-Bench pairs 139 mobile tasks with 88 predefined shortcuts, 11 APIs, 70 deep links, 7 RPA scripts, and finds hybrid agents beat GUI-only agents by as much as 44.7 points on cross-app tasks. phoneshell's action space exposes exactly one shortcut, a deep-link opener, and no API calls, no RPA scripts, and no shortcut knowledge base at all.">
+<meta property="og:url" content="https://blolabel.ai/blog/three-shortcut-types-phoneshell-has-one/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/three-shortcut-types-phoneshell-has-one-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "MAS-Bench's shortcuts lift cross-app success from 17.0% to 61.7%; phoneshell's agent has one shortcut type of the three MAS-Bench tests", "description": "MAS-Bench pairs 139 mobile tasks with 88 predefined shortcuts, 11 APIs, 70 deep links, 7 RPA scripts, and finds hybrid agents beat GUI-only agents by as much as 44.7 points on cross-app tasks. phoneshell's action space exposes exactly one shortcut, a deep-link opener, and no API calls, no RPA scripts, and no shortcut knowledge base at all.", "datePublished": "2026-10-17", "dateModified": "2026-10-17", "url": "https://blolabel.ai/blog/three-shortcut-types-phoneshell-has-one/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/three-shortcut-types-phoneshell-has-one/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/three-shortcut-types-phoneshell-has-one-hero.png", "citation": ["https://arxiv.org/abs/2509.06477", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-17">17 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>MAS-Bench's shortcuts lift cross-app success from 17.0% to 61.7%; phoneshell's agent has one shortcut type of the three MAS-Bench tests</h1>
+  <p class="standfirst">MAS-Bench scores mobile agents twice, once with GUI taps alone and once with access to 88 predefined shortcuts, APIs, deep links and RPA scripts, and the gap is largest on exactly the tasks that cross between apps. phoneshell's agent has a single shortcut verb, open_url, which covers one of MAS-Bench's three shortcut types and comes with no catalog to draw from.</p>
+
+<p>MAS-Bench (arXiv:2509.06477), submitted 8 September 2025 by Pengxiang Zhao, Guangyi Liu and 12 coauthors from Zhejiang University and vivo AI Lab, and revised to its current version on 15 April 2026 ahead of ACL 2026, argues that GUI-only mobile agents are leaving an easy win on the table: real phones already carry structured ways to skip the screen, an API call, a deep link, a saved automation, and most agent benchmarks test as if those did not exist. The benchmark pairs 139 complex tasks across 11 real-world apps with a knowledge base of 88 predefined shortcuts, 11 APIs, 70 deep links, and 7 custom RPA scripts, and scores agents under both conditions: GUI-only, and hybrid, where the same agent can call a shortcut instead of tapping through a screen.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/three-shortcut-types-phoneshell-has-one-hero.png" alt="Abstract technical illustration on a dark grid: a single thin glowing line representing a GUI-only path winding through many small nodes, next to a second, shorter path that jumps directly between three distinct gateway shapes labelled by type, API, deep link, and automation script, reaching the same destination in far fewer hops, cool blues and teals with one amber accent marking the shortest path" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="the-gap-is-biggest-on-cross-app-tasks">The gap is biggest on cross-app tasks, not single-app ones</h2>
+
+<p>Table 2 of the paper runs two agent families, MobileAgentV2 and T3A, both driven by Gemini-2.5-Pro, in both conditions, split into single-app tasks (92 of the 139) and cross-app tasks (47 of the 139). MobileAgentV2's GUI-only success rate on cross-app tasks is 17.0%; its hybrid version, MAS-MobileAgent, reaches 61.7%, a 44.7-point jump, the largest swing anywhere in the table. T3A's cross-app success rises from 34.0% GUI-only to 51.1% hybrid. On single-app tasks the hybrid advantage is smaller: MobileAgentV2 rises from 44.6% to 64.1%, T3A from 51.1% to 57.6%. The paper's own summary calls the hybrid single-app result "a significant improvement over the 44.6% achieved by their GUI-only counterparts," and a second model pairing, Gemini-2.0-Flash (Table 5), shows the same direction: MobileAgentV2's cross-app success rises from 0% GUI-only to 23.4% hybrid.</p>
+
+<table>
+  <thead><tr><th>Agent</th><th>Task set</th><th>GUI-only SR</th><th>Hybrid SR</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>MobileAgentV2 (Gemini-2.5-Pro)</td><td>Single-app (92 tasks)</td><td>44.6%</td><td>64.1%</td><td>arXiv:2509.06477 Table 2</td></tr>
+    <tr><td>MobileAgentV2 (Gemini-2.5-Pro)</td><td>Cross-app (47 tasks)</td><td>17.0%</td><td>61.7%</td><td>arXiv:2509.06477 Table 2</td></tr>
+    <tr><td>T3A (Gemini-2.5-Pro)</td><td>Single-app (92 tasks)</td><td>51.1%</td><td>57.6%</td><td>arXiv:2509.06477 Table 2</td></tr>
+    <tr><td>T3A (Gemini-2.5-Pro)</td><td>Cross-app (47 tasks)</td><td>34.0%</td><td>51.1%</td><td>arXiv:2509.06477 Table 2</td></tr>
+    <tr><td>MobileAgentV2 (Gemini-2.0-Flash)</td><td>Cross-app (47 tasks)</td><td>0.0%</td><td>23.4%</td><td>arXiv:2509.06477 Table 5</td></tr>
+  </tbody>
+</table>
+
+<svg viewBox="0 0 860 460" style="width:100%;height:auto" role="img" aria-label="Grouped bar chart of MAS-Bench Table 2 success rates with Gemini-2.5-Pro. MobileAgentV2 single-app rises from 44.6 percent GUI-only to 64.1 percent hybrid. MobileAgentV2 cross-app rises from 17.0 percent GUI-only to 61.7 percent hybrid, the largest gap. T3A single-app rises from 51.1 percent to 57.6 percent. T3A cross-app rises from 34.0 percent to 51.1 percent.">
+<rect x="0" y="0" width="860" height="460" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">MAS-Bench Table 2: GUI-only vs hybrid success, Gemini-2.5-Pro</text>
+<line x1="60" y1="380" x2="820" y2="380" stroke="#3d4458" stroke-width="1"/>
+<line x1="60" y1="320" x2="820" y2="320" stroke="#2a3040" stroke-width="1"/>
+<line x1="60" y1="260" x2="820" y2="260" stroke="#2a3040" stroke-width="1"/>
+<line x1="60" y1="200" x2="820" y2="200" stroke="#2a3040" stroke-width="1"/>
+<line x1="60" y1="140" x2="820" y2="140" stroke="#2a3040" stroke-width="1"/>
+<line x1="60" y1="80" x2="820" y2="80" stroke="#2a3040" stroke-width="1"/>
+<text x="52" y="384" font-size="10" fill="#8893a8" text-anchor="end">0%</text>
+<text x="52" y="324" font-size="10" fill="#8893a8" text-anchor="end">20%</text>
+<text x="52" y="264" font-size="10" fill="#8893a8" text-anchor="end">40%</text>
+<text x="52" y="204" font-size="10" fill="#8893a8" text-anchor="end">60%</text>
+<text x="52" y="144" font-size="10" fill="#8893a8" text-anchor="end">80%</text>
+<text x="52" y="84" font-size="10" fill="#8893a8" text-anchor="end">100%</text>
+<rect x="90" y="246.8" width="34" height="133.2" fill="#3d4a63"/>
+<text x="107" y="240.8" font-size="10.5" fill="#c4ccda" text-anchor="middle">44.6%</text>
+<rect x="128" y="188.3" width="34" height="191.7" fill="#f2a65a"/>
+<text x="145" y="182.3" font-size="10.5" fill="#f2a65a" text-anchor="middle">64.1%</text>
+<text x="126" y="404" font-size="10.5" fill="#c4ccda" text-anchor="end" transform="rotate(-35 126 404)">MobileAgentV2 single</text>
+<rect x="230" y="329.0" width="34" height="51.0" fill="#3d4a63"/>
+<text x="247" y="323.0" font-size="10.5" fill="#c4ccda" text-anchor="middle">17.0%</text>
+<rect x="268" y="195.1" width="34" height="184.9" fill="#f2a65a"/>
+<text x="285" y="189.1" font-size="10.5" fill="#f2a65a" text-anchor="middle">61.7%</text>
+<text x="266" y="404" font-size="10.5" fill="#c4ccda" text-anchor="end" transform="rotate(-35 266 404)">MobileAgentV2 cross</text>
+<rect x="370" y="227.3" width="34" height="152.7" fill="#3d4a63"/>
+<text x="387" y="221.3" font-size="10.5" fill="#c4ccda" text-anchor="middle">51.1%</text>
+<rect x="408" y="207.8" width="34" height="172.2" fill="#f2a65a"/>
+<text x="425" y="201.8" font-size="10.5" fill="#f2a65a" text-anchor="middle">57.6%</text>
+<text x="406" y="404" font-size="10.5" fill="#c4ccda" text-anchor="end" transform="rotate(-35 406 404)">T3A single</text>
+<rect x="510" y="277.8" width="34" height="102.2" fill="#3d4a63"/>
+<text x="527" y="271.8" font-size="10.5" fill="#c4ccda" text-anchor="middle">34.0%</text>
+<rect x="548" y="227.3" width="34" height="152.7" fill="#f2a65a"/>
+<text x="565" y="221.3" font-size="10.5" fill="#f2a65a" text-anchor="middle">51.1%</text>
+<text x="546" y="404" font-size="10.5" fill="#c4ccda" text-anchor="end" transform="rotate(-35 546 404)">T3A cross</text>
+<rect x="660" y="56" width="14" height="14" fill="#3d4a63"/>
+<text x="680" y="67" font-size="10.5" fill="#c4ccda">GUI-only</text>
+<rect x="760" y="56" width="14" height="14" fill="#f2a65a"/>
+<text x="780" y="67" font-size="10.5" fill="#f2a65a">Hybrid</text>
+<text x="20" y="440" font-size="10" fill="#8893a8">Source: arXiv:2509.06477, Table 2, read 17 October 2026.</text>
+</g></svg>
+
+<h2 id="predefined-shortcuts-beat-agent-generated-ones">Predefined shortcuts beat agent-generated ones, and phoneshell has neither</h2>
+
+<p>MAS-Bench does not stop at predefined shortcuts. Table 3 also tests whether an agent can discover or build its own: replaying a prior successful task, replaying a subtask, generating a shortcut dynamically, or using a dedicated shortcut-authoring agent (MobileAgent-E). Predefined shortcuts reach a 1.00 shortcut success rate (SSR), meaning every attempted use of one actually works, at an overall task success rate of 0.52 against a no-shortcut baseline of 0.43. Agent-generated shortcuts lag: Replay-Task shortcuts manage only a 0.10 SSR and drop task success to 0.34, below the no-shortcut baseline. The paper's own framing is "agent-generated shortcuts lag in robustness and efficiency" compared to a curated knowledge base.</p>
+
+<p>phoneshell's (<a href="https://github.com/Blomega/phoneshell">github.com/Blomega/phoneshell</a>) action surface, read from <code>phoneshell/actions.py</code> and the tool list exposed in <code>phoneshell/mcp_server.py</code>, has exactly one verb that matches any of MAS-Bench's three shortcut categories: <code>open_url</code>, a deep-link opener. Its own docstring states the case for it plainly: "Deep links are the fastest, least fragile way into a known screen." There is no equivalent for an API call (phoneshell drives the phone through WebDriverAgent and the accessibility tree, not through any app's backend) and no equivalent for an RPA script (there is no saved, replayable action sequence an agent can invoke by name; <code>phoneshell/agent/macros.py</code> records and replays a fixed macro by a human, not a shortcut an agent chooses mid-task). There is also no knowledge base: no file in the repository catalogs known-good deep links the way MAS-Bench's 70-deep-link set does, so an agent has to already know or guess a URL scheme before <code>open_url</code> is useful at all.</p>
+
+<svg viewBox="0 0 820 400" style="width:100%;height:auto" role="img" aria-label="Diagram comparing MAS-Bench's three shortcut types, APIs, deep links, and RPA scripts, drawn from a catalog of 88 predefined entries, 11 APIs, 70 deep links, 7 scripts, against phoneshell's action space, which exposes a single open_url deep-link action with no API path, no saved script path, and no catalog to draw a known-good link from.">
+<rect x="0" y="0" width="820" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Three shortcut types tested, one shortcut type shipped</text>
+<rect x="20" y="50" width="360" height="300" rx="10" fill="#1d2330" stroke="#6f7b90"/>
+<text x="36" y="76" font-size="12" font-weight="600">MAS-Bench's knowledge base (88 shortcuts)</text>
+<text x="36" y="104" font-size="11" fill="#c4ccda">11 APIs</text>
+<text x="36" y="124" font-size="11" fill="#c4ccda">70 deep links</text>
+<text x="36" y="144" font-size="11" fill="#c4ccda">7 custom RPA scripts</text>
+<text x="36" y="172" font-size="10.5" fill="#8893a8">Agents can also generate their own; predefined</text>
+<text x="36" y="190" font-size="10.5" fill="#8893a8">shortcuts reach 1.00 SSR, agent-generated ones</text>
+<text x="36" y="208" font-size="10.5" fill="#8893a8">as low as 0.10 SSR (Table 3).</text>
+<text x="36" y="236" font-size="10.5" fill="#f2a65a" font-weight="600">Cross-app success: 17.0% &rarr; 61.7%</text>
+<text x="36" y="254" font-size="10.5" fill="#f2a65a" font-weight="600">when a shortcut is available (Table 2)</text>
+<rect x="420" y="50" width="380" height="300" rx="10" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="436" y="76" font-size="12" font-weight="600">phoneshell's action space (phoneshell/actions.py)</text>
+<text x="436" y="104" font-size="11" fill="#5ad1a0">open_url: one deep-link verb</text>
+<text x="436" y="124" font-size="11" fill="#8893a8">no API call path</text>
+<text x="436" y="144" font-size="11" fill="#8893a8">no agent-invokable RPA script path</text>
+<text x="436" y="164" font-size="11" fill="#8893a8">no catalog of known-good deep links</text>
+<text x="436" y="192" font-size="10.5" fill="#c4ccda">macros.py replays a human-recorded</text>
+<text x="436" y="210" font-size="10.5" fill="#c4ccda">sequence; it is not a shortcut an</text>
+<text x="436" y="228" font-size="10.5" fill="#c4ccda">agent discovers or chooses mid-task</text>
+<text x="436" y="256" font-size="10.5" fill="#8893a8">An agent must already know or guess a</text>
+<text x="436" y="274" font-size="10.5" fill="#8893a8">URL scheme before open_url helps at all</text>
+<text x="20" y="384" font-size="10" fill="#8893a8">Sources: arXiv:2509.06477 Tables 2-3; phoneshell/actions.py, phoneshell/mcp_server.py, read 17 October 2026.</text>
+</g></svg>
+
+<h2 id="what-it-means-for-anyone-building-a-phone-agent">What it means for anyone building a phone agent's action space</h2>
+
+<ul>
+  <li>The cross-app result is the sharpest evidence in the paper: a 44.7-point swing from a single added capability suggests that GUI-only agents are not failing because they are bad at tapping, they are failing because moving between apps through the UI alone is disproportionately expensive and error-prone, and a shortcut removes that cost entirely rather than reducing it.</li>
+  <li>phoneshell's single shortcut, <code>open_url</code>, already covers the category MAS-Bench's own data calls the cheapest to add and easiest to get right (deep links dominate the 88-entry knowledge base at 70 of 88). It is also the category phoneshell's own code never catalogs, so the benefit is theoretically available but not actually realized without an agent that already knows the right scheme.</li>
+  <li>The predefined-versus-generated gap (1.00 SSR against 0.10) is a caution against the obvious next step. Letting phoneshell's agent write its own shortcuts, rather than using a maintained list, is the MAS-Bench condition that performed worst of all five tested, worse than no shortcuts at all.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># phoneshell's only shortcut-shaped action
+grep -n "def open_url" phoneshell/actions.py
+grep -n "phone_open_url\|open_url" phoneshell/mcp_server.py
+
+# confirm there is no API-call action and no agent-invokable script catalog
+grep -rn "def \|open_url\|shortcut" phoneshell/actions.py | grep -v "^Binary"
+find . -iname "*shortcut*" -not -path "./site/*"
+
+# MAS-Bench's own tables and shortcut knowledge base
+curl -s https://arxiv.org/abs/2509.06477 | grep -i "shortcut\|deep-link\|RPA"
+# full tables: https://arxiv.org/html/2509.06477v1 (Table 2, Table 3, Table 5)</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim phoneshell's action space contains exactly one shortcut type, a deep-link opener, and no API-call path, no agent-invokable automation script, and no catalog of known-good links. That is wrong the moment a future commit to <code>phoneshell/actions.py</code> or <code>phoneshell/mcp_server.py</code> adds an action that calls an app's API directly, lets the agent invoke a saved macro by name mid-task, or ships a file cataloging deep links the way MAS-Bench's 70-entry set does. We also report MAS-Bench's cross-app gap as 44.7 points from its own Table 2; that number is wrong if a later revision of the paper restates Table 2 with different figures. We will check both by 31 March 2027.</p>
+
+<h2 id="sources">Sources</h2>
+
+<ul>
+  <li>Zhao, Liu, et al., <a href="https://arxiv.org/abs/2509.06477">MAS-Bench: A Unified Benchmark for Shortcut-Augmented Hybrid Mobile GUI Agents</a>, arXiv:2509.06477, submitted 8 September 2025, revised 15 April 2026 (v2), read 17 October 2026.</li>
+  <li>Full tables (Table 2 GUI-only vs hybrid, Table 3 predefined vs agent-generated shortcuts, Table 5 Gemini-2.0-Flash): <a href="https://arxiv.org/html/2509.06477v1">arxiv.org/html/2509.06477v1</a>.</li>
+  <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/actions.py</code>, <code>phoneshell/mcp_server.py</code>, <code>phoneshell/agent/macros.py</code>, read 17 October 2026.</li>
+</ul>
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
