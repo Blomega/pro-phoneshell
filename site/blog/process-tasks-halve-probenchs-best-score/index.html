@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ProBench's best model scores 45.6% when the final screen is enough and 27.9% when a step in between must be checked; every one of phoneshell's 80 checks reads only the final screen - Blolabel</title>
+<meta name="description" content="ProBench adds process-related tasks, ones where a sort order, a filter, or an intermediate choice never appears in the final screenshot, to a mobile GUI benchmark. Its best model, Gemini 2.5 Pro, drops 17.7 points between the two task types. phoneshell's five check kinds all read device state once, after the agent finishes; none inspects a step along the way.">
+<link rel="canonical" href="https://blolabel.ai/blog/process-tasks-halve-probenchs-best-score/">
+<meta property="og:title" content="ProBench's best model scores 45.6% when the final screen is enough and 27.9% when a step in between must be checked; every one of phoneshell's 80 checks reads only the final screen - Blolabel">
+<meta property="og:description" content="ProBench adds process-related tasks, ones where a sort order, a filter, or an intermediate choice never appears in the final screenshot, to a mobile GUI benchmark. Its best model, Gemini 2.5 Pro, drops 17.7 points between the two task types. phoneshell's five check kinds all read device state once, after the agent finishes; none inspects a step along the way.">
+<meta property="og:url" content="https://blolabel.ai/blog/process-tasks-halve-probenchs-best-score/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/process-tasks-halve-probenchs-best-score-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "ProBench's best model scores 45.6% when the final screen is enough and 27.9% when a step in between must be checked; every one of phoneshell's 80 checks reads only the final screen", "description": "ProBench adds process-related tasks, ones where a sort order, a filter, or an intermediate choice never appears in the final screenshot, to a mobile GUI benchmark. Its best model, Gemini 2.5 Pro, drops 17.7 points between the two task types. phoneshell's five check kinds all read device state once, after the agent finishes; none inspects a step along the way.", "datePublished": "2026-10-17", "dateModified": "2026-10-17", "url": "https://blolabel.ai/blog/process-tasks-halve-probenchs-best-score/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/process-tasks-halve-probenchs-best-score/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/process-tasks-halve-probenchs-best-score-hero.png", "citation": ["https://arxiv.org/abs/2511.09157", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-17">17 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>ProBench's best model scores 45.6% when the final screen is enough and 27.9% when a step in between must be checked; every one of phoneshell's 80 checks reads only the final screen</h1>
+  <p class="standfirst">ProBench splits its mobile tasks into two kinds: ones a final screenshot can grade, and ones where the thing that mattered, a sort order applied, a filter set, a wrong turn taken, never shows up in the last frame at all. Its best model loses 17.7 points moving from the first kind to the second. phoneshell's own check code, read directly, never looks anywhere but the last frame.</p>
+
+<p>ProBench (arXiv:2511.09157), submitted 12 November 2025 by Leyang Yang, Ziwei Wang and five coauthors from Zhejiang University and Ant Group, and published at AAAI 2026, starts from a specific complaint about how mobile GUI agents get graded: "current GUI agent benchmarks judge task completion only by the final screen state, but important information can appear in intermediate steps." Their example is concrete: finding the highest-rated sushi restaurant in Tokyo requires locating Tokyo, sorting results by rating, and picking a sushi place specifically, three decisions, and the final screen, a restaurant's menu, looks identical whether the agent actually sorted by rating or just tapped the first result it saw. ProBench keeps the older final-screen checks, which it calls State-related Tasks (ST), and adds over 200 tasks total with a second category, Process-related Tasks (PT), graded by a dedicated Process Provider that captures what happened along the way.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/process-tasks-halve-probenchs-best-score-hero.png" alt="Abstract technical illustration on a dark grid: a single bright endpoint node reachable by two different glowing paths, one short and direct representing a final-state check, one long and winding through several dimmer intermediate nodes representing a process check, with the winding path's nodes rendered with a visible but fainter trail that the short path lacks, cool blues and teals with one amber accent on the winding path" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="every-model-drops-on-process-tasks">Every evaluated model drops on process tasks, none rises</h2>
+
+<p>Table 3 of the paper scores ten models on both task types. Gemini 2.5 Pro is the best model overall: 45.6% on State-related tasks, 27.9% on Process-related tasks, an average of 40.1% and the largest single-model drop in absolute points, 17.7. Qwen2.5-VL-72B shows the same direction at a lower level, 40.9% ST against 27.9% PT. Three of the ten models, GPT-4o, Claude 4 Sonnet and UI-R1-E-3B, score 0.0% on both task types in this evaluation, which the paper attributes to the models failing to complete even the state-related portion of these specific tasks. Every model in the table that scores above 0% on ST also scores lower on PT than on ST; none of the ten reverses that direction. The paper traces failures to two causes directly: agents that ignore a stated constraint rather than execute it (its example is a goggles search where Gemini 2.5 Pro skipped an implicit price-sort requirement and simply scrolled), and agents that pass a process check only because the step was functionally unavoidable, not because the agent recognized it as a requirement, which the authors flag explicitly as not proof of real capability.</p>
+
+<table>
+  <thead><tr><th>Model</th><th>State-related (ST)</th><th>Process-related (PT)</th><th>Average</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>Gemini 2.5 Pro</td><td>45.6%</td><td>27.9%</td><td>40.1%</td><td>arXiv:2511.09157 Table 3</td></tr>
+    <tr><td>Qwen2.5-VL-72B</td><td>40.9%</td><td>27.9%</td><td>36.9%</td><td>arXiv:2511.09157 Table 3</td></tr>
+    <tr><td>Qwen2.5-VL-32B</td><td>18.8%</td><td>11.8%</td><td>16.6%</td><td>arXiv:2511.09157 Table 3</td></tr>
+    <tr><td>UI-TARS-1.5-7B</td><td>11.4%</td><td>2.9%</td><td>8.8%</td><td>arXiv:2511.09157 Table 3</td></tr>
+    <tr><td>GUI-R1-3B</td><td>12.1%</td><td>0.0%</td><td>8.3%</td><td>arXiv:2511.09157 Table 3</td></tr>
+    <tr><td>Qwen2.5-VL-7B</td><td>6.7%</td><td>1.5%</td><td>5.1%</td><td>arXiv:2511.09157 Table 3</td></tr>
+    <tr><td>GPT-4o</td><td>0.0%</td><td>0.0%</td><td>0.0%</td><td>arXiv:2511.09157 Table 3</td></tr>
+  </tbody>
+</table>
+
+<svg viewBox="0 0 860 440" style="width:100%;height:auto" role="img" aria-label="Grouped bar chart from ProBench Table 3 showing state-related versus process-related success rates for six models. Gemini 2.5 Pro: 45.6 percent state-related, 27.9 percent process-related. Qwen2.5-VL-72B: 40.9 and 27.9 percent. Qwen2.5-VL-32B: 18.8 and 11.8 percent. UI-TARS-1.5-7B: 11.4 and 2.9 percent. GUI-R1-3B: 12.1 and 0.0 percent. Qwen2.5-VL-7B: 6.7 and 1.5 percent. Every model scores lower on process-related tasks than on state-related tasks.">
+<rect x="0" y="0" width="860" height="440" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">ProBench Table 3: state-related vs process-related success</text>
+<line x1="60" y1="360" x2="820" y2="360" stroke="#3d4458" stroke-width="1"/>
+<line x1="60" y1="296" x2="820" y2="296" stroke="#2a3040" stroke-width="1"/>
+<line x1="60" y1="232" x2="820" y2="232" stroke="#2a3040" stroke-width="1"/>
+<line x1="60" y1="168" x2="820" y2="168" stroke="#2a3040" stroke-width="1"/>
+<line x1="60" y1="104" x2="820" y2="104" stroke="#2a3040" stroke-width="1"/>
+<text x="52" y="364" font-size="10" fill="#8893a8" text-anchor="end">0%</text>
+<text x="52" y="300" font-size="10" fill="#8893a8" text-anchor="end">10%</text>
+<text x="52" y="236" font-size="10" fill="#8893a8" text-anchor="end">20%</text>
+<text x="52" y="172" font-size="10" fill="#8893a8" text-anchor="end">30%</text>
+<text x="52" y="108" font-size="10" fill="#8893a8" text-anchor="end">40%</text>
+<rect x="90" y="68.96" width="30" height="291.04" fill="#3d4a63"/>
+<text x="105" y="62.96" font-size="10.5" fill="#c4ccda" text-anchor="middle">45.6%</text>
+<rect x="124" y="181.44" width="30" height="178.56" fill="#f2a65a"/>
+<text x="139" y="175.44" font-size="10.5" fill="#f2a65a" text-anchor="middle">27.9%</text>
+<text x="122" y="384" font-size="10.5" fill="#c4ccda" text-anchor="end" transform="rotate(-35 122 384)">Gemini 2.5 Pro</text>
+<rect x="200" y="97.76" width="30" height="262.24" fill="#3d4a63"/>
+<text x="215" y="91.76" font-size="10.5" fill="#c4ccda" text-anchor="middle">40.9%</text>
+<rect x="234" y="181.44" width="30" height="178.56" fill="#f2a65a"/>
+<text x="249" y="175.44" font-size="10.5" fill="#f2a65a" text-anchor="middle">27.9%</text>
+<text x="232" y="384" font-size="10.5" fill="#c4ccda" text-anchor="end" transform="rotate(-35 232 384)">Qwen2.5-VL-72B</text>
+<rect x="310" y="239.68" width="30" height="120.32" fill="#3d4a63"/>
+<text x="325" y="233.68" font-size="10.5" fill="#c4ccda" text-anchor="middle">18.8%</text>
+<rect x="344" y="284.48" width="30" height="75.52" fill="#f2a65a"/>
+<text x="359" y="278.48" font-size="10.5" fill="#f2a65a" text-anchor="middle">11.8%</text>
+<text x="342" y="384" font-size="10.5" fill="#c4ccda" text-anchor="end" transform="rotate(-35 342 384)">Qwen2.5-VL-32B</text>
+<rect x="420" y="286.08" width="30" height="73.92" fill="#3d4a63"/>
+<text x="435" y="280.08" font-size="10.5" fill="#c4ccda" text-anchor="middle">11.4%</text>
+<rect x="454" y="341.44" width="30" height="18.56" fill="#f2a65a"/>
+<text x="469" y="335.44" font-size="10.5" fill="#f2a65a" text-anchor="middle">2.9%</text>
+<text x="452" y="384" font-size="10.5" fill="#c4ccda" text-anchor="end" transform="rotate(-35 452 384)">UI-TARS-1.5-7B</text>
+<rect x="530" y="282.88" width="30" height="77.12" fill="#3d4a63"/>
+<text x="545" y="276.88" font-size="10.5" fill="#c4ccda" text-anchor="middle">12.1%</text>
+<rect x="564" y="359.00" width="30" height="1.00" fill="#f2a65a"/>
+<text x="579" y="353.00" font-size="10.5" fill="#f2a65a" text-anchor="middle">0.0%</text>
+<text x="562" y="384" font-size="10.5" fill="#c4ccda" text-anchor="end" transform="rotate(-35 562 384)">GUI-R1-3B</text>
+<rect x="660" y="56" width="14" height="14" fill="#3d4a63"/>
+<text x="680" y="67" font-size="10.5" fill="#c4ccda">State-related (ST)</text>
+<rect x="660" y="80" width="14" height="14" fill="#f2a65a"/>
+<text x="680" y="91" font-size="10.5" fill="#f2a65a">Process-related (PT)</text>
+<text x="20" y="420" font-size="10" fill="#8893a8">Source: arXiv:2511.09157, Table 3, read 17 October 2026.</text>
+</g></svg>
+
+<h2 id="phoneshell-checks-the-last-frame-only">phoneshell's checks run once, after the agent is already finished</h2>
+
+<p>phoneshell's (<a href="https://github.com/Blomega/phoneshell">github.com/Blomega/phoneshell</a>) grading code lives in <code>phoneshell/bench/verify.py</code> and <code>phoneshell/bench/runner.py</code>. The runner's own docstring states its loop as "setup (no model) -> hand the instruction to the agent -> check the phone," and the actual call, <code>run_all(self.phone, task.checks, said=result.agent_said)</code>, happens after <code>run_agent</code> returns, not during it. There are five check kinds across the 80 environment files: <code>foreground_app</code> reads which app bundle is currently frontmost, <code>element_exists</code> and <code>element_exists_anywhere</code> read the current accessibility tree (the second one scrolls first), <code>regex_on_screen</code> pattern-matches whatever text is visible right now, and <code>answer_contains</code>, the one documented exception, grades the model's own stated answer rather than phone state, reserved for tasks whose deliverable is information rather than a state change, such as reading a word out of an image. Every one of the other four reads the phone exactly once, at the moment <code>run_all</code> is called, and none of them inspects what the screen looked like three steps earlier.</p>
+
+<p>That design is deliberate and stated, not an oversight: <code>verify.py</code>'s own docstring reads "every check reads the phone directly rather than believing the agent's account of itself," which is a different, narrower promise than ProBench's. phoneshell's checks guarantee that whatever is claimed about the final state is true. They make no claim at all about whether the agent took the specified route to get there. A phoneshell task whose environment file does not happen to require a visible trace of sorting, filtering, or an intermediate choice, which is most of them, cannot distinguish an agent that did the work from one that got lucky, the exact gap ProBench's Process-related Tasks were built to close.</p>
+
+<svg viewBox="0 0 820 380" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting ProBench's two-track evaluation with phoneshell's single-track one. ProBench routes a task through a Structure Description Converter, which records the clickable node tapped at each step, and an MLLM-based Summarizer, which compares before and after screenshots, so a state-related check and a process-related check can both be scored. phoneshell's runner hands the instruction to the agent, waits for it to finish, then calls run_all exactly once against the phone's current foreground app, accessibility tree, and screen text, with no record of what happened at any earlier step.">
+<rect x="0" y="0" width="820" height="380" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Two tracks of evidence versus one</text>
+<rect x="20" y="50" width="370" height="290" rx="10" fill="#1d2330" stroke="#6f7b90"/>
+<text x="36" y="76" font-size="12" font-weight="600">ProBench's Process Provider</text>
+<text x="36" y="104" font-size="10.5" fill="#c4ccda">1. agent acts: locate, sort, filter, select</text>
+<text x="36" y="124" font-size="10.5" fill="#c4ccda">2. Structure Description Converter records the</text>
+<text x="36" y="142" font-size="10.5" fill="#c4ccda">   clickable node tapped at each step</text>
+<text x="36" y="166" font-size="10.5" fill="#c4ccda">3. MLLM Summarizer compares before/after</text>
+<text x="36" y="184" font-size="10.5" fill="#c4ccda">   screenshots and writes a short action log</text>
+<text x="36" y="212" font-size="10.5" fill="#f2a65a" font-weight="600">4. State-related check AND Process-related</text>
+<text x="36" y="230" font-size="10.5" fill="#f2a65a" font-weight="600">   check are both scored from this trail</text>
+<text x="36" y="258" font-size="10.5" fill="#8893a8">Best model: 45.6% ST, 27.9% PT (Table 3)</text>
+<rect x="420" y="50" width="380" height="290" rx="10" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="436" y="76" font-size="12" font-weight="600">phoneshell's runner.py</text>
+<text x="436" y="104" font-size="10.5" fill="#c4ccda">1. setup script runs, no model involved</text>
+<text x="436" y="124" font-size="10.5" fill="#c4ccda">2. instruction handed to the agent</text>
+<text x="436" y="144" font-size="10.5" fill="#c4ccda">3. agent runs to completion, unobserved</text>
+<text x="436" y="168" font-size="10.5" fill="#5ad1a0" font-weight="600">4. run_all() called once: foreground_app,</text>
+<text x="436" y="186" font-size="10.5" fill="#5ad1a0" font-weight="600">   element_exists, regex_on_screen read NOW</text>
+<text x="436" y="210" font-size="10.5" fill="#8893a8">No record of step 2, step 5, or any point</text>
+<text x="436" y="228" font-size="10.5" fill="#8893a8">between setup and this single read</text>
+<text x="436" y="256" font-size="10.5" fill="#8893a8">One check kind, answer_contains, grades the</text>
+<text x="436" y="274" font-size="10.5" fill="#8893a8">model's stated answer, not device state</text>
+<text x="20" y="364" font-size="10" fill="#8893a8">Sources: arXiv:2511.09157 Process Provider description; phoneshell/bench/runner.py, verify.py, read 17 October 2026.</text>
+</g></svg>
+
+<h2 id="what-it-means-for-anyone-grading-a-phone-agent">What it means for anyone grading a phone agent honestly</h2>
+
+<ul>
+  <li>A benchmark that only reads final state is not wrong, it is answering a narrower question than it may appear to. ProBench's own numbers show that narrower question has an easier, more forgiving answer: every one of its ten models scored higher on ST than on PT, often by double.</li>
+  <li>Adding process-aware grading to a harness like phoneshell's would need a new check kind that samples the accessibility tree or a screenshot partway through the agent's turns, not at the end, which the current <code>run_all</code> call, by design, never does.</li>
+  <li>The three zero-scoring models (GPT-4o, Claude 4 Sonnet, UI-R1-E-3B on this evaluation) are a reminder that a process-aware check only matters once a model clears the state-related bar first; it adds a second, harder filter on top of the first one, not a replacement for it.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># confirm phoneshell's checks run once, after the agent finishes
+grep -n "run_all\|run_agent" phoneshell/bench/runner.py
+sed -n '1,20p' phoneshell/bench/verify.py
+
+# the five check kinds and what each one reads
+grep -n 'if kind ==\|if check.kind ==' phoneshell/bench/verify.py
+
+# ProBench's own task split and Process Provider
+curl -s https://arxiv.org/abs/2511.09157 | grep -i "process-related\|state-related\|Process Provider"
+# full tables: https://arxiv.org/html/2511.09157v1 (Table 3, error analysis section)</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim phoneshell's checks read device state exactly once, after the agent's turn ends, and that none of its five check kinds inspects an intermediate screen. That is wrong the moment a future commit to <code>phoneshell/bench/runner.py</code> calls a check before <code>run_agent</code> returns, or adds a check kind that samples the tree mid-task. We also report ProBench's Gemini 2.5 Pro gap as 17.7 points from Table 3; that figure is wrong if a later revision of the paper restates the table with different numbers. We will check both by 31 March 2027.</p>
+
+<h2 id="sources">Sources</h2>
+
+<ul>
+  <li>Yang, Wang, et al., <a href="https://arxiv.org/abs/2511.09157">ProBench: Benchmarking GUI Agents with Accurate Process Information</a>, arXiv:2511.09157, submitted 12 November 2025, AAAI 2026, read 17 October 2026.</li>
+  <li>Full tables and error analysis: <a href="https://arxiv.org/html/2511.09157v1">arxiv.org/html/2511.09157v1</a>.</li>
+  <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/bench/verify.py</code>, <code>phoneshell/bench/runner.py</code>, read 17 October 2026.</li>
+</ul>
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
