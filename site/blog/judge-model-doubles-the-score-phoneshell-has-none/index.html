@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A3's MLLM reward model roughly doubles average success from 19.0% to 36.5% across ten agents; phoneshell's checks run with no judge model in the loop at all - Blolabel</title>
+<meta name="description" content="A3 grades mobile agents two ways on the same 100 live-app tasks: a strict final-state success rate, and an essential-state score from an MLLM reward model that credits partial progress, validated at 95.7% precision against human labels. phoneshell's five check kinds read the accessibility tree and screen text directly; no model ever judges whether a phoneshell run succeeded.">
+<link rel="canonical" href="https://blolabel.ai/blog/judge-model-doubles-the-score-phoneshell-has-none/">
+<meta property="og:title" content="A3's MLLM reward model roughly doubles average success from 19.0% to 36.5% across ten agents; phoneshell's checks run with no judge model in the loop at all - Blolabel">
+<meta property="og:description" content="A3 grades mobile agents two ways on the same 100 live-app tasks: a strict final-state success rate, and an essential-state score from an MLLM reward model that credits partial progress, validated at 95.7% precision against human labels. phoneshell's five check kinds read the accessibility tree and screen text directly; no model ever judges whether a phoneshell run succeeded.">
+<meta property="og:url" content="https://blolabel.ai/blog/judge-model-doubles-the-score-phoneshell-has-none/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/judge-model-doubles-the-score-phoneshell-has-none-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "A3's MLLM reward model roughly doubles average success from 19.0% to 36.5% across ten agents; phoneshell's checks run with no judge model in the loop at all", "description": "A3 grades mobile agents two ways on the same 100 live-app tasks: a strict final-state success rate, and an essential-state score from an MLLM reward model that credits partial progress, validated at 95.7% precision against human labels. phoneshell's five check kinds read the accessibility tree and screen text directly; no model ever judges whether a phoneshell run succeeded.", "datePublished": "2026-10-17", "dateModified": "2026-10-17", "url": "https://blolabel.ai/blog/judge-model-doubles-the-score-phoneshell-has-none/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/judge-model-doubles-the-score-phoneshell-has-none/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/judge-model-doubles-the-score-phoneshell-has-none-hero.png", "citation": ["https://arxiv.org/abs/2501.01149", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-17">17 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>A3's MLLM reward model roughly doubles average success from 19.0% to 36.5% across ten agents; phoneshell's checks run with no judge model in the loop at all</h1>
+  <p class="standfirst">A3 scores the same 100 live-app tasks two ways, and the two ways do not agree: a strict pass/fail success rate, and a more forgiving essential-state score produced by an MLLM acting as a reward model. The reward model's own accuracy is reported and is not perfect. phoneshell's checks never ask a model anything; they read the accessibility tree and the screen directly, every time.</p>
+
+<p>A3: Android Agent Arena for Mobile GUI Agents with Essential-State Procedural Evaluation (arXiv:2501.01149), submitted 2 January 2025 by Yuxiang Chai and 14 coauthors, revised most recently on 12 January 2026 (v3) ahead of ACL 2026 Findings, starts from a complaint about where mobile benchmarks run: AndroidControl grades against static frames, and AndroidWorld grades inside offline, non-live apps, so neither captures how an agent behaves against a real, changing app. A3 fixes that by running 100 tasks across 20 widely used, live online apps, and then grades each run two different ways. A strict success rate (SR) counts only a clean, complete pass. An essential-state score (A3 calls it ESAR) comes from a purpose-built MLLM reward model, A3RM, which scans a sliding window over the agent's trajectory and judges, segment by segment, whether any of a task's defined "essential states," intermediate milestones a human labeler identified in advance, were actually reached, crediting progress a strict pass/fail check would discard entirely.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/judge-model-doubles-the-score-phoneshell-has-none-hero.png" alt="Abstract technical illustration on a dark grid: a device-state node connected by a short direct line to a pass or fail gate on one side, and the same device-state node feeding into a separate glowing evaluator node with a visible accuracy percentage orbiting it before producing a softer, partial-credit output on the other side, cool blues and teals with one amber accent on the evaluator node" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="the-judges-score-is-roughly-double">The judge's score is roughly double the strict score, for nearly every agent</h2>
+
+<p>Table 3, graded by A3RM, lists ten agents. The pattern holds across almost all of them: UI-TARS-1.5 scores 12% SR and 28.2% ESAR, UI-Genie scores 13% SR and 32.1% ESAR, GUI-OWL scores 14% SR and 32.0% ESAR, InfiGUI-R1, the best open-source single-model agent, scores 27% SR and 52.1% ESAR, and the best agent overall, T3A paired with Gemini-2.5-pro, scores 53% SR and 66.4% ESAR. Averaged across all ten agents in the table, mean SR is 19.0% and mean ESAR is 36.5%, just under double. A second table, Table 6, regrades the same trajectories with a different judge, Gemini-2.5-pro instead of A3RM, and the gap persists with similar or larger size: T3A with Gemini-2.5-pro reaches 58% SR and 69.3% ESAR under that judge. The paper's own validation of A3RM against held-out human labels reports, at the essential-state level, 95.7% precision, 94.8% recall, and 96.6% accuracy, and at the task level, 96.0% precision, 96.0% recall, and 98.0% accuracy, adding, in its own words, that "A3RM is more aligned to human judgment and Gemini suffers from the low precision situation." No inter-annotator agreement figure for the human labels themselves is reported.</p>
+
+<table>
+  <thead><tr><th>Agent</th><th>SR (strict, %)</th><th>ESAR (A3RM judge, %)</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>Qwen2.5-VL</td><td>3</td><td>14.2</td><td>arXiv:2501.01149 Table 3</td></tr>
+    <tr><td>UI-TARS-1.5</td><td>12</td><td>28.2</td><td>arXiv:2501.01149 Table 3</td></tr>
+    <tr><td>UI-Genie</td><td>13</td><td>32.1</td><td>arXiv:2501.01149 Table 3</td></tr>
+    <tr><td>GUI-OWL</td><td>14</td><td>32.0</td><td>arXiv:2501.01149 Table 3</td></tr>
+    <tr><td>T3A + Qwen2.5-VL</td><td>15</td><td>30.7</td><td>arXiv:2501.01149 Table 3</td></tr>
+    <tr><td>Mobile-Use + Qwen2.5-VL</td><td>16</td><td>39.5</td><td>arXiv:2501.01149 Table 3</td></tr>
+    <tr><td>InfiGUI-R1</td><td>27</td><td>52.1</td><td>arXiv:2501.01149 Table 3</td></tr>
+    <tr><td>T3A + Gemini-2.5-pro</td><td>53</td><td>66.4</td><td>arXiv:2501.01149 Table 3</td></tr>
+  </tbody>
+</table>
+
+<svg viewBox="0 0 860 440" style="width:100%;height:auto" role="img" aria-label="Scatter plot of eight A3 agents, strict success rate on the horizontal axis against A3RM essential-state score on the vertical axis. Every point sits above the diagonal line where the two scores would be equal, showing the judge model always scores higher: Qwen2.5-VL at 3 and 14.2 percent, UI-TARS-1.5 at 12 and 28.2 percent, UI-Genie at 13 and 32.1 percent, GUI-OWL at 14 and 32.0 percent, T3A with Qwen2.5-VL at 15 and 30.7 percent, Mobile-Use with Qwen2.5-VL at 16 and 39.5 percent, InfiGUI-R1 at 27 and 52.1 percent, T3A with Gemini-2.5-pro at 53 and 66.4 percent.">
+<rect x="0" y="0" width="860" height="440" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">A3 Table 3: strict success rate vs A3RM essential-state score</text>
+<line x1="70" y1="370" x2="70" y2="60" stroke="#3d4458" stroke-width="1"/>
+<line x1="70" y1="370" x2="800" y2="370" stroke="#3d4458" stroke-width="1"/>
+<line x1="70" y1="370" x2="750" y2="60" stroke="#43506b" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="755" y="56" font-size="9.5" fill="#8893a8">SR = ESAR</text>
+<text x="430" y="400" font-size="11" fill="#8893a8" text-anchor="middle">Strict success rate, SR (%)</text>
+<text x="30" y="215" font-size="11" fill="#8893a8" text-anchor="middle" transform="rotate(-90 30 215)">A3RM essential-state score, ESAR (%)</text>
+<text x="66" y="374" font-size="9.5" fill="#8893a8" text-anchor="end">0</text>
+<text x="66" y="212" font-size="9.5" fill="#8893a8" text-anchor="end">30</text>
+<text x="66" y="68" font-size="9.5" fill="#8893a8" text-anchor="end">60</text>
+<circle cx="83" cy="325.9" r="5" fill="#f2a65a"/><text x="95" y="320" font-size="9.5" fill="#c4ccda">Qwen2.5-VL 3/14.2</text>
+<circle cx="138" cy="282.5" r="5" fill="#f2a65a"/><text x="150" y="276" font-size="9.5" fill="#c4ccda">UI-TARS-1.5 12/28.2</text>
+<circle cx="149" cy="269.0" r="5" fill="#f2a65a"/><text x="150" y="296" font-size="9.5" fill="#c4ccda">UI-Genie 13/32.1</text>
+<circle cx="160" cy="269.7" r="5" fill="#f2a65a"/><text x="150" y="258" font-size="9.5" fill="#c4ccda">GUI-OWL 14/32.0</text>
+<circle cx="171" cy="277.9" r="5" fill="#f2a65a"/><text x="150" y="238" font-size="9.5" fill="#c4ccda">T3A+Qwen 15/30.7</text>
+<circle cx="182" cy="217.0" r="5" fill="#f2a65a"/><text x="195" y="214" font-size="9.5" fill="#c4ccda">Mobile-Use+Qwen 16/39.5</text>
+<circle cx="258" cy="128.5" r="5" fill="#f2a65a"/><text x="270" y="125" font-size="9.5" fill="#c4ccda">InfiGUI-R1 27/52.1</text>
+<circle cx="494" cy="57.4" r="5" fill="#5ad1a0"/><text x="500" y="52" font-size="9.5" fill="#5ad1a0">T3A+Gemini-2.5-pro 53/66.4</text>
+<text x="20" y="420" font-size="10" fill="#8893a8">Source: arXiv:2501.01149, Table 3, read 17 October 2026. All points fall above the SR=ESAR line.</text>
+</g></svg>
+
+<h2 id="phoneshell-has-no-judge-to-be-accurate-or-not">phoneshell has no judge model to be 95.7% accurate, or any other number</h2>
+
+<p>phoneshell's (<a href="https://github.com/Blomega/phoneshell">github.com/Blomega/phoneshell</a>) grading, in <code>phoneshell/bench/verify.py</code>, states its own rule in its module docstring: "Every check reads the phone directly rather than believing the agent's account of itself... Where a check can be made against real device state rather than against pixels, it is: state is harder to fake and does not move when Apple redesigns a screen." The five check kinds, <code>foreground_app</code>, <code>element_exists</code>, <code>element_exists_anywhere</code>, <code>regex_on_screen</code>, and <code>answer_contains</code>, are deterministic functions over the accessibility tree, screen text, or the model's stated answer against a known string. None of them calls an LLM, vision model, or any other model to interpret what it sees. There is consequently no analogue to A3RM's reported precision or recall anywhere in phoneshell, not because the number would be good or bad, but because there is no judge in the loop to measure in the first place.</p>
+
+<p>That trade runs in both directions, and A3's own numbers show what phoneshell's design gives up. phoneshell's checks cannot award partial credit the way A3RM does: a phoneshell task is pass or fail against whatever its environment file's checks state, with no equivalent of ESAR's progress-aware scoring for a task that got partway there. A3's checks, in exchange for that flexibility, inherit whatever error the judge itself carries, 4.3% of state-level judgments disagreeing with a human label by A3RM's own reported precision, and a second, different judge (Gemini-2.5-pro) producing yet another, measurably different set of scores on the same trajectories in Table 6. phoneshell's bet is that a narrower, strictly pass/fail signal that is never itself a probabilistic judgment is worth more than partial credit that depends on how good this run's judge happens to be.</p>
+
+<svg viewBox="0 0 820 380" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting A3's judge-based grading pipeline with phoneshell's deterministic one. A3RM slides a two-step window across the agent's trajectory and asks an MLLM whether any essential state was reached in that segment, a method validated at 95.7 percent precision against human labels but still imperfect. phoneshell's run_all function reads the foreground app, the accessibility tree, and on-screen text directly, with no model making a judgment call anywhere in the path.">
+<rect x="0" y="0" width="820" height="380" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">A judgment call versus a direct read</text>
+<rect x="20" y="50" width="370" height="290" rx="10" fill="#1d2330" stroke="#6f7b90"/>
+<text x="36" y="76" font-size="12" font-weight="600">A3RM's essential-state pipeline</text>
+<text x="36" y="104" font-size="10.5" fill="#c4ccda">1. trajectory recorded step by step</text>
+<text x="36" y="124" font-size="10.5" fill="#c4ccda">2. a size-2 sliding window scans the trace</text>
+<text x="36" y="144" font-size="10.5" fill="#c4ccda">3. an MLLM judges whether an essential state</text>
+<text x="36" y="162" font-size="10.5" fill="#c4ccda">   was reached inside that window</text>
+<text x="36" y="190" font-size="10.5" fill="#f2a65a" font-weight="600">4. judgment validated at 95.7% precision,</text>
+<text x="36" y="208" font-size="10.5" fill="#f2a65a" font-weight="600">   94.8% recall against human labels</text>
+<text x="36" y="236" font-size="10.5" fill="#8893a8">A different judge (Gemini-2.5-pro) scores</text>
+<text x="36" y="254" font-size="10.5" fill="#8893a8">the same trajectories differently (Table 6)</text>
+<rect x="420" y="50" width="380" height="290" rx="10" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="436" y="76" font-size="12" font-weight="600">phoneshell's run_all() pipeline</text>
+<text x="436" y="104" font-size="10.5" fill="#c4ccda">1. agent runs to completion, unobserved</text>
+<text x="436" y="124" font-size="10.5" fill="#c4ccda">2. foreground_app: read the bundle id directly</text>
+<text x="436" y="144" font-size="10.5" fill="#c4ccda">3. element_exists: read the accessibility tree</text>
+<text x="436" y="164" font-size="10.5" fill="#c4ccda">4. regex_on_screen: pattern-match screen text</text>
+<text x="436" y="192" font-size="10.5" fill="#5ad1a0" font-weight="600">No model is asked to interpret anything;</text>
+<text x="436" y="210" font-size="10.5" fill="#5ad1a0" font-weight="600">each check is a deterministic function</text>
+<text x="436" y="238" font-size="10.5" fill="#8893a8">Same phone state always yields the same</text>
+<text x="436" y="256" font-size="10.5" fill="#8893a8">pass/fail verdict, by construction</text>
+<text x="20" y="364" font-size="10" fill="#8893a8">Sources: arXiv:2501.01149 Table 2 (A3RM validation), Table 6; phoneshell/bench/verify.py, read 17 October 2026.</text>
+</g></svg>
+
+<h2 id="what-it-means-for-anyone-choosing-how-to-grade-an-agent">What it means for anyone choosing how to grade a phone agent</h2>
+
+<ul>
+  <li>A benchmark's grading method is itself a result that needs its own accuracy number. A3 reports one (95.7% precision, 94.8% recall at the state level); many benchmarks that use an LLM judge do not, which makes their reported success rates harder to compare against a deterministic one like phoneshell's.</li>
+  <li>The near-universal direction of the gap, every one of A3's ten agents scores higher under ESAR than under SR, means a reader comparing an ESAR number from A3 against a strict SR number from any other benchmark, phoneshell's leaderboard included, is comparing two different kinds of measurement, not two agents.</li>
+  <li>Using two different judges on the same data (A3RM in Table 3, Gemini-2.5-pro in Table 6) and getting two different ESAR numbers for the same agent is itself evidence for phoneshell's design choice: a judge-based score is specific to the judge used to produce it, in a way a tree-read check is not.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># confirm phoneshell's checks never call a model
+grep -n "if check.kind ==\|if kind ==" phoneshell/bench/verify.py
+sed -n '1,10p' phoneshell/bench/verify.py
+
+# look for any LLM/vision-judge call anywhere in the grading path
+grep -rn "openai\|anthropic\|gemini\|judge\|reward_model" phoneshell/bench/verify.py phoneshell/bench/runner.py
+
+# A3's own two-judge tables and reward-model validation
+curl -s https://arxiv.org/abs/2501.01149 | grep -i "A3RM\|essential-state\|precision"
+# full tables: https://arxiv.org/html/2501.01149v3 (Table 3, Table 6, Table 2 validation)</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim none of phoneshell's five check kinds calls any model, LLM or otherwise, to judge a run; every one is a deterministic read of the accessibility tree, screen text, or a literal string match. That is wrong the moment a future commit to <code>phoneshell/bench/verify.py</code> adds a check kind that asks a model to interpret a screen or trajectory. We also report the ten-agent mean gap between SR and ESAR in A3's Table 3 as 19.0% to 36.5%; that computed average is wrong if a later revision of the paper restates Table 3 with different per-agent figures. We will check both by 31 March 2027.</p>
+
+<h2 id="sources">Sources</h2>
+
+<ul>
+  <li>Chai, Tang, et al., <a href="https://arxiv.org/abs/2501.01149">A3: Android Agent Arena for Mobile GUI Agents with Essential-State Procedural Evaluation</a>, arXiv:2501.01149, submitted 2 January 2025, revised 12 January 2026 (v3), ACL 2026 Findings, read 17 October 2026.</li>
+  <li>Full tables and A3RM validation: <a href="https://arxiv.org/html/2501.01149v3">arxiv.org/html/2501.01149v3</a> (Table 2 reward-model validation, Table 3 A3RM-judged results, Table 6 Gemini-2.5-pro-judged results).</li>
+  <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/bench/verify.py</code>, read 17 October 2026.</li>
+</ul>
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
