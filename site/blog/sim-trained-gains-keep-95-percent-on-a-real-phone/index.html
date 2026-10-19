@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MobileGym's simulation-trained policy keeps 95.1% of its gain on a physical Android phone, a 2.1-point loss out of 42.8; phoneshell trains and grades on physical hardware from the first run, with no simulated stage to lose anything from - Blolabel</title>
+<meta name="description" content="MobileGym trains Qwen3-VL-4B-Instruct with GRPO inside a parallel, deterministic Android simulator, then re-runs the same 59 tasks on a physical Redmi Note 12 Turbo. The real device retains 95.1% of the simulated training gain, 40.7 of 42.8 points. phoneshell skips simulation entirely and runs its 80 tasks on a physical iPhone 17 Pro Max from the start, at the cost of the parallelism a simulator provides.">
+<link rel="canonical" href="https://blolabel.ai/blog/sim-trained-gains-keep-95-percent-on-a-real-phone/">
+<meta property="og:title" content="MobileGym's simulation-trained policy keeps 95.1% of its gain on a physical Android phone, a 2.1-point loss out of 42.8; phoneshell trains and grades on physical hardware from the first run, with no simulated stage to lose anything from - Blolabel">
+<meta property="og:description" content="MobileGym trains Qwen3-VL-4B-Instruct with GRPO inside a parallel, deterministic Android simulator, then re-runs the same 59 tasks on a physical Redmi Note 12 Turbo. The real device retains 95.1% of the simulated training gain, 40.7 of 42.8 points. phoneshell skips simulation entirely and runs its 80 tasks on a physical iPhone 17 Pro Max from the start, at the cost of the parallelism a simulator provides.">
+<meta property="og:url" content="https://blolabel.ai/blog/sim-trained-gains-keep-95-percent-on-a-real-phone/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/sim-trained-gains-keep-95-percent-on-a-real-phone-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "MobileGym's simulation-trained policy keeps 95.1% of its gain on a physical Android phone, a 2.1-point loss out of 42.8; phoneshell trains and grades on physical hardware from the first run, with no simulated stage to lose anything from", "description": "MobileGym trains Qwen3-VL-4B-Instruct with GRPO inside a parallel, deterministic Android simulator, then re-runs the same 59 tasks on a physical Redmi Note 12 Turbo. The real device retains 95.1% of the simulated training gain, 40.7 of 42.8 points. phoneshell skips simulation entirely and runs its 80 tasks on a physical iPhone 17 Pro Max from the start, at the cost of the parallelism a simulator provides.", "datePublished": "2026-10-18", "dateModified": "2026-10-18", "url": "https://blolabel.ai/blog/sim-trained-gains-keep-95-percent-on-a-real-phone/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/sim-trained-gains-keep-95-percent-on-a-real-phone/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/sim-trained-gains-keep-95-percent-on-a-real-phone-hero.png", "citation": ["https://arxiv.org/abs/2605.26114", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-18">18 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>MobileGym's simulation-trained policy keeps 95.1% of its gain on a physical Android phone, a 2.1-point loss out of 42.8; phoneshell trains and grades on physical hardware from the first run, with no simulated stage to lose anything from</h1>
+  <p class="standfirst">MobileGym trains Qwen3-VL-4B-Instruct with reinforcement learning inside a parallel, deterministic Android simulator, then checks the same 59 tasks on a physical phone. The simulated gain is 42.8 points; the real-device gain is 40.7. That is a 95.1% retention rate, and a 4.9% loss. phoneshell's own 80 tasks never touch a simulator in the first place, which is a different trade, not a better number.</p>
+
+<p>MobileGym: A Verifiable and Highly Parallel Simulation Platform for Mobile GUI Agent Research (arXiv:2605.26114), submitted 25 May 2026 and revised most recently 23 September 2026 (v3) for EMNLP 2026, by Dingbang Wu, Rui Hao, Haiyang Wang, Shuzhe Wu, Han Xiao, Zhenghong Li, Bojiang Zhou, Zheng Ju, Zichen Liu, Lue Fan, and Zhaoxiang Zhang, builds a browser-hosted simulator across 28 Android apps that judges tasks deterministically from structured JSON state rather than from pixels or model self-report. Each simulated instance costs about 400 MB of memory and about 3 seconds to cold-start, so a single server can host hundreds of them in parallel, which is the entire economic case for simulating rather than running on physical hardware: training runs that would need hundreds of phones instead need hundreds of lightweight instances on one machine. The paper then asks the question that economic case depends on: does a policy trained inside that simulator still work once it is moved to an actual phone.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/sim-trained-gains-keep-95-percent-on-a-real-phone-hero.png" alt="Abstract technical illustration on a dark grid: hundreds of small parallel instance nodes feeding a training arrow into one consolidated policy node, which then crosses a visible seam into a single physical device node on the other side, with the arrow narrowing slightly as it crosses to represent a small, measured loss" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="the-gain-mostly-survives-the-jump">The training gain mostly survives the jump to hardware, and the loss is now a number</h2>
+
+<p>On MobileGym-Bench's full 256-task simulation test set, GRPO training raises Qwen3-VL-4B-Instruct's overall success rate from 9.4% to 22.2%, a gain of 12.8 points, entirely inside the simulator. The paper then isolates a 59-task subset chosen for being reproducible on real hardware (excluding 8 of an original 67 "signal-bucket" tasks that depended on unreproducible account state or an irreversible action), and runs that same comparison twice: once inside the simulator and once on a physical Redmi Note 12 Turbo. On the simulator side of that 59-task subset, training raises success from 33.9% to 76.7%, a gain of 42.8 points. On the real device, the same training raises success from 32.2% to 72.9%, a gain of 40.7 points. Dividing one gain by the other, 40.7/42.8, gives the paper's own reported retention figure: 95.1%.</p>
+
+<table>
+  <thead><tr><th>Condition</th><th>Pre-RL success</th><th>Post-RL success</th><th>Gain</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>Simulator, 256-task MobileGym-Bench test set</td><td>9.4%</td><td>22.2%</td><td>+12.8 pt</td><td>arXiv:2605.26114</td></tr>
+    <tr><td>Simulator, 59-task real-device subset</td><td>33.9%</td><td>76.7%</td><td>+42.8 pt</td><td>arXiv:2605.26114</td></tr>
+    <tr><td>Physical Redmi Note 12 Turbo, same 59 tasks</td><td>32.2%</td><td>72.9%</td><td>+40.7 pt</td><td>arXiv:2605.26114</td></tr>
+    <tr><td>Retained gain on physical hardware</td><td colspan="3">40.7 / 42.8 = 95.1%</td><td>arXiv:2605.26114</td></tr>
+  </tbody>
+</table>
+
+<svg viewBox="0 0 860 420" style="width:100%;height:auto" role="img" aria-label="Grouped bar chart of three pre-training to post-training success rate pairs. The 256-task simulation test set rises from 9.4 to 22.2 percent. The 59-task subset rises from 33.9 to 76.7 percent inside the simulator, and from 32.2 to 72.9 percent on a physical Redmi Note 12 Turbo, a visibly smaller real-device bar pair sitting just below its simulator counterpart.">
+<rect x="0" y="0" width="860" height="420" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">MobileGym: pre-RL vs post-RL success, simulator and physical device</text>
+<line x1="60" y1="350" x2="60" y2="60" stroke="#3d4458" stroke-width="1"/>
+<line x1="60" y1="350" x2="820" y2="350" stroke="#3d4458" stroke-width="1"/>
+<text x="54" y="354" font-size="9.5" fill="#8893a8" text-anchor="end">0%</text>
+<text x="54" y="206" font-size="9.5" fill="#8893a8" text-anchor="end">50%</text>
+<text x="54" y="64" font-size="9.5" fill="#8893a8" text-anchor="end">100%</text>
+<rect x="100" y="323.0" width="34" height="27" fill="#6ea8fe"/><text x="117" y="316" font-size="9" fill="#c4ccda" text-anchor="middle">9.4%</text>
+<rect x="138" y="283.6" width="34" height="66.4" fill="#5ad1a0"/><text x="155" y="277" font-size="9" fill="#c4ccda" text-anchor="middle">22.2%</text>
+<text x="136" y="370" font-size="9.5" fill="#8893a8" text-anchor="middle">256-task sim</text>
+<rect x="260" y="252.9" width="34" height="97.1" fill="#6ea8fe"/><text x="277" y="246" font-size="9" fill="#c4ccda" text-anchor="middle">33.9%</text>
+<rect x="298" y="129.7" width="34" height="220.3" fill="#5ad1a0"/><text x="315" y="123" font-size="9" fill="#c4ccda" text-anchor="middle">76.7%</text>
+<text x="296" y="370" font-size="9.5" fill="#8893a8" text-anchor="middle">59-task, simulator</text>
+<rect x="420" y="258.5" width="34" height="91.5" fill="#6ea8fe"/><text x="437" y="252" font-size="9" fill="#c4ccda" text-anchor="middle">32.2%</text>
+<rect x="458" y="141.8" width="34" height="208.2" fill="#f2a65a"/><text x="475" y="135" font-size="9" fill="#c4ccda" text-anchor="middle">72.9%</text>
+<text x="456" y="370" font-size="9.5" fill="#8893a8" text-anchor="middle">59-task, real Redmi</text>
+<rect x="640" y="60" width="14" height="14" fill="#6ea8fe"/><text x="660" y="71" font-size="10" fill="#c4ccda">pre-RL</text>
+<rect x="640" y="82" width="14" height="14" fill="#5ad1a0"/><text x="660" y="93" font-size="10" fill="#c4ccda">post-RL, simulator</text>
+<rect x="640" y="104" width="14" height="14" fill="#f2a65a"/><text x="660" y="115" font-size="10" fill="#c4ccda">post-RL, physical phone</text>
+<text x="20" y="400" font-size="10" fill="#8893a8">Source: arXiv:2605.26114, section 5.2, read 18 October 2026. Real-device gain (40.7 pt) retains 95.1% of the simulator gain on the same 59 tasks (42.8 pt).</text>
+</g></svg>
+
+<h2 id="two-different-bets-on-the-same-gap">Two different bets on the same 4.9% gap</h2>
+
+<p>MobileGym's architecture is built to make the simulator the default and the physical device the spot check: hundreds of 400 MB instances per server, 3-second cold starts, and a 59-task real-hardware pass used only to validate that training, which happened in the simulator, actually transfers. phoneshell's architecture answers a different question and makes the opposite bet. Its houseFacts describe 80 public tasks run on one physical iPhone 17 Pro Max on iOS 26.6, with no simulated stage at all; every number phoneshell publishes, including its own screenshot-cost and pixel-only-task figures, comes from the device, never from a simulated stand-in for it. MobileGym's 95.1% retention is evidence that, for its own task mix, the bet on simulating first and validating later mostly pays off. It is also evidence that mostly is not entirely: 4.9% of the simulated gain, about 2.1 of the 42.8 points, did not survive contact with a real Android build, real app data, and the real-world entities (contacts, points of interest) the paper names as sources of divergence. Whether that gap matters depends on whether the failures concentrated in it look like noise or like exactly the cases a benchmark exists to catch, a question this paper's 59-task sample is not large enough to answer on its own.</p>
+
+<svg viewBox="0 0 820 360" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting MobileGym's simulate-first pipeline, which trains inside hundreds of parallel lightweight instances and validates on a small physical sample afterward, with phoneshell's physical-first pipeline, which has no simulated stage and grades every one of its 80 tasks from the device itself.">
+<rect x="0" y="0" width="820" height="360" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Simulate-first versus physical-first</text>
+<rect x="20" y="50" width="370" height="270" rx="10" fill="#1d2330" stroke="#6f7b90"/>
+<text x="36" y="76" font-size="12" font-weight="600">MobileGym: simulate, then validate</text>
+<text x="36" y="104" font-size="10.5" fill="#c4ccda">hundreds of parallel simulated instances</text>
+<text x="36" y="122" font-size="10.5" fill="#c4ccda">~400 MB and ~3s cold start, each</text>
+<text x="36" y="140" font-size="10.5" fill="#c4ccda">GRPO training: 256-task set, +12.8 pt</text>
+<text x="36" y="168" font-size="10.5" fill="#f2a65a" font-weight="600">validated on 59 real-device tasks only</text>
+<text x="36" y="186" font-size="10.5" fill="#f2a65a" font-weight="600">95.1% of the gain survives (40.7/42.8 pt)</text>
+<text x="36" y="214" font-size="10.5" fill="#8893a8">4.9% of training signal never gets a</text>
+<text x="36" y="232" font-size="10.5" fill="#8893a8">physical-world test in this design</text>
+<rect x="420" y="50" width="380" height="270" rx="10" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="436" y="76" font-size="12" font-weight="600">phoneshell: physical from the first run</text>
+<text x="436" y="104" font-size="10.5" fill="#c4ccda">one iPhone 17 Pro Max, iOS 26.6</text>
+<text x="436" y="122" font-size="10.5" fill="#c4ccda">80 public tasks, every one run on hardware</text>
+<text x="436" y="150" font-size="10.5" fill="#5ad1a0" font-weight="600">no simulated stage, so no sim-to-real</text>
+<text x="436" y="168" font-size="10.5" fill="#5ad1a0" font-weight="600">retention number to report, by construction</text>
+<text x="436" y="196" font-size="10.5" fill="#8893a8">trade: one device, not hundreds of parallel</text>
+<text x="436" y="214" font-size="10.5" fill="#8893a8">instances; slower to scale, nothing to lose</text>
+<text x="20" y="344" font-size="10" fill="#8893a8">Sources: arXiv:2605.26114, section 5.2; phoneshell houseFacts, read 18 October 2026.</text>
+</g></svg>
+
+<h2 id="what-it-means-for-choosing-sim-or-real">What it means for choosing simulation, hardware, or both</h2>
+
+<ul>
+  <li>95.1% retention is a specific, falsifiable number for a specific policy, model size, and 59-task sample. It licenses the claim "this simulator's training signal mostly transfers for Qwen3-VL-4B-Instruct on these tasks," not the broader claim that simulation is interchangeable with hardware for mobile agents in general.</li>
+  <li>The 4.9% that did not transfer is the part a parallel simulator cannot, by MobileGym's own account, currently see: divergence from real app data, real-world entities, and UI details the simulator does not model. A benchmark built entirely on physical hardware, like phoneshell's, cannot lose that signal to a sim-to-real gap, because there is no simulated stage to diverge from.</li>
+  <li>The two designs are optimizing different things. MobileGym optimizes for training throughput, hundreds of parallel instances at 400 MB each, and spends a 59-task physical check to bound its own error. phoneshell optimizes for the error bound being zero by construction, at the cost of never getting that parallel throughput at all.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># MobileGym's paper and sim-to-real section
+curl -s https://arxiv.org/abs/2605.26114
+# full results (section 5.2, Table 2, the 59-task real-device subset): https://arxiv.org/html/2605.26114
+
+# phoneshell's device-only design: no simulator anywhere in the grading path
+grep -rln "simulator\|simulated" phoneshell/ 2>/dev/null
+grep -n "physical\|iPhone 17" phoneshell/bench/runner.py phoneshell/config.py 2>/dev/null</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We report MobileGym's real-device retention as 95.1%, computed from a 42.8-point simulated gain and a 40.7-point physical gain on the same 59-task subset, both read directly from arXiv:2605.26114 section 5.2. That is wrong if a future revision of the paper restates either figure, or if the 59-task subset is later shown to be unrepresentative of the full 256-task benchmark in a way the authors have not flagged. We also claim phoneshell's physical-only design cannot have a sim-to-real gap because it has no simulated stage; that framing would be wrong if phoneshell's harness is later shown to rely on any simulated or mocked component for grading rather than live device state. We will check both by 31 March 2027.</p>
+
+<h2 id="sources">Sources</h2>
+
+<ul>
+  <li>Wu, Hao, Wang, Wu, Xiao, Li, Zhou, Ju, Liu, Fan, Zhang, <a href="https://arxiv.org/abs/2605.26114">MobileGym: A Verifiable and Highly Parallel Simulation Platform for Mobile GUI Agent Research</a>, arXiv:2605.26114, submitted 25 May 2026, revised 23 September 2026 (v3), EMNLP 2026, read 18 October 2026.</li>
+  <li>Full results: <a href="https://arxiv.org/html/2605.26114">arxiv.org/html/2605.26114</a> (section 5.2, Table 2, 59-task real-device subset).</li>
+  <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: houseFacts and <code>phoneshell/config.py</code>, read 18 October 2026.</li>
+</ul>
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
