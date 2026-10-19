@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DailyDroid's screenshot adds about 5 points of average success on two models; UI Retrieval, the single largest failure cause, stays the same count with or without it - Blolabel</title>
+<meta name="description" content="DailyDroid runs GPT-4o and o4-mini on 75 everyday Android tasks under text-only and text-plus-screenshot conditions. Average success rises by 5.3 and 4.0 points. The System-Level failure category, UI Retrieval, which causes about 40% of all failures, has the identical count in both conditions. phoneshell's own screenshot result is binary, 0% or 100%, on the pixel-only tasks it isolates for exactly that reason.">
+<link rel="canonical" href="https://blolabel.ai/blog/ui-retrieval-failures-dont-move-with-the-screenshot/">
+<meta property="og:title" content="DailyDroid's screenshot adds about 5 points of average success on two models; UI Retrieval, the single largest failure cause, stays the same count with or without it - Blolabel">
+<meta property="og:description" content="DailyDroid runs GPT-4o and o4-mini on 75 everyday Android tasks under text-only and text-plus-screenshot conditions. Average success rises by 5.3 and 4.0 points. The System-Level failure category, UI Retrieval, which causes about 40% of all failures, has the identical count in both conditions. phoneshell's own screenshot result is binary, 0% or 100%, on the pixel-only tasks it isolates for exactly that reason.">
+<meta property="og:url" content="https://blolabel.ai/blog/ui-retrieval-failures-dont-move-with-the-screenshot/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/ui-retrieval-failures-dont-move-with-the-screenshot-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "DailyDroid's screenshot adds about 5 points of average success on two models; UI Retrieval, the single largest failure cause, stays the same count with or without it", "description": "DailyDroid runs GPT-4o and o4-mini on 75 everyday Android tasks under text-only and text-plus-screenshot conditions. Average success rises by 5.3 and 4.0 points. The System-Level failure category, UI Retrieval, which causes about 40% of all failures, has the identical count in both conditions. phoneshell's own screenshot result is binary, 0% or 100%, on the pixel-only tasks it isolates for exactly that reason.", "datePublished": "2026-10-18", "dateModified": "2026-10-18", "url": "https://blolabel.ai/blog/ui-retrieval-failures-dont-move-with-the-screenshot/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/ui-retrieval-failures-dont-move-with-the-screenshot/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/ui-retrieval-failures-dont-move-with-the-screenshot-hero.png", "citation": ["https://arxiv.org/abs/2604.17817", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-18">18 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>DailyDroid's screenshot adds about 5 points of average success on two models; UI Retrieval, the single largest failure cause, stays the same count with or without it</h1>
+  <p class="standfirst">DailyDroid runs GPT-4o and o4-mini on 75 everyday Android tasks, once with text-only screen state and once with the same text plus a screenshot. Average success moves from 26.7% to 32.0% for GPT-4o and from 29.3% to 33.3% for o4-mini, a gain of about five points either way. The System-Level failure category that causes the most losses, UI Retrieval, has the exact same count in both conditions for both models. The screenshot's entire measured effect lands somewhere else.</p>
+
+<p>Do LLMs Need to See Everything? A Benchmark and Study of Failures in LLM-driven Smartphone Automation using Screentext vs. Screenshots (arXiv:2604.17817), submitted 20 April 2026 by Shiquan Zhang, Tianyi Zhang, Le Fang, Simon D'Alfonso, Hong Jia, and Vassilis Kostakos, and published in the Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies, builds DailyDroid: 75 tasks spanning five everyday scenarios across 25 Android apps, at three difficulty levels. Each task runs twice per model, once given only the Android accessibility tree as text ("screentext") and once given that text plus a screenshot ("multimodal"), on GPT-4o and o4-mini, for 300 runs total. The paper's own framing is blunt about what it expected to find: that screenshot access, which carries a privacy cost and a token cost, "may be unjustified when agents could achieve comparable utility with less invasive representations."</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/ui-retrieval-failures-dont-move-with-the-screenshot-hero.png" alt="Abstract technical illustration on a dark grid: two parallel processing pipelines run from the same starting node, one carrying only a text stream and one carrying a text stream plus a small image tile, converging on a shared decision gate that is only partly open, with a separate locked gate beside it that both pipelines fail to open at the same rate" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="the-average-gain-is-five-points">The average gain is five points, not the hundred phoneshell measures on its pixel-only tasks</h2>
+
+<p>Across all 75 tasks, GPT-4o succeeds on 20 of them text-only (26.7%) and 24 multimodal (32.0%), a gain of 5.3 points. o4-mini succeeds on 22 text-only (29.3%) and 25 multimodal (33.3%), a gain of 4.0 points. The paper's own summary calls this "comparable performance with multimodal inputs yielding marginally higher success rates," and the numbers support that description exactly: the screenshot helps, consistently, in both models, by a small amount. Neither model's overall rate breaks 34% in either condition, and DailyDroid does not report a breakdown by its three stated difficulty levels, so there is no way from this paper alone to see whether the five-point average gain is concentrated in easy tasks, hard ones, or spread evenly.</p>
+
+<table>
+  <thead><tr><th>Model</th><th>Text-only success</th><th>Multimodal success</th><th>Gain</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>GPT-4o</td><td>20/75 (26.7%)</td><td>24/75 (32.0%)</td><td>+5.3 pt</td><td>arXiv:2604.17817</td></tr>
+    <tr><td>o4-mini</td><td>22/75 (29.3%)</td><td>25/75 (33.3%)</td><td>+4.0 pt</td><td>arXiv:2604.17817</td></tr>
+    <tr><td>GPT-4o, System-Level UI Retrieval failures</td><td>25/75 (33.3%)</td><td>25/75 (33.3%)</td><td>0.0 pt</td><td>arXiv:2604.17817, failure taxonomy</td></tr>
+    <tr><td>o4-mini, System-Level UI Retrieval failures</td><td>23/75 (30.7%)</td><td>23/75 (30.7%)</td><td>0.0 pt</td><td>arXiv:2604.17817, failure taxonomy</td></tr>
+    <tr><td>phoneshell, pixel-only tasks (houseFacts)</td><td>0%</td><td>100%</td><td>+100 pt</td><td>phoneshell/bench, pre-registered, p &lt; 0.0001</td></tr>
+  </tbody>
+</table>
+
+<svg viewBox="0 0 860 420" style="width:100%;height:auto" role="img" aria-label="Grouped bar chart of success rates. GPT-4o rises from 26.7 percent text-only to 32.0 percent multimodal, a gain of 5.3 points. o4-mini rises from 29.3 percent to 33.3 percent, a gain of 4.0 points. A separate reference bar shows phoneshell's pixel-only task result rising from 0 percent to 100 percent, roughly twenty times the scale of either DailyDroid gain.">
+<rect x="0" y="0" width="860" height="420" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">DailyDroid success rate, text-only vs multimodal, against phoneshell's pixel-only case</text>
+<line x1="60" y1="340" x2="60" y2="50" stroke="#3d4458" stroke-width="1"/>
+<line x1="60" y1="340" x2="820" y2="340" stroke="#3d4458" stroke-width="1"/>
+<text x="54" y="344" font-size="9.5" fill="#8893a8" text-anchor="end">0%</text>
+<text x="54" y="195" font-size="9.5" fill="#8893a8" text-anchor="end">50%</text>
+<text x="54" y="54" font-size="9.5" fill="#8893a8" text-anchor="end">100%</text>
+<line x1="60" y1="195" x2="820" y2="195" stroke="#272e3d" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="110" y="263.8" width="48" height="76.2" fill="#6ea8fe"/>
+<text x="134" y="257" font-size="9.5" fill="#c4ccda" text-anchor="middle">26.7%</text>
+<rect x="166" y="247.2" width="48" height="92.8" fill="#5ad1a0"/>
+<text x="190" y="240" font-size="9.5" fill="#c4ccda" text-anchor="middle">32.0%</text>
+<text x="162" y="362" font-size="10.5" fill="#8893a8" text-anchor="middle">GPT-4o</text>
+<rect x="250" y="255.0" width="48" height="85.0" fill="#6ea8fe"/>
+<text x="274" y="248" font-size="9.5" fill="#c4ccda" text-anchor="middle">29.3%</text>
+<rect x="306" y="243.4" width="48" height="96.6" fill="#5ad1a0"/>
+<text x="330" y="236" font-size="9.5" fill="#c4ccda" text-anchor="middle">33.3%</text>
+<text x="302" y="362" font-size="10.5" fill="#8893a8" text-anchor="middle">o4-mini</text>
+<rect x="430" y="339.4" width="48" height="0.6" fill="#f2a65a"/>
+<text x="454" y="334" font-size="9.5" fill="#f2a65a" text-anchor="middle">0%</text>
+<rect x="486" y="54" width="48" height="286" fill="#f2a65a"/>
+<text x="510" y="48" font-size="9.5" fill="#f2a65a" text-anchor="middle">100%</text>
+<text x="482" y="362" font-size="10.5" fill="#8893a8" text-anchor="middle">phoneshell, pixel-only</text>
+<rect x="650" y="54" width="14" height="14" fill="#6ea8fe"/><text x="670" y="65" font-size="10" fill="#c4ccda">text-only</text>
+<rect x="650" y="76" width="14" height="14" fill="#5ad1a0"/><text x="670" y="87" font-size="10" fill="#c4ccda">multimodal</text>
+<rect x="650" y="98" width="14" height="14" fill="#f2a65a"/><text x="670" y="109" font-size="10" fill="#c4ccda">phoneshell pixel-only</text>
+<text x="20" y="400" font-size="10" fill="#8893a8">Sources: arXiv:2604.17817 (75 tasks, 300 runs); phoneshell houseFacts, pre-registered, p &lt; 0.0001.</text>
+</g></svg>
+
+<h2 id="the-gain-lands-on-agent-level-errors-not-retrieval">The gain lands on Agent-Level prediction errors, not on finding the element</h2>
+
+<p>DailyDroid's failure handbook splits every failed run into two tiers: System-Level failures, which the paper attributes to the phone's own UI (retrieval, parsing, logic, execution), and Agent-Level failures, which it attributes to the model's choices (prediction, reflection, reaching the step limit, misjudging an impossible task). The System-Level tier, and specifically its largest subcategory, UI Retrieval, is where the screenshot does nothing measurable: GPT-4o has 25 UI Retrieval failures (33.3%) in both the text-only and multimodal conditions, and o4-mini has 23 (30.7%) in both. Summed across all four System-Level subcategories, GPT-4o's System-Level failure count is 32 (42.7%) in both conditions, and o4-mini's is 30 (40.0%) in both. The entire five-point average gain is produced on the Agent-Level side: GPT-4o's LLM Prediction failures drop from 10 to 7, and o4-mini's drop from 7 to 3, when the screenshot is added.</p>
+
+<svg viewBox="0 0 820 400" style="width:100%;height:auto" role="img" aria-label="Diagram splitting DailyDroid's failure taxonomy into two tiers. The System-Level tier, dominated by UI Retrieval failures, shows the identical failure count in the text-only and multimodal conditions for both models, 32 of 75 for GPT-4o and 30 of 75 for o4-mini either way. The Agent-Level tier, dominated by LLM Prediction failures, is where the screenshot's entire measured gain appears, with GPT-4o's prediction failures falling from 10 to 7 and o4-mini's falling from 7 to 3.">
+<rect x="0" y="0" width="820" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Where the screenshot's effect does, and does not, show up</text>
+<rect x="20" y="50" width="370" height="310" rx="10" fill="#1d2330" stroke="#6f7b90"/>
+<text x="36" y="76" font-size="12" font-weight="600">System-Level tier (the phone's own UI)</text>
+<text x="36" y="104" font-size="10.5" fill="#c4ccda">UI Retrieval, UI Parsing, UI Logic, Execution</text>
+<text x="36" y="132" font-size="10.5" fill="#f2a65a" font-weight="600">GPT-4o: 32/75 failures, text-only AND multimodal</text>
+<text x="36" y="152" font-size="10.5" fill="#f2a65a" font-weight="600">o4-mini: 30/75 failures, text-only AND multimodal</text>
+<text x="36" y="180" font-size="10.5" fill="#8893a8">UI Retrieval alone: 25/75 (GPT-4o) and 23/75</text>
+<text x="36" y="198" font-size="10.5" fill="#8893a8">(o4-mini), identical in both conditions</text>
+<text x="36" y="232" font-size="11" font-weight="600" fill="#e9ecf2">The screenshot changes nothing here</text>
+<rect x="420" y="50" width="380" height="310" rx="10" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="436" y="76" font-size="12" font-weight="600">Agent-Level tier (the model's choices)</text>
+<text x="436" y="104" font-size="10.5" fill="#c4ccda">LLM Prediction, Reflection, Max Step, Impossible Task</text>
+<text x="436" y="132" font-size="10.5" fill="#5ad1a0" font-weight="600">GPT-4o LLM Prediction: 10 &rarr; 7 failures</text>
+<text x="436" y="152" font-size="10.5" fill="#5ad1a0" font-weight="600">o4-mini LLM Prediction: 7 &rarr; 3 failures</text>
+<text x="436" y="180" font-size="10.5" fill="#8893a8">o4-mini Reaching Max Step rises 3 &rarr; 7:</text>
+<text x="436" y="198" font-size="10.5" fill="#8893a8">the screenshot adds a new way to stall, too</text>
+<text x="436" y="232" font-size="11" font-weight="600" fill="#5ad1a0">The entire average gain is produced here</text>
+<text x="20" y="384" font-size="10" fill="#8893a8">Source: arXiv:2604.17817, failure taxonomy table, read 18 October 2026.</text>
+</g></svg>
+
+<h2 id="what-it-means-for-reading-a-vision-benefit-number">What it means for reading any "vision helps" or "vision doesn't help" number</h2>
+
+<ul>
+  <li>An average gain over a task mix is a statement about the mix, not about the screenshot. DailyDroid's 75 tasks are everyday, mostly tree-answerable Android actions; phoneshell's houseFacts figure isolates tasks where the answer exists only as pixels. The same screenshot that is worth 100 points on one suite is worth five on the other, because the suites measure different things.</li>
+  <li>A failure category that does not move with the input is evidence the input was never the bottleneck for that category. UI Retrieval failing at the same rate with or without a screenshot means the model is not failing to see the element; whatever it is failing to do, pixels do not fix it.</li>
+  <li>o4-mini's Reaching Max Step failures rise from 3 to 7 when the screenshot is added, the one number in the table that moves against the trend. A benefit on one metric can carry a small, specific cost on another, and an average masks that too.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># DailyDroid's paper and task/failure tables
+curl -s https://arxiv.org/abs/2604.17817
+# full tables (success rates, failure taxonomy): https://arxiv.org/html/2604.17817
+
+# phoneshell's pixel-only task definition and its binary result
+grep -rl "pixel" phoneshell/bench/*.py environments/*.yaml 2>/dev/null
+cat phoneshell/bench/verify.py | sed -n '1,20p'
+# the screenshot cost figure (about 35% per step) is in the published run stats:
+python3 -m phoneshell.bench.stats --help</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We report DailyDroid's System-Level UI Retrieval failure counts as identical between the text-only and multimodal conditions, 25/75 and 25/75 for GPT-4o, 23/75 and 23/75 for o4-mini, read directly from the paper's failure taxonomy table. That claim is wrong if a future revision of arXiv:2604.17817 restates that table with different per-condition counts, or if a follow-up study on a different task mix finds UI Retrieval failures that do move with screenshot access. We also claim phoneshell's own pixel-only result and DailyDroid's average result are not in tension, because they measure different task populations; that reconciliation is wrong if someone runs DailyDroid's exact 75 tasks through phoneshell's grading and finds the pixel-only subset within it behaves like the aggregate rather than like phoneshell's isolated cases. We will check both by 31 March 2027.</p>
+
+<h2 id="sources">Sources</h2>
+
+<ul>
+  <li>Zhang, Zhang, Fang, D'Alfonso, Jia, Kostakos, <a href="https://arxiv.org/abs/2604.17817">Do LLMs Need to See Everything? A Benchmark and Study of Failures in LLM-driven Smartphone Automation using Screentext vs. Screenshots</a>, arXiv:2604.17817, submitted 20 April 2026, Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies, vol. 37, no. 4, read 18 October 2026.</li>
+  <li>Full tables: <a href="https://arxiv.org/html/2604.17817">arxiv.org/html/2604.17817</a> (success-rate table and failure taxonomy table).</li>
+  <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: houseFacts and <code>phoneshell/bench/verify.py</code>, read 18 October 2026.</li>
+</ul>
+
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
