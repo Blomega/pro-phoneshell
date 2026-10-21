@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WebDriverAgent 16.15.3 closes a LAN-open video port that USE_IP never covered; phoneshell's own check has never tested it either &mdash; Blolabel</title>
+<meta name="description" content="WebDriverAgent's MJPEG broadcaster bound to every network interface regardless of USE_IP until pull request #1299 landed on 16 October 2026. phoneshell sets USE_IP and forwards both WDA ports, but its lan_exposure_check has only ever opened a socket to port 8100, the one that was never the problem.">
+<link rel="canonical" href="https://blolabel.ai/blog/lan-check-never-tested-the-video-port/">
+<meta property="og:title" content="WebDriverAgent 16.15.3 closes a LAN-open video port that USE_IP never covered; phoneshell's own check has never tested it either &mdash; Blolabel">
+<meta property="og:description" content="WebDriverAgent's MJPEG broadcaster bound to every network interface regardless of USE_IP until pull request #1299 landed on 16 October 2026. phoneshell sets USE_IP and forwards both WDA ports, but its lan_exposure_check has only ever opened a socket to port 8100, the one that was never the problem.">
+<meta property="og:url" content="https://blolabel.ai/blog/lan-check-never-tested-the-video-port/">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"WebDriverAgent 16.15.3 closes a LAN-open video port that USE_IP never covered; phoneshell's own check has never tested it either","description":"WebDriverAgent's MJPEG broadcaster bound to every network interface regardless of USE_IP until pull request #1299 landed on 16 October 2026. phoneshell sets USE_IP and forwards both WDA ports, but its lan_exposure_check has only ever opened a socket to port 8100, the one that was never the problem.",
+ "datePublished":"2026-10-20","dateModified":"2026-10-20",
+ "url":"https://blolabel.ai/blog/lan-check-never-tested-the-video-port/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/lan-check-never-tested-the-video-port/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"},
+ "image":"https://blolabel.ai/images/blog/lan-check-never-tested-the-video-port-hero.png",
+ "citation":["https://github.com/appium/WebDriverAgent/pull/1299","https://github.com/appium/WebDriverAgent/blob/master/CHANGELOG.md","https://registry.npmjs.org/appium-webdriveragent","https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAABOCAMAAAD4iTj8AAAAilBMVEVMaXFiXmJhXmEVieRkYGRiXmJiXmJEaZJiX2IWjehNaIJhXmEUjOcVjOdgXWBjX2MWjecUjOZiXmJiXmIUi+UVjehUoN7w9/33+/7q9Pzg7/p8gIlkYGQXjuj///9oZGgWk/JmY2YVjullYWUJh+dtaG0olumr1/dSq+7T6vo6n+tntfCMx/N7vvJEi25LAAAAHHRSTlMAakku/HusA/z7Eo+hwDL30nXizUnjHfvKolE8aPCOgAAAAAlwSFlzAAALEgAACxIB0t1+/AAAB35JREFUeJztmn1zsjoThwMCCaCg4EvbASFA1bZ3v//XO7MJeQFBwJ55nnNP85v+oSYB9mJ3k2yKkJGRkZGRkZGRkZGRkZGRkZGRkdHPhZXQ7xPuGH2P4Gk4P8L6P3slGCOEV7vderNZr3f7I/yEfpEwQqvd1i+FDpt90PWCwBKyF147kiOjxc8VzborvtdI++gV0Grtl2XuC1Vledhh5QQY2e8F17u3yASMQjnSXehVGFnaXReOxUvug3c+WJ9LMQbblbwpRnYdO6CYLgZA25HFEwAKddfxscdVX0eIaPnw6ueR2xw3ZaVZLxiU/k7cFSObkgzkFIsBFE478hkAYuw4AIzWld/TYbvetw6M0Ur69XZ4/GpbCvOrBiQQ5KUgMAeACjM95voAxoJxKH5nAyh7r6+qyrLacAcGAK095RAAjI7K/uZy+/q6fVYtAt8XBKYB6I89wwPu0tTQtZ4GkEMMl/4exkwBQHijhv85nUEfN+kELYFJABjhyA09L7QxQpEtFPQAoMCCTlakJVhucWDDcM9zoU363dMAcnj2A5/NHwLojL6ehb6ED1Q+c6QpABjZqUMhXdM0QuG7Q5lY3tcB2AnvFHuRPsUg24spaykojVMLuP0YQO6Xa3gxDwFgtJfpr/mW9p9Pl0oM2szwAIzcmhLiOA4hNI7CIiYgh3YAvFu2Q6ET62WpBBt4tMjYcN5WJHbrd0sB+FwiFRyC6RDQAuBDATh/d4PgMQAwkvDmLCM09age9QIAqcOklr1I0RLAKErUaDaM1DVLF8sBlEzSBao9ZJcHADDaqwT4qdl/vioA26kQYI3KAuKIL10AGXEcrReJWRSA/e2llYjD8CwHsGbypfvuJgEoB2huOoAPLZIYxocekN6ZMASgZ2R7IZwWyi3kpwzwLAewZ9j2/kwA0NbCyvPmSwcgkwBPJY8AqDb++p0HACDO5eestVFaXVMVImDxYgAVvCssX+sMADuVAUYBQCp5DMBTNlBKVUDfASAFLSQsUoRglPQeSB7KlQiBCHnGAxAKtjyz+9VqCsB6GgC/zKMQCGRuI5ln2558jf0cQJzQtmQzoSnGKIrl1xAj7EkcbOziHLADbVr72/T1aBbQ5oCxHNDOA6MAwAb5/l0gHgoj+gAoS/yyOUsCJCPAoSm7Wtrycdj257lZoOT255C9HgPABwWgupyGZoEZAOz2mUmdsCJCkAx6AKlTFqCyOcsiwNG20jACuVS72E/WAX6Vs1XsQwCBBiBv1ELwfL4tASAs5E+J0cg6gMe8aia1jZDyeS4REVkWPwFAU3XgCWECgLYNbj5PQw4wDUA9Zbt86W5/epsh3SUYgMFJEgBEPwKQ+5s9b57rAdpa+PT5/wDAl8Liy1Me4OtL4bJcT4UAVjthRuDPgP0DADrFNz0EpI+TIQBUNHcBCJ+vO8qeygGlvhb22yXM3FmgyS/N7eN0Pl0vzacqi8zIATJvpcAGYTEt9gC0zWrW5ElQTBlx0pX3xEpww5bCG7+NbLaKnbcOaKrb9eP01TSXz7zJr+ePP5+NXFHvdStpGukKkDaV1xZbvo1Ng5kNzSLPizQnr4uDIMBRFADDIAiCpxdCaN8ucPmGeM5KsLnxreD1dskv3+3nC3eC6nDsLHdJrKm2tIUQyWI3ilyxLLgHEFtRFIooh2kRoSiTCyHobMdJ6rk2cH1mN7jn4Sl/YRviGXsBEfwQ/yc5F3ywVOCXG30v0BVf26ipLCvieHwpTDIaO3LjyI3CqSKQul6cZVAYIUnq/cADkAhteHkdAHdnB6xnZwVw7q0G2h3FMACHAZA+DzYKe4Y3Q5DepQfwiNA2QwXAg8pIRuD44QkAGGLnuBOze+VrAPLK32o6MLugHqCXgro6XRqfQXzsAVpa6+K58wB9KIsAfSeRqXoBrxYsB3DgkiWRTgjkeVXq4gvFbakvgPq6Nv2K0AAAfUvLHl5Y2s8BtV42IZTVvTCyZQHl5wWRiksuCyB8NQDq6AuqxtywfaklgHt9VlvIR489AGHvXQuCRG5ougBqL5FOQMh7KJ7fqnUyjCBLiM8URX2tJNifBrtqC94wWq8F9vXdtMV1u26Llh3BLMB24F4BRVD2V9iuPNByO0djllU4bSen8LRjtwRqolKZXhSdPhrDY1Vh5gBTAKB68MD+81WeC4hjyq7eRWnTjYuC1jUtYqt3HKp/c+Oihk40sXQLAjehBaV1VlNoC1VZfMbhKB4GAE6+CaYBYHQcTwHn86u4beQOq63vYxRYXpokaRghZHda9W8oCqGTJyr/wgQU2CEMT1IvtNlT89/VXcePxzEAuFdV+uugezbYlTr1ehsn8DL7NJPBDAJ5qjPai3e6O0Djw1nToqNtxADcy9+u5dngQLOcBTiBl/H3r53mDUtrFw/fbez0lT/dmdH+1G2a8+81GO22m67Wu91K+BFGq82gttrZ9/F1yPzTG/qbhZf4Eb53gtMrbAH+DuHH/yQz4bttp7eXU8/8v8b+f0Ng6/Ht9YXp9fWN589fJTzx/TcIyw+/0XojIyMjIyMjIyMjIyMjIyP0n9Y/P2/lF8zxuoMAAAAASUVORK5CYII=" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind event">event</span>
+    <time datetime="2026-10-20">20 October 2026</time>
+    <span>7 min read</span>
+  </div>
+  <h1>WebDriverAgent 16.15.3 closes a LAN-open video port that USE_IP never covered; phoneshell's own check has never tested it either</h1>
+  <p class="standfirst">WebDriverAgent's MJPEG broadcaster bound to every network interface regardless of USE_IP until pull request #1299 landed on 16 October 2026. phoneshell sets USE_IP and forwards both WDA ports, but its lan_exposure_check has only ever opened a socket to port 8100, the one that was never the problem.</p>
+
+  <p>WebDriverAgent 16.15.3, merged 16 October 2026 as pull request #1299, fixes an MJPEG broadcaster that ignored the <code>USE_IP</code> setting entirely: the HTTP server on port 8100 bound to the configured address, but the live video stream on port 9100 listened on every network interface regardless. phoneshell sets <code>USE_IP=127.0.0.1</code> on every launch and forwards both ports as a pair, and its own LAN-exposure check has never once opened a socket to port 9100 to find out whether that promise held.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/lan-check-never-tested-the-video-port-hero.png" alt="Abstract technical illustration of two network ports on a circuit board, one shown behind a closed padlock symbol and one shown open with signal lines radiating outward across a wireless network" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="method">Two sockets, one setting, one of them listening anyway</h2>
+
+<p>WebDriverAgent exposes two TCP services on a physical iPhone: an HTTP server (default port 8100, carrying <code>/wda/activeAppInfo</code>, <code>/source</code>, <code>/wda/apps/launch</code>, every command a driver sends) and an MJPEG broadcaster (default port 9100) that streams the screen as a sequence of JPEG frames with no authentication of any kind. Both are meant to be gated by one setting, <code>USE_IP</code>, exposed internally as <code>FBConfiguration.bindingIPAddress</code>, which restricts which address the server listens on. Set it to <code>127.0.0.1</code> and the HTTP server stops answering on the phone's wifi network.</p>
+
+<p>The MJPEG broadcaster did not stop. Pull request #1299's own description states the HTTP server is restricted "to one address through <code>setInterface:</code>," while "the MJPEG screenshots broadcaster never sets <code>FBTCPSocket.interface</code>." With no interface set, the broadcaster's listener is created with <code>nw_listener_create_with_port</code> and binds to every interface, wifi included. The author's reproduction, on an iPhone 16 Pro running iOS 26.6.2 with <code>USE_IP=127.0.0.1</code>: port 8100 refused a connection from the device's wifi address, as expected, while port 9100 accepted it and streamed the screen. The fix applies the same binding address to the broadcaster; when <code>USE_IP</code> is unset, behaviour is unchanged.</p>
+
+<figure>
+<svg viewBox="0 0 900 320" role="img" style="width:100%;height:auto"
+  aria-label="Diagram comparing how WebDriverAgent's two servers bound their listening sockets before version 16.15.3. The HTTP server on port 8100 called setInterface and honoured the USE_IP setting. The MJPEG broadcaster on port 9100 never set FBTCPSocket interface and used nw_listener_create_with_port with no interface restriction, so it bound to every network interface including wifi regardless of USE_IP. Version 16.15.3, pull request 1299, applies the same interface binding to the MJPEG broadcaster.">
+  <rect x="0" y="0" width="900" height="320" fill="#0f172a"/>
+  <text x="30" y="34" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="18" font-weight="700">Before 16.15.3: one server honoured USE_IP, one did not</text>
+  <g font-family="Montserrat,sans-serif">
+    <rect x="30" y="68" width="390" height="100" rx="10" fill="#16304a" stroke="#38bdf8"/>
+    <text x="48" y="96" fill="#e2e8f0" font-size="15" font-weight="600">HTTP server, port 8100</text>
+    <text x="48" y="120" fill="#7dd3fc" font-size="12">setInterface: called at bind time</text>
+    <text x="48" y="142" fill="#7dd3fc" font-size="12">USE_IP=127.0.0.1 -&gt; loopback only</text>
+
+    <rect x="470" y="68" width="400" height="100" rx="10" fill="#3a1414" stroke="#ef4444"/>
+    <text x="488" y="96" fill="#fecaca" font-size="15" font-weight="600">MJPEG broadcaster, port 9100</text>
+    <text x="488" y="120" fill="#fca5a5" font-size="12">FBTCPSocket.interface never set</text>
+    <text x="488" y="142" fill="#fca5a5" font-size="12">nw_listener_create_with_port, every interface</text>
+
+    <path d="M450 118 L450 118" stroke="none"/>
+    <text x="30" y="210" fill="#94a3b8" font-size="13">Reproduced by the PR author: iPhone 16 Pro, iOS 26.6.2, USE_IP=127.0.0.1.</text>
+    <text x="30" y="232" fill="#94a3b8" font-size="13">Port 8100 refused from the phone's wifi address. Port 9100 answered and streamed the screen.</text>
+    <text x="30" y="264" fill="#38bdf8" font-size="13" font-weight="600">Fix in 16.15.3: the broadcaster now sets the same interface, binding to USE_IP when it is set.</text>
+    <text x="30" y="296" fill="#64748b" font-size="11">Source: appium/WebDriverAgent pull request #1299, merged 16 October 2026</text>
+  </g>
+</svg>
+<figcaption>The HTTP command channel was never the leak. The unauthenticated video feed was, for every build before this one.</figcaption>
+</figure>
+
+<div class="scroll">
+<table>
+<thead><tr><th>version</th><th>date</th><th>change</th><th>PR</th></tr></thead>
+<tbody>
+<tr><td>16.15.0</td><td>2026-10-12</td><td>adds <code>asAppUnderTest</code> flag to <code>/wda/apps/launch</code></td><td><a href="https://github.com/appium/WebDriverAgent/issues/1289">#1289</a></td></tr>
+<tr><td>16.15.1</td><td>2026-10-16</td><td>cleans up an AUT launch abandoned by a deleted session</td><td><a href="https://github.com/appium/WebDriverAgent/issues/1297">#1297</a></td></tr>
+<tr><td>16.15.2</td><td>2026-10-16</td><td>makes <code>/health</code> a standalone route</td><td><a href="https://github.com/appium/WebDriverAgent/issues/1300">#1300</a></td></tr>
+<tr><td>16.15.3</td><td>2026-10-16</td><td>binds the MJPEG broadcaster to <code>USE_IP</code>, closing the LAN leak on port 9100</td><td><a href="https://github.com/appium/WebDriverAgent/issues/1299">#1299</a></td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="finding">What phoneshell's own check actually probes</h2>
+
+<p>phoneshell has carried a <code>lan-exposure</code> check since before this fix existed, and its docstring states the stakes plainly: "WDA authenticates nothing, so this matters." The function, <code>lan_exposure_check</code> in <code>phoneshell/device.py</code>, reads the phone's wifi address with <code>phone_lan_ip</code>, then opens exactly one socket:</p>
+
+<pre><code>with socket.create_connection((ip, cfg.wda.port), timeout=1.5):
+    return Check("lan-exposure", False,
+                 f"SECURITY: WebDriverAgent answers on {ip}:{cfg.wda.port} to ANYONE on this wifi...")</code></pre>
+
+<p><code>cfg.wda.port</code> is 8100. There is no second call anywhere in the function, or anywhere else in the codebase, against <code>cfg.wda.mjpeg_port</code> (9100). phoneshell's own <code>PortForward</code> class explicitly treats the two as a pair it tunnels together, with <code>pairs: tuple[tuple[int, int], ...] = ((8100, 8100), (9100, 9100))</code> as its default, and <code>launch_wda</code> sets both <code>USE_PORT</code> and <code>MJPEG_SERVER_PORT</code> in the same environment dictionary before passing <code>USE_IP</code> alongside them. The code clearly treats both ports as the same trust boundary. The audit does not.</p>
+
+<figure>
+<svg viewBox="0 0 900 340" role="img" style="width:100%;height:auto"
+  aria-label="Diagram of phoneshell's lan_exposure_check function. It reads the phone's wifi IP, then opens a socket only to cfg.wda.port, port 8100, and reports good if that port is closed. It never opens a socket to cfg.wda.mjpeg_port, port 9100, which is the exact port WebDriverAgent's MJPEG broadcaster used before version 16.15.3, and which phoneshell's own PortForward class forwards as a pair with port 8100.">
+  <rect x="0" y="0" width="900" height="340" fill="#0f172a"/>
+  <text x="30" y="34" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="18" font-weight="700">lan_exposure_check probes one of the two ports phoneshell forwards</text>
+  <g font-family="Montserrat,sans-serif">
+    <rect x="30" y="70" width="380" height="110" rx="10" fill="#16304a" stroke="#38bdf8"/>
+    <text x="48" y="100" fill="#e2e8f0" font-size="15" font-weight="600">port 8100 (cfg.wda.port)</text>
+    <text x="48" y="124" fill="#7dd3fc" font-size="12">socket.create_connection probes it</text>
+    <text x="48" y="146" fill="#7dd3fc" font-size="12">closed -&gt; verdict "good"</text>
+    <text x="48" y="168" fill="#7dd3fc" font-size="12">open -&gt; verdict "SECURITY" failure</text>
+
+    <rect x="470" y="70" width="400" height="110" rx="10" fill="#1e293b" stroke="#475569"/>
+    <text x="488" y="100" fill="#e2e8f0" font-size="15" font-weight="600">port 9100 (cfg.wda.mjpeg_port)</text>
+    <text x="488" y="124" fill="#94a3b8" font-size="12">no socket probe anywhere in device.py</text>
+    <text x="488" y="146" fill="#f59e0b" font-size="12">before 16.15.3: bound to every interface</text>
+    <text x="488" y="168" fill="#94a3b8" font-size="12">verdict: none, the check never asks</text>
+
+    <text x="30" y="230" fill="#94a3b8" font-size="12">PortForward.pairs = ((8100, 8100), (9100, 9100)): phoneshell tunnels both ports together</text>
+    <text x="30" y="250" fill="#94a3b8" font-size="12">for the same usbmux session, but audits reachability for only one of them.</text>
+    <text x="30" y="290" fill="#64748b" font-size="11">Source: phoneshell/device.py (lan_exposure_check, launch_wda, PortForward), 20 October 2026</text>
+  </g>
+</svg>
+<figcaption>The audit and the bug lived on different ports. phoneshell's check would have reported "good" the entire time.</figcaption>
+</figure>
+
+<h2>What it means for someone running a bridge over wifi</h2>
+
+<p>phoneshell's default transport binds WDA to loopback and reaches it over a cable-only usbmux tunnel, which this bug never touched regardless of what the broadcaster bound to underneath. The exposure is real for the configurations the LAN check exists to catch: a runner launched with <code>USE_IP</code> set but reached over wifi (<code>phoneshell up --wifi</code>), or any deployment that trusted the "good" verdict to cover the bridge's full surface rather than one port of it. For those, every WebDriverAgent build before 16.15.3 streamed the phone's screen, unauthenticated, to anyone on the same wifi network, while phoneshell's own doctor command reported nothing wrong.</p>
+
+<p>Our judgement, not WebDriverAgent's: a check named <code>lan-exposure</code> that audits one of two ports a tool explicitly pairs and forwards together is not auditing the exposure, it is auditing a sample of it. The upstream fix closes this specific bug. It does not make phoneshell's check correct in general, because the check still has no logic that would catch the next service WDA adds on a new port, or any other port phoneshell itself forwards.</p>
+
+<h2>Check it yourself</h2>
+
+<pre><code>git clone https://github.com/Blomega/phoneshell &amp;&amp; cd phoneshell
+
+# the check probes exactly one port
+grep -n "cfg.wda.port\|cfg.wda.mjpeg_port\|create_connection" phoneshell/device.py
+
+# the two ports phoneshell forwards together for the same tunnel
+grep -n "pairs: tuple" phoneshell/device.py
+
+# from a second machine on the same wifi as the phone, with a pre-16.15.3
+# runner and USE_IP set, test both ports yourself:
+nc -zv &lt;phone-wifi-ip&gt; 8100   # refused, if USE_IP is honoured
+nc -zv &lt;phone-wifi-ip&gt; 9100   # answered, on any WebDriverAgent build before 16.15.3</code></pre>
+
+<h2>What would prove this wrong</h2>
+
+<p>The claim is narrow and checkable: as of 20 October 2026, <code>lan_exposure_check</code> contains no socket probe against <code>cfg.wda.mjpeg_port</code>, anywhere in <code>phoneshell/device.py</code> or the rest of the repository. If a maintainer adds one, or a reader finds a probe we missed, this finding is wrong and we will say so in public. We will recheck the repository on 3 November 2026 and publish whichever is true.</p>
+
+  <section class="sources">
+    <h2>Sources</h2>
+    <ol>
+      <li>appium/WebDriverAgent, pull request #1299, "bind the MJPEG server to the USE_IP address", merged 16 October 2026. <a href="https://github.com/appium/WebDriverAgent/pull/1299">github.com/appium/WebDriverAgent/pull/1299</a></li>
+      <li>appium/WebDriverAgent, CHANGELOG.md, versions 16.15.0 through 16.15.3. <a href="https://github.com/appium/WebDriverAgent/blob/master/CHANGELOG.md">github.com/appium/WebDriverAgent/blob/master/CHANGELOG.md</a></li>
+      <li>registry.npmjs.org, appium-webdriveragent publish timestamps, accessed 20 October 2026. <a href="https://registry.npmjs.org/appium-webdriveragent">registry.npmjs.org/appium-webdriveragent</a></li>
+      <li>Blomega/phoneshell, <code>phoneshell/device.py</code>: <code>lan_exposure_check</code>, <code>launch_wda</code>, <code>PortForward</code>. <a href="https://github.com/Blomega/phoneshell">github.com/Blomega/phoneshell</a></li>
+    </ol>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>

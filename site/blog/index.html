@@ -41,6 +41,14 @@
 <div class="wrap">
   <ul class="postlist" id="posts">
   <!-- POSTS:START -->
+  <li><a class="row" href="/blog/lan-check-never-tested-the-video-port/">
+    <span class="when">20 October 2026</span>
+    <span>
+      <h3>WebDriverAgent 16.15.3 closes a LAN-open video port that USE_IP never covered; phoneshell's own check has never tested it either</h3>
+      <p>WebDriverAgent's MJPEG broadcaster bound to every network interface regardless of USE_IP until pull request #1299 landed on 16 October 2026. phoneshell sets USE_IP and forwards both WDA ports, but its lan_exposure_check has only ever opened a socket to port 8100, the port that was never the problem.</p>
+      <span class="meta"><span class="kind analysis">analysis</span><span>8 min read</span></span>
+    </span>
+  </a></li>
   <li><a class="row" href="/blog/sim-trained-gains-keep-95-percent-on-a-real-phone/">
     <span class="when">19 October 2026</span>
     <span>
