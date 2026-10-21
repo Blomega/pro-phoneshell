@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DAC-Bench puts a number on compositional collapse: branch accuracy averages 38%, and three of phoneshell's 80 tasks share the structure that falls hardest &mdash; Blolabel</title>
+<meta name="description" content="DAC-Bench (ACL 2026) scores seven agents across 830 episodes and four compositional task structures: success falls below 5% on 6 to 8 step tasks and branch accuracy averages 38%. phoneshell's own suite has exactly three tasks built from the Sequential structure that taxonomy names, and its checkers grade them with one assertion that cannot see a branch at all.">
+<link rel="canonical" href="https://blolabel.ai/blog/three-tasks-match-the-structure-that-collapses/">
+<meta property="og:title" content="DAC-Bench puts a number on compositional collapse: branch accuracy averages 38%, and three of phoneshell's 80 tasks share the structure that falls hardest &mdash; Blolabel">
+<meta property="og:description" content="DAC-Bench (ACL 2026) scores seven agents across 830 episodes and four compositional task structures: success falls below 5% on 6 to 8 step tasks and branch accuracy averages 38%. phoneshell's own suite has exactly three tasks built from the Sequential structure that taxonomy names, and its checkers grade them with one assertion that cannot see a branch at all.">
+<meta property="og:url" content="https://blolabel.ai/blog/three-tasks-match-the-structure-that-collapses/">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"DAC-Bench puts a number on compositional collapse: branch accuracy averages 38%, and three of phoneshell's 80 tasks share the structure that falls hardest","description":"DAC-Bench (ACL 2026) scores seven agents across 830 episodes and four compositional task structures: success falls below 5% on 6 to 8 step tasks and branch accuracy averages 38%. phoneshell's own suite has exactly three tasks built from the Sequential structure that taxonomy names, and its checkers grade them with one assertion that cannot see a branch at all.",
+ "datePublished":"2026-10-20","dateModified":"2026-10-20",
+ "url":"https://blolabel.ai/blog/three-tasks-match-the-structure-that-collapses/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/three-tasks-match-the-structure-that-collapses/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"},
+ "image":"https://blolabel.ai/images/blog/three-tasks-match-the-structure-that-collapses-hero.png",
+ "citation":["https://aclanthology.org/2026.acl-long.2064/","https://github.com/Blomega/phoneshell","https://blolabel.ai/blog/eighty-tasks-five-checks/"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-20">20 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>DAC-Bench puts a number on compositional collapse: branch accuracy averages 38%, and three of phoneshell's 80 tasks share the structure that falls hardest</h1>
+  <p class="standfirst">DAC-Bench (ACL 2026) scores seven agents across 830 episodes and four compositional task structures: success falls below 5% on 6 to 8 step tasks and branch accuracy averages 38%. phoneshell's own suite has exactly three tasks built from the Sequential structure that taxonomy names, and we already know its checkers grade them with one assertion that cannot see a branch at all.</p>
+
+  <p>DAC-Bench, published at ACL 2026, evaluates seven agents on 830 episodes and 11,345 action steps across 35 apps on Android and iOS, sorted into four task structures: Sequential, Conjunctive, Conditional, and Hierarchical. Across all seven agents, success falls below 5% on tasks needing 6 to 8 steps, and a new weighted longest-common-subsequence metric puts average branch accuracy at 38%. phoneshell's own 80-task iPhone suite has exactly three tasks that fit the Sequential structure by name, and this site already showed, on 20 September 2026, that each one is satisfiable by its first leg because its checker asserts only the final app in front.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/three-tasks-match-the-structure-that-collapses-hero.png" alt="Abstract technical illustration of a branching tree diagram with four distinct path shapes, one of them fading to a thin dotted line partway through to suggest a collapse in continuation" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="method">Four structures, one metric built to catch a shortcut</h2>
+
+<p>DAC-Bench's premise, per its abstract, is that existing mobile GUI benchmarks measure short, linear workflows and step-level accuracy, which says little about long-horizon planning or branching decisions. Its four structures separate different ways a task can require more than one path: Sequential (do A, then B, then C, in order), Conjunctive (multiple conditions must all hold), Conditional (the path depends on what the phone shows), and Hierarchical (a task built from sub-tasks). To grade partial credit without rewarding a lucky shortcut, the authors add a weighted longest-common-subsequence metric for "length-sensitive progress and branch correctness." The published abstract does not give the metric's formula or a per-structure breakdown; those numbers are not reported here.</p>
+
+<div class="scroll">
+<table>
+<thead><tr><th>metric</th><th>DAC-Bench</th><th>phoneshell</th><th>source</th></tr></thead>
+<tbody>
+<tr><td>episodes / tasks</td><td>830</td><td>80</td><td>ACL anthology abstract; environments/*.yaml</td></tr>
+<tr><td>action steps</td><td>11,345</td><td>not reported as a single total; capped at 25 per task</td><td>ACL anthology abstract; bench/schema.py</td></tr>
+<tr><td>apps</td><td>35, Android and iOS</td><td>16, all first-party Apple, iOS only</td><td>ACL anthology abstract; eighty-tasks-five-checks, 20 Sep 2026</td></tr>
+<tr><td>agents evaluated</td><td>7</td><td>6 on the published board</td><td>ACL anthology abstract; site/results.json</td></tr>
+<tr><td>tasks matching the Sequential structure</td><td>not separated out in the abstract</td><td>3 (<code>multi.app_switch</code>, <code>multi.return_after_detour</code>, <code>multi.three_apps</code>)</td><td>our classification, from environments/*.yaml</td></tr>
+<tr><td>success rate, 6&ndash;8 step tasks</td><td>below 5%, all 7 agents</td><td>not measured in this structure</td><td>ACL anthology abstract</td></tr>
+<tr><td>branch accuracy</td><td>38% average</td><td>0 of 153 checks read an intermediate step</td><td>ACL anthology abstract; eighty-tasks-five-checks, 20 Sep 2026</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="finding">Three tasks, one taxonomy, one shared weakness</h2>
+
+<p>We already documented, task by task, that <code>multi.app_switch</code> ("Open the Calculator, then open Safari, then go back to the Calculator"), <code>multi.return_after_detour</code>, and <code>multi.three_apps</code> are the only phoneshell tasks whose instruction names an ordered sequence of more than one app, and that each one's sole check is <code>foreground_app</code> against the last app named. Two of the three name the sequence's starting app as that final assertion, which a model satisfies by opening it and stopping. DAC-Bench's taxonomy gives that exact shape a name: Sequential. Its finding, independently, is that this is the shape of task every one of seven agents is worst at once step counts rise, and that a checker scoring only the endpoint cannot tell a completed sequence from an abandoned one, which is the branch-correctness gap its weighted-LCS metric exists to catch.</p>
+
+<figure>
+<svg viewBox="0 0 900 340" role="img" style="width:100%;height:auto"
+  aria-label="Diagram of DAC-Bench's four task structures, named Sequential, Conjunctive, Conditional and Hierarchical, with two reported aggregate numbers attached: success below five percent on six to eight step tasks across seven agents, and branch accuracy averaging thirty eight percent, measured by a new weighted longest common subsequence metric. Per structure breakdowns are not reported in the published abstract.">
+  <rect x="0" y="0" width="900" height="340" fill="#0f172a"/>
+  <text x="30" y="34" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="18" font-weight="700">DAC-Bench's four structures, and the two numbers the abstract reports</text>
+  <g font-family="Montserrat,sans-serif" font-size="13">
+    <rect x="30" y="64" width="195" height="70" rx="8" fill="#16304a" stroke="#38bdf8"/>
+    <text x="48" y="92" fill="#e2e8f0" font-size="14" font-weight="600">Sequential</text>
+    <text x="48" y="112" fill="#7dd3fc" font-size="11">A, then B, then C</text>
+
+    <rect x="240" y="64" width="195" height="70" rx="8" fill="#1e293b" stroke="#475569"/>
+    <text x="258" y="92" fill="#e2e8f0" font-size="14" font-weight="600">Conjunctive</text>
+    <text x="258" y="112" fill="#94a3b8" font-size="11">all conditions must hold</text>
+
+    <rect x="450" y="64" width="195" height="70" rx="8" fill="#1e293b" stroke="#475569"/>
+    <text x="468" y="92" fill="#e2e8f0" font-size="14" font-weight="600">Conditional</text>
+    <text x="468" y="112" fill="#94a3b8" font-size="11">path depends on the screen</text>
+
+    <rect x="660" y="64" width="210" height="70" rx="8" fill="#1e293b" stroke="#475569"/>
+    <text x="678" y="92" fill="#e2e8f0" font-size="14" font-weight="600">Hierarchical</text>
+    <text x="678" y="112" fill="#94a3b8" font-size="11">built from sub-tasks</text>
+
+    <text x="30" y="175" fill="#f59e0b" font-size="15" font-weight="700">success &lt; 5% on 6&ndash;8 step tasks, all 7 agents</text>
+    <text x="30" y="200" fill="#f59e0b" font-size="15" font-weight="700">branch accuracy averages 38% (weighted LCS metric)</text>
+    <text x="30" y="235" fill="#94a3b8" font-size="12">Per-structure splits of these two numbers are not reported in the abstract: not reported here either.</text>
+    <text x="30" y="270" fill="#38bdf8" font-size="13" font-weight="600">phoneshell: 3 of 80 tasks are Sequential by this taxonomy, graded by a single final-state check.</text>
+    <text x="30" y="305" fill="#64748b" font-size="11">Source: aclanthology.org/2026.acl-long.2064, abstract accessed 19&ndash;20 October 2026</text>
+  </g>
+</svg>
+<figcaption>Two real numbers from a 830-episode study, attached honestly to the structure phoneshell's three multi-app tasks already matched.</figcaption>
+</figure>
+
+<figure>
+<svg viewBox="0 0 900 260" role="img" style="width:100%;height:auto"
+  aria-label="Diagram showing phoneshell's own 80 tasks split by whether they match DAC-Bench's Sequential structure. Three tasks, multi dot app switch, multi dot return after detour, and multi dot three apps, require an ordered sequence of more than one app and match the Sequential structure by name. The remaining seventy seven tasks have no ordered multi app sequence in their instruction and sit outside the four structures DAC-Bench measures.">
+  <rect x="0" y="0" width="900" height="260" fill="#0f172a"/>
+  <text x="30" y="32" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="18" font-weight="700">phoneshell's 80 tasks, sorted by this one taxonomy</text>
+  <g font-family="Montserrat,sans-serif" font-size="13">
+    <rect x="30" y="70" width="90" height="100" rx="6" fill="#f59e0b"/>
+    <text x="40" y="190" fill="#e2e8f0" font-size="13">3 Sequential</text>
+    <text x="40" y="208" fill="#94a3b8" font-size="11">multi.*</text>
+
+    <rect x="140" y="70" width="700" height="100" rx="6" fill="#1e293b" stroke="#475569"/>
+    <text x="160" y="190" fill="#e2e8f0" font-size="13">77 tasks with no ordered multi-app sequence, outside these four structures</text>
+
+    <text x="30" y="30" fill="#64748b" font-size="11"></text>
+    <text x="30" y="236" fill="#64748b" font-size="11">Our classification, applied to Blomega/phoneshell environments/*.yaml, 20 October 2026. This is a judgement, not a DAC-Bench finding.</text>
+  </g>
+</svg>
+<figcaption>phoneshell's suite is structurally lopsided toward the shape DAC-Bench does not test, by accident rather than design.</figcaption>
+</figure>
+
+<h2>What it means for someone building this kind of suite</h2>
+
+<p>Our judgement, not DAC-Bench's: a benchmark dominated by single-leg, final-state checks is not wrong to exist, but it measures a narrower claim than "this agent can operate a phone." DAC-Bench's seven-agent, 830-episode result says the collapse phoneshell's three sequencing tasks hint at is not an artefact of a small suite: it holds at scale, across two platforms, with a metric purpose-built to catch exactly the shortcut phoneshell's own checker allows. The useful next step for phoneshell is narrow and already known, from the earlier piece on this site: give <code>multi.app_switch</code> and <code>multi.return_after_detour</code> a second assertion the shortcut cannot satisfy, which is the same fix this site proposed on 20 September 2026, independent of DAC-Bench.</p>
+
+<h2>Check it yourself</h2>
+
+<pre><code>git clone https://github.com/Blomega/phoneshell &amp;&amp; cd phoneshell
+
+# the three tasks that match DAC-Bench's Sequential structure
+grep -l "then open\|then go back\|then the\|then come back\|End on" environments/*.yaml
+
+# confirm each one's check count and kind
+python3 - &lt;&lt;'PY'
+import yaml, glob
+for f in ('environments/multi.app_switch.yaml', 'environments/multi.return_after_detour.yaml',
+          'environments/multi.three_apps.yaml'):
+    t = yaml.safe_load(open(f))
+    print(f, len(t['checks']), [c['kind'] for c in t['checks']])
+PY</code></pre>
+
+<p>DAC-Bench's own repository, <a href="https://github.com/YuqingZhangMirror12/DAC-Bench">github.com/YuqingZhangMirror12/DAC-Bench</a>, held no README content beyond its name as of 20 October 2026. The per-structure and per-agent tables that would let us check this more precisely are not reported here because we could not find them published anywhere we could cite.</p>
+
+<h2>What would prove this wrong</h2>
+
+<p>If DAC-Bench's full paper or appendix publishes a per-structure success table showing Sequential tasks do not collapse worse than Conjunctive, Conditional, or Hierarchical ones at the same step count, the comparison drawn here would need revision. If phoneshell adds a branch-aware second check to its three sequencing tasks and a re-run shows no model's pass rate on them falls, our 20 September prediction about those three tasks, not DAC-Bench's broader finding, would be wrong. We will look for the full paper again by 17 November 2026.</p>
+
+  <section class="sources">
+    <h2>Sources</h2>
+    <ol>
+      <li>Zhang, Y., Sheng, H., Hu, X., Zhang, S., Wu, F. "DAC-Bench: A Decision-Aware Benchmark for Compositional Mobile GUI Tasks." ACL 2026, Volume 1: Long Papers, pp. 44578&ndash;44598. <a href="https://aclanthology.org/2026.acl-long.2064/">aclanthology.org/2026.acl-long.2064</a></li>
+      <li>YuqingZhangMirror12/DAC-Bench, official code repository, checked 20 October 2026. <a href="https://github.com/YuqingZhangMirror12/DAC-Bench">github.com/YuqingZhangMirror12/DAC-Bench</a></li>
+      <li>Blolabel, "Eighty iPhone tasks assert five things, and seven of them only check which app is in front," 20 September 2026. <a href="https://blolabel.ai/blog/eighty-tasks-five-checks/">blolabel.ai/blog/eighty-tasks-five-checks</a></li>
+      <li>Blomega/phoneshell, <code>environments/*.yaml</code>. <a href="https://github.com/Blomega/phoneshell">github.com/Blomega/phoneshell</a></li>
+    </ol>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
