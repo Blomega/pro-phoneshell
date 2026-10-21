@@ -41,6 +41,14 @@
 <div class="wrap">
   <ul class="postlist" id="posts">
   <!-- POSTS:START -->
+  <li><a class="row" href="/blog/give-up-path-never-kills-the-process/">
+    <span class="when">20 October 2026</span>
+    <span>
+      <h3>pymobiledevice3 11.40.1 stops its RSD connection from hanging forever; phoneshell's give-up path still never kills the process it spawned</h3>
+      <p>pymobiledevice3 11.40.1 (20 October 2026, PR #2069) makes a stalled RemoteServiceDiscoveryService connection fail after 10 seconds instead of waiting forever. phoneshell shells out to that exact connection through developer dvt xcuitest, and its own 85-second give-up path in cli.py never terminates the subprocess it spawned.</p>
+      <span class="meta"><span class="kind analysis">analysis</span><span>8 min read</span></span>
+    </span>
+  </a></li>
   <li><a class="row" href="/blog/lan-check-never-tested-the-video-port/">
     <span class="when">20 October 2026</span>
     <span>

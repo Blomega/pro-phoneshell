@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>pymobiledevice3 11.40.1 stops its RSD connection from hanging forever; phoneshell's give-up path still never kills the process it spawned &mdash; Blolabel</title>
+<meta name="description" content="pymobiledevice3 11.40.1 (20 October 2026, PR #2069) makes a stalled RemoteServiceDiscoveryService connection fail after 10 seconds instead of waiting forever. phoneshell shells out to that exact connection through developer dvt xcuitest, and its own 85-second give-up path in cli.py never terminates the subprocess it spawned.">
+<link rel="canonical" href="https://blolabel.ai/blog/give-up-path-never-kills-the-process/">
+<meta property="og:title" content="pymobiledevice3 11.40.1 stops its RSD connection from hanging forever; phoneshell's give-up path still never kills the process it spawned &mdash; Blolabel">
+<meta property="og:description" content="pymobiledevice3 11.40.1 (20 October 2026, PR #2069) makes a stalled RemoteServiceDiscoveryService connection fail after 10 seconds instead of waiting forever. phoneshell shells out to that exact connection through developer dvt xcuitest, and its own 85-second give-up path in cli.py never terminates the subprocess it spawned.">
+<meta property="og:url" content="https://blolabel.ai/blog/give-up-path-never-kills-the-process/">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"pymobiledevice3 11.40.1 stops its RSD connection from hanging forever; phoneshell's give-up path still never kills the process it spawned","description":"pymobiledevice3 11.40.1 (20 October 2026, PR #2069) makes a stalled RemoteServiceDiscoveryService connection fail after 10 seconds instead of waiting forever. phoneshell shells out to that exact connection through developer dvt xcuitest, and its own 85-second give-up path in cli.py never terminates the subprocess it spawned.",
+ "datePublished":"2026-10-20","dateModified":"2026-10-20",
+ "url":"https://blolabel.ai/blog/give-up-path-never-kills-the-process/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/give-up-path-never-kills-the-process/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"},
+ "image":"https://blolabel.ai/images/blog/give-up-path-never-kills-the-process-hero.png",
+ "citation":["https://github.com/doronz88/pymobiledevice3/releases/tag/v11.40.1","https://github.com/doronz88/pymobiledevice3/issues/2068","https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind event">event</span>
+    <time datetime="2026-10-20">20 October 2026</time>
+    <span>7 min read</span>
+  </div>
+  <h1>pymobiledevice3 11.40.1 stops its RSD connection from hanging forever; phoneshell's give-up path still never kills the process it spawned</h1>
+  <p class="standfirst">pymobiledevice3 11.40.1, released 20 October 2026, makes a stalled RemoteServiceDiscoveryService connection fail after 10 seconds instead of waiting forever. phoneshell shells out to that exact connection through <code>developer dvt xcuitest</code>, and its own 85-second give-up path in <code>cli.py</code> never terminates the subprocess it spawned, whether the hang is 10 seconds or infinite.</p>
+
+  <p>pymobiledevice3 11.40.1, released 20 October 2026 as pull request #2069, makes <code>RemoteServiceDiscoveryService.connect()</code> raise <code>RemoteXPCHandshakeTimeoutError</code> after 10 seconds when the device's peer info never arrives, instead of waiting forever (issue #2068). phoneshell's fallback WDA launcher runs <code>pymobiledevice3 developer dvt xcuitest</code>, which rides exactly this RemoteXPC connection path. When that launch never answers, phoneshell's own bring-up command gives up after roughly 85 seconds of polling and exits, and in that exact branch it never calls <code>.terminate()</code> on the subprocess it spawned.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/give-up-path-never-kills-the-process-hero.png" alt="Abstract technical illustration of a process tree diagram where a parent node fades out while a child node, connected by a thin line, keeps pulsing and running on its own" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="method">A ten-second fix for a connection that used to wait forever</h2>
+
+<p>pymobiledevice3's remote service discovery (RSD) step is part of the RemoteXPC handshake used to reach a device's developer services without Xcode. Before 11.40.1, <code>RemoteServiceDiscoveryService.connect()</code> "waited forever for the device's peer info," in the release's own description. If a tunnel dropped a large packet during the handshake and the peer info never arrived, the call simply never returned. 11.40.1 makes it behave like the handshake step before it: raise <code>RemoteXPCHandshakeTimeoutError</code> after 10 seconds. A companion fix in the same release, <code>userspace_tunnel: Warn when a packet from the device can't reach the stack</code>, logs the specific error (such as <code>EMSGSIZE</code>) that used to cause this kind of stall silently.</p>
+
+<p>This landed as part of a dense run of releases: 11.38.0 and 11.39.0 on 19 October, 11.40.0 through 11.40.2 on 20 October. phoneshell's own <code>requirements.txt</code> pins <code>pymobiledevice3==11.8.0</code>, which predates all of them. The CLI binary phoneshell actually shells out to, via <code>shutil.which("pymobiledevice3")</code>, is whatever is installed from that pin, so the infinite wait this release fixes is not a historical curiosity for phoneshell. It is the shipped behaviour today, in the exact command phoneshell runs as its iOS 27 fallback.</p>
+
+<div class="scroll">
+<table>
+<thead><tr><th>what happens</th><th>phoneshell source</th><th>cleans up <code>held</code>?</th></tr></thead>
+<tbody>
+<tr><td><code>launch_wda_dvt</code> spawns <code>pymobiledevice3 developer dvt xcuitest ...</code> via <code>subprocess.Popen</code>, no timeout</td><td>device.py:587&ndash;605</td><td>n/a, this is the spawn</td></tr>
+<tr><td><code>up</code> stores the handle as <code>held</code> and polls <code>client.is_alive()</code> for 40 x 1s</td><td>cli.py:217&ndash;230</td><td>no</td></tr>
+<tr><td>still dead, retries <code>launch_wda_dvt</code> and polls 45 more seconds</td><td>cli.py:238&ndash;244</td><td>no</td></tr>
+<tr><td>still dead: prints "WebDriverAgent did not come up", <code>raise typer.Exit(1)</code></td><td>cli.py:245&ndash;252</td><td>no, <code>held</code> is never referenced here</td></tr>
+<tr><td><code>finally</code> block terminates <code>held</code> if it is still running</td><td>cli.py:285&ndash;289</td><td>yes, but only reached after the supervising loop starts, which requires the bridge to already be up</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="finding">The one cleanup call is scoped to the wrong branch</h2>
+
+<p>The only place phoneshell terminates a tethered DVT subprocess is a <code>finally</code> block wrapping the "supervising, ctrl-c to stop" loop that starts once <code>client.is_alive()</code> has already returned true. The failure branch, where the device never comes up at all, exits earlier, at line 252, with a bare <code>raise typer.Exit(1)</code>. That exception unwinds past the point where <code>held</code> is ever inspected. The Python process exits with status 1. The <code>pymobiledevice3 developer dvt xcuitest</code> child it spawned does not receive a signal from this code at all, and keeps running as an orphan of a process that has already reported failure to the user.</p>
+
+<figure>
+<svg viewBox="0 0 900 360" role="img" style="width:100%;height:auto"
+  aria-label="Sequence diagram of phoneshell's up command on the dvt fallback path. It spawns a pymobiledevice3 developer dvt xcuitest subprocess and stores the handle as held, then polls the WebDriverAgent client for up to eighty five seconds. If the client never becomes alive, it prints an error and raises typer Exit one, exiting the python process without ever calling held dot terminate. The one place that does call held dot terminate is a finally block that only wraps the later supervising loop, which never runs on this failure path.">
+  <rect x="0" y="0" width="900" height="360" fill="#0f172a"/>
+  <text x="30" y="32" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="18" font-weight="700">The failure branch exits before the only cleanup call</text>
+  <g font-family="Montserrat,sans-serif" font-size="13">
+    <rect x="30" y="60" width="200" height="50" rx="8" fill="#1e293b" stroke="#475569"/>
+    <text x="48" y="90" fill="#e2e8f0" font-size="13">spawn held =</text>
+    <text x="48" y="106" fill="#94a3b8" font-size="11">pymobiledevice3 dvt</text>
+
+    <path d="M232 85 L296 85" stroke="#64748b" stroke-width="2" marker-end="url(#a2)"/>
+    <rect x="300" y="60" width="220" height="50" rx="8" fill="#1e293b" stroke="#475569"/>
+    <text x="318" y="90" fill="#e2e8f0" font-size="13">poll is_alive(), 85s total</text>
+
+    <path d="M522 85 L586 85" stroke="#64748b" stroke-width="2" marker-end="url(#a2)"/>
+    <rect x="590" y="60" width="280" height="50" rx="8" fill="#3a1414" stroke="#ef4444"/>
+    <text x="608" y="84" fill="#fecaca" font-size="13">never alive: print error,</text>
+    <text x="608" y="102" fill="#fecaca" font-size="13">raise typer.Exit(1)</text>
+
+    <path d="M730 112 L730 170" stroke="#ef4444" stroke-width="2" marker-end="url(#a2)"/>
+    <rect x="590" y="174" width="280" height="56" rx="8" fill="#3a1414" stroke="#ef4444"/>
+    <text x="608" y="198" fill="#fecaca" font-size="13">python process exits,</text>
+    <text x="608" y="216" fill="#fecaca" font-size="13">held.terminate() never called</text>
+
+    <defs><marker id="a2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="#64748b"/></marker></defs>
+
+    <rect x="30" y="174" width="500" height="56" rx="8" fill="#16304a" stroke="#38bdf8"/>
+    <text x="48" y="198" fill="#7dd3fc" font-size="13">the only held.terminate() call lives in a finally block</text>
+    <text x="48" y="216" fill="#7dd3fc" font-size="13">wrapping the supervising loop, which only starts after success</text>
+
+    <text x="30" y="270" fill="#94a3b8" font-size="12">Before pymobiledevice3 11.40.1: a stalled RSD handshake inside the dvt subprocess ran with no timeout of its own,</text>
+    <text x="30" y="292" fill="#94a3b8" font-size="12">so the orphaned process could keep running indefinitely after phoneshell's own command had already exited 1.</text>
+    <text x="30" y="326" fill="#64748b" font-size="11">Source: phoneshell/cli.py lines 217-289, phoneshell/device.py launch_wda_dvt, 20 October 2026</text>
+  </g>
+</svg>
+<figcaption>Our judgement from reading the code, not a live reproduction: the gap is in the control flow, independent of which specific hang triggers it.</figcaption>
+</figure>
+
+<figure>
+<svg viewBox="0 0 900 300" role="img" style="width:100%;height:auto"
+  aria-label="Timeline of pymobiledevice3 releases from version 11.38.0 on 19 October 2026 through 11.40.2 on 20 October 2026, five releases in two days, with the RSD timeout fix landing in 11.40.1. phoneshell's own pinned version in requirements.txt, 11.8.0, sits far earlier and does not include this fix, meaning the infinite wait it fixes is the version phoneshell actually runs today.">
+  <rect x="0" y="0" width="900" height="300" fill="#0f172a"/>
+  <text x="30" y="32" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="18" font-weight="700">Five releases in two days; phoneshell's pin predates all of them</text>
+  <g font-family="Montserrat,sans-serif" font-size="12">
+    <line x1="60" y1="150" x2="860" y2="150" stroke="#334155" stroke-width="2"/>
+    <circle cx="90" cy="150" r="7" fill="#ef4444"/>
+    <text x="70" y="130" fill="#fca5a5" font-size="12" font-weight="700">11.8.0</text>
+    <text x="50" y="180" fill="#94a3b8" font-size="11">phoneshell's pin</text>
+    <text x="50" y="198" fill="#94a3b8" font-size="11">requirements.txt</text>
+
+    <circle cx="560" cy="150" r="6" fill="#64748b"/>
+    <text x="520" y="130" fill="#cbd5e1" font-size="12">11.38.0</text>
+    <text x="500" y="200" fill="#94a3b8" font-size="11">19 Oct: restore</text>
+    <text x="500" y="216" fill="#94a3b8" font-size="11">multiple devices</text>
+
+    <circle cx="650" cy="150" r="6" fill="#64748b"/>
+    <text x="610" y="130" fill="#cbd5e1" font-size="12">11.39.0</text>
+    <text x="595" y="200" fill="#94a3b8" font-size="11">19 Oct: XPC/libdispatch</text>
+    <text x="595" y="216" fill="#94a3b8" font-size="11">tracing</text>
+
+    <circle cx="740" cy="150" r="6" fill="#64748b"/>
+    <text x="700" y="130" fill="#cbd5e1" font-size="12">11.40.0</text>
+    <text x="690" y="200" fill="#94a3b8" font-size="11">20 Oct: parse-live</text>
+    <text x="690" y="216" fill="#94a3b8" font-size="11">syslog filters</text>
+
+    <circle cx="800" cy="150" r="8" fill="#38bdf8"/>
+    <text x="755" y="130" fill="#7dd3fc" font-size="13" font-weight="700">11.40.1</text>
+    <text x="745" y="200" fill="#7dd3fc" font-size="11" font-weight="600">20 Oct: RSD connect</text>
+    <text x="745" y="216" fill="#7dd3fc" font-size="11" font-weight="600">times out at 10s</text>
+
+    <circle cx="845" cy="150" r="6" fill="#64748b"/>
+    <text x="820" y="130" fill="#cbd5e1" font-size="12">11.40.2</text>
+    <text x="800" y="200" fill="#94a3b8" font-size="11">20 Oct: tunnel</text>
+    <text x="800" y="216" fill="#94a3b8" font-size="11">socket-pair fix</text>
+
+    <text x="30" y="260" fill="#94a3b8" font-size="12">The gap between the red dot and the blue dot is not a count of releases, it is the version gap between what</text>
+    <text x="30" y="280" fill="#94a3b8" font-size="12">phoneshell's requirements.txt installs and the release that fixes the exact hang this article describes.</text>
+  </g>
+</svg>
+<figcaption>phoneshell's pinned CLI predates the timeout fix, so the infinite-wait behaviour is not historical, it is what ships today.</figcaption>
+</figure>
+
+<h2>What it means, and what it does not</h2>
+
+<p>pymobiledevice3 11.40.1 shrinks the worst case for one specific cause of this leak: an RSD handshake that never gets its peer info now fails loudly at 10 seconds instead of silently forever, so once phoneshell's pin catches up, an orphaned process from that specific cause will not outlive its parent by more than about 10 seconds past exit. It does nothing for the missing <code>held.terminate()</code> call itself. Any other reason the DVT session fails to answer within 85 seconds, a stuck device, a wedged testmanagerd session, a slow Mac, leaves the same orphan behind, for as long as that subprocess keeps running, because the cleanup code that exists for exactly this purpose is scoped to a branch the failure path never reaches.</p>
+
+<p>We have not reproduced an orphaned process surviving a real <code>phoneshell up</code> failure on hardware; this is a static reading of the control flow in <code>cli.py</code> and <code>device.py</code>, stated as our judgement and flagged as such.</p>
+
+<h2>Check it yourself</h2>
+
+<pre><code>git clone https://github.com/Blomega/phoneshell &amp;&amp; cd phoneshell
+
+# the pin phoneshell actually ships
+grep -n "pymobiledevice3" requirements.txt
+
+# the failure branch that never touches `held`
+sed -n '227,252p' phoneshell/cli.py
+
+# the one cleanup call, and the loop it is scoped to
+sed -n '263,289p' phoneshell/cli.py
+
+# reproduce the leak class yourself: start `phoneshell up --launcher dvt`
+# against a phone that will never answer (airplane mode after the launch
+# starts), wait for "WebDriverAgent did not come up", then check for the
+# orphan:
+ps aux | grep "pymobiledevice3 developer dvt"</code></pre>
+
+<h2>What would prove this wrong</h2>
+
+<p>The claim is about control flow, not about pymobiledevice3's bug: in <code>phoneshell/cli.py</code>, the branch at lines 245-252 does not call <code>held.terminate()</code> or <code>held.kill()</code> on any path. If a maintainer adds that call, or a reader finds an existing signal handler or atexit hook elsewhere in the codebase that we missed and that actually cleans this up, the finding is wrong. We will recheck the repository on 3 November 2026.</p>
+
+  <section class="sources">
+    <h2>Sources</h2>
+    <ol>
+      <li>doronz88/pymobiledevice3, release v11.40.1, 20 October 2026. <a href="https://github.com/doronz88/pymobiledevice3/releases/tag/v11.40.1">github.com/doronz88/pymobiledevice3/releases/tag/v11.40.1</a></li>
+      <li>doronz88/pymobiledevice3, issue #2068, the RSD peer-info stall. <a href="https://github.com/doronz88/pymobiledevice3/issues/2068">github.com/doronz88/pymobiledevice3/issues/2068</a></li>
+      <li>doronz88/pymobiledevice3, pull request #2069. <a href="https://github.com/doronz88/pymobiledevice3/pull/2069">github.com/doronz88/pymobiledevice3/pull/2069</a></li>
+      <li>Blomega/phoneshell, <code>phoneshell/cli.py</code> (the <code>up</code> command) and <code>phoneshell/device.py</code> (<code>launch_wda_dvt</code>). <a href="https://github.com/Blomega/phoneshell">github.com/Blomega/phoneshell</a></li>
+    </ol>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
