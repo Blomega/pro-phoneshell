@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A $7 ESP32 drives a real iPhone with no Xcode and no accessibility tree; its only check after every action is whether the screenshot changed &mdash; Blolabel</title>
+<meta name="description" content="esp32-iphone-agent (MIT, about 3,300 GitHub stars) controls a real iPhone through AirPlay mirroring and a $7 ESP32-S3 acting as a USB keyboard and mouse, with no Mac-side Xcode, developer account or accessibility-tree read. Its write-ups describe one correctness signal: whether the screenshot changed. phoneshell reads the tree on every step and grades its 80 tasks from device state because, by its own runner's rule, the agent's account of what it did counts for nothing.">
+<link rel="canonical" href="https://blolabel.ai/blog/screen-changed-is-the-only-check-it-has/">
+<meta property="og:title" content="A $7 ESP32 drives a real iPhone with no Xcode and no accessibility tree; its only check after every action is whether the screenshot changed &mdash; Blolabel">
+<meta property="og:description" content="esp32-iphone-agent (MIT, about 3,300 GitHub stars) controls a real iPhone through AirPlay mirroring and a $7 ESP32-S3 acting as a USB keyboard and mouse, with no Mac-side Xcode, developer account or accessibility-tree read. Its write-ups describe one correctness signal: whether the screenshot changed. phoneshell reads the tree on every step and grades its 80 tasks from device state because, by its own runner's rule, the agent's account of what it did counts for nothing.">
+<meta property="og:url" content="https://blolabel.ai/blog/screen-changed-is-the-only-check-it-has/">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"A $7 ESP32 drives a real iPhone with no Xcode and no accessibility tree; its only check after every action is whether the screenshot changed","description":"esp32-iphone-agent (MIT, about 3,300 GitHub stars) controls a real iPhone through AirPlay mirroring and a $7 ESP32-S3 acting as a USB keyboard and mouse, with no Mac-side Xcode, developer account or accessibility-tree read. Its write-ups describe one correctness signal: whether the screenshot changed. phoneshell reads the tree on every step and grades its 80 tasks from device state because, by its own runner's rule, the agent's account of what it did counts for nothing.",
+ "datePublished":"2026-10-20","dateModified":"2026-10-20",
+ "url":"https://blolabel.ai/blog/screen-changed-is-the-only-check-it-has/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/screen-changed-is-the-only-check-it-has/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"},
+ "image":"https://blolabel.ai/images/blog/screen-changed-is-the-only-check-it-has-hero.png",
+ "citation":["https://github.com/onehumanbeing/esp32-iphone-agent","https://opensourceforu.com/2026/10/esp32-iphone-agent-opens-ai-phone-automation/","https://hackaday.com/2026/10/14/ai-controls-iphone-via-esp32/","https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind comparison">comparison</span>
+    <time datetime="2026-10-20">20 October 2026</time>
+    <span>7 min read</span>
+  </div>
+  <h1>A $7 ESP32 drives a real iPhone with no Xcode and no accessibility tree; its only check after every action is whether the screenshot changed</h1>
+  <p class="standfirst">esp32-iphone-agent needs no Mac-side Xcode, developer account or jailbreak to control a real iPhone, and its write-ups describe one correctness signal: did the screenshot change. phoneshell needs all three of what the ESP32 project avoids, and grades its 80 tasks from device state precisely because a changed screenshot is not evidence of a correct one.</p>
+
+  <p><a href="https://github.com/onehumanbeing/esp32-iphone-agent">esp32-iphone-agent</a>, MIT licensed and sitting at roughly 3,300 GitHub stars after coverage by Hackaday on 14 October 2026, controls a real iPhone with a $7 Seeed Studio XIAO ESP32S3 acting as a USB mouse and keyboard, reading the screen only through AirPlay mirroring. Neither of the two write-ups we checked mentions an accessibility-tree read anywhere in the loop: both describe a vision model deciding actions from screenshots, and a retry check that asks only whether the screenshot changed after each one. phoneshell reads the accessibility tree on every step and grades its 80 tasks from device state once the agent stops, because, in its own runner's words, "the agent never sees the checks, never sees the setup script, and its own account of what it did counts for nothing."</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/screen-changed-is-the-only-check-it-has-hero.png" alt="Abstract technical illustration contrasting a small hardware circuit board connected by a USB cable to a phone silhouette on one side, with a structured branching tree diagram overlaid on a phone silhouette on the other side" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="method">Eyes from AirPlay, hands from a $7 board, no app installed on the phone</h2>
+
+<p>Per opensourceforu's 15 October 2026 write-up, the setup described there runs the iPhone's screen through AirPlay to a computer running UxPlay, while an ESP32-S3 plugged into the phone's USB port presents itself as a standard mouse and keyboard. A Python FastAPI server reads the mirrored screenshots, sends them to any OpenAI-compatible vision model (cloud or local, no specific model named), and a planning step breaks a request into actions: tap, swipe, type, or draw. After each action the server checks whether the screen changed, and can retry if it did not. The GitHub project page itself, found separately, describes a newer variant where the ESP32-S3 is its own AirPlay receiver with no separate computer needed; the two sources describe different versions of the same project and we have not verified which is current, so we attribute each description to its own source rather than merging them.</p>
+
+<figure class="embed">
+  <div style="position:relative;width:100%;aspect-ratio:16/9">
+    <iframe src="https://www.youtube-nocookie.com/embed/Ly4im-P4jYg" title="A $7 ESP32 lets an AI set an alarm on a stock iPhone (no Mac, no jailbreak)" loading="lazy" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:10px"></iframe>
+  </div>
+  <figcaption>"A $7 ESP32 lets an AI set an alarm on a stock iPhone (no Mac, no jailbreak)",
+  <a href="https://www.youtube.com/@henryyuantech">@henryyuantech</a>, embedded in Hackaday's coverage of
+  the project on 14 October 2026. Shows the actual setup this article compares against: an ESP32-S3 over
+  USB HID driving a real iPhone through AirPlay mirroring, with no Mac-side tooling in the loop.</figcaption>
+</figure>
+
+<p>Either version shares the part that matters here: no Xcode, no Apple developer account, no jailbreak, and nothing installed on the phone beyond what AssistiveTouch and Screen Mirroring already are. phoneshell needs a Mac, Xcode, a signed WebDriverAgent runner and, for the cable path, a developer account, to get the same physical access this project reaches with a $7 board and the phone's own accessibility feature for pointer control.</p>
+
+<div class="scroll">
+<table>
+<thead><tr><th></th><th>esp32-iphone-agent</th><th>phoneshell</th><th>source</th></tr></thead>
+<tbody>
+<tr><td>hardware needed</td><td>$7 ESP32-S3 board, USB</td><td>a Mac, a cable or wifi</td><td>opensourceforu.com, 15 Oct 2026; phoneshell README</td></tr>
+<tr><td>Xcode / dev account</td><td>not required</td><td>required for the signed WDA runner</td><td>opensourceforu.com; phoneshell/device.py bringup checks</td></tr>
+<tr><td>screen access</td><td>AirPlay mirroring</td><td>WDA <code>/screenshot</code> and MJPEG stream</td><td>opensourceforu.com; phoneshell/wda/client.py</td></tr>
+<tr><td>state access</td><td>not mentioned in either write-up checked</td><td>accessibility tree via WDA <code>/source</code>, read every step</td><td>opensourceforu.com, hackaday.com; phoneshell/actions.py</td></tr>
+<tr><td>correctness signal described</td><td>"did the screenshot change"</td><td>device state read once, after the agent stops, independent of the model's report</td><td>opensourceforu.com; phoneshell/bench/runner.py</td></tr>
+<tr><td>license / maturity</td><td>MIT, ~3,300 stars as of Oct 2026</td><td>open source, 80-task public benchmark</td><td>trendshift.io; huggingface.co/datasets/blolabel/phoneshell-bench</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="finding">"The screen changed" and "the task is done" are different claims</h2>
+
+<p>A changed screenshot is consistent with a successful tap. It is equally consistent with a loading spinner, a keyboard sliding into view, a push notification, an ad, or the wrong app opening. None of those indicate that the instruction was carried out, only that something on screen moved. phoneshell has its own notion of "the screen settled," in <code>watch.py</code>: <code>SETTLE_GAP = 0.5</code>, with the comment "WDA's MJPEG goes silent while nothing moves: silence this long = at rest." What matters is what that signal is used for. phoneshell's settle detection decides <em>when</em> to capture a keyframe during macro recording. It is never used to decide <em>whether</em> an action succeeded. That judgement is reserved for the checks in <code>bench/verify.py</code>, which read specific device state: the foreground bundle id, an element's text, a value on screen, after the agent has stopped, with the agent's own report carrying no weight at all.</p>
+
+<figure>
+<svg viewBox="0 0 900 320" role="img" style="width:100%;height:auto"
+  aria-label="Diagram comparing two action loops. The esp32-iphone-agent loop: take a screenshot over AirPlay, send it to a vision model, perform a tap swipe type or draw action through the ESP32 USB HID board, take another screenshot, and check only whether the screenshot changed, retrying if not. The phoneshell loop: read the accessibility tree and a screenshot, the model picks an element and action, WebDriverAgent executes it by element coordinates, the tree is read again, and a separate check reads specific device state such as the foreground app or an element's text, independent of what the model reports.">
+  <rect x="0" y="0" width="900" height="320" fill="#0f172a"/>
+  <text x="30" y="32" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="18" font-weight="700">Two loops, two different ideas of "it worked"</text>
+  <g font-family="Montserrat,sans-serif" font-size="12">
+    <text x="30" y="64" fill="#7dd3fc" font-size="14" font-weight="600">esp32-iphone-agent</text>
+    <rect x="30" y="76" width="170" height="46" rx="6" fill="#16304a" stroke="#38bdf8"/>
+    <text x="42" y="103" fill="#e2e8f0" font-size="12">screenshot via AirPlay</text>
+    <path d="M202 99 L240 99" stroke="#64748b" stroke-width="2" marker-end="url(#a3)"/>
+    <rect x="244" y="76" width="170" height="46" rx="6" fill="#16304a" stroke="#38bdf8"/>
+    <text x="256" y="103" fill="#e2e8f0" font-size="12">vision model picks action</text>
+    <path d="M416 99 L454 99" stroke="#64748b" stroke-width="2" marker-end="url(#a3)"/>
+    <rect x="458" y="76" width="170" height="46" rx="6" fill="#16304a" stroke="#38bdf8"/>
+    <text x="470" y="103" fill="#e2e8f0" font-size="12">ESP32 USB HID event</text>
+    <path d="M630 99 L668 99" stroke="#64748b" stroke-width="2" marker-end="url(#a3)"/>
+    <rect x="672" y="76" width="200" height="46" rx="6" fill="#3a1414" stroke="#ef4444"/>
+    <text x="684" y="97" fill="#fecaca" font-size="11">re-screenshot: did it</text>
+    <text x="684" y="113" fill="#fecaca" font-size="11">change? retry if not</text>
+
+    <text x="30" y="170" fill="#38bdf8" font-size="14" font-weight="600">phoneshell</text>
+    <rect x="30" y="182" width="170" height="46" rx="6" fill="#1e293b" stroke="#475569"/>
+    <text x="42" y="206" fill="#e2e8f0" font-size="12">tree + screenshot read</text>
+    <path d="M202 205 L240 205" stroke="#64748b" stroke-width="2" marker-end="url(#a3)"/>
+    <rect x="244" y="182" width="170" height="46" rx="6" fill="#1e293b" stroke="#475569"/>
+    <text x="256" y="206" fill="#e2e8f0" font-size="12">model picks element</text>
+    <path d="M416 205 L454 205" stroke="#64748b" stroke-width="2" marker-end="url(#a3)"/>
+    <rect x="458" y="182" width="170" height="46" rx="6" fill="#1e293b" stroke="#475569"/>
+    <text x="470" y="206" fill="#e2e8f0" font-size="12">WDA taps coordinates</text>
+    <path d="M630 205 L668 205" stroke="#64748b" stroke-width="2" marker-end="url(#a3)"/>
+    <rect x="672" y="182" width="200" height="46" rx="6" fill="#16304a" stroke="#38bdf8"/>
+    <text x="684" y="203" fill="#7dd3fc" font-size="11">check reads device state,</text>
+    <text x="684" y="219" fill="#7dd3fc" font-size="11">not the model's report</text>
+
+    <defs><marker id="a3" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="#64748b"/></marker></defs>
+    <text x="30" y="270" fill="#94a3b8" font-size="12">Neither available write-up on esp32-iphone-agent mentions an accessibility-tree read anywhere in its loop.</text>
+    <text x="30" y="294" fill="#64748b" font-size="11">Source: opensourceforu.com (15 Oct 2026), hackaday.com (14 Oct 2026), phoneshell/bench/runner.py, phoneshell/watch.py</text>
+  </g>
+</svg>
+<figcaption>Both systems ask "did something happen." Only one of them also asks "was it the right thing."</figcaption>
+</figure>
+
+<figure>
+<svg viewBox="0 0 900 280" role="img" style="width:100%;height:auto"
+  aria-label="Diagram contrasting the information available to each system when deciding whether an action succeeded. esp32-iphone-agent has only a screenshot: pixels with no labels. phoneshell has a screenshot plus an accessibility tree with element types, labels, values and coordinates, read fresh after every action, which is what its device-state checks query instead of the model's own report.">
+  <rect x="0" y="0" width="900" height="280" fill="#0f172a"/>
+  <text x="30" y="32" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="18" font-weight="700">What each system has to decide "did it work" from</text>
+  <g font-family="Montserrat,sans-serif" font-size="12">
+    <rect x="30" y="60" width="380" height="170" rx="10" fill="#1e293b" stroke="#475569"/>
+    <text x="48" y="90" fill="#e2e8f0" font-size="14" font-weight="600">esp32-iphone-agent</text>
+    <text x="48" y="118" fill="#94a3b8" font-size="12">one screenshot, pixels only</text>
+    <text x="48" y="140" fill="#94a3b8" font-size="12">no element type, label or value</text>
+    <text x="48" y="162" fill="#94a3b8" font-size="12">no accessibility tree in either</text>
+    <text x="48" y="184" fill="#94a3b8" font-size="12">write-up we found</text>
+    <text x="48" y="210" fill="#f59e0b" font-size="12" font-weight="600">signal used: did the pixels change</text>
+
+    <rect x="490" y="60" width="380" height="170" rx="10" fill="#16304a" stroke="#38bdf8"/>
+    <text x="508" y="90" fill="#e2e8f0" font-size="14" font-weight="600">phoneshell</text>
+    <text x="508" y="118" fill="#7dd3fc" font-size="12">screenshot AND accessibility tree</text>
+    <text x="508" y="140" fill="#7dd3fc" font-size="12">per element: type, label, value,</text>
+    <text x="508" y="162" fill="#7dd3fc" font-size="12">coordinates, re-read after every tap</text>
+    <text x="508" y="210" fill="#38bdf8" font-size="12" font-weight="600">signal used: specific state, read fresh</text>
+  </g>
+</svg>
+<figcaption>Both systems can tell that something happened. Only one of them has the information to tell what.</figcaption>
+</figure>
+
+<h2>What it means</h2>
+
+<p>The ESP32 project is not trying to be an evaluation harness, and its stated limitations (portrait-only, ASCII-only keyboard input, a computer still needed for at least one variant) suggest its authors know the tradeoffs. The comparison is still informative: it shows how much of an agent's reach over a real iPhone comes from the phone's own accessibility affordances (AssistiveTouch, Screen Mirroring) rather than from Apple's developer tooling, and how cheaply that reach can be bought. What it costs is legibility. An agent whose only feedback is "the pixels moved" cannot distinguish progress from a distraction, and nothing in the write-ups we found describes a mechanism that would let it. phoneshell's answer to the same problem is to never let a screen change, by itself, count as anything.</p>
+
+<h2>Check it yourself</h2>
+
+<pre><code># the project described
+git clone https://github.com/onehumanbeing/esp32-iphone-agent
+
+# phoneshell's settle detection, used only for timing
+grep -n "SETTLE_GAP" phoneshell/watch.py
+
+# phoneshell's grading rule, used for every bench task
+sed -n '1,12p' phoneshell/bench/runner.py</code></pre>
+
+<h2>What would prove this wrong</h2>
+
+<p>If esp32-iphone-agent's maintainers document an accessibility-tree or OCR-based state check we missed, or publish task-level results showing its screenshot-changed heuristic tracks ground-truth success closely on a labelled task set, this comparison understates what it does and should be revised. We will check the repository again by 17 November 2026.</p>
+
+  <section class="sources">
+    <h2>Sources</h2>
+    <ol>
+      <li>onehumanbeing/esp32-iphone-agent, GitHub repository. <a href="https://github.com/onehumanbeing/esp32-iphone-agent">github.com/onehumanbeing/esp32-iphone-agent</a></li>
+      <li>"ESP32 iPhone Agent Opens AI Phone Automation," Open Source For U, 15 October 2026. <a href="https://opensourceforu.com/2026/10/esp32-iphone-agent-opens-ai-phone-automation/">opensourceforu.com/2026/10/esp32-iphone-agent-opens-ai-phone-automation</a></li>
+      <li>"AI Controls iPhone Via ESP32," Hackaday, 14 October 2026. <a href="https://hackaday.com/2026/10/14/ai-controls-iphone-via-esp32/">hackaday.com/2026/10/14/ai-controls-iphone-via-esp32</a></li>
+      <li>Blomega/phoneshell, <code>phoneshell/watch.py</code> and <code>phoneshell/bench/runner.py</code>. <a href="https://github.com/Blomega/phoneshell">github.com/Blomega/phoneshell</a></li>
+    </ol>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
