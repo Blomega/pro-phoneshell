@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A11y-CUA: Claude Sonnet 4.5 drops from 78.3% to 28.3% success when a desktop screen is magnified; phoneshell's own vision gap is 100% or 0%, never in between &mdash; Blolabel</title>
+<meta name="description" content="A CHI '26 dataset runs two computer-use agents through 60 Windows tasks under full access, keyboard-only and magnifier conditions. Claude Sonnet 4.5 falls from 78.3% to 28.3% as access narrows; Qwen3-VL-32B-Instruct falls to zero. phoneshell's own pre-registered probe on iOS finds no slope at all: 100% with a screenshot, 0% without it, and nothing in between, because the question of whether the answer is in the tree is binary per screen, not a matter of degree.">
+<link rel="canonical" href="https://blolabel.ai/blog/cua-success-halves-under-a-magnified-screen/">
+<meta property="og:title" content="A11y-CUA: Claude Sonnet 4.5 drops from 78.3% to 28.3% success when a desktop screen is magnified; phoneshell's own vision gap is 100% or 0%, never in between &mdash; Blolabel">
+<meta property="og:description" content="A CHI '26 dataset runs two computer-use agents through 60 Windows tasks under full access, keyboard-only and magnifier conditions. Claude Sonnet 4.5 falls from 78.3% to 28.3% as access narrows; Qwen3-VL-32B-Instruct falls to zero. phoneshell's own pre-registered probe on iOS finds no slope at all: 100% with a screenshot, 0% without it, and nothing in between.">
+<meta property="og:url" content="https://blolabel.ai/blog/cua-success-halves-under-a-magnified-screen/">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"A11y-CUA: Claude Sonnet 4.5 drops from 78.3% to 28.3% success when a desktop screen is magnified; phoneshell's own vision gap is 100% or 0%, never in between","description":"A CHI '26 dataset runs two computer-use agents through 60 Windows tasks under full access, keyboard-only and magnifier conditions. Claude Sonnet 4.5 falls from 78.3% to 28.3% as access narrows; Qwen3-VL-32B-Instruct falls to zero. phoneshell's own pre-registered probe on iOS finds no slope at all: 100% with a screenshot, 0% without it, and nothing in between.",
+ "datePublished":"2026-10-21","dateModified":"2026-10-21",
+ "url":"https://blolabel.ai/blog/cua-success-halves-under-a-magnified-screen/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/cua-success-halves-under-a-magnified-screen/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"},
+ "image":"https://blolabel.ai/images/blog/cua-success-halves-under-a-magnified-screen-hero.png",
+ "citation":["https://arxiv.org/abs/2602.09310","https://doi.org/10.1145/3772318.3791896","https://github.com/Blomega/phoneshell/blob/main/FINDINGS.md","https://github.com/Blomega/phoneshell/blob/main/docs/EXPERIMENT-2.md"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "How much does restricting visual access hurt computer-use agents, according to A11y-CUA?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Claude Sonnet 4.5 completed 78.3% of 60 Windows tasks with full mouse and screen access, 41.6% keyboard-only, and 28.3% viewed through a 150% magnifier. Qwen3-VL-32B-Instruct went from 20.0% to 0.0% under either restriction. Sighted human users scored 99.1% and blind or low-vision users scored 84.6% on the same tasks."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does phoneshell see the same gradual decline when it removes the screenshot?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. In a pre-registered 120-run probe, three vision-capable models scored 100% with the screenshot and 0% without it on pages where the answer was rendered into an image, and scored 97% to 100% either way on pages where the answer was already in the accessibility tree. The result is a step function per screen, not a slope."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Why do the two studies disagree about whether vision loss is gradual?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "A11y-CUA's three conditions each remove several overlapping channels at once (pointer precision, full-resolution context, peripheral layout), so an average over many tasks with mixed channel dependence looks graded. phoneshell's probe holds everything constant and varies one channel on tasks engineered so the answer is either entirely inside it or entirely outside it, which cannot produce a slope by construction."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAABOCAMAAAD4iTj8AAAAilBMVEVMaXFiXmJhXmEVieRkYGRiXmJiXmJEaZJiX2IWjehNaIJhXmEUjOcVjOdgXWBjX2MWjecUjOZiXmJiXmIUi+UVjehUoN7w9/33+/7q9Pzg7/p8gIlkYGQXjuj///9oZGgWk/JmY2YVjullYWUJh+dtaG0olumr1/dSq+7T6vo6n+tntfCMx/N7vvJEi25LAAAAHHRSTlMAakku/HusA/z7Eo+hwDL30nXizUnjHfvKolE8aPCOgAAAAAlwSFlzAAALEgAACxIB0t1+/AAAB35JREFUeJztmn1zsjoThwMCCaCg4EvbASFA1bZ3v//XO7MJeQFBwJ55nnNP85v+oSYB9mJ3k2yKkJGRkZGRkZGRkZGRkZGRkZGRkdHPhZXQ7xPuGH2P4Gk4P8L6P3slGCOEV7vderNZr3f7I/yEfpEwQqvd1i+FDpt90PWCwBKyF147kiOjxc8VzborvtdI++gV0Grtl2XuC1Vledhh5QQY2e8F17u3yASMQjnSXehVGFnaXReOxUvug3c+WJ9LMQbblbwpRnYdO6CYLgZA25HFEwAKddfxscdVX0eIaPnw6ueR2xw3ZaVZLxiU/k7cFSObkgzkFIsBFE478hkAYuw4AIzWld/TYbvetw6M0Ur69XZ4/GpbCvOrBiQQ5KUgMAeACjM95voAxoJxKH5nAyh7r6+qyrLacAcGAK095RAAjI7K/uZy+/q6fVYtAt8XBKYB6I89wwPu0tTQtZ4GkEMMl/4exkwBQHijhv85nUEfN+kELYFJABjhyA09L7QxQpEtFPQAoMCCTlakJVhucWDDcM9zoU363dMAcnj2A5/NHwLojL6ehb6ED1Q+c6QpABjZqUMhXdM0QuG7Q5lY3tcB2AnvFHuRPsUg24spaykojVMLuP0YQO6Xa3gxDwFgtJfpr/mW9p9Pl0oM2szwAIzcmhLiOA4hNI7CIiYgh3YAvFu2Q6ET62WpBBt4tMjYcN5WJHbrd0sB+FwiFRyC6RDQAuBDATh/d4PgMQAwkvDmLCM09age9QIAqcOklr1I0RLAKErUaDaM1DVLF8sBlEzSBao9ZJcHADDaqwT4qdl/vioA26kQYI3KAuKIL10AGXEcrReJWRSA/e2llYjD8CwHsGbypfvuJgEoB2huOoAPLZIYxocekN6ZMASgZ2R7IZwWyi3kpwzwLAewZ9j2/kwA0NbCyvPmSwcgkwBPJY8AqDb++p0HACDO5eestVFaXVMVImDxYgAVvCssX+sMADuVAUYBQCp5DMBTNlBKVUDfASAFLSQsUoRglPQeSB7KlQiBCHnGAxAKtjyz+9VqCsB6GgC/zKMQCGRuI5ln2558jf0cQJzQtmQzoSnGKIrl1xAj7EkcbOziHLADbVr72/T1aBbQ5oCxHNDOA6MAwAb5/l0gHgoj+gAoS/yyOUsCJCPAoSm7Wtrycdj257lZoOT255C9HgPABwWgupyGZoEZAOz2mUmdsCJCkAx6AKlTFqCyOcsiwNG20jACuVS72E/WAX6Vs1XsQwCBBiBv1ELwfL4tASAs5E+J0cg6gMe8aia1jZDyeS4REVkWPwFAU3XgCWECgLYNbj5PQw4wDUA9Zbt86W5/epsh3SUYgMFJEgBEPwKQ+5s9b57rAdpa+PT5/wDAl8Liy1Me4OtL4bJcT4UAVjthRuDPgP0DADrFNz0EpI+TIQBUNHcBCJ+vO8qeygGlvhb22yXM3FmgyS/N7eN0Pl0vzacqi8zIATJvpcAGYTEt9gC0zWrW5ElQTBlx0pX3xEpww5bCG7+NbLaKnbcOaKrb9eP01TSXz7zJr+ePP5+NXFHvdStpGukKkDaV1xZbvo1Ng5kNzSLPizQnr4uDIMBRFADDIAiCpxdCaN8ucPmGeM5KsLnxreD1dskv3+3nC3eC6nDsLHdJrKm2tIUQyWI3ilyxLLgHEFtRFIooh2kRoSiTCyHobMdJ6rk2cH1mN7jn4Sl/YRviGXsBEfwQ/yc5F3ywVOCXG30v0BVf26ipLCvieHwpTDIaO3LjyI3CqSKQul6cZVAYIUnq/cADkAhteHkdAHdnB6xnZwVw7q0G2h3FMACHAZA+DzYKe4Y3Q5DepQfwiNA2QwXAg8pIRuD44QkAGGLnuBOze+VrAPLK32o6MLugHqCXgro6XRqfQXzsAVpa6+K58wB9KIsAfSeRqXoBrxYsB3DgkiWRTgjkeVXq4gvFbakvgPq6Nv2K0AAAfUvLHl5Y2s8BtV42IZTVvTCyZQHl5wWRiksuCyB8NQDq6AuqxtywfaklgHt9VlvIR489AGHvXQuCRG5ougBqL5FOQMh7KJ7fqnUyjCBLiM8URX2tJNifBrtqC94wWq8F9vXdtMV1u26Llh3BLMB24F4BRVD2V9iuPNByO0djllU4bSen8LRjtwRqolKZXhSdPhrDY1Vh5gBTAKB68MD+81WeC4hjyq7eRWnTjYuC1jUtYqt3HKp/c+Oihk40sXQLAjehBaV1VlNoC1VZfMbhKB4GAE6+CaYBYHQcTwHn86u4beQOq63vYxRYXpokaRghZHda9W8oCqGTJyr/wgQU2CEMT1IvtNlT89/VXcePxzEAuFdV+uugezbYlTr1ehsn8DL7NJPBDAJ5qjPai3e6O0Djw1nToqNtxADcy9+u5dngQLOcBTiBl/H3r53mDUtrFw/fbez0lT/dmdH+1G2a8+81GO22m67Wu91K+BFGq82gttrZ9/F1yPzTG/qbhZf4Eb53gtMrbAH+DuHH/yQz4bttp7eXU8/8v8b+f0Ng6/Ht9YXp9fWN589fJTzx/TcIyw+/0XojIyMjIyMjIyMjIyMjIyP0n9Y/P2/lF8zxuoMAAAAASUVORK5CYII=" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind comparison">comparison</span>
+    <time datetime="2026-10-21">21 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>A11y-CUA: Claude Sonnet 4.5 drops from 78.3% to 28.3% success when a desktop screen is magnified; phoneshell's own vision gap is 100% or 0%, never in between</h1>
+  <p class="standfirst">A11y-CUA runs two computer-use agents through 60 Windows tasks under three levels of restricted access and gets a slope. phoneshell ran a pre-registered probe on iOS varying one channel at a time and got a step function. Both are real; they are measuring different things.</p>
+
+<p>A11y-CUA, a CHI '26 dataset paper (DOI 10.1145/3772318.3791896, arXiv:2602.09310, submitted
+10 February 2026), scores Claude Sonnet 4.5 at 78.3% of 60 everyday Windows tasks with full
+mouse and screen access, 41.6% restricted to keyboard-only input, and 28.3% viewed through a
+150% magnifier. Qwen3-VL-32B-Instruct scores 20.0% with full access and 0.0% under either
+restriction. phoneshell's own experiment 2, run on a physical iPhone and pre-registered before
+the data existed, varies exactly one channel, the screenshot, and finds no slope at all:
+100% with it, 0% without it, on pages built so the answer is rendered into an image, and 97%
+to 100% either way on pages where the answer is already text in the accessibility tree. The
+two results do not contradict each other. They show that "how much does vision loss cost an
+agent" has two different correct answers depending on whether you are averaging over many
+tasks with mixed channel dependence, or asking the question one screen at a time.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/cua-success-halves-under-a-magnified-screen-hero.png" alt="Abstract technical illustration of two measuring instruments reading the same restricted signal and producing a smooth descending curve from one and a sharp vertical step from the other" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="finding">What changed, and when</h2>
+
+<p>A11y-CUA was built by Ananya Gubbi Mohanbabu, Rosiana Natalie, Brandon Kim, Anhong Guo and
+Amy Pavel, and accepted to CHI '26 (Barcelona, 13 to 17 April 2026). It recorded 16
+participants, 8 sighted users and 8 blind or low-vision users, completing 60 everyday Windows
+tasks: 40.4 hours and 158,325 logged events, captured with an open-source recorder the authors
+built that keeps screen video, input events and the accessibility tree together. Against that
+human baseline they ran two current computer-use agents under three conditions: Default-CUA
+(full mouse and keyboard, full-resolution screen), SR-CUA (keyboard-only navigation, the
+condition a screen-reader user is closest to), and Magnifier-CUA (a 150% zoomed viewport, the
+condition a low-vision magnifier user is closest to).</p>
+
+<p>phoneshell's experiment 2 is a different design answering an adjacent question, run earlier
+in 2026 and documented in <code>docs/EXPERIMENT-2.md</code> before any run happened. Twenty
+tasks, three vision-capable models (GPT-5.1, Gemini 3.1 Pro, Kimi K3), each task run twice,
+once with the screenshot and once without, order alternated, 120 runs in 37 minutes on a
+physical iPhone. Ten of the twenty tasks are a controlled stimulus: one word written as real
+text in the page and a different word rendered into an image with no alt text, verified on
+device so that 0 of 10 image words appear in the accessibility tree and 10 of 10 written
+words do. The other ten tasks ask about content that is already labelled, as a control.</p>
+
+<h2 id="evidence">The two tables, side by side</h2>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>study</th><th>agent</th><th>condition</th><th>task success</th><th>source</th></tr></thead>
+  <tbody>
+    <tr><td>A11y-CUA</td><td>Claude Sonnet 4.5</td><td>Default-CUA (full access)</td><td>78.3%</td><td>arXiv:2602.09310</td></tr>
+    <tr><td>A11y-CUA</td><td>Claude Sonnet 4.5</td><td>SR-CUA (keyboard-only)</td><td>41.6%</td><td>arXiv:2602.09310</td></tr>
+    <tr><td>A11y-CUA</td><td>Claude Sonnet 4.5</td><td>Magnifier-CUA (150% zoom)</td><td>28.3%</td><td>arXiv:2602.09310</td></tr>
+    <tr><td>A11y-CUA</td><td>Qwen3-VL-32B-Instruct</td><td>Default-CUA</td><td>20.0%</td><td>arXiv:2602.09310</td></tr>
+    <tr><td>A11y-CUA</td><td>Qwen3-VL-32B-Instruct</td><td>SR-CUA / Magnifier-CUA</td><td>0.0% / 0.0%</td><td>arXiv:2602.09310</td></tr>
+    <tr><td>A11y-CUA</td><td>sighted human users</td><td>native use</td><td>99.1%</td><td>arXiv:2602.09310</td></tr>
+    <tr><td>A11y-CUA</td><td>blind / low-vision human users</td><td>native use, own AT</td><td>84.6%</td><td>arXiv:2602.09310 (reported 86.9% in one results passage; not reconciled by the authors)</td></tr>
+    <tr><td>phoneshell</td><td>GPT-5.1, Gemini 3.1 Pro, Kimi K3 (pooled)</td><td>render stratum, with screenshot</td><td>100% (30/30)</td><td>FINDINGS.md &sect;26</td></tr>
+    <tr><td>phoneshell</td><td>same three models</td><td>render stratum, tree only</td><td>0% (0/30)</td><td>FINDINGS.md &sect;26</td></tr>
+    <tr><td>phoneshell</td><td>same three models</td><td>tree stratum, with screenshot</td><td>97% (29/30)</td><td>FINDINGS.md &sect;26</td></tr>
+    <tr><td>phoneshell</td><td>same three models</td><td>tree stratum, tree only</td><td>100% (30/30)</td><td>FINDINGS.md &sect;26</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>Read down the A11y-CUA column and the number falls in steps as access narrows. Read down the
+phoneshell column and there is no fall at all, only a jump that depends on which stratum you
+are in. McNemar's exact test on phoneshell's render stratum gives p &lt; 0.0001 on a 30-0
+split; the tree stratum, held as a control, gives p = 1.0 on a 0-1 split. Both numbers are in
+the same paragraph of the same source because the point is the contrast between them, not
+either one alone.</p>
+
+<figure>
+<svg viewBox="0 0 900 380" role="img" style="width:100%;height:auto"
+  aria-label="Grouped bar chart of A11y-CUA task success as access narrows. Claude Sonnet 4.5 scores 78.3% with full access, 41.6% keyboard only, and 28.3% under a 150% magnifier. Qwen3-VL-32B-Instruct scores 20.0% with full access and 0.0% under either restriction. The decline is gradual for Claude and present but smaller in absolute terms for Qwen.">
+  <rect x="0" y="0" width="900" height="380" fill="#0f172a"/>
+  <text x="40" y="34" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="18" font-weight="700">A11y-CUA: task success as access narrows, 60 Windows tasks</text>
+  <g stroke="#1e293b"><line x1="80" y1="60" x2="80" y2="300"/><line x1="80" y1="300" x2="860" y2="300"/></g>
+  <g font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#64748b" text-anchor="end">
+    <text x="72" y="64">100%</text><text x="72" y="140">75%</text><text x="72" y="220">50%</text><text x="72" y="300">0%</text>
+  </g>
+  <g font-family="Montserrat,sans-serif" font-size="13" fill="#e2e8f0" text-anchor="middle">
+    <text x="190" y="324">Default-CUA</text>
+    <text x="450" y="324">SR-CUA</text>
+    <text x="450" y="340" fill="#94a3b8" font-size="11">keyboard-only</text>
+    <text x="710" y="324">Magnifier-CUA</text>
+    <text x="710" y="340" fill="#94a3b8" font-size="11">150% zoom</text>
+  </g>
+  <rect x="150" y="112" width="55" height="188" fill="#38bdf8"/>
+  <rect x="215" y="251" width="55" height="49" fill="#64748b"/>
+  <text x="177" y="100" fill="#e2e8f0" font-family="ui-monospace,Menlo,monospace" font-size="12" text-anchor="middle">78.3%</text>
+  <text x="242" y="239" fill="#94a3b8" font-family="ui-monospace,Menlo,monospace" font-size="12" text-anchor="middle">20.0%</text>
+  <rect x="410" y="200" width="55" height="100" fill="#38bdf8"/>
+  <rect x="475" y="299" width="55" height="1" fill="#64748b"/>
+  <text x="437" y="188" fill="#e2e8f0" font-family="ui-monospace,Menlo,monospace" font-size="12" text-anchor="middle">41.6%</text>
+  <text x="502" y="296" fill="#94a3b8" font-family="ui-monospace,Menlo,monospace" font-size="12" text-anchor="middle">0.0%</text>
+  <rect x="670" y="233" width="55" height="67" fill="#38bdf8"/>
+  <rect x="735" y="299" width="55" height="1" fill="#64748b"/>
+  <text x="697" y="221" fill="#e2e8f0" font-family="ui-monospace,Menlo,monospace" font-size="12" text-anchor="middle">28.3%</text>
+  <text x="762" y="296" fill="#94a3b8" font-family="ui-monospace,Menlo,monospace" font-size="12" text-anchor="middle">0.0%</text>
+  <g font-family="Montserrat,sans-serif" font-size="12">
+    <rect x="620" y="60" width="14" height="14" fill="#38bdf8"/><text x="640" y="71" fill="#e2e8f0">Claude Sonnet 4.5</text>
+    <rect x="620" y="80" width="14" height="14" fill="#64748b"/><text x="640" y="91" fill="#e2e8f0">Qwen3-VL-32B-Instruct</text>
+  </g>
+</svg>
+<figcaption>Claude's three bars fall roughly a third each step. Qwen starts at a fifth of tasks
+and falls to nothing under either restriction, which is itself informative: a model that is
+already failing most tasks with full access has nothing left to lose when access narrows
+further.</figcaption>
+</figure>
+
+<figure>
+<svg viewBox="0 0 900 380" role="img" style="width:100%;height:auto"
+  aria-label="Two small line charts side by side. The left chart, labelled A11y-CUA, shows a smooth descending line from 78.3 percent through 41.6 percent to 28.3 percent as three overlapping channels, pointer precision, full resolution and peripheral layout, are removed together across three conditions. The right chart, labelled phoneshell, shows a flat line at 100 percent then a vertical drop to 0 percent for the render stratum where the answer lives only in pixels, and a flat line near 100 percent for the tree stratum where the answer is already text, because only one channel is removed and the question of whether the answer depends on it is binary per screen.">
+  <rect x="0" y="0" width="900" height="380" fill="#0f172a"/>
+  <text x="40" y="32" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="18" font-weight="700">Why one study finds a slope and the other finds a step</text>
+
+  <text x="60" y="66" fill="#38bdf8" font-family="Montserrat,sans-serif" font-size="14" font-weight="700">A11y-CUA: many channels removed together</text>
+  <g stroke="#334155"><line x1="60" y1="90" x2="60" y2="280"/><line x1="60" y1="280" x2="400" y2="280"/></g>
+  <polyline points="90,118 230,185 370,222" fill="none" stroke="#38bdf8" stroke-width="3"/>
+  <circle cx="90" cy="118" r="5" fill="#38bdf8"/><circle cx="230" cy="185" r="5" fill="#38bdf8"/><circle cx="370" cy="222" r="5" fill="#38bdf8"/>
+  <g font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#e2e8f0">
+    <text x="70" y="110">78.3%</text><text x="210" y="178">41.6%</text><text x="350" y="245">28.3%</text>
+  </g>
+  <g font-family="Montserrat,sans-serif" font-size="10.5" fill="#94a3b8" text-anchor="middle">
+    <text x="90" y="300">full access</text><text x="230" y="300">keyboard only</text><text x="370" y="300">+ magnified</text>
+  </g>
+  <text x="230" y="330" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="12" text-anchor="middle">pointer precision, resolution and layout context all shrink at once</text>
+
+  <text x="520" y="66" fill="#f59e0b" font-family="Montserrat,sans-serif" font-size="14" font-weight="700">phoneshell: one channel removed, per screen</text>
+  <g stroke="#334155"><line x1="520" y1="90" x2="520" y2="280"/><line x1="520" y1="280" x2="860" y2="280"/></g>
+  <polyline points="540,108 660,108 660,272 820,272" fill="none" stroke="#f59e0b" stroke-width="3"/>
+  <polyline points="540,112 820,100" fill="none" stroke="#34d399" stroke-width="3" stroke-dasharray="2,4"/>
+  <text x="545" y="100" fill="#e2e8f0" font-family="ui-monospace,Menlo,monospace" font-size="11">100%</text>
+  <text x="780" y="262" fill="#fbbf24" font-family="ui-monospace,Menlo,monospace" font-size="11">0%</text>
+  <text x="545" y="94" fill="#34d399" font-family="ui-monospace,Menlo,monospace" font-size="11">tree stratum: ~100% either way</text>
+  <g font-family="Montserrat,sans-serif" font-size="10.5" fill="#94a3b8" text-anchor="middle">
+    <text x="660" y="300">screenshot present</text><text x="820" y="300">screenshot removed</text>
+  </g>
+  <text x="690" y="330" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="12" text-anchor="middle">render stratum: the answer is entirely inside the one channel removed, or entirely outside it</text>
+</svg>
+<figcaption>Same underlying question, different instrument. A11y-CUA's conditions are each a
+bundle of losses; phoneshell's probe isolates one channel and engineers the task so the answer
+is either fully inside it or fully outside it, which cannot produce a middle value.</figcaption>
+</figure>
+
+<h2 id="method">What this means for someone building or evaluating a phone or desktop agent</h2>
+
+<p>An average success rate under a restricted-access condition answers "across a realistic mix
+of everyday tasks, how much does this restriction cost." That is the right question for
+accessibility conformance and for predicting a deployed agent's real-world degradation. It is
+the wrong question for deciding whether to pay for vision on a specific screen, because the
+average is itself a mixture of tasks at 100% and tasks at 0%, and the mixture ratio, not the
+mechanism, is what moves the headline number. phoneshell's render-stratum result says the floor
+under those 0% tasks is a hard floor, not a soft one: there is no amount of model capability in
+these three vision-capable frontier models that recovers a word that exists only as pixels with
+no text channel beside it. A11y-CUA's Magnifier-CUA condition at 28.3% is consistent with a
+dataset that contains a mix of tree-exposed and pixel-only targets in roughly that ratio, though
+the paper does not break its 60 tasks down that way and we have not re-sliced it ourselves.</p>
+
+<p>The practical rule carried over from phoneshell's own finding (FINDINGS.md &sect;26) still
+applies across platforms: decide per screen, not per deployment. A screen whose content is
+already exposed to assistive technology costs nothing extra to automate without vision, on
+either Windows or iOS. A screen that bakes its answer into pixels, a map tile, a chart, a scan,
+costs everything. An aggregate percentage under one access condition cannot tell you which kind
+of screen you are looking at; only a per-screen audit, of the kind <code>render_gap.py</code>
+runs on this project, can.</p>
+
+<h2 id="run">Check it yourself</h2>
+
+<p>A11y-CUA's own numbers are in its CHI '26 proceedings PDF and the arXiv preprint; neither the
+authors' dataset recorder nor a benchmark harness has a public release we could find as of this
+writing, so the task-by-task breakdown behind the aggregate percentages is not independently
+reproducible from outside the paper. phoneshell's half of the comparison is public end to end:</p>
+
+<pre><code>git clone https://github.com/Blomega/phoneshell && cd phoneshell
+cat docs/EXPERIMENT-2.md          # pre-registered design, written before the run
+grep -A4 "render stratum" FINDINGS.md   # section 26, the 30/30 vs 0/30 split
+python3 scripts/render_gap.py --help    # the per-screen OCR-vs-tree audit this argument depends on</code></pre>
+
+<h2 id="falsify">What would prove this wrong</h2>
+
+<ul>
+  <li>If A11y-CUA's released task list turns out to contain no pixel-only targets at all, the
+  28.3% and 0.0% magnifier scores would have to come from a different mechanism than the one we
+  propose here (channel overlap, not a binary floor), and the cross-platform analogy we are
+  drawing would not hold. We have not seen the task-by-task list and would want to before
+  treating this prediction as settled.</li>
+  <li>We predict that re-slicing A11y-CUA's 60 tasks by whether the target text is present in
+  the Windows accessibility tree under Magnifier-CUA, the same way phoneshell's render and tree
+  strata were split, would produce two groups separated by close to the full 100-point range,
+  not a uniform 28.3% across both. This is falsifiable by anyone with access to the dataset and
+  we have not run it ourselves, through 31 December 2027, the authors' own data-sharing window
+  implied by the CHI '26 publication date.</li>
+  <li>The blind/low-vision human baseline is reported as both 84.6% and 86.9% in different parts
+  of the same paper. We flag this as unresolved rather than picking one; if the discrepancy turns
+  out to be a typo correctable from the authors' own supplementary material, the human-vs-agent
+  gap narrows by two points and nothing in this article's comparison changes.</li>
+</ul>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ol>
+      <li>Gubbi Mohanbabu, Natalie, Kim, Guo, Pavel. "A11y-CUA Dataset: Characterizing the Accessibility Gap in Computer Use Agents." CHI '26, Barcelona, 13 to 17 April 2026. DOI <a href="https://doi.org/10.1145/3772318.3791896">10.1145/3772318.3791896</a>. Preprint: <a href="https://arxiv.org/abs/2602.09310">arXiv:2602.09310</a>, submitted 10 February 2026.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell/blob/main/FINDINGS.md">FINDINGS.md</a>, section 26, "Vision is decisive exactly where the tree is silent, and worthless everywhere else," measured on a physical iPhone, pre-registered before the run.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell/blob/main/docs/EXPERIMENT-2.md">docs/EXPERIMENT-2.md</a>, the pre-registration for the 120-run probe.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell/blob/main/scripts/render_gap.py">scripts/render_gap.py</a>, the per-screen OCR-versus-tree audit referenced above.</li>
+    </ol>
+  </section>
+</article>
+</div>
+</body></html>
