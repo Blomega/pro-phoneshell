@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VenusBench-Mobile: the best mobile agent passes 15% of its five-repeat stability tasks; phoneshell's own day-apart rerun flipped 12 of 144, 11 of them one way &mdash; Blolabel</title>
+<meta name="description" content="VenusBench-Mobile (ICML 2026) scores the best agent pairing at 36.9% success on 149 online Android tasks, then drops it to 15% when a task must succeed on all five of its variants. phoneshell's own repeat, 144 identical tasks run a day apart with no intentional variation, flipped 12 outcomes and 11 moved the same direction, traced to the harness, not the model. Two different kinds of instability, neither captured by a single run.">
+<link rel="canonical" href="https://blolabel.ai/blog/venusbench-stability-phoneshells-rerun-flipped-12/">
+<meta property="og:title" content="VenusBench-Mobile: the best mobile agent passes 15% of its five-repeat stability tasks; phoneshell's own day-apart rerun flipped 12 of 144, 11 of them one way &mdash; Blolabel">
+<meta property="og:description" content="VenusBench-Mobile scores the best agent pairing at 36.9% on 149 online Android tasks, then 15% when a task must succeed on all five of its variants. phoneshell's own repeat, 144 identical tasks a day apart, flipped 12 outcomes, 11 the same direction, traced to the harness, not the model.">
+<meta property="og:url" content="https://blolabel.ai/blog/venusbench-stability-phoneshells-rerun-flipped-12/">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"VenusBench-Mobile: the best mobile agent passes 15% of its five-repeat stability tasks; phoneshell's own day-apart rerun flipped 12 of 144, 11 of them one way","description":"VenusBench-Mobile (ICML 2026) scores the best agent pairing at 36.9% success on 149 online Android tasks, then drops it to 15% when a task must succeed on all five of its variants. phoneshell's own repeat, 144 identical tasks run a day apart with no intentional variation, flipped 12 outcomes and 11 moved the same direction, traced to the harness, not the model.",
+ "datePublished":"2026-10-21","dateModified":"2026-10-21",
+ "url":"https://blolabel.ai/blog/venusbench-stability-phoneshells-rerun-flipped-12/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/venusbench-stability-phoneshells-rerun-flipped-12/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"},
+ "image":"https://blolabel.ai/images/blog/venusbench-stability-phoneshells-rerun-flipped-12-hero.png",
+ "citation":["https://arxiv.org/abs/2604.06182","https://proceedings.mlr.press/v306/gong26a.html","https://arxiv.org/abs/2610.01618","https://github.com/Blomega/phoneshell/blob/main/FINDINGS.md","https://blolabel.ai/blog/rerun-flips-came-from-the-rig/"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "How much does requiring repeat success change a mobile agent's measured success rate?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "On VenusBench-Mobile (ICML 2026), the best agent pairing, Gemini-3-Pro plus UI-Venus-72B, scores 36.9% total success across 149 single-run online Android tasks across 27 apps. On the benchmark's stability subset, where a task counts only if the agent succeeds on all five of its variants, the same pairing drops to 15%. Most of the other eight tested agents score 0% on that stricter measure."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Did phoneshell find the same kind of instability on iPhone?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Not the same kind. phoneshell reran 144 identical tasks a day apart with no intentional variation in the task itself. 12 outcomes flipped, and 11 of those 12 moved in the same direction, which traced to two framework commits and a phone that kept leaving the foregrounded app, not to model-level randomness. VenusBench-Mobile's drop comes from varying the task's starting state five ways and requiring all five to succeed."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Is one of these the real instability number and the other noise?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Neither; they measure different things. VenusBench-Mobile's stability pass rate exposes brittleness to environment variation. phoneshell's rerun exposes infrastructure drift between two runs of the identical environment. A separate paper, Wiedmann, Girrbach, Schmid and Akata (arXiv:2610.01618), finds about 54% of agent score variance across 432 configurations run five times each is run-to-run noise that is neither of these, which is the third thing a single success-rate number also cannot distinguish from the other two."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-21">21 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>VenusBench-Mobile: the best mobile agent passes 15% of its five-repeat stability tasks; phoneshell's own day-apart rerun flipped 12 of 144, 11 of them one way</h1>
+  <p class="standfirst">Two different repeat experiments, two different kinds of instability, and neither one is what a single success-rate number reports. VenusBench-Mobile varies the task and demands five-for-five. phoneshell reran the identical task a day later and the flips traced to the rig, not the model.</p>
+
+<p>VenusBench-Mobile, accepted at ICML 2026 (PMLR volume 306), scores its best agent pairing,
+Gemini-3-Pro paired with the UI-Venus-72B grounding model, at 36.9% total success across 149
+single-run online Android tasks spanning 27 apps. On the benchmark's stability subset, which
+adds five variants of a subset of tasks and counts a pass only if the agent succeeds on all
+five, the same pairing drops to 15%, and most of the other eight tested agents score 0%.
+phoneshell's own repeat test is a different experiment answering a different question: 144
+identical iPhone task runs executed a day apart, no intentional variation in the task or the
+starting screen, and 12 outcomes flipped between the two days. 11 of those 12 flips moved the
+same direction, and the article that reported them traced the cause to two commits in
+phoneshell's own framework and a phone that kept leaving the foregrounded app, not to anything
+resembling model randomness. Both results are real. Neither is "the" instability number for
+mobile agents, because they are measuring different sources of it.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/venusbench-stability-phoneshells-rerun-flipped-12-hero.png" alt="Abstract technical illustration of two different measuring setups: one branching a single path into five variant paths that must all stay lit, the other replaying one fixed path on two different days with a few lights flickering out of sync" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="finding">What changed, and when</h2>
+
+<p>VenusBench-Mobile (Gong, Cai, Dai, Zhou, Gu, Meng, Shen) was submitted to arXiv in February
+2026 (arXiv:2604.06182) and appears in the ICML 2026 proceedings via PMLR volume 306. It argues
+that prior online mobile benchmarks concentrate on single apps and repetitive task types, and
+builds a user-intent-driven task set with a capability-oriented annotation scheme meant to
+attribute each failure to a specific agent component rather than a bare pass or fail. Its
+diagnostics attribute most failures to perception and memory. Code and data are published on
+the UI-Venus GitHub repository's VenusBench-Mobile branch.</p>
+
+<p>phoneshell's rerun was prompted by a separate paper, Wiedmann, Girrbach, Schmid and Akata,
+"Agents Are Systems, Not Models" (arXiv:2610.01618, 1 October 2026), which repeats 432 agent
+configurations five times each and attributes about 54% of score variance to run-to-run noise,
+with task identity outranking model identity as a predictor of that variance. phoneshell checked
+the one place its own public data repeats: 144 runs executed a day apart on the same physical
+iPhone, reported in the earlier note "A new paper puts 54% of agent outcome variance in
+repetition" (16 October 2026 at this outlet).</p>
+
+<h2 id="evidence">What each repeat test actually found</h2>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>study</th><th>design</th><th>best result</th><th>rest of the field</th><th>source</th></tr></thead>
+  <tbody>
+    <tr><td>VenusBench-Mobile</td><td>149 tasks, 27 apps, single run each</td><td>Gemini-3-Pro + UI-Venus-72B: 36.9% total SR</td><td>average across 9 agents: 15.2%; weakest (GUI-Owl-7B, Qwen3-VL-8B): 6.7%</td><td>arXiv:2604.06182, Table 3</td></tr>
+    <tr><td>VenusBench-Mobile</td><td>stability subset, 5 variants per task, all 5 must pass</td><td>Gemini-3-Pro + UI-Venus-72B: 15%</td><td>GPT-5.1 + UI-Venus-72B: 5%; most other agents: 0%</td><td>arXiv:2604.06182, Table 4</td></tr>
+    <tr><td>VenusBench-Mobile</td><td>reported drop vs AndroidWorld, same agents</td><td>&ldquo;around 50 points&rdquo; (qualitative, Figure 2)</td><td>not given as an exact figure in the text</td><td>arXiv:2604.06182</td></tr>
+    <tr><td>Wiedmann et al.</td><td>432 agent configurations, 5 reruns each, task held fixed</td><td>&asymp;54% of score variance is run-to-run noise</td><td>task identity outranks model identity as a predictor</td><td>arXiv:2610.01618</td></tr>
+    <tr><td>phoneshell</td><td>144 identical runs, no variation, one day apart</td><td>12 of 144 outcomes flipped</td><td>11 of 12 flips moved the same direction; traced to 2 framework commits and app-backgrounding</td><td>FINDINGS.md / blolabel.ai/blog/rerun-flips-came-from-the-rig</td></tr>
+  </tbody>
+</table>
+</div>
+
+<figure>
+<svg viewBox="0 0 900 360" role="img" style="width:100%;height:auto"
+  aria-label="Bar chart of VenusBench-Mobile success rates. The best agent pairing, Gemini-3-Pro with UI-Venus-72B, scores 36.9 percent on single-run tasks, 15.2 percent average across all nine tested agents, and 15 percent on the stability subset requiring five out of five successes on task variants. The second-best pairing, GPT-5.1 with UI-Venus-72B, scores 26.9 percent single-run and 5 percent on stability.">
+  <rect x="0" y="0" width="900" height="360" fill="#0f172a"/>
+  <text x="40" y="32" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="17" font-weight="700">VenusBench-Mobile: single-run success versus five-for-five stability</text>
+  <g stroke="#1e293b"><line x1="80" y1="56" x2="80" y2="290"/><line x1="80" y1="290" x2="860" y2="290"/></g>
+  <g font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#64748b" text-anchor="end">
+    <text x="72" y="60">40%</text><text x="72" y="134">30%</text><text x="72" y="208">20%</text><text x="72" y="286">0%</text>
+  </g>
+  <g font-family="Montserrat,sans-serif" font-size="12.5" fill="#e2e8f0" text-anchor="middle">
+    <text x="190" y="314">Gemini-3-Pro</text><text x="190" y="330" fill="#94a3b8" font-size="10.5">+ UI-Venus-72B</text>
+    <text x="400" y="314">GPT-5.1</text><text x="400" y="330" fill="#94a3b8" font-size="10.5">+ UI-Venus-72B</text>
+    <text x="610" y="314">average, all 9 agents</text>
+  </g>
+  <rect x="150" y="105" width="55" height="185" fill="#38bdf8"/>
+  <rect x="215" y="235" width="55" height="55" fill="#f59e0b"/>
+  <text x="177" y="93" fill="#e2e8f0" font-family="ui-monospace,Menlo,monospace" font-size="12" text-anchor="middle">36.9%</text>
+  <text x="242" y="223" fill="#fbbf24" font-family="ui-monospace,Menlo,monospace" font-size="12" text-anchor="middle">15.0%</text>
+  <rect x="360" y="153" width="55" height="137" fill="#38bdf8"/>
+  <rect x="425" y="276" width="55" height="14" fill="#f59e0b"/>
+  <text x="387" y="141" fill="#e2e8f0" font-family="ui-monospace,Menlo,monospace" font-size="12" text-anchor="middle">26.9%</text>
+  <text x="452" y="264" fill="#fbbf24" font-family="ui-monospace,Menlo,monospace" font-size="12" text-anchor="middle">5.0%</text>
+  <rect x="580" y="179" width="55" height="111" fill="#64748b"/>
+  <text x="607" y="167" fill="#e2e8f0" font-family="ui-monospace,Menlo,monospace" font-size="12" text-anchor="middle">15.2%</text>
+  <g font-family="Montserrat,sans-serif" font-size="12">
+    <rect x="700" y="60" width="14" height="14" fill="#38bdf8"/><text x="720" y="71" fill="#e2e8f0">single-run total SR</text>
+    <rect x="700" y="80" width="14" height="14" fill="#f59e0b"/><text x="720" y="91" fill="#e2e8f0">5-of-5 stability pass rate</text>
+  </g>
+</svg>
+<figcaption>The best agent on VenusBench-Mobile loses 59% of its single-run score when the same
+task has to succeed five times on five variants. Most agents lose all of it.</figcaption>
+</figure>
+
+<figure>
+<svg viewBox="0 0 900 320" role="img" style="width:100%;height:auto"
+  aria-label="Diagram contrasting two repeat-testing designs. VenusBench-Mobile branches one task into five variants with different starting states and requires the agent to succeed on all five, which exposes brittleness to environment variation. phoneshell reran the identical 144 tasks a day apart with no intentional variation and found 12 flips, 11 moving the same direction, traced to two framework commits and the tested app losing the foreground, which is infrastructure drift rather than variation brittleness.">
+  <rect x="0" y="0" width="900" height="320" fill="#0f172a"/>
+  <text x="40" y="30" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="17" font-weight="700">Two repeats, two different things broke</text>
+
+  <text x="40" y="64" fill="#38bdf8" font-family="Montserrat,sans-serif" font-size="13" font-weight="700">VenusBench-Mobile: same task, five different starting states</text>
+  <g font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#e2e8f0">
+    <rect x="40" y="78" width="120" height="36" rx="6" fill="#1e293b" stroke="#334155"/><text x="56" y="100">task</text>
+    <rect x="220" y="76" width="24" height="18" fill="#34d399"/><rect x="220" y="98" width="24" height="18" fill="#34d399"/><rect x="220" y="120" width="24" height="18" fill="#f59e0b"/>
+    <rect x="260" y="76" width="24" height="18" fill="#34d399"/><rect x="260" y="98" width="24" height="18" fill="#f59e0b"/>
+    <text x="220" y="150" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="11">5 variants, different start states</text>
+  </g>
+  <text x="430" y="100" fill="#fbbf24" font-family="Montserrat,sans-serif" font-size="12">any one variant failing fails the stability pass</text>
+
+  <line x1="40" y1="170" x2="860" y2="170" stroke="#334155"/>
+
+  <text x="40" y="204" fill="#f59e0b" font-family="Montserrat,sans-serif" font-size="13" font-weight="700">phoneshell: identical task, same environment, one day apart</text>
+  <g font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#e2e8f0">
+    <rect x="40" y="218" width="150" height="36" rx="6" fill="#1e293b" stroke="#334155"/><text x="56" y="240">day 1: 144 runs</text>
+    <rect x="220" y="218" width="150" height="36" rx="6" fill="#1e293b" stroke="#334155"/><text x="236" y="240">day 2: same 144</text>
+  </g>
+  <g stroke="#64748b" stroke-width="2"><line x1="190" y1="236" x2="220" y2="236"/></g>
+  <text x="400" y="235" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="12">12 flips. 11 traced to 2 framework commits + app backgrounding</text>
+  <text x="400" y="255" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="12">not to anything resembling model-level randomness</text>
+</svg>
+<figcaption>VenusBench-Mobile's repeat axis is the task's environment. phoneshell's repeat axis is
+calendar time on a fixed environment. A single success-rate figure discloses neither.</figcaption>
+</figure>
+
+<h2 id="method">What this means for someone reporting a success rate</h2>
+
+<p>A pass rate reported from one run per task answers "did it work that one time," which is a
+narrower claim than most leaderboards present it as. VenusBench-Mobile's result says that even
+the strongest tested pairing is brittle to starting-state variation specifically: the same task
+phrased or begun five different ways succeeds all five times only 15% of the time, against 36.9%
+on any single attempt. phoneshell's result says a completely different thing: given the exact
+same environment and the exact same task, outcomes can still move between two calendar days for
+reasons that have nothing to do with the model, and the direction of that movement here was not
+random, it was a one-way correction once a bug got fixed. Averaged into one number, these would
+look like generic "noise." Reported separately, they point at different fixes: VenusBench-
+Mobile's number argues for training or prompting that generalizes across phrasing and starting
+state; phoneshell's argues for pinning framework versions and checking app foreground state
+before trusting any single run's score.</p>
+
+<p>The Wiedmann et al. finding that about 54% of variance is run-to-run noise sits above both of
+these as a reminder that even after accounting for variation-brittleness and infra drift, a
+sizeable remainder is still unexplained repetition noise in the strict sense, the kind that
+would show up even with a perfectly pinned harness and an unvarying task. None of the three
+studies here claims to have isolated that remainder cleanly from the other two.</p>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code>git clone https://github.com/inclusionAI/UI-Venus -b VenusBench-Mobile   # VenusBench-Mobile's own tasks and data
+git clone https://github.com/Blomega/phoneshell && cd phoneshell
+grep -A10 "day apart" FINDINGS.md 2>/dev/null; grep -rn "144" FINDINGS.md
+# phoneshell has no built-in task-variant generator as of this writing, so a
+# VenusBench-style 5-variant rerun of its own 80 tasks does not exist as a one-line command</code></pre>
+
+<h2 id="falsify">What would prove this wrong</h2>
+
+<ul>
+  <li>We predict that if phoneshell's 144 tasks were each run through five hand-written starting-
+  state variants in the style of VenusBench-Mobile, the flip rate would exceed 12 of 144 (8.3%),
+  because VenusBench-Mobile's stability drop (36.9% to 15%, a 59% relative fall for the best
+  agent) suggests variation-brittleness is a larger effect on well-behaved tasks than the
+  day-to-day infrastructure drift phoneshell happened to catch. This is untested, since the
+  variant generator referenced above does not yet exist, and is falsifiable by whoever builds
+  it, through 31 December 2027.</li>
+  <li>If a rerun of phoneshell's same 144 tasks on a third day, with the two identified framework
+  bugs now fixed, shows zero flips, that would confirm the 11-of-12 one-directional pattern was
+  entirely the two named bugs and not a third, undetected source of drift. If flips persist at a
+  similar rate with the known bugs fixed, that would mean something else is also moving outcomes
+  day to day, and this article's attribution would need revision.</li>
+</ul>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ol>
+      <li>Gong, Cai, Dai, Zhou, Gu, Meng, Shen. "VenusBench-Mobile: A Challenging and User-Centric Benchmark for Mobile GUI Agents with Capability Diagnostics." <a href="https://arxiv.org/abs/2604.06182">arXiv:2604.06182</a>; ICML 2026, <a href="https://proceedings.mlr.press/v306/gong26a.html">PMLR v306</a>.</li>
+      <li>Wiedmann, Girrbach, Schmid, Akata. "Agents Are Systems, Not Models: Rethinking Agentic Evaluation." <a href="https://arxiv.org/abs/2610.01618">arXiv:2610.01618</a>, 1 October 2026.</li>
+      <li>Blolabel, <a href="https://blolabel.ai/blog/rerun-flips-came-from-the-rig/">"A new paper puts 54% of agent outcome variance in repetition"</a>, 16 October 2026.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell/blob/main/FINDINGS.md">FINDINGS.md</a>, phoneshell repository.</li>
+      <li>UI-Venus GitHub repository, VenusBench-Mobile branch: <a href="https://github.com/inclusionAI/UI-Venus/tree/VenusBench-Mobile">code and data</a>.</li>
+    </ol>
+  </section>
+</article>
+</div>
+</body></html>
