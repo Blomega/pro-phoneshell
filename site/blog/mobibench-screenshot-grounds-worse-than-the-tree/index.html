@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MobiBench: a raw screenshot grounds Android actions at 4.72%, the accessibility tree at 27.17%; phoneshell's vision question was never about which the agent acts from &mdash; Blolabel</title>
+<meta name="description" content="MobiBench (KAIST, Sungkyunkwan, Korea University, Fluiz) scores GPT-4.1's task success at 27.17% reading the Android accessibility tree and 4.72% reading a raw screenshot alone, with a hybrid of both reaching 31.50%. That is a result about which input helps an agent choose its next tap. phoneshell's own vision finding, 100% versus 0% on an iOS screen, is about a different question entirely: whether the thing checking the outcome needs to see the pixels at all.">
+<link rel="canonical" href="https://blolabel.ai/blog/mobibench-screenshot-grounds-worse-than-the-tree/">
+<meta property="og:title" content="MobiBench: a raw screenshot grounds Android actions at 4.72%, the accessibility tree at 27.17%; phoneshell's vision question was never about which the agent acts from &mdash; Blolabel">
+<meta property="og:description" content="MobiBench scores GPT-4.1's task success at 27.17% from the Android accessibility tree and 4.72% from a raw screenshot alone, hybrid reaching 31.50%. phoneshell's own vision finding, 100% versus 0% on an iOS screen, answers a different question: whether the grader needs to see the pixels at all.">
+<meta property="og:url" content="https://blolabel.ai/blog/mobibench-screenshot-grounds-worse-than-the-tree/">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"MobiBench: a raw screenshot grounds Android actions at 4.72%, the accessibility tree at 27.17%; phoneshell's vision question was never about which the agent acts from","description":"MobiBench scores GPT-4.1's task success at 27.17% from the Android accessibility tree and 4.72% from a raw screenshot alone, hybrid reaching 31.50%. phoneshell's own vision finding, 100% versus 0% on an iOS screen, answers a different question: whether the grader needs to see the pixels at all.",
+ "datePublished":"2026-10-21","dateModified":"2026-10-21",
+ "url":"https://blolabel.ai/blog/mobibench-screenshot-grounds-worse-than-the-tree/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/mobibench-screenshot-grounds-worse-than-the-tree/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"},
+ "image":"https://blolabel.ai/images/blog/mobibench-screenshot-grounds-worse-than-the-tree-hero.png",
+ "citation":["https://arxiv.org/abs/2512.12634","https://github.com/fclab-skku/Mobi-Bench","https://github.com/Blomega/phoneshell/blob/main/FINDINGS.md"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Does a raw screenshot help or hurt a mobile GUI agent choosing its next action?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "On MobiBench, GPT-4.1 reading only a raw Android screenshot scores 4.72% task success, against 27.17% reading only the accessibility tree as HTML-style text. A hybrid of both reaches 31.50%, the best of the three. For GPT-4.1 mini, the hybrid scores 2.7 times the text-only number, 15.94% versus 5.91%, even though the screenshot alone scores lower than text alone, 2.56% versus 5.91%."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does this contradict phoneshell's own finding that a screenshot is worth 100 points or zero?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No, they answer different questions. MobiBench measures whether a screenshot helps the agent pick where to tap. phoneshell's result is about whether the thing scoring the outcome needs to see the screen at all, measured on pages engineered so the answer either lives entirely in the accessibility tree or entirely in rendered pixels. Neither study tested the other's question."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What else does MobiBench report about how mobile agent benchmarks score tasks?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "MobiBench reports that single-path offline scoring, crediting only one annotated correct action per step, underestimates real agent capability by up to 16.09 percentage points, a 49.9% relative gap, compared to its own multi-path, human-agreement-validated scoring (94.72% agreement with human evaluators, against 50.15% for a single-path static baseline)."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind comparison">comparison</span>
+    <time datetime="2026-10-21">21 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>MobiBench: a raw screenshot grounds Android actions at 4.72%, the accessibility tree at 27.17%; phoneshell's vision question was never about which the agent acts from</h1>
+  <p class="standfirst">Two "vision versus the tree" results from two different projects, pointing in what looks like opposite directions until you notice they are not measuring the same job. One is about choosing where to tap. The other is about whether the referee needs to watch the screen.</p>
+
+<p>MobiBench, a modular offline benchmark for mobile GUI agents from KAIST, Sungkyunkwan
+University, Korea University and Fluiz, scores GPT-4.1 at 27.17% task success reading an
+Android accessibility tree as linearized HTML-style text, and 4.72% reading a raw screenshot
+with no text channel at all, a gap of more than five times. A hybrid feeding both the
+screenshot and the tree reaches 31.50%, the best of the three. phoneshell's own headline vision
+result, measured on a physical iPhone, is 100% success with a screenshot against 0% without it,
+on pages built so the answer exists only as pixels. Read quickly, these look like the same
+debate reaching opposite conclusions: one says text beats pixels, the other says pixels beat
+nothing. Read carefully, MobiBench is scoring which input helps an agent decide its next tap.
+phoneshell's probe is scoring whether the device-state checker needs to see the screen to know
+what happened. Those are different jobs, and a single phrase, "vision versus the accessibility
+tree," is being asked to cover both.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/mobibench-screenshot-grounds-worse-than-the-tree-hero.png" alt="Abstract technical illustration of two separate control panels, one labelled with crosshairs choosing a target point, the other labelled with a checkmark verifying a result, each wired to a different mix of a text feed and a raw image feed" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="finding">What changed, and when</h2>
+
+<p>MobiBench was posted to arXiv as "Modular and Multi-Path-Aware Offline Benchmarking for
+Mobile GUI Agents" (arXiv:2512.12634), with v1 on 14 December 2025 and a revised v2 on 8
+January 2026, and its code and dataset are published at
+<a href="https://github.com/fclab-skku/Mobi-Bench">github.com/fclab-skku/Mobi-Bench</a>. Its
+central dataset holds 508 tasks across 66 apps, 4,173 screenshots and 12,339 annotated actions,
+built so that more than one action can be marked correct at each step rather than penalizing an
+agent for a valid alternative a single-path annotation never recorded. A 105-task subset is used
+to compare directly against AndroidWorld, the standard online Android benchmark.</p>
+
+<p>phoneshell's render-stratum result comes from experiment 2, pre-registered in
+<code>docs/EXPERIMENT-2.md</code> before the run: twenty tasks, three vision-capable models, each
+run with and without the screenshot, with ten tasks engineered so the answer is a word rendered
+into an image with no alt text, verified absent from the accessibility tree on 10 of 10 pages.
+Neither study is newer than the other in a way that matters here; they were simply never asking
+each other's question.</p>
+
+<h2 id="evidence">Two jobs, measured separately</h2>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>benchmark</th><th>platform</th><th>what the number measures</th><th>configuration</th><th>result</th><th>source</th></tr></thead>
+  <tbody>
+    <tr><td>MobiBench</td><td>Android</td><td>agent's own input for choosing the next action</td><td>GPT-4.1, accessibility tree as text (a11y-HTML)</td><td>27.17% task success</td><td>arXiv:2512.12634, Table 5</td></tr>
+    <tr><td>MobiBench</td><td>Android</td><td>agent's own input for choosing the next action</td><td>GPT-4.1, raw screenshot only</td><td>4.72% task success</td><td>arXiv:2512.12634, Table 5</td></tr>
+    <tr><td>MobiBench</td><td>Android</td><td>agent's own input for choosing the next action</td><td>GPT-4.1, hybrid (screenshot + tree)</td><td>31.50% task success</td><td>arXiv:2512.12634, Table 5</td></tr>
+    <tr><td>MobiBench</td><td>Android</td><td>agent's own input for choosing the next action</td><td>GPT-4.1 mini, tree only / hybrid</td><td>5.91% / 15.94% (hybrid is 2.7x)</td><td>arXiv:2512.12634, Table 5 &amp; &sect;4.2</td></tr>
+    <tr><td>phoneshell</td><td>iOS</td><td>grader's signal for scoring the outcome, pixel-only page</td><td>with screenshot / tree only</td><td>100% (30/30) / 0% (0/30)</td><td>FINDINGS.md &sect;26</td></tr>
+    <tr><td>phoneshell</td><td>iOS</td><td>grader's signal for scoring the outcome, labelled page</td><td>with screenshot / tree only</td><td>97% (29/30) / 100% (30/30)</td><td>FINDINGS.md &sect;26</td></tr>
+  </tbody>
+</table>
+</div>
+
+<figure>
+<svg viewBox="0 0 900 360" role="img" style="width:100%;height:auto"
+  aria-label="Grouped bar chart of MobiBench task success rates for GPT-4.1 and GPT-4.1 mini across three input configurations. GPT-4.1 scores 27.17 percent with the accessibility tree as text, 4.72 percent with a raw screenshot alone, and 31.50 percent with both combined. GPT-4.1 mini scores 5.91 percent with text alone, 2.56 percent with a screenshot alone, and 15.94 percent with both combined.">
+  <rect x="0" y="0" width="900" height="360" fill="#0f172a"/>
+  <text x="40" y="32" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="17" font-weight="700">MobiBench: what GPT-4.1 and GPT-4.1 mini ground actions from</text>
+  <g stroke="#1e293b"><line x1="80" y1="56" x2="80" y2="290"/><line x1="80" y1="290" x2="860" y2="290"/></g>
+  <g font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#64748b" text-anchor="end">
+    <text x="72" y="60">35%</text><text x="72" y="172">17.5%</text><text x="72" y="286">0%</text>
+  </g>
+  <g font-family="Montserrat,sans-serif" font-size="12" fill="#e2e8f0" text-anchor="middle">
+    <text x="230" y="314">GPT-4.1</text><text x="630" y="314">GPT-4.1 mini</text>
+  </g>
+  <rect x="120" y="130" width="50" height="160" fill="#38bdf8"/><text x="145" y="118" fill="#e2e8f0" font-family="ui-monospace,Menlo,monospace" font-size="11" text-anchor="middle">27.17%</text>
+  <rect x="180" y="262" width="50" height="28" fill="#f59e0b"/><text x="205" y="250" fill="#fbbf24" font-family="ui-monospace,Menlo,monospace" font-size="11" text-anchor="middle">4.72%</text>
+  <rect x="240" y="104" width="50" height="186" fill="#34d399"/><text x="265" y="92" fill="#e2e8f0" font-family="ui-monospace,Menlo,monospace" font-size="11" text-anchor="middle">31.50%</text>
+  <rect x="540" y="255" width="50" height="35" fill="#38bdf8"/><text x="565" y="243" fill="#e2e8f0" font-family="ui-monospace,Menlo,monospace" font-size="11" text-anchor="middle">5.91%</text>
+  <rect x="600" y="274" width="50" height="16" fill="#f59e0b"/><text x="625" y="262" fill="#fbbf24" font-family="ui-monospace,Menlo,monospace" font-size="11" text-anchor="middle">2.56%</text>
+  <rect x="660" y="195" width="50" height="95" fill="#34d399"/><text x="685" y="183" fill="#e2e8f0" font-family="ui-monospace,Menlo,monospace" font-size="11" text-anchor="middle">15.94%</text>
+  <g font-family="Montserrat,sans-serif" font-size="12">
+    <rect x="720" y="60" width="14" height="14" fill="#38bdf8"/><text x="740" y="71" fill="#e2e8f0">tree text only</text>
+    <rect x="720" y="80" width="14" height="14" fill="#f59e0b"/><text x="740" y="91" fill="#e2e8f0">screenshot only</text>
+    <rect x="720" y="100" width="14" height="14" fill="#34d399"/><text x="740" y="111" fill="#e2e8f0">hybrid, both</text>
+  </g>
+</svg>
+<figcaption>A raw screenshot alone is the weakest action-grounding channel for both models.
+Adding it on top of text still helps, 2.7x for the mini model, which means the pixels carry
+real marginal information even though they are a poor channel by themselves.</figcaption>
+</figure>
+
+<figure>
+<svg viewBox="0 0 900 320" role="img" style="width:100%;height:auto"
+  aria-label="Diagram contrasting two different jobs vision can be asked to do. The first job is choosing the next action: an agent must map either pixels or text to a specific tap target, and on Android, text naming the element directly scores far higher than raw pixels requiring implicit coordinate grounding. The second job is checking the outcome: a grader reads either the accessibility tree or a screenshot to determine whether a task succeeded, and the screenshot matters only when the answer is not present in the tree at all, in which case it is the entire signal.">
+  <rect x="0" y="0" width="900" height="320" fill="#0f172a"/>
+  <text x="40" y="30" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="17" font-weight="700">Two jobs, same two inputs, different payoff shapes</text>
+
+  <text x="40" y="64" fill="#38bdf8" font-family="Montserrat,sans-serif" font-size="13" font-weight="700">Job 1: choose the next action (MobiBench, Android)</text>
+  <g font-family="Montserrat,sans-serif" font-size="11" fill="#e2e8f0">
+    <rect x="40" y="78" width="160" height="40" rx="6" fill="#1e293b" stroke="#334155"/><text x="52" y="102">tree text: names the element</text>
+    <rect x="220" y="78" width="160" height="40" rx="6" fill="#1e293b" stroke="#334155"/><text x="232" y="102">raw pixels: implicit coords</text>
+  </g>
+  <text x="420" y="92" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="11.5">naming beats guessing coordinates: 27.17% vs 4.72%</text>
+  <text x="420" y="112" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="11.5">pixels on top of naming still add 2.7x for the weaker model</text>
+
+  <line x1="40" y1="150" x2="860" y2="150" stroke="#334155"/>
+
+  <text x="40" y="184" fill="#f59e0b" font-family="Montserrat,sans-serif" font-size="13" font-weight="700">Job 2: check the outcome (phoneshell, iOS)</text>
+  <g font-family="Montserrat,sans-serif" font-size="11" fill="#e2e8f0">
+    <rect x="40" y="198" width="200" height="40" rx="6" fill="#1e293b" stroke="#334155"/><text x="52" y="222">is the answer in the tree?</text>
+  </g>
+  <g stroke="#64748b" stroke-width="2"><line x1="240" y1="218" x2="280" y2="218"/></g>
+  <rect x="280" y="198" width="190" height="40" rx="6" fill="#0f2e22" stroke="#34d399"/><text x="292" y="222" fill="#34d399">yes: tree alone scores 97 to 100%</text>
+  <g stroke="#64748b" stroke-width="2"><line x1="240" y1="238" x2="280" y2="258"/></g>
+  <rect x="280" y="248" width="230" height="40" rx="6" fill="#3a2a10" stroke="#f59e0b"/><text x="292" y="272" fill="#fbbf24">no: pixels are 100% of the signal, 0% without</text>
+</svg>
+<figcaption>MobiBench's gap is about grounding an action in coordinates versus named targets.
+phoneshell's gap is about whether a fact exists outside its one rendered location at all. The
+same two words, vision and tree, cover both, which is exactly why the two results look like a
+contradiction until you ask which job.</figcaption>
+</figure>
+
+<h2 id="method">What this means for someone building or reading about these agents</h2>
+
+<p>When a benchmark reports "vision helped" or "vision didn't help," the first question worth
+asking is which of the two jobs it tested. MobiBench's result is a caution against assuming a
+screenshot alone is a sufficient channel for an agent to act from on Android: naming beats
+guessing coordinates by a wide margin, and a developer choosing a parser for an action-taking
+agent should default to structured text and treat raw pixels as a supplement, not a
+replacement, matching the 2.7x hybrid gain MobiBench reports for the weaker model. phoneshell's
+result is a caution in the opposite direction, aimed at whoever is deciding whether a grading or
+verification step needs to look at the screen: the answer there is not "rarely" or "sometimes,"
+it is "exactly when the fact you need is not already exposed to assistive technology," which is
+knowable per screen in advance with a tool like <code>render_gap.py</code>, before spending
+anything on a vision call. Neither study tells you the other's answer. A team that reads
+MobiBench and concludes vision is broadly weak, or reads phoneshell and concludes vision is
+broadly essential, has generalized past what either one measured.</p>
+
+<p>MobiBench's other headline number is adjacent context worth carrying over separately: scoring
+with a single annotated correct path, the common offline-benchmark design, underestimated its
+own multi-path, human-validated score by up to 16.09 percentage points, a 49.9% relative gap
+(16.18% single-path versus 32.27% human-agreement TSR in its own comparison table). That is not
+a vision-versus-tree finding; it is a caution about crediting only one correct action per step
+at all, text or pixels, and belongs with phoneshell's own repeated point that a benchmark's
+scoring method can manufacture a result the model never earned.</p>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code>git clone https://github.com/fclab-skku/Mobi-Bench && cd Mobi-Bench   # MobiBench's 508 tasks, 66 apps
+# Table 5 in the paper (arXiv:2512.12634) holds the per-parser action-accuracy and TSR numbers quoted above
+
+git clone https://github.com/Blomega/phoneshell && cd phoneshell
+cat docs/EXPERIMENT-2.md                 # phoneshell's pre-registered grading probe
+grep -A6 "render stratum" FINDINGS.md    # section 26, 30/30 vs 0/30</code></pre>
+
+<h2 id="falsify">What would prove this wrong</h2>
+
+<ul>
+  <li>We predict that if MobiBench's exact three-configuration comparison (text-only,
+  screenshot-only, hybrid) were run on phoneshell's own render-stratum pages, where the tree
+  carries nothing by construction, the text-only configuration would score near zero rather than
+  27.17%, because there would be no element names to extract. MobiBench's 4.72% screenshot-only
+  number comes from Android apps where usable text existed in the tree and pixels still lost to
+  it; that is a different situation from a page where the tree has nothing to offer in the first
+  place. Untested by either project as of this writing, falsifiable by whoever runs it, through
+  31 December 2027.</li>
+  <li>If a future MobiBench revision reports its per-task breakdown of which specific tasks the
+  hybrid configuration recovers over text-only, and none of those tasks resemble phoneshell's
+  render stratum (pixel-only facts with no text analogue anywhere on screen), that would weaken
+  the resonance we draw between MobiBench's hybrid gain and phoneshell's own vision-decisive
+  cases, and we would want to revise this comparison accordingly.</li>
+</ul>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ol>
+      <li>Wi, Lee, Oh, Shin et al. "Modular and Multi-Path-Aware Offline Benchmarking for Mobile GUI Agents" (MobiBench). <a href="https://arxiv.org/abs/2512.12634">arXiv:2512.12634</a>, v1 14 December 2025, v2 8 January 2026. Code and data: <a href="https://github.com/fclab-skku/Mobi-Bench">github.com/fclab-skku/Mobi-Bench</a>.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell/blob/main/FINDINGS.md">FINDINGS.md</a>, section 26, measured on a physical iPhone, pre-registered before the run.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell/blob/main/docs/EXPERIMENT-2.md">docs/EXPERIMENT-2.md</a>.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell/blob/main/scripts/render_gap.py">scripts/render_gap.py</a>.</li>
+    </ol>
+  </section>
+</article>
+</div>
+</body></html>
