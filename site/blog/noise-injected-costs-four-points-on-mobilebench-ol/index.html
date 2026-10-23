@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MobileBench-OL injects noise at a 20% chance per step and costs its best agent 4.2 points; phoneshell's day-apart rerun flipped 12 of 144 outcomes with no noise injected at all - Blolabel</title>
+<meta name="description" content="MobileBench-OL's noise-injection subset injects one of four interruption types, repeat, unexecuted, delay, or pop-up, with a 20% chance at every step, and drops its best agent, UI-TARS-1.5-7B, from 60.97% to 56.77%. phoneshell has never injected noise on purpose: its own day-apart rerun of 144 identical tasks still flipped 12 outcomes, and nothing in that result says which of four causes was responsible.">
+<link rel="canonical" href="https://blolabel.ai/blog/noise-injected-costs-four-points-on-mobilebench-ol/">
+<meta property="og:title" content="MobileBench-OL injects noise at a 20% chance per step and costs its best agent 4.2 points; phoneshell's day-apart rerun flipped 12 of 144 outcomes with no noise injected at all - Blolabel">
+<meta property="og:description" content="MobileBench-OL's noise-injection subset injects repeat, unexecuted, delay, or pop-up noise at a 20% chance per step and drops UI-TARS-1.5-7B from 60.97% to 56.77%. phoneshell's own day-apart rerun of 144 tasks flipped 12 outcomes with no noise injected at all, and was never broken down by cause.">
+<meta property="og:url" content="https://blolabel.ai/blog/noise-injected-costs-four-points-on-mobilebench-ol/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/noise-injected-costs-four-points-on-mobilebench-ol-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"MobileBench-OL injects noise at a 20% chance per step and costs its best agent 4.2 points; phoneshell's day-apart rerun flipped 12 of 144 outcomes with no noise injected at all",
+ "description":"MobileBench-OL's noise-injection subset injects one of four interruption types, repeat, unexecuted, delay, or pop-up, with a 20% chance at every step, and drops its best agent, UI-TARS-1.5-7B, from 60.97% to 56.77%. phoneshell's own day-apart rerun of 144 tasks flipped 12 outcomes with no noise injected at all.",
+ "datePublished":"2026-10-22","dateModified":"2026-10-22",
+ "url":"https://blolabel.ai/blog/noise-injected-costs-four-points-on-mobilebench-ol/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/noise-injected-costs-four-points-on-mobilebench-ol/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"},
+ "image":"https://blolabel.ai/images/blog/noise-injected-costs-four-points-on-mobilebench-ol-hero.png",
+ "citation":["https://arxiv.org/abs/2601.20335","https://github.com/Blomega/phoneshell/blob/main/FINDINGS.md"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "What is MobileBench-OL's noise-injection subset and how much does it cost an agent?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "MobileBench-OL injects one of four noise types, repeat, unexecuted, delay, or pop-up, with a 20% chance at every step of a task drawn from its Base subset. Its best agent, UI-TARS-1.5-7B, scores 60.97% success rate on the clean Base subset and 56.77% on the noise-injection subset, a drop of 4.20 percentage points. Its Long-Horizon subset falls much further, to 15.00%."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Has phoneshell ever measured how much noise affects its own results?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Not deliberately. phoneshell has never injected a repeat, delay, or pop-up on purpose to measure its effect. What it has measured is natural variance: a day-apart rerun of 144 identical tasks flipped 12 outcomes, 11 of them in the same direction, a result traced to the harness rather than the model but never broken down by which of several possible causes, such as a pop-up, a delayed load, or a duplicated tap, was responsible for any individual flip."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What does MobileBench-OL's reset mechanism do between task attempts?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "It restores device state by running a reliable agent through fine-grained inverse tasks, classified as task-level resets, app-level shared resets such as clearing a cart, no reset needed, or infeasible. This is a deliberate, catalogued reset. phoneshell's own device resets, by contrast, were discovered as a side effect of a session-management bug, not designed as a reset mechanism at all."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#evidence">Evidence</a>
+    <a href="#method">What it means</a>
+    <a href="/blog/">Notes</a>
+    <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-22">22 October 2026</time>
+    <span>9 min read</span>
+  </div>
+  <h1>MobileBench-OL injects noise at a 20% chance per step and costs its best agent 4.2 points; phoneshell's day-apart rerun flipped 12 of 144 outcomes with no noise injected at all</h1>
+  <p class="standfirst">MobileBench-OL manufactures its own interruptions on purpose, at a known rate, so it can name exactly what cost an agent a point. phoneshell's own instability showed up uninvited, in a rerun nobody perturbed, and the harness has no equivalent name for what caused any of its 12 flips.</p>
+
+<p>MobileBench-OL ("A Comprehensive Chinese Benchmark for Evaluating Mobile GUI Agents in Real-World Environment," arXiv:2601.20335), submitted 28 January 2026 and revised the next day, scores 12 GUI agents across five subsets built from 1,080 tasks spanning 80 Chinese apps: Base, Long-Tail, Long-Horizon, GUI-Reasoning, and a fifth subset built around injected noise. That subset takes Base-subset tasks as seeds and, at every step of trajectory generation, injects one of four interruption types with a 20% chance: Repeat (the action fires more than once), Unexecuted (the agent's action is generated but never carried out), Delay (the page stays in a prolonged loading state), or Pop-up ("an unexpected dialog interrupts the workflow, e.g., a permission dialog or an ad"). The paper's best agent on the leaderboard, UI-TARS-1.5-7B, scores a 60.97% success rate on the clean Base subset and 56.77% on the noise-injection subset, a drop of 4.20 percentage points. Its Long-Horizon subset falls far further, to 15.00%, from the same 60.97% baseline, though that is a different stress (task length, not injected interruption) and not the subject here.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/noise-injected-costs-four-points-on-mobilebench-ol-hero.png" alt="Abstract technical illustration on a dark background of a steady signal path running left to right, interrupted at four points by small angular glitch marks of different shapes, each glitch slightly deflecting the path downward before it recovers, with a faint dotted twin path running beside it undisturbed, cool blues and teals with one amber accent on the glitch marks" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="finding">What changed, and when</h2>
+
+<p>MobileBench-OL's contribution is not just another leaderboard; it is a method for making instability reproducible. Its noise is injected deliberately, at a stated 20% per-step probability, drawn from four named categories, so a 4.20-point drop can be attributed to a specific, repeatable intervention rather than to whatever happened to go wrong on a given run. The paper pairs this with a reset mechanism: between task attempts, "a reliable agent" executes fine-grained inverse tasks to restore device state, catalogued as task-level resets (adjusting app state or user data for one task), app-level shared resets (such as "Clear Shopping Cart"), cases needing no reset, and cases marked infeasible.</p>
+
+<p>phoneshell has no equivalent deliberate noise injection anywhere in its 80 tasks or its runner. What it does have is an uninvited natural-variance result: a day-apart rerun of 144 identical task attempts, reported elsewhere on this site, flipped 12 outcomes, 11 of them in the same direction, a pattern traced to the harness rather than to the model being tested. That rerun was never decomposed by cause. Nothing in phoneshell's logs says whether a given flip came from a pop-up, a delayed screen transition, a duplicated tap, or something else entirely, because the harness was not instrumented to tell the four apart, and no one perturbed it on purpose to find out which ones it is even sensitive to.</p>
+
+<h2 id="evidence">Named noise against unnamed noise</h2>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>dimension</th><th>MobileBench-OL</th><th>phoneshell</th><th>source</th></tr></thead>
+  <tbody>
+    <tr><td>noise source</td><td>deliberately injected, 4 named types, 20% chance per step</td><td>naturally occurring, unnamed, not injected</td><td>arXiv:2601.20335; phoneshell FINDINGS.md (rerun result)</td></tr>
+    <tr><td>clean baseline</td><td>Base subset, UI-TARS-1.5-7B: 60.97% SR</td><td>day-1 run, outcome treated as ground truth for comparison</td><td>arXiv:2601.20335 Table 5</td></tr>
+    <tr><td>perturbed result</td><td>Noise-injection subset: 56.77% SR, a 4.20pp drop</td><td>day-apart rerun, 144 attempts: 12 flips, 11 in the same direction</td><td>arXiv:2601.20335 Table 5; phoneshell FINDINGS.md</td></tr>
+    <tr><td>cause attribution</td><td>attributable to one of 4 named noise types by construction</td><td>attributed only to "the harness," not decomposed by cause</td><td>arXiv:2601.20335 Section on noise injection; phoneshell FINDINGS.md</td></tr>
+    <tr><td>reset between attempts</td><td>deliberate, catalogued inverse-task reset of device state</td><td>incidental: a session-creation bug was found to reset foreground app as a side effect</td><td>arXiv:2601.20335; phoneshell/agent session-management notes</td></tr>
+  </tbody>
+</table>
+</div>
+
+<figure>
+<svg viewBox="0 0 900 340" role="img" style="width:100%;height:auto"
+  aria-label="Bar chart comparing UI-TARS-1.5-7B's success rate on MobileBench-OL's clean Base subset, 60.97 percent, against its noise-injection subset, 56.77 percent, a drop of 4.20 percentage points. A third bar shows phoneshell's day-apart rerun result expressed as a flip rate, 12 of 144 outcomes changed, 8.3 percent, with no deliberate noise injected and no breakdown of which of several possible causes produced any individual flip.">
+  <rect x="0" y="0" width="900" height="340" fill="#0f172a"/>
+  <text x="40" y="32" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="16" font-weight="700">Known-cause drop vs unattributed flip rate</text>
+  <g stroke="#1e293b"><line x1="80" y1="56" x2="80" y2="270"/><line x1="80" y1="270" x2="860" y2="270"/></g>
+  <g font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#64748b" text-anchor="end">
+    <text x="72" y="60">70%</text><text x="72" y="163">35%</text><text x="72" y="266">0%</text>
+  </g>
+  <rect x="150" y="76" width="70" height="194" fill="#38bdf8"/><text x="185" y="64" fill="#e2e8f0" font-family="ui-monospace,Menlo,monospace" font-size="12" text-anchor="middle">60.97%</text>
+  <text x="185" y="294" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="11" text-anchor="middle">Base (clean)</text>
+  <rect x="260" y="90" width="70" height="180" fill="#f59e0b"/><text x="295" y="78" fill="#fbbf24" font-family="ui-monospace,Menlo,monospace" font-size="12" text-anchor="middle">56.77%</text>
+  <text x="295" y="294" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="11" text-anchor="middle">Noise-injection</text>
+  <text x="295" y="312" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10">4 named causes</text>
+  <rect x="600" y="245" width="70" height="25" fill="#f472b6"/><text x="635" y="233" fill="#f472b6" font-family="ui-monospace,Menlo,monospace" font-size="12" text-anchor="middle">8.3%</text>
+  <text x="635" y="294" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="11" text-anchor="middle">phoneshell rerun flips</text>
+  <text x="635" y="312" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10">0 named causes, 12 of 144</text>
+  <text x="40" y="332" fill="#64748b" font-family="Montserrat,sans-serif" font-size="10.5">Source: arXiv:2601.20335 Table 5; phoneshell FINDINGS.md rerun result. Different units (a rate drop vs a flip rate), shown together for scale only.</text>
+</svg>
+<figcaption>MobileBench-OL's 4.20-point drop and phoneshell's 8.3% flip rate are not the same measurement, and the chart does not claim they are. The point is that one has four named suspects and the other has none.</figcaption>
+</figure>
+
+<figure>
+<svg viewBox="0 0 860 300" role="img" style="width:100%;height:auto"
+  aria-label="Diagram contrasting two reset designs. MobileBench-OL's reset is a deliberate pipeline: a reliable agent executes inverse tasks, classified as task-level, app-level, not-needed, or infeasible, restoring device state before the next attempt. phoneshell's reset was discovered as an accident: creating a WebDriverAgent session with no bundle id switches the foreground app to the home screen as an unintended side effect, which was later found to be closing whatever the agent had just opened.">
+  <rect x="0" y="0" width="860" height="300" fill="#0f172a"/>
+  <text x="30" y="30" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="15" font-weight="700">A reset that was designed, and a reset that was found</text>
+
+  <text x="30" y="60" fill="#38bdf8" font-family="Montserrat,sans-serif" font-size="12.5" font-weight="700">MobileBench-OL: deliberate reset</text>
+  <rect x="30" y="72" width="170" height="48" rx="8" fill="#1e293b" stroke="#334155"/><text x="40" y="92" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="10.5">reliable agent runs</text><text x="40" y="108" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10">inverse tasks</text>
+  <rect x="230" y="72" width="170" height="48" rx="8" fill="#1e293b" stroke="#334155"/><text x="240" y="92" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="10.5">classified reset type</text><text x="240" y="108" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10">task / app / none / infeasible</text>
+  <rect x="430" y="72" width="170" height="48" rx="8" fill="#262d3d" stroke="#34d399"/><text x="440" y="92" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="10.5">device state restored</text><text x="440" y="108" fill="#34d399" font-family="Montserrat,sans-serif" font-size="10">before next attempt</text>
+  <g stroke="#475569" stroke-width="1.5"><line x1="200" y1="96" x2="230" y2="96"/><line x1="400" y1="96" x2="430" y2="96"/></g>
+
+  <line x1="30" y1="150" x2="830" y2="150" stroke="#334155"/>
+
+  <text x="30" y="180" fill="#f59e0b" font-family="Montserrat,sans-serif" font-size="12.5" font-weight="700">phoneshell: accidental reset</text>
+  <rect x="30" y="192" width="190" height="48" rx="8" fill="#1e293b" stroke="#334155"/><text x="40" y="212" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="10.5">session created, no bundle id</text>
+  <rect x="250" y="192" width="190" height="48" rx="8" fill="#1e293b" stroke="#334155"/><text x="260" y="212" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="10.5">WDA switches foreground app</text>
+  <rect x="470" y="192" width="190" height="48" rx="8" fill="#3a2a10" stroke="#f59e0b"/><text x="480" y="212" fill="#fbbf24" font-family="Montserrat,sans-serif" font-size="10.5">whatever was open, closes</text><text x="480" y="228" fill="#fbbf24" font-family="Montserrat,sans-serif" font-size="10">found as a bug, not built as a feature</text>
+  <g stroke="#475569" stroke-width="1.5"><line x1="220" y1="216" x2="250" y2="216"/><line x1="440" y1="216" x2="470" y2="216"/></g>
+
+  <text x="30" y="280" fill="#64748b" font-family="Montserrat,sans-serif" font-size="10.5">Source: arXiv:2601.20335 reset-mechanism description; phoneshell session-management findings.</text>
+</svg>
+<figcaption>Both systems reset device state between attempts. One designed that reset as a measured instrument. The other tripped over it while debugging something else.</figcaption>
+</figure>
+
+<h2 id="method">What it means for someone building or reading about these agents</h2>
+
+<p>MobileBench-OL's contribution here is the decomposition, not the headline drop. A 4.20-point fall from noise is a modest number by itself, smaller than many step-budget or vision-channel effects reported elsewhere on this site, but it comes with an answer to "which noise": Repeat, Unexecuted, Delay, or Pop-up, each with a known injection rate. That is a different, and in some ways more useful, kind of result than a larger but unexplained drop, because it tells an engineer which failure mode to harden against first.</p>
+
+<p>phoneshell's 12-of-144 flip rate has never had that treatment. The result as published says the cause is "the harness," which is already more honest than blaming the model, but it stops one level short of naming which harness behavior: a popup the task did not expect, a load that took longer on the second day, a duplicated tap from a retry, or something the current instrumentation cannot see at all. Until phoneshell's own rerun logs are categorized the way MobileBench-OL's injected noise is, by type and by step, "the harness did it" is phoneshell's version of MobileBench-OL's four named categories collapsed into one, and that collapse is a measurable gap in what the harness currently reports about its own instability.</p>
+
+<ul>
+  <li>A benchmark that injects noise on purpose can quantify exactly how much of its own instability comes from a specific, named cause. A benchmark that only observes natural variance, as phoneshell currently does, can report that instability exists without being able to say how much of it any single intervention would fix.</li>
+  <li>MobileBench-OL's four noise types, repeat, unexecuted, delay, and pop-up, are a ready-made checklist for auditing any rerun discrepancy on another harness. phoneshell's own 12 flips have never been checked against that specific list.</li>
+  <li>A deliberate, catalogued reset (MobileBench-OL's inverse-task design) is a different kind of asset than a reset discovered as a side effect of a bug (phoneshell's session-creation finding). The first is built to be trusted; the second was found because it was not.</li>
+</ul>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># MobileBench-OL's Table 5, per-subset scores for all 12 agents
+curl -s https://arxiv.org/html/2601.20335v2 | grep -iE "60\.97|56\.77"
+
+git clone https://github.com/Blomega/phoneshell && cd phoneshell
+grep -n "Found in the first three runs of 120" FINDINGS.md   # phoneshell's own natural-noise catches
+grep -n "## 6. Session management" -A5 FINDINGS.md           # the accidental reset
+# phoneshell's day-apart rerun result (12 of 144 flips) is reported in this site's
+# own VenusBench-Mobile comparison article; it has no per-cause breakdown to grep for,
+# which is exactly the gap this article is pointing at.</code></pre>
+
+<h2 id="falsify">What would prove this wrong</h2>
+
+<ul>
+  <li>We predict that if phoneshell's rerun logs were re-examined against MobileBench-OL's four noise categories, pop-up interruptions (confirm sheets, permission dialogs, promo overlays, already catalogued in <code>phoneshell/agent/playbook.py</code>) would account for more of the 12 flips than delay or repeat, because phoneshell's own overlay catalogue is larger and better understood than its handling of slow loads or duplicated taps. This is untested as of this writing and falsifiable by whoever runs the categorization, through 31 December 2027.</li>
+  <li>We claim phoneshell has never deliberately injected noise to measure its effect. That is wrong the moment a future experiment adds a scripted delay, duplicated tap, or forced pop-up to a subset of its 80 tasks and reports a before-and-after score, the same design MobileBench-OL already ran.</li>
+</ul>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ol>
+      <li>Wu, Yang, Li, Gao, Liu, Luan, "MobileBench-OL: A Comprehensive Chinese Benchmark for Evaluating Mobile GUI Agents in Real-World Environment," <a href="https://arxiv.org/abs/2601.20335">arXiv:2601.20335</a>, v1 28 January 2026, v2 29 January 2026.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell/blob/main/FINDINGS.md">FINDINGS.md</a>, sections 5 and 6 (overlay catalogue and session management), and the day-apart rerun result, read 22 October 2026.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell/blob/main/phoneshell/agent/playbook.py">phoneshell/agent/playbook.py</a>, read 22 October 2026.</li>
+    </ol>
+  </section>
+</article>
+</div>
+</body></html>
