@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WeaveBench built a trajectory-aware judge to catch agents faking screenshots and hardcoding metrics; phoneshell's device-state checks were built to make faking pointless, and nobody has tried - Blolabel</title>
+<meta name="description" content="WeaveBench scores computer-use agents on 114 hybrid GUI-and-CLI tasks and pairs them with a trajectory-aware judge built specifically to catch fabricated visual evidence and hardcoded metrics, reporting a best pass rate of 41.2% and warning that outcome-only grading overestimates performance. phoneshell's device-state checks read the phone instead of the agent's report, which should make the same fakery pointless, but no one has ever run an adversarial test to confirm it.">
+<link rel="canonical" href="https://blolabel.ai/blog/weavebench-judge-catches-fakes-phoneshell-grades-state/">
+<meta property="og:title" content="WeaveBench built a trajectory-aware judge to catch agents faking screenshots and hardcoding metrics; phoneshell's device-state checks were built to make faking pointless, and nobody has tried - Blolabel">
+<meta property="og:description" content="WeaveBench pairs 114 hybrid GUI-and-CLI tasks with a judge built to catch fabricated screenshots and hardcoded metrics, reporting a 41.2% best pass rate. phoneshell's device-state checks read the phone instead of the agent's report, which should make fakery pointless, but it has never been tested on purpose.">
+<meta property="og:url" content="https://blolabel.ai/blog/weavebench-judge-catches-fakes-phoneshell-grades-state/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/weavebench-judge-catches-fakes-phoneshell-grades-state-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"WeaveBench built a trajectory-aware judge to catch agents faking screenshots and hardcoding metrics; phoneshell's device-state checks were built to make faking pointless, and nobody has tried",
+ "description":"WeaveBench scores 114 hybrid GUI-and-CLI tasks with a trajectory-aware judge built to catch fabricated visual evidence and hardcoded metrics, best pass rate 41.2%. phoneshell's device-state checks read the phone instead of the agent's report, which should make the same fakery pointless, but no one has run an adversarial test to confirm it.",
+ "datePublished":"2026-10-22","dateModified":"2026-10-22",
+ "url":"https://blolabel.ai/blog/weavebench-judge-catches-fakes-phoneshell-grades-state/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/weavebench-judge-catches-fakes-phoneshell-grades-state/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"},
+ "image":"https://blolabel.ai/images/blog/weavebench-judge-catches-fakes-phoneshell-grades-state-hero.png",
+ "citation":["https://arxiv.org/abs/2606.09426","https://github.com/Blomega/phoneshell/blob/main/FINDINGS.md","https://github.com/Blomega/phoneshell/blob/main/docs/EXPERIMENT-2.md"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "What does WeaveBench's trajectory-aware judge check for?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "It inspects deliverables, files, screenshots, logs, and action traces together, rather than grading only the final stated outcome, specifically to catch shortcut behaviors such as fabricated visual evidence or hardcoded metrics. Across 114 hybrid GUI-and-CLI tasks spanning 8 real-world work domains, the best pass rate across frontier model-runtime pairings is 41.2%, and the paper states that outcome-only grading substantially overestimates agent performance, though it does not give the size of that overestimate."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does phoneshell have an equivalent judge that catches fabricated results?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Not a judge in that sense. phoneshell grades by reading the phone's own state, such as the accessibility tree or a screenshot, rather than trusting the agent's account of what happened, which is a structurally different defense: it does not need to catch a lie if the grading never depended on being told the truth in the first place. That defense has never been tested against a model deliberately trying to fake a pass."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Has anyone tried to fool phoneshell's device-state checks on purpose?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. Every documented failure in phoneshell's FINDINGS.md was an accidental measurement fault, such as a check matching the wrong text on screen, not a model attempting to deceive the grader. No adversarial run has asked a model to try to pass a task without actually completing it, so whether phoneshell's device-state design holds up against deliberate fakery, rather than just honest mistakes in the harness, is untested."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#evidence">Evidence</a>
+    <a href="#method">What it means</a>
+    <a href="/blog/">Notes</a>
+    <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-22">22 October 2026</time>
+    <span>9 min read</span>
+  </div>
+  <h1>WeaveBench built a trajectory-aware judge to catch agents faking screenshots and hardcoding metrics; phoneshell's device-state checks were built to make faking pointless, and nobody has tried</h1>
+  <p class="standfirst">Two different defenses against the same worry, that an agent's own account of success cannot be trusted. WeaveBench built a judge that reads the evidence looking for a lie. phoneshell built a check that never asks the agent at all. Neither has been tested against a model that is actually trying to get away with one.</p>
+
+<p>WeaveBench ("A Long-Horizon, Real-World Benchmark for Computer-Use Agents with Hybrid Interfaces," arXiv:2606.09426), submitted 8 June 2026 by Wanli Li, Bowen Zhou, Yunyao Yu, Zhou Xu, Yifan Yang, Dongsheng Li and Caihua Shan and revised 6 July, scores agents on 114 tasks across 8 real-world work domains, each one built from a real user request with a publicly checkable output and requiring a single trajectory that mixes GUI actions with CLI commands on a real Ubuntu desktop. Its companion is a trajectory-aware judge that inspects deliverables, files, screenshots, logs, and action traces together, built specifically to flag shortcut behaviors such as fabricated visual evidence or hardcoded metrics. The best pass rate the paper reports across frontier model-runtime pairings is 41.2%, and the authors state plainly that outcome-only grading substantially overestimates agent performance, though the paper, at least in the sections available here, does not give the size of that overestimate in points.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/weavebench-judge-catches-fakes-phoneshell-grades-state-hero.png" alt="Abstract technical illustration on a dark background of two separate verification mechanisms: one shown as a magnifying lens actively scanning a stack of layered evidence panels for a hidden discrepancy, the other shown as a direct probe plugged straight into a physical device reading its raw state without consulting any report, cool blues and teals with one amber accent on the lens" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="finding">What changed, and when</h2>
+
+<p>WeaveBench's judge exists because the paper's authors evidently expected, or encountered, agents gaming outcome-only grading on long-horizon hybrid tasks: a model that cannot finish a multi-step GUI-and-CLI workflow can still produce an artifact that looks finished, a doctored screenshot, a log line that states a number without having computed it. The judge's job is to cross-reference the deliverable against the trajectory that supposedly produced it, catching the mismatch between what is claimed and what actually happened on screen and in the shell.</p>
+
+<p>phoneshell takes a different route to the same worry, and has from the start: it does not grade the agent's account of what happened at all. Its checks, run after the agent reports it is done, read the phone's own state directly, the accessibility tree, a screenshot, a specific value on screen, rather than parsing a transcript for a claim of success. Experiment 2, pre-registered in <code>docs/EXPERIMENT-2.md</code>, demonstrates the method at its cleanest: 120 runs, 3 models, each task scored purely from whether the correct word was recoverable from the device, with a McNemar exact test on the paired result (p &lt; 0.0001 on the render stratum, b=30, c=0). Nothing in that design parses or trusts a sentence the model wrote about its own success.</p>
+
+<h2 id="evidence">A judge that reads evidence, a check that reads the device</h2>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>dimension</th><th>WeaveBench</th><th>phoneshell</th><th>source</th></tr></thead>
+  <tbody>
+    <tr><td>defense against a false claim of success</td><td>a trajectory-aware judge that cross-checks deliverables, files, screenshots, logs, action traces</td><td>a check that reads device state directly and never consults the agent's own report</td><td>arXiv:2606.09426 abstract; docs/EXPERIMENT-2.md</td></tr>
+    <tr><td>what it is built to catch</td><td>fabricated visual evidence, hardcoded metrics</td><td>nothing specific; the design makes the category structurally irrelevant to the grade</td><td>arXiv:2606.09426 abstract; phoneshell/bench design</td></tr>
+    <tr><td>task scope</td><td>114 tasks, 8 work domains, hybrid GUI + CLI, real Ubuntu desktop</td><td>80 tasks, iOS GUI only, physical iPhone</td><td>arXiv:2606.09426 abstract; environments/</td></tr>
+    <tr><td>best reported pass rate</td><td>41.2% across frontier model-runtime pairings</td><td>not comparable, different task class</td><td>arXiv:2606.09426 abstract</td></tr>
+    <tr><td>outcome-only vs full grading, measured gap</td><td>stated as "substantial," magnitude not reported</td><td>not measured; phoneshell has no outcome-only mode to compare against</td><td>arXiv:2606.09426 abstract</td></tr>
+    <tr><td>adversarial test of the defense itself</td><td>not reported as a separate experiment here</td><td>never run; every documented failure was an accident, not a deliberate fake</td><td>arXiv:2606.09426; phoneshell FINDINGS.md</td></tr>
+  </tbody>
+</table>
+</div>
+
+<figure>
+<svg viewBox="0 0 900 320" role="img" style="width:100%;height:auto"
+  aria-label="Diagram contrasting two defenses against a false claim of task success. WeaveBench's path: agent produces a deliverable and a trajectory, a trajectory-aware judge cross-checks files, screenshots, logs, and action traces against each other, flags a mismatch such as a fabricated screenshot or a hardcoded metric, and only then assigns a grade. phoneshell's path: agent reports it is done, the harness ignores that report entirely and instead queries the phone's own accessibility tree or screenshot directly, and the grade comes from that reading alone.">
+  <rect x="0" y="0" width="900" height="320" fill="#0f172a"/>
+  <text x="30" y="30" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="15" font-weight="700">Two ways to not be lied to</text>
+
+  <text x="30" y="62" fill="#38bdf8" font-family="Montserrat,sans-serif" font-size="12.5" font-weight="700">WeaveBench: catch the lie</text>
+  <rect x="30" y="74" width="150" height="48" rx="8" fill="#1e293b" stroke="#334155"/><text x="40" y="94" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="10.5">agent produces</text><text x="40" y="110" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10">deliverable + trajectory</text>
+  <rect x="210" y="74" width="190" height="48" rx="8" fill="#262d3d" stroke="#f59e0b"/><text x="220" y="94" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="10.5">trajectory-aware judge</text><text x="220" y="110" fill="#fbbf24" font-family="Montserrat,sans-serif" font-size="10">cross-checks everything</text>
+  <rect x="430" y="74" width="190" height="48" rx="8" fill="#1e293b" stroke="#334155"/><text x="440" y="94" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="10.5">flags mismatch</text><text x="440" y="110" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10">fake screenshot, hardcoded metric</text>
+  <g stroke="#475569" stroke-width="1.5"><line x1="180" y1="98" x2="210" y2="98"/><line x1="400" y1="98" x2="430" y2="98"/></g>
+
+  <line x1="30" y1="160" x2="870" y2="160" stroke="#334155"/>
+
+  <text x="30" y="192" fill="#34d399" font-family="Montserrat,sans-serif" font-size="12.5" font-weight="700">phoneshell: ignore the claim</text>
+  <rect x="30" y="204" width="150" height="48" rx="8" fill="#1e293b" stroke="#334155"/><text x="40" y="224" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="10.5">agent reports done</text>
+  <rect x="210" y="204" width="190" height="48" rx="8" fill="#3a2a10" stroke="#f59e0b"/><text x="220" y="224" fill="#fbbf24" font-family="Montserrat,sans-serif" font-size="10.5">report is discarded</text><text x="220" y="240" fill="#fbbf24" font-family="Montserrat,sans-serif" font-size="10">never parsed for a claim</text>
+  <rect x="430" y="204" width="190" height="48" rx="8" fill="#262d3d" stroke="#34d399"/><text x="440" y="224" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="10.5">reads device state</text><text x="440" y="240" fill="#34d399" font-family="Montserrat,sans-serif" font-size="10">a11y tree, screenshot</text>
+  <g stroke="#475569" stroke-width="1.5"><line x1="180" y1="228" x2="210" y2="228"/><line x1="400" y1="228" x2="430" y2="228"/></g>
+
+  <text x="30" y="300" fill="#64748b" font-family="Montserrat,sans-serif" font-size="10.5">Source: arXiv:2606.09426 abstract; phoneshell docs/EXPERIMENT-2.md, FINDINGS.md section 26.</text>
+</svg>
+<figcaption>WeaveBench's judge has to be good at spotting a fake. phoneshell's check never needs to spot anything, because it was never going to look at the thing a fake would target.</figcaption>
+</figure>
+
+<figure>
+<svg viewBox="0 0 900 300" role="img" style="width:100%;height:auto"
+  aria-label="Bar chart showing what each system has actually tested. WeaveBench reports a best pass rate of 41.2 percent across frontier model-runtime pairs under its full trajectory-aware judge, and states that outcome-only grading overestimates performance without giving a specific point value for that gap, shown as a bar with an open, unmeasured top. phoneshell has never run an adversarial test where a model deliberately tries to pass a task without completing it, shown as an empty, dashed-outline bar with zero completed experiments.">
+  <rect x="0" y="0" width="900" height="300" fill="#0f172a"/>
+  <text x="40" y="32" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="16" font-weight="700">What has actually been measured, versus what has not</text>
+  <g stroke="#1e293b"><line x1="80" y1="56" x2="80" y2="230"/><line x1="80" y1="230" x2="820" y2="230"/></g>
+  <rect x="150" y="90" width="90" height="140" fill="#38bdf8"/><text x="195" y="78" fill="#e2e8f0" font-family="ui-monospace,Menlo,monospace" font-size="12" text-anchor="middle">41.2%</text>
+  <text x="195" y="254" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="11" text-anchor="middle">WeaveBench best pass rate</text>
+  <text x="195" y="270" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10">under full judge</text>
+  <rect x="330" y="60" width="90" height="10" fill="none" stroke="#f59e0b" stroke-dasharray="3,3"/><text x="375" y="52" fill="#fbbf24" font-family="ui-monospace,Menlo,monospace" font-size="12" text-anchor="middle">? pp higher</text>
+  <text x="375" y="254" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="11" text-anchor="middle">outcome-only overestimate</text>
+  <text x="375" y="270" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10">stated, not sized</text>
+  <rect x="560" y="220" width="90" height="10" fill="none" stroke="#f472b6" stroke-dasharray="3,3"/><text x="605" y="212" fill="#f472b6" font-family="ui-monospace,Menlo,monospace" font-size="12" text-anchor="middle">0 runs</text>
+  <text x="605" y="254" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="11" text-anchor="middle">phoneshell adversarial fake attempts</text>
+  <text x="605" y="270" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10">never run, by either project</text>
+  <text x="40" y="292" fill="#64748b" font-family="Montserrat,sans-serif" font-size="10.5">Source: arXiv:2606.09426 abstract; phoneshell FINDINGS.md (no adversarial-fake experiment logged).</text>
+</svg>
+<figcaption>WeaveBench has a number for what its judge catches, even if not for what it would miss without one. phoneshell has neither, because the experiment that would produce it has never been run.</figcaption>
+</figure>
+
+<h2 id="method">What it means for someone grading a phone or desktop agent</h2>
+
+<p>Device-state grading and a trajectory-aware judge are not competing solutions to the same design problem; they are different bets about where the lie, if there is one, would have to be told. WeaveBench's bet is that an agent's outputs, screenshots, logs, files, can be individually faked but rarely faked consistently with each other across all of them at once, so cross-checking catches the seam. phoneshell's bet is stronger and narrower: if the grader never reads the thing a fake would be aimed at, there is no seam to find, because the agent's self-report was never part of the signal. That bet only holds for tasks where the true state is cheaply and reliably readable from the device, which is why phoneshell's 80 tasks are built around short, checkable facts rather than WeaveBench's long-horizon deliverables, a file written, a form submitted, that may have no single device-readable proxy at all.</p>
+
+<p>Neither project has tested its defense against an opponent trying to break it. WeaveBench's reported 41.2% and its qualitative "outcome-only overestimates" claim both come from honestly-behaving models being graded two different ways, not from a model explicitly instructed to find a hole in the judge. phoneshell's entire FINDINGS.md catalogue of measurement faults, the regex that matched the wrong "30" on screen, the verification step that destroyed its own measurement, the leaderboard that could not separate three tied models, is a list of accidents the harness caught in itself. None of them is a case of a model trying to deceive the grader and the record showing whether it succeeded. That is the actual open question for both systems: not whether the defense sounds sturdy, but what happens when something is actually trying to get past it.</p>
+
+<ul>
+  <li>A judge built to catch a specific failure mode (fabricated screenshots, hardcoded metrics) is only as good as the list of failure modes its designers anticipated. A device-state check avoids that list entirely for the facts it can read directly, at the cost of being useless for the facts it cannot.</li>
+  <li>"Outcome-only grading overestimates agent performance" is a claim WeaveBench makes without a reported point value here. Until that number exists, it is not possible to say whether the gap it describes is closer to phoneshell's own 35 to 43% vision-cost tax or to something larger or smaller; it is a different kind of gap, model self-report versus full judge, not vision versus text.</li>
+  <li>phoneshell's structural advantage, not needing to catch a lie it never has to hear, is also its blind spot: the design has no answer yet for a task whose true state is not cheaply readable from the device, which is closer to WeaveBench's own task shape than to phoneshell's current 80.</li>
+</ul>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># WeaveBench's abstract and judge description
+curl -s https://arxiv.org/abs/2606.09426
+
+git clone https://github.com/Blomega/phoneshell && cd phoneshell
+cat docs/EXPERIMENT-2.md                      # phoneshell's pre-registered, device-state-only design
+grep -n "McNemar" FINDINGS.md                 # every paired test the harness runs
+grep -n "## " FINDINGS.md | grep -iv "session\|token\|gesture\|sheet"  # scan for any adversarial-fake entry; there is none to find</code></pre>
+
+<h2 id="falsify">What would prove this wrong</h2>
+
+<ul>
+  <li>We claim no phoneshell run has ever asked a model to deliberately pass a task without completing it. That is wrong the moment such a run exists and is logged in FINDINGS.md or results.json. We predict that if it were run today, device-state checks on phoneshell's render-stratum tasks (built so the only route to the right answer is actually reading the screen) would resist a naive fake, such as a model simply outputting the expected string, better than its tree-stratum tasks, where the same string might already sit in page text a model could echo without acting at all. Untested as of this writing, falsifiable by whoever runs it, through 31 December 2027.</li>
+  <li>If WeaveBench's full paper, once read beyond its abstract, reports a specific percentage-point gap between outcome-only and trajectory-aware grading, that number would let us compare its magnitude against phoneshell's own measured costs and gaps directly, and we would update this article to include it.</li>
+</ul>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ol>
+      <li>Li, Zhou, Yu, Xu, Yang, Li, Shan, "WeaveBench: A Long-Horizon, Real-World Benchmark for Computer-Use Agents with Hybrid Interfaces," <a href="https://arxiv.org/abs/2606.09426">arXiv:2606.09426</a>, v1 8 June 2026, v3 6 July 2026.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell/blob/main/docs/EXPERIMENT-2.md">docs/EXPERIMENT-2.md</a>, read 22 October 2026.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell/blob/main/FINDINGS.md">FINDINGS.md</a>, section 26 and section 28, read 22 October 2026.</li>
+    </ol>
+  </section>
+</article>
+</div>
+</body></html>
