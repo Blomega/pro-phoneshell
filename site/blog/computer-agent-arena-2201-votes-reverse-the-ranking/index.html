@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Computer Agent Arena's 2,201 human votes reverse agent rankings that static benchmarks report; phoneshell's own static leaderboard failed a different way, it could not separate three models at all - Blolabel</title>
+<meta name="description" content="Computer Agent Arena, an ICLR 2026 platform, collects 2,201 human votes over 12 computer-use agents and reports striking ranking reversals against static benchmarks, driven mainly by overall correctness plus agent-human interaction and self-correction. phoneshell's own static leaderboard failed differently: a McNemar analysis found three of six models statistically tied, with no size of sweep able to separate them. Confidently wrong and confidently empty are two separate ways a leaderboard can mislead.">
+<link rel="canonical" href="https://blolabel.ai/blog/computer-agent-arena-2201-votes-reverse-the-ranking/">
+<meta property="og:title" content="Computer Agent Arena's 2,201 human votes reverse agent rankings that static benchmarks report; phoneshell's own static leaderboard failed a different way, it could not separate three models at all - Blolabel">
+<meta property="og:description" content="Computer Agent Arena's 2,201 human votes over 12 agents report ranking reversals against static benchmarks. phoneshell's own static leaderboard failed a different way: McNemar found three of six models statistically tied, with no sweep size able to separate them.">
+<meta property="og:url" content="https://blolabel.ai/blog/computer-agent-arena-2201-votes-reverse-the-ranking/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/computer-agent-arena-2201-votes-reverse-the-ranking-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"Computer Agent Arena's 2,201 human votes reverse agent rankings that static benchmarks report; phoneshell's own static leaderboard failed a different way, it could not separate three models at all",
+ "description":"Computer Agent Arena, an ICLR 2026 platform, collects 2,201 human votes over 12 computer-use agents and reports ranking reversals against static benchmarks. phoneshell's own static leaderboard failed differently: McNemar found three of six models statistically tied, with no size of sweep able to separate them.",
+ "datePublished":"2026-10-22","dateModified":"2026-10-22",
+ "url":"https://blolabel.ai/blog/computer-agent-arena-2201-votes-reverse-the-ranking/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/computer-agent-arena-2201-votes-reverse-the-ranking/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"},
+ "image":"https://blolabel.ai/images/blog/computer-agent-arena-2201-votes-reverse-the-ranking-hero.png",
+ "citation":["https://proceedings.iclr.cc/paper_files/paper/2026/hash/5f1d328711b162e1cf9896c7d6aaecdd-Abstract-Conference.html","https://github.com/Blomega/phoneshell/blob/main/FINDINGS.md","https://github.com/Blomega/phoneshell/blob/main/phoneshell/bench/stats.py"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "What did Computer Agent Arena find about static benchmark rankings?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Across 2,201 human votes collected over 12 computer-use agents running head-to-head in matched cloud environments, the ICLR 2026 paper reports striking ranking reversals relative to static benchmarks. Overall correctness mainly drives human preference, but agent-human interaction and self-correction also raise preference even when task completion is similar, and the platform's error analysis surfaces agent behavior failures, long-horizon memory failures and fine-grained action failures, that static benchmarks do not evaluate."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Did phoneshell's own leaderboard have a similar ranking problem?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "A related but different problem. A McNemar analysis of phoneshell's own six-model leaderboard found that three of the six models were statistically tied: each model's wins against the other two were exactly symmetric, so no amount of added tasks could separate them. That is not a reversed ranking, it is an absent one. Computer Agent Arena's benchmarks disagreed with its human-preference results; phoneshell's benchmark could not produce a result confident enough to disagree with anything."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Has phoneshell ever tested whether its device-state grades would reverse under human preference, the way Computer Agent Arena found for static benchmarks?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. phoneshell has never collected a human preference vote on any of its runs. Its grading is built to avoid relying on an agent's self-report, but Computer Agent Arena's result is about something else: whether the thing being graded, task completion, is even the property a human user would care most about. That comparison, device-state score against human preference on the same tasks, has not been run."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#evidence">Evidence</a>
+    <a href="#method">What it means</a>
+    <a href="/blog/">Notes</a>
+    <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-22">22 October 2026</time>
+    <span>9 min read</span>
+  </div>
+  <h1>Computer Agent Arena's 2,201 human votes reverse agent rankings that static benchmarks report; phoneshell's own static leaderboard failed a different way, it could not separate three models at all</h1>
+  <p class="standfirst">A leaderboard can mislead in two different directions. It can confidently rank agents in an order a human user would reverse, which is what Computer Agent Arena measured. Or it can confidently fail to rank them at all, which is what a McNemar analysis found on phoneshell's own six-model board. Neither failure looks like the other from the outside.</p>
+
+<p>Computer Agent Arena ("Toward Human-Centric Evaluation and Analysis of Computer-Use Agents," ICLR 2026, presented 23 to 25 April 2026 in Rio de Janeiro) is an open-source platform, built by a 19-author team including Bowen Wang, Tao Yu, Victor Zhong, Yi Zhang, Diyi Yang and Ion Stoica, that runs two anonymized agents head-to-head in matched, controlled cloud environments and collects human preference votes rather than relying on a fixed task-completion script. Across 2,201 high-quality votes over 12 agents, the paper reports "striking ranking reversals relative to static benchmarks." Overall correctness mainly drives human preference, but the authors find that agent-human interaction and self-correction also raise a user's preference even when overall task completion looks similar, and their error analysis names failure categories, long-horizon memory failures and fine-grained action failures among them, that the authors say static benchmarks do not evaluate.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/computer-agent-arena-2201-votes-reverse-the-ranking-hero.png" alt="Abstract technical illustration on a dark background of two separate ranking panels side by side: the left panel shows a sorted vertical list of markers with two positions swapped and highlighted, representing a reversed ranking; the right panel shows the same kind of vertical list but with three markers fused into one indistinguishable band, representing an absent ranking, cool blues and teals with one amber accent on the swap and one on the fused band" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="finding">What changed, and when</h2>
+
+<p>Computer Agent Arena's critique of static benchmarks is about validity: a benchmark can produce a confident, statistically clean ranking that still does not match what a human user, watching the same agents work, would actually prefer. Its fix is to go get that preference directly, at scale, rather than assume task completion alone captures it. The platform and its 2,201-vote dataset are reported as open-sourced alongside the paper.</p>
+
+<p>phoneshell's own leaderboard failure, documented in FINDINGS.md section 28, is about statistical power, a different axis entirely. Six models ran the identical 24-task public suite, a paired design, and a McNemar analysis of the pairwise disagreements found that three of the six, Claude Opus 4.8, GPT-5.1 and Qwen3-Max, were exactly symmetric: each won the same two tasks the other two lost. The published board had shown an 83.3% tie between them as if it were a ranking; the correct read is that the instrument could not tell them apart, and no size of sweep would change that, because there was nothing in the disagreement pattern left to scale. McNemar needs six one-directional disagreements to reach p &lt; 0.05 regardless of sample size, and these three pairs never had more than two.</p>
+
+<h2 id="evidence">Reversed versus absent</h2>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>dimension</th><th>Computer Agent Arena</th><th>phoneshell</th><th>source</th></tr></thead>
+  <tbody>
+    <tr><td>what the static benchmark produced</td><td>a confident ranking</td><td>a confident-looking sorted list, actually unranked for 3 of 6 models</td><td>proceedings.iclr.cc abstract; FINDINGS.md section 28</td></tr>
+    <tr><td>what the alternative measurement found</td><td>2,201 human votes reverse that ranking for several agent pairs</td><td>a McNemar exact test on the same data finds no significant separation to reverse</td><td>proceedings.iclr.cc abstract; FINDINGS.md section 28</td></tr>
+    <tr><td>nature of the failure</td><td>validity: the ranked property is not what users prefer</td><td>power: the task set cannot statistically separate some models at any size</td><td>proceedings.iclr.cc abstract; FINDINGS.md section 28</td></tr>
+    <tr><td>scale of evidence</td><td>2,201 votes, 12 agents</td><td>24 to 58 tasks, 6 models, 15 pairwise tests</td><td>proceedings.iclr.cc abstract; FINDINGS.md section 28</td></tr>
+    <tr><td>fix applied</td><td>a new, open-sourced human-preference platform</td><td>Wilson intervals, McNemar's exact test, and a power calculation added to every published board</td><td>proceedings.iclr.cc abstract; phoneshell/bench/stats.py</td></tr>
+    <tr><td>cross-check between the two failure modes</td><td>not reported, not phoneshell's data</td><td>never run: no human-preference vote has been collected on any phoneshell task</td><td>FINDINGS.md; not applicable to arXiv/ICLR source</td></tr>
+  </tbody>
+</table>
+</div>
+
+<figure>
+<svg viewBox="0 0 900 340" role="img" style="width:100%;height:auto"
+  aria-label="Two side-by-side panels. The left panel shows Computer Agent Arena's finding: a static benchmark ranks three agents as first, second, third, while 2,201 human votes rank the same three agents in a different order, with two positions swapped, illustrating a ranking reversal. The right panel shows phoneshell's finding: a static leaderboard lists six models with distinct-looking percentages, while a McNemar test reveals that three of those six are statistically indistinguishable, collapsing into one tied band regardless of how many more tasks are added.">
+  <rect x="0" y="0" width="900" height="340" fill="#0f172a"/>
+  <text x="30" y="30" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="15" font-weight="700">Two different ways a leaderboard stops meaning what it says</text>
+
+  <text x="30" y="62" fill="#38bdf8" font-family="Montserrat,sans-serif" font-size="12.5" font-weight="700">Computer Agent Arena: reversed</text>
+  <text x="30" y="90" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10.5">static benchmark order</text>
+  <rect x="30" y="98" width="200" height="22" fill="#1e293b" stroke="#334155"/><text x="40" y="113" fill="#e2e8f0" font-family="ui-monospace,Menlo,monospace" font-size="10">1. Agent A</text>
+  <rect x="30" y="124" width="200" height="22" fill="#1e293b" stroke="#334155"/><text x="40" y="139" fill="#e2e8f0" font-family="ui-monospace,Menlo,monospace" font-size="10">2. Agent B</text>
+  <rect x="30" y="150" width="200" height="22" fill="#1e293b" stroke="#334155"/><text x="40" y="165" fill="#e2e8f0" font-family="ui-monospace,Menlo,monospace" font-size="10">3. Agent C</text>
+  <text x="270" y="90" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10.5">2,201-vote order</text>
+  <rect x="270" y="98" width="200" height="22" fill="#262d3d" stroke="#f59e0b"/><text x="280" y="113" fill="#fbbf24" font-family="ui-monospace,Menlo,monospace" font-size="10">1. Agent B</text>
+  <rect x="270" y="124" width="200" height="22" fill="#262d3d" stroke="#f59e0b"/><text x="280" y="139" fill="#fbbf24" font-family="ui-monospace,Menlo,monospace" font-size="10">2. Agent A</text>
+  <rect x="270" y="150" width="200" height="22" fill="#1e293b" stroke="#334155"/><text x="280" y="165" fill="#e2e8f0" font-family="ui-monospace,Menlo,monospace" font-size="10">3. Agent C</text>
+  <text x="30" y="195" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10">A and B swap. The order exists on both sides; it disagrees.</text>
+
+  <line x1="30" y1="225" x2="870" y2="225" stroke="#334155"/>
+
+  <text x="30" y="255" fill="#34d399" font-family="Montserrat,sans-serif" font-size="12.5" font-weight="700">phoneshell: absent</text>
+  <text x="30" y="283" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10.5">published board, sorted</text>
+  <rect x="30" y="291" width="140" height="20" fill="#1e293b" stroke="#334155"/><text x="36" y="305" fill="#e2e8f0" font-family="ui-monospace,Menlo,monospace" font-size="9.5">Opus 4.8  91.4%</text>
+  <rect x="180" y="291" width="140" height="20" fill="#1e293b" stroke="#334155"/><text x="186" y="305" fill="#e2e8f0" font-family="ui-monospace,Menlo,monospace" font-size="9.5">GPT-5.1   91.4%</text>
+  <rect x="330" y="291" width="140" height="20" fill="#1e293b" stroke="#334155"/><text x="336" y="305" fill="#e2e8f0" font-family="ui-monospace,Menlo,monospace" font-size="9.5">Qwen3-Max 89.7%</text>
+  <rect x="500" y="282" width="330" height="38" rx="6" fill="#3a2a10" stroke="#f59e0b"/><text x="515" y="305" fill="#fbbf24" font-family="Montserrat,sans-serif" font-size="10.5">McNemar: these 3 are statistically the same model</text>
+  <g stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="3,3"><line x1="170" y1="301" x2="500" y2="301"/></g>
+
+  <text x="30" y="332" fill="#64748b" font-family="Montserrat,sans-serif" font-size="10.5">Source: proceedings.iclr.cc/paper_files/paper/2026/.../Abstract-Conference.html; phoneshell FINDINGS.md section 28.</text>
+</svg>
+<figcaption>Computer Agent Arena's order disagrees with another order. phoneshell's order was never statistically there to disagree with in the first place.</figcaption>
+</figure>
+
+<figure>
+<svg viewBox="0 0 860 420" role="img" style="width:100%;height:auto"
+  aria-label="A two-axis diagram. The horizontal axis is statistical separability, whether a paired significance test can tell two agents apart. The vertical axis is agreement with human preference. Computer Agent Arena's reported agents sit high on separability but low on preference agreement, in the reversed-ranking quadrant. phoneshell's three tied models sit low on separability, with preference agreement unmeasured and marked as a question mark, in a third, distinct quadrant neither paper has occupied together.">
+  <rect x="0" y="0" width="860" height="420" fill="#0f172a"/>
+  <text x="30" y="30" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="15" font-weight="700">Two axes a leaderboard can fail on, plotted together</text>
+
+  <line x1="90" y1="370" x2="800" y2="370" stroke="#334155" stroke-width="1.5"/>
+  <line x1="90" y1="370" x2="90" y2="60" stroke="#334155" stroke-width="1.5"/>
+  <text x="445" y="400" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="12" text-anchor="middle">statistical separability (paired significance test)</text>
+  <text x="40" y="215" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="12" text-anchor="middle" transform="rotate(-90 40 215)">agreement with human preference</text>
+  <text x="95" y="388" fill="#64748b" font-family="ui-monospace,Menlo,monospace" font-size="10">low</text>
+  <text x="790" y="388" fill="#64748b" font-family="ui-monospace,Menlo,monospace" font-size="10" text-anchor="end">high</text>
+  <text x="80" y="365" fill="#64748b" font-family="ui-monospace,Menlo,monospace" font-size="10" text-anchor="end">low</text>
+  <text x="80" y="70" fill="#64748b" font-family="ui-monospace,Menlo,monospace" font-size="10" text-anchor="end">high</text>
+
+  <rect x="500" y="300" width="270" height="55" rx="8" fill="#262d3d" stroke="#38bdf8"/>
+  <text x="635" y="322" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="11" text-anchor="middle">reversed-ranking quadrant</text>
+  <text x="635" y="340" fill="#38bdf8" font-family="Montserrat,sans-serif" font-size="10.5" text-anchor="middle">Computer Agent Arena's agents: separable, but</text>
+  <text x="635" y="353" fill="#38bdf8" font-family="Montserrat,sans-serif" font-size="10.5" text-anchor="middle">reversed against human preference</text>
+  <circle cx="650" cy="150" r="7" fill="#38bdf8"/>
+  <g stroke="#38bdf8" stroke-dasharray="3,3"><line x1="650" y1="157" x2="650" y2="300"/></g>
+
+  <rect x="120" y="140" width="270" height="70" rx="8" fill="#3a2a10" stroke="#f59e0b"/>
+  <text x="255" y="162" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="11" text-anchor="middle">phoneshell's three tied models</text>
+  <text x="255" y="180" fill="#fbbf24" font-family="Montserrat,sans-serif" font-size="10.5" text-anchor="middle">not separable at any sample size,</text>
+  <text x="255" y="196" fill="#fbbf24" font-family="Montserrat,sans-serif" font-size="10.5" text-anchor="middle">preference agreement never measured</text>
+  <circle cx="130" cy="330" r="7" fill="#f59e0b"/>
+  <text x="130" y="355" fill="#f59e0b" font-family="ui-monospace,Menlo,monospace" font-size="16" text-anchor="middle">?</text>
+  <g stroke="#f59e0b" stroke-dasharray="3,3"><line x1="130" y1="337" x2="130" y2="210"/></g>
+
+  <text x="30" y="412" fill="#64748b" font-family="Montserrat,sans-serif" font-size="10.5">Source: proceedings.iclr.cc abstract; phoneshell FINDINGS.md section 28. Axes are qualitative, not to scale.</text>
+</svg>
+<figcaption>The two results occupy different corners of the same two-axis problem. Nobody has yet placed a single leaderboard's models on both axes at once.</figcaption>
+</figure>
+
+<h2 id="method">What it means for someone grading computer-use or phone agents</h2>
+
+<p>Both results point the same reader toward the same discipline, approached from opposite directions. Computer Agent Arena's lesson is that passing a validity check, agreeing with human preference, is a separate question from passing a statistical one, separating cleanly on a fixed task set; a ranking can be statistically tidy and still wrong about what matters. phoneshell's section 28 lesson is the mirror case: a ranking can look tidy, sorted percentages descending, and still carry no statistical content at all for part of the field, which is a problem a human-preference study would not even get the chance to contradict, because there was no real ranking there to compare against in the first place.</p>
+
+<p>Neither project has run the other's check on its own data. Computer Agent Arena does not report, at least in what is available here, whether its reversed rankings would also fail a power analysis like phoneshell's McNemar test; and phoneshell has never collected a single human preference vote on any of its 80 tasks, so whether its device-state grades would agree with what a user watching the same run would prefer is simply unmeasured. A model that passes phoneshell's accessibility-tree check might still take an interaction path a human found clumsy, slow, or oddly phrased, properties phoneshell's binary pass or fail was never built to capture and Computer Agent Arena's whole platform exists to collect.</p>
+
+<ul>
+  <li>A statistically significant ranking and a human-preferred ranking are two different claims. Computer Agent Arena shows they can diverge; phoneshell's section 28 shows a third failure mode sits underneath both, a ranking that was never statistically there to diverge from anything.</li>
+  <li>Error categories that static, completion-only benchmarks miss, Computer Agent Arena names long-horizon memory failures and fine-grained action failures, are exactly the kind of thing a device-state check like phoneshell's can sometimes see (a wrong value on screen) and sometimes cannot (an agent that got the right answer by a clumsy, low-trust route).</li>
+  <li>Before trusting any sorted leaderboard, phone or desktop, ask both questions separately: does the order survive a paired significance test (phoneshell's McNemar fix), and does the order match what a human doing the same task would actually prefer (Computer Agent Arena's whole premise). A board can fail either one without failing the other.</li>
+</ul>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># Computer Agent Arena's abstract and reported vote count
+curl -s https://proceedings.iclr.cc/paper_files/paper/2026/hash/5f1d328711b162e1cf9896c7d6aaecdd-Abstract-Conference.html
+
+git clone https://github.com/Blomega/phoneshell && cd phoneshell
+grep -n "## 28" -A40 FINDINGS.md | head -60   # the three-way tie and the McNemar arithmetic
+cat phoneshell/bench/stats.py                  # Wilson intervals, McNemar exact test, power calc, in one place
+python3 scripts/run_sweep.py --help            # the resumable, round-robin sweep the fix produced</code></pre>
+
+<h2 id="falsify">What would prove this wrong</h2>
+
+<ul>
+  <li>We claim phoneshell has never collected a human preference vote on any run. That is wrong the moment such a study exists and reports whether its ranking agrees or disagrees with the device-state grades on the same tasks. We predict that on phoneshell's render-stratum tasks specifically, where the pass or fail condition is an unambiguous, narrow fact, human preference and device-state grading would agree closely, because there is little room for a "clumsy but correct" path to diverge from a "clean and correct" one on a single-fact check. On phoneshell's more open-ended tasks, we would expect more disagreement. Untested as of this writing, falsifiable by whoever runs it, through 31 December 2027.</li>
+  <li>If Computer Agent Arena's full paper, read beyond its abstract, reports a power analysis of its own 2,201-vote comparisons, that would answer whether its reversals also survive the same significance standard phoneshell now applies to its own board, and we would fold that number in here.</li>
+</ul>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ol>
+      <li>Wang, Yu, Zhong, Zhang, Yang, Stoica et al., "Computer Agent Arena: Toward Human-Centric Evaluation and Analysis of Computer-Use Agents," ICLR 2026, <a href="https://proceedings.iclr.cc/paper_files/paper/2026/hash/5f1d328711b162e1cf9896c7d6aaecdd-Abstract-Conference.html">proceedings.iclr.cc</a>, conference held 23 to 25 April 2026, read 22 October 2026. Also at <a href="https://openreview.net/pdf/ec4dde084013adbc23da54b211fb4aa2f4eee6a5.pdf">OpenReview</a>.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell/blob/main/FINDINGS.md">FINDINGS.md</a>, section 28, read 22 October 2026.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell/blob/main/phoneshell/bench/stats.py">phoneshell/bench/stats.py</a>, read 22 October 2026.</li>
+    </ol>
+  </section>
+</article>
+</div>
+</body></html>
