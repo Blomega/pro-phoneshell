@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OSWorld 2.0 scores its best agent at 20.6% inside a 500-step ceiling, averaging 318 tool calls a task; phoneshell's hard cap stops at 60, a budget never tested against a task this long - Blolabel</title>
+<meta name="description" content="OSWorld 2.0's 108 long-horizon desktop tasks take a human a median 1.6 hours and Claude Opus 4.7 an average of 318 tool calls, against about 30 in OSWorld 1.0. Scored to a 500-step ceiling, Claude Opus 4.8 completes only 20.6% of tasks. phoneshell's hard cap is 60 steps, a value no phoneshell task has ever come close to needing.">
+<link rel="canonical" href="https://blolabel.ai/blog/osworld-2-step-ceiling-dwarfs-phoneshells-sixty/">
+<meta property="og:title" content="OSWorld 2.0 scores its best agent at 20.6% inside a 500-step ceiling, averaging 318 tool calls a task; phoneshell's hard cap stops at 60, a budget never tested against a task this long - Blolabel">
+<meta property="og:description" content="OSWorld 2.0's 108 long-horizon desktop tasks average 318 tool calls with Claude Opus 4.7, against about 30 in OSWorld 1.0. Scored to a 500-step ceiling, Claude Opus 4.8 completes only 20.6% of tasks. phoneshell's hard cap stops at 60 steps, untested against a task this long.">
+<meta property="og:url" content="https://blolabel.ai/blog/osworld-2-step-ceiling-dwarfs-phoneshells-sixty/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/osworld-2-step-ceiling-dwarfs-phoneshells-sixty-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"OSWorld 2.0 scores its best agent at 20.6% inside a 500-step ceiling, averaging 318 tool calls a task; phoneshell's hard cap stops at 60, a budget never tested against a task this long",
+ "description":"OSWorld 2.0's 108 long-horizon desktop tasks average 318 tool calls with Claude Opus 4.7, against about 30 in OSWorld 1.0. Scored to a 500-step ceiling, Claude Opus 4.8 completes only 20.6% of tasks. phoneshell's hard cap stops at 60 steps, untested against a task this long.",
+ "datePublished":"2026-10-22","dateModified":"2026-10-22",
+ "url":"https://blolabel.ai/blog/osworld-2-step-ceiling-dwarfs-phoneshells-sixty/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/osworld-2-step-ceiling-dwarfs-phoneshells-sixty/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"},
+ "image":"https://blolabel.ai/images/blog/osworld-2-step-ceiling-dwarfs-phoneshells-sixty-hero.png",
+ "citation":["https://arxiv.org/abs/2606.29537","https://github.com/Blomega/phoneshell/blob/main/phoneshell/bench/schema.py","https://github.com/Blomega/phoneshell/blob/main/phoneshell/config.py"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "How many tool calls does OSWorld 2.0's best agent use per task?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Claude Opus 4.7, run with maximum thinking, averages 318 tool calls per task across OSWorld 2.0's 108 long-horizon desktop workflows, against roughly 30 per task on the original OSWorld. The benchmark's primary metric caps a run at 500 steps, and even there, Claude Opus 4.8 with maximum thinking and batched tool calls completes only 20.6% of tasks outright, with a 54.8% partial-credit score."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Is phoneshell's own step budget anywhere close to OSWorld 2.0's scale?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. phoneshell's schema sets a per-task default of 25 steps and a global hard cap of 60, a ceiling 8.3 times smaller than OSWorld 2.0's 500-step primary metric. Across the six models in phoneshell's own results.json, the mean task finishes in about 5.2 turns and 52 seconds. No phoneshell task has ever been run with max_steps raised past the schema default, so whether the harness could even support a task shaped like OSWorld 2.0's has not been tested."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does this mean phoneshell's results do not generalize to long-horizon tasks?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "It means phoneshell has never tried to measure that. Its 80 tasks are built to be short, scriptable, and device-checkable in a single sitting, a different task class from OSWorld 2.0's professional, hours-long workflows. Neither benchmark's result transfers to the other's task shape, and nothing in phoneshell's own data says what would happen if a task there needed more than 60 steps, because none has ever been allowed to ask."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#evidence">Evidence</a>
+    <a href="#method">What it means</a>
+    <a href="/blog/">Notes</a>
+    <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-22">22 October 2026</time>
+    <span>9 min read</span>
+  </div>
+  <h1>OSWorld 2.0 scores its best agent at 20.6% inside a 500-step ceiling, averaging 318 tool calls a task; phoneshell's hard cap stops at 60, a budget never tested against a task this long</h1>
+  <p class="standfirst">OSWorld 2.0 built its benchmark because the first OSWorld had saturated: agents were clearing it in roughly 30 tool calls. Its answer was to make tasks that take a human a median of 1.6 hours and a frontier model an average of 318 tool calls, and even then the best agent completes one in five. phoneshell's own hard cap on a task is 60 steps, a number no task of its 80 has ever needed to approach.</p>
+
+<p>OSWorld 2.0 ("Benchmarking Computer Use Agents on Long-Horizon Real-World Tasks," arXiv:2606.29537), posted by the XLANG Lab with Snorkel AI on 28 June 2026 and revised 13 July, replaces OSWorld's saturated leaderboard with 108 long-horizon workflows built from everyday and professional computer use. Its own abstract reports that human testers take a median of about 1.6 hours per task, and that Claude Opus 4.7, run with maximum thinking, averages 318 tool calls to attempt one, against roughly 30 tool calls per task on the original OSWorld. Scored under the benchmark's primary metric, a run capped at 500 steps, the best-performing configuration, Claude Opus 4.8 with maximum thinking and batched tool calls, completes 20.6% of tasks outright and earns a 54.8% partial-credit score. GPT-5.5 is reported as more token-efficient per step but plateaus near 13% in the arXiv abstract; the benchmark's own project page gives a close but not identical figure, near 14%, for the same model, and we could not reconcile the two from what either page states.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/osworld-2-step-ceiling-dwarfs-phoneshells-sixty-hero.png" alt="Abstract technical illustration on a dark background: two vertical measuring columns of different heights representing step budgets, the taller column reaching far above the frame's visible top edge with a small marker partway up it, the shorter column fully visible and capped by a solid lid, connected by a thin dashed line comparing their scales, cool blues and teals with one amber accent marking the smaller column's cap" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="finding">What changed, and when</h2>
+
+<p>The original OSWorld had become easy enough that it stopped discriminating between frontier agents, the same saturation problem that pushed Android benchmarking from AndroidWorld to MobileWorld. OSWorld 2.0's fix was to lengthen the task, not just add more of them: 108 workflows chosen for multi-hour, multi-application real work, each one scored to a 500-step budget instead of whatever a model happened to need. That design choice is itself the finding worth reporting, independent of which model currently tops the board: a benchmark's step ceiling is now explicitly part of what is being measured, set ten times higher than the model that needs it most actually uses on average.</p>
+
+<p>phoneshell's step accounting is set once, in two files. <code>phoneshell/bench/schema.py</code> gives every <code>Task</code> a default of <code>max_steps: int = 25</code> unless its YAML file overrides it, and a grep across all 80 files in <code>environments/</code> finds no override. <code>phoneshell/config.py</code> separately sets a global ceiling, commented in the code itself as "Hard cap on agent steps per task, and on money": <code>max_steps: int = 60</code>. Neither number has ever been raised to see what happens, because nothing in phoneshell's task suite has asked for more than the schema default of 25 to begin with.</p>
+
+<h2 id="evidence">Two benchmarks' idea of a long task</h2>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>dimension</th><th>OSWorld 2.0</th><th>phoneshell</th><th>source</th></tr></thead>
+  <tbody>
+    <tr><td>platform</td><td>full Ubuntu desktop</td><td>physical iPhone 17 Pro Max, iOS 26.6</td><td>arXiv:2606.29537 abstract; phoneshell houseFacts</td></tr>
+    <tr><td>task count</td><td>108 long-horizon workflows</td><td>80 tasks</td><td>arXiv:2606.29537 abstract; environments/*.yaml</td></tr>
+    <tr><td>human time per task</td><td>median about 1.6 hours</td><td>not measured; agent time averages under a minute</td><td>arXiv:2606.29537 abstract; site/results.json</td></tr>
+    <tr><td>step budget per task</td><td>500-step primary metric</td><td>25 default, 60 hard cap</td><td>arXiv:2606.29537 abstract; phoneshell/bench/schema.py; phoneshell/config.py</td></tr>
+    <tr><td>average tool calls actually used by the best agent</td><td>318 (Claude Opus 4.7, max thinking)</td><td>about 5.2, mean of 6 models' avg_turns</td><td>arXiv:2606.29537 abstract; site/results.json, computed</td></tr>
+    <tr><td>best reported score</td><td>20.6% binary completion, 54.8% partial (Claude Opus 4.8)</td><td>not comparable, different task class and metric</td><td>arXiv:2606.29537 abstract</td></tr>
+  </tbody>
+</table>
+</div>
+
+<figure>
+<svg viewBox="0 0 900 380" role="img" style="width:100%;height:auto"
+  aria-label="Horizontal scale comparing step budgets on a shared axis from 0 to 500. phoneshell's schema default of 25 steps and hard cap of 60 steps sit close to the left edge. OSWorld 2.0's primary metric ceiling of 500 steps sits at the far right. A marker partway along shows the average 318 tool calls Claude Opus 4.7 actually used, well past phoneshell's hard cap and short of OSWorld 2.0's own ceiling. A second marker near the left edge shows the roughly 30 tool calls OSWorld 1.0 tasks needed, close to phoneshell's own scale.">
+  <rect x="0" y="0" width="900" height="380" fill="#0f172a"/>
+  <text x="40" y="34" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="17" font-weight="700">Step budgets on one axis, 0 to 500</text>
+  <line x1="60" y1="200" x2="840" y2="200" stroke="#334155" stroke-width="2"/>
+  <g font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#64748b">
+    <text x="55" y="224" text-anchor="middle">0</text>
+    <text x="840" y="224" text-anchor="middle">500</text>
+  </g>
+  <circle cx="99" cy="200" r="6" fill="#38bdf8"/>
+  <text x="99" y="175" fill="#38bdf8" font-family="ui-monospace,Menlo,monospace" font-size="11" text-anchor="middle">25</text>
+  <text x="99" y="245" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10.5" text-anchor="middle">phoneshell default</text>
+  <circle cx="153" cy="200" r="6" fill="#38bdf8"/>
+  <text x="153" y="175" fill="#38bdf8" font-family="ui-monospace,Menlo,monospace" font-size="11" text-anchor="middle">60</text>
+  <text x="153" y="265" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10.5" text-anchor="middle">phoneshell hard cap</text>
+  <circle cx="106" cy="200" r="5" fill="#f59e0b"/>
+  <text x="106" y="290" fill="#fbbf24" font-family="ui-monospace,Menlo,monospace" font-size="11" text-anchor="middle">~30</text>
+  <text x="106" y="310" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10.5" text-anchor="middle">OSWorld 1.0 avg</text>
+  <circle cx="556" cy="200" r="6" fill="#34d399"/>
+  <text x="556" y="175" fill="#34d399" font-family="ui-monospace,Menlo,monospace" font-size="11" text-anchor="middle">318</text>
+  <text x="556" y="245" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10.5" text-anchor="middle">OSWorld 2.0 avg (Opus 4.7)</text>
+  <circle cx="840" cy="200" r="6" fill="#f472b6"/>
+  <text x="840" y="175" fill="#f472b6" font-family="ui-monospace,Menlo,monospace" font-size="11" text-anchor="middle">500</text>
+  <text x="840" y="245" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10.5" text-anchor="middle">OSWorld 2.0 ceiling</text>
+  <text x="40" y="350" fill="#64748b" font-family="Montserrat,sans-serif" font-size="11">Source: arXiv:2606.29537 abstract; phoneshell/bench/schema.py; phoneshell/config.py. Axis not log-scaled.</text>
+</svg>
+<figcaption>phoneshell's entire budget, default to hard cap, fits inside the gap between OSWorld 1.0's old average and OSWorld 2.0's new one. The average OSWorld 2.0 task already uses 5.3 times phoneshell's hard cap before the benchmark's own 500-step ceiling is reached at all.</figcaption>
+</figure>
+
+<figure>
+<svg viewBox="0 0 860 300" role="img" style="width:100%;height:auto"
+  aria-label="Two parallel flow diagrams. The top row shows phoneshell: an environment YAML file with no max_steps override, feeding schema.py's default of 25, feeding runner.py, bounded by config.py's hard cap of 60, which has never been reached. The bottom row shows OSWorld 2.0: a long-horizon task feeding an agent's tool calls, averaging 318 for Claude Opus 4.7, bounded by the benchmark's primary metric ceiling of 500 steps, at which the best agent scores 20.6 percent.">
+  <rect x="0" y="0" width="860" height="300" fill="#0f172a"/>
+  <text x="30" y="30" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="15" font-weight="700">How each system's step count reaches its ceiling</text>
+
+  <text x="30" y="60" fill="#38bdf8" font-family="Montserrat,sans-serif" font-size="12.5" font-weight="700">phoneshell</text>
+  <rect x="30" y="72" width="150" height="52" rx="8" fill="#1e293b" stroke="#334155"/><text x="40" y="92" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="10.5">environments/*.yaml</text><text x="40" y="110" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10">0 of 80 set max_steps</text>
+  <rect x="210" y="72" width="140" height="52" rx="8" fill="#1e293b" stroke="#334155"/><text x="220" y="92" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="10.5">schema.py</text><text x="220" y="110" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10">default = 25</text>
+  <rect x="380" y="72" width="140" height="52" rx="8" fill="#1e293b" stroke="#334155"/><text x="390" y="92" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="10.5">runner.py</text><text x="390" y="110" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10">passes max_steps on</text>
+  <rect x="550" y="72" width="150" height="52" rx="8" fill="#262d3d" stroke="#f59e0b"/><text x="560" y="92" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="10.5">config.py</text><text x="560" y="110" fill="#fbbf24" font-family="Montserrat,sans-serif" font-size="10">hard cap = 60, never reached</text>
+  <g stroke="#475569" stroke-width="1.5"><line x1="180" y1="98" x2="210" y2="98"/><line x1="350" y1="98" x2="380" y2="98"/><line x1="520" y1="98" x2="550" y2="98" stroke-dasharray="4,4"/></g>
+
+  <line x1="30" y1="155" x2="830" y2="155" stroke="#334155"/>
+
+  <text x="30" y="185" fill="#34d399" font-family="Montserrat,sans-serif" font-size="12.5" font-weight="700">OSWorld 2.0</text>
+  <rect x="30" y="197" width="160" height="52" rx="8" fill="#1e293b" stroke="#334155"/><text x="40" y="217" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="10.5">long-horizon task</text><text x="40" y="235" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10">median human time 1.6h</text>
+  <rect x="220" y="197" width="160" height="52" rx="8" fill="#1e293b" stroke="#334155"/><text x="230" y="217" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="10.5">agent tool calls</text><text x="230" y="235" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10">avg 318, Opus 4.7</text>
+  <rect x="410" y="197" width="180" height="52" rx="8" fill="#262d3d" stroke="#34d399"/><text x="420" y="217" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="10.5">primary metric ceiling</text><text x="420" y="235" fill="#34d399" font-family="Montserrat,sans-serif" font-size="10">500 steps</text>
+  <rect x="620" y="197" width="180" height="52" rx="8" fill="#1e293b" stroke="#334155"/><text x="630" y="217" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="10.5">best score, Opus 4.8</text><text x="630" y="235" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10">20.6% complete, 54.8% partial</text>
+  <g stroke="#475569" stroke-width="1.5"><line x1="190" y1="223" x2="220" y2="223"/><line x1="380" y1="223" x2="410" y2="223"/><line x1="590" y1="223" x2="620" y2="223"/></g>
+
+  <text x="30" y="285" fill="#64748b" font-family="Montserrat,sans-serif" font-size="10.5">Source: arXiv:2606.29537 abstract; phoneshell/bench/schema.py, config.py, runner.py.</text>
+</svg>
+<figcaption>phoneshell's chain stops at a cap that has never been tested. OSWorld 2.0's chain runs ten times further and still leaves four of five tasks unfinished at the ceiling.</figcaption>
+</figure>
+
+<h2 id="method">What it means for someone building or reading a phone-agent benchmark</h2>
+
+<p>A step budget is not a neutral measurement instrument; it is a design decision about what kind of task the benchmark is willing to credit as completable at all. OSWorld 1.0 saturated at roughly 30 tool calls per task, so OSWorld 2.0 raised the ceiling to 500 and built tasks long enough to need an average of 318, more than ten times the old average, and the result is a leaderboard where the best model still finishes one task in five. That is the opposite failure mode from saturation: a benchmark hard enough that almost nobody clears it, which is its own kind of uninformative if it persists across several model generations without the top score moving.</p>
+
+<p>phoneshell sits at the other extreme by design, not by accident. Its tasks are built to be scored from device state in a single short session, which is why its schema defaults to 25 steps and its hard cap stops at 60: a task that needed hundreds of steps would not fit the harness's grading model, which checks a specific, narrow claim about the phone's state rather than a multi-hour deliverable. That design choice has a cost phoneshell has not yet measured: nothing in its 80 tasks or its results.json says what would happen to pass rates, cost, or grading reliability if a task were allowed to run for 300 or 400 steps instead of 60. The step ceiling and the task design are co-selected, and changing one without the other is an untested move for either benchmark.</p>
+
+<ul>
+  <li>Comparing success rates across benchmarks with different step ceilings compares the ceiling as much as the model. A 20.6% score at 500 steps and a 91.4% score at phoneshell's own 60-step cap are not evidence that one model is worse; they are scores on tasks built for different time horizons.</li>
+  <li>OSWorld 2.0's own jump, 30 to 318 average tool calls between versions of the same benchmark family, shows that a ten-times increase in task length is achievable without the benchmark becoming unusable. phoneshell has made no equivalent jump and has not tested whether its grading approach, built around a short device-state check, would survive one.</li>
+  <li>A credible claim that phoneshell's 60-step hard cap is "enough" for its own 80 tasks is still an assumption carried from the schema default, not a measured property, exactly as the earlier MobileWorld step-budget comparison on this site found for a 25-step default against a 50-and-100-step benchmark. This is the same open question at a different scale.</li>
+</ul>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># OSWorld 2.0's own abstract and task count
+curl -s https://arxiv.org/abs/2606.29537
+
+git clone https://github.com/Blomega/phoneshell && cd phoneshell
+grep -n "max_steps" phoneshell/bench/schema.py
+grep -n "Hard cap on agent steps" -A1 phoneshell/config.py
+grep -c "max_steps" environments/*.yaml | grep -v ":0$" || echo "no task overrides max_steps"
+
+# mean turns and seconds across the six models in phoneshell's own board
+python3 -c "
+import json
+d = json.load(open('site/results.json'))
+turns = [v['avg_turns'] for v in d['board'].values()]
+secs = [v['avg_seconds'] for v in d['board'].values()]
+print('mean avg_turns', sum(turns)/len(turns))
+print('mean avg_seconds', sum(secs)/len(secs))
+"</code></pre>
+
+<h2 id="falsify">What would prove this wrong</h2>
+
+<ul>
+  <li>We claim no phoneshell task has ever been run with <code>max_steps</code> raised past the schema default of 25, let alone past the hard cap of 60. That is wrong the moment a future run sets a higher value in any environment YAML and <code>results.json</code> records a score for it. We predict that if such a run happened today, most of phoneshell's 80 tasks would still finish inside 25 to 30 steps regardless of the higher ceiling, because they are built to be short, not because the ceiling was binding. We will treat a future run that raises <code>max_steps</code> for any task, and finds that the extra budget changes the outcome, as grounds to revise this prediction, checked by 31 December 2027.</li>
+  <li>We note OSWorld 2.0's GPT-5.5 figure differs between its arXiv abstract (near 13%) and its project page (near 14%), and we treat that one-point gap as unresolved rather than picking a side. If a future revision of either page reconciles the number, that resolves this specific uncertainty without affecting the rest of the comparison.</li>
+</ul>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ol>
+      <li>XLANG Lab and Snorkel AI, "OSWorld 2.0: Benchmarking Computer Use Agents on Long-Horizon Real-World Tasks," <a href="https://arxiv.org/abs/2606.29537">arXiv:2606.29537</a>, v1 28 June 2026, v2 13 July 2026.</li>
+      <li>OSWorld 2.0 project page, <a href="https://osworld-v2.xlang.ai/">osworld-v2.xlang.ai</a>, read 22 October 2026.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell/blob/main/phoneshell/bench/schema.py">phoneshell/bench/schema.py</a>, <a href="https://github.com/Blomega/phoneshell/blob/main/phoneshell/config.py">phoneshell/config.py</a>, <a href="https://github.com/Blomega/phoneshell/tree/main/environments">environments/</a>, read 22 October 2026.</li>
+      <li>Blolabel, <code>site/results.json</code>, read 22 October 2026.</li>
+    </ol>
+  </section>
+</article>
+</div>
+</body></html>
