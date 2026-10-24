@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MobileJailBench's adaptive attacker raises Gemini-2.5-Pro's jailbreak rate from 50.7% to 83.6% in one round; phoneshell's only hard block is three credential app IDs, never attacked - Blolabel</title>
+<meta name="description" content="MobileJailBench (arXiv:2610.23303, submitted 16 October 2026) scores mobile agents with a judge that separates saying no from doing it anyway, and its Failure-Distilled Jailbreak Evolution raises Gemini-2.5-Pro's attack success rate from 50.7% to 83.6% in one adaptation round, GLM-4.6V from 83.6% to 95.0%. phoneshell's Guard class has one hard block, three Apple bundle IDs tied to credentials, and no adversarial jailbreak run has ever been pointed at it.">
+<link rel="canonical" href="https://blolabel.ai/blog/adaptive-attacker-raises-gemini-jailbreak-33-points/">
+<meta property="og:title" content="MobileJailBench's adaptive attacker raises Gemini-2.5-Pro's jailbreak rate from 50.7% to 83.6% in one round; phoneshell's only hard block is three credential app IDs, never attacked - Blolabel">
+<meta property="og:description" content="MobileJailBench's Failure-Distilled Jailbreak Evolution raises Gemini-2.5-Pro's attack success rate from 50.7% to 83.6% in one adaptation round. phoneshell's Guard class has one hard block, three Apple bundle IDs tied to credentials, never adversarially tested.">
+<meta property="og:url" content="https://blolabel.ai/blog/adaptive-attacker-raises-gemini-jailbreak-33-points/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/adaptive-attacker-raises-gemini-jailbreak-33-points-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"MobileJailBench's adaptive attacker raises Gemini-2.5-Pro's jailbreak rate from 50.7% to 83.6% in one round; phoneshell's only hard block is three credential app IDs, never attacked",
+ "description":"MobileJailBench (arXiv:2610.23303, 16 October 2026) raises Gemini-2.5-Pro's attack success rate from 50.7% to 83.6% in one adaptation round through Failure-Distilled Jailbreak Evolution. phoneshell's Guard class has one hard block, three Apple bundle IDs tied to credentials, never adversarially tested.",
+ "datePublished":"2026-10-23","dateModified":"2026-10-23",
+ "url":"https://blolabel.ai/blog/adaptive-attacker-raises-gemini-jailbreak-33-points/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/adaptive-attacker-raises-gemini-jailbreak-33-points/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"},
+ "image":"https://blolabel.ai/images/blog/adaptive-attacker-raises-gemini-jailbreak-33-points-hero.png",
+ "citation":["https://arxiv.org/abs/2610.23303","https://github.com/Blomega/phoneshell/blob/main/phoneshell/safety.py","https://github.com/Blomega/phoneshell/blob/main/phoneshell/config.py"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "What is MobileJailBench and when was it released?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "MobileJailBench is a jailbreak benchmark for mobile agents, posted to arXiv as 2610.23303 on 16 October 2026 by Songping Wang and seven co-authors. It runs 520 tasks across three jailbreak paradigms and 14 risk categories in a sandbox of 28 apps, and its own description calls it the first evolving jailbreak benchmark for mobile agents, meaning the benchmark itself adapts to each agent's failures rather than staying fixed."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How much does the adaptive attack actually add over a static baseline?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "In the paper's Table 3(a), Failure-Distilled Jailbreak Evolution (FDJE) raises Gemini-2.5-Pro's attack success rate from a 50.7% static baseline to 83.6%, a 32.9-point gain. Gemini-3.1-Pro rises from 62.9% to 88.6%, Gemini-3-Flash from 65.0% to 87.9%, and GLM-4.6V from 83.6% to 95.0%. Every one of the ten models the paper reports gains ground once the benchmark is allowed to adapt to what beat it last time."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does phoneshell have anything like MobileJailBench's security-awareness-versus-execution check?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. phoneshell's Guard.classify_tap matches a tap's label against 14 regex patterns and returns needs_confirmation when one hits, but it always returns allowed=True; it never distinguishes an agent that merely flags a risky action from one that is about to act on a harmful instruction, which is exactly the gap MobileJailBench's Reasoning Hijacking Rate is built to catch. phoneshell's only hard refusal is Guard.classify_app's denylist of three bundle IDs, all tied to Apple's own credential stores, and no adversarial prompt of any kind has been run against it."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#evidence">Evidence</a>
+    <a href="#method">What it means</a>
+    <a href="/blog/">Notes</a>
+    <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-23">23 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>MobileJailBench's adaptive attacker raises Gemini-2.5-Pro's jailbreak rate from 50.7% to 83.6% in one round; phoneshell's only hard block is three credential app IDs, never attacked</h1>
+  <p class="standfirst">A static jailbreak test tells you how a mobile agent does against last year's attacks. MobileJailBench instead distils each failed attempt into a stronger one and runs it again, and that single adaptation round adds 32.9 points to Gemini-2.5-Pro's attack success rate. phoneshell has never run anything adversarial against its own safety code at all.</p>
+
+<p>MobileJailBench, posted to arXiv as 2610.23303 on 16 October 2026 by Songping Wang, Borui Li, Qinglong Liu, Yueming Lyu, Yi Huang, Fengting Li, Chao Feng and Caifeng Shan, describes itself as the first evolving jailbreak benchmark for mobile agents: 520 tasks across three jailbreak paradigms and 14 risk categories, run in a mobile sandbox of 28 apps, 14 third-party apps spanning communication, finance, social media, commerce, navigation and entertainment, plus 14 system apps including Messages, Settings, Contacts, Calendar, Notes, Gallery, Browser and File Manager. The paper's headline claim is a 100% attack success rate (ASR) on Qwen3.5-122B-A10B reached through what it calls Dual-Dynamic Evolution. Its own Table 3(a), read directly, shows that same model at 98.6% under its evolved attack, a 1.4-point gap between the abstract's round number and the table it is presumably drawn from that the paper does not reconcile anywhere we could find.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/adaptive-attacker-raises-gemini-jailbreak-33-points-hero.png" alt="Abstract technical illustration on a dark grid: a glowing attack vector looping back through a small gear-shaped feedback node before striking a row of device icons a second time at a taller height than the first pass, with a separate, isolated single lock icon sitting apart from the loop, untouched, cool blues and teals with one amber accent on the feedback node" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="finding">What changed, and when</h2>
+
+<p>The mechanism behind the gain is Dual-Dynamic Evolution, which pairs two processes. Failure-Distilled Jailbreak Evolution (FDJE) takes a prompt that failed to jailbreak a model and rewrites it using what the model's own response revealed about why it refused, then retries. Weakness-Driven Benchmark Expansion (WDBE) does the complementary thing at the benchmark level: once FDJE has found a reliable new attack pattern, WDBE mints new tasks that generalize it, so the benchmark's own task pool grows around each model's demonstrated weak points rather than staying fixed at 520 tasks forever. The paper reports a second round of this expansion, WDBE-50, a set of 50 new tasks built from exactly this process, and re-ran it against the same ten models: first-try success on the new tasks alone ranged from 36.0% (Gemini-2.5-Pro) to 96.0% (Qwen3.5-122B-A10B), confirming the expanded tasks were not simply easier versions of the original 520.</p>
+
+<p>What makes this different from a conventional jailbreak suite is not any individual number, it is that the benchmark does not hold still. A static red-team set, scored once, measures resistance to the attacks someone thought of before publication. MobileJailBench's FDJE loop means the attack a model is scored against on day one is not the attack it will be scored against on day thirty; every refusal teaches the benchmark something about how to ask again.</p>
+
+<h2 id="evidence">The baseline number undercounts every model it was tried on</h2>
+
+<p>Table 3(a) in the paper reports the same ten models twice: once against a static pass-at-2 baseline, and once after Failure-Distilled Jailbreak Evolution has had a single round to adapt. Every model's attack success rate rises. Gemini-2.5-Pro moves from 50.7% to 83.6%, a 32.9-point gain, the largest in the table. Gemini-3-Flash moves from 65.0% to 87.9%. Gemini-3.1-Pro moves from 62.9% to 88.6%. Qwen3.5-397B-A17B, already at 86.4% static, still gains 10.7 points to reach 97.1%. The smallest gain in the table belongs to Kimi-K3, which rises only 3.6 points, from 60.0% to 63.6%, the one model in the set the adaptive attacker struggled to move.</p>
+
+<svg viewBox="0 0 860 420" style="width:100%;height:auto" role="img" aria-label="Grouped bar chart comparing each of ten models' static pass-at-2 jailbreak attack success rate against its attack success rate after one round of Failure-Distilled Jailbreak Evolution, from MobileJailBench Table 3(a). Gemini-2.5-Pro rises from 50.7 to 83.6 percent, the largest gain at 32.9 points. Gemini-3-Flash rises from 65.0 to 87.9. Gemini-3.1-Pro rises from 62.9 to 88.6. GPT-5.5 rises from 56.4 to 70.0. GPT-5.6-Luna rises from 70.0 to 80.0. GLM-4.6V rises from 83.6 to 95.0. Qwen-27B rises from 71.4 to 94.3. Qwen-397B rises from 86.4 to 97.1. Qwen-122B rises from 89.3 to 98.6. Kimi-K3 rises from 60.0 to 63.6, the smallest gain at 3.6 points. Every model's attack success rate increases once the benchmark is allowed to adapt.">
+<rect x="0" y="0" width="860" height="420" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Static baseline vs. one round of adaptive attack (Table 3a)</text>
+<line x1="60" y1="370" x2="840" y2="370" stroke="#2a3140"/><text x="52" y="374" font-size="9" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="60" y1="290" x2="840" y2="290" stroke="#2a3140"/><text x="52" y="294" font-size="9" fill="#c4ccda" text-anchor="end">25</text>
+<line x1="60" y1="210" x2="840" y2="210" stroke="#2a3140"/><text x="52" y="214" font-size="9" fill="#c4ccda" text-anchor="end">50</text>
+<line x1="60" y1="130" x2="840" y2="130" stroke="#2a3140"/><text x="52" y="134" font-size="9" fill="#c4ccda" text-anchor="end">75</text>
+<line x1="60" y1="50" x2="840" y2="50" stroke="#2a3140"/><text x="52" y="54" font-size="9" fill="#c4ccda" text-anchor="end">100</text>
+<g font-size="8.5" fill="#8893a8" text-anchor="middle">
+<text x="105" y="398">Gemini-2.5-Pro</text><text x="185" y="398">Gemini-3-Flash</text><text x="265" y="398">Gemini-3.1-Pro</text><text x="345" y="398">GPT-5.5</text><text x="425" y="398">GPT-5.6-Luna</text><text x="505" y="398">GLM-4.6V</text><text x="585" y="398">Qwen-27B</text><text x="665" y="398">Qwen-397B</text><text x="745" y="398">Qwen-122B</text><text x="815" y="398">Kimi-K3</text>
+</g>
+<g>
+<rect x="90" y="169" width="14" height="201" fill="#5ad1a0"/><rect x="106" y="65" width="14" height="305" fill="#f2a65a"/>
+<rect x="170" y="162" width="14" height="208" fill="#5ad1a0"/><rect x="186" y="51" width="14" height="319" fill="#f2a65a"/>
+<rect x="250" y="168" width="14" height="202" fill="#5ad1a0"/><rect x="266" y="48" width="14" height="322" fill="#f2a65a"/>
+<rect x="330" y="189" width="14" height="181" fill="#5ad1a0"/><rect x="346" y="146" width="14" height="224" fill="#f2a65a"/>
+<rect x="410" y="146" width="14" height="224" fill="#5ad1a0"/><rect x="426" y="114" width="14" height="256" fill="#f2a65a"/>
+<rect x="490" y="102" width="14" height="268" fill="#5ad1a0"/><rect x="506" y="65" width="14" height="305" fill="#f2a65a"/>
+<rect x="570" y="141" width="14" height="229" fill="#5ad1a0"/><rect x="586" y="60" width="14" height="310" fill="#f2a65a"/>
+<rect x="650" y="94" width="14" height="276" fill="#5ad1a0"/><rect x="666" y="43" width="14" height="327" fill="#f2a65a"/>
+<rect x="730" y="77" width="14" height="293" fill="#5ad1a0"/><rect x="746" y="35" width="14" height="335" fill="#f2a65a"/>
+<rect x="810" y="178" width="14" height="192" fill="#5ad1a0"/><rect x="826" y="167" width="14" height="203" fill="#f2a65a"/>
+</g>
+<rect x="640" y="60" width="12" height="12" fill="#5ad1a0"/><text x="657" y="70" font-size="9.5" fill="#c4ccda">static baseline (pass@2)</text>
+<rect x="640" y="78" width="12" height="12" fill="#f2a65a"/><text x="657" y="88" font-size="9.5" fill="#c4ccda">after one FDJE round</text>
+<text x="20" y="412" font-size="9" fill="#8893a8">Source: arXiv:2610.23303 Table 3(a), read 23 October 2026. Every model's ASR rises; Gemini-2.5-Pro's 32.9-point gain is the largest.</text>
+</g></svg>
+
+<p>The paper's scoring method is built to separate two things a single pass/fail number conflates: whether a model said it would refuse, and whether it then acted on the harmful instruction anyway. Its Stratified Adjudication Framework (SAF) assigns each episode a label on three axes, security awareness (did the agent express a safety-motivated refusal before acting), execution behavior (did it adopt the prohibited objective and act on it), and risk consequences (did a state oracle confirm the prohibited outcome actually happened on the device). From those three labels it derives a Reasoning Hijacking Rate (RHR), the share of episodes where a model's own refusal language appears in its output while it executes the harmful action anyway. The paper validates SAF against a reference set and reports 97.26% agreement and 98.1% stability, against 91.14% and 95.7% for a single LLM acting as judge; on RHR specifically, SAF matches the reference rate of 83.3% where the single judge undercounts it at 63.3%, a 20-point miss on the exact failure mode, an agent narrating safety while its hands do something else, that a pass/fail grader would not see at all.</p>
+
+<svg viewBox="0 0 820 300" style="width:100%;height:auto" role="img" aria-label="Diagram of the Dual-Dynamic Evolution loop. A static attack prompt is scored against a model. A failed attempt feeds Failure-Distilled Jailbreak Evolution, which rewrites the prompt using the model's own refusal as a hint and retries, raising attack success rate, for example Gemini-2.5-Pro from 50.7 to 83.6 percent. A reliable new attack pattern then feeds Weakness-Driven Benchmark Expansion, which mints new tasks generalizing it, for example the 50-task WDBE-50 set, where first-try success ranged from 36.0 to 96.0 percent across ten models. The loop repeats. A separate box shows phoneshell's Guard.classify_app, a static denylist of three bundle IDs, written once and never run against any adversarial prompt.">
+<rect x="0" y="0" width="820" height="300" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Dual-Dynamic Evolution: the benchmark that rewrites itself</text>
+<rect x="30" y="50" width="150" height="55" rx="8" fill="#1d2330" stroke="#6f7b90"/><text x="44" y="72" font-size="10.5" font-weight="600">Static attack prompt</text><text x="44" y="90" font-size="9.5" fill="#c4ccda">scored once, e.g. 50.7%</text>
+<path d="M180 77 L250 77" stroke="#6f7b90" stroke-width="1.5" marker-end="url(#arr1)"/>
+<rect x="250" y="50" width="200" height="55" rx="8" fill="#262d3d" stroke="#f2a65a"/><text x="264" y="72" font-size="10.5" font-weight="600" fill="#f2a65a">FDJE: rewrite using the</text><text x="264" y="90" font-size="9.5" fill="#f2a65a">refusal itself as a hint</text>
+<path d="M450 77 L540 77" stroke="#6f7b90" stroke-width="1.5" marker-end="url(#arr1)"/>
+<rect x="540" y="50" width="250" height="55" rx="8" fill="#1d2330" stroke="#5ad1a0"/><text x="554" y="72" font-size="10.5" font-weight="600">ASR rises, e.g. Gemini-2.5-Pro</text><text x="554" y="90" font-size="9.5" fill="#5ad1a0">50.7% &#8594; 83.6%</text>
+<path d="M665 105 L665 140" stroke="#6f7b90" stroke-width="1.5" marker-end="url(#arr1)"/>
+<rect x="420" y="140" width="320" height="55" rx="8" fill="#262d3d" stroke="#f2a65a"/><text x="434" y="162" font-size="10.5" font-weight="600" fill="#f2a65a">WDBE: mint new tasks generalizing</text><text x="434" y="180" font-size="9.5" fill="#f2a65a">the pattern, e.g. WDBE-50, 36-96% first try</text>
+<path d="M420 167 L180 167" stroke="#6f7b90" stroke-width="1.5" marker-end="url(#arr1)"/>
+<path d="M105 167 L105 105" stroke="#6f7b90" stroke-width="1.5" marker-end="url(#arr1)"/>
+<text x="110" y="135" font-size="9" fill="#8893a8">loop repeats</text>
+<line x1="20" y1="225" x2="800" y2="225" stroke="#6f7b90" stroke-dasharray="4,4"/>
+<rect x="30" y="245" width="400" height="45" rx="8" fill="#1d2330" stroke="#8893a8"/>
+<text x="44" y="264" font-size="10.5" font-weight="600">phoneshell Guard.classify_app</text>
+<text x="44" y="280" font-size="9.5" fill="#c4ccda">3 bundle IDs, written 5 Oct 2026, no loop, never attacked</text>
+<defs><marker id="arr1" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#6f7b90"/></marker></defs>
+<text x="20" y="298" font-size="8.5" fill="#8893a8">Source: arXiv:2610.23303 &sect;3, Table 3(a), Table 3(b); phoneshell/safety.py, read 23 October 2026.</text>
+</g></svg>
+
+<table>
+  <thead><tr><th>Dimension</th><th>MobileJailBench</th><th>phoneshell Guard</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>What a refusal means</td><td>Three separate labels: security awareness, execution behavior, risk consequence; RHR catches saying no and doing it anyway</td><td>One Verdict: allowed is always True on a tap, needs_confirmation is the only flag</td><td>arXiv:2610.23303 &sect;3; phoneshell/safety.py</td></tr>
+    <tr><td>Hard refusal mechanism</td><td>None stated; every episode is scored, not blocked</td><td>classify_app denies exactly 3 bundle IDs: Passwords, Passwords (legacy), Keychain</td><td>phoneshell/config.py SafetyConfig</td></tr>
+    <tr><td>Risk surface covered by the hard block</td><td>14 risk categories across communication, finance, social, commerce, navigation, entertainment</td><td>Credential stores only; no overlap with finance, social or commerce apps</td><td>arXiv:2610.23303 &sect;2; phoneshell/config.py</td></tr>
+    <tr><td>Does the benchmark/guard adapt to failures</td><td>Yes: FDJE rewrites failed attacks, WDBE expands the task set around them</td><td>No: confirm_patterns is a fixed list of 14 regex patterns, unchanged since 5 Oct 2026</td><td>arXiv:2610.23303 &sect;3; phoneshell/config.py</td></tr>
+    <tr><td>Adversarial evaluation ever run</td><td>520 tasks, 10 models, 3 paradigms, as of this paper</td><td>None on record</td><td>arXiv:2610.23303; phoneshell repository, read 23 October 2026</td></tr>
+  </tbody>
+</table>
+
+<h2 id="method">What it means for anyone grading a phone agent on safety</h2>
+
+<ul>
+  <li>A pass/fail jailbreak score hides the exact failure MobileJailBench was built to surface. phoneshell's Guard never records whether a tap it flagged for confirmation was preceded by anything resembling the model reasoning about risk, because Guard.classify_tap takes only the tap's own label text, never the model's chain of thought; there is no channel for an RHR-style check to run through even if someone wanted to build one.</li>
+  <li>phoneshell's one hard block, the three-bundle-ID denylist in classify_app, covers a narrower slice of risk than almost any other mechanism in this comparison: it stops an agent from opening Apple's own Passwords or Keychain apps, and nothing else. MobileJailBench's 14 risk categories run across finance, commerce, social and navigation apps that phoneshell's denylist has no mechanism to ever name, confirm, or refuse.</li>
+  <li>A benchmark that evolves against a model's own failures, the way FDJE and WDBE do, answers a different question than a fixed task set can: not "does this model resist the attacks we thought of," but "does this model's resistance generalize past the first prompt that worked." phoneshell's confirm_patterns list has had no equivalent exercise; nothing has ever tried to find the phrasing that gets past it, and so whatever score that list would earn on an adaptive attacker is simply unmeasured.</li>
+  <li>The 1.4-point gap between MobileJailBench's abstract (100% ASR on Qwen3.5-122B-A10B) and its own Table 3(a) (98.6% under FDJE) is small, but it is the kind of inconsistency this site's house rule is built to flag rather than smooth over: the paper's round number and its own table do not agree, and neither we nor, as far as we can tell, the paper itself resolves which one is the intended headline figure.</li>
+</ul>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># MobileJailBench's own numbers
+curl -s https://arxiv.org/abs/2610.23303 | grep -i "attack success\|520 tasks\|risk categories"
+# full text with Table 3(a), 3(b), 3(c): https://arxiv.org/html/2610.23303
+
+git clone https://github.com/Blomega/phoneshell && cd phoneshell
+cat phoneshell/safety.py                         # Guard.classify_tap always returns allowed=True
+grep -n "denied_bundle_ids\|confirm_patterns" phoneshell/config.py   # the 3-bundle denylist and the 14 fixed patterns
+grep -rn "jailbreak\|adversarial\|red.?team" phoneshell/ || echo "no adversarial testing in this repository"</code></pre>
+
+<h2 id="falsify">What would prove this wrong</h2>
+
+<p>We claim phoneshell's Guard class has never been tested against an adversarial prompt of any kind, static or adaptive. That is wrong the moment any commit adds a test file, script, or log that runs a jailbreak-style prompt against classify_tap or classify_app and records the result; we found none as of 23 October 2026. We also report the 1.4-point discrepancy between MobileJailBench's abstract and its Table 3(a) as unresolved in the paper; that is wrong if a later revision of arXiv:2610.23303 reconciles the two figures, which we will check by 30 April 2027.</p>
+
+<section class="sources">
+  <h2 id="sources">Sources</h2>
+  <ol>
+    <li>Wang, Li, Liu, Lyu, Huang, Li, Feng, Shan, <a href="https://arxiv.org/abs/2610.23303">MobileJailBench: Red Queen Jailbreak Benchmarking for Mobile Agents</a>, arXiv:2610.23303, submitted 16 October 2026, read 23 October 2026.</li>
+    <li>Full text with Tables 2 and 3: <a href="https://arxiv.org/html/2610.23303">arxiv.org/html/2610.23303</a>, read 23 October 2026.</li>
+    <li>Blolabel, <a href="https://github.com/Blomega/phoneshell/blob/main/phoneshell/safety.py">phoneshell/safety.py</a>, read 23 October 2026.</li>
+    <li>Blolabel, <a href="https://github.com/Blomega/phoneshell/blob/main/phoneshell/config.py">phoneshell/config.py</a>, SafetyConfig, read 23 October 2026.</li>
+  </ol>
+</section>
+</article>
+</div>
+</body></html>
