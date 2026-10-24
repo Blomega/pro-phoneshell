@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Appium 4's fourth beta drives a real iPhone through a tunnel with no Xcode on the driving machine at all; phoneshell's own bootstrap still calls xcodebuild at step 4 of six - Blolabel</title>
+<meta name="description" content="Appium 4's fourth beta, shipped 9 October 2026, lets the XCUITest driver control a real iOS or tvOS 18+ device over a tunnel from any host, including non-macOS ones, with no Xcode in the driving loop, provided WebDriverAgent is already installed on the phone. phoneshell's own six-step bootstrap needs Xcode at two of those six steps, including the xcodebuild call that builds and signs WDA in the first place.">
+<link rel="canonical" href="https://blolabel.ai/blog/tunnel-replaces-the-mac-appium-4-beta-4/">
+<meta property="og:title" content="Appium 4's fourth beta drives a real iPhone through a tunnel with no Xcode on the driving machine at all; phoneshell's own bootstrap still calls xcodebuild at step 4 of six - Blolabel">
+<meta property="og:description" content="Appium 4 beta 4 (9 October 2026) drives a real iOS 18+ device over a tunnel from any host, no Xcode in the driving loop, if WebDriverAgent is already installed. phoneshell's own bootstrap needs Xcode at two of its six steps, including building WDA itself.">
+<meta property="og:url" content="https://blolabel.ai/blog/tunnel-replaces-the-mac-appium-4-beta-4/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/tunnel-replaces-the-mac-appium-4-beta-4-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"Appium 4's fourth beta drives a real iPhone through a tunnel with no Xcode on the driving machine at all; phoneshell's own bootstrap still calls xcodebuild at step 4 of six",
+ "description":"Appium 4 beta 4 (9 October 2026) lets the XCUITest driver control a real iOS or tvOS 18+ device from any host with no Xcode in the driving loop, provided WebDriverAgent is already installed. phoneshell's own six-step bootstrap needs Xcode at two steps, including building WDA itself.",
+ "datePublished":"2026-10-23","dateModified":"2026-10-23",
+ "url":"https://blolabel.ai/blog/tunnel-replaces-the-mac-appium-4-beta-4/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/tunnel-replaces-the-mac-appium-4-beta-4/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"},
+ "image":"https://blolabel.ai/images/blog/tunnel-replaces-the-mac-appium-4-beta-4-hero.png",
+ "citation":["https://www.testmuai.com/blog/whats-new-in-appium-4/","https://github.com/Blomega/phoneshell/blob/main/phoneshell/device.py","https://github.com/Blomega/phoneshell/blob/main/phoneshell/cli.py"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "What does Appium 4's fourth beta change for driving a real iPhone?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Shipped 9 October 2026, Appium 4 beta 4's XCUITest driver can control a real iOS or tvOS 18+ device over a tunnel using the appium-ios-remotexpc library, with no Xcode anywhere in the driving loop. On a non-macOS host, appium:udid and appium:platformVersion become required capabilities, and WebDriverAgent must already be installed on the device or reachable via appium:webDriverAgentUrl; driving simulators still requires macOS."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does this remove Xcode from the whole pipeline, not just the driving step?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. The reporting on beta 4 is explicit that WebDriverAgent must already be on the device. Something still has to build, sign and install WDA before a non-Mac host can drive it over the tunnel, and Xcode is the standard way to do that. Beta 4 removes Xcode from the ongoing control loop, not from the one-time step of getting WDA onto the phone in the first place."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How does phoneshell's own bootstrap compare?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "phoneshell/device.py documents a six-step bootstrap from plugged-in iPhone to driveable device. Step 1, selecting Xcode's DEVELOPER_DIR, exists because devicectl only ships with Xcode. Step 4, building and signing WebDriverAgent, calls xcodebuild test-without-building directly. Only the final step, launching WDA detached via devicectl, resembles what Appium 4 beta 4's tunnel does; the two steps before it still require a Mac with Xcode installed."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#evidence">Evidence</a>
+    <a href="#method">What it means</a>
+    <a href="/blog/">Notes</a>
+    <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind event">event</span>
+    <time datetime="2026-10-23">23 October 2026</time>
+    <span>7 min read</span>
+  </div>
+  <h1>Appium 4's fourth beta drives a real iPhone through a tunnel with no Xcode on the driving machine at all; phoneshell's own bootstrap still calls xcodebuild at step 4 of six</h1>
+  <p class="standfirst">Appium's fourth Appium 4 beta lets its XCUITest driver open a tunnel to a real iOS device from any host, Mac or not, and drive it with no Xcode in that loop. The catch is in one clause of the same release note: WebDriverAgent has to already be on the phone. phoneshell's own bootstrap still needs Xcode to put it there.</p>
+
+<p>The fourth beta of Appium 4 shipped on 9 October 2026, according to a vendor writeup from TestMu AI, the only dated source we found for that specific beta; we could not independently confirm the date against Appium's own GitHub release notes, so treat it as single-sourced. The release modernizes the project end to end: Appium 4 refuses to start on Node 20, requiring 22.22 or newer on the 22 line, 24.15 or newer on the 24 line, or Node 26 and up, and every <code>@appium/*</code> package, including <code>appium</code> itself, ships ESM-only with no CommonJS build, so a plain <code>require()</code> call now fails. The CLI drops <code>--allow-cors</code> (replaced by <code>--allow-insecure=*:cors</code> or <code>--relaxed-security</code>), drops <code>--nodeconfig</code> along with Selenium Grid 3 registration entirely, and no longer installs drivers or plugins at <code>npm install</code> time; those now go through <code>appium driver install</code> or a <code>package.json</code> declaration. There is no GA date. Betas are landing weekly.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/tunnel-replaces-the-mac-appium-4-beta-4-hero.png" alt="Abstract technical illustration on a dark grid: a thin glowing tunnel line connecting a generic computer silhouette, deliberately without any Mac-specific markings, to a single phone icon, with a small separate padlocked gear icon labelled as a precondition sitting on the phone's side of the tunnel, cool blues and teals with one amber accent on the precondition icon" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="finding">What changed, and when</h2>
+
+<p>The specific change worth isolating is in the XCUITest driver's own Appium 4 beta: real iOS or tvOS 18+ devices can now be driven with no Xcode at all, using a new library called <code>appium-ios-remotexpc</code>, after a tunnel is started with <code>sudo appium driver run xcuitest tunnel-creation</code>. On a host that is not running macOS, <code>appium:udid</code> and <code>appium:platformVersion</code> become required capabilities, and WebDriverAgent must either be pre-installed on the device already or reachable through <code>appium:webDriverAgentUrl</code>. Driving a simulator is unaffected by any of this and still requires macOS, since there is no such thing as an iOS simulator anywhere else.</p>
+
+<svg viewBox="0 0 860 300" style="width:100%;height:auto" role="img" aria-label="Diagram of Appium 4 beta 4's tunnel mechanism for driving a real iOS device from a non-macOS host. A host machine running any operating system starts a tunnel with the command sudo appium driver run xcuitest tunnel-creation, built on the appium-ios-remotexpc library. On a non-macOS host this requires the capabilities appium:udid and appium:platformVersion. The tunnel reaches an iPhone or iPad running iOS or tvOS 18 or later, where WebDriverAgent must already be installed and running; no Xcode runs anywhere on the host side of this tunnel. A separate note states that driving an iOS or tvOS simulator still requires macOS and is unaffected by this beta.">
+<rect x="0" y="0" width="860" height="300" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Appium 4 beta 4's tunnel: host to already-instrumented device</text>
+<rect x="20" y="55" width="235" height="75" rx="6" fill="#1d2330" stroke="#6f7b90"/><text x="32" y="76" font-size="10.5" font-weight="600">Host machine, any OS</text><text x="32" y="92" font-size="9" fill="#c4ccda">e.g. a Linux CI runner</text><text x="32" y="110" font-size="8.5" fill="#c4ccda">$ sudo appium driver run xcuitest</text><text x="32" y="122" font-size="8.5" fill="#c4ccda">tunnel-creation</text>
+<path d="M255 92 L300 92" stroke="#6f7b90" stroke-width="1.5" marker-end="url(#arrtun)"/>
+<rect x="300" y="55" width="260" height="75" rx="6" fill="#262d3d" stroke="#f2a65a"/><text x="312" y="76" font-size="10.5" font-weight="600" fill="#f2a65a">Tunnel: appium-ios-remotexpc</text><text x="312" y="94" font-size="9" fill="#f2a65a">non-macOS host must set:</text><text x="312" y="110" font-size="8.5" fill="#f2a65a">appium:udid</text><text x="312" y="122" font-size="8.5" fill="#f2a65a">appium:platformVersion</text>
+<path d="M560 92 L605 92" stroke="#6f7b90" stroke-width="1.5" marker-end="url(#arrtun)"/>
+<rect x="605" y="55" width="235" height="75" rx="6" fill="#1d2330" stroke="#5ad1a0"/><text x="617" y="76" font-size="10.5" font-weight="600" fill="#5ad1a0">iPhone/iPad, iOS/tvOS 18+</text><text x="617" y="94" font-size="9" fill="#c4ccda">WebDriverAgent already</text><text x="617" y="108" font-size="9" fill="#c4ccda">installed and running</text><text x="617" y="122" font-size="8.5" fill="#8893a8">no Xcode on host side</text>
+<line x1="20" y1="155" x2="840" y2="155" stroke="#6f7b90" stroke-dasharray="4,4"/>
+<rect x="20" y="172" width="820" height="46" rx="6" fill="#1d2330" stroke="#8893a8"/><text x="34" y="191" font-size="10.5" font-weight="600">Driving a simulator instead of a real device</text><text x="34" y="207" font-size="9" fill="#c4ccda">still requires macOS; beta 4's tunnel does not change this, there is no non-Mac iOS simulator</text>
+<defs><marker id="arrtun" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#6f7b90"/></marker></defs>
+<text x="20" y="238" font-size="8.5" fill="#8893a8">Source: testmuai.com/blog/whats-new-in-appium-4, read 23 October 2026.</text>
+</g></svg>
+
+<p>Read closely, the claim is narrower than "Appium no longer needs Xcode for iOS." It is "the control loop no longer needs Xcode, provided WebDriverAgent already exists on the device." Getting WDA onto a device in the first place is still, as far as the public tooling goes, an Xcode-shaped problem: WDA is an XCTest bundle, and XCTest bundles are built, signed, and installed through Apple's own toolchain. What beta 4 removes is the requirement that the machine doing the ongoing tapping, typing, and reading also be the machine that holds Xcode.</p>
+
+<h2 id="evidence">Six steps, and two of them say Xcode</h2>
+
+<p>phoneshell's own bootstrap, documented directly in <code>phoneshell/device.py</code>'s module docstring, lays out exactly where a Mac with Xcode is load-bearing. Step 1 is "Xcode selected," because <code>devicectl</code>, the detached launcher phoneshell prefers, only ships with Xcode and not with the Command Line Tools alone; the docstring notes this is why <code>DEVELOPER_DIR</code> has to point at a full Xcode install. Step 4 is "WDA built + signed," and the code backing it calls <code>xcodebuild test-without-building</code> directly against a project checked into the Blomega team's own signing setup. Only step 6, launching WDA detached with <code>xcrun devicectl device process launch</code> so nothing on the Mac has to stay attached, resembles what Appium 4 beta 4's tunnel is doing: driving a device that is already instrumented, without holding a build tool open for the whole session.</p>
+
+<svg viewBox="0 0 860 460" style="width:100%;height:auto" role="img" aria-label="Diagram of phoneshell's six-step device bootstrap from device.py, with Xcode requirements marked. Step 1, Xcode selected, requires Xcode because devicectl only ships with it. Step 2, device visible, no Xcode requirement. Step 3, Developer Mode on, no Xcode requirement. Step 4, WDA built and signed, requires Xcode because it calls xcodebuild test-without-building directly. Step 5, WDA installed and stripped of embedded XCTest frameworks, no Xcode requirement at that point. Step 6, WDA running, launched detached via devicectl, no Xcode held open during the launch itself. A separate box shows Appium 4 beta 4's XCUITest driver needing zero of these steps to require Xcode on the driving machine, provided WebDriverAgent is already installed, which corresponds only to having already completed phoneshell's steps 1 through 5.">
+<rect x="0" y="0" width="860" height="460" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">phoneshell's six-step bootstrap: where Xcode is load-bearing</text>
+<rect x="20" y="46" width="390" height="46" rx="6" fill="#262d3d" stroke="#f2a65a"/><text x="32" y="64" font-size="10.5" font-weight="600" fill="#f2a65a">1. Xcode selected</text><text x="32" y="80" font-size="9.5" fill="#c4ccda">devicectl only ships with Xcode, not Command Line Tools</text>
+<rect x="430" y="46" width="410" height="46" rx="6" fill="#1d2330" stroke="#6f7b90"/><text x="442" y="64" font-size="10.5" font-weight="600">2. Device visible</text><text x="442" y="80" font-size="9.5" fill="#c4ccda">paired, trusted, connected; no Xcode-specific step</text>
+<rect x="20" y="102" width="390" height="46" rx="6" fill="#1d2330" stroke="#6f7b90"/><text x="32" y="120" font-size="10.5" font-weight="600">3. Developer Mode on</text><text x="32" y="136" font-size="9.5" fill="#c4ccda">a device setting, then a reboot</text>
+<rect x="430" y="102" width="410" height="46" rx="6" fill="#262d3d" stroke="#f2a65a"/><text x="442" y="120" font-size="10.5" font-weight="600" fill="#f2a65a">4. WDA built + signed</text><text x="442" y="136" font-size="9.5" fill="#f2a65a">calls xcodebuild test-without-building directly</text>
+<rect x="20" y="158" width="390" height="46" rx="6" fill="#1d2330" stroke="#6f7b90"/><text x="32" y="176" font-size="10.5" font-weight="600">5. WDA installed</text><text x="32" y="192" font-size="9.5" fill="#c4ccda">stripped of embedded XCTest frameworks for iOS 17+</text>
+<rect x="430" y="158" width="410" height="46" rx="6" fill="#1d2330" stroke="#5ad1a0"/><text x="442" y="176" font-size="10.5" font-weight="600">6. WDA running</text><text x="442" y="192" font-size="9.5" fill="#5ad1a0">launched detached via devicectl, port 8100</text>
+<line x1="20" y1="222" x2="840" y2="222" stroke="#6f7b90" stroke-dasharray="4,4"/>
+<rect x="20" y="240" width="820" height="60" rx="8" fill="#1d2330" stroke="#5ad1a0"/>
+<text x="34" y="263" font-size="11" font-weight="600">Appium 4 beta 4, XCUITest driver, non-macOS host</text>
+<text x="34" y="282" font-size="10" fill="#5ad1a0">0 of its own steps require Xcode, but it still assumes phoneshell's steps 1-5 already happened, on some Mac, at some point</text>
+<text x="20" y="320" font-size="9.5" fill="#8893a8">Source: phoneshell/device.py module docstring and function bodies; testmuai.com/blog/whats-new-in-appium-4, read 23 October 2026.</text>
+</g></svg>
+
+<p>For comparison, the pattern this site has already documented for driving a phone with zero on-device instrumentation at all is physical, not a tunnel: an ESP32 microcontroller pressing the touchscreen from outside, with no Xcode and no accessibility tree in the loop because there is no WDA session to begin with (<a href="https://blolabel.ai/blog/screen-changed-is-the-only-check-it-has/">covered here</a>). Appium 4 beta 4's approach is the opposite trade: it keeps WDA, and the rich accessibility-tree access that comes with it, and removes only the Mac that would otherwise have to sit between the test script and the tunnel.</p>
+
+<table>
+  <thead><tr><th>Dimension</th><th>Appium 4 beta 4 (XCUITest, non-macOS host)</th><th>phoneshell bootstrap</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>Host OS to drive a real device</td><td>Any OS; <code>appium-ios-remotexpc</code> tunnel is the only requirement</td><td>macOS with Xcode installed and selected (step 1)</td><td>testmuai.com; phoneshell/device.py</td></tr>
+    <tr><td>Xcode needed to build/sign WDA</td><td>Not addressed; assumes WDA already installed</td><td>Yes, step 4 calls <code>xcodebuild test-without-building</code> directly</td><td>phoneshell/device.py</td></tr>
+    <tr><td>Launch mechanism once WDA exists</td><td>Tunnel via <code>appium-ios-remotexpc</code>, no build tool held open</td><td><code>xcrun devicectl device process launch</code>, detached (step 6)</td><td>testmuai.com; phoneshell/device.py</td></tr>
+    <tr><td>Simulators</td><td>Still require macOS, unaffected by this beta</td><td>Not used; phoneshell drives only physical hardware</td><td>testmuai.com; phoneshell houseFacts</td></tr>
+    <tr><td>Stability</td><td>Fourth of weekly betas, no GA date announced</td><td>Default launcher is "auto", with devicectl/dvt/xcodebuild as explicit fallbacks</td><td>testmuai.com; phoneshell/cli.py</td></tr>
+  </tbody>
+</table>
+
+<h2 id="method">What it means for anyone driving a real iPhone from something other than a Mac</h2>
+
+<ul>
+  <li>Beta 4 is good news specifically for the control loop, not the setup. A CI runner on Linux could, in principle, hold open an Appium session against a physical iPhone all day with no Xcode license, no macOS VM, and no build step in sight, as long as something else put WDA on that phone first.</li>
+  <li>That "something else" is still, in practice, a Mac running Xcode, the same machine phoneshell's steps 1 and 4 require. Nothing in the beta 4 reporting we found describes a non-Xcode path to building and signing WDA itself; the tunnel is a way to stop depending on that machine after the fact, not a way to avoid it.</li>
+  <li>phoneshell's own launcher choice (<code>auto | devicectl | dvt | xcodebuild</code> in <code>cli.py</code>) already treats "hold a build tool open" and "launch something already built" as different operations, the same distinction beta 4's tunnel draws. phoneshell has simply never had a reason to move the second half off the Mac, because its Mac is already there for the first half.</li>
+  <li>Simulators are the one place this beta changes nothing for anyone: there is no tvOS or iOS simulator outside macOS, so any workflow that needs simulated devices rather than physical ones gets no benefit from a non-Mac host regardless of which driver version it runs.</li>
+</ul>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># Appium 4 beta 4's own claims (single-sourced; check the project's own notes directly)
+curl -s https://www.testmuai.com/blog/whats-new-in-appium-4/ | grep -i "remotexpc\|tunnel-creation\|beta 4\|October"
+# Appium's own release history, to confirm or correct the 9 October 2026 date:
+curl -s https://github.com/appium/appium/releases | grep -i "4.0.0-beta"
+
+git clone https://github.com/Blomega/phoneshell && cd phoneshell
+sed -n '1,25p' phoneshell/device.py       # the six-step bootstrap, in the module's own words
+grep -n "xcodebuild" phoneshell/device.py phoneshell/cli.py   # every place Xcode is load-bearing
+grep -n "\"auto\"\|devicectl\|\"dvt\"\|\"xcodebuild\"" phoneshell/cli.py   # the four launcher choices</code></pre>
+
+<h2 id="falsify">What would prove this wrong</h2>
+
+<p>We claim Appium 4 beta 4's no-Xcode tunnel still requires WebDriverAgent to be pre-installed by some other, Xcode-dependent process. That is wrong the moment the XCUITest driver's own documentation describes a way to build, sign, and install WDA onto a real device without Xcode anywhere in that chain; we found none as of 23 October 2026. We also report the 9 October 2026 beta 4 date as single-sourced from a vendor blog; that is wrong if Appium's own GitHub releases page gives a different date, which we were unable to load directly in this check and will revisit by 31 January 2027.</p>
+
+<section class="sources">
+  <h2 id="sources">Sources</h2>
+  <ol>
+    <li>TestMu AI, <a href="https://www.testmuai.com/blog/whats-new-in-appium-4/">What's New in Appium 4</a>, beta 4 dated 9 October 2026, read 23 October 2026.</li>
+    <li>Blolabel, <a href="https://github.com/Blomega/phoneshell/blob/main/phoneshell/device.py">phoneshell/device.py</a>, module docstring and WDA build/launch functions, read 23 October 2026.</li>
+    <li>Blolabel, <a href="https://github.com/Blomega/phoneshell/blob/main/phoneshell/cli.py">phoneshell/cli.py</a>, launcher option handling, read 23 October 2026.</li>
+    <li>Blolabel, <a href="https://blolabel.ai/blog/screen-changed-is-the-only-check-it-has/">A $7 ESP32 drives a real iPhone with no Xcode and no accessibility tree</a>, for the contrasting hardware-only approach, read 23 October 2026.</li>
+  </ol>
+</section>
+</article>
+</div>
+</body></html>
