@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Apple's AppIntentsTesting runs an app's own intents with &quot;no mocks, no stubs&quot; and no UI at all; phoneshell's one Shortcuts call is a URL string with no return type - Blolabel</title>
+<meta name="description" content="WWDC26 session 295 introduces AppIntentsTesting, a framework that executes an app's App Intents across process boundaries and asserts on typed results, built on the same path Siri, Shortcuts and Spotlight use, with no UI automation anywhere in the test. phoneshell's own closest equivalent, a shortcuts://run-shortcut deeplink, is an untyped URL string that returns nothing phoneshell can check.">
+<link rel="canonical" href="https://blolabel.ai/blog/no-ui-automation-at-all-appintentstesting/">
+<meta property="og:title" content="Apple's AppIntentsTesting runs an app's own intents with &quot;no mocks, no stubs&quot; and no UI at all; phoneshell's one Shortcuts call is a URL string with no return type - Blolabel">
+<meta property="og:description" content="WWDC26's AppIntentsTesting executes App Intents across process boundaries with no UI automation at all. phoneshell's only comparable call, a shortcuts:// deeplink, is an untyped URL string with no return value to check.">
+<meta property="og:url" content="https://blolabel.ai/blog/no-ui-automation-at-all-appintentstesting/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/no-ui-automation-at-all-appintentstesting-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"Apple's AppIntentsTesting runs an app's own intents with \"no mocks, no stubs\" and no UI at all; phoneshell's one Shortcuts call is a URL string with no return type",
+ "description":"WWDC26 session 295 introduces AppIntentsTesting, which executes App Intents across process boundaries and asserts on typed results, with no UI automation anywhere in the test. phoneshell's closest equivalent, a shortcuts://run-shortcut deeplink, is an untyped URL string that returns nothing phoneshell can check.",
+ "datePublished":"2026-10-23","dateModified":"2026-10-23",
+ "url":"https://blolabel.ai/blog/no-ui-automation-at-all-appintentstesting/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/no-ui-automation-at-all-appintentstesting/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"},
+ "image":"https://blolabel.ai/images/blog/no-ui-automation-at-all-appintentstesting-hero.png",
+ "citation":["https://developer.apple.com/videos/play/wwdc2026/295","https://github.com/Blomega/phoneshell/blob/main/phoneshell/apps.py"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "What is AppIntentsTesting?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "AppIntentsTesting is a framework Apple introduced at WWDC26 in session 295, Validate your App Intents adoption with AppIntentsTesting. It executes an app's own App Intents across process boundaries using the same infrastructure Siri, Shortcuts and Spotlight rely on, builds an IntentDefinitions object from the app's bundle identifier, calls makeIntent with parameters, runs the intent on-device, and asserts on the typed entity it returns. The session states plainly that these tests do not depend on any UI."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How is this different from UI automation tools like XCUITest or Appium?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "UI automation tools, including the ones phoneshell is built on, drive an app by simulating taps, swipes and text entry against whatever is on screen, then read the screen or the accessibility tree back to check the result. AppIntentsTesting skips the screen entirely: it calls the app's intent code directly, in its own process, and checks the structured value that comes back. The session describes this explicitly as having no mocks, no stubs, and no UI dependency at all."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does phoneshell have anything like this?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Not really. phoneshell's APP_SHORTCUTS table in phoneshell/apps.py has one entry that reaches toward Apple's intents system, a shortcuts://run-shortcut deeplink that opens the Shortcuts app with a name and a text parameter baked into a URL string. It has no typed parameters, no entity query, and no return value phoneshell's checks can read; whatever the shortcut actually does has to be verified back through the screen, the same UI phoneshell's other 79-plus tasks already depend on."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#evidence">Evidence</a>
+    <a href="#method">What it means</a>
+    <a href="/blog/">Notes</a>
+    <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind foundational">foundational</span>
+    <time datetime="2026-10-23">23 October 2026</time>
+    <span>7 min read</span>
+  </div>
+  <h1>Apple's AppIntentsTesting runs an app's own intents with "no mocks, no stubs" and no UI at all; phoneshell's one Shortcuts call is a URL string with no return type</h1>
+  <p class="standfirst">Every tool this site measures drives a phone by pretending to be a finger: tap a point, type into a field, read the screen back. Apple's own AppIntentsTesting framework, shown at WWDC26, skips the finger and the screen entirely by calling an app's intent code directly and checking what comes back. phoneshell's nearest equivalent is a URL string with nothing to check at all.</p>
+
+<p>WWDC26 session 295, "Validate your App Intents adoption with AppIntentsTesting," a roughly 26-minute talk, introduces AppIntentsTesting as a framework for checking an app's App Intents through the same infrastructure Siri, Shortcuts and Spotlight already use to call into it. The session's own description says it lets a developer "execute intents, inspect results, and test entities and queries" without UI automation. Working from a sample calendar app called CometCal, the speaker builds a UI-testing bundle, constructs an <code>IntentDefinitions</code> object from the app's bundle identifier, calls <code>makeIntent</code> with parameters, runs the intent on-device, and asserts on the entity it returns, stating directly that the test runner "executes your App Intents across process boundaries" and receives results "with no mocks, no stubs," and that the tests "don't depend on any UI" at all. The test bundle needs only the target app's bundle identifier, not a copy of its source.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/no-ui-automation-at-all-appintentstesting-hero.png" alt="Abstract technical illustration on a dark grid: on one side a chain of glyphs showing a finger-tap icon feeding a screen-rectangle icon feeding an eye icon reading it back, representing UI automation, and on the other side a single direct glowing line from a code-bracket icon straight to a typed-value icon, bypassing any screen shape entirely, cool blues and teals with one amber accent on the direct line" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="finding">What changed, and when</h2>
+
+<p>App Intents itself is not new: Apple has been pushing developers toward it since SiriKit's deprecation was raised at WWDC 2026, and this site has already covered the companion session on onscreen awareness from the same week. What session 295 adds is specifically a testing story, and the gap it closes is concrete. Before AppIntentsTesting, confirming that an app's own App Intents worked meant either driving the UI that exposes them (a Shortcuts run, a Siri request, a Spotlight tap) or writing bespoke unit tests against intent classes directly, with no shared harness and no guarantee either path matched what the system actually does when it calls an intent for real. AppIntentsTesting routes a test through the exact mechanism Siri, Shortcuts and Spotlight use, so passing it is evidence about the real call path, not a proxy for it.</p>
+
+<p>The session also describes a layered testing strategy rather than a single tool: unit-test the fundamental types first, actions, data, and queries, in isolation; then integration-test the deeper system reaches, view annotations, Spotlight indexing, and intents that combine across apps; and still test manually with Siri and Shortcuts on top of both, because AppIntentsTesting validates the intent layer, not the voice or suggestion layer sitting above it.</p>
+
+<svg viewBox="0 0 860 380" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting two test paths for the same action. The UI automation path, which phoneshell and tools like it use, goes from an agent or test script, through a simulated tap or type on screen, through the rendered UI, and back through a screenshot or accessibility tree read to check the result. The AppIntentsTesting path goes from a test bundle, through makeIntent with typed parameters, directly across a process boundary into the app's own intent code, which runs on-device and returns a typed entity the test asserts on directly, with no screen, no tap, and no read-back step anywhere in the path.">
+<rect x="0" y="0" width="860" height="380" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Two ways to check whether an app did the thing</text>
+<text x="20" y="54" font-size="11" font-weight="600" fill="#f2a65a">UI automation (phoneshell, XCUITest, Appium)</text>
+<rect x="20" y="64" width="140" height="44" rx="6" fill="#1d2330" stroke="#6f7b90"/><text x="30" y="90" font-size="10" fill="#c4ccda">agent / test script</text>
+<path d="M160 86 L200 86" stroke="#6f7b90" stroke-width="1.5" marker-end="url(#arr2)"/>
+<rect x="200" y="64" width="140" height="44" rx="6" fill="#1d2330" stroke="#6f7b90"/><text x="210" y="90" font-size="10" fill="#c4ccda">simulated tap / type</text>
+<path d="M340 86 L380 86" stroke="#6f7b90" stroke-width="1.5" marker-end="url(#arr2)"/>
+<rect x="380" y="64" width="140" height="44" rx="6" fill="#1d2330" stroke="#6f7b90"/><text x="390" y="90" font-size="10" fill="#c4ccda">rendered UI changes</text>
+<path d="M520 86 L560 86" stroke="#6f7b90" stroke-width="1.5" marker-end="url(#arr2)"/>
+<rect x="560" y="64" width="270" height="44" rx="6" fill="#262d3d" stroke="#f2a65a"/><text x="570" y="90" font-size="10" fill="#f2a65a">read screenshot / a11y tree back to check</text>
+<line x1="20" y1="140" x2="840" y2="140" stroke="#6f7b90" stroke-dasharray="4,4"/>
+<text x="20" y="168" font-size="11" font-weight="600" fill="#5ad1a0">AppIntentsTesting</text>
+<rect x="20" y="178" width="140" height="44" rx="6" fill="#1d2330" stroke="#5ad1a0"/><text x="30" y="204" font-size="10" fill="#c4ccda">test bundle, app's bundle id</text>
+<path d="M160 200 L200 200" stroke="#5ad1a0" stroke-width="1.5" marker-end="url(#arr3)"/>
+<rect x="200" y="178" width="160" height="44" rx="6" fill="#1d2330" stroke="#5ad1a0"/><text x="210" y="204" font-size="10" fill="#c4ccda">makeIntent(params)</text>
+<path d="M360 200 L410 200" stroke="#5ad1a0" stroke-width="1.5" marker-end="url(#arr3)"/>
+<rect x="410" y="178" width="200" height="44" rx="6" fill="#1d2330" stroke="#5ad1a0"/><text x="420" y="196" font-size="10" fill="#c4ccda">runs in app's own process</text><text x="420" y="212" font-size="9" fill="#5ad1a0">no mocks, no stubs</text>
+<path d="M610 200 L650 200" stroke="#5ad1a0" stroke-width="1.5" marker-end="url(#arr3)"/>
+<rect x="650" y="178" width="180" height="44" rx="6" fill="#262d3d" stroke="#5ad1a0"/><text x="660" y="204" font-size="10" fill="#5ad1a0">typed entity, asserted directly</text>
+<text x="20" y="252" font-size="10" fill="#8893a8">No screen, no tap, no screenshot, and no accessibility-tree read anywhere in the second path.</text>
+<defs><marker id="arr2" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#6f7b90"/></marker><marker id="arr3" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#5ad1a0"/></marker></defs>
+<text x="20" y="300" font-size="9.5" fill="#8893a8">Source: WWDC26 session 295 transcript and chapter list, developer.apple.com/videos/play/wwdc2026/295, read 23 October 2026.</text>
+</g></svg>
+
+<h2 id="evidence">What phoneshell has instead of an intent layer</h2>
+
+<p><code>phoneshell/apps.py</code> defines an <code>APP_SHORTCUTS</code> table of deeplinks it can fire to skip past UI steps, and exactly one entry in that table touches Apple's own intents system at all: <code>"com.apple.shortcuts": {"run": "shortcuts://run-shortcut?name={name}&amp;input=text&amp;text={text}"}</code>, a URL scheme that asks the Shortcuts app to run a named shortcut with a single text input. It has none of the structure AppIntentsTesting is built around: no typed parameter list, no entity query, and critically, no return value. Firing the URL tells iOS to go run something; whatever that something actually did has to be confirmed the same way every other phoneshell task confirms anything, by reading the screen or the accessibility tree afterward. phoneshell's whole grading model, scoring a task from device state rather than an agent's self-report, exists because it has no other channel into what happened; AppIntentsTesting's whole point is that App Intents give you that other channel for free, a typed value handed back across a process boundary with no screen involved at any point.</p>
+
+<table>
+  <thead><tr><th>Dimension</th><th>AppIntentsTesting</th><th>phoneshell</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>What gets called</td><td>The app's own App Intent, via <code>makeIntent</code></td><td>A Shortcuts URL scheme, <code>shortcuts://run-shortcut</code></td><td>WWDC26 session 295; phoneshell/apps.py</td></tr>
+    <tr><td>Parameters</td><td>Typed, declared on the intent</td><td>Two untyped strings interpolated into a URL</td><td>WWDC26 session 295; phoneshell/apps.py</td></tr>
+    <tr><td>Return value</td><td>A typed entity, asserted on directly</td><td>None; the URL call returns nothing to check</td><td>WWDC26 session 295; phoneshell/apps.py</td></tr>
+    <tr><td>How success is confirmed</td><td>In-process assertion, same call</td><td>A later screenshot or accessibility-tree read, separate step</td><td>WWDC26 session 295; phoneshell/bench checks</td></tr>
+    <tr><td>UI involved</td><td>None; explicitly stated in the session</td><td>Always; it is the only channel phoneshell has</td><td>WWDC26 session 295; phoneshell houseFacts</td></tr>
+  </tbody>
+</table>
+
+<h2 id="method">What it means for anyone grading a phone agent rather than an app's own code</h2>
+
+<ul>
+  <li>AppIntentsTesting answers a question phoneshell does not ask: does this app's own intent code behave correctly. phoneshell asks a different one: did an external agent, using only what a person could see and tap, get the phone into the right state. The two are complementary, not competing, but they are easy to conflate because both get called "testing a phone."</li>
+  <li>A phone agent benchmark could, in principle, use App Intents as a ground-truth oracle: run the same action through an app's intent to get a typed, verified result, then compare it against what the agent, working blind through the screen, reported or left on screen. phoneshell has no such oracle today; its one Shortcuts call is fire-and-forget, with device-state reads as the only verification that exists.</li>
+  <li>The layered strategy the session describes, unit-test the intent, integration-test the system reach, manually test Siri and Shortcuts on top, has no analog in phoneshell's own test design, which grades every one of its 80 tasks at a single layer, the same device-state check, regardless of whether the underlying action was simple or compound.</li>
+  <li>Because AppIntentsTesting needs only an app's bundle identifier and runs across a process boundary, it does not require the kind of screen access, accessibility labels, or visual grounding that every tool in this site's "vision versus the accessibility tree" coverage argues about. For whatever slice of an app's behavior is reachable through its own declared intents, that entire argument is moot: there is no screen in the loop to argue about.</li>
+</ul>
+
+<svg viewBox="0 0 820 400" style="width:100%;height:auto" role="img" aria-label="Diagram comparing Apple's three-layer AppIntentsTesting strategy from WWDC26 session 295, a unit layer testing actions, data and queries in isolation, an integration layer testing view annotations, Spotlight indexing and cross-app intents, and a manual layer testing Siri and Shortcuts, against phoneshell's single layer, a device-state check read from a screenshot or the accessibility tree, applied the same way across all 80 of its tasks regardless of whether the action is simple or compound.">
+<rect x="0" y="0" width="820" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Three layers for Apple's intents, one layer for all 80 phoneshell tasks</text>
+<text x="30" y="52" font-size="11" font-weight="600" fill="#5ad1a0">AppIntentsTesting&#39;s layered strategy (WWDC26 session 295)</text>
+<rect x="30" y="64" width="330" height="68" rx="6" fill="#1d2330" stroke="#5ad1a0"/>
+<text x="42" y="86" font-size="10.5" fill="#c4ccda">Unit layer</text>
+<text x="42" y="102" font-size="9.5" fill="#8893a8">actions, data, queries, in isolation</text>
+<path d="M195 132 L195 156" stroke="#6f7b90" stroke-width="1.5" marker-end="url(#arr4)"/>
+<rect x="30" y="156" width="330" height="68" rx="6" fill="#1d2330" stroke="#5ad1a0"/>
+<text x="42" y="178" font-size="10.5" fill="#c4ccda">Integration layer</text>
+<text x="42" y="194" font-size="9.5" fill="#8893a8">view annotations, Spotlight indexing, cross-app intents</text>
+<path d="M195 224 L195 248" stroke="#6f7b90" stroke-width="1.5" marker-end="url(#arr4)"/>
+<rect x="30" y="248" width="330" height="68" rx="6" fill="#1d2330" stroke="#5ad1a0"/>
+<text x="42" y="270" font-size="10.5" fill="#c4ccda">Manual layer</text>
+<text x="42" y="286" font-size="9.5" fill="#8893a8">Siri and Shortcuts tested on top of both</text>
+<text x="460" y="52" font-size="11" font-weight="600" fill="#f2a65a">phoneshell&#39;s strategy</text>
+<rect x="460" y="64" width="330" height="252" rx="6" fill="#262d3d" stroke="#f2a65a"/>
+<text x="472" y="90" font-size="10.5" fill="#f2a65a">1 layer, applied to all 80 tasks</text>
+<text x="472" y="112" font-size="9.5" fill="#c4ccda">device-state check: a screenshot or</text>
+<text x="472" y="128" font-size="9.5" fill="#c4ccda">accessibility-tree read, taken after</text>
+<text x="472" y="144" font-size="9.5" fill="#c4ccda">the action runs</text>
+<text x="472" y="172" font-size="9.5" fill="#c4ccda">same depth whether the task is a</text>
+<text x="472" y="188" font-size="9.5" fill="#c4ccda">single tap or a compound, multi-step</text>
+<text x="472" y="204" font-size="9.5" fill="#c4ccda">action across several apps</text>
+<text x="472" y="232" font-size="9.5" fill="#8893a8">no unit layer, no integration layer,</text>
+<text x="472" y="248" font-size="9.5" fill="#8893a8">no separate manual pass: 1 check</text>
+<text x="472" y="264" font-size="9.5" fill="#8893a8">stands in for all three</text>
+<text x="20" y="344" font-size="9" fill="#8893a8">Source: WWDC26 session 295 transcript and chapter list; phoneshell bench task definitions, read 23 October 2026.</text>
+<defs><marker id="arr4" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#6f7b90"/></marker></defs>
+</g></svg>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># WWDC26 session 295's own description and chapter list
+open "https://developer.apple.com/videos/play/wwdc2026/295"
+# community transcript and chapter index:
+curl -s https://nonstrict.eu/wwdcindex/wwdc2026/295/ | grep -i "makeIntent\|no mocks\|no UI\|IntentDefinitions"
+
+git clone https://github.com/Blomega/phoneshell && cd phoneshell
+grep -n "APP_SHORTCUTS" -A5 phoneshell/apps.py     # the one Shortcuts deeplink, and everything it is missing
+grep -rn "makeIntent\|IntentDefinitions\|AppIntentsTesting" phoneshell/ || echo "phoneshell has no App Intents test layer"</code></pre>
+
+<h2 id="falsify">What would prove this wrong</h2>
+
+<p>We claim phoneshell has no channel for confirming an action's result other than reading the screen or accessibility tree afterward. That is wrong the moment any call in <code>phoneshell/apps.py</code> or elsewhere in the repository reads a typed return value from an intent, a Shortcuts run, or any API call rather than inferring success from device state; we found none as of 23 October 2026. We also report AppIntentsTesting as requiring only the target app's bundle identifier, not its source, based on the session's own framing; that is wrong if the full documentation describes additional requirements the 26-minute session omitted, which we will check against Apple's AppIntentsTesting reference pages by 30 April 2027.</p>
+
+<section class="sources">
+  <h2 id="sources">Sources</h2>
+  <ol>
+    <li>Apple, <a href="https://developer.apple.com/videos/play/wwdc2026/295">Validate your App Intents adoption with AppIntentsTesting</a>, WWDC26 session 295, read 23 October 2026.</li>
+    <li>Community transcript and chapter index, <a href="https://nonstrict.eu/wwdcindex/wwdc2026/295/">nonstrict.eu/wwdcindex/wwdc2026/295</a>, read 23 October 2026.</li>
+    <li>Session summary, <a href="https://wwdcnotes.com/documentation/wwdc26-295-validate-your-app-intents-adoption-with-appintentstesting/">wwdcnotes.com</a>, read 23 October 2026.</li>
+    <li>Blolabel, <a href="https://github.com/Blomega/phoneshell/blob/main/phoneshell/apps.py">phoneshell/apps.py</a>, <code>APP_SHORTCUTS</code>, read 23 October 2026.</li>
+  </ol>
+</section>
+</article>
+</div>
+</body></html>
