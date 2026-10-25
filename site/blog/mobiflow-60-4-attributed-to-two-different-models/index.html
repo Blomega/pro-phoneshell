@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MobiFlow's own text and its own table disagree about which model scores 60.4; phoneshell never needs the trajectory graph MobiFlow builds to referee that argument - Blolabel</title>
+<meta name="description" content="MobiFlow (arXiv:2604.09587) fuses real third-party app trajectories into a state-transition graph because AndroidWorld-style benchmarks need emulator state most apps do not expose. Its own Section 5.2 attributes a 60.4 score to GUI-Owl while Table 3 lists 60.4 as UI-TARS-1.5's success rate and 77.9 as GUI-Owl's own completion rate. phoneshell sidesteps the whole problem by grading a real device's own OS-level state.">
+<link rel="canonical" href="https://blolabel.ai/blog/mobiflow-60-4-attributed-to-two-different-models/">
+<meta property="og:title" content="MobiFlow's own text and its own table disagree about which model scores 60.4; phoneshell never needs the trajectory graph MobiFlow builds to referee that argument - Blolabel">
+<meta property="og:description" content="MobiFlow's Section 5.2 and its own Table 3 disagree about which model scores 60.4. phoneshell never needs a fused trajectory graph in the first place: it grades a real iPhone's own OS-level state.">
+<meta property="og:url" content="https://blolabel.ai/blog/mobiflow-60-4-attributed-to-two-different-models/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/mobiflow-60-4-attributed-to-two-different-models-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"MobiFlow's own text and its own table disagree about which model scores 60.4; phoneshell never needs the trajectory graph MobiFlow builds to referee that argument",
+ "description":"MobiFlow (arXiv:2604.09587) fuses real third-party app trajectories into a state-transition graph because AndroidWorld-style benchmarks need emulator state most apps do not expose. Its own Section 5.2 attributes a 60.4 score to GUI-Owl while Table 3 lists 60.4 as UI-TARS-1.5's success rate and 77.9 as GUI-Owl's own completion rate. phoneshell sidesteps the whole problem by grading a real device's own OS-level state.",
+ "datePublished":"2026-10-24","dateModified":"2026-10-24",
+ "url":"https://blolabel.ai/blog/mobiflow-60-4-attributed-to-two-different-models/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/mobiflow-60-4-attributed-to-two-different-models/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"},
+ "image":"https://blolabel.ai/images/blog/mobiflow-60-4-attributed-to-two-different-models-hero.png",
+ "citation":["https://arxiv.org/abs/2604.09587", "https://github.com/Blomega/phoneshell/blob/main/phoneshell/bench/schema.py"]}
+</script>
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What problem is MobiFlow's trajectory fusion trying to solve?", "acceptedAnswer": {"@type": "Answer", "text": "MobiFlow (arXiv:2604.09587) argues that AndroidWorld-style benchmarks rely on system-level emulator state that most third-party apps do not expose, so it instead collects multiple human trajectories through the same task (the paper gives an example of 7 trajectories covering all valid paths through a 15-step Weibo-comment task) and fuses them into a state-transition graph, across 20 third-party apps and 240 real-world tasks."}}, {"@type": "Question", "name": "Where does MobiFlow's own text disagree with its own results table?", "acceptedAnswer": {"@type": "Answer", "text": "The paper's introduction and Table 3 both report UI-TARS-1.5 at a 60.4% success rate and GUI-Owl at 55.7%. Section 5.2 instead states that \\'GUI-Owl attains the highest completion rate (CR) of 60.4,\\' which assigns the 60.4 figure to a different model (GUI-Owl rather than UI-TARS-1.5) and a different metric (completion rate rather than success rate) than the figure Table 3 lists under that exact number. Table 3's own completion-rate column puts GUI-Owl at 77.9, not 60.4. We could not reconcile the two readings from the text available."}}, {"@type": "Question", "name": "Why doesn't phoneshell need a trajectory-fusion graph?", "acceptedAnswer": {"@type": "Answer", "text": "MobiFlow's graph exists to work around apps that do not expose internal state to an emulator. phoneshell does not run in an emulator: its checks (see phoneshell/bench/schema.py's Check class) read the real device's own accessibility tree, foreground app, and settings values directly from the physical iPhone, so there is no app-internal state to infer by fusing multiple recorded paths through it."}}]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#evidence">Evidence</a>
+    <a href="#method">What it means</a>
+    <a href="/blog/">Notes</a>
+    <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-24">24 October 2026</time>
+    <span>7 min read</span>
+  </div>
+  <h1>MobiFlow's own text and its own table disagree about which model scores 60.4; phoneshell never needs the trajectory graph MobiFlow builds to referee that argument</h1>
+  <p class="standfirst">MobiFlow's introduction and its Table 3 agree that UI-TARS-1.5 scores 60.4% and GUI-Owl scores 55.7%. Section 5.2 of the same paper instead credits that 60.4 figure to GUI-Owl, under a different metric than the one Table 3 defines. The two readings cannot both be right, and the paper does not say which one is. phoneshell never has to adjudicate a result like this, because it never needs the trajectory-fusion graph MobiFlow built to get a result in the first place.</p>
+
+<p>MobiFlow, posted to arXiv as 2604.09587 by a team including researchers at Shanghai Jiao Tong University, starts from a real constraint: AndroidWorld-style benchmarks score a task by reading system-level emulator state, and most third-party apps simply do not expose that state the way the handful of open-source reference apps those benchmarks lean on do. MobiFlow's answer is to record multiple human trajectories through the same task on a real third-party app (the paper's own example: 7 recorded paths cover every valid way to complete a roughly 15-step Weibo-comment task) and fuse them into a single state-transition graph, which becomes the thing a model's run is checked against. Across 20 third-party apps and 240 real-world tasks, the paper reports UI-TARS-1.5 at 60.4% and GUI-Owl at 55.7% success rate in its base scenario, in both the introduction and Table 3.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/mobiflow-60-4-attributed-to-two-different-models-hero.png" alt="Abstract technical illustration on a dark grid: seven thin divergent lines representing separate recorded paths converging and merging into one thick braided graph structure with branching nodes, labeled with a highlighted number that appears twice in two different colored boxes pointing to two different small model-icon squares, with a separate, isolated single phone-outline icon off to one side with a direct straight line to a small checkmark and no graph behind it at all, cool blues and teals with one amber accent on the ambiguous duplicated number" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="finding">What changed, and when</h2>
+
+<p>Section 5.2 of the same paper states that "GUI-Owl attains the highest completion rate (CR) of 60.4." That sentence assigns the number 60.4 to GUI-Owl and to a metric called completion rate. But Table 3 lists 60.4 as UI-TARS-1.5's success rate (SR), and gives GUI-Owl's own completion-rate column a different value entirely, 77.9. Read literally, the paper's prose and its own table disagree about both which model earns the 60.4 figure and which metric it belongs to. We read this from the sections of the HTML version available to this check on 24 October 2026 and could not find a correction or an explanation for the mismatch elsewhere in the text; it may be a labeling slip in the prose, a table that was updated after the prose was written, or something else, and we are stating that plainly rather than picking the reading that makes a cleaner headline.</p>
+
+<svg viewBox="0 0 780 360" style="width:100%;height:auto" role="img" aria-label="Bar chart of base-scenario scores from MobiFlow's Table 3. UI-TARS-1.5 scores 60.4 percent success rate. GUI-Owl scores 55.7 percent success rate in the same table, but 77.9 percent on the table's own completion-rate column, and Section 5.2 of the same paper instead describes 60.4 as GUI-Owl's completion rate, a number Table 3 assigns to a different model under a different metric.">
+<rect x="0" y="0" width="780" height="360" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">MobiFlow Table 3 vs. Section 5.2's own description</text>
+<line x1="60" y1="310" x2="750" y2="310" stroke="#2a3140"/><text x="52" y="314" font-size="9.5" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="60" y1="250" x2="750" y2="250" stroke="#2a3140"/><text x="52" y="254" font-size="9.5" fill="#c4ccda" text-anchor="end">25</text>
+<line x1="60" y1="190" x2="750" y2="190" stroke="#2a3140"/><text x="52" y="194" font-size="9.5" fill="#c4ccda" text-anchor="end">50</text>
+<line x1="60" y1="130" x2="750" y2="130" stroke="#2a3140"/><text x="52" y="134" font-size="9.5" fill="#c4ccda" text-anchor="end">75</text>
+<line x1="60" y1="70" x2="750" y2="70" stroke="#2a3140"/><text x="52" y="74" font-size="9.5" fill="#c4ccda" text-anchor="end">100</text>
+<rect x="90" y="166" width="90" height="144" fill="#5ad1a0"/><text x="135" y="157" font-size="11" fill="#5ad1a0" text-anchor="middle">60.4</text><text x="135" y="328" font-size="9.5" fill="#c4ccda" text-anchor="middle">UI-TARS-1.5, Table 3 SR</text>
+<rect x="240" y="196" width="90" height="114" fill="#8893a8"/><text x="285" y="187" font-size="11" fill="#8893a8" text-anchor="middle">55.7</text><text x="285" y="328" font-size="9.5" fill="#c4ccda" text-anchor="middle">GUI-Owl, Table 3 SR</text>
+<rect x="390" y="79" width="90" height="231" fill="#e2715a"/><text x="435" y="70" font-size="11" fill="#e2715a" text-anchor="middle">77.9</text><text x="435" y="328" font-size="9.5" fill="#c4ccda" text-anchor="middle">GUI-Owl, Table 3 CR</text>
+<rect x="540" y="166" width="90" height="144" fill="#f2a65a"/><text x="585" y="157" font-size="11" fill="#f2a65a" text-anchor="middle">60.4</text><text x="585" y="328" font-size="9.5" fill="#c4ccda" text-anchor="middle">"GUI-Owl's CR" (&sect;5.2 text)</text>
+<text x="20" y="348" font-size="9.5" fill="#8893a8">Source: arXiv:2604.09587, Table 3 and Section 5.2, read 24 October 2026. SR = success rate, CR = completion rate.</text>
+</g></svg>
+
+<h2 id="evidence">Fusing trajectories to see state phoneshell just reads off the phone</h2>
+
+<p>MobiFlow's graph-fusion method exists for a specific reason: an emulator running a third-party app usually cannot tell a benchmark whether a task actually succeeded, because the app's own internal database is opaque from outside. Recording several real completions of the same task and fusing them into a state-transition graph gives the benchmark something to check a new run against, without needing the app's cooperation. phoneshell's checks (phoneshell/bench/schema.py's Check class) do not face this problem the same way, because phoneshell is not driving an emulator against an app that might hide its state. It drives one physical iPhone and reads the operating system's own signals directly: which app is in the foreground, what a Settings toggle's value is, what text is on screen, each as a named check kind rather than an inferred position in a fused graph. Where MobiFlow has to reconstruct what "done" looks like from multiple recordings because the app itself won't say, phoneshell can usually just ask the phone.</p>
+
+<svg viewBox="0 0 820 300" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting MobiFlow's method with phoneshell's. MobiFlow fuses seven recorded human trajectories through a third-party app into a state-transition graph, because the app's own internal state is opaque to an emulator, then checks a new agent run against that graph. phoneshell instead reads the real device's own operating system signals directly, foreground app, settings values, and on-screen text, with no graph and no fused trajectories needed.">
+<rect x="0" y="0" width="820" height="300" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Checking task success: MobiFlow vs. phoneshell</text>
+<rect x="40" y="55" width="330" height="175" rx="8" fill="#1d2330" stroke="#5ad1a0"/>
+<text x="54" y="78" font-size="11" font-weight="600" fill="#5ad1a0">MobiFlow</text>
+<text x="54" y="100" font-size="10" fill="#c4ccda">7 recorded human trajectories</text>
+<text x="54" y="118" font-size="10" fill="#c4ccda">&rarr; fused state-transition graph</text>
+<text x="54" y="136" font-size="10" fill="#c4ccda">&rarr; new run checked against graph</text>
+<text x="54" y="160" font-size="9.5" fill="#8893a8">needed because the app's own state</text>
+<text x="54" y="176" font-size="9.5" fill="#8893a8">is opaque to an emulator</text>
+<text x="54" y="200" font-size="10" fill="#5ad1a0">20 apps, 240 tasks</text>
+<rect x="450" y="55" width="330" height="175" rx="8" fill="#1d2330" stroke="#8893a8"/>
+<text x="464" y="78" font-size="11" font-weight="600" fill="#8893a8">phoneshell</text>
+<text x="464" y="100" font-size="10" fill="#c4ccda">one physical iPhone, iOS 26.6</text>
+<text x="464" y="118" font-size="10" fill="#c4ccda">&rarr; Check reads OS state directly</text>
+<text x="464" y="136" font-size="10" fill="#c4ccda">(foreground app, settings, text)</text>
+<text x="464" y="160" font-size="9.5" fill="#8893a8">no graph, no fused trajectories,</text>
+<text x="464" y="176" font-size="9.5" fill="#8893a8">no app cooperation needed</text>
+<text x="464" y="200" font-size="10" fill="#8893a8">80 tasks, 1 device</text>
+<text x="20" y="286" font-size="9" fill="#8893a8">Source: arXiv:2604.09587, Section 4.1; github.com/Blomega/phoneshell/blob/main/phoneshell/bench/schema.py, read 24 October 2026.</text>
+</g></svg>
+
+<table>
+  <thead><tr><th>Dimension</th><th>MobiFlow</th><th>phoneshell</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>How task success is checked</td><td>State-transition graph fused from multiple recorded human trajectories (7 covered one 15-step task)</td><td>Named Check objects reading OS-level device state directly (foreground app, settings value, on-screen text)</td><td>arXiv:2604.09587; phoneshell/bench/schema.py</td></tr>
+    <tr><td>Scale</td><td>20 third-party apps, 240 real-world tasks</td><td>80 public tasks, one physical iPhone 17 Pro Max, iOS 26.6</td><td>arXiv:2604.09587; blolabel.ai houseFacts</td></tr>
+    <tr><td>Reported model scores (base scenario)</td><td>UI-TARS-1.5 60.4% SR; GUI-Owl 55.7% SR / 77.9% CR (Table 3); &sect;5.2 text instead calls 60.4 GUI-Owl's CR</td><td>Not comparable; phoneshell reports one pass/fail per task, not SR/CR split</td><td>arXiv:2604.09587 Table 3 and &sect;5.2</td></tr>
+    <tr><td>Why the method exists</td><td>Most third-party apps do not expose system-level state an emulator can read</td><td>Not applicable; checks read the real device's own OS signals, no app cooperation needed</td><td>arXiv:2604.09587; phoneshell/bench/schema.py</td></tr>
+  </tbody>
+</table>
+
+<h2 id="method">What it means for anyone reading a benchmark's own numbers</h2>
+
+<ul>
+  <li>A number that appears twice in the same paper is not automatically the same claim twice. 60.4 shows up once as UI-TARS-1.5's success rate in Table 3 and once as a description of GUI-Owl's completion rate in Section 5.2's prose; treating those as corroborating each other, rather than checking which table column and which model each actually belongs to, would understate how uncertain the paper's own headline comparison is.</li>
+  <li>Trajectory fusion is a reasonable answer to a real constraint (most third-party apps hide their state from an emulator), and it is also a method with its own failure surface: a graph built from 7 human paths through one task is only as complete as those 7 paths, a judgment call the paper does not quantify with an error bound.</li>
+  <li>Running on a real device instead of an emulator does not make phoneshell's checks infallible; it changes what has to be trusted. phoneshell trusts the operating system's own accessibility tree and settings APIs instead of trusting that a handful of recorded trajectories cover every way a task could legitimately be completed.</li>
+  <li>Grading from device state, phoneshell's own house rule, is not a generic virtue independent of what state is actually available to read. It works here because iOS exposes a real accessibility tree and settings values to a connected tool; MobiFlow's method is what a benchmark has to build when that kind of direct read is not available at all.</li>
+</ul>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># MobiFlow's own Table 3 vs. its Section 5.2 description
+curl -s https://arxiv.org/html/2604.09587 | grep -i "60.4\|UI-TARS-1.5\|GUI-Owl\|completion rate"
+
+git clone https://github.com/Blomega/phoneshell && cd phoneshell
+grep -n "class Check\|kind:" phoneshell/bench/schema.py          # named check kinds, no fused graph
+grep -rn "foreground_app\|settings" phoneshell/bench/ | head -5  # checks read OS state directly</code></pre>
+
+<h2 id="falsify">What would prove this wrong</h2>
+
+<p>We claim MobiFlow's Table 3 and its Section 5.2 text assign the number 60.4 to two different models under two different metrics, with no reconciliation in the sections we read. That is wrong if a later revision of arXiv:2604.09587 corrects or explains the mismatch, which we will check by 30 April 2027. We also claim phoneshell's checks read real device OS state directly rather than inferring state from a fused trajectory graph; that is wrong the moment any check in <code>phoneshell/bench/schema.py</code> or its verifier does the latter, and we found none as of 24 October 2026.</p>
+
+<section class="sources">
+  <h2 id="sources">Sources</h2>
+  <ol>
+    <li><a href="https://arxiv.org/abs/2604.09587">MobiFlow: Real-World Mobile Agent Benchmarking through Trajectory Fusion</a>, arXiv:2604.09587, submitted 28 February 2026, read 24 October 2026.</li>
+    <li>Full text with Table 3 and Section 5.2: <a href="https://arxiv.org/html/2604.09587">arxiv.org/html/2604.09587</a>, read 24 October 2026.</li>
+    <li>Blolabel, <a href="https://github.com/Blomega/phoneshell/blob/main/phoneshell/bench/schema.py">phoneshell/bench/schema.py</a>, read 24 October 2026.</li>
+  </ol>
+</section>
+</article>
+</div>
+</body></html>
