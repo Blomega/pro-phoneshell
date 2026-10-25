@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ScaleWoB's five mobile agents average 27.92% against a human 92.08%, and the gap nearly doubles on long-horizon tasks to a 74-point spread; phoneshell has never put a human number next to its own 80 tasks - Blolabel</title>
+<meta name="description" content="ScaleWoB (arXiv:2605.25160) synthesizes 120 mobile GUI tasks across 63 simulated apps and measures the five highest-scoring published agents at an average 27.92% success rate, falling to 17.82% on its long-horizon subset, against a measured human success rate of 92.08%. phoneshell's own results report model scores and paired comparisons between models, but no human baseline run on the same 80 tasks.">
+<link rel="canonical" href="https://blolabel.ai/blog/human-92-agent-28-phoneshell-has-no-baseline-row/">
+<meta property="og:title" content="ScaleWoB's five mobile agents average 27.92% against a human 92.08%, and the gap nearly doubles on long-horizon tasks to a 74-point spread; phoneshell has never put a human number next to its own 80 tasks - Blolabel">
+<meta property="og:description" content="ScaleWoB's agents average 27.92% success against a 92.08% human baseline, falling to 17.82% on long-horizon tasks. phoneshell has never measured a human baseline on its own 80 tasks to compare against.">
+<meta property="og:url" content="https://blolabel.ai/blog/human-92-agent-28-phoneshell-has-no-baseline-row/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/human-92-agent-28-phoneshell-has-no-baseline-row-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"ScaleWoB's five mobile agents average 27.92% against a human 92.08%, and the gap nearly doubles on long-horizon tasks to a 74-point spread; phoneshell has never put a human number next to its own 80 tasks",
+ "description":"ScaleWoB (arXiv:2605.25160) synthesizes 120 mobile GUI tasks across 63 simulated apps and measures the five highest-scoring published agents at an average 27.92% success rate, falling to 17.82% on its long-horizon subset, against a measured human success rate of 92.08%. phoneshell's own results report model scores and paired comparisons between models, but no human baseline run on the same 80 tasks.",
+ "datePublished":"2026-10-24","dateModified":"2026-10-24",
+ "url":"https://blolabel.ai/blog/human-92-agent-28-phoneshell-has-no-baseline-row/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/human-92-agent-28-phoneshell-has-no-baseline-row/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"},
+ "image":"https://blolabel.ai/images/blog/human-92-agent-28-phoneshell-has-no-baseline-row-hero.png",
+ "citation":["https://arxiv.org/abs/2605.25160", "https://blolabel.ai/results.json"]}
+</script>
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is ScaleWoB's human baseline, and how big is the gap to agents?", "acceptedAnswer": {"@type": "Answer", "text": "ScaleWoB (arXiv:2605.25160) reports a human success rate of 92.08% on its 120-task mobile GUI agent benchmark, against the five highest-scoring published mobile agents averaging 27.92% overall, a 64.16-point gap. On the benchmark's long-horizon subset, the agent average falls to 17.82%, widening the gap to roughly 74 points."}}, {"@type": "Question", "name": "Does phoneshell report a human baseline for its own 80 tasks?", "acceptedAnswer": {"@type": "Answer", "text": "No. phoneshell's published house facts cover paired model comparisons (120 paired runs across 3 frontier models) and the screenshot-versus-no-screenshot result, but no run of its own 80 tasks by a human operator for comparison. Without that number, a reader cannot tell how much of any given pass rate reflects genuine task difficulty versus how far current models sit from a human ceiling on the same tasks."}}, {"@type": "Question", "name": "What is ScaleWoB's mobile benchmark built from?", "acceptedAnswer": {"@type": "Answer", "text": "ScaleWoB is a framework for synthesizing interactive environments, served as backend-free webpages accessible via URL, with verifiable rewards, across mobile, desktop and automotive interfaces. Its released mobile component is a 120-task benchmark across 63 simulated mobile applications, built this way rather than run against real third-party apps or a real device."}}]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAABOCAMAAAD4iTj8AAAAilBMVEVMaXFiXmJhXmEVieRkYGRiXmJiXmJEaZJiX2IWjehNaIJhXmEUjOcVjOdgXWBjX2MWjecUjOZiXmJiXmIUi+UVjehUoN7w9/33+/7q9Pzg7/p8gIlkYGQXjuj///9oZGgWk/JmY2YVjullYWUJh+dtaG0olumr1/dSq+7T6vo6n+tntfCMx/N7vvJEi25LAAAAHHRSTlMAakku/HusA/z7Eo+hwDL30nXizUnjHfvKolE8aPCOgAAAAAlwSFlzAAALEgAACxIB0t1+/AAAB35JREFUeJztmn1zsjoThwMCCaCg4EvbASFA1bZ3v//XO7MJeQFBwJ55nnNP85v+oSYB9mJ3k2yKkJGRkZGRkZGRkZGRkZGRkZGRkdHPhZXQ7xPuGH2P4Gk4P8L6P3slGCOEV7vderNZr3f7I/yEfpEwQqvd1i+FDpt90PWCwBKyF147kiOjxc8VzborvtdI++gV0Grtl2XuC1Vledhh5QQY2e8F17u3yASMQjnSXehVGFnaXReOxUvug3c+WJ9LMQbblbwpRnYdO6CYLgZA25HFEwAKddfxscdVX0eIaPnw6ueR2xw3ZaVZLxiU/k7cFSObkgzkFIsBFE478hkAYuw4AIzWld/TYbvetw6M0Ur69XZ4/GpbCvOrBiQQ5KUgMAeACjM95voAxoJxKH5nAyh7r6+qyrLacAcGAK095RAAjI7K/uZy+/q6fVYtAt8XBKYB6I89wwPu0tTQtZ4GkEMMl/4exkwBQHijhv85nUEfN+kELYFJABjhyA09L7QxQpEtFPQAoMCCTlakJVhucWDDcM9zoU363dMAcnj2A5/NHwLojL6ehb6ED1Q+c6QpABjZqUMhXdM0QuG7Q5lY3tcB2AnvFHuRPsUg24spaykojVMLuP0YQO6Xa3gxDwFgtJfpr/mW9p9Pl0oM2szwAIzcmhLiOA4hNI7CIiYgh3YAvFu2Q6ET62WpBBt4tMjYcN5WJHbrd0sB+FwiFRyC6RDQAuBDATh/d4PgMQAwkvDmLCM09age9QIAqcOklr1I0RLAKErUaDaM1DVLF8sBlEzSBao9ZJcHADDaqwT4qdl/vioA26kQYI3KAuKIL10AGXEcrReJWRSA/e2llYjD8CwHsGbypfvuJgEoB2huOoAPLZIYxocekN6ZMASgZ2R7IZwWyi3kpwzwLAewZ9j2/0wA0NbCyvPmSwcgkwBPJY8AqDb++p0HACDO5eestVFaXVMVImDxYgAVvCssX+sMADuVAUYBQCp5DMBTNlBKVUDfASAFLSQsUoRglPQeSB7KlQiBCHnGAxAKtjyz+9VqCsB6GgC/zKMQCGRuI5ln2558jf0cQJzQtmQzoSnGKIrl1xAj7EkcbOziHLADbVr72/T1aBbQ5oCxHNDOA6MAwAb5/l0gHgoj+gAoS/yyOUsCJCPAoSm7Wtrycdj257lZoOT255C9HgPABwWgupyGZoEZAOz2mUmdsCJCkAx6AKlTFqCyOcsiwNG20jACuVS72E/WAX6Vs1XsQwCBBiBv1ELwfL4tASAs5E+J0cg6gMe8aia1jZDyeS4REVkWPwFAU3XgCWECgLYNbj5PQw4wDUA9Zbt86W5/epsh3SUYgMFJEgBEPwKQ+5s9b57vAdpa6PT5/wDAl8Liy1Me4OtL4bJcT4UAVjthRuDPgP0DADrFNz0EpI+TIQBUNHcBCJ+vO8qeygGlvhb22yXM3FmgyS/N7eN0Pl0vzacqi8zIATJvpcAGYTEt9gC0zWrW5ElQTBlx0pX3xEpww5bCG7+NbLaKnbcOaKrb9eP01TSXz7zJr+ePP5+NXFHvdStpGukKkDaV1xZbvo1Ng5kNzSLPizQnr4uDIMBRFADDIAiCpxdCaN8ucPmGeM5KsLnxreD1dskv3+3nC3eC6nDsLHdJrKm2tIUQyWI3ilyxLLgHEFtRFIooh2kRoSiTCyHobMdJ6rk2cH1mN7jn4Sl/YRviGXsBEfwQ/yc5F3ywVOCXG30v0BVf26ipLCvieHwpTDIaO3LjyI3CqSKQul6cZVAYIUnq/cADkAhteHkdAHdnB6xnZwVw7q0G2h3FMACHAZA+DzYKe4Y3Q5DepQfwiNA2QwXAg8pIRuD44QkAGGLnuBOze+VrAPLK32o6MLugHqCXgro6XRqfQXzsAVpa6+K58wB9KIsAfSeRqXoBrxYsB3DgkiWRTgjkeVXq4gvFbakvgPq6Nv2K0AAAfUvLHl5Y2s8BtV42IZTVvTCyZQHl5wWRiksuCyB8NQDq6AuqxtywfaklgHt9VlvIR489AGHvXQuCRG5ougBqL5FOQMh7KJ7fqnUyjCBLiM8URX2tJNifBrtqC94wWq8F9vXdtMV1u26Llh3BLMB24F4BRVD2V9iuPNByO0djllU4bSen8LRjtwRqolKZXhSdPhrDY1Vh5gBTAKB68MD+81WeC4hjyq7eRWnTjYuC1jUtYqt3HKp/c+Oihk40sXQLAjehBaV1VlNoC1VZfMbhKB4GAE6+CaYBYHQcTwHn86u4beQOq63vYxRYXpokaRghZHda9W8oCqGTJyr/wgQU2CEMT1IvtNlT89/VXcePxzEAuFdV+uugezbYlTr1ehsn8DL7NJPBDAJ5qjPai3e6O0Djw1nToqNtxADcy9+u5dngQLOcBTiBl/H3r53mDUtrFw/fbez0lT/dmdH+1G2a8+81GO22m67Wu91K+BFGq82gttrZ9/F1yPzTG/qbhZf4Eb53gtMrbAH+DuHH/yQz4bttp7eXU8/8v8b+f0Ng6/Ht9YXp9fWN589fJTzx/TcIyw+/0XojIyMjIyMjIyMjIyMjIyP0n9Y/P2/lF8zxuoMAAAAASUVORK5CYII=" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#evidence">Evidence</a>
+    <a href="#method">What it means</a>
+    <a href="/blog/">Notes</a>
+    <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-24">24 October 2026</time>
+    <span>7 min read</span>
+  </div>
+  <h1>ScaleWoB's five mobile agents average 27.92% against a human 92.08%, and the gap nearly doubles on long-horizon tasks to a 74-point spread; phoneshell has never put a human number next to its own 80 tasks</h1>
+  <p class="standfirst">ScaleWoB's five tested mobile agents average a 27.92% success rate against a measured human success rate of 92.08% on the same 120 tasks, a 64-point gap that widens past 70 points once the task requires more than a few steps. phoneshell has run 120 paired comparisons between frontier models on its own 80 tasks, but it has never run a human through those same tasks to put a number on the other end of the scale.</p>
+
+<p>ScaleWoB, posted to arXiv as 2605.25160 and revised on 18 June 2026, is a framework for synthesizing interactive GUI environments as backend-free webpages with verifiable rewards, built to scale past what hand-built simulators and real third-party apps can offer across mobile, desktop and in-vehicle interfaces. Its released mobile component is a 120-task benchmark spanning 63 simulated mobile applications. Against it, the paper evaluated the five highest-scoring published mobile GUI agents and measured a human success rate on the same tasks for comparison: 92.08% for humans, 27.92% averaged across the five agents, and 17.82% for the agents on the benchmark's long-horizon subset specifically.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/human-92-agent-28-phoneshell-has-no-baseline-row-hero.png" alt="Abstract technical illustration on a dark grid: a tall nearly-full vertical bar labeled as a human figure silhouette standing beside a much shorter cluster of five small bars representing different agent models, with a second even shorter bar set further right under a long-horizon label, and a separate isolated single blank bar off to one side with a question mark instead of a height, cool blues and teals with one amber accent marking the gap between the tall and short bars" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="finding">What changed, and when</h2>
+
+<p>The 92.08% human figure is not a ceiling pulled from a different benchmark; it was measured on the identical 120 tasks the five agents were run against, by the same paper, which is what makes the comparison meaningful rather than a borrowed number. The agent average of 27.92% sits 64.16 points below that, and the drop to 17.82% on the long-horizon subset means the gap on the hardest tasks in the set is closer to 74 points than 64. phoneshell's own published results compare models against each other (120 paired runs across 3 frontier models, pre-registered, with the screenshot-ablation result as its headline) and report pass rates per model on its 80 tasks. Nowhere in the public results.json or the site's houseFacts is there a human operator's own completion number on those same 80 tasks to anchor what a given pass rate is actually close to or far from.</p>
+
+<svg viewBox="0 0 780 360" style="width:100%;height:auto" role="img" aria-label="Bar chart of ScaleWoB results. A human success rate of 92.08 percent on the benchmark's 120 mobile tasks compares against the five highest-scoring published mobile agents averaging 27.92 percent overall, and 17.82 percent on the benchmark's long-horizon task subset specifically. The gap between human and agent performance is 64.16 points overall and widens on long-horizon tasks.">
+<rect x="0" y="0" width="780" height="360" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">ScaleWoB: human baseline vs. five mobile agents (120 tasks)</text>
+<line x1="60" y1="310" x2="750" y2="310" stroke="#2a3140"/><text x="52" y="314" font-size="9.5" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="60" y1="238" x2="750" y2="238" stroke="#2a3140"/><text x="52" y="242" font-size="9.5" fill="#c4ccda" text-anchor="end">25</text>
+<line x1="60" y1="166" x2="750" y2="166" stroke="#2a3140"/><text x="52" y="170" font-size="9.5" fill="#c4ccda" text-anchor="end">50</text>
+<line x1="60" y1="94" x2="750" y2="94" stroke="#2a3140"/><text x="52" y="98" font-size="9.5" fill="#c4ccda" text-anchor="end">75</text>
+<line x1="60" y1="22" x2="750" y2="22" stroke="#2a3140"/><text x="52" y="26" font-size="9.5" fill="#c4ccda" text-anchor="end">100</text>
+<rect x="110" y="43" width="120" height="267" fill="#5ad1a0"/><text x="170" y="34" font-size="11" fill="#5ad1a0" text-anchor="middle">92.08</text><text x="170" y="328" font-size="10" fill="#c4ccda" text-anchor="middle">human baseline</text>
+<rect x="330" y="229" width="120" height="81" fill="#e2715a"/><text x="390" y="220" font-size="11" fill="#e2715a" text-anchor="middle">27.92</text><text x="390" y="328" font-size="10" fill="#c4ccda" text-anchor="middle">5-agent average, overall</text>
+<rect x="550" y="259" width="120" height="51" fill="#f2a65a"/><text x="610" y="250" font-size="11" fill="#f2a65a" text-anchor="middle">17.82</text><text x="610" y="328" font-size="10" fill="#c4ccda" text-anchor="middle">5-agent average, long-horizon</text>
+<text x="20" y="348" font-size="9.5" fill="#8893a8">Source: arXiv:2605.25160 (revised 18 Jun 2026), results section, read 24 October 2026.</text>
+</g></svg>
+
+<h2 id="evidence">A baseline row phoneshell's own tables leave blank</h2>
+
+<p>A human baseline measured on the exact tasks a model is scored against turns a pass rate from a number that only means something relative to other models into one that also means something relative to how hard the task actually is for a person. ScaleWoB's 27.92% reads very differently next to a 92.08% human ceiling than it would read alone. phoneshell's site structure (the leaderboard and results.json referenced throughout its published pages) is built entirely around per-model comparisons: pass_rate, avg_turns, avg_seconds and total_cost_usd, one row per model. There is no row, and no field in results.json's schema, reserved for a human operator running the same 80 tasks once each and reporting what fraction they complete, how many turns they take, or how long they take, the three numbers that would let a reader place phoneshell's own model results on the same kind of scale ScaleWoB's chart makes possible.</p>
+
+<svg viewBox="0 0 820 300" style="width:100%;height:auto" role="img" aria-label="Diagram comparing what ScaleWoB's results table records against what phoneshell's results.json records. ScaleWoB's table has a row for each of five agent models plus a separate human row measured on the same tasks. phoneshell's results.json board has a row for each model, with pass rate, average turns, average seconds and total cost, but no human row at all.">
+<rect x="0" y="0" width="820" height="300" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Results table rows: ScaleWoB vs. phoneshell's results.json</text>
+<rect x="40" y="55" width="330" height="175" rx="8" fill="#1d2330" stroke="#5ad1a0"/>
+<text x="54" y="78" font-size="11" font-weight="600" fill="#5ad1a0">ScaleWoB results table</text>
+<text x="54" y="102" font-size="10" fill="#c4ccda">5 agent model rows (avg 27.92%)</text>
+<text x="54" y="122" font-size="10" fill="#c4ccda">+ 1 human row (92.08%)</text>
+<text x="54" y="150" font-size="9.5" fill="#8893a8">long-horizon subset: 17.82%</text>
+<text x="54" y="166" font-size="9.5" fill="#8893a8">agent avg (vs. same 92.08% human)</text>
+<rect x="450" y="55" width="330" height="175" rx="8" fill="#1d2330" stroke="#8893a8"/>
+<text x="464" y="78" font-size="11" font-weight="600" fill="#8893a8">phoneshell results.json "board"</text>
+<text x="464" y="102" font-size="10" fill="#c4ccda">1 row per model: pass_rate,</text>
+<text x="464" y="120" font-size="10" fill="#c4ccda">avg_turns, avg_seconds, cost_usd</text>
+<text x="464" y="148" font-size="9.5" fill="#f2a65a">no human row in the schema</text>
+<text x="464" y="164" font-size="9.5" fill="#8893a8">nothing to compare a pass rate to</text>
+<text x="20" y="286" font-size="9" fill="#8893a8">Source: arXiv:2605.25160 results section; blolabel.ai/results.json, read 24 October 2026.</text>
+</g></svg>
+
+<table>
+  <thead><tr><th>Dimension</th><th>ScaleWoB</th><th>phoneshell</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>Human baseline measured</td><td>Yes, 92.08% on the same 120 tasks</td><td>Not published; no human-run row in results.json's schema</td><td>arXiv:2605.25160; blolabel.ai results.json</td></tr>
+    <tr><td>Agent average (overall)</td><td>27.92% across 5 SOTA mobile agents</td><td>Per-model pass_rate, e.g. 96.6% best, 89.7% lowest of 6 models (different task set)</td><td>arXiv:2605.25160; blolabel.ai results.json</td></tr>
+    <tr><td>Long-horizon subset</td><td>17.82% agent average (vs. 92.08% human on full set)</td><td>No long-horizon subset flag in the task schema's difficulty field (easy/medium/hard only)</td><td>arXiv:2605.25160; phoneshell/bench/schema.py</td></tr>
+    <tr><td>Environment</td><td>63 simulated mobile apps, synthesized as backend-free webpages</td><td>One physical iPhone 17 Pro Max, iOS 26.6, real apps</td><td>arXiv:2605.25160; blolabel.ai houseFacts</td></tr>
+  </tbody>
+</table>
+
+<h2 id="method">What it means for anyone publishing an agent leaderboard</h2>
+
+<ul>
+  <li>A pass rate without a human anchor answers "which model is better" but not "how far is any of them from done." ScaleWoB's chart makes both questions answerable from the same table; a leaderboard with only model rows, phoneshell's own included, can only answer the first.</li>
+  <li>Measuring a human baseline costs something real: a person's time on every task in the set, at least once. That is a judgment call about where to spend effort, not an oversight by default, and ScaleWoB's own baseline is a single human run per task, not a sample large enough to report a human variance the way the agent average is reported across five models.</li>
+  <li>phoneshell's difficulty field (easy, medium, hard) is a guess at how hard a task is for a model, made by whoever wrote the task, not a measurement. ScaleWoB's long-horizon-versus-full-set split is closer to a measured property: it is defined by how the agents' own scores behave, not asserted up front.</li>
+  <li>Adding a human-baseline row to phoneshell's results.json would not require a new task schema field, since difficulty, max_steps and checks all apply unchanged to a human run; it needs a person to actually sit down and run the 80 tasks once, which has not happened yet.</li>
+</ul>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># ScaleWoB's human-vs-agent numbers
+curl -s https://arxiv.org/abs/2605.25160 | grep -i "92.08\|27.92\|17.82\|human"
+# project site: https://scalewob.github.io
+
+curl -s https://blolabel.ai/results.json | python3 -c "import json,sys; d=json.load(sys.stdin); print(list(d['board'].keys())); print('human' in str(d).lower())"</code></pre>
+
+<h2 id="falsify">What would prove this wrong</h2>
+
+<p>We claim phoneshell's results.json and public houseFacts contain no human-baseline row for its 80 tasks. That is wrong the moment a human-run row appears in results.json's board or runs sections; we found none as of 24 October 2026. We also report ScaleWoB's human baseline as 92.08% on its own 120-task set, measured once per task rather than across a sample; that figure is wrong if a later revision of arXiv:2605.25160 reports a different human success rate or a variance range, which we will check by 30 April 2027.</p>
+
+<section class="sources">
+  <h2 id="sources">Sources</h2>
+  <ol>
+    <li><a href="https://arxiv.org/abs/2605.25160">ScaleWoB: Guiding GUI Agents with Coding Agents via Large-Scale Environmental Synthesis</a>, arXiv:2605.25160, submitted 24 May 2026, revised (v2) 18 June 2026, read 24 October 2026.</li>
+    <li>Project site: <a href="https://scalewob.github.io">scalewob.github.io</a>, read 24 October 2026.</li>
+    <li>Blolabel, <a href="https://blolabel.ai/results.json">results.json</a>, read 24 October 2026.</li>
+  </ol>
+</section>
+</article>
+</div>
+</body></html>
