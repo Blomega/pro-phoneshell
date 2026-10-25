@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MobilePA-Bench splits every score into four weighted capabilities, memory worth 20% and sub-agent collaboration worth 10%; phoneshell's 80 tasks return one pass or fail, nothing underneath it - Blolabel</title>
+<meta name="description" content="MobilePA-Bench (arXiv:2608.23035, revised 19 October 2026) scores mobile planner agents on four weighted capabilities, tool use at 50%, memory and skill usage at 20% each, sub-agent collaboration at 10%. Its best model, GPT-6-Astra, reaches 76.87% overall; nine of fourteen models score below 70%. phoneshell's task schema has one check list and one pass/fail result per task, with no field for any of the four.">
+<link rel="canonical" href="https://blolabel.ai/blog/four-weighted-capabilities-phoneshells-one-pass-fail/">
+<meta property="og:title" content="MobilePA-Bench splits every score into four weighted capabilities, memory worth 20% and sub-agent collaboration worth 10%; phoneshell's 80 tasks return one pass or fail, nothing underneath it - Blolabel">
+<meta property="og:description" content="GPT-6-Astra scores 76.87% on MobilePA-Bench's four-way weighted composite; nine of fourteen models fall below 70%. phoneshell's schema has one pass/fail result per task and no capability breakdown at all.">
+<meta property="og:url" content="https://blolabel.ai/blog/four-weighted-capabilities-phoneshells-one-pass-fail/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/four-weighted-capabilities-phoneshells-one-pass-fail-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"MobilePA-Bench splits every score into four weighted capabilities, memory worth 20% and sub-agent collaboration worth 10%; phoneshell's 80 tasks return one pass or fail, nothing underneath it",
+ "description":"MobilePA-Bench (arXiv:2608.23035, revised 19 October 2026) scores mobile planner agents on four weighted capabilities, tool use at 50%, memory and skill usage at 20% each, sub-agent collaboration at 10%. Its best model, GPT-6-Astra, reaches 76.87% overall; nine of fourteen models score below 70%. phoneshell's task schema has one check list and one pass/fail result per task, with no field for any of the four.",
+ "datePublished":"2026-10-24","dateModified":"2026-10-24",
+ "url":"https://blolabel.ai/blog/four-weighted-capabilities-phoneshells-one-pass-fail/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/four-weighted-capabilities-phoneshells-one-pass-fail/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"},
+ "image":"https://blolabel.ai/images/blog/four-weighted-capabilities-phoneshells-one-pass-fail-hero.png",
+ "citation":["https://arxiv.org/abs/2608.23035", "https://github.com/Blomega/phoneshell/blob/main/phoneshell/bench/schema.py"]}
+</script>
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What are MobilePA-Bench's four capabilities, and how are they weighted?", "acceptedAnswer": {"@type": "Answer", "text": "MobilePA-Bench (arXiv:2608.23035) scores a mobile planner agent on tool use (50% of the overall score), memory usage (20%), skill usage (20%) and sub-agent collaboration (10%). Each task is matched to a checker for its prescribed tool calls, state changes and interaction behavior, so a model that reaches the right final screen without passing the required memory or skill checks does not get full credit for that task."}}, {"@type": "Question", "name": "What is phoneshell's equivalent of a capability score?", "acceptedAnswer": {"@type": "Answer", "text": "There isn't one. phoneshell's Task dataclass (phoneshell/bench/schema.py) carries a single checks list per task, and the runner reduces that to one pass or fail. No field distinguishes a failure caused by a memory lapse from one caused by a mistapped button; both produce an identical record."}}, {"@type": "Question", "name": "What happens when a MobilePA-Bench agent runs out of steps?", "acceptedAnswer": {"@type": "Answer", "text": "The paper sets a step cap of Tmax = 15 per episode, ending it when the planner emits Finish or hits that limit. The paper states that missing or invalid predictions count as failures, but does not say explicitly whether an episode that silently hits Tmax without ever emitting Finish is scored as a failure or simply checked against its final state. We could not resolve that from the sections available to this check."}}]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#evidence">Evidence</a>
+    <a href="#method">What it means</a>
+    <a href="/blog/">Notes</a>
+    <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-24">24 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>MobilePA-Bench splits every score into four weighted capabilities, memory worth 20% and sub-agent collaboration worth 10%; phoneshell's 80 tasks return one pass or fail, nothing underneath it</h1>
+  <p class="standfirst">GPT-6-Astra's 76.87% on MobilePA-Bench is not one number measured once. It is a weighted sum of four separate capability scores, tool use carrying half the weight and sub-agent collaboration carrying a tenth, and nine of the fourteen models tested score below 70% on that composite. phoneshell's task schema has no equivalent field: every one of its 80 tasks collapses to a single pass or fail, with nothing recorded about which capability broke.</p>
+
+<p>MobilePA-Bench, posted to arXiv as 2608.23035 by a team at Alibaba's MAI group and revised to its third version on 19 October 2026, runs a mobile planner agent through a stateful sandbox with live application databases rather than static screenshots, across 1,705 tasks spanning eight query-task domains and 212 mobile tools. Each task is matched to a fixed checker for its tool calls, its state changes and, where relevant, its interaction behavior. The paper's headline number, GPT-6-Astra's 76.87% overall score, is the output of a weighted composite: tool use counts for 50% of a task's score, memory usage and skill usage 20% each, and sub-agent collaboration the remaining 10%. phoneshell's own schema (phoneshell/bench/schema.py) defines a Task as an instruction, a setup, a checks list and nothing more granular; the runner that scores it produces one boolean, not four weighted ones.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/four-weighted-capabilities-phoneshells-one-pass-fail-hero.png" alt="Abstract technical illustration on a dark grid: a glowing central node splitting into four separate weighted beams of different thickness labeled with percentage-sized bars, flowing into a single composite score dial, with a second, isolated plain switch icon off to one side showing only two states, on and off, with no beams feeding into it, cool blues and teals with one amber accent on the largest beam" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="finding">What changed, and when</h2>
+
+<p>The paper's step budget is fixed and small: an episode ends when the planner emits a Finish action or reaches Tmax = 15 steps, a third of phoneshell's own default per-task budget of 25 (Task.max_steps in phoneshell/bench/schema.py) and a quarter of phoneshell's hard safety ceiling of 60 (SafetyConfig.max_steps in phoneshell/config.py). The paper states plainly that missing or invalid tool-call predictions count as failures, but it does not say, in the sections available to this check, whether an episode that silently exhausts Tmax without ever emitting Finish is scored as a failure outright or evaluated purely on whatever state it happened to land in. That is exactly the ambiguity phoneshell's own house rule exists to close: a task phoneshell never finishes because of a rate limit or a missing app is logged as not scored, never as a failure, and the distinction is enforced in code, not left to a sentence in a paper.</p>
+
+<svg viewBox="0 0 780 360" style="width:100%;height:auto" role="img" aria-label="Bar chart of MobilePA-Bench overall scores. GPT-6-Astra, the best of fourteen evaluated models, scores 76.87 percent. A Qwen3.8-27B baseline scores 66.94 percent before online reinforcement learning in the sandbox and 69.25 percent after it, a gain of 2.31 points on a single trained checkpoint. A dashed line at 70 percent marks the threshold below which nine of the fourteen evaluated models fall.">
+<rect x="0" y="0" width="780" height="360" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">MobilePA-Bench overall scores (weighted composite)</text>
+<line x1="60" y1="310" x2="750" y2="310" stroke="#2a3140"/><text x="52" y="314" font-size="9.5" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="60" y1="250" x2="750" y2="250" stroke="#2a3140"/><text x="52" y="254" font-size="9.5" fill="#c4ccda" text-anchor="end">25</text>
+<line x1="60" y1="190" x2="750" y2="190" stroke="#2a3140"/><text x="52" y="194" font-size="9.5" fill="#c4ccda" text-anchor="end">50</text>
+<line x1="60" y1="130" x2="750" y2="130" stroke="#f2a65a" stroke-dasharray="5,4"/><text x="52" y="134" font-size="9.5" fill="#f2a65a" text-anchor="end">70</text>
+<line x1="60" y1="70" x2="750" y2="70" stroke="#2a3140"/><text x="52" y="74" font-size="9.5" fill="#c4ccda" text-anchor="end">100</text>
+<rect x="110" y="117" width="110" height="193" fill="#5ad1a0"/><text x="165" y="108" font-size="11" fill="#5ad1a0" text-anchor="middle">76.87</text><text x="165" y="328" font-size="10" fill="#c4ccda" text-anchor="middle">GPT-6-Astra (best of 14)</text>
+<rect x="320" y="170" width="110" height="140" fill="#8893a8"/><text x="375" y="161" font-size="11" fill="#8893a8" text-anchor="middle">66.94</text><text x="375" y="328" font-size="10" fill="#c4ccda" text-anchor="middle">Qwen3.8-27B, pre-RL</text>
+<rect x="530" y="156" width="110" height="154" fill="#e2715a"/><text x="585" y="147" font-size="11" fill="#e2715a" text-anchor="middle">69.25</text><text x="585" y="328" font-size="10" fill="#c4ccda" text-anchor="middle">Qwen3.8-27B, post-RL</text>
+<text x="20" y="348" font-size="9.5" fill="#8893a8">Source: arXiv:2608.23035 v3 (19 Oct 2026), results table and RL section, read 24 October 2026.</text>
+</g></svg>
+
+<h2 id="evidence">The composite phoneshell's schema has no field for</h2>
+
+<p>MobilePA-Bench's four-way split exists because a planner can reach the user-visible goal while skipping a step the task actually requires: completing a booking without the memory lookup that should have informed which option to pick, or firing a business tool before the route that was supposed to load first. Scoring tool use, memory, skill and sub-agent collaboration separately, then weighting them 50/20/20/10 into one overall number, is how the paper keeps a model from getting full credit for the right answer reached the wrong way. phoneshell's Task dataclass has no equivalent axis to split along: id, instruction, app, difficulty, a setup list and a checks list, reduced by the runner to one boolean. A model that fails a phoneshell task by forgetting something it saw three screens earlier and a model that fails it by tapping the wrong button produce the same record: passed=false, with whatever text happens to be in the individual check's note field, not a structured capability tag.</p>
+
+<svg viewBox="0 0 820 300" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting MobilePA-Bench's scoring structure with phoneshell's. MobilePA-Bench combines four weighted capability scores, tool use at 50 percent, memory usage at 20 percent, skill usage at 20 percent and sub-agent collaboration at 10 percent, into one overall score. phoneshell's Task record instead produces a single pass or fail boolean directly from its checks list, with no capability field in between.">
+<rect x="0" y="0" width="820" height="300" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Scoring structure: MobilePA-Bench vs. phoneshell/bench/schema.py</text>
+<rect x="40" y="55" width="330" height="175" rx="8" fill="#1d2330" stroke="#5ad1a0"/>
+<text x="54" y="78" font-size="11" font-weight="600" fill="#5ad1a0">MobilePA-Bench, per task</text>
+<text x="54" y="100" font-size="10" fill="#c4ccda">Tool use ............ 50%</text>
+<text x="54" y="118" font-size="10" fill="#c4ccda">Memory usage ......... 20%</text>
+<text x="54" y="136" font-size="10" fill="#c4ccda">Skill usage .......... 20%</text>
+<text x="54" y="154" font-size="10" fill="#c4ccda">Sub-agent collab ..... 10%</text>
+<text x="54" y="182" font-size="11" font-weight="600" fill="#5ad1a0">&rarr; one weighted overall score</text>
+<text x="54" y="202" font-size="9.5" fill="#8893a8">e.g. GPT-6-Astra: 76.87</text>
+<rect x="450" y="55" width="330" height="175" rx="8" fill="#1d2330" stroke="#8893a8"/>
+<text x="464" y="78" font-size="11" font-weight="600" fill="#8893a8">phoneshell, per task (schema.py)</text>
+<text x="464" y="100" font-size="10" fill="#c4ccda">setup: list[Step]</text>
+<text x="464" y="118" font-size="10" fill="#c4ccda">checks: list[Check]</text>
+<text x="464" y="136" font-size="10" fill="#c4ccda">max_steps: 25 (default)</text>
+<text x="464" y="154" font-size="10" fill="#c4ccda">no capability field</text>
+<text x="464" y="182" font-size="11" font-weight="600" fill="#8893a8">&rarr; one boolean: passed</text>
+<text x="464" y="202" font-size="9.5" fill="#8893a8">no sub-score survives</text>
+<text x="20" y="286" font-size="9" fill="#8893a8">Source: arXiv:2608.23035 v3 scoring section; github.com/Blomega/phoneshell/blob/main/phoneshell/bench/schema.py, read 24 October 2026.</text>
+</g></svg>
+
+<table>
+  <thead><tr><th>Dimension</th><th>MobilePA-Bench</th><th>phoneshell</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>Capabilities scored per task</td><td>4, weighted: tool use 50%, memory 20%, skill 20%, sub-agent 10%</td><td>1: a single pass/fail boolean</td><td>arXiv:2608.23035; phoneshell/bench/schema.py</td></tr>
+    <tr><td>Step budget</td><td>Tmax = 15 per episode</td><td>25 default per task, 60 hard ceiling</td><td>arXiv:2608.23035; phoneshell/bench/schema.py; phoneshell/config.py</td></tr>
+    <tr><td>Environment</td><td>Stateful simulated sandbox, live app databases, 212 tools</td><td>One physical iPhone 17 Pro Max, iOS 26.6, real apps</td><td>arXiv:2608.23035; houseFacts, blolabel.ai</td></tr>
+    <tr><td>Models evaluated</td><td>14 frontier LLMs; 9 score below 70% overall</td><td>3 frontier models, 120 paired runs, pre-registered</td><td>arXiv:2608.23035; blolabel.ai houseFacts</td></tr>
+    <tr><td>Training loop</td><td>Online RL checkpoint, Qwen3.8-27B: 66.94% &rarr; 69.25%</td><td>None; a task grades a model as shipped, not as trained</td><td>arXiv:2608.23035</td></tr>
+  </tbody>
+</table>
+
+<h2 id="method">What it means for anyone scoring a mobile agent</h2>
+
+<ul>
+  <li>A single pass/fail number cannot say whether a model is bad at using tools, bad at remembering what it saw, or bad at the handoff to a sub-agent. MobilePA-Bench's weighting makes that diagnosis possible before it makes the headline number; phoneshell's schema would need a new field, not a new metric, to do the same.</li>
+  <li>Weighting tool use at half the composite is a design choice, not a law of mobile agents, and it is one MobilePA-Bench's authors made rather than one a model's behavior dictated. A benchmark that weighted memory and sub-agent collaboration 50/50 instead would likely produce a different leaderboard order from the same fourteen models' same raw trajectories.</li>
+  <li>The paper's silence on what happens when Tmax is hit without a Finish call is the kind of gap this site's own house rule treats as a real finding, not a rounding error: a budget-exhausted trajectory and a trajectory that confidently got the task wrong are different failure modes, and conflating them under one failure count makes the 9-of-14-below-70% figure harder to interpret than it looks.</li>
+  <li>phoneshell's 80 tasks were built around one pass/fail check per task on purpose, to keep the checker itself auditable: a four-way weighted score multiplies the number of things that can be wrong in the grading code by four. That is a real tradeoff against MobilePA-Bench's finer-grained diagnosis, not a free win either way.</li>
+</ul>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># MobilePA-Bench's capability weights and step cap
+curl -s https://arxiv.org/abs/2608.23035 | grep -i "tool use\|memory usage\|sub-agent\|Tmax"
+# full text with the results table: https://arxiv.org/html/2608.23035
+
+git clone https://github.com/Blomega/phoneshell && cd phoneshell
+grep -n "class Task\|checks:\|max_steps" phoneshell/bench/schema.py   # one checks list, one max_steps field
+grep -n "max_steps" phoneshell/config.py                              # separate 60-step hard ceiling
+grep -rn "capabilit\|memory\|sub.agent" phoneshell/bench/ || echo "no capability field in phoneshell's task schema"</code></pre>
+
+<h2 id="falsify">What would prove this wrong</h2>
+
+<p>We claim phoneshell's task schema has no field that scores a capability separately from overall pass/fail. That is wrong the moment any field in <code>phoneshell/bench/schema.py</code> or the runner that consumes it records a sub-score; we found none as of 24 October 2026. We also report that MobilePA-Bench's text does not specify how a Tmax-exhausted episode without a Finish call is scored; that is wrong if a later revision of arXiv:2608.23035 states it plainly, which we will check by 30 April 2027.</p>
+
+<section class="sources">
+  <h2 id="sources">Sources</h2>
+  <ol>
+    <li><a href="https://arxiv.org/abs/2608.23035">MobilePA-Bench: Benchmarking Mobile Planner Agents on Complex Real-World Tasks</a>, arXiv:2608.23035, submitted 24 August 2026, revised (v3) 19 October 2026, read 24 October 2026.</li>
+    <li>Full text with the results table and RL section: <a href="https://arxiv.org/html/2608.23035">arxiv.org/html/2608.23035</a>, read 24 October 2026.</li>
+    <li>Blolabel, <a href="https://github.com/Blomega/phoneshell/blob/main/phoneshell/bench/schema.py">phoneshell/bench/schema.py</a> and <a href="https://github.com/Blomega/phoneshell/blob/main/phoneshell/config.py">phoneshell/config.py</a>, read 24 October 2026.</li>
+  </ol>
+</section>
+</article>
+</div>
+</body></html>
