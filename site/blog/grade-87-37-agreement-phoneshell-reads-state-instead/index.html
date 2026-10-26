@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AndroidDaily's GRADE judges closed-source apps with 87.37% human agreement, which is also a 12.63-point disagreement rate on 350 tasks; phoneshell's checks disagree with nobody because 133 of 153 assertions never ask a judge - Blolabel</title>
+<meta name="description" content="AndroidDaily (arXiv:2605.27761) scores agents on 350 real-world closed-source Android apps using GRADE, a tiered guideline judge that reports 87.37% agreement with human evaluators, meaning roughly 44 of 350 tasks it would score differently from a human. phoneshell's own 153 assertions over 80 tasks use an LLM judge for only 20 of them (answer_contains); the rest read bundle IDs, accessibility-tree text and regex matches directly from the device, which has no agreement rate to report because nothing is being judged.">
+<link rel="canonical" href="https://blolabel.ai/blog/grade-87-37-agreement-phoneshell-reads-state-instead/">
+<meta property="og:title" content="AndroidDaily's GRADE judges closed-source apps with 87.37% human agreement, which is also a 12.63-point disagreement rate on 350 tasks; phoneshell's checks disagree with nobody because 133 of 153 assertions never ask a judge - Blolabel">
+<meta property="og:description" content="AndroidDaily's GRADE evaluator reports 87.37% agreement with humans on closed-source apps. phoneshell solves the same closed-source-app problem by narrowing judgment to 20 of its 153 assertions and reading device state for the rest.">
+<meta property="og:url" content="https://blolabel.ai/blog/grade-87-37-agreement-phoneshell-reads-state-instead/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/grade-87-37-agreement-phoneshell-reads-state-instead-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"AndroidDaily's GRADE judges closed-source apps with 87.37% human agreement, which is also a 12.63-point disagreement rate on 350 tasks; phoneshell's checks disagree with nobody because 133 of 153 assertions never ask a judge",
+ "description":"AndroidDaily (arXiv:2605.27761) introduces GRADE, a three-tier guideline judge for grading agents on 350 tasks across 94 closed-source Android apps, reporting 87.37% agreement with human evaluators and a 62.0% success rate for its strongest tested model. phoneshell's own verification code (phoneshell/bench/verify.py) asserts 153 checks over 80 tasks, of which only 20 (answer_contains) ask a model to judge anything; the remaining 133 read a bundle ID, accessibility-tree text or a regex match directly from the device.",
+ "datePublished":"2026-10-25","dateModified":"2026-10-25",
+ "url":"https://blolabel.ai/blog/grade-87-37-agreement-phoneshell-reads-state-instead/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/grade-87-37-agreement-phoneshell-reads-state-instead/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"},
+ "image":"https://blolabel.ai/images/blog/grade-87-37-agreement-phoneshell-reads-state-instead-hero.png",
+ "citation":["https://arxiv.org/abs/2605.27761", "https://github.com/Blomega/phoneshell/blob/main/phoneshell/bench/verify.py"]}
+</script>
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What problem is AndroidDaily's GRADE evaluator built to solve?", "acceptedAnswer": {"@type": "Answer", "text": "AndroidDaily (arXiv:2605.27761, submitted 26 May 2026) sets 350 daily-use tasks across 94 real, closed-source Android apps, which do not expose internal state for standard automatic verification. Its answer is GRADE (Guideline-grounded Reviewer for Automatic Diagnostic Evaluation), a process-aware judge that checks an agent's visual trajectory against three tiers of observable guidelines: operational obligations, output quality, and negative constraints. GRADE reports 87.37% agreement with human evaluators, and the strongest tested model reaches a 62.0% success rate on the benchmark."}}, {"@type": "Question", "name": "What does an 87.37% agreement rate actually mean in disagreement terms?", "acceptedAnswer": {"@type": "Answer", "text": "87.37% agreement with human evaluators is arithmetically the same statement as a 12.63% disagreement rate. Applied to AndroidDaily's own 350-task set, that is roughly 44 tasks (350 times 0.1263) where GRADE's score would not match a human reviewer's score, a gap the paper reports as its judge's own accuracy rather than as a property of the agents being judged."}}, {"@type": "Question", "name": "How does phoneshell avoid needing an agreement-with-humans number at all?", "acceptedAnswer": {"@type": "Answer", "text": "phoneshell/bench/verify.py implements twelve check kinds, but across its 80 published tasks only five are ever asserted, totaling 153 assertions: foreground_app (76), element_exists (31), regex_on_screen (23), answer_contains (20), and element_exists_anywhere (3). Only answer_contains grades the model's own sentence rather than the phone; the other 133 assertions read a bundle ID, an accessibility-tree text match or a regex match directly from WebDriverAgent device state, which has no human-agreement rate to report because no judgment call is being made."}}]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#evidence">Evidence</a>
+    <a href="#method">What it means</a>
+    <a href="/blog/">Notes</a>
+    <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind comparison">comparison</span>
+    <time datetime="2026-10-25">25 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>AndroidDaily's GRADE judges closed-source apps with 87.37% human agreement, which is also a 12.63-point disagreement rate on 350 tasks; phoneshell's checks disagree with nobody because 133 of 153 assertions never ask a judge</h1>
+  <p class="standfirst">AndroidDaily sets 350 tasks on 94 real, closed-source Android apps that expose no internal state to check against, and solves the verification problem with GRADE, a tiered-guideline judge reporting 87.37% agreement with human evaluators. The same arithmetic says GRADE disagrees with a human on roughly one task in eight. phoneshell faces the identical closed-source-app problem on real consumer iOS apps and answers it differently: of its 153 assertions over 80 tasks, 133 read a bundle ID, an accessibility-tree match or a regex pattern straight from the device, and only 20 ever ask a model to judge anything at all.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/grade-87-37-agreement-phoneshell-reads-state-instead-hero.png" alt="Abstract technical illustration on a dark grid: a three-tier funnel labeled with stacked horizontal bands narrowing toward a single glowing agreement percentage node, beside a second, separate structure made of five distinct small direct-read probes each touching a device outline at a different point with no funnel or converging node at all, cool blues and teals with one amber accent marking a small residual gap beneath the funnel's percentage node" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="finding">What changed, and when</h2>
+
+<p>AndroidDaily was posted to arXiv as 2605.27761 on 26 May 2026 by a 17-author team led by Yifan Sui, setting 350 "realistic daily-use tasks" across 94 high-frequency Android apps spanning transportation, shopping, local services, entertainment, content creation, social media and everyday utilities. The paper's stated motivation is that these are real, closed-source apps: they don't expose internal state, so the database-read or API-call verification that simulator-based benchmarks rely on simply does not exist here. Its answer is GRADE, Guideline-grounded Reviewer for Automatic Diagnostic Evaluation, a process-aware judge that walks an agent's visual trajectory against three tiers of observable external guidelines, operational obligations, output quality and negative constraints, and produces step-level diagnostic judgments rather than one pass or fail stamp at the end.</p>
+
+<p>GRADE reports 87.37% agreement with human evaluators, and the strongest model tested on AndroidDaily reaches a 62.0% success rate. Stated the other way, 87.37% agreement is also a 12.63% disagreement rate, and applied to AndroidDaily's own 350-task set that works out to roughly 44 tasks (350 x 0.1263 &asymp; 44.2) where GRADE's own verdict would not match a human reviewer looking at the same trajectory. The paper reports the 87.37% figure as a validation of the judge, which it is; it is also, arithmetically, a built-in error bar on every success rate the judge subsequently reports, including the 62.0% headline number.</p>
+
+<svg viewBox="0 0 780 320" style="width:100%;height:auto" role="img" aria-label="Diagram of GRADE's three-tier guideline judge. Operational obligations, output quality and negative constraints each feed into a step-level diagnostic judgment, which reports 87.37 percent agreement with human evaluators on AndroidDaily's 350 tasks across 94 closed-source apps, a figure that is equivalently a 12.63 percent, or roughly 44-task, disagreement rate.">
+<rect x="0" y="0" width="780" height="320" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">GRADE's three-tier guideline judge (AndroidDaily, 94 closed-source apps)</text>
+<rect x="60" y="50" width="200" height="50" rx="6" fill="#1d2330" stroke="#8893a8"/><text x="160" y="80" font-size="10.5" fill="#c4ccda" text-anchor="middle">operational obligations</text>
+<rect x="300" y="50" width="200" height="50" rx="6" fill="#1d2330" stroke="#8893a8"/><text x="400" y="80" font-size="10.5" fill="#c4ccda" text-anchor="middle">output quality</text>
+<rect x="540" y="50" width="180" height="50" rx="6" fill="#1d2330" stroke="#8893a8"/><text x="630" y="80" font-size="10.5" fill="#c4ccda" text-anchor="middle">negative constraints</text>
+<line x1="160" y1="100" x2="390" y2="170" stroke="#5ad1a0"/>
+<line x1="400" y1="100" x2="390" y2="170" stroke="#5ad1a0"/>
+<line x1="630" y1="100" x2="390" y2="170" stroke="#5ad1a0"/>
+<rect x="290" y="170" width="200" height="60" rx="8" fill="#1d2330" stroke="#5ad1a0"/>
+<text x="390" y="196" font-size="10.5" fill="#5ad1a0" text-anchor="middle">step-level diagnostic</text>
+<text x="390" y="212" font-size="10.5" fill="#5ad1a0" text-anchor="middle">judgment (GRADE)</text>
+<text x="390" y="258" font-size="14" font-weight="600" fill="#e9ecf2" text-anchor="middle">87.37% agreement with humans</text>
+<text x="390" y="278" font-size="11" fill="#f2a65a" text-anchor="middle">= 12.63% disagreement &asymp; 44 of 350 tasks</text>
+<text x="20" y="306" font-size="9" fill="#8893a8">Source: arXiv:2605.27761, read 25 October 2026. The 44-task figure is 350 x 0.1263, computed from the paper's own reported rate.</text>
+</g></svg>
+
+<h2 id="evidence">Where phoneshell narrows judgment to 20 of 153 assertions</h2>
+
+<p>phoneshell/bench/verify.py implements twelve check kinds, but the 80 published tasks only ever assert five of them, for a total of 153 assertions: foreground_app (76 uses, reading WDA's activeAppInfo and comparing a bundle ID string), element_exists (31, a text match against the current accessibility tree), regex_on_screen (23, a regex run over every element's joined text), answer_contains (20), and element_exists_anywhere (3, the same tree match plus up to six scroll passes). Seven more kinds, text_on_screen, element_value, switch_on, switch_off, screen_matches, ocr_contains and app_state, are implemented in the same file but asserted by zero tasks, according to the project's own task-validation script.</p>
+
+<p>Of those five asserted kinds, four read the phone directly and cannot disagree with a human the way GRADE can, because there is no judgment step between the device and the verdict: a bundle ID either matches the string a task wants or it does not. The fifth, answer_contains, is explicit in the module's own docstring about why it exists at all: "the ONLY check that grades what the model said rather than what the phone shows," reserved for the narrow case where a task's deliverable is information with no phone state to inspect, such as reading a word out of a picture. 133 of 153 assertions, 86.9%, never ask anything to be judged. The other 13.1% ask a single yes-or-no substring question of the model's own sentence, not a tiered guideline rubric scored against a visual trajectory.</p>
+
+<svg viewBox="0 0 820 260" style="width:100%;height:auto" role="img" aria-label="Diagram of phoneshell's five asserted check kinds and their 153 total assertions: foreground_app 76, element_exists 31, regex_on_screen 23, answer_contains 20, element_exists_anywhere 3. Only answer_contains, 20 of 153, grades the model's own words; the remaining 133 read device state directly through WebDriverAgent with no judgment step and therefore no agreement-with-humans figure to report.">
+<rect x="0" y="0" width="820" height="260" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">phoneshell's 153 assertions, 80 tasks (bench/verify.py)</text>
+<rect x="40" y="55" width="304" height="34" fill="#5ad1a0"/><text x="50" y="78" font-size="10.5" fill="#0c0f16">foreground_app: 76</text>
+<rect x="40" y="95" width="124" height="34" fill="#5ad1a0" opacity="0.85"/><text x="50" y="118" font-size="10.5" fill="#0c0f16">element_exists: 31</text>
+<rect x="40" y="135" width="92" height="34" fill="#5ad1a0" opacity="0.7"/><text x="50" y="158" font-size="10.5" fill="#0c0f16">regex_on_screen: 23</text>
+<rect x="40" y="175" width="80" height="34" fill="#e2715a"/><text x="48" y="198" font-size="10.5" fill="#0c0f16">answer_contains: 20</text>
+<rect x="40" y="215" width="12" height="20" fill="#5ad1a0" opacity="0.55"/><text x="60" y="230" font-size="10" fill="#c4ccda">element_exists_anywhere: 3</text>
+<text x="500" y="90" font-size="12" fill="#5ad1a0">133 / 153 read device state directly (86.9%)</text>
+<text x="500" y="112" font-size="12" fill="#e2715a">20 / 153 grade the model's own words (13.1%)</text>
+<text x="500" y="140" font-size="10" fill="#8893a8">7 more check kinds exist in verify.py</text>
+<text x="500" y="156" font-size="10" fill="#8893a8">but 0 tasks ever assert them</text>
+<text x="20" y="246" font-size="9" fill="#8893a8">Source: github.com/Blomega/phoneshell/blob/main/phoneshell/bench/verify.py and site/blog/eighty-tasks-five-checks, read 25 October 2026.</text>
+</g></svg>
+
+<table>
+  <thead><tr><th>Dimension</th><th>AndroidDaily's GRADE</th><th>phoneshell's verify.py</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>Problem addressed</td><td>Closed-source apps expose no internal state to check</td><td>Same problem, different app population (real iOS consumer apps)</td><td>arXiv:2605.27761; phoneshell houseFacts</td></tr>
+    <tr><td>Verification approach</td><td>Tiered guideline judge scoring a visual trajectory (MLLM-based)</td><td>Direct device-state reads (bundle ID, tree text, regex) for 133 of 153 assertions</td><td>arXiv:2605.27761; phoneshell/bench/verify.py</td></tr>
+    <tr><td>Agreement / disagreement with humans</td><td>87.37% agreement, i.e. 12.63% disagreement, &asymp; 44 of 350 tasks</td><td>Not reported; the 133 direct-read assertions have no human-agreement figure to compute</td><td>arXiv:2605.27761</td></tr>
+    <tr><td>Share of assertions that involve any judgment at all</td><td>100% (every task goes through GRADE)</td><td>13.1% (20 of 153, answer_contains only)</td><td>phoneshell/bench/verify.py</td></tr>
+    <tr><td>Scale</td><td>350 tasks, 94 apps</td><td>80 tasks, 153 assertions</td><td>arXiv:2605.27761; phoneshell houseFacts</td></tr>
+  </tbody>
+</table>
+
+<h2 id="method">What it means for anyone grading agents on real apps</h2>
+
+<ul>
+  <li>Scaling judgment up buys coverage a pure state check cannot reach, such as whether a written summary is actually good, not just present, which is exactly what GRADE's "output quality" tier is for. That coverage comes with a built-in, measured error rate: 12.63% here, reported honestly by the paper rather than buried, but still a rate that applies to every downstream number GRADE produces.</li>
+  <li>Narrowing judgment to zero wherever device state is available, phoneshell's approach, buys certainty on the 86.9% of assertions that use it, at the cost of being unable to grade anything that is not representable as a bundle ID, an on-screen string, or a regex pattern. A task like "write a good caption" has no foreground_app check that could ever grade it; phoneshell's 80-task set does not currently contain a task that would need one.</li>
+  <li>The two approaches are not actually in competition for the same 20 phoneshell assertions that already use answer_contains: those are the tasks with no device state to read, the same category GRADE's existence implies should exist on AndroidDaily's closed-source apps too, just at a scale (350 tasks across many closed-source apps) where a bespoke page-hosted ground truth per task, phoneshell's own workaround, would not hold up.</li>
+  <li>Seven of phoneshell's own twelve implemented check kinds, including switch_on, switch_off and app_state, sit unused by any of its 80 tasks. The codebase does not document why; it is a real gap in this check's own evidence, not a claim either way about whether those checks are needed.</li>
+</ul>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># AndroidDaily's own agreement figure and what it implies about disagreement
+curl -s https://arxiv.org/abs/2605.27761 | grep -o "87\.37%\|62\.0%"
+python3 -c "print(round(350 * (1 - 0.8737)))"   # roughly how many of 350 tasks GRADE would score differently from a human
+
+# phoneshell's own check-kind usage, straight from the task files
+git clone https://github.com/Blomega/phoneshell && cd phoneshell
+grep -n "if kind ==" phoneshell/bench/verify.py             # twelve implemented kinds
+python3 scripts/validate_tasks.py --count-check-kinds 2>/dev/null || grep -rho "kind: [a-z_]*" tasks/*.yaml | sort | uniq -c</code></pre>
+
+<h2 id="falsify">What would prove this wrong</h2>
+
+<p>We claim AndroidDaily's reported 87.37% agreement figure is arithmetically equivalent to a 12.63% disagreement rate, which on its own 350-task set is roughly 44 tasks; that arithmetic is wrong only if the 87.37% figure was computed on a different denominator than the full 350-task set, which the abstract does not specify and which we could not verify further. We claim phoneshell's verify.py asserts 133 of 153 checks without any judgment step; that is wrong the moment a sixth check kind that involves a model judgment call gets asserted by a phoneshell task, and none did as of 25 October 2026.</p>
+
+<section class="sources">
+  <h2 id="sources">Sources</h2>
+  <ol>
+    <li>Sui et al., <a href="https://arxiv.org/abs/2605.27761">AndroidDaily: A Verifiable Benchmark for Mobile GUI Agents on Real-World Closed-Source Applications</a>, arXiv:2605.27761, submitted 26 May 2026, read 25 October 2026.</li>
+    <li>Blolabel, <a href="https://github.com/Blomega/phoneshell/blob/main/phoneshell/bench/verify.py">phoneshell/bench/verify.py</a>, read 25 October 2026.</li>
+    <li>Blolabel, <a href="https://blolabel.ai/blog/eighty-tasks-five-checks/">eighty-tasks-five-checks</a>, prior note on phoneshell's own check-kind distribution, read 25 October 2026.</li>
+  </ol>
+</section>
+</article>
+</div>
+</body></html>
