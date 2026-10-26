@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A CLI oracle solves 88.8% of AndroidWorld and 86.3% of MobileWorld in 10.7 steps; the paper never tests iOS, and phoneshell's action module has never had a shell verb to test it with - Blolabel</title>
+<meta name="description" content="Beyond the GUI Paradigm (arXiv:2606.19388) finds Claude Code using ADB shell commands beats every reproducible GUI baseline on AndroidWorld and MobileWorld, with an oracle CLI ceiling of 88.8% and 86.3%, at 10.7 steps per task against 18.6 for GUI agents. The paper reports zero iOS figures. phoneshell's action module (phoneshell/actions.py, phoneshell/cli.py) has no verb that issues a shell command to the phone it drives, only accessibility-tree reads and WebDriverAgent touch events.">
+<link rel="canonical" href="https://blolabel.ai/blog/cli-ceiling-88-8-phoneshell-has-no-shell-verb/">
+<meta property="og:title" content="A CLI oracle solves 88.8% of AndroidWorld and 86.3% of MobileWorld in 10.7 steps; the paper never tests iOS, and phoneshell's action module has never had a shell verb to test it with - Blolabel">
+<meta property="og:description" content="Claude Code with ADB shell access beats every GUI baseline on two Android benchmarks. phoneshell's own action module has no shell verb at all, by design, and the paper has no iOS numbers either way.">
+<meta property="og:url" content="https://blolabel.ai/blog/cli-ceiling-88-8-phoneshell-has-no-shell-verb/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/cli-ceiling-88-8-phoneshell-has-no-shell-verb-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"A CLI oracle solves 88.8% of AndroidWorld and 86.3% of MobileWorld in 10.7 steps; the paper never tests iOS, and phoneshell's action module has never had a shell verb to test it with",
+ "description":"Beyond the GUI Paradigm (arXiv:2606.19388) reports an oracle CLI ceiling of 88.8% on AndroidWorld and 86.3% on MobileWorld, both reached over ADB shell access, versus GUI baselines ranging from 57.8% to 69.3% and 13.3% to 43.2% on the same two Android benchmarks. The paper reports no iOS results. phoneshell's own action module, read across phoneshell/actions.py and phoneshell/cli.py, has no verb that issues a shell command to the phone it drives.",
+ "datePublished":"2026-10-25","dateModified":"2026-10-25",
+ "url":"https://blolabel.ai/blog/cli-ceiling-88-8-phoneshell-has-no-shell-verb/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/cli-ceiling-88-8-phoneshell-has-no-shell-verb/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"},
+ "image":"https://blolabel.ai/images/blog/cli-ceiling-88-8-phoneshell-has-no-shell-verb-hero.png",
+ "citation":["https://arxiv.org/abs/2606.19388", "https://github.com/Blomega/phoneshell/blob/main/phoneshell/actions.py", "https://github.com/Blomega/phoneshell/blob/main/phoneshell/cli.py"]}
+</script>
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What does Beyond the GUI Paradigm measure, and on which benchmarks?", "acceptedAnswer": {"@type": "Answer", "text": "arXiv:2606.19388 runs three coding agents (Claude Code, Terminus-2, mini-swe-agent) across four model APIs on AndroidWorld and MobileWorld, giving them ADB shell access instead of screen-reading GUI actions, with no mobile-specific post-training, and compares them to three reproducible GUI baselines (GUI-Owl-1.5-32B, MAI-UI, Qwen3-VL-32B) and an oracle CLI solution that establishes a performance ceiling. Both benchmarks are Android environments reached over ADB; the paper reports no iOS results."}}, {"@type": "Question", "name": "What were the headline numbers?", "acceptedAnswer": {"@type": "Answer", "text": "Claude Code (Opus 4.7) with shell access reached 71.8% on AndroidWorld and 51.9% on MobileWorld, beating every one of the three reproducible GUI baselines, which ranged from 57.8% to 69.3% on AndroidWorld and from 13.3% to 43.2% on MobileWorld. The oracle CLI ceiling reached 88.8% on AndroidWorld (103 of 116 tasks judged CLI-solvable) and 86.3% on MobileWorld (101 of 117). On a 45-template CLI-Advantage Task Suite, every CLI agent beat every GUI baseline in all five task categories, averaging 10.7 steps per task against 18.6 for GUI agents."}}, {"@type": "Question", "name": "Does phoneshell have anything comparable to a CLI action?", "acceptedAnswer": {"@type": "Answer", "text": "No. phoneshell/actions.py, the module that defines every move the agent can make, has no action that opens a shell or runs a command on the phone; it reads the accessibility tree and issues taps, swipes, typing and app launches through WebDriverAgent. phoneshell/cli.py does define a command literally named shell, but its own docstring describes it as a way to drive the phone by hand, to see what the agent sees, a human debugging tool, not an agent-callable action."}}]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#evidence">Evidence</a>
+    <a href="#method">What it means</a>
+    <a href="/blog/">Notes</a>
+    <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind comparison">comparison</span>
+    <time datetime="2026-10-25">25 October 2026</time>
+    <span>9 min read</span>
+  </div>
+  <h1>A CLI oracle solves 88.8% of AndroidWorld and 86.3% of MobileWorld in 10.7 steps; the paper never tests iOS, and phoneshell's action module has never had a shell verb to test it with</h1>
+  <p class="standfirst">Beyond the GUI Paradigm (arXiv:2606.19388) hands three coding agents ADB shell access instead of a screen, and the best of them, Claude Code on Opus 4.7, beats every one of three reproducible GUI baselines on both AndroidWorld and MobileWorld, while an oracle CLI solution reaches 88.8% and 86.3% in a fraction of the steps a GUI agent needs. Every number in the paper comes from Android. phoneshell's own action module has no verb that issues a shell command to the phone it drives, and the gap is not an oversight: there is no ADB-equivalent shell for third-party apps on iOS to write one against.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/cli-ceiling-88-8-phoneshell-has-no-shell-verb-hero.png" alt="Abstract technical illustration on a dark grid: two parallel glowing paths reaching toward a phone-shaped node, one path labeled with a terminal-prompt glyph and a short step count running almost straight through, the other path labeled with a touch-gesture glyph winding through more intermediate nodes before reaching the same destination, with the terminal path's glyph fading to a dim outline before it reaches a second, separate phone-shaped node marked with an orchard-fruit silhouette, signaling the terminal path cannot actually reach that second device, cool blues and teals with one amber accent on the fading terminal glyph" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="finding">What changed, and when</h2>
+
+<p>Posted to arXiv as 2606.19388 on 16 June 2026 by Li Gu and eight co-authors, Beyond the GUI Paradigm asks whether command-line access should sit alongside, not under, the screen-reading GUI paradigm that dominates mobile agent research. Three coding agents built for software engineering, Claude Code, Terminus-2 and mini-swe-agent, are pointed at Android devices over ADB and run across four model APIs with no mobile-specific training at all, then scored on AndroidWorld and MobileWorld against three reproducible GUI baselines (GUI-Owl-1.5-32B, MAI-UI, Qwen3-VL-32B) and an oracle CLI solution meant to establish where the CLI approach's ceiling sits.</p>
+
+<p>Claude Code on Opus 4.7 reached 71.8% on AndroidWorld and 51.9% on MobileWorld, ahead of every one of the three GUI baselines, which ranged from 57.8% to 69.3% on AndroidWorld and from 13.3% to 43.2% on MobileWorld. The oracle CLI ceiling, built from hand-verified solutions rather than a model's own attempts, reached 88.8% on AndroidWorld (103 of 116 tasks judged solvable by shell command) and 86.3% on MobileWorld (101 of 117). On a new 45-template CLI-Advantage Task Suite spanning bulk operations, multi-condition filtering, aggregation, cross-app workflows and hidden device state, every CLI agent beat every GUI baseline in all five categories, averaging 10.7 steps per task against 18.6 for the GUI agents on the same tasks. Every one of these numbers comes from AndroidWorld or MobileWorld, both Android environments reached over ADB. The paper reports no iOS figures, oracle or otherwise.</p>
+
+<svg viewBox="0 0 780 340" style="width:100%;height:auto" role="img" aria-label="Bar chart of success rates on AndroidWorld and MobileWorld. Claude Code with shell access reaches 71.8 percent on AndroidWorld and 51.9 percent on MobileWorld, ahead of the three GUI baselines which range from 57.8 to 69.3 percent on AndroidWorld and 13.3 to 43.2 percent on MobileWorld. The oracle CLI ceiling reaches 88.8 percent on AndroidWorld and 86.3 percent on MobileWorld. All figures are from arXiv 2606.19388 and all are Android-only.">
+<rect x="0" y="0" width="780" height="340" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">AndroidWorld / MobileWorld success rates (Android only)</text>
+<line x1="60" y1="290" x2="750" y2="290" stroke="#2a3140"/><text x="52" y="294" font-size="9.5" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="60" y1="218" x2="750" y2="218" stroke="#2a3140"/><text x="52" y="222" font-size="9.5" fill="#c4ccda" text-anchor="end">25</text>
+<line x1="60" y1="146" x2="750" y2="146" stroke="#2a3140"/><text x="52" y="150" font-size="9.5" fill="#c4ccda" text-anchor="end">50</text>
+<line x1="60" y1="74" x2="750" y2="74" stroke="#2a3140"/><text x="52" y="78" font-size="9.5" fill="#c4ccda" text-anchor="end">75</text>
+<line x1="60" y1="20" x2="750" y2="20" stroke="#2a3140"/><text x="52" y="24" font-size="9.5" fill="#c4ccda" text-anchor="end">100</text>
+<rect x="100" y="187" width="55" height="103" fill="#5ad1a0"/><text x="127" y="178" font-size="10.5" fill="#5ad1a0" text-anchor="middle">71.8</text><text x="127" y="306" font-size="9" fill="#c4ccda" text-anchor="middle">Claude Code AW</text>
+<rect x="175" y="241" width="55" height="49" fill="#5ad1a0"/><text x="202" y="232" font-size="10.5" fill="#5ad1a0" text-anchor="middle">51.9</text><text x="202" y="306" font-size="9" fill="#c4ccda" text-anchor="middle">Claude Code MW</text>
+<rect x="280" y="190" width="40" height="100" fill="#8893a8"/><text x="300" y="302" font-size="8.5" fill="#c4ccda" text-anchor="middle">GUI AW</text><text x="300" y="181" font-size="9.5" fill="#8893a8" text-anchor="middle">57.8-69.3</text>
+<rect x="330" y="249" width="40" height="41" fill="#8893a8"/><text x="350" y="302" font-size="8.5" fill="#c4ccda" text-anchor="middle">GUI MW</text><text x="350" y="240" font-size="9.5" fill="#8893a8" text-anchor="middle">13.3-43.2</text>
+<rect x="470" y="33" width="55" height="257" fill="#e2715a"/><text x="497" y="24" font-size="10.5" fill="#e2715a" text-anchor="middle">88.8</text><text x="497" y="306" font-size="9" fill="#c4ccda" text-anchor="middle">Oracle CLI AW</text>
+<rect x="545" y="52" width="55" height="238" fill="#e2715a"/><text x="572" y="43" font-size="10.5" fill="#e2715a" text-anchor="middle">86.3</text><text x="572" y="306" font-size="9" fill="#c4ccda" text-anchor="middle">Oracle CLI MW</text>
+<text x="20" y="328" font-size="9.5" fill="#8893a8">Source: arXiv:2606.19388, read 25 October 2026. AW = AndroidWorld, MW = MobileWorld. No iOS figures reported anywhere in the paper.</text>
+</g></svg>
+
+<h2 id="evidence">The verb phoneshell's action module never got</h2>
+
+<p>Every one of the CLI agents in this paper reaches the device through ADB shell, which can read an app's SQLite database, touch its files, and query system properties directly, the mechanism behind the paper's hidden-device-state task category. phoneshell's action module, phoneshell/actions.py, has no equivalent. Grepping the module that defines every move the agent can make turns up tap, type, swipe, scroll, open_app, open_url and press, each one routed through WebDriverAgent against the accessibility tree or the touchscreen; none of them opens a shell or runs a command on the phone itself. phoneshell/cli.py does define a command literally named shell, but its own module docstring describes it plainly: "drive the phone by hand, to see what the agent sees." That command hands control to a human at a terminal for debugging, it is never called by the agent during a task, and it is a different thing entirely from the ADB shell this paper's agents use to solve tasks on their own.</p>
+
+<p>This is not a capability phoneshell is missing by accident. iOS has no equivalent of ADB's shell access into a third-party app's own sandbox for an ordinary, non-jailbroken device, which is the access this paper's entire CLI-Advantage result depends on. The paper's own benchmark choice reflects the same boundary: AndroidWorld and MobileWorld are both Android environments reachable over ADB, and the paper reports no test of the same CLI-Advantage claim on iOS, not because the authors overlooked it, but because the question "does shell access beat the GUI" has no iOS answer to go test in the first place under the device model Apple ships.</p>
+
+<svg viewBox="0 0 820 280" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting two paths to a mobile device. The CLI agent's path runs from the model through ADB shell directly into the Android device's file system, database and system properties. phoneshell's path runs from the model through WebDriverAgent into the iOS accessibility tree and touchscreen only, with no shell node anywhere on the path, and a labelled gap where ADB-equivalent access would be on iOS.">
+<rect x="0" y="0" width="820" height="280" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Two paths from a model to a device</text>
+<rect x="40" y="55" width="340" height="150" rx="8" fill="#1d2330" stroke="#e2715a"/>
+<text x="54" y="78" font-size="11" font-weight="600" fill="#e2715a">CLI agent (arXiv:2606.19388, Android)</text>
+<text x="54" y="100" font-size="10" fill="#c4ccda">model &rarr; ADB shell &rarr; files / database / sysprops</text>
+<text x="54" y="122" font-size="10" fill="#c4ccda">10.7 steps/task on the CLI-Advantage suite</text>
+<text x="54" y="144" font-size="10" fill="#c4ccda">oracle ceiling: 88.8% AW, 86.3% MW</text>
+<text x="54" y="180" font-size="9.5" fill="#8893a8">tested on Android only</text>
+<rect x="440" y="55" width="340" height="150" rx="8" fill="#1d2330" stroke="#5ad1a0"/>
+<text x="454" y="78" font-size="11" font-weight="600" fill="#5ad1a0">phoneshell (actions.py, iOS)</text>
+<text x="454" y="100" font-size="10" fill="#c4ccda">model &rarr; WebDriverAgent &rarr; accessibility tree + touch</text>
+<text x="454" y="122" font-size="10" fill="#c4ccda">18.6 steps/task is the GUI-side figure the paper reports</text>
+<text x="454" y="154" font-size="10" fill="#f2a65a">no shell node on this path at all</text>
+<text x="454" y="176" font-size="9.5" fill="#8893a8">cli.py's "shell" command is for a human, not the agent</text>
+<text x="20" y="266" font-size="9" fill="#8893a8">Sources: arXiv:2606.19388; github.com/Blomega/phoneshell/blob/main/phoneshell/actions.py and phoneshell/cli.py, read 25 October 2026.</text>
+</g></svg>
+
+<table>
+  <thead><tr><th>Dimension</th><th>Beyond the GUI Paradigm</th><th>phoneshell</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>Device access mechanism</td><td>ADB shell: files, SQLite database, system properties</td><td>WebDriverAgent: accessibility tree reads, taps, swipes, typing</td><td>arXiv:2606.19388; phoneshell/actions.py</td></tr>
+    <tr><td>Platform tested</td><td>AndroidWorld, MobileWorld (both Android, both ADB-reachable)</td><td>Physical iPhone 17 Pro Max, iOS 26.6</td><td>arXiv:2606.19388; phoneshell houseFacts</td></tr>
+    <tr><td>Best CLI vs best GUI baseline</td><td>71.8%/51.9% (Claude Code) vs 57.8-69.3%/13.3-43.2% (3 GUI baselines)</td><td>No CLI baseline exists to compare; not reported</td><td>arXiv:2606.19388</td></tr>
+    <tr><td>Steps per task, CLI-Advantage suite</td><td>10.7 (CLI) vs 18.6 (GUI)</td><td>Not measured against this suite</td><td>arXiv:2606.19388</td></tr>
+    <tr><td>Does a shell-style verb exist in the agent's own action set</td><td>Yes, the entire paradigm under test</td><td>No; cli.py's "shell" command is a human debugging tool, never called by the agent</td><td>phoneshell/cli.py, phoneshell/actions.py</td></tr>
+  </tbody>
+</table>
+
+<h2 id="method">What it means for anyone choosing an access layer</h2>
+
+<ul>
+  <li>The CLI-Advantage result is real and large on the two benchmarks it was measured on, but it is a result about Android's own access model, not about mobile agents in general. Citing it as evidence that "agents should use shell access" without naming the platform overstates what the paper actually tested.</li>
+  <li>phoneshell's shell-free design is a platform constraint turned into an architecture, not an oversight corrected later. Everything the agent does, it does through the same WebDriverAgent-and-accessibility-tree path a sighted user's finger would use, which is also the only path available on iOS for arbitrary third-party apps.</li>
+  <li>The step-count gap, 10.7 versus 18.6, is the sharpest number in the paper for anyone costing out an agent by turns rather than by success rate alone: a task that a GUI agent solves in 18 steps is a task a shell command can often solve in one, when the access exists to write that command against.</li>
+  <li>Nothing in this comparison argues phoneshell should want shell access; it argues the paper's conclusion ("CLI deserves first-class consideration alongside GUI") is scoped to the one platform where that first-class citizen can exist as more than an oracle's hypothesis.</li>
+</ul>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># Beyond the GUI Paradigm's own numbers, and that it never mentions iOS
+curl -s https://arxiv.org/abs/2606.19388 | grep -io "AndroidWorld\|MobileWorld\|iOS" | sort | uniq -c
+
+# phoneshell's action module has no shell verb
+git clone https://github.com/Blomega/phoneshell && cd phoneshell
+grep -n "def \|action ==" phoneshell/actions.py | grep -i "shell\|subprocess\|exec"   # nothing matches
+sed -n '1,10p' phoneshell/cli.py                                                      # "shell" command's own docstring</code></pre>
+
+<h2 id="falsify">What would prove this wrong</h2>
+
+<p>We claim Beyond the GUI Paradigm reports zero iOS results anywhere in arXiv:2606.19388. That is wrong if a revision adds an iOS CLI-Advantage run; none existed as of 25 October 2026. We also claim phoneshell's action module has no agent-callable verb that issues a shell command to the phone. That is wrong the moment such a verb appears in phoneshell/actions.py, and we found none as of the same date. If Apple or a jailbreak-free tool later exposes a general ADB-equivalent shell into third-party app sandboxes on stock iOS, the structural reason for the gap would disappear even if the code has not yet caught up to it.</p>
+
+<section class="sources">
+  <h2 id="sources">Sources</h2>
+  <ol>
+    <li>Gu, Jiang, Guo, Chi, Wang, Liu, Yu, Chen, Wang, <a href="https://arxiv.org/abs/2606.19388">Beyond the GUI Paradigm: Do Mobile Agents Need the Phone Screen?</a>, arXiv:2606.19388, submitted 16 June 2026, read 25 October 2026.</li>
+    <li>Blolabel, <a href="https://github.com/Blomega/phoneshell/blob/main/phoneshell/actions.py">phoneshell/actions.py</a> and <a href="https://github.com/Blomega/phoneshell/blob/main/phoneshell/cli.py">phoneshell/cli.py</a>, read 25 October 2026.</li>
+  </ol>
+</section>
+</article>
+</div>
+</body></html>
