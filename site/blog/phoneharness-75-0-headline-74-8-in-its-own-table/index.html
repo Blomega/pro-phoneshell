@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PhoneHarness's abstract says its mixed GUI/CLI/Tool agent reaches 75.0%; its own model-combination table gives the same configuration 74.8%; phoneshell has no Tool action type to even build that table with - Blolabel</title>
+<meta name="description" content="PhoneHarness (arXiv:2606.14832) reports a 75.0% headline pass rate on its 124-task annotated evaluation split, beating the strongest non-PhoneHarness baseline by 12.9 points. Its own model-combination table lists 74.8% for the matching DeepSeek V4 flash plus Seed2.0-Pro configuration. phoneshell's verify.py has five asserted check kinds and none of PhoneHarness's tool-called or email-recipient checks, because phoneshell has no Tool action type for those checks to grade.">
+<link rel="canonical" href="https://blolabel.ai/blog/phoneharness-75-0-headline-74-8-in-its-own-table/">
+<meta property="og:title" content="PhoneHarness's abstract says its mixed GUI/CLI/Tool agent reaches 75.0%; its own model-combination table gives the same configuration 74.8%; phoneshell has no Tool action type to even build that table with - Blolabel">
+<meta property="og:description" content="PhoneHarness's headline 75.0% and its own table's 74.8% describe the same configuration. phoneshell's check taxonomy has no equivalent to the tool-called or email-recipient checks PhoneHarness needs, because it has no Tool actions at all.">
+<meta property="og:url" content="https://blolabel.ai/blog/phoneharness-75-0-headline-74-8-in-its-own-table/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/phoneharness-75-0-headline-74-8-in-its-own-table-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"PhoneHarness's abstract says its mixed GUI/CLI/Tool agent reaches 75.0%; its own model-combination table gives the same configuration 74.8%; phoneshell has no Tool action type to even build that table with",
+ "description":"PhoneHarness (arXiv:2606.14832) reports a 75.0% headline pass rate on 124 annotated Android tasks, 12.9 points ahead of the strongest non-PhoneHarness setting, while its own model-combination table lists 74.8% for DeepSeek V4 flash with Seed2.0-Pro as GUI worker, the same configuration under a different table. phoneshell's verify.py has five asserted check kinds, none of which match PhoneHarness's tool-called or email-recipient checks, because phoneshell's action module has no Tool action type at all.",
+ "datePublished":"2026-10-25","dateModified":"2026-10-25",
+ "url":"https://blolabel.ai/blog/phoneharness-75-0-headline-74-8-in-its-own-table/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/phoneharness-75-0-headline-74-8-in-its-own-table/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"},
+ "image":"https://blolabel.ai/images/blog/phoneharness-75-0-headline-74-8-in-its-own-table-hero.png",
+ "citation":["https://arxiv.org/abs/2606.14832", "https://github.com/Blomega/phoneshell/blob/main/phoneshell/bench/verify.py"]}
+</script>
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is PhoneHarness's headline result and its own internal discrepancy?", "acceptedAnswer": {"@type": "Answer", "text": "PhoneHarness (arXiv:2606.14832, submitted 12 June 2026) reports a 75.0% pass rate on the 124-task annotated split of PhoneHarness Bench, 12.9 points ahead of the strongest non-PhoneHarness setting (62.1%, tied between MobileClaw and Seed2.0-Pro) and 37.9 points ahead of AutoGLM-Phone (37.1%). The paper's own model-combination table separately lists 74.8% for DeepSeek V4 flash paired with Seed2.0-Pro as the GUI worker, which the text identifies as the configuration behind the 75.0% headline figure, a 0.2-point gap between the abstract's number and the table's number for what is described as the same run."}}, {"@type": "Question", "name": "What are PhoneHarness's three action types?", "acceptedAnswer": {"@type": "Answer", "text": "GUI actions (taps, swipes, text input, app launches, UI-tree retrieval, delegated to a GUI model), CLI actions (deterministic ADB/shell/Python commands for device-state queries, wake-lock control, file downloads) and Tool actions (host-side MCP-style utilities: search, email, document and file processing, chart generation, calendar creation). Verification checks whether a required tool was called, an email reached the right recipient, a device setting reached the expected value, an artifact exists and meets constraints, a calendar event was created, or the final answer contains required information."}}, {"@type": "Question", "name": "Why can't phoneshell be graded with PhoneHarness's own check types?", "acceptedAnswer": {"@type": "Answer", "text": "Two of PhoneHarness's six side-effect checks, whether a required tool was called and whether an email reached the correct recipient, have no phoneshell equivalent because phoneshell/actions.py has no Tool action type: there is no email-sending or MCP-style tool call in its action set to check in the first place. phoneshell's own five asserted check kinds (foreground_app, element_exists, regex_on_screen, answer_contains, element_exists_anywhere) all grade GUI-only state, consistent with phoneshell having no CLI or Tool action types either."}}]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#evidence">Evidence</a>
+    <a href="#method">What it means</a>
+    <a href="/blog/">Notes</a>
+    <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind comparison">comparison</span>
+    <time datetime="2026-10-25">25 October 2026</time>
+    <span>9 min read</span>
+  </div>
+  <h1>PhoneHarness's abstract says its mixed GUI/CLI/Tool agent reaches 75.0%; its own model-combination table gives the same configuration 74.8%; phoneshell has no Tool action type to even build that table with</h1>
+  <p class="standfirst">PhoneHarness mixes GUI, CLI and Tool actions into one Android agent and reports a 75.0% headline pass rate, 12.9 points ahead of the strongest non-PhoneHarness setting. Its own model-combination table lists 74.8% for the DeepSeek V4 flash plus Seed2.0-Pro pairing the text says produced that headline number, a small but real mismatch inside one paper. phoneshell's verify.py has no check that could even grade two of PhoneHarness's six side-effect categories, tool-called and email-recipient, because phoneshell has no Tool action type for those checks to apply to.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/phoneharness-75-0-headline-74-8-in-its-own-table-hero.png" alt="Abstract technical illustration on a dark grid: three distinct glyph-paths (a touch icon, a terminal prompt, and a small wrench-tool icon) converging into one glowing percentage readout with a thin secondary readout just beneath it showing a slightly different value, and off to one side a fourth, separate single touch-icon path reaching its own percentage readout alone with two of the three converging glyph-paths visibly absent from it, cool blues and teals with one amber accent marking the gap between the two close readouts" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="finding">What changed, and when</h2>
+
+<p>PhoneHarness was posted to arXiv as 2606.14832 on 12 June 2026 by a 21-author team led by Chenxin Li, introducing a mixed-action execution harness for Android phone-use agents built around three action types: GUI (taps, swipes, text input, UI-tree retrieval, delegated to a GUI model), CLI (deterministic ADB/shell/Python commands for device-state queries, wake-lock control, file downloads) and Tool (host-side MCP-style utilities: search, email, document and file processing, chart generation, calendar creation). Its benchmark, PhoneHarness Bench, has an annotated evaluation split of 124 tasks drawn from a 181-task candidate pool: 30 device/system tasks, 30 single-app GUI tasks, 35 tool-assisted tasks and 29 cross-app tasks.</p>
+
+<p>The paper's headline claim is a 75.0% pass rate on that 124-task split, 12.9 points ahead of the strongest non-PhoneHarness setting (62.1%, tied between the MobileClaw harness-based controller and the Seed2.0-Pro model-only agent) and 37.9 points ahead of AutoGLM-Phone, a native phone-use GUI agent, at 37.1%. The same paper's model-combination table, listing results by which model plays which role in the harness, gives 74.8% for DeepSeek V4 flash paired with Seed2.0-Pro as the GUI worker, the configuration the surrounding text identifies as the one behind the 75.0% headline. A 0.2-point gap between a paper's stated headline and its own supporting table, for what the text describes as the same run, is the kind of thing a reader citing only the abstract would never notice.</p>
+
+<svg viewBox="0 0 780 320" style="width:100%;height:auto" role="img" aria-label="Bar chart of PhoneHarness pass rates. The headline abstract figure is 75.0 percent. The paper's own model-combination table lists 74.8 percent for the same DeepSeek V4 flash plus Seed2.0-Pro configuration. The strongest non-PhoneHarness settings, MobileClaw and Seed2.0-Pro alone, reach 62.1 percent, and AutoGLM-Phone reaches 37.1 percent.">
+<rect x="0" y="0" width="780" height="320" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">PhoneHarness Bench, annotated split (124 tasks)</text>
+<line x1="60" y1="270" x2="750" y2="270" stroke="#2a3140"/><text x="52" y="274" font-size="9.5" fill="#c4ccda" text-anchor="end">0</text>
+<line x1="60" y1="202" x2="750" y2="202" stroke="#2a3140"/><text x="52" y="206" font-size="9.5" fill="#c4ccda" text-anchor="end">25</text>
+<line x1="60" y1="134" x2="750" y2="134" stroke="#2a3140"/><text x="52" y="138" font-size="9.5" fill="#c4ccda" text-anchor="end">50</text>
+<line x1="60" y1="66" x2="750" y2="66" stroke="#2a3140"/><text x="52" y="70" font-size="9.5" fill="#c4ccda" text-anchor="end">75</text>
+<rect x="100" y="66" width="60" height="204" fill="#5ad1a0"/><text x="130" y="57" font-size="10.5" fill="#5ad1a0" text-anchor="middle">75.0</text><text x="130" y="288" font-size="9" fill="#c4ccda" text-anchor="middle">Headline (abstract)</text>
+<rect x="190" y="72" width="60" height="198" fill="#8893a8"/><text x="220" y="63" font-size="10.5" fill="#8893a8" text-anchor="middle">74.8</text><text x="220" y="288" font-size="9" fill="#c4ccda" text-anchor="middle">Table, same config</text>
+<rect x="320" y="144" width="60" height="126" fill="#e2715a"/><text x="350" y="135" font-size="10.5" fill="#e2715a" text-anchor="middle">62.1</text><text x="350" y="288" font-size="9" fill="#c4ccda" text-anchor="middle">MobileClaw / Seed2.0-Pro</text>
+<rect x="450" y="169" width="60" height="101" fill="#e2715a" opacity="0.7"/><text x="480" y="160" font-size="10.5" fill="#e2715a" text-anchor="middle">37.1</text><text x="480" y="288" font-size="9" fill="#c4ccda" text-anchor="middle">AutoGLM-Phone</text>
+<text x="20" y="308" font-size="9.5" fill="#8893a8">Source: arXiv:2606.14832, abstract and model-combination table, read 25 October 2026.</text>
+</g></svg>
+
+<h2 id="evidence">Two check kinds phoneshell cannot build without a Tool action type</h2>
+
+<p>PhoneHarness verifies its mixed-action tasks with six rule-based, trace-backed checks: whether a required tool was called, whether an email went to the correct recipient, whether a device setting reached the expected value, whether a generated artifact exists and meets size or content constraints, whether a calendar event was created, and whether the final answer contains required information. phoneshell's verify.py, read in full, implements twelve check kinds but asserts only five across its 80 tasks: foreground_app (76), element_exists (31), regex_on_screen (23), answer_contains (20) and element_exists_anywhere (3). None of the five, and none of the seven unused kinds either, checks whether a tool was called or whether an email reached a recipient, because phoneshell's action module (phoneshell/actions.py) has no Tool action type and no email-sending capability for such a check to apply to in the first place. The verification surface in both projects tracks the action surface: PhoneHarness needed six check kinds because it gave its agent three different ways to act; phoneshell's five asserted kinds all grade GUI-only state because GUI is the only thing phoneshell's agent does.</p>
+
+<p>Where the two projects' taxonomies do overlap, the comparison is closer than it looks. PhoneHarness's "device setting reached the expected value" check has a direct phoneshell analogue in switch_on, switch_off and app_state, three kinds implemented in verify.py but asserted by zero of phoneshell's 80 published tasks. PhoneHarness's "final answer contains required information" check is, in method if not in wording, the same operation as phoneshell's answer_contains: both grade a model's own sentence against a required substring because the task's deliverable is information rather than a state change. Neither project's final-answer check reads the device at all; both projects reserve that one exception for the same reason.</p>
+
+<svg viewBox="0 0 820 280" style="width:100%;height:auto" role="img" aria-label="Diagram mapping PhoneHarness's six side-effect checks against phoneshell's twelve implemented check kinds. Device-setting and final-answer-contains checks have direct phoneshell analogues. Tool-called and email-recipient checks have no phoneshell equivalent at all, because phoneshell's action module has no Tool action type. Artifact-exists and calendar-event checks also have no phoneshell equivalent.">
+<rect x="0" y="0" width="820" height="280" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">PhoneHarness's 6 side-effect checks vs phoneshell's 12 implemented kinds</text>
+<rect x="40" y="50" width="340" height="200" rx="8" fill="#1d2330" stroke="#8893a8"/>
+<text x="54" y="72" font-size="11" font-weight="600" fill="#8893a8">PhoneHarness checks</text>
+<text x="54" y="94" font-size="10" fill="#5ad1a0">device setting reached value &rarr; has phoneshell analogue</text>
+<text x="54" y="112" font-size="10" fill="#5ad1a0">final answer contains info &rarr; has phoneshell analogue</text>
+<text x="54" y="134" font-size="10" fill="#e2715a">tool was called &rarr; no phoneshell equivalent</text>
+<text x="54" y="152" font-size="10" fill="#e2715a">email reached recipient &rarr; no phoneshell equivalent</text>
+<text x="54" y="170" font-size="10" fill="#f2a65a">artifact exists / constraints &rarr; no equivalent</text>
+<text x="54" y="188" font-size="10" fill="#f2a65a">calendar event created &rarr; no equivalent</text>
+<text x="54" y="220" font-size="9.5" fill="#8893a8">3 of 6 need a Tool or file-producing action phoneshell lacks</text>
+<rect x="440" y="50" width="340" height="200" rx="8" fill="#1d2330" stroke="#5ad1a0"/>
+<text x="454" y="72" font-size="11" font-weight="600" fill="#5ad1a0">phoneshell actions.py</text>
+<text x="454" y="96" font-size="10" fill="#c4ccda">GUI actions only: tap, type, swipe, scroll,</text>
+<text x="454" y="114" font-size="10" fill="#c4ccda">open_app, open_url, press</text>
+<text x="454" y="140" font-size="10" fill="#f2a65a">no CLI action type</text>
+<text x="454" y="158" font-size="10" fill="#f2a65a">no Tool action type (no email, no MCP tools)</text>
+<text x="454" y="196" font-size="9.5" fill="#8893a8">verification surface tracks action surface: 5 asserted</text>
+<text x="454" y="212" font-size="9.5" fill="#8893a8">kinds, all grading GUI-only state</text>
+<text x="20" y="268" font-size="9" fill="#8893a8">Sources: arXiv:2606.14832; github.com/Blomega/phoneshell/blob/main/phoneshell/bench/verify.py and phoneshell/actions.py, read 25 October 2026.</text>
+</g></svg>
+
+<table>
+  <thead><tr><th>Dimension</th><th>PhoneHarness</th><th>phoneshell</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>Action types</td><td>GUI, CLI, Tool (3)</td><td>GUI only (tap, type, swipe, scroll, open_app, open_url, press)</td><td>arXiv:2606.14832; phoneshell/actions.py</td></tr>
+    <tr><td>Verification check kinds</td><td>6 rule-based side-effect checks</td><td>12 implemented, 5 ever asserted</td><td>arXiv:2606.14832; phoneshell/bench/verify.py</td></tr>
+    <tr><td>Headline vs internal-table figure</td><td>75.0% (abstract) vs 74.8% (model-combination table, same config)</td><td>Single board, no headline-vs-table split to report</td><td>arXiv:2606.14832; site/results.json</td></tr>
+    <tr><td>Tool-called / email-recipient checks</td><td>Both exist, 35 of 124 tasks are tool-assisted</td><td>No equivalent; no Tool action type to check</td><td>arXiv:2606.14832; phoneshell/actions.py</td></tr>
+    <tr><td>Task scale</td><td>124 annotated tasks (30/30/35/29 split), Android only</td><td>80 tasks, 153 assertions, physical iPhone</td><td>arXiv:2606.14832; phoneshell houseFacts</td></tr>
+  </tbody>
+</table>
+
+<h2 id="method">What it means for anyone comparing verification taxonomies</h2>
+
+<ul>
+  <li>A benchmark's check-kind count is mostly a function of its action-type count, not an independent design choice. PhoneHarness needed a tool-called check and an email-recipient check because it gave its agent tools and email; phoneshell has neither kind because it gave its agent neither capability. Comparing the raw count of check kinds between two projects without naming which actions each kind grades will overstate how different the two verification philosophies actually are.</li>
+  <li>The 75.0%-versus-74.8% gap is small enough to be a rounding or re-run artifact, and the paper offers no note explaining it either way. That is the same category of problem as the iOSWorld arXiv-versus-ICML gap covered separately on this site: small, real, unexplained, and invisible to a reader who checks only one of a paper's own numbers for a given result.</li>
+  <li>phoneshell's seven unused check kinds, switch_on, switch_off, element_value, screen_matches, ocr_contains, app_state and text_on_screen, are a measurable amount of unused verification capacity: 58% of the implemented kinds (7 of 12) have never been exercised by a real task in 80 attempts, a gap any future phoneshell task author should know about before assuming an unused kind is untested as well as unused.</li>
+  <li>PhoneHarness's 35-of-124 tool-assisted tasks and phoneshell's 0-of-80 tool-involving tasks are not a performance gap, they describe two agents built to do different amounts of stuff. Neither number says anything about which agent is better at the actions it actually has.</li>
+</ul>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># PhoneHarness's own two numbers for the same configuration
+curl -s https://arxiv.org/abs/2606.14832 | grep -o "75\.0%\|74\.8%"
+
+# phoneshell has no Tool action type and no email/MCP-tool verb
+git clone https://github.com/Blomega/phoneshell && cd phoneshell
+grep -n "def \|action ==" phoneshell/actions.py | grep -iE "email|tool|mcp"   # nothing matches
+grep -n "if kind ==" phoneshell/bench/verify.py                               # twelve kinds, read which ones exist</code></pre>
+
+<h2 id="falsify">What would prove this wrong</h2>
+
+<p>We claim PhoneHarness's abstract (75.0%) and its model-combination table (74.8%) report two different numbers for what the surrounding text identifies as the same DeepSeek V4 flash plus Seed2.0-Pro configuration. That is wrong if a revision of arXiv:2606.14832 clarifies that the two figures describe different runs or different rounding bases; we found no such clarification as of 25 October 2026. We claim phoneshell's action module has no Tool action type and therefore no tool-called or email-recipient check. That is wrong the moment such an action and check appear in phoneshell/actions.py and phoneshell/bench/verify.py, and we found neither as of the same date.</p>
+
+<section class="sources">
+  <h2 id="sources">Sources</h2>
+  <ol>
+    <li>Li et al., <a href="https://arxiv.org/abs/2606.14832">PhoneHarness: Harnessing Phone-Use Agents through Mixed GUI, CLI, and Tool Actions</a>, arXiv:2606.14832, submitted 12 June 2026, read 25 October 2026.</li>
+    <li>Blolabel, <a href="https://github.com/Blomega/phoneshell/blob/main/phoneshell/bench/verify.py">phoneshell/bench/verify.py</a> and <a href="https://github.com/Blomega/phoneshell/blob/main/phoneshell/actions.py">phoneshell/actions.py</a>, read 25 October 2026.</li>
+  </ol>
+</section>
+</article>
+</div>
+</body></html>
