@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Changing only which app is asking drops a GUI agent's permission grants from 26 of 32 to 0 of 32 on the identical task; phoneshell's confirm gate never reads who is asking at all - Blolabel</title>
+<meta name="description" content="A Permission Literacy study (arXiv:2608.04755, 5 August 2026) injects permission pop-ups into real GUI tasks across four frontier multimodal LLMs and finds an App-Trust Bias: holding the Calendar task fixed and changing only the requesting app from Calendar to PiMusic drops grants from 26 of 32 to 0 of 32. phoneshell's 14-pattern confirm gate checks only the tapped label's text; it has no requester field, no permission type, and nothing in its 14 patterns matches an iOS permission alert's own button labels.">
+<link rel="canonical" href="https://blolabel.ai/blog/permission-grants-26-of-32-then-zero-same-task-different-app/">
+<meta property="og:title" content="Changing only which app is asking drops a GUI agent's permission grants from 26 of 32 to 0 of 32 on the identical task; phoneshell's confirm gate never reads who is asking at all - Blolabel">
+<meta property="og:description" content="A Permission Literacy study finds an App-Trust Bias: holding a Calendar task fixed and changing only the requesting app from Calendar to PiMusic drops grants from 26 of 32 to 0 of 32. phoneshell's confirm gate checks only a tapped label's text, with no requester field and no match for a permission alert's own buttons.">
+<meta property="og:url" content="https://blolabel.ai/blog/permission-grants-26-of-32-then-zero-same-task-different-app/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/permission-grants-26-of-32-then-zero-same-task-different-app-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"Changing only which app is asking drops a GUI agent's permission grants from 26 of 32 to 0 of 32 on the identical task; phoneshell's confirm gate never reads who is asking at all",
+ "description":"A Permission Literacy study (arXiv:2608.04755) finds an App-Trust Bias: holding a Calendar task fixed and changing only the requesting app from Calendar to PiMusic drops grants from 26 of 32 to 0 of 32. phoneshell's 14-pattern confirm gate checks only a tapped label's text, with no requester field and no match for a permission alert's own buttons.",
+ "datePublished":"2026-10-26","dateModified":"2026-10-26",
+ "url":"https://blolabel.ai/blog/permission-grants-26-of-32-then-zero-same-task-different-app/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/permission-grants-26-of-32-then-zero-same-task-different-app/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"},
+ "image":"https://blolabel.ai/images/blog/permission-grants-26-of-32-then-zero-same-task-different-app-hero.png",
+ "citation":["https://arxiv.org/abs/2608.04755","https://blolabel.ai/blog/confirm-gate-lets-send-through/","https://github.com/Blomega/phoneshell"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "What is App-Trust Bias in mobile GUI agents?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "A finding from a Permission Literacy study (arXiv:2608.04755, submitted 5 August 2026): when the same Calendar task was held fixed and only the identity of the app requesting a permission was changed, from Calendar, a plausible requester, to PiMusic, an implausible one, a frontier multimodal LLM's grants dropped from 26 of 32 to 0 of 32. The agent was not reasoning about what the permission was for; it was reacting to which app's name appeared on the dialog."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does phoneshell's confirm gate check which app is requesting a permission?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. phoneshell's confirm gate is 14 regular-expression patterns applied to the label text of whatever element was tapped, covering words like order, pay, delete and subscribe. It has no field for a requesting app's identity, a permission type, or a justification, because it was built to catch dangerous taps inside ordinary app screens, not specifically to reason about system permission dialogs. None of its 14 patterns match the standard iOS alert buttons Allow, Allow Once, Allow While Using App or Don't Allow."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Is phoneshell vulnerable to the same App-Trust Bias the paper found?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Not in the same way, because the bias the paper measures requires the agent to read and weigh a requester identity, and phoneshell's gate does not read that field at all. But the absence of the bias is not a defense; it is the absence of any permission-specific check whatsoever. An iOS permission alert's Allow button already passes through phoneshell's existing confirm gate unchecked, the same gap already documented for Send, Post and Confirm on 5 October 2026."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAABOCAMAAAD4iTj8AAAAilBMVEVMaXFiXmJhXmEVieRkYGRiXmJiXmJEaZJiX2IWjehNaIJhXmEUjOcVjOdgXWBjX2MWjecUjOZiXmJiXmIUi+UVjehUoN7w9/33+/7q9Pzg7/p8gIlkYGQXjuj///9oZGgWk/JmY2YVjullYWUJh+dtaG0olumr1/dSq+7T6vo6n+tntfCMx/N7vvJEi25LAAAAHHRSTlMAakku/HusA/z7Eo+hwDL30nXizUnjHfvKolE8aPCOgAAAAAlwSFlzAAALEgAACxIB0t1+/AAAB35JREFUeJztmn1zsjoThwMCCaCg4EvbASFA1bZ3v//XO7MJeQFBwJ55nnNP85v+oSYB9mJ3k2yKkJGRkZGRkZGRkZGRkZGRkZGRkdHPhZXQ7xPuGH2P4Gk4P8L6P3slGCOEV7vderNZr3f7I/yEfpEwQqvd1i+FDpt90PWCwBKyF147kiOjxc8VzborvtdI++gV0Grtl2XuC1Vledhh5QQY2e8F17u3yASMQjnSXehVGFnaXReOxUvug3c+WJ9LMQbblbwpRnYdO6CYLgZA25HFEwAKddfxscdVX0eIaPnw6ueR2xw3ZaVZLxiU/k7cFSObkgzkFIsBFE478hkAYuw4AIzWld/TYbvetw6M0Ur69XZ4/GpbCvOrBiQQ5KUgMAeACjM95voAxoJxKH5nAyh7r6+qyrLacAcGAK095RAAjI7K/uZy+/q6fVYtAt8XBKYB6I89wwPu0tTQtZ4GkEMMl/4exkwBQHijhv85nUEfN+kELYFJABjhyA09L7QxQpEtFPQAoMCCTlakJVhucWDDcM9zoU363dMAcnj2A5/NHwLojL6ehb6ED1Q+c6QpABjZqUMhXdM0QuG7Q5lY3tcB2AnvFHuRPsUg24spaykojVMLuP0YQO6Xa3gxDwFgtJfpr/mW9p9Pl0oM2szwAIzcmhLiOA4hNI7CIiYgh3YAvFu2Q6ET62WpBBt4tMjYcN5WJHbrd0sB+FwiFRyC6RDQAuBDATh/d4PgMQAwkvDmLCM09age9QIAqcOklr1I0RLAKErUaDaM1DVLF8sBlEzSBao9ZJcHADDaqwT4qdl/vioA26kQYI3KAuKIL10AGXEcrReJWRSA/e2llYjD8CwHsGbypfvuJgEoB2huOoAPLZIYxocekN6ZMASgZ2R7IZwWyi3kpwzwLAewZ9j2/kwA0NbCyvPmSwcgkwBPJY8AqDb++p0HACDO5eestVFaXVMVImDxYgAVvCssX+sMADuVAUYBQCp5DMBTNlBKVUDfASAFLSQsUoRglPQeSB7KlQiBCHnGAxAKtjyz+9VqCsB6GgC/zKMQCGRuI5ln2558jf0cQJzQtmQzoSnGKIrl1xAj7EkcbOziHLADbVr72/T1aBbQ5oCxHNDOA6MAwAb5/l0gHgoj+gAoS/yyOUsCJCPAoSm7Wtrycdj257lZoOT255C9HgPABwWgupyGZoEZAOz2mUmdsCJCkAx6AKlTFqCyOcsiwNG20jACuVS72E/WAX6Vs1XsQwCBBiBv1ELwfL4tASAs5E+J0cg6gMe8aia1jZDyeS4REVkWPwFAU3XgCWECgLYNbj5PQw4wDUA9Zbt86W5/epsh3SUYgMFJEgBEPwKQ+5s9b57rAdpa6PT5/wDAl8Liy1Me4OtL4bJcT4UAVjthRuDPgP0DADrFNz0EpI+TIQBUNHcBCJ+vO8qeygGlvhb22yXM3FmgyS/N7eN0Pl0vzacqi8zIATJvpcAGYTEt9gC0zWrW5ElQTBlx0pX3xEpww5bCG7+NbLaKnbcOaKrb9eP01TSXz7zJr+ePP5+NXFHvdStpGukKkDaV1xZbvo1Ng5kNzSLPizQnr4uDIMBRFADDIAiCpxdCaN8ucPmGeM5KsLnxreD1dskv3+3nC3eC6nDsLHdJrKm2tIUQyWI3ilyxLLgHEFtRFIooh2kRoSiTCyHobMdJ6rk2cH1mN7jn4Sl/YRviGXsBEfwQ/yc5F3ywVOCXG30v0BVf26ipLCvieHwpTDIaO3LjyI3CqSKQul6cZVAYIUnq/cADkAhteHkdAHdnB6xnZwVw7q0G2h3FMACHAZA+DzYKe4Y3Q5DepQfwiNA2QwXAg8pIRuD44QkAGGLnuBOze+VrAPLK32o6MLugHqCXgro6XRqfQXzsAVpa6+K58wB9KIsAfSeRqXoBrxYsB3DgkiWRTgjkeVXq4gvFbakvgPq6Nv2K0AAAfUvLHl5Y2s8BtV42IZTVvTCyZQHl5wWRiksuCyB8NQDq6AuqxtywfaklgHt9VlvIR489AGHvXQuCRG5ougBqL5FOQMh7KJ7fqnUyjCBLiM8URX2tJNifBrtqC94wWq8F9vXdtMV1u26Llh3BLMB24F4BRVD2V9iuPNByO0djllU4bSen8LRjtwRqolKZXhSdPhrDY1Vh5gBTAKB68MD+81WeC4hjyq7eRWnTjYuC1jUtYqt3HKp/c+Oihk40sXQLAjehBaV1VlNoC1VZfMbhKB4GAE6+CaYBYHQcTwHn86u4beQOq63vYxRYXpokaRghZHda9W8oCqGTJyr/wgQU2CEMT1IvtNlT89/VXcePxzEAuFdV+uugezbYlTr1ehsn8DL7NJPBDAJ5qjPai3e6O0Djw1nToqNtxADcy9+u5dngQLOcBTiBl/H3r53mDUtrFw/fbez0lT/dmdH+1G2a8+81GO22m67Wu91K+BFGq82gttrZ9/F1yPzTG/qbhZf4Eb53gtMrbAH+DuHH/yQz4bttp7eXU8/8v8b+f0Ng6/Ht9YXp9fWN589fJTzx/TcIyw+/0XojIyMjIyMjIyMjIyMjIyP0n9Y/P2/lF8zxuoMAAAAASUVORK5CYII=" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#evidence">Evidence</a>
+    <a href="#method">What it means</a>
+    <a href="/blog/">Notes</a>
+    <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-26">26 October 2026</time>
+    <span>9 min read</span>
+  </div>
+  <h1>Changing only which app is asking drops a GUI agent's permission grants from 26 of 32 to 0 of 32 on the identical task; phoneshell's confirm gate never reads who is asking at all</h1>
+  <p class="standfirst">No attacker, no injected instruction, the same task every time. Only the name on the permission dialog changed, and a frontier model's willingness to grant it collapsed from near-certain to never. phoneshell's own safety check has no field that question could even be asked of.</p>
+
+<p>"'Allow' to Achieve, Over-Privileged Inadvertently," a Permission Literacy study submitted 5 August 2026 (arXiv:2608.04755, Dongsheng Chen, Yuxuan Li, Guanhua Chen, Jiaxin Zhang, Xiangyu Zhao, Lei Ma, Xin Yao and Xuetao Wei), injects Android-style permission pop-ups into real GUI tasks and tests four frontier multimodal LLMs, each shown an annotated screenshot, the UI-tree hierarchy, the requesting app's identity, the permission being asked for, a stated justification, and the available response actions. The paper's sharpest result holds the task completely fixed and varies one field: in a Calendar task, changing only the requester named on the pop-up from Calendar, a plausible fit, to PiMusic, an implausible one, drops grants from 26 of 32 to 0 of 32. The authors call this App-Trust Bias. A second intervention, changing the task context while holding the pop-up itself fixed, call it Task-Prior Override, shifts authorization decisions substantially in the other direction. Neither manipulation touched the instruction the agent was given. Both changed what it decided to allow.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/permission-grants-26-of-32-then-zero-same-task-different-app-hero.png" alt="Abstract technical illustration on a dark background of two identical translucent dialog panels side by side, one with a small trusted-looking seal that lets a bright signal pass through, the other with a different seal that blocks the identical signal entirely, cool blues and teals with one amber accent on the blocked path" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="finding">What changed, and when</h2>
+
+<p>The study's four-level Permission Literacy framework, built on task relevance crossed with privacy risk and validated by three independent GUI-agent safety experts, is meant to classify whether a given permission grant was appropriate given what the task actually needed. The App-Trust Bias result sits underneath that framework as a confound: before a model can be judged on whether it got the relevance-and-risk tradeoff right, the study shows that identity alone, which app's name sits on the dialog, moves the decision by the full range from near-certain grant to total refusal, with the task and the permission itself held constant. Prompt interventions reduce unnecessary grants in the paper's tests, but inconsistently across the four models, and sometimes suppress grants that were actually appropriate, which the authors read as evidence that the fix belongs in how the decision is made, not just in how it is prompted. Their suggested direction is separating task execution from permission authorization entirely, as two different decisions made by two different mechanisms.</p>
+
+<p>phoneshell's confirm gate was never built with a requester field to be biased by in the first place, which sounds like a defense and is not one. It is 14 regular-expression patterns, covering order, pay, checkout, buy, purchase, send money, transfer, book, subscribe, delete, remove, log out and sign out, checked against the label text of whatever element <code>phone_tap</code> or <code>phone_do</code> just tapped, documented here on 5 October as missing "Send," "Post," "Unsubscribe," and "Erase All Content and Settings" entirely. An iOS system permission alert is, to phoneshell's harness, just another screen with buttons: Allow Once, Allow While Using App, Don't Allow, Allow. None of those four strings appears among the 14 patterns. The gate does not weigh the requesting app's identity against the permission because it does not represent either concept at all; it would tap "Allow" exactly as readily as it already taps "Send."</p>
+
+<h2 id="evidence">Where each system's decision actually comes from</h2>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>dimension</th><th>Permission Literacy study</th><th>phoneshell's confirm gate</th><th>source</th></tr></thead>
+  <tbody>
+    <tr><td>what the agent is shown before deciding</td><td>screenshot, UI-tree, requester identity, permission type, justification, available actions</td><td>the tapped element's label text only</td><td>arXiv:2608.04755 abstract; config.py</td></tr>
+    <tr><td>Calendar task, requester = Calendar</td><td>26 of 32 grants</td><td>not applicable; no permission-specific check exists</td><td>arXiv:2608.04755 abstract</td></tr>
+    <tr><td>identical Calendar task, requester = PiMusic</td><td>0 of 32 grants</td><td>not applicable</td><td>arXiv:2608.04755 abstract</td></tr>
+    <tr><td>models evaluated</td><td>4 frontier multimodal LLMs</td><td>14 fixed regex patterns, no model involved in the gate decision itself</td><td>arXiv:2608.04755 abstract; config.py</td></tr>
+    <tr><td>does "Allow" on a native permission alert get checked</td><td>not applicable; the paper's own interface shows the permission fields directly</td><td>no; "Allow," "Allow Once," "Allow While Using App" match none of the 14 patterns</td><td>config.py; confirm-gate-lets-send-through, 5 October 2026</td></tr>
+    <tr><td>mitigation tested</td><td>prompt interventions, inconsistent across models, sometimes suppress valid grants too</td><td>none tested; the gap has been documented, not patched, as of 26 October 2026</td><td>arXiv:2608.04755 abstract; FINDINGS.md</td></tr>
+  </tbody>
+</table>
+</div>
+
+<figure>
+<svg viewBox="0 0 900 300" role="img" style="width:100%;height:auto"
+  aria-label="Bar chart of permission grants out of 32 trials on an identical Calendar task, varying only the requesting app's identity. Calendar as requester: 26 of 32 grants. PiMusic as requester, same task, same permission: 0 of 32 grants.">
+  <rect x="0" y="0" width="900" height="300" fill="#0f172a"/>
+  <text x="30" y="32" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="16" font-weight="700">Same task, same permission, only the requester changed</text>
+  <g stroke="#1e293b"><line x1="80" y1="56" x2="80" y2="230"/><line x1="80" y1="230" x2="820" y2="230"/></g>
+
+  <rect x="200" y="78" width="110" height="152" fill="#34d399"/>
+  <text x="255" y="66" fill="#6ee7b7" font-family="ui-monospace,Menlo,monospace" font-size="14" text-anchor="middle">26 / 32</text>
+  <text x="255" y="254" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="11.5" text-anchor="middle">requester: Calendar</text>
+  <text x="255" y="270" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10" text-anchor="middle">plausible fit for the task</text>
+
+  <rect x="550" y="228" width="110" height="2" fill="none" stroke="#f472b6" stroke-dasharray="3,3"/>
+  <text x="605" y="214" fill="#f472b6" font-family="ui-monospace,Menlo,monospace" font-size="14" text-anchor="middle">0 / 32</text>
+  <text x="605" y="254" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="11.5" text-anchor="middle">requester: PiMusic</text>
+  <text x="605" y="270" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10" text-anchor="middle">identical task, identical permission</text>
+
+  <text x="30" y="292" fill="#64748b" font-family="Montserrat,sans-serif" font-size="10.5">Source: arXiv:2608.04755 abstract, App-Trust Bias experiment.</text>
+</svg>
+<figcaption>Nothing about the task or the permission changed between these two bars. The only variable was a name on a dialog, and it moved the outcome across the entire possible range.</figcaption>
+</figure>
+
+<figure>
+<svg viewBox="0 0 900 320" role="img" style="width:100%;height:auto"
+  aria-label="Diagram contrasting two permission-decision mechanisms. The Permission Literacy study's four-level framework reads task relevance and privacy risk, plus the requester's identity, before deciding whether to grant a permission, and that identity field is where App-Trust Bias enters. phoneshell's confirm gate reads only the tapped element's label text against 14 fixed patterns, with no requester field, no permission type, and no match for Allow, Allow Once, or Allow While Using App.">
+  <rect x="0" y="0" width="900" height="320" fill="#151a24"/>
+  <text x="30" y="30" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="15" font-weight="700">What each gate actually reads before deciding</text>
+
+  <text x="30" y="62" fill="#38bdf8" font-family="Montserrat,sans-serif" font-size="12.5" font-weight="700">Permission Literacy study's agent</text>
+  <rect x="30" y="74" width="140" height="52" rx="8" fill="#1e293b" stroke="#334155"/><text x="40" y="94" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="10">task relevance</text><text x="40" y="110" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10">+ privacy risk</text>
+  <rect x="190" y="74" width="150" height="52" rx="8" fill="#262d3d" stroke="#f59e0b"/><text x="200" y="94" fill="#fbbf24" font-family="Montserrat,sans-serif" font-size="10">requester identity</text><text x="200" y="110" fill="#fcd34d" font-family="Montserrat,sans-serif" font-size="10">App-Trust Bias enters here</text>
+  <rect x="360" y="74" width="140" height="52" rx="8" fill="#1e293b" stroke="#334155"/><text x="370" y="94" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="10">justification</text><text x="370" y="110" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10">text shown</text>
+  <rect x="520" y="74" width="150" height="52" rx="8" fill="#1e293b" stroke="#34d399"/><text x="530" y="94" fill="#34d399" font-family="Montserrat,sans-serif" font-size="10">grant / deny decision</text><text x="530" y="110" fill="#6ee7b7" font-family="Montserrat,sans-serif" font-size="10">26/32 or 0/32</text>
+  <g stroke="#475569" stroke-width="1.5"><line x1="170" y1="100" x2="190" y2="100"/><line x1="340" y1="100" x2="360" y2="100"/><line x1="500" y1="100" x2="520" y2="100"/></g>
+
+  <line x1="30" y1="170" x2="870" y2="170" stroke="#334155"/>
+
+  <text x="30" y="202" fill="#34d399" font-family="Montserrat,sans-serif" font-size="12.5" font-weight="700">phoneshell's confirm gate</text>
+  <rect x="30" y="214" width="220" height="52" rx="8" fill="#1e293b" stroke="#334155"/><text x="40" y="234" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="10">tapped element's label text</text><text x="40" y="250" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10">no requester, no risk field</text>
+  <rect x="290" y="214" width="220" height="52" rx="8" fill="#262d3d" stroke="#f59e0b"/><text x="300" y="234" fill="#fbbf24" font-family="Montserrat,sans-serif" font-size="10">14 fixed regex patterns</text><text x="300" y="250" fill="#fcd34d" font-family="Montserrat,sans-serif" font-size="10">"Allow" matches none of them</text>
+  <rect x="550" y="214" width="150" height="52" rx="8" fill="#3a2a10" stroke="#f59e0b"/><text x="560" y="234" fill="#fbbf24" font-family="Montserrat,sans-serif" font-size="10">tap executes</text><text x="560" y="250" fill="#fcd34d" font-family="Montserrat,sans-serif" font-size="10">unasked, every time</text>
+  <g stroke="#475569" stroke-width="1.5"><line x1="250" y1="240" x2="290" y2="240"/><line x1="510" y1="240" x2="550" y2="240"/></g>
+
+  <text x="30" y="300" fill="#64748b" font-family="Montserrat,sans-serif" font-size="10.5">Source: arXiv:2608.04755 abstract; phoneshell config.py confirm-gate patterns.</text>
+</svg>
+<figcaption>The paper's agent has a field that bias can corrupt. phoneshell's gate has no equivalent field at all, which means an "Allow" tap passes for the plainer reason that the gate was never told to look for it.</figcaption>
+</figure>
+
+<h2 id="method">What it means for someone gating a phone agent's dangerous steps</h2>
+
+<p>The useful distinction the paper draws out is between a bias and a gap. App-Trust Bias is a bias: the agent has the requester identity in front of it and uses it, just not in a way that tracks actual risk, since an implausible requester gets refused even when the specific permission in that trial might have been harmless, and a plausible one gets granted even when it might not have been. phoneshell's situation is a gap: there is no requester field to misuse, because the harness never represents one. A gap is, in one narrow sense, safer than a bias, since a system with no signal to exploit cannot be fooled by that signal. But it is safer only against attacks that specifically target the signal that is missing; it offers no protection at all against the ordinary case of an agent simply tapping "Allow" because "Allow" is not among the 14 words the gate is watching for, the same shape of miss already catalogued for "Send" and "Post."</p>
+
+<p>For anyone building a gate on top of a GUI agent, the two failures point at the same fix from different directions. The paper's authors suggest separating task execution from permission authorization as distinct decisions, so that a permission grant is never simply a side effect of an agent trying to finish its assigned task quickly. phoneshell's gate currently makes exactly that side-effect mistake in the opposite direction: because it only watches tap labels inside ordinary app screens, a permission alert's own distinctive button text was never pulled into the pattern list as its own category, task-completion pressure and permission authorization were never separated because permission authorization was never recognized as a category at all. Adding "Allow," "Allow Once" and "Allow While Using App" to the 14 patterns would close the specific gap this article measures, but it would only be pattern-matching a fourth kind of dangerous label onto the same label-text mechanism; it would not give phoneshell any of the requester-identity or justification-weighing the paper's four models already have and still get wrong.</p>
+
+<ul>
+  <li>A 26-to-0 swing from a single changed field is a stronger result than a generic "models over-grant permissions" claim, because it isolates identity as the driver and rules out the permission type or the task itself as the explanation.</li>
+  <li>Prompt-based mitigation reducing grants inconsistently, and sometimes catching valid ones too, is evidence against treating this as a prompting problem; it argues for a structural separation of the two decisions, which is a harder fix than a better system prompt.</li>
+  <li>phoneshell's gap here is independent of, not a subset of, the branch-steering vulnerability covered in the COBRA article on 5 October: that one needs an attacker supplying data to steer a pre-approved branch; this one needs no attacker at all, since App-Trust Bias and phoneshell's missing Allow-pattern are both the agent, unprompted by anyone, making the wrong call on its own.</li>
+</ul>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># The Permission Literacy study's abstract and the App-Trust Bias numbers
+curl -s https://arxiv.org/abs/2608.04755
+
+git clone https://github.com/Blomega/phoneshell && cd phoneshell
+grep -n "CONFIRM_PATTERNS\|order\|pay\|subscribe" phoneshell/*/config.py
+grep -i "allow" phoneshell/*/config.py   # expect no match</code></pre>
+
+<h2 id="falsify">What would prove this wrong</h2>
+
+<ul>
+  <li>We read the 26-to-0 swing as evidence that requester identity, not task or permission content, is the dominant signal behind the models' decisions. That is wrong if the paper's full tables, once read past the abstract, show the same swing occurs even when the requester name is varied between two equally plausible apps rather than a plausible one against an implausible one; that would point at a cruder plausibility heuristic rather than true identity-tracking. Untested as of this writing, through 31 December 2027.</li>
+  <li>We predict that adding "Allow," "Allow Once," "Allow While Using App" and "Don't Allow" to phoneshell's 14 confirm-gate patterns would make the gate ask before granting any iOS system permission, with no exceptions and no identity-conditioned bias of the kind the paper measures, because the gate has no mechanism to treat one requester differently from another. We will update this article, or file the pattern addition directly, once that gap is closed and tested against a live permission prompt.</li>
+</ul>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ol>
+      <li>Chen, Li, Chen, Zhang, Zhao, Ma, Yao, Wei, "'Allow' to Achieve, Over-Privileged Inadvertently: The Unintended Cost of Task-Completion-Driven Pop-up Decisions in Mobile GUI Agents," <a href="https://arxiv.org/abs/2608.04755">arXiv:2608.04755</a>, v1, 5 August 2026.</li>
+      <li>Blolabel, <a href="https://blolabel.ai/blog/confirm-gate-lets-send-through/">COBRA stops branch steering by bounding where each action may go; phoneshell's confirm gate lets a tap on Send straight through</a>, 5 October 2026.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell/blob/main/README.md">README.md</a>, "Safety" section, read 26 October 2026.</li>
+    </ol>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
