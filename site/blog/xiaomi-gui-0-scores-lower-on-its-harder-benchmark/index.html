@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Xiaomi-GUI-0 trains on physical phones and still scores 72.0% on its own harder benchmark against 78.9% on AndroidWorld; phoneshell's board sits at 89.7% to 96.6% with nothing to separate it - Blolabel</title>
+<meta name="description" content="Xiaomi-GUI-0 (arXiv:2606.31410, 30 June 2026) trains and evaluates closed-loop on physical phones, then scores 72.0% on its own in-house RealMobile benchmark against 78.9% on the public AndroidWorld, a 6.9-point gap in the harder benchmark's disfavor. phoneshell's six-model board sits at 89.7% to 96.6% on first-party iOS apps, with zero of fifteen pairs separating under McNemar's test, the same ceiling effect from the opposite direction.">
+<link rel="canonical" href="https://blolabel.ai/blog/xiaomi-gui-0-scores-lower-on-its-harder-benchmark/">
+<meta property="og:title" content="Xiaomi-GUI-0 trains on physical phones and still scores 72.0% on its own harder benchmark against 78.9% on AndroidWorld; phoneshell's board sits at 89.7% to 96.6% with nothing to separate it - Blolabel">
+<meta property="og:description" content="Xiaomi-GUI-0 trains and evaluates closed-loop on physical phones, then scores 72.0% on its own RealMobile benchmark against 78.9% on the public AndroidWorld. phoneshell's six-model board sits at 89.7% to 96.6% on first-party iOS apps with zero of fifteen pairs separating, the same ceiling effect from the opposite direction.">
+<meta property="og:url" content="https://blolabel.ai/blog/xiaomi-gui-0-scores-lower-on-its-harder-benchmark/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/xiaomi-gui-0-scores-lower-on-its-harder-benchmark-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"Xiaomi-GUI-0 trains on physical phones and still scores 72.0% on its own harder benchmark against 78.9% on AndroidWorld; phoneshell's board sits at 89.7% to 96.6% with nothing to separate it",
+ "description":"Xiaomi-GUI-0 (arXiv:2606.31410) trains and evaluates closed-loop on physical phones, then scores 72.0% on its own in-house RealMobile benchmark against 78.9% on the public AndroidWorld. phoneshell's six-model board sits at 89.7% to 96.6% with zero of fifteen pairs separating, a ceiling effect in the opposite direction.",
+ "datePublished":"2026-10-26","dateModified":"2026-10-26",
+ "url":"https://blolabel.ai/blog/xiaomi-gui-0-scores-lower-on-its-harder-benchmark/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/xiaomi-gui-0-scores-lower-on-its-harder-benchmark/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"},
+ "image":"https://blolabel.ai/images/blog/xiaomi-gui-0-scores-lower-on-its-harder-benchmark-hero.png",
+ "citation":["https://arxiv.org/abs/2606.31410","https://github.com/Blomega/phoneshell/blob/main/FINDINGS.md","https://blolabel.ai/blog/leaderboard-that-cannot-rank/"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Why does Xiaomi-GUI-0 score lower on its own RealMobile benchmark than on the public AndroidWorld?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Xiaomi's technical report (arXiv:2606.31410) reports 72.0% on RealMobile, its in-house benchmark built to resemble real user traffic and app diversity, against 78.9% on AndroidWorld, the public benchmark most mobile agents are tuned toward. The report does not give a quantitative explanation for the 6.9-point gap, but its own framing, that offline trajectories, simulators and standardized benchmarks differ from real apps in layout, interaction logic and abnormal-state distribution, points at AndroidWorld being the more standardized, more saturated surface of the two."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does phoneshell have an equivalent gap between an easy and a hard benchmark?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Not measured the same way, but the direction matches. phoneshell's own six-model, 58-task board, run entirely on first-party Apple apps with well-formed accessibility trees, scores between 89.7% and 96.6%, and none of the fifteen pairwise comparisons between models separates under McNemar's exact test. That is a benchmark at ceiling for the same structural reason RealMobile is not: clean, standardized, well-labelled interfaces are easier for every model, regardless of training method."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What does physical-device training actually buy, if the public benchmark score is still higher?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "The report does not say, because it reports no comparison of Xiaomi-GUI-0 against itself trained a different way. What it shows is that training and evaluating closed-loop on physical devices, rather than mainly on offline trajectories or simulators, did not make the model's score on the harder, more realistic benchmark exceed its score on the easier, more standardized one. Whether a simulator-trained version of the same model would have scored lower still on RealMobile is untested as of this writing."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#evidence">Evidence</a>
+    <a href="#method">What it means</a>
+    <a href="/blog/">Notes</a>
+    <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-26">26 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>Xiaomi-GUI-0 trains on physical phones and still scores 72.0% on its own harder benchmark against 78.9% on AndroidWorld; phoneshell's board sits at 89.7% to 96.6% with nothing to separate it</h1>
+  <p class="standfirst">Training closed-loop on real hardware was supposed to close the gap between a benchmark score and what a phone agent can actually do. It didn't close it inside Xiaomi's own numbers. The public benchmark still wins by 6.9 points, and phoneshell's own board shows the same ceiling from the other side.</p>
+
+<p>Xiaomi-GUI-0, a 32-author technical report posted 30 June 2026 and revised 1 July (arXiv:2606.31410), trains a vision-language GUI agent through three stages, supervised fine-tuning, step-level reinforcement learning and agentic reinforcement learning, run with physical phones as the primary execution environment and sandboxes only as auxiliary support. The paper's own argument for doing this is that offline trajectories, simulated environments and standardized benchmarks differ from real apps in layout, interaction logic and abnormal-state distribution, which opens a gap between benchmark scores and real-world usability. Its reported numbers do not close that gap in the direction the argument implies: 72.0% on RealMobile, its own in-house benchmark built to resemble real user traffic, against 78.9% on AndroidWorld, the public benchmark the rest of the field is tuned to. The harder, more realistic benchmark, the one the physical-device training loop was built for, scores 6.9 points lower.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/xiaomi-gui-0-scores-lower-on-its-harder-benchmark-hero.png" alt="Abstract technical illustration on a dark background of two measuring instruments pointed at the same physical phone, one reading a clean standardized scale that sits higher, the other reading a cluttered irregular scale that sits lower, cool blues and teals with one amber accent marking the gap between the two readings" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="finding">What changed, and when</h2>
+
+<p>Xiaomi's report describes a closed loop: data collection, training, rollout and evaluation all run with an execution distribution close to real deployment, meaning physical devices rather than emulators carry the weight at every stage. Training data covers high-frequency tasks, long-tail intents, and an error-driven data flywheel that turns failed trajectories into corrected actions and recovery demonstrations. That is a materially different approach from training mainly on offline logs or in a simulator and evaluating once at the end, and the paper frames it as the fix for exactly the gap this article is about. The two numbers it reports, 72.0% on RealMobile and 78.9% on AndroidWorld, are the only quantitative comparison the abstract gives, and the abstract does not state a reason for the gap beyond its general argument about standardized benchmarks differing from real apps.</p>
+
+<p>phoneshell's own board runs the opposite experiment on the opposite platform: six frontier models from six vendors, Kimi K3, GPT-5.1, Claude Opus 4.8, Qwen3-Max, Gemini 3.1 Pro and DeepSeek v3.2, driven over the same 58 iOS tasks on a physical iPhone 14 Pro, 349 scored cells, $9.25 of API spend. Every task is a first-party Apple app with a clean accessibility tree. The result, covered here on 10 September as <a href="/blog/leaderboard-that-cannot-rank/">the board that cannot rank</a>, is a tight 89.7% to 96.6% band in which not one of the fifteen possible pairs between models separates under McNemar's exact test. Forty-six of the 58 tasks were passed by every model. The suite is at ceiling for the same reason phoneshell predicted it would be: well-labelled, standardized, first-party interfaces are the easy case, for any model, trained any way.</p>
+
+<h2 id="evidence">Two benchmarks, two ceilings, opposite directions</h2>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>dimension</th><th>Xiaomi-GUI-0</th><th>phoneshell's board</th><th>source</th></tr></thead>
+  <tbody>
+    <tr><td>training/eval loop</td><td>physical devices primary, sandboxes auxiliary, 3-stage SFT + step RL + agentic RL</td><td>no training; six off-the-shelf frontier models driven over MCP, graded by device state</td><td>arXiv:2606.31410 abstract; README.md</td></tr>
+    <tr><td>harder, more realistic benchmark score</td><td>RealMobile (in-house): 72.0%</td><td>no in-house "hard" benchmark exists yet</td><td>arXiv:2606.31410 abstract</td></tr>
+    <tr><td>easier, standardized public benchmark score</td><td>AndroidWorld: 78.9%</td><td>phoneshell's own 58-task board on first-party iOS apps: 89.7% to 96.6%</td><td>arXiv:2606.31410 abstract; FINDINGS.md section 30</td></tr>
+    <tr><td>gap between the two, and its direction</td><td>6.9 points, harder benchmark lower</td><td>not comparable directly; phoneshell has one benchmark, not two of differing difficulty</td><td>arXiv:2606.31410 abstract</td></tr>
+    <tr><td>can the board separate models by accuracy</td><td>not reported; no paired test given against other models on either benchmark</td><td>no: 0 of 15 pairs separate, widest gap 4 wins to 0 at p = 0.12</td><td>FINDINGS.md section 30</td></tr>
+    <tr><td>stated reason for any gap</td><td>general claim that standardized benchmarks differ from real apps; no number attached</td><td>well-formed accessibility trees on first-party apps are the easy case for every model</td><td>arXiv:2606.31410 abstract; FINDINGS.md section 30</td></tr>
+  </tbody>
+</table>
+</div>
+
+<figure>
+<svg viewBox="0 0 900 340" role="img" style="width:100%;height:auto"
+  aria-label="Bar chart comparing four reported success rates. Xiaomi-GUI-0 scores 72.0 percent on its own RealMobile benchmark and 78.9 percent on the public AndroidWorld benchmark, 6.9 points lower on the harder benchmark. phoneshell's six-model board on first-party iOS apps spans 89.7 percent for the lowest model to 96.6 percent for the highest, a 6.9 point spread that is not statistically significant in any pairwise comparison.">
+  <rect x="0" y="0" width="900" height="340" fill="#0f172a"/>
+  <text x="30" y="34" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="16" font-weight="700">Where each system's score actually lands</text>
+  <g stroke="#1e293b"><line x1="70" y1="56" x2="70" y2="270"/><line x1="70" y1="270" x2="860" y2="270"/></g>
+
+  <rect x="110" y="156" width="80" height="114" fill="#f59e0b"/>
+  <text x="150" y="146" fill="#fbbf24" font-family="ui-monospace,Menlo,monospace" font-size="13" text-anchor="middle">72.0%</text>
+  <text x="150" y="288" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="11" text-anchor="middle">RealMobile</text>
+  <text x="150" y="303" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10" text-anchor="middle">Xiaomi-GUI-0, in-house</text>
+
+  <rect x="230" y="128" width="80" height="142" fill="#38bdf8"/>
+  <text x="270" y="118" fill="#7dd3fc" font-family="ui-monospace,Menlo,monospace" font-size="13" text-anchor="middle">78.9%</text>
+  <text x="270" y="288" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="11" text-anchor="middle">AndroidWorld</text>
+  <text x="270" y="303" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10" text-anchor="middle">Xiaomi-GUI-0, public</text>
+
+  <rect x="430" y="72" width="80" height="198" fill="#64748b"/>
+  <text x="470" y="62" fill="#cbd5e1" font-family="ui-monospace,Menlo,monospace" font-size="13" text-anchor="middle">89.7%</text>
+  <text x="470" y="288" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="11" text-anchor="middle">phoneshell board, low</text>
+  <text x="470" y="303" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10" text-anchor="middle">Qwen3-Max, first-party iOS</text>
+
+  <rect x="550" y="54" width="80" height="216" fill="#34d399"/>
+  <text x="590" y="44" fill="#6ee7b7" font-family="ui-monospace,Menlo,monospace" font-size="13" text-anchor="middle">96.6%</text>
+  <text x="590" y="288" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="11" text-anchor="middle">phoneshell board, high</text>
+  <text x="590" y="303" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10" text-anchor="middle">Kimi K3, first-party iOS</text>
+
+  <text x="30" y="324" fill="#64748b" font-family="Montserrat,sans-serif" font-size="10.5">Source: arXiv:2606.31410 abstract; phoneshell FINDINGS.md section 30, results.json.</text>
+</svg>
+<figcaption>Xiaomi's harder benchmark sits below its easier one by 6.9 points. phoneshell's own board spans a similar 6.9 points, entirely on the easy side, with none of it separable between models.</figcaption>
+</figure>
+
+<figure>
+<svg viewBox="0 0 900 300" role="img" style="width:100%;height:auto"
+  aria-label="Diagram of Xiaomi-GUI-0's closed training loop: data collection, training through supervised fine-tuning, step-level reinforcement learning and agentic reinforcement learning, rollout, and evaluation, all running primarily on physical phones with sandboxes as auxiliary support only, feeding an error-driven data flywheel that turns failed trajectories back into training data.">
+  <rect x="0" y="0" width="900" height="300" fill="#151a24"/>
+  <text x="30" y="32" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="15" font-weight="700">Xiaomi-GUI-0's closed loop, physical devices primary</text>
+
+  <rect x="30" y="60" width="150" height="56" rx="8" fill="#1d2330" stroke="#6f7b90"/><text x="40" y="84" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="11">data collection</text><text x="40" y="100" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="9.5">high-freq + long-tail</text>
+  <rect x="210" y="60" width="180" height="56" rx="8" fill="#262d3d" stroke="#f59e0b"/><text x="220" y="80" fill="#fbbf24" font-family="Montserrat,sans-serif" font-size="11">training: SFT &#8594; step RL &#8594; agentic RL</text>
+  <rect x="420" y="60" width="140" height="56" rx="8" fill="#1d2330" stroke="#6f7b90"/><text x="430" y="84" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="11">rollout</text><text x="430" y="100" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="9.5">physical phones</text>
+  <rect x="590" y="60" width="150" height="56" rx="8" fill="#1d2330" stroke="#6f7b90"/><text x="600" y="84" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="11">evaluation</text><text x="600" y="100" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="9.5">RealMobile + AndroidWorld</text>
+  <g stroke="#475569" stroke-width="1.5"><line x1="180" y1="88" x2="210" y2="88"/><line x1="390" y1="88" x2="420" y2="88"/><line x1="560" y1="88" x2="590" y2="88"/></g>
+
+  <rect x="210" y="160" width="330" height="56" rx="8" fill="#3a2a10" stroke="#f59e0b"/><text x="225" y="184" fill="#fbbf24" font-family="Montserrat,sans-serif" font-size="11">error-driven data flywheel</text><text x="225" y="200" fill="#fcd34d" font-family="Montserrat,sans-serif" font-size="9.5">failed trajectories &#8594; corrected actions, recovery demos</text>
+  <path d="M 505 160 L 505 116" stroke="#475569" stroke-width="1.5" fill="none" marker-end="url(#a1)"/>
+  <path d="M 285 216 L 285 116" stroke="#475569" stroke-width="1.5" fill="none" marker-end="url(#a1)"/>
+  <defs><marker id="a1" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#475569"/></marker></defs>
+
+  <text x="30" y="260" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="11.5">Sandboxes support this loop only as an auxiliary environment, never the primary one.</text>
+  <text x="30" y="282" fill="#64748b" font-family="Montserrat,sans-serif" font-size="10.5">Source: arXiv:2606.31410 abstract, training pipeline description.</text>
+</svg>
+<figcaption>The loop that was supposed to close the benchmark-to-reality gap runs on physical phones at every stage. The reported scores still rank AndroidWorld, the public benchmark, above RealMobile, the benchmark the loop was built for.</figcaption>
+</figure>
+
+<h2 id="method">What it means for someone reading a phone-agent benchmark score</h2>
+
+<p>The honest reading of Xiaomi's two numbers is not that physical-device training failed. It is that training method and benchmark difficulty are separate variables, and a paper that moves the first one does not thereby move the second one in a predictable direction. AndroidWorld is a known quantity that much of the field has spent two years optimizing against; RealMobile is Xiaomi's own construction, built specifically to carry the diversity and mess the abstract says public benchmarks lack. A model can get measurably better at the hard thing, through exactly the training loop the paper describes, and still score lower on it than on the easy thing, because the easy thing started easier and stayed easier. Nothing in the abstract licenses a claim that RealMobile's 72.0% would have been lower without the physical-device loop; the report has no such counterfactual to compare it against.</p>
+
+<p>phoneshell's board makes the matching point from the other side, with a statistical test behind it rather than a single pair of numbers. First-party iOS apps, built by Apple, with accessibility trees Apple controls, are the standardized surface. Six independently trained frontier models land in a 6.9-point band on that surface and no pair of them separates. That is not six models converging on a hard problem; it is six models all finding the same easy problem easy, the mirror image of a benchmark with nothing left to discriminate. Put the two findings together and the shape is consistent: whichever side of the real-device-versus-standardized-surface line a task sits on predicts its difficulty for a competent model far better than which lab trained the model or how.</p>
+
+<ul>
+  <li>A single benchmark score, in isolation, says almost nothing about how a model will do on a different distribution of apps. The number that matters is the gap between a model's easy-surface score and its hard-surface score, and Xiaomi's own report is one of the few places that gap is published at all for a physical-device-trained agent.</li>
+  <li>phoneshell's board cannot yet produce the matching comparison for iOS, because it has no equivalent to RealMobile, a deliberately harder, messier benchmark built from real app diversity rather than first-party apps. Building one is the gap this article actually points at.</li>
+  <li>"Trained on physical devices" is doing less work in the abstract than it appears to. It describes where training happened, not how hard the evaluation surface was. Both numbers can be true and the training method can still be a real improvement over a simulator-only baseline that Xiaomi's report simply does not measure.</li>
+</ul>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># Xiaomi-GUI-0's abstract and reported numbers
+curl -s https://arxiv.org/abs/2606.31410
+
+git clone https://github.com/Blomega/phoneshell && cd phoneshell
+grep -n -A20 "## 30. Adding tasks moved the ranking further out of reach" FINDINGS.md
+python3 -c "import json; d=json.load(open('site/results.json')); print(d['board'])"</code></pre>
+
+<h2 id="falsify">What would prove this wrong</h2>
+
+<ul>
+  <li>We read the 6.9-point gap as evidence that AndroidWorld remains the more standardized, more saturated surface even against a model trained specifically on physical-device diversity. That is wrong if Xiaomi, or anyone reproducing RealMobile from a published task list, shows a general-purpose model with no physical-device training scoring at or above 72.0% on it; that would mean RealMobile is not harder for the reason this article assumes, just differently distributed. Untested as of this writing, falsifiable by whoever runs it, through 31 December 2027.</li>
+  <li>We predict that if phoneshell builds an equivalent harder benchmark for iOS, drawing on third-party apps with the kind of opaque accessibility trees already documented in FINDINGS.md section 23 and section 26, its six-model board's scores would drop well below the current 89.7% to 96.6% band and the fifteen pairs would very likely start separating, because disagreement, not raw difficulty, is what a ranking needs. We will update this article once that benchmark exists and the sweep has run.</li>
+</ul>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ol>
+      <li>Cao, Wanxia, et al. (32 authors), "Xiaomi-GUI-0 Technical Report," <a href="https://arxiv.org/abs/2606.31410">arXiv:2606.31410</a>, v1 30 June 2026, v2 1 July 2026.</li>
+      <li>Blolabel, <a href="https://blolabel.ai/blog/leaderboard-that-cannot-rank/">Six models, 58 tasks on one iPhone, and not a single pair separates</a>, 10 September 2026.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell/blob/main/FINDINGS.md">FINDINGS.md</a>, section 30, read 26 October 2026.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell/blob/main/site/results.json">results.json</a>, read 26 October 2026.</li>
+    </ol>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
