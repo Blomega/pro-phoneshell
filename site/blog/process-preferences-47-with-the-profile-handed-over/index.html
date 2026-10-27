@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PrefDiag-Bench's best model clears 47.17% of Process preferences even with the profile handed to it directly; phoneshell has zero of its 80 tasks built to need one - Blolabel</title>
+<meta name="description" content="PrefDiag-Bench (arXiv:2610.30573, 22 October 2026) runs 1,664 stage-wise probes across 5 preference types and 11 agent systems; even Seed-2.0-Pro, its best model, clears only 47.17% of Process preferences with an explicit user profile supplied, and handing agents relevant evidence directly, rather than making them retrieve it, raises end-to-end success by up to 7.06 points. phoneshell's 80 tasks carry no persona, no behavioral log and no preference field of any kind to diagnose.">
+<link rel="canonical" href="https://blolabel.ai/blog/process-preferences-47-with-the-profile-handed-over/">
+<meta property="og:title" content="PrefDiag-Bench's best model clears 47.17% of Process preferences even with the profile handed to it directly; phoneshell has zero of its 80 tasks built to need one - Blolabel">
+<meta property="og:description" content="PrefDiag-Bench runs 1,664 stage-wise probes across 5 preference types and 11 agents; even its best model clears only 47.17% of Process preferences with an explicit profile supplied. phoneshell's 80 tasks carry no persona, no behavioral log and no preference field at all.">
+<meta property="og:url" content="https://blolabel.ai/blog/process-preferences-47-with-the-profile-handed-over/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/process-preferences-47-with-the-profile-handed-over-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"PrefDiag-Bench's best model clears 47.17% of Process preferences even with the profile handed to it directly; phoneshell has zero of its 80 tasks built to need one",
+ "description":"PrefDiag-Bench (arXiv:2610.30573) runs 1,664 stage-wise probes across 5 preference types and 11 agents; even its best model clears only 47.17% of Process preferences under an explicit profile, and handing agents relevant evidence directly raises end-to-end success by up to 7.06 points. phoneshell's 80 tasks carry no persona, behavioral log or preference field of any kind.",
+ "datePublished":"2026-10-26","dateModified":"2026-10-26",
+ "url":"https://blolabel.ai/blog/process-preferences-47-with-the-profile-handed-over/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/process-preferences-47-with-the-profile-handed-over/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"},
+ "image":"https://blolabel.ai/images/blog/process-preferences-47-with-the-profile-handed-over-hero.png",
+ "citation":["https://arxiv.org/abs/2610.30573","https://blolabel.ai/blog/jordan-avery-one-identity-26-apps/","https://github.com/Blomega/phoneshell"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "What is PrefDiag-Bench and what does it measure?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "PrefDiag-Bench (arXiv:2610.30573, submitted 22 October 2026) is a stage-wise diagnostic benchmark for personalized mobile GUI agents. It classifies user preferences into five types and runs 1,664 probes against 11 agent systems under two conditions, an explicit user profile and a behavioral memory log the agent must read preferences out of. Agents do relatively well on non-personalized tasks and much worse once a preference has to shape execution, with Ranking and Process preferences the hardest. Even Seed-2.0-Pro, the best model reported, clears only 47.17% of Process preferences with an explicit profile handed to it."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What is the actual bottleneck, according to the paper?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Two things, by the paper's own diagnosis: selecting the relevant evidence out of a user's history, and recognising when a given preference should actually apply to the current step. Both are retrieval and timing problems rather than reasoning problems in the usual sense. The paper's own controlled intervention supports that reading: supplying the relevant evidence directly, instead of making the agent find it, raises end-to-end task success by up to 7.06 points."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does phoneshell have any tasks a preference-personalization benchmark could score?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. phoneshell's 80 tasks are built around a fixed, deterministic starting state and a single sentence of instruction; none carries a persona, a behavioral memory log, or a preference field the agent is meant to read and apply. Of PrefDiag-Bench's five preference types and 1,664 probes, phoneshell's current schema has an equivalent for zero of them, the same gap already noted for cross-app memory and persona tasks."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#evidence">Evidence</a>
+    <a href="#method">What it means</a>
+    <a href="/blog/">Notes</a>
+    <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind event">event</span>
+    <time datetime="2026-10-26">26 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>PrefDiag-Bench's best model clears 47.17% of Process preferences even with the profile handed to it directly; phoneshell has zero of its 80 tasks built to need one</h1>
+  <p class="standfirst">The agent was not asked to infer what the user wanted. It was handed a written profile and still failed more than half the time on one preference type. The bottleneck is not reasoning about preferences, it is finding the right fact and knowing when it applies. phoneshell has no task that creates either problem.</p>
+
+<p>A benchmark posted four days ago, "Diagnosing Personalization Failures in Mobile GUI Agents" (PrefDiag-Bench, arXiv:2610.30573, Zhixin Lin, Dongliang Xu, Jungang Li, Shidong Pan, Jun Feng, Yanbin Sun, Jing Li, Liang Liu and Yue Yao, submitted 22 October 2026), runs 1,664 stage-wise probes across five preference types against 11 agent systems, under both an explicit user profile and a behavioral memory log the agent has to read preferences out of itself. The headline number is specific and uncomfortable: Seed-2.0-Pro, the best-performing model the paper reports, clears only 47.17% of Process-type preferences even when the profile is handed to it directly rather than inferred. Agents complete non-personalized tasks at comparatively high rates; the moment a task requires a preference to shape how a multi-step action gets carried out, performance drops hard, and Ranking and Process preferences are the two hardest categories.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/process-preferences-47-with-the-profile-handed-over-hero.png" alt="Abstract technical illustration on a dark background of a hand placing a labelled document directly into a mechanism, with the mechanism's output gauge still reading below half scale, cool blues and teals with one amber accent on the gauge needle" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="finding">What changed, and when</h2>
+
+<p>PrefDiag-Bench's design isolates the question that matters: is a personalization failure a reasoning failure, or a plumbing failure. The paper's own diagnosis names two bottlenecks, selecting the relevant evidence out of a user's history, and recognizing when a given preference should actually apply to the current step, and its own controlled intervention supports that reading over a reasoning-deficit story: supplying the relevant evidence directly, rather than making the agent retrieve it, raises end-to-end task success by up to 7.06 points. That is a retrieval-and-timing problem dressed up as a capability problem in every prior benchmark that only measured overall task success rather than diagnosing the stage at which execution actually broke.</p>
+
+<p>phoneshell's 80 tasks were never built to have this problem, in either direction. Every task starts from a deterministic setup state, carries one sentence of instruction, and is graded by reading the device afterward; <a href="/blog/jordan-avery-one-identity-26-apps/">covered here on 24 October</a>, phoneshell has no persona, no multi-app memory category and no cross-app identity in its schema at all, the same structural gap iOSWorld's invented identity Jordan Avery exposed from a different angle. PrefDiag-Bench adds a sharper version of that same gap: not just "no persona," but no preference field, no behavioral log, and no mechanism by which an instruction could even specify "the way I usually do this." Of the five preference types PrefDiag-Bench diagnoses, Content, Ranking, Process, Timing and whatever the fifth category contributes to its 1,664 probes, phoneshell's current task definitions have an equivalent for exactly zero.</p>
+
+<h2 id="evidence">What the benchmark measures against what phoneshell has to measure it with</h2>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>dimension</th><th>PrefDiag-Bench</th><th>phoneshell</th><th>source</th></tr></thead>
+  <tbody>
+    <tr><td>preference types diagnosed</td><td>5, including Ranking and Process (the two hardest)</td><td>0; no preference field exists in the task schema</td><td>arXiv:2610.30573 abstract; README.md task spec</td></tr>
+    <tr><td>probes / scored items</td><td>1,664 stage-wise probes</td><td>80 tasks, 153 assertions, none testing preference application</td><td>arXiv:2610.30573 abstract; README.md</td></tr>
+    <tr><td>agent systems evaluated</td><td>11, under explicit profile and behavioral log conditions</td><td>6 frontier models on the public board, none tested for preference handling</td><td>arXiv:2610.30573 abstract; results.json</td></tr>
+    <tr><td>best reported score, hardest category, easiest condition</td><td>Seed-2.0-Pro: 47.17% on Process preferences, explicit profile supplied</td><td>not applicable; no Process-preference task exists to score</td><td>arXiv:2610.30573 abstract</td></tr>
+    <tr><td>diagnosed bottleneck</td><td>evidence selection from user history, and timing of when a preference applies</td><td>no equivalent failure mode is possible, because no task carries a preference to select or time</td><td>arXiv:2610.30573 abstract</td></tr>
+    <tr><td>effect of removing the retrieval step</td><td>+7.06 points end-to-end when relevant evidence is supplied directly</td><td>not applicable</td><td>arXiv:2610.30573 abstract</td></tr>
+  </tbody>
+</table>
+</div>
+
+<figure>
+<svg viewBox="0 0 900 320" role="img" style="width:100%;height:auto"
+  aria-label="Bar chart of three PrefDiag-Bench figures. The best model's score on Process preferences under an explicit profile is 47.17 percent. The same score after a controlled intervention that supplies the relevant evidence directly rises by up to 7.06 points, to at most 54.23 percent. Phoneshell's equivalent task coverage for any preference type is zero, shown as an empty bar.">
+  <rect x="0" y="0" width="900" height="320" fill="#0f172a"/>
+  <text x="30" y="32" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="15" font-weight="700">What moves the Process-preference score, and what phoneshell has to move</text>
+  <g stroke="#1e293b"><line x1="70" y1="54" x2="70" y2="250"/><line x1="70" y1="250" x2="860" y2="250"/></g>
+
+  <rect x="120" y="138" width="90" height="112" fill="#f59e0b"/>
+  <text x="165" y="128" fill="#fbbf24" font-family="ui-monospace,Menlo,monospace" font-size="13" text-anchor="middle">47.17%</text>
+  <text x="165" y="268" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="11" text-anchor="middle">Seed-2.0-Pro, Process</text>
+  <text x="165" y="283" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10" text-anchor="middle">explicit profile supplied</text>
+
+  <rect x="290" y="124" width="90" height="126" fill="#38bdf8"/>
+  <text x="335" y="114" fill="#7dd3fc" font-family="ui-monospace,Menlo,monospace" font-size="13" text-anchor="middle">&#8804;54.23%</text>
+  <text x="335" y="268" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="11" text-anchor="middle">+ evidence intervention</text>
+  <text x="335" y="283" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10" text-anchor="middle">up to +7.06 points</text>
+
+  <rect x="620" y="246" width="90" height="4" fill="none" stroke="#f472b6" stroke-dasharray="3,3"/>
+  <text x="665" y="236" fill="#f472b6" font-family="ui-monospace,Menlo,monospace" font-size="13" text-anchor="middle">0 of 5 types</text>
+  <text x="665" y="268" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="11" text-anchor="middle">phoneshell preference tasks</text>
+  <text x="665" y="283" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10" text-anchor="middle">no field exists to score</text>
+
+  <text x="30" y="306" fill="#64748b" font-family="Montserrat,sans-serif" font-size="10.5">Source: arXiv:2610.30573 abstract; phoneshell README.md task schema, read 26 October 2026.</text>
+</svg>
+<figcaption>Even with the fix the paper itself identifies, the best reported score on the hardest category tops out in the mid-fifties. phoneshell is not failing this test. It has never taken it.</figcaption>
+</figure>
+
+<figure>
+<svg viewBox="0 0 900 320" role="img" style="width:100%;height:auto"
+  aria-label="Diagram contrasting two task pipelines. PrefDiag-Bench's stage-wise pipeline: an explicit profile or behavioral log holds a stored preference, the agent must select the relevant evidence from it, then decide whether the preference applies to the current step, before finally executing an action, with each stage separately diagnosable. phoneshell's pipeline: a deterministic setup state, one sentence of instruction, then device-state checks, with no stage anywhere that stores, retrieves, or times a preference.">
+  <rect x="0" y="0" width="900" height="320" fill="#151a24"/>
+  <text x="30" y="30" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="15" font-weight="700">A pipeline with a preference stage, and one without</text>
+
+  <text x="30" y="62" fill="#38bdf8" font-family="Montserrat,sans-serif" font-size="12.5" font-weight="700">PrefDiag-Bench: diagnose each stage</text>
+  <rect x="30" y="74" width="150" height="52" rx="8" fill="#1e293b" stroke="#334155"/><text x="40" y="94" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="10">profile or</text><text x="40" y="110" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10">behavioral log</text>
+  <rect x="200" y="74" width="160" height="52" rx="8" fill="#262d3d" stroke="#f59e0b"/><text x="210" y="94" fill="#fbbf24" font-family="Montserrat,sans-serif" font-size="10">select relevant</text><text x="210" y="110" fill="#fcd34d" font-family="Montserrat,sans-serif" font-size="10">evidence (bottleneck 1)</text>
+  <rect x="380" y="74" width="160" height="52" rx="8" fill="#262d3d" stroke="#f59e0b"/><text x="390" y="94" fill="#fbbf24" font-family="Montserrat,sans-serif" font-size="10">decide if it applies</text><text x="390" y="110" fill="#fcd34d" font-family="Montserrat,sans-serif" font-size="10">now (bottleneck 2)</text>
+  <rect x="560" y="74" width="150" height="52" rx="8" fill="#1e293b" stroke="#34d399"/><text x="570" y="94" fill="#34d399" font-family="Montserrat,sans-serif" font-size="10">execute action</text><text x="570" y="110" fill="#6ee7b7" font-family="Montserrat,sans-serif" font-size="10">47.17% at best</text>
+  <g stroke="#475569" stroke-width="1.5"><line x1="180" y1="100" x2="200" y2="100"/><line x1="360" y1="100" x2="380" y2="100"/><line x1="540" y1="100" x2="560" y2="100"/></g>
+
+  <line x1="30" y1="170" x2="870" y2="170" stroke="#334155"/>
+
+  <text x="30" y="202" fill="#34d399" font-family="Montserrat,sans-serif" font-size="12.5" font-weight="700">phoneshell: no preference stage exists</text>
+  <rect x="30" y="214" width="150" height="52" rx="8" fill="#1e293b" stroke="#334155"/><text x="40" y="234" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="10">deterministic</text><text x="40" y="250" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10">setup state</text>
+  <rect x="200" y="214" width="160" height="52" rx="8" fill="#1e293b" stroke="#334155"/><text x="210" y="234" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="10">one sentence of</text><text x="210" y="250" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10">instruction, no profile</text>
+  <rect x="560" y="214" width="150" height="52" rx="8" fill="#1e293b" stroke="#34d399"/><text x="570" y="234" fill="#34d399" font-family="Montserrat,sans-serif" font-size="10">device-state checks</text><text x="570" y="250" fill="#6ee7b7" font-family="Montserrat,sans-serif" font-size="10">pass or fail only</text>
+  <g stroke="#475569" stroke-width="1.5"><line x1="180" y1="240" x2="200" y2="240"/><line x1="360" y1="240" x2="560" y2="240"/></g>
+
+  <text x="30" y="300" fill="#64748b" font-family="Montserrat,sans-serif" font-size="10.5">Source: arXiv:2610.30573 abstract; phoneshell README.md task schema.</text>
+</svg>
+<figcaption>PrefDiag-Bench can name which of two stages failed. phoneshell's pipeline has no corresponding stages to fail, because it never stores or retrieves a preference in the first place.</figcaption>
+</figure>
+
+<h2 id="method">What it means for someone building or scoring a personalized phone agent</h2>
+
+<p>The useful finding here is not "agents are bad at preferences," which was already assumed by anyone who has watched one. It is that the badness is disproportionately a plumbing problem: an agent with the preference written down in front of it, no inference required, still gets the hardest category wrong more than half the time, and a large chunk of the gap closes when someone else does the evidence retrieval for it. That reframes where engineering effort should go for anyone building a personalization layer onto a GUI agent. The expensive-looking problem, teaching a model to reason about what a user probably wants, is smaller than the cheap-looking problem of building reliable retrieval over a behavioral log and a trigger for when a stored preference is actually relevant to the step in front of the agent right now.</p>
+
+<p>For phoneshell, the finding does not land as a failure, because the benchmark measures a capability phoneshell was never built to have. Every one of its 80 tasks is a closed, single-session, single-instruction unit, by design, which is exactly what makes its device-state grading reproducible: there is no history to misread and no stored preference to misapply, because there is no history or stored preference at all. That is a real limitation relative to what PrefDiag-Bench diagnoses, not a different, unrelated design choice. A phone agent that has to respect "the way I usually book a flight" needs a memory substrate and a retrieval step before the question PrefDiag-Bench asks becomes answerable one way or the other, and phoneshell's current schema has neither.</p>
+
+<ul>
+  <li>"The model can see the preference and still gets it wrong" is a stronger result than "the model has to infer the preference and gets it wrong," because it isolates execution from perception. PrefDiag-Bench's explicit-profile condition is the cleaner of its two conditions for that reason, and 47.17% is the number from that cleaner condition, not the harder behavioral-log one.</li>
+  <li>The 7.06-point gain from a retrieval intervention is a ceiling on how much of the problem is retrieval, not a floor; the paper does not report what fraction of the remaining failures after that intervention is a true reasoning failure versus a timing failure, so "fix retrieval and you are most of the way there" is not yet a licensed conclusion.</li>
+  <li>phoneshell's gap here is the same shape as its memory and persona gap, cited above, but sharper: it is not merely missing a feature PrefDiag-Bench tests, it is missing the data structure, a behavioral log or stored profile, that any version of this feature would need to exist first.</li>
+</ul>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># PrefDiag-Bench's abstract and probe design
+curl -s https://arxiv.org/abs/2610.30573
+
+git clone https://github.com/Blomega/phoneshell && cd phoneshell
+grep -n "persona\|profile\|preference\|memory" environments/*.yaml   # expect zero matches
+cat README.md | sed -n '98,133p'   # the task schema: setup, instruction, checks, nothing else</code></pre>
+
+<h2 id="falsify">What would prove this wrong</h2>
+
+<ul>
+  <li>We read 47.17% on Process preferences, with the profile supplied directly, as evidence that execution under a known preference is still substantially unsolved, independent of whether the preference had to be inferred. That is wrong if PrefDiag-Bench's full paper, once its tables are read past the abstract, shows a different model clearing Process preferences above roughly 65% under the explicit-profile condition; if so we will revise this article to say the ceiling is higher than the abstract's headline model suggests. Untested as of this writing, through 31 December 2027.</li>
+  <li>We predict that the first personalization task phoneshell adds, whenever that happens, will fail primarily on evidence selection rather than on execution once the correct preference is known, mirroring PrefDiag-Bench's own diagnosis rather than phoneshell's usual failure shape of a stack that silently reports success. That prediction is falsifiable the day such a task exists and is run.</li>
+</ul>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ol>
+      <li>Lin, Xu, Li, Pan, Feng, Sun, Li, Liu, Yao, "Diagnosing Personalization Failures in Mobile GUI Agents," <a href="https://arxiv.org/abs/2610.30573">arXiv:2610.30573</a>, v1, 22 October 2026.</li>
+      <li>Blolabel, <a href="https://blolabel.ai/blog/jordan-avery-one-identity-26-apps/">iOSWorld ties 133 tasks to one invented identity, Jordan Avery, across 26 apps</a>, 24 October 2026.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell/blob/main/README.md">README.md</a>, "The benchmark" section, read 26 October 2026.</li>
+    </ol>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
