@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>V-Droid swaps the LLM's job from generating a tap to scoring candidate taps and reaches 59.5% on AndroidWorld at 4.3 seconds a step; phoneshell's loop still asks one model to generate the tap - Blolabel</title>
+<meta name="description" content="V-Droid (arXiv:2503.15937, accepted to MobiCom 2026) replaces direct action generation with an LLM verifier that scores discretized candidate actions, reporting 59.5% on AndroidWorld (+5.2 points), 38.3% on AndroidLab (+2.1), 49% on MobileAgentBench (+9), at 4.3 seconds a step, 6.1x faster than the agents it compares against. phoneshell's MCP server hands a screenshot and accessibility tree straight to whichever model is driving it and takes whatever action comes back, with no verifier in between.">
+<link rel="canonical" href="https://blolabel.ai/blog/v-droid-verifier-not-generator-59-5-on-androidworld/">
+<meta property="og:title" content="V-Droid swaps the LLM's job from generating a tap to scoring candidate taps and reaches 59.5% on AndroidWorld at 4.3 seconds a step; phoneshell's loop still asks one model to generate the tap - Blolabel">
+<meta property="og:description" content="V-Droid replaces direct action generation with an LLM verifier scoring discretized candidates: 59.5% on AndroidWorld, 38.3% on AndroidLab, 49% on MobileAgentBench, 4.3 seconds a step. phoneshell's MCP server hands the screen to whichever model drives it and takes whatever action comes back, with no verifier in between.">
+<meta property="og:url" content="https://blolabel.ai/blog/v-droid-verifier-not-generator-59-5-on-androidworld/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/v-droid-verifier-not-generator-59-5-on-androidworld-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+ "headline":"V-Droid swaps the LLM's job from generating a tap to scoring candidate taps and reaches 59.5% on AndroidWorld at 4.3 seconds a step; phoneshell's loop still asks one model to generate the tap",
+ "description":"V-Droid (arXiv:2503.15937) replaces direct action generation with an LLM verifier that scores discretized candidate actions: 59.5% on AndroidWorld, 38.3% on AndroidLab, 49% on MobileAgentBench, 4.3 seconds a step. phoneshell's MCP server hands the screen to whichever model drives it and takes whatever action comes back, with no verifier in between.",
+ "datePublished":"2026-10-26","dateModified":"2026-10-26",
+ "url":"https://blolabel.ai/blog/v-droid-verifier-not-generator-59-5-on-androidworld/",
+ "mainEntityOfPage":{"@type":"WebPage","@id":"https://blolabel.ai/blog/v-droid-verifier-not-generator-59-5-on-androidworld/"},
+ "author":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "publisher":{"@type":"Organization","name":"Blolabel","url":"https://blolabel.ai"},
+ "isPartOf":{"@type":"Blog","@id":"https://blolabel.ai/blog/#blog"},
+ "image":"https://blolabel.ai/images/blog/v-droid-verifier-not-generator-59-5-on-androidworld-hero.png",
+ "citation":["https://arxiv.org/abs/2503.15937","https://github.com/V-Droid-Agent/V-Droid","https://github.com/Blomega/phoneshell"]}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "What does V-Droid change about how a GUI agent picks its next action?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Most mobile GUI agents, phoneshell included, ask an LLM to generate the next action directly from the screen. V-Droid (arXiv:2503.15937) instead discretizes the screen into a set of candidate actions and uses an LLM as a verifier that scores each candidate, trained with pairwise progress preference, then executes the highest-scoring one. A prefilling-only workflow lets the verifier score candidates fast enough that the swap is also a speedup, not just an accuracy change."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What results does V-Droid report?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "59.5% on AndroidWorld, 5.2 points above the agents it compares against; 38.3% on AndroidLab, 2.1 points above; 49% on MobileAgentBench, 9 points above. Latency is 4.3 seconds per step, reported as 6.1 times faster than the agents it compares against. The arXiv abstract does not name those comparison agents, so the deltas and the speed claim are from the authors and have not been checked here against a named baseline."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does phoneshell use a verifier anywhere in its action loop?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. phoneshell is an MCP server exposing 23 tools, observe, tap, type, swipe, named gestures, popup dismissal and app launch among them, to whichever model an MCP client connects. The model reads a screenshot and an accessibility tree and calls a tool directly; nothing scores a set of candidate actions before one executes. The only gate afterward is 14 label-pattern checks on taps that look irreversible, which is a safety check, not a verifier of action quality."
+   }
+  }
+ ]
+}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#evidence">Evidence</a>
+    <a href="#method">What it means</a>
+    <a href="/blog/">Notes</a>
+    <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind comparison">comparison</span>
+    <time datetime="2026-10-26">26 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>V-Droid swaps the LLM's job from generating a tap to scoring candidate taps and reaches 59.5% on AndroidWorld at 4.3 seconds a step; phoneshell's loop still asks one model to generate the tap</h1>
+  <p class="standfirst">Two different jobs for the same model. Generate the next action from the screen, or score a short list of candidates someone else proposed. V-Droid rebuilt a mobile agent around the second job and reports gains on every benchmark it ran and a 6.1x speedup besides. phoneshell has never tried the swap on iOS.</p>
+
+<p>V-Droid, accepted to MobiCom 2026 and posted on arXiv under the title "Advancing Mobile GUI Agents: A Verifier-Driven Approach to Practical Deployment" (arXiv:2503.15937, Gaole Dai, Shiqi Jiang, Ting Cao, Yuanchun Li, Yuqing Yang, Rui Tan, Mo Li and Lili Qiu, v1 20 March 2025, current v5 21 February 2026), changes which job the language model does. Almost every mobile GUI agent, phoneshell among them, hands a screen to a model and asks it to generate the next action directly: a tap coordinate, an element id, a typed string. V-Droid instead discretizes the screen into a set of candidate actions and asks the model to verify each one, scoring it rather than inventing it, with the highest-scoring candidate executed. The reported numbers: 59.5% on AndroidWorld (5.2 points above the agents it compares against), 38.3% on AndroidLab (2.1 points above), 49% on MobileAgentBench (9 points above), at 4.3 seconds per step, which the paper reports as 6.1 times faster than existing mobile agents. The arXiv abstract names none of those comparison agents, so both the point gains and the speed multiple are the authors' own framing, not independently checked here against a specific baseline.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/v-droid-verifier-not-generator-59-5-on-androidworld-hero.png" alt="Abstract technical illustration on a dark background of a single beam splitting into several short parallel paths that each terminate at a small scoring gauge, with one path, lit brighter than the rest, continuing forward alone, cool blues and teals with one amber accent on the selected path" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="finding">What changed, and when</h2>
+
+<p>The mechanism behind V-Droid's numbers has three parts. A discretized action space turns "tap somewhere on this screen" into a short, enumerable list of candidates, which is what makes verifying them tractable at all. A prefilling-only workflow lets the verifier score every candidate in roughly the time a single forward pass takes, rather than generating token by token for each one, which is where the speed comes from rather than from a smaller model. And pairwise progress preference training teaches the verifier to prefer the candidate that moves a task forward, using a scalable human-agent joint annotation scheme to collect the training signal at scale rather than relying only on hand-labelled trajectories. None of the three parts is new in isolation, discretized action spaces and preference training both predate this paper, but combining them into a verifier that replaces the generator, rather than one that merely filters a generator's output after the fact, is the paper's actual claim.</p>
+
+<p>phoneshell has never run this experiment, on either platform it could run it on. Its MCP server exposes 23 tools, observe, tap, type, swipe, 49 named gestures, picker-wheel and popup handling, app launch, and <code>phone_do</code> for chaining several steps, directly to whichever model an MCP client connects. The model reads an accessibility tree and a screenshot and calls a tool. Nothing in that loop proposes several candidates and scores them; the model generates one action and phoneshell executes it, gated only by the 14 label patterns that stop a tap on something that looks irreversible, which is a safety check on the output, not a quality check on the choice. V-Droid's swap, generation to verification, has not been tried against iOS's accessibility tree, which already differs from Android's in ways this site has covered before: cleaner on first-party apps, degraded on some third-party ones.</p>
+
+<h2 id="evidence">Two roles for the same model</h2>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>dimension</th><th>V-Droid</th><th>phoneshell</th><th>source</th></tr></thead>
+  <tbody>
+    <tr><td>the LLM's job at each step</td><td>score a short list of discretized candidate actions; execute the top score</td><td>generate one action directly from the screen; execute it</td><td>arXiv:2503.15937 abstract; README.md MCP tools</td></tr>
+    <tr><td>action space</td><td>discretized, enumerable per screen</td><td>unbounded; whatever the model names among 23 tools and their arguments</td><td>arXiv:2503.15937 abstract; README.md</td></tr>
+    <tr><td>training signal</td><td>pairwise progress preference, human-agent joint annotation</td><td>none; off-the-shelf frontier models, no fine-tuning</td><td>arXiv:2503.15937 abstract; README.md</td></tr>
+    <tr><td>AndroidWorld result</td><td>59.5%, +5.2 points over comparison agents (unnamed in the abstract)</td><td>not tested on AndroidWorld; phoneshell's board is iOS-only</td><td>arXiv:2503.15937 abstract</td></tr>
+    <tr><td>latency per step</td><td>4.3 seconds, reported 6.1x faster than comparison agents</td><td>phoneshell's own board averages 37.7 to 68.3 seconds per task, not per step, across six models</td><td>arXiv:2503.15937 abstract; results.json</td></tr>
+    <tr><td>title given at submission vs. at acceptance</td><td>arXiv: "A Verifier-Driven Approach to Practical Deployment"; MobiCom: "V-Droid: Advancing Mobile GUI Agent Through Generative Verifiers"</td><td>not applicable</td><td>arXiv:2503.15937 title field and comments field</td></tr>
+  </tbody>
+</table>
+</div>
+
+<figure>
+<svg viewBox="0 0 900 340" role="img" style="width:100%;height:auto"
+  aria-label="Diagram contrasting two action-selection loops. V-Droid's loop: the screen is discretized into candidate actions, an LLM verifier scores each candidate using a prefilling-only pass, and the top-scoring candidate executes. phoneshell's loop: the screen is read as an accessibility tree and screenshot, a single LLM call generates one action directly, and that action executes after a label-pattern safety check, with no scoring of alternatives at any point.">
+  <rect x="0" y="0" width="900" height="340" fill="#151a24"/>
+  <text x="30" y="30" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="15" font-weight="700">Score the candidates, or generate the one action</text>
+
+  <text x="30" y="62" fill="#38bdf8" font-family="Montserrat,sans-serif" font-size="12.5" font-weight="700">V-Droid: verify</text>
+  <rect x="30" y="74" width="170" height="48" rx="8" fill="#1e293b" stroke="#334155"/><text x="40" y="94" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="10.5">discretize screen</text><text x="40" y="110" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10">into candidate actions</text>
+  <rect x="230" y="74" width="190" height="48" rx="8" fill="#262d3d" stroke="#f59e0b"/><text x="240" y="94" fill="#fbbf24" font-family="Montserrat,sans-serif" font-size="10.5">LLM verifier scores each</text><text x="240" y="110" fill="#fcd34d" font-family="Montserrat,sans-serif" font-size="10">prefilling-only, no generation</text>
+  <rect x="450" y="74" width="190" height="48" rx="8" fill="#1e293b" stroke="#34d399"/><text x="460" y="94" fill="#34d399" font-family="Montserrat,sans-serif" font-size="10.5">top-scoring candidate</text><text x="460" y="110" fill="#6ee7b7" font-family="Montserrat,sans-serif" font-size="10">executes, 4.3s/step</text>
+  <g stroke="#475569" stroke-width="1.5"><line x1="200" y1="98" x2="230" y2="98"/><line x1="420" y1="98" x2="450" y2="98"/></g>
+
+  <line x1="30" y1="170" x2="870" y2="170" stroke="#334155"/>
+
+  <text x="30" y="202" fill="#34d399" font-family="Montserrat,sans-serif" font-size="12.5" font-weight="700">phoneshell: generate</text>
+  <rect x="30" y="214" width="170" height="48" rx="8" fill="#1e293b" stroke="#334155"/><text x="40" y="234" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="10.5">read a11y tree +</text><text x="40" y="250" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10">screenshot</text>
+  <rect x="230" y="214" width="190" height="48" rx="8" fill="#262d3d" stroke="#334155"/><text x="240" y="234" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="10.5">one LLM call generates</text><text x="240" y="250" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="10">one action, no alternatives scored</text>
+  <rect x="450" y="214" width="190" height="48" rx="8" fill="#3a2a10" stroke="#f59e0b"/><text x="460" y="234" fill="#fbbf24" font-family="Montserrat,sans-serif" font-size="10.5">label-pattern check</text><text x="460" y="250" fill="#fcd34d" font-family="Montserrat,sans-serif" font-size="10">safety only, not quality</text>
+  <g stroke="#475569" stroke-width="1.5"><line x1="200" y1="238" x2="230" y2="238"/><line x1="420" y1="238" x2="450" y2="238"/></g>
+
+  <text x="30" y="310" fill="#64748b" font-family="Montserrat,sans-serif" font-size="10.5">Source: arXiv:2503.15937 abstract; phoneshell README.md, config.py confirm-gate description.</text>
+</svg>
+<figcaption>V-Droid's speedup comes from scoring, which needs only a prefilling pass. phoneshell's single generation step is simpler, has never been benchmarked against a verifier variant, and has no step that would catch a plausible-looking wrong action before it executes.</figcaption>
+</figure>
+
+<figure>
+<svg viewBox="0 0 900 320" role="img" style="width:100%;height:auto"
+  aria-label="Bar chart of V-Droid's three reported benchmark results and its latency figure. AndroidWorld: 59.5 percent, 5.2 points above the comparison agents. AndroidLab: 38.3 percent, 2.1 points above. MobileAgentBench: 49 percent, 9 points above. Latency: 4.3 seconds per step, reported as 6.1 times faster than the comparison agents, which the abstract does not name.">
+  <rect x="0" y="0" width="900" height="320" fill="#0f172a"/>
+  <text x="30" y="32" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="15" font-weight="700">V-Droid's reported numbers, against unnamed comparison agents</text>
+  <g stroke="#1e293b"><line x1="70" y1="54" x2="70" y2="250"/><line x1="70" y1="250" x2="860" y2="250"/></g>
+
+  <rect x="110" y="130" width="80" height="120" fill="#38bdf8"/>
+  <text x="150" y="120" fill="#7dd3fc" font-family="ui-monospace,Menlo,monospace" font-size="12.5" text-anchor="middle">59.5%</text>
+  <text x="150" y="268" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="10.5" text-anchor="middle">AndroidWorld</text>
+  <text x="150" y="282" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="9.5" text-anchor="middle">+5.2 pts</text>
+
+  <rect x="240" y="173" width="80" height="77" fill="#34d399"/>
+  <text x="280" y="163" fill="#6ee7b7" font-family="ui-monospace,Menlo,monospace" font-size="12.5" text-anchor="middle">38.3%</text>
+  <text x="280" y="268" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="10.5" text-anchor="middle">AndroidLab</text>
+  <text x="280" y="282" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="9.5" text-anchor="middle">+2.1 pts</text>
+
+  <rect x="370" y="151" width="80" height="99" fill="#a78bfa"/>
+  <text x="410" y="141" fill="#c4b5fd" font-family="ui-monospace,Menlo,monospace" font-size="12.5" text-anchor="middle">49%</text>
+  <text x="410" y="268" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="10.5" text-anchor="middle">MobileAgentBench</text>
+  <text x="410" y="282" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="9.5" text-anchor="middle">+9 pts</text>
+
+  <rect x="560" y="60" width="80" height="4" fill="none" stroke="#f59e0b" stroke-dasharray="3,3"/>
+  <text x="600" y="50" fill="#fbbf24" font-family="ui-monospace,Menlo,monospace" font-size="12.5" text-anchor="middle">4.3s / step</text>
+  <text x="600" y="268" fill="#e2e8f0" font-family="Montserrat,sans-serif" font-size="10.5" text-anchor="middle">latency</text>
+  <text x="600" y="282" fill="#94a3b8" font-family="Montserrat,sans-serif" font-size="9.5" text-anchor="middle">reported 6.1x faster</text>
+
+  <text x="30" y="306" fill="#64748b" font-family="Montserrat,sans-serif" font-size="10.5">Source: arXiv:2503.15937 abstract. Comparison agents are not named in the abstract.</text>
+</svg>
+<figcaption>Three benchmarks, three gains, one speed figure, all against agents the abstract never names. The direction of every number favors V-Droid; the size of the favor is only as checkable as the baseline is identifiable.</figcaption>
+</figure>
+
+<h2 id="method">What it means for someone building a phone agent's action loop</h2>
+
+<p>V-Droid's gains are real numbers against unnamed baselines, which means the honest claim available from the abstract alone is narrower than "verification beats generation." It is "this particular verifier, trained this particular way, beat whatever the authors compared it against, on Android." Whether the architecture generalizes to iOS, where phoneshell's own board already sits at a 89.7%-to-96.6% ceiling on first-party apps with nothing left to discriminate between models, is a separate question the paper does not address and phoneshell has not tested. A verifier only has something to score if the generator side still has meaningful room for error; on a benchmark already near ceiling, there may be little headroom for a verifier to recover, which would make V-Droid's approach look stronger on Android's harder average case than it would on phoneshell's current, saturated iOS task set.</p>
+
+<p>The architectural lesson that does transfer, independent of the specific numbers, is that where a safety or quality check sits in the loop changes what it can catch. phoneshell's 14-pattern confirm gate runs after the model has already committed to one action, checking only whether that action's label looks dangerous; it has no visibility into whether a different, safer, equally task-advancing action was available and skipped. A verifier architecture would, by construction, see every candidate at once and could in principle reject an entire class of actions before any of them execute, not just flag a label pattern after the fact. That is a different failure mode than the ones already documented for phoneshell's confirm gate, and it suggests the next place to look is not just a better pattern list but a different point in the loop for a check to live.</p>
+
+<ul>
+  <li>A reported 6.1x speedup over unnamed baselines is a comparison claim, not an absolute latency fact; phoneshell's own per-task timings (37.7 to 68.3 seconds across six models) are not directly comparable, since they measure a full multi-step task rather than a single step.</li>
+  <li>The title mismatch between arXiv's submitted version and the MobiCom acceptance is a minor inconsistency, not a substantive one; it says nothing about the reported numbers, only that the venue's title and the preprint's title were never reconciled.</li>
+  <li>Discretizing the action space is the precondition for everything else V-Droid does. A platform where "the next action" is genuinely open-ended, free-form text entry, an arbitrary gesture sequence, would need a different discretization scheme before a verifier architecture could even be defined for it.</li>
+</ul>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># V-Droid's abstract, reported numbers, and code
+curl -s https://arxiv.org/abs/2503.15937
+# https://github.com/V-Droid-Agent/V-Droid
+
+git clone https://github.com/Blomega/phoneshell && cd phoneshell
+bin/phoneshell mcp-config          # the 23 tools exposed, one generation call per step
+grep -n "confirm\|CONFIRM_PATTERNS" phoneshell/*/config.py</code></pre>
+
+<h2 id="falsify">What would prove this wrong</h2>
+
+<ul>
+  <li>We read V-Droid's point gains and speedup as specific to its Android baselines and not yet shown to generalize to iOS or to phoneshell's own task set. That is wrong if V-Droid's full paper, or a reproduction, reports results against a named, independently reproducible baseline on a benchmark phoneshell also runs; we would then be able to check the claimed deltas directly rather than taking them on the abstract's word. Untested as of this writing, through 31 December 2027.</li>
+  <li>We predict that adding a verifier step to phoneshell's loop, scoring a small discretized set of candidate taps drawn from the accessibility tree's interactive elements before executing one, would produce a measurable drop in the handful of failure modes already catalogued in FINDINGS.md as "plausible wrong action taken with confidence" rather than in the modes caused by the stack silently lying about success, which a verifier cannot fix because it never sees them. This is falsifiable the day such a variant is built and run against the existing 58-task board.</li>
+</ul>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ol>
+      <li>Dai, Jiang, Cao, Li, Yang, Tan, Li, Qiu, "Advancing Mobile GUI Agents: A Verifier-Driven Approach to Practical Deployment" (V-Droid), <a href="https://arxiv.org/abs/2503.15937">arXiv:2503.15937</a>, v1 20 March 2025, v5 21 February 2026, accepted to MobiCom 2026.</li>
+      <li><a href="https://github.com/V-Droid-Agent/V-Droid">V-Droid-Agent/V-Droid</a>, code repository, read 26 October 2026.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell/blob/main/README.md">README.md</a>, "Use it from an AI assistant" and "Safety" sections, read 26 October 2026.</li>
+    </ol>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
