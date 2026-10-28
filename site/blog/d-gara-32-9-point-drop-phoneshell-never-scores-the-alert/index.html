@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>D-GARA's permission dialogs and battery warnings cut AgentCPM-GUI-8B from 59.87% to 26.97%; phoneshell detects the same alert and never scores what it cost - Blolabel</title>
+<meta name="description" content="D-GARA (arXiv:2511.16590, accepted AAAI 2026) interrupts five GUI agents mid-task with the anomalies a real phone actually produces: low-battery warnings, permission dialogs, app crashes, update prompts. The worst of the five models loses 32.9 points. phoneshell's own code already detects the same kind of system alert on a real iPhone; its results schema has no field that would let anyone compute whether a phoneshell task failed because of one.">
+<link rel="canonical" href="https://blolabel.ai/blog/d-gara-32-9-point-drop-phoneshell-never-scores-the-alert/">
+<meta property="og:title" content="D-GARA's permission dialogs and battery warnings cut AgentCPM-GUI-8B from 59.87% to 26.97%; phoneshell detects the same alert and never scores what it cost - Blolabel">
+<meta property="og:description" content="D-GARA (arXiv:2511.16590, accepted AAAI 2026) interrupts five GUI agents mid-task with the anomalies a real phone actually produces: low-battery warnings, permission dialogs, app crashes, update prompts. The worst of the five models loses 32.9 points. phoneshell's own code already detects the same kind of system alert on a real iPhone; its results schema has no field that would let anyone compute whether a phoneshell task failed because of one.">
+<meta property="og:url" content="https://blolabel.ai/blog/d-gara-32-9-point-drop-phoneshell-never-scores-the-alert/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/d-gara-32-9-point-drop-phoneshell-never-scores-the-alert-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "D-GARA's permission dialogs and battery warnings cut AgentCPM-GUI-8B from 59.87% to 26.97%; phoneshell detects the same alert and never scores what it cost", "description": "D-GARA (arXiv:2511.16590, accepted AAAI 2026) interrupts five GUI agents mid-task with the anomalies a real phone actually produces: low-battery warnings, permission dialogs, app crashes, update prompts. The worst of the five models loses 32.9 points. phoneshell's own code already detects the same kind of system alert on a real iPhone; its results schema has no field that would let anyone compute whether a phoneshell task failed because of one.", "datePublished": "2026-10-27", "dateModified": "2026-10-27", "url": "https://blolabel.ai/blog/d-gara-32-9-point-drop-phoneshell-never-scores-the-alert/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/d-gara-32-9-point-drop-phoneshell-never-scores-the-alert/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/d-gara-32-9-point-drop-phoneshell-never-scores-the-alert-hero.png", "citation": ["https://arxiv.org/abs/2511.16590", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-27">27 October 2026</time>
+    <span>9 min read</span>
+  </div>
+  <h1>D-GARA's permission dialogs and battery warnings cut AgentCPM-GUI-8B from 59.87% to 26.97%; phoneshell detects the same alert and never scores what it cost</h1>
+  <p class="standfirst">D-GARA (arXiv:2511.16590, accepted AAAI 2026) interrupts five GUI agents mid-task with the anomalies a real phone actually produces: low-battery warnings, permission dialogs, app crashes, update prompts. The worst of the five models loses 32.9 points. phoneshell's own code already detects the same kind of system alert on a real iPhone; its results schema has no field that would let anyone compute whether a phoneshell task failed because of one.</p>
+
+<p>D-GARA (arXiv:2511.16590, submitted 20 November 2025 by Sen Chen, Tong Zhao, Yi Bin, Fei Ma, Wenqi Shao and Zheng Wang, accepted to AAAI 2026) ran five GUI agents across roughly 150 Android tasks twice: once clean, once with a real-world interruption injected mid-task. AgentCPM-GUI-8B, the weakest of the five on this measure, dropped from 59.87% to 26.97%, a 32.90-point fall that leaves it completing fewer than four in ten of the tasks it completed without the interruption (a relative success rate of 39.56%). Every one of the five models tested lost ground. None of the interruptions were adversarial or exotic: a low-battery banner, a Wi-Fi drop, an app update prompt, a permission dialog, a crash. phoneshell's own code already has a name for one of those, <code>Alert</code>, and already reads its text and buttons off a real iPhone. Nothing in phoneshell's results schema records whether one appeared.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/d-gara-32-9-point-drop-phoneshell-never-scores-the-alert-hero.png" alt="Abstract technical illustration on a dark grid: a smooth glowing path crossing a phone-shaped silhouette, suddenly interrupted by a sharp angular shard cutting across it like a crack of glass, with faint ripple distortion spreading from the crack, cool blues and teal with one amber accent on the crack itself, no icons or text" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="what-d-gara-injects">What D-GARA injects, and what it cost each model</h2>
+
+<p>D-GARA groups its interruptions into five categories: System Resource (low-battery warnings, thermal throttling alerts), System Network (Wi-Fi disconnection, mobile data switches), App Malfunction (crashes, freezes), Permission Control (runtime permission dialogs), and UX Disruption (update prompts, feedback forms). The benchmark runs 152 tasks built around apps including JD.com, Weibo, Bilibili, Amap, Ctrip, Amazon, Facebook and Google Maps, per the paper's Appendix A, though a separate table in the same paper, labelled D-GARA-152, lists seven apps for what appears to be the same split, a discrepancy the paper does not resolve and we could not verify further. Five models were evaluated with and without the anomaly injection turned on:</p>
+
+<table>
+  <thead><tr><th>Model</th><th>Success, no interruption</th><th>Success, with interruption</th><th>Drop</th><th>Relative success rate</th></tr></thead>
+  <tbody>
+    <tr><td>Gemini2.5-flash</td><td>80.26%</td><td>68.42%</td><td>11.84 pts</td><td>73.77%</td></tr>
+    <tr><td>GPT-4o</td><td>69.08%</td><td>60.53%</td><td>8.55 pts</td><td>66.67%</td></tr>
+    <tr><td>Qwen2.5-VL-7B</td><td>69.08%</td><td>46.05%</td><td>23.03 pts</td><td>53.33%</td></tr>
+    <tr><td>UI-TARS-1.5-72B</td><td>50.66%</td><td>39.47%</td><td>11.19 pts</td><td>48.05%</td></tr>
+    <tr><td>AgentCPM-GUI-8B</td><td>59.87%</td><td>26.97%</td><td>32.90 pts</td><td>39.56%</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: D-GARA, arXiv:2511.16590, Table 1, read 27 October 2026. Relative success rate is success-with-interruption divided by success-without.</p>
+
+<p>A separate, more severe probe in the same paper forces agents down a harder interaction path, a single confirm button standing in for what a two-button dialog would normally offer: Qwen2.5-VL-7B falls from 96.15% to 41.27%, and AgentCPM-GUI-8B falls from 82.35% to 9.30%. The paper's own framing is that none of these five models hold up against anomalies a real device routinely produces on its own, with no attacker involved.</p>
+
+<svg viewBox="0 0 800 400" style="width:100%;height:auto" role="img" aria-label="Bar chart of five GUI agent models' success rate with and without D-GARA's injected anomalies. Gemini2.5-flash falls from 80.26% to 68.42%. GPT-4o falls from 69.08% to 60.53%. Qwen2.5-VL-7B falls from 69.08% to 46.05%. UI-TARS-1.5-72B falls from 50.66% to 39.47%. AgentCPM-GUI-8B falls from 59.87% to 26.97%, the largest drop of the five.">
+<rect x="0" y="0" width="800" height="400" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="24" font-size="13" font-weight="600">D-GARA: success rate, no interruption vs with interruption</text>
+<line x1="60" y1="350" x2="770" y2="350" stroke="#2a3140"/>
+<text x="52" y="354" font-size="9" fill="#8893a8" text-anchor="end">0%</text>
+<line x1="60" y1="260" x2="770" y2="260" stroke="#232938"/><text x="52" y="264" font-size="9" fill="#8893a8" text-anchor="end">25%</text>
+<line x1="60" y1="170" x2="770" y2="170" stroke="#232938"/><text x="52" y="174" font-size="9" fill="#8893a8" text-anchor="end">50%</text>
+<line x1="60" y1="80" x2="770" y2="80" stroke="#232938"/><text x="52" y="84" font-size="9" fill="#8893a8" text-anchor="end">75%</text>
+<g>
+<rect x="90" y="61.1" width="22" height="288.9" fill="#5ad1a0"/>
+<rect x="116" y="103.7" width="22" height="246.3" fill="#e2574c"/>
+<text x="116" y="55" font-size="9.5" fill="#c4ccda" text-anchor="middle">Gemini2.5-flash</text>
+</g>
+<g>
+<rect x="195" y="101.3" width="22" height="248.7" fill="#5ad1a0"/>
+<rect x="221" y="132.1" width="22" height="217.9" fill="#e2574c"/>
+<text x="221" y="55" font-size="9.5" fill="#c4ccda" text-anchor="middle">GPT-4o</text>
+</g>
+<g>
+<rect x="300" y="101.3" width="22" height="248.7" fill="#5ad1a0"/>
+<rect x="326" y="184.2" width="22" height="165.8" fill="#e2574c"/>
+<text x="326" y="55" font-size="9.5" fill="#c4ccda" text-anchor="middle">Qwen2.5-VL-7B</text>
+</g>
+<g>
+<rect x="420" y="167.6" width="22" height="182.4" fill="#5ad1a0"/>
+<rect x="446" y="207.9" width="22" height="142.1" fill="#e2574c"/>
+<text x="446" y="55" font-size="9.5" fill="#c4ccda" text-anchor="middle">UI-TARS-1.5-72B</text>
+</g>
+<g>
+<rect x="540" y="134.5" width="22" height="215.5" fill="#5ad1a0"/>
+<rect x="566" y="252.9" width="22" height="97.1" fill="#e2574c"/>
+<text x="566" y="55" font-size="9.5" fill="#f2a65a" text-anchor="middle">AgentCPM-GUI-8B</text>
+<text x="566" y="238" font-size="10" fill="#f2a65a" text-anchor="middle">&minus;32.90</text>
+</g>
+<rect x="650" y="370" width="14" height="14" fill="#5ad1a0"/><text x="670" y="381" font-size="10" fill="#c4ccda">no interruption</text>
+<rect x="650" y="388" width="14" height="14" fill="#e2574c"/><text x="670" y="399" font-size="10" fill="#c4ccda">with interruption</text>
+<text x="20" y="390" font-size="10" fill="#8893a8">Source: arXiv:2511.16590, Table 1, read 27 October 2026.</text>
+</g></svg>
+
+<h2 id="phoneshells-own-alert-handling">phoneshell's own alert handling, and the hole next to it</h2>
+
+<p>phoneshell already detects exactly one of D-GARA's five categories at the perception layer. <code>actions.py</code>'s snapshot routine checks whether any element on screen has type <code>Alert</code> or <code>Dialog</code>; if one does, it asks WebDriverAgent for the alert's text and buttons, a call the code's own comment says costs 1.36 seconds and is worth paying only when the tree already flagged an alert as present. That text reaches the model: <code>observation.py</code>'s <code>as_text()</code> method writes a line reading <code>"!! SYSTEM ALERT ON SCREEN"</code> straight into what the model sees, and <code>actions.py</code> exposes <code>accept_alert</code> and <code>dismiss_alert</code> as callable actions, with an MCP tool, <code>phone_alert</code>, wired into the Claude Code CLI path in <code>bench/runner.py</code>. None of the other four categories, no network state, no battery level, no update prompt, no crash detector, has any equivalent anywhere in the codebase.</p>
+
+<p>What is missing sits one layer up. <code>bench/runner.py</code>'s <code>TaskResult</code> dataclass, the record written to <code>results.json</code> for every run, carries <code>task_id</code>, <code>model</code>, <code>passed</code>, <code>checks</code>, <code>turns</code>, <code>cost_usd</code>, <code>seconds</code>, <code>agent_said</code> and <code>error</code>. There is no field for whether a system alert appeared during the task. phoneshell can see the exact anomaly D-GARA calls Permission Control, hand the model the means to deal with it, and then throw away, at the moment of scoring, the one piece of information that would say whether that interruption had anything to do with the outcome. A task that fails because a model mishandled a real alert on a real iPhone is written to the same JSON row, with the same <code>passed: false</code>, as a task that fails for any other reason.</p>
+
+<svg viewBox="0 0 820 320" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting two pipelines for the same kind of interruption. D-GARA deliberately injects an anomaly such as a permission dialog mid-task, then measures the resulting drop in success rate per model, producing a reported number such as minus 32.90 points for AgentCPM-GUI-8B. phoneshell's own code detects the same kind of system alert through WebDriverAgent, surfaces its text and buttons to the model, and offers accept or dismiss actions, but the task result schema records only pass or fail with no field for whether an alert occurred, so no drop can be computed from it.">
+<rect x="0" y="0" width="820" height="320" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Two pipelines for the same kind of interruption</text>
+<text x="20" y="50" font-size="11.5" font-weight="600" fill="#5ad1a0">D-GARA</text>
+<rect x="20" y="62" width="220" height="60" rx="10" fill="#1d2330" stroke="#6f7b90"/>
+<text x="34" y="86" font-size="10.5" fill="#c4ccda">inject permission dialog,</text>
+<text x="34" y="104" font-size="10.5" fill="#c4ccda">battery warning, etc, mid-task</text>
+<rect x="290" y="62" width="220" height="60" rx="10" fill="#1d2330" stroke="#6f7b90"/>
+<text x="304" y="86" font-size="10.5" fill="#c4ccda">compare success rate</text>
+<text x="304" y="104" font-size="10.5" fill="#c4ccda">with vs without the injection</text>
+<rect x="560" y="62" width="230" height="60" rx="10" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="574" y="86" font-size="10.5" fill="#5ad1a0">a reported, attributable drop</text>
+<text x="574" y="104" font-size="10.5" fill="#5ad1a0">e.g. &minus;32.90 pts, AgentCPM-GUI-8B</text>
+<line x1="240" y1="92" x2="290" y2="92" stroke="#6f7b90" stroke-width="1.5"/>
+<line x1="510" y1="92" x2="560" y2="92" stroke="#6f7b90" stroke-width="1.5"/>
+<text x="20" y="170" font-size="11.5" font-weight="600" fill="#f2a65a">phoneshell</text>
+<rect x="20" y="182" width="220" height="70" rx="10" fill="#1d2330" stroke="#6f7b90"/>
+<text x="34" y="204" font-size="10.5" fill="#c4ccda">a real alert appears on the</text>
+<text x="34" y="222" font-size="10.5" fill="#c4ccda">real iPhone, detected via</text>
+<text x="34" y="240" font-size="10.5" fill="#c4ccda">actions.py / observation.py</text>
+<rect x="290" y="182" width="220" height="70" rx="10" fill="#1d2330" stroke="#6f7b90"/>
+<text x="304" y="204" font-size="10.5" fill="#c4ccda">model sees the alert text,</text>
+<text x="304" y="222" font-size="10.5" fill="#c4ccda">can call accept_alert or</text>
+<text x="304" y="240" font-size="10.5" fill="#c4ccda">dismiss_alert</text>
+<rect x="560" y="182" width="230" height="70" rx="10" fill="#262d3d" stroke="#e2574c"/>
+<text x="574" y="204" font-size="10.5" fill="#e2574c">TaskResult has no field for it;</text>
+<text x="574" y="222" font-size="10.5" fill="#e2574c">pass/fail looks identical whether</text>
+<text x="574" y="240" font-size="10.5" fill="#e2574c">an alert occurred or not</text>
+<line x1="240" y1="217" x2="290" y2="217" stroke="#6f7b90" stroke-width="1.5"/>
+<line x1="510" y1="217" x2="560" y2="217" stroke="#6f7b90" stroke-width="1.5"/>
+<text x="20" y="300" font-size="10" fill="#8893a8">Sources: arXiv:2511.16590; phoneshell/actions.py, phoneshell/agent/observation.py, phoneshell/bench/runner.py, read 27 October 2026.</text>
+</g></svg>
+
+<h2 id="what-it-means">What it means for a benchmark run on one real phone</h2>
+
+<ul>
+  <li>D-GARA's number is a controlled comparison: the same tasks, with and without the injection, on the same models. phoneshell runs on a single physical iPhone, where alerts show up or not depending on the phone's own state (notification settings, first-launch permission prompts, the carrier's own banners), not on a deliberate toggle. The two are not directly comparable, but the direction D-GARA reports, that an ordinary system interruption costs real points, is exactly the kind of effect phoneshell's current data cannot rule out or confirm.</li>
+  <li>phoneshell's detection code already distinguishes a <code>system_alert</code> from an ordinary tap target in at least one place (<code>actions.py</code>'s consistency check compares against <code>found.kind != "system_alert"</code>), so the information exists in memory during a run. It is simply never written down.</li>
+  <li>The fix implied by D-GARA's result is not a new detector. phoneshell already has the detector. It is a one-field addition to <code>TaskResult</code>, logging whether <code>snap.alert</code> was non-null at any point during the task, which would let a future run compute phoneshell's own relative success rate the way D-GARA computes its.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># phoneshell's alert detection, all of it
+grep -n "e.type in {\"Alert\", \"Dialog\"}" -A5 phoneshell/actions.py
+grep -n "SYSTEM ALERT ON SCREEN" phoneshell/agent/observation.py
+grep -n "phone_alert\|accept_alert\|dismiss_alert" phoneshell/actions.py phoneshell/bench/runner.py
+
+# confirm TaskResult has no field for whether an alert occurred
+grep -n "class TaskResult" -A16 phoneshell/bench/runner.py
+
+# D-GARA's own anomaly categories and Table 1
+curl -s https://arxiv.org/html/2511.16590v1 | grep -iE "permission|battery|Table 1"</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim phoneshell detects system alerts at the perception layer but records nothing about them in its results schema, so no one can currently compute whether a phoneshell task failure correlates with one appearing. That is wrong if a later version of <code>bench/runner.py</code>'s <code>TaskResult</code> carries an alert-related field we missed, or a build we did not check. We also claim D-GARA's degradation, measured on Android apps, has not been shown to hold on phoneshell's own iOS task set. That is tested directly the day someone adds the one field above and re-runs phoneshell's existing 80 tasks enough times to see whether the runs that happened to trigger a real alert score worse than the ones that did not. We will treat that comparison, if published, as the relevant check, by 30 April 2027.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Chen, Zhao, Bin, Ma, Shao, Wang, <a href="https://arxiv.org/abs/2511.16590">D-GARA: A Dynamic Benchmarking Framework for GUI Agent Robustness in Real-World Anomalies</a>, arXiv:2511.16590, submitted 20 November 2025, accepted AAAI 2026, read 27 October 2026.</li>
+      <li>Full text and Table 1: <a href="https://arxiv.org/html/2511.16590v1">arxiv.org/html/2511.16590v1</a>.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/actions.py</code>, <code>phoneshell/agent/observation.py</code>, <code>phoneshell/bench/runner.py</code>, read 27 October 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
