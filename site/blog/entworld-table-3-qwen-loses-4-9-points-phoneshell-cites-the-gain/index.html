@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EntWorld's Table 3 has Qwen2.5-VL-32B losing 4.9 points when a screenshot joins the tree; phoneshell's own docstring cites only the row that gained 18.5 - Blolabel</title>
+<meta name="description" content="EntWorld (arXiv:2601.17722, 25 January 2026) ran the same screenshot-plus-tree ablation on three models across six enterprise apps. Combining inputs added 18.5 points for a model fine-tuned on the benchmark's own apps and cost 4.9 points for the untuned model in the same table. phoneshell's observation code quotes only the first number, uncredited, to justify a design it ships to models that look like the second.">
+<link rel="canonical" href="https://blolabel.ai/blog/entworld-table-3-qwen-loses-4-9-points-phoneshell-cites-the-gain/">
+<meta property="og:title" content="EntWorld's Table 3 has Qwen2.5-VL-32B losing 4.9 points when a screenshot joins the tree; phoneshell's own docstring cites only the row that gained 18.5 - Blolabel">
+<meta property="og:description" content="EntWorld (arXiv:2601.17722, 25 January 2026) ran the same screenshot-plus-tree ablation on three models across six enterprise apps. Combining inputs added 18.5 points for a model fine-tuned on the benchmark's own apps and cost 4.9 points for the untuned model in the same table. phoneshell's observation code quotes only the first number, uncredited, to justify a design it ships to models that look like the second.">
+<meta property="og:url" content="https://blolabel.ai/blog/entworld-table-3-qwen-loses-4-9-points-phoneshell-cites-the-gain/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/entworld-table-3-qwen-loses-4-9-points-phoneshell-cites-the-gain-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "EntWorld's Table 3 has Qwen2.5-VL-32B losing 4.9 points when a screenshot joins the tree; phoneshell's own docstring cites only the row that gained 18.5", "description": "EntWorld (arXiv:2601.17722, 25 January 2026) ran the same screenshot-plus-tree ablation on three models across six enterprise apps. Combining inputs added 18.5 points for a model fine-tuned on the benchmark's own apps and cost 4.9 points for the untuned model in the same table. phoneshell's observation code quotes only the first number, uncredited, to justify a design it ships to models that look like the second.", "datePublished": "2026-10-27", "dateModified": "2026-10-27", "url": "https://blolabel.ai/blog/entworld-table-3-qwen-loses-4-9-points-phoneshell-cites-the-gain/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/entworld-table-3-qwen-loses-4-9-points-phoneshell-cites-the-gain/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/entworld-table-3-qwen-loses-4-9-points-phoneshell-cites-the-gain-hero.png", "citation": ["https://arxiv.org/abs/2601.17722", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-27">27 October 2026</time>
+    <span>9 min read</span>
+  </div>
+  <h1>EntWorld's Table 3 has Qwen2.5-VL-32B losing 4.9 points when a screenshot joins the tree; phoneshell's own docstring cites only the row that gained 18.5</h1>
+  <p class="standfirst">EntWorld (arXiv:2601.17722, 25 January 2026) ran the same screenshot-plus-tree ablation on three models across six enterprise apps. Combining inputs added 18.5 points for a model fine-tuned on the benchmark's own apps and cost 4.9 points for the untuned model in the same table. phoneshell's observation code quotes only the first number, uncredited, to justify a design it ships to models that look like the second.</p>
+
+<p>phoneshell's own observation code justifies its design with one parenthetical: "Hybrid beats either channel alone (53.7% vs 35.2% tree-only vs 15.6% pixels-only)," the first of three measured results the module's docstring says shaped the choice to feed a model both the accessibility tree and a numbered screenshot overlay on every step. Those three numbers come from EntWorld (arXiv:2601.17722, submitted 25 January 2026 by Ying Mo, Yu Bai, Dapeng Sun, Yuqian Shi, Yukai Miao, Li Chen and Dan Li, Zhongguancun Laboratory and Tsinghua University), and in the paper's own Table 3 they belong to one specific model: EntAgent-RL, fine-tuned by reinforcement learning on EntWorld's own six enterprise apps. The same table has a closer match to what phoneshell actually runs: Qwen2.5-VL-32B-Instruct, used off the shelf with no EntWorld-specific tuning at all, the way phoneshell runs every frontier model it grades. For that model, combining the screenshot with the tree did not help. It cost 4.9 points, from 27.2% tree-only down to 22.3% combined, in the same table phoneshell's code quotes from, without naming it.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/entworld-table-3-qwen-loses-4-9-points-phoneshell-cites-the-gain-hero.png" alt="Abstract technical illustration on a dark grid: two translucent overlapping planes, one a fine wireframe mesh representing structured tree data and one a smooth gradient plane representing a pixel image, merging at a seam; on one side of the seam the merge brightens and strengthens, on the other side it dims and fractures slightly, cool blues and teal with one amber accent marking the fracture point" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="what-entworld-measured">What EntWorld measured, and on whom</h2>
+
+<p>EntWorld builds six enterprise applications, EspoCRM, ZenTao, OpenProject, Veops CMDB, iTOP and Snipe-IT, into 1,756 verifiable tasks checked against SQL-level state rather than visual matching, and its Table 3 runs an observation-modality ablation across three models and three input conditions: accessibility tree only, screenshot only, and both together. Two of the three models are EntWorld's own: EntAgent-SFT, supervised fine-tuned on the benchmark's own trajectories, and EntAgent-RL, further trained with reinforcement learning on the same apps. The third, Qwen2.5-VL-32B-Instruct, gets no EntWorld-specific training of any kind. The paper's text states plainly that the accessibility tree alone beats the screenshot alone, on average, for every model in the table, and that relying on the tree alone "is particularly inadequate for legacy enterprise applications, where accessibility metadata is often incomplete or inconsistently implemented." It does not say, in the prose, what happens to the untrained model when the two inputs are combined. Table 3 says it anyway.</p>
+
+<table>
+  <thead><tr><th>Model</th><th>Tuning</th><th>Tree only</th><th>Screenshot only</th><th>Combined</th><th>Combined &minus; tree only</th></tr></thead>
+  <tbody>
+    <tr><td>Qwen2.5-VL-32B-Instruct</td><td>none (off the shelf)</td><td>27.2%</td><td>10.7%</td><td>22.3%</td><td>&minus;4.9 pts</td></tr>
+    <tr><td>EntAgent-SFT</td><td>supervised, on EntWorld's own apps</td><td>33.2%</td><td>15.3%</td><td>48.2%</td><td>+15.0 pts</td></tr>
+    <tr><td>EntAgent-RL</td><td>SFT + reinforcement learning, same apps</td><td>35.2%</td><td>15.6%</td><td>53.7%</td><td>+18.5 pts</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: EntWorld, arXiv:2601.17722, Table 3, averaged across EspoCRM, ZenTao, OpenProject, Veops CMDB, iTOP and Snipe-IT. Per-app figures in the paper range from 4.7% to 70.0%.</p>
+
+<svg viewBox="0 0 800 380" style="width:100%;height:auto" role="img" aria-label="Diverging bar chart of EntWorld Table 3's point change when a screenshot is added to the accessibility tree, for three models. Qwen2.5-VL-32B-Instruct, untuned, loses 4.9 percentage points, from 27.2% to 22.3%. EntAgent-SFT, fine-tuned on EntWorld's own apps, gains 15.0 points. EntAgent-RL, fine-tuned and reinforcement-learned on the same apps, gains 18.5 points.">
+<rect x="0" y="0" width="800" height="380" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">EntWorld Table 3: point change, tree-only &rarr; combined</text>
+<line x1="400" y1="60" x2="400" y2="330" stroke="#2a3140"/>
+<text x="400" y="50" font-size="10" fill="#8893a8" text-anchor="middle">0</text>
+<rect x="282" y="90" width="118" height="36" fill="#e2574c"/>
+<text x="266" y="113" font-size="12" fill="#e2574c" text-anchor="end">&minus;4.9</text>
+<text x="20" y="113" font-size="12" fill="#c4ccda">Qwen2.5-VL-32B-Instruct (untuned)</text>
+<rect x="400" y="170" width="360" height="36" fill="#5ad1a0"/>
+<text x="770" y="193" font-size="12" fill="#5ad1a0">+15.0</text>
+<text x="20" y="193" font-size="12" fill="#c4ccda">EntAgent-SFT (tuned on these apps)</text>
+<rect x="400" y="250" width="444" height="36" fill="#5ad1a0"/>
+<text x="770" y="273" font-size="12" fill="#5ad1a0">+18.5</text>
+<text x="20" y="273" font-size="12" fill="#c4ccda">EntAgent-RL (tuned on these apps)</text>
+<text x="20" y="355" font-size="10" fill="#8893a8">Source: arXiv:2601.17722, Table 3, read 27 October 2026. Bar length is not to a shared scale across the two directions.</text>
+</g></svg>
+
+<h2 id="which-row-phoneshell-looks-like">Which row phoneshell actually looks like</h2>
+
+<p>phoneshell/agent/observation.py builds exactly the input EntWorld's "combined" column tests: a numbered set-of-mark screenshot plus a TSV-serialized accessibility tree, sent to the model on every step. The module never fine-tunes the models it evaluates. Every model phoneshell grades, through the OpenRouter path or the Claude Code CLI path, is run the way EntWorld ran Qwen2.5-VL-32B-Instruct: off the shelf, with no EntWorld-style training on phoneshell's own 80 tasks or any other. Nothing in the repository runs reinforcement learning on phoneshell's task set, and nothing could, since the published suite deliberately withholds a private task set from bench/schema.py's own loader specifically so a model generation cannot memorize the answer key. The model type EntWorld shows losing 4.9 points from the same combination phoneshell ships by default is, architecturally, the only model type phoneshell has ever run.</p>
+
+<svg viewBox="0 0 820 320" style="width:100%;height:auto" role="img" aria-label="Diagram of phoneshell's observation pipeline. WebDriverAgent's accessibility tree is read and serialized to TSV, labelled as the channel that leads. A screenshot is captured and given a numbered set-of-mark overlay, labelled as the channel that supports. Both are merged into one observation sent to the model every step. A callout notes that this hybrid design is justified in the code's own docstring by a single number from EntWorld's Table 3, with no citation to the paper anywhere in the repository, and that the untuned row in the same table loses 4.9 points instead of gaining.">
+<rect x="0" y="0" width="820" height="320" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">phoneshell's observation pipeline, one step</text>
+<rect x="20" y="50" width="240" height="90" rx="10" fill="#1d2330" stroke="#6f7b90"/>
+<text x="34" y="72" font-size="12" font-weight="600">accessibility tree &rarr; TSV</text>
+<text x="34" y="94" font-size="10.5" fill="#c4ccda">perception/tree.py</text>
+<text x="34" y="112" font-size="10.5" fill="#5ad1a0">role: leads</text>
+<rect x="20" y="170" width="240" height="90" rx="10" fill="#1d2330" stroke="#6f7b90"/>
+<text x="34" y="192" font-size="12" font-weight="600">screenshot + numbered overlay</text>
+<text x="34" y="214" font-size="10.5" fill="#c4ccda">perception/screen.py</text>
+<text x="34" y="232" font-size="10.5" fill="#5ad1a0">role: supports</text>
+<rect x="320" y="110" width="200" height="100" rx="10" fill="#262d3d" stroke="#f2a65a"/>
+<text x="334" y="134" font-size="12" font-weight="600">merged observation</text>
+<text x="334" y="156" font-size="10.5" fill="#c4ccda">agent/observation.py</text>
+<text x="334" y="174" font-size="10.5" fill="#c4ccda">sent to the model, every step</text>
+<rect x="570" y="80" width="230" height="160" rx="10" fill="#262d3d" stroke="#e2574c"/>
+<text x="584" y="104" font-size="12" font-weight="600">design rationale, in the docstring</text>
+<text x="584" y="126" font-size="10.5" fill="#c4ccda">"53.7% vs 35.2% vs 15.6%"</text>
+<text x="584" y="144" font-size="10.5" fill="#c4ccda">one row of EntWorld's Table 3,</text>
+<text x="584" y="162" font-size="10.5" fill="#c4ccda">a fine-tuned model, uncredited</text>
+<text x="584" y="188" font-size="10.5" fill="#e2574c">the untuned row in the same</text>
+<text x="584" y="206" font-size="10.5" fill="#e2574c">table loses 4.9 points instead</text>
+<line x1="260" y1="95" x2="320" y2="140" stroke="#6f7b90" stroke-width="1.5"/>
+<line x1="260" y1="215" x2="320" y2="180" stroke="#6f7b90" stroke-width="1.5"/>
+<line x1="520" y1="160" x2="570" y2="160" stroke="#f2a65a" stroke-width="1.5"/>
+<text x="20" y="290" font-size="10" fill="#8893a8">Sources: phoneshell/agent/observation.py; arXiv:2601.17722 Table 3, read 27 October 2026.</text>
+</g></svg>
+
+<h2 id="what-it-means">What it means for a design choice that quotes a benchmark</h2>
+
+<ul>
+  <li>The docstring's number is accurate. 53.7% beats 35.2%, which beats 15.6%, exactly as written. What the comment omits is which row that is, and that the same table's untrained row moves the other way.</li>
+  <li>Enterprise web forms and native iOS apps are not the same rendering surface either. EspoCRM, ZenTao and the other five apps run inside a browser-rendered desktop UI; phoneshell's tasks run against native iOS apps through XCUITest. A result's direction can fail to transfer across that gap even before the tuning mismatch is considered.</li>
+  <li>This is not evidence that phoneshell's hybrid design is wrong. EntWorld's own text says the tree beats the screenshot alone for every model, tuned or not, which supports leading with the tree the way phoneshell's docstring already does. The specific number cited for the combination, though, needs the kind of fine-tuning phoneshell does not do and currently has no mechanism to do.</li>
+  <li>No citation, to EntWorld or anything else, appears anywhere in phoneshell's repository next to this number. A reader of the docstring alone has no way to find Table 3, or the row next to the one quoted.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># the uncredited number, and the design it justifies
+grep -n "Hybrid beats either channel" -A2 phoneshell/agent/observation.py
+sed -n '1,14p' phoneshell/agent/observation.py
+
+# confirm no citation to EntWorld or arXiv:2601.17722 exists anywhere in the repo
+grep -rniE "entworld|2601.17722" phoneshell/ README.md docs/ 2>/dev/null || echo "no matches"
+
+# confirm phoneshell never fine-tunes or RL-trains the models it grades
+grep -rniE "fine.?tun|reinforcement learning|\bRL\b.*train" phoneshell/bench/ phoneshell/agent/ 2>/dev/null || echo "no matches"
+
+# EntWorld's own Table 3 and the claim about legacy accessibility metadata
+curl -s https://arxiv.org/html/2601.17722v1 | grep -i "legacy enterprise\|Table 3"</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim phoneshell's observation design quotes EntAgent-RL's row from EntWorld's Table 3 without naming the paper, and that the architecturally closer row in the same table, for the untuned model, moves in the opposite direction. That is wrong if a citation to arXiv:2601.17722 exists anywhere in the repository we did not find, or if EntWorld's Table 3 is revised in a later arXiv version to show Qwen2.5-VL-32B-Instruct gaining rather than losing from the combination. It is also an open question, not yet tested by anyone, whether the direction phoneshell actually depends on, screenshot-plus-tree versus tree-alone, holds for the specific frontier models phoneshell grades on its own 80 iOS tasks. We will treat a phoneshell run that isolates tree-only against its current default as a direct test of that question, and revisit this piece if one is published before 30 April 2027.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Mo, Bai, Sun, Shi, Miao, Chen, Li, <a href="https://arxiv.org/abs/2601.17722">EntWorld: A Holistic Environment and Benchmark for Verifiable Enterprise GUI Agents</a>, arXiv:2601.17722, submitted 25 January 2026, read 27 October 2026.</li>
+      <li>Full text and Table 3: <a href="https://arxiv.org/html/2601.17722v1">arxiv.org/html/2601.17722v1</a>.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/agent/observation.py</code>, read 27 October 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
