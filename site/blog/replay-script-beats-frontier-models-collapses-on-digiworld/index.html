@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A replay script that never looks at the screen beat the frontier model it copied on OSWorld and MobileWorld, then scored 6.9% against DigiWorld's 45.7%; phoneshell's setup step promises the exact start state a replay needs - Blolabel</title>
+<meta name="description" content="Computer Use at the Edge of the Statistical Precipice (arXiv:2605.08261, Meta Superintelligence Labs, 7 May 2026) records one correct trajectory and replays it with no vision and no reasoning. It beats the frontier model it copied on two static benchmarks and falls to 6.9% on the one benchmark built to resist it. phoneshell's own task format guarantees the one property that makes the trick work, and has never tested for it.">
+<link rel="canonical" href="https://blolabel.ai/blog/replay-script-beats-frontier-models-collapses-on-digiworld/">
+<meta property="og:title" content="A replay script that never looks at the screen beat the frontier model it copied on OSWorld and MobileWorld, then scored 6.9% against DigiWorld's 45.7%; phoneshell's setup step promises the exact start state a replay needs - Blolabel">
+<meta property="og:description" content="Computer Use at the Edge of the Statistical Precipice (arXiv:2605.08261, Meta Superintelligence Labs, 7 May 2026) records one correct trajectory and replays it with no vision and no reasoning. It beats the frontier model it copied on two static benchmarks and falls to 6.9% on the one benchmark built to resist it. phoneshell's own task format guarantees the one property that makes the trick work, and has never tested for it.">
+<meta property="og:url" content="https://blolabel.ai/blog/replay-script-beats-frontier-models-collapses-on-digiworld/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/replay-script-beats-frontier-models-collapses-on-digiworld-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "A replay script that never looks at the screen beat the frontier model it copied on OSWorld and MobileWorld, then scored 6.9% against DigiWorld's 45.7%; phoneshell's setup step promises the exact start state a replay needs", "description": "Computer Use at the Edge of the Statistical Precipice (arXiv:2605.08261, Meta Superintelligence Labs, 7 May 2026) records one correct trajectory and replays it with no vision and no reasoning. It beats the frontier model it copied on two static benchmarks and falls to 6.9% on the one benchmark built to resist it. phoneshell's own task format guarantees the one property that makes the trick work, and has never tested for it.", "datePublished": "2026-10-27", "dateModified": "2026-10-27", "url": "https://blolabel.ai/blog/replay-script-beats-frontier-models-collapses-on-digiworld/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/replay-script-beats-frontier-models-collapses-on-digiworld/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/replay-script-beats-frontier-models-collapses-on-digiworld-hero.png", "citation": ["https://arxiv.org/abs/2605.08261", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-27">27 October 2026</time>
+    <span>10 min read</span>
+  </div>
+  <h1>A replay script that never looks at the screen beat the frontier model it copied on OSWorld and MobileWorld, then scored 6.9% against DigiWorld's 45.7%; phoneshell's setup step promises the exact start state a replay needs</h1>
+  <p class="standfirst">"Computer Use at the Edge of the Statistical Precipice" (arXiv:2605.08261, Meta Superintelligence Labs, 7 May 2026) records one correct trajectory and replays it with no vision and no reasoning. It beats the frontier model it copied on two static benchmarks and falls to 6.9% on the one benchmark built to resist it. phoneshell's own task format guarantees the one property that makes the trick work, and has never tested for it.</p>
+
+<p>"Computer Use at the Edge of the Statistical Precipice" (arXiv:2605.08261, submitted 7 May 2026 by Pierluca D'Oro and eight co-authors at Meta Superintelligence Labs) built a roughly 1MB script that looks at nothing: it replays a single recorded action sequence, open-loop, with no screenshot, no reasoning and no model call. On OSWorld it scores 71.1%, half a point above the 70.6% of the frontier model whose trajectory it copied. On MobileWorld it scores 41.5% against that model's 32.7%, 8.8 points ahead. On the authors' own DigiWorld, a benchmark built specifically to resist this, the same script collapses to 6.90% against a real model's 45.7%. phoneshell's own task format, by its own docstring's design, guarantees exactly the property that makes the first result possible and the second one necessary to test for.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/replay-script-beats-frontier-models-collapses-on-digiworld-hero.png" alt="Abstract technical illustration on a dark grid: a single glowing thread tracing a fixed looping path that repeats perfectly twice over a static grid, then a third copy of the same thread shown dissolving into scattered fragments over a grid that has visibly shifted and reconfigured, cool blues and teal with one amber accent on the dissolving thread, no icons or text" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="what-the-paper-shows">What the paper shows, and why DigiWorld is different</h2>
+
+<p>The authors' argument is that a benchmark's expected score for an open-loop replay equals the source agent's own pass@k whenever the environment is deterministic, so a static benchmark cannot tell the difference between a model that reasoned its way to the answer and a script that memorized one correct path through an environment that never changes. DigiWorld is their answer: 15 hand-built Android apps across 7 domains, reconfigured into more than 3.2 million verified unique configurations, spanning 387 scenarios and over 4,300 task instances, so that no single recorded trajectory works twice. The paper proposes a second fix for a different problem, that benchmark rankings are usually reported as point estimates on too few runs to separate models that are not actually different: pairing Wilson score intervals with a hierarchical bootstrap that respects the nested structure of tasks inside apps inside configurations. In a worked simulation at 3 rollouts per task, the ordinary Wald interval covers the true value about 25% of the time; the Wilson interval the paper uses instead covers it about 95% of the time, and switching to the full hierarchical method is reported to cut a benchmark's total expected regret from 9.8% to 6.0% by refusing to declare a winner on three apps where only the weaker interval saw one.</p>
+
+<table>
+  <thead><tr><th>Benchmark</th><th>Frontier model</th><th>Open-loop replay script</th><th>Replay &minus; model</th></tr></thead>
+  <tbody>
+    <tr><td>OSWorld (static)</td><td>70.6%</td><td>71.1%</td><td>+0.5 pts</td></tr>
+    <tr><td>MobileWorld (static, 96 of 201 tasks)</td><td>32.7%</td><td>41.5%</td><td>+8.8 pts</td></tr>
+    <tr><td>DigiWorld (3.2M+ reconfigured instances)</td><td>45.7%</td><td>6.90%</td><td>&minus;38.8 pts</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: arXiv:2605.08261, Table 1, read 27 October 2026. Replay trajectories for OSWorld and DigiWorld came from Claude Opus 4.6; the MobileWorld replay trajectory came from Gemini 3 Pro.</p>
+
+<svg viewBox="0 0 760 360" style="width:100%;height:auto" role="img" aria-label="Bar chart comparing a frontier model's success rate to an open-loop replay script's success rate on three benchmarks. On OSWorld the model scores 70.6% and the replay scores 71.1%, half a point ahead. On MobileWorld the model scores 32.7% and the replay scores 41.5%, 8.8 points ahead. On DigiWorld, which randomizes over 3.2 million configurations, the model scores 45.7% and the replay collapses to 6.9%, 38.8 points behind.">
+<rect x="0" y="0" width="760" height="360" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="24" font-size="13" font-weight="600">Frontier model vs a script that never looks at the screen</text>
+<line x1="60" y1="310" x2="730" y2="310" stroke="#2a3140"/>
+<text x="52" y="314" font-size="9" fill="#8893a8" text-anchor="end">0%</text>
+<line x1="60" y1="220" x2="730" y2="220" stroke="#232938"/><text x="52" y="224" font-size="9" fill="#8893a8" text-anchor="end">25%</text>
+<line x1="60" y1="130" x2="730" y2="130" stroke="#232938"/><text x="52" y="134" font-size="9" fill="#8893a8" text-anchor="end">50%</text>
+<line x1="60" y1="40" x2="730" y2="40" stroke="#232938"/><text x="52" y="44" font-size="9" fill="#8893a8" text-anchor="end">75%</text>
+<g>
+<rect x="110" y="56.6" width="30" height="253.4" fill="#5ad1a0"/>
+<rect x="146" y="54.8" width="30" height="255.2" fill="#f2a65a"/>
+<text x="140" y="330" font-size="10.5" fill="#c4ccda" text-anchor="middle">OSWorld</text>
+<text x="146" y="46" font-size="10" fill="#f2a65a" text-anchor="middle">+0.5</text>
+</g>
+<g>
+<rect x="290" y="193.3" width="30" height="116.7" fill="#5ad1a0"/>
+<rect x="326" y="161.5" width="30" height="148.5" fill="#f2a65a"/>
+<text x="320" y="330" font-size="10.5" fill="#c4ccda" text-anchor="middle">MobileWorld</text>
+<text x="326" y="153" font-size="10" fill="#f2a65a" text-anchor="middle">+8.8</text>
+</g>
+<g>
+<rect x="470" y="145.3" width="30" height="164.7" fill="#5ad1a0"/>
+<rect x="506" y="285.2" width="30" height="24.8" fill="#e2574c"/>
+<text x="506" y="330" font-size="10.5" fill="#c4ccda" text-anchor="middle">DigiWorld</text>
+<text x="506" y="277" font-size="10" fill="#e2574c" text-anchor="middle">&minus;38.8</text>
+</g>
+<rect x="600" y="60" width="14" height="14" fill="#5ad1a0"/><text x="620" y="71" font-size="10" fill="#c4ccda">frontier model</text>
+<rect x="600" y="80" width="14" height="14" fill="#f2a65a"/><text x="620" y="91" font-size="10" fill="#c4ccda">replay, ahead</text>
+<rect x="600" y="100" width="14" height="14" fill="#e2574c"/><text x="620" y="111" font-size="10" fill="#c4ccda">replay, behind</text>
+<text x="20" y="345" font-size="10" fill="#8893a8">Source: arXiv:2605.08261, Table 1, read 27 October 2026.</text>
+</g></svg>
+
+<h2 id="which-side-phoneshell-is-on">Which side of this result phoneshell's own tasks sit on</h2>
+
+<p><code>bench/schema.py</code>'s own module docstring describes a phoneshell task's <code>setup</code> field as "deterministic steps that put the phone in a known start state, run with no model involved so every attempt starts identically." That sentence is a design decision made for a good reason, stated in the same docstring: a task's <code>checks</code> are what make it worth running automatically at scale, and checks only mean something if every run starts from the same place. It is also, by the Statistical Precipice paper's own logic, the exact property that let a recorded replay match or beat a reasoning model on OSWorld and on MobileWorld: an identical start state, run after run, is what makes one recorded path reliably work twice. Nothing in <code>Task.load</code> or <code>Step.parse</code> randomizes a task's starting configuration the way DigiWorld's 3.2 million configurations do. By this description alone, phoneshell's 80 tasks sit on OSWorld and MobileWorld's side of the result, the side a non-reasoning replay was able to match, not DigiWorld's side, the one built to resist it.</p>
+
+<svg viewBox="0 0 820 300" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting two kinds of task start state. OSWorld, MobileWorld and phoneshell each run a deterministic setup that puts the environment in the same known state every attempt, which is the property an open-loop replay script needs to work twice. DigiWorld instead reconfigures its apps into over 3.2 million verified unique configurations, so no single recorded trajectory works twice, which is why a replay collapses there instead.">
+<rect x="0" y="0" width="820" height="300" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Two kinds of start state</text>
+<rect x="20" y="50" width="360" height="110" rx="10" fill="#262d3d" stroke="#f2a65a"/>
+<text x="34" y="74" font-size="12" font-weight="600">one fixed start state, repeated</text>
+<text x="34" y="96" font-size="10.5" fill="#c4ccda">OSWorld, MobileWorld, phoneshell's</text>
+<text x="34" y="114" font-size="10.5" fill="#c4ccda">"setup: deterministic steps... every</text>
+<text x="34" y="132" font-size="10.5" fill="#c4ccda">attempt starts identically"</text>
+<text x="34" y="150" font-size="10.5" fill="#f2a65a">a recorded path can work twice</text>
+<rect x="430" y="50" width="360" height="110" rx="10" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="444" y="74" font-size="12" font-weight="600">3.2M+ reconfigured start states</text>
+<text x="444" y="96" font-size="10.5" fill="#c4ccda">DigiWorld: 15 apps, 7 domains,</text>
+<text x="444" y="114" font-size="10.5" fill="#c4ccda">387 scenarios, 4,300+ instances</text>
+<text x="444" y="150" font-size="10.5" fill="#5ad1a0">no single recorded path works twice</text>
+<text x="20" y="200" font-size="11" fill="#c4ccda">Replay script's result on each:</text>
+<text x="20" y="222" font-size="11" fill="#f2a65a">OSWorld 71.1% vs model 70.6%  /  MobileWorld 41.5% vs model 32.7%</text>
+<text x="20" y="244" font-size="11" fill="#5ad1a0">DigiWorld 6.90% vs model 45.7%</text>
+<text x="20" y="280" font-size="10" fill="#8893a8">Sources: arXiv:2605.08261 Table 1; phoneshell/bench/schema.py, read 27 October 2026.</text>
+</g></svg>
+
+<p>phoneshell's own statistics module, <code>bench/stats.py</code>, already does independently what the paper spends several pages arguing the field needs: its <code>wilson()</code> function computes a 95% Wilson interval rather than a point estimate, for the same reason the paper gives, that the normal approximation lies about the bottom end near a benchmark's typical high pass rates; its <code>mcnemar_exact()</code> function runs a paired, discordant-pairs test between two models on the same task set, the same structural move the paper's hierarchical bootstrap generalizes; and the module's own comment records the reason it exists, that an earlier version of this project published a leaderboard where six models sat on six percentages, three identical, with "not a single pair of those models separat[ing] at p&lt;0.05." That half of the paper's prescription, phoneshell already follows, for reasons it arrived at the same way the paper did, by being burned by the alternative first. What phoneshell has never tested is whether an agent submission that is, in fact, just replaying a trajectory it already has, open-loop, would score anomalously well against its own deterministic <code>setup</code>.</p>
+
+<h2 id="what-it-means">What it means for a benchmark that grades real models honestly</h2>
+
+<ul>
+  <li>phoneshell's device-state checks are not fooled by a model that lies about what it did; <code>verify.py</code>'s own docstring says as much. They have never been tested against a model, or script, that does exactly what it needs to do without reasoning about it at all, because it has seen this exact task before.</li>
+  <li>The two phoneshell behaviours are not in tension. Grading from device state (phoneshell's existing defense against a model that misreports success) and resisting a memorized replay (the defense DigiWorld adds) are different problems; phoneshell has solid footing on the first and no footing at all on the second, because nothing about phoneshell's task set has ever needed to resist a submission that already has the answer.</li>
+  <li>The held-out private task set that <code>schema.py</code>'s <code>load_all</code> function keeps off this site exists for a related but distinct reason, to stop a model generation from memorizing the public answer key during training, not to stop a replay from winning on the public set once a correct trajectory for it has been recorded once, by any means.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># phoneshell's own determinism guarantee
+grep -n "deterministic steps" -A3 phoneshell/bench/schema.py
+
+# phoneshell's existing Wilson interval and paired exact test
+sed -n '1,40p' phoneshell/bench/stats.py
+grep -n "def wilson\|def mcnemar_exact" phoneshell/bench/stats.py
+
+# confirm no task-level randomization of starting configuration exists
+grep -n "class Step\|class Task" -A10 phoneshell/bench/schema.py
+
+# the paper's own replay-script result and DigiWorld's configuration count
+curl -s https://arxiv.org/html/2605.08261 | grep -iE "3.2 million|replay"</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim phoneshell's deterministic <code>setup</code> step places its 80 tasks structurally alongside OSWorld and MobileWorld, the two benchmarks a no-reasoning replay matched or beat, rather than alongside DigiWorld, the one built to resist it, and that this specific vulnerability has never been tested on phoneshell's own task set. That is wrong if any phoneshell task already randomizes its starting configuration in a way we did not find, or if a run already exists, that we could not locate, testing an open-loop replay against phoneshell's current suite. It is proven wrong the useful way the day someone records one correct trajectory per phoneshell task and replays it open-loop against a freshly run <code>setup</code>: if it scores close to the real pass rate phoneshell currently reports for frontier models, the paper's result transfers; if it scores far lower, phoneshell's real device, with its own network timing, live notifications and animation jitter, is already doing some of DigiWorld's job by accident. We will treat that specific test, run by either side, as settling the question, by 30 April 2027.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>D'Oro, Silwal, Wong, Sun, Xiao, Wang, Gan, Bolourchi, Tighe, <a href="https://arxiv.org/abs/2605.08261">Computer Use at the Edge of the Statistical Precipice</a>, arXiv:2605.08261, submitted 7 May 2026, read 27 October 2026.</li>
+      <li>Full text and Table 1: <a href="https://arxiv.org/html/2605.08261">arxiv.org/html/2605.08261</a>.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/bench/schema.py</code>, <code>phoneshell/bench/stats.py</code>, read 27 October 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
