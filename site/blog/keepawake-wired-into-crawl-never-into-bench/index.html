@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MyPCBench's zero-score trajectories still average 22 to 85 steps per task; phoneshell's fix for a lock screen that ends a run, built after losing four of them, is wired into one feature and not the benchmark - Blolabel</title>
+<meta name="description" content="MyPCBench (arXiv:2606.16748) runs six agents on tasks averaging 43.7 to 69.2 steps, with zero-score failed runs still averaging 22 to 85 steps before quitting. phoneshell's own KeepAwake class exists specifically because this project has lost four benchmark runs to the iPhone's screen locking mid-task, and its own source shows it called from exactly one feature, app crawling, never from bench/runner.py, the code path that actually runs phoneshell's 80 scored tasks.">
+<link rel="canonical" href="https://blolabel.ai/blog/keepawake-wired-into-crawl-never-into-bench/">
+<meta property="og:title" content="MyPCBench's zero-score trajectories still average 22 to 85 steps per task; phoneshell's fix for a lock screen that ends a run, built after losing four of them, is wired into one feature and not the benchmark - Blolabel">
+<meta property="og:description" content="MyPCBench's agents average 43.7 to 69.2 steps per task, and even zero-score failures average 22 to 85 steps before quitting. phoneshell's own KeepAwake fix for a mid-task screen lock, built after losing four runs to it, is called from exactly one feature and never from the benchmark runner.">
+<meta property="og:url" content="https://blolabel.ai/blog/keepawake-wired-into-crawl-never-into-bench/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/keepawake-wired-into-crawl-never-into-bench-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "MyPCBench's zero-score trajectories still average 22 to 85 steps per task; phoneshell's fix for a lock screen that ends a run, built after losing four of them, is wired into one feature and not the benchmark", "description": "MyPCBench (arXiv:2606.16748) runs six agents on tasks averaging 43.7 to 69.2 steps, with zero-score failed runs still averaging 22 to 85 steps before quitting. phoneshell's own KeepAwake class exists because this project has lost four benchmark runs to the iPhone's screen locking mid-task, and its source shows it called from exactly one feature, app crawling, never from bench/runner.py, the path that runs phoneshell's 80 scored tasks.", "datePublished": "2026-10-28", "dateModified": "2026-10-28", "url": "https://blolabel.ai/blog/keepawake-wired-into-crawl-never-into-bench/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/keepawake-wired-into-crawl-never-into-bench/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/keepawake-wired-into-crawl-never-into-bench-hero.png", "citation": ["https://arxiv.org/abs/2606.16748", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAABOCAMAAAD4iTj8AAAAilBMVEVMaXFiXmJhXmEVieRkYGRiXmJiXmJEaZJiX2IWjehNaIJhXmEUjOcVjOdgXWBjX2MWjecUjOZiXmJiXmIUi+UVjehUoN7w9/33+/7q9Pzg7/p8gIlkYGQXjuj///9oZGgWk/JmY2YVjullYWUJh+dtaG0olumr1/dSq+7T6vo6n+tntfCMx/N7vvJEi25LAAAAHHRSTlMAakku/HusA/z7Eo+hwDL30nXizUnjHfvKolE8aPCOgAAAAAlwSFlzAAALEgAACxIB0t1+/AAAB35JREFUeJztmn1zsjoThwMCCaCg4EvbASFA1bZ3v//XO7MJeQFBwJ55nnNP85v+oSYB9mJ3k2yKkJGRkZGRkZGRkZGRkZGRkZGRkdHPhZXQ7xPuGH2P4Gk4P8L6P3slGCOEV7vderNZr3f7I/yEfpEwQqvd1i+FDpt90PWCwBKyF147kiOjxc8VzborvtdI++gV0Grtl2XuC1Vledhh5QQY2e8F17u3yASMQjnSXehVGFnaXReOxUvug3c+WJ9LMQbblbwpRnYdO6CYLgZA25HFEwAKddfxscdVX0eIaPnw6ueR2xw3ZaVZLxiU/k7cFSObkgzkFIsBFE478hkAYuw4AIzWld/TYbvetw6M0Ur69XZ4/GpbCvOrBiQQ5KUgMAeACjM95voAxoJxKH5nAyh7r6+qyrLacAcGAK095RAAjI7K/uZy+/q6fVYtAt8XBKYB6I89wwPu0tTQtZ4GkEMMl/4exkwBQHijhv85nUEfN+kELYFJABjhyA09L7QxQpEtFPQAoMCCTlakJVhucWDDcM9zoU363dMAcnj2A5/NHwLojL6ehb6ED1Q+c6QpABjZqUMhXdM0QuG7Q5lY3tcB2AnvFHuRPsUg24spaykojVMLuP0YQO6Xa3gxDwFgtJfpr/mW9p9Pl0oM2szwAIzcmhLiOA4hNI7CIiYgh3YAvFu2Q6ET62WpBBt4tMjYcN5WJHbrd0sB+FwiFRyC6RDQAuBDATh/d4PgMQAwkvDmLCM09age9QIAqcOklr1I0RLAKErUaDaM1DVLF8sBlEzSBao9ZJcHADDaqwT4qdl/vioA26kQYI3KAuKIL10AGXEcrReJWRSA/e2llYjD8CwHsGbypfvuJgEoB2huOoAPLZIYxocekN6ZMASgZ2R7IZwWyi3kpwzwLAewZ9j2/kwA0NbCyvPmSwcgkwBPJY8AqDb++p0HACDO5eestVFaXVMVImDxYgAVvCssX+sMADuVAUYBQCp5DMBTNlBKVUDfASAFLSQsUoRglPQeSB7KlQiBCHnGAxAKtjyz+9VqCsB6GgC/zKMQCGRuI5ln2558jf0cQJzQtmQzoSnGKIrl1xAj7EkcbOziHLADbVr72/T1aBbQ5oCxHNDOA6MAwAb5/l0gHgoj+gAoS/yyOUsCJCPAoSm7Wtrycdj257lZoOT255C9HgPABwWgupyGZoEZAOz2mUmdsCJCkAx6AKlTFqCyOcsiwNG20jACuVS72E/WAX6Vs1XsQwCBBiBv1ELwfL4tASAs5E+J0cg6gMe8aia1jZDyeS4REVkWPwFAU3XgCWECgLYNbj5PQw4wDUA9Zbt86W5/epsh3SUYgMFJEgBEPwKQ+5s9b57rAdpa+PT5/wDAl8Liy1Me4OtL4bJcT4UAVjthRuDPgP0DADrFNz0EpI+TIQBUNHcBCJ+vO8qeygGlvhb22yXM3FmgyS/N7eN0Pl0vzacqi8zIATJvpcAGYTEt9gC0zWrW5ElQTBlx0pX3xEpww5bCG7+NbLaKnbcOaKrb9eP01TSXz7zJr+ePP5+NXFHvdStpGukKkDaV1xZbvo1Ng5kNzSLPizQnr4uDIMBRFADDIAiCpxdCaN8ucPmGeM5KsLnxreD1dskv3+3nC3eC6nDsLHdJrKm2tIUQyWI3ilyxLLgHEFtRFIooh2kRoSiTCyHobMdJ6rk2cH1mN7jn4Sl/YRviGXsBEfwQ/yc5F3ywVOCXG30v0BVf26ipLCvieHwpTDIaO3LjyI3CqSKQul6cZVAYIUnq/cADkAhteHkdAHdnB6xnZwVw7q0G2h3FMACHAZA+DzYKe4Y3Q5DepQfwiNA2QwXAg8pIRuD44QkAGGLnuBOze+VrAPLK32o6MLugHqCXgro6XRqfQXzsAVpa6+K58wB9KIsAfSeRqXoBrxYsB3DgkiWRTgjkeVXq4gvFbakvgPq6Nv2K0AAAfUvLHl5Y2s8BtV42IZTVvTCyZQHl5wWRiksuCyB8NQDq6AuqxtywfaklgHt9VlvIR489AGHvXQuCRG5ougBqL5FOQMh7KJ7fqnUyjCBLiM8URX2tJNifBrtqC94wWq8F9vXdtMV1u26Llh3BLMB24F4BRVD2V9iuPNByO0djllU4bSen8LRjtwRqolKZXhSdPhrDY1Vh5gBTAKB68MD+81WeC4hjyq7eRWnTjYuC1jUtYqt3HKp/c+Oihk40sXQLAjehBaV1VlNoC1VZfMbhKB4GAE6+CaYBYHQcTwHn86u4beQOq63vYxRYXpokaRghZHda9W8oCqGTJyr/wgQU2CEMT1IvtNlT89/VXcePxzEAuFdV+uugezbYlTr1ehsn8DL7NJPBDAJ5qjPai3e6O0Djw1nToqNtxADcy9+u5dngQLOcBTiBl/H3r53mDUtrFw/fbez0lT/dmdH+1G2a8+81GO22m67Wu91K+BFGq82gttrZ9/F1yPzTG/qbhZf4Eb53gtMrbAH+DuHH/yQz4bttp7eXU8/8v8b+f0Ng6/Ht9YXp9fWN589fJTzx/TcIyw+/0XojIyMjIyMjIyMjIyMjIyP0n9Y/P2/lF8zxuoMAAAAASUVORK5CYII=" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-28">28 October 2026</time>
+    <span>9 min read</span>
+  </div>
+  <h1>MyPCBench's zero-score trajectories still average 22 to 85 steps per task; phoneshell's fix for a lock screen that ends a run, built after losing four of them, is wired into one feature and not the benchmark</h1>
+  <p class="standfirst">MyPCBench's six agents average 43.7 to 69.2 steps per task, and even the runs that score zero do not quit quickly: failed trajectories from three models still average 22 to 31 steps before giving up, and two others average 52 to 85. phoneshell already has code for the one thing a long, idle-heavy run risks on a real iPhone, the screen locking mid-task, built because "this project has lost four runs that way." That fix is called from exactly one feature. It is never called from the code that runs phoneshell's own 80 scored tasks.</p>
+
+<p>MyPCBench (arXiv:2606.16748, Lawrence Keunho Jang, Andrew Keunwoo Jang, Jing Yu Koh and Ruslan Salakhutdinov, submitted 15 June 2026) builds 184 tasks around one persona, Michael Scott, seeded consistently across 17 simulated web applications on a Linux desktop. Its Table 2 reports both a "Perfect" rate, the share of tasks every rubric item passed, and average steps per task; its best model, Claude Opus 4.6, needs 46.5 steps on average and solves 55.4% of tasks perfectly. Every model tested needs dozens of steps per task, and the paper's own zero-score breakdown shows that failing is not a fast process either. phoneshell runs its own 80 tasks with a 240-second timeout and no step count anywhere near MyPCBench's, but it shares the one physical property every long automated session on a real phone has to survive: the screen has to stay on.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/keepawake-wired-into-crawl-never-into-bench-hero.png" alt="Abstract technical illustration on a dark grid: a long glowing path winding across the full width of the frame representing a long task trajectory, crossing over a thin horizontal seam partway through rendered as a hairline crack, with the path continuing unbroken on one lane but visibly severed and dimming on a second, parallel lane just above it, cool blues and teal with one amber accent on the unbroken lane, no icons or text" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="how-long-these-tasks-run">How long MyPCBench's tasks actually run, including the ones that fail</h2>
+
+<p>MyPCBench grades two ways: "Perfect," a full rubric pass, and a weighted "Rubric score" giving partial credit, alongside average steps and a trajectory-efficiency figure, rubric points per step. The six models tested span a wide range on all four. What stands out for a question about session length is the step counts on the zero-score end: the paper's own text states that zero-score trajectories from GPT-5.5, GPT-5.4 mini and Claude Sonnet 4.6 average about 22 to 31 steps, meaning those models quit early, while Opus 4.6 and the two Qwen 3.5 models average 52 to 85 steps on their own zero-score runs, quitting late or not at all before the task's own cap. Figure 6 in the paper plots a 100-step budget curve on which Opus is still rising at the cap.</p>
+
+<table>
+  <thead><tr><th>Model</th><th>Perfect</th><th>Rubric score</th><th>Avg steps</th><th>Traj. Eff.</th></tr></thead>
+  <tbody>
+    <tr><td>Claude Opus 4.6</td><td>55.4%</td><td>81.8%</td><td>46.5</td><td>3.61</td></tr>
+    <tr><td>Claude Sonnet 4.6</td><td>39.1%</td><td>65.4%</td><td>45.8</td><td>3.03</td></tr>
+    <tr><td>GPT-5.5</td><td>29.3%</td><td>54.1%</td><td>45.8</td><td>1.45</td></tr>
+    <tr><td>GPT-5.4 mini</td><td>19.0%</td><td>48.8%</td><td>43.7</td><td>1.65</td></tr>
+    <tr><td>Qwen 3.5 35B-A3B</td><td>7.6%</td><td>42.5%</td><td>66.0</td><td>1.41</td></tr>
+    <tr><td>Qwen 3.5 9B</td><td>2.7%</td><td>7.0%</td><td>69.2</td><td>0.65</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: arXiv:2606.16748, Table 2, read 28 October 2026. 184 tasks, Linux desktop, 17 simulated web apps seeded with one persona's accounts and history.</p>
+
+<svg viewBox="0 0 760 360" style="width:100%;height:auto" role="img" aria-label="Bar chart of MyPCBench's average steps per task by model, from Table 2, against a reference line at 240, the number of seconds phoneshell allows per task by default. Claude Opus 4.6 averages 46.5 steps. Claude Sonnet 4.6 averages 45.8. GPT-5.5 averages 45.8. GPT-5.4 mini averages 43.7. Qwen 3.5 35B-A3B averages 66.0. Qwen 3.5 9B averages 69.2, the highest. Zero-score trajectories for three of the models still average 22 to 31 steps before quitting, and for the other three average 52 to 85 steps.">
+<rect x="0" y="0" width="760" height="360" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="24" font-size="13" font-weight="600">Average steps per task, MyPCBench Table 2</text>
+<line x1="60" y1="310" x2="730" y2="310" stroke="#2a3140"/>
+<text x="52" y="314" font-size="9" fill="#8893a8" text-anchor="end">0</text>
+<line x1="60" y1="235" x2="730" y2="235" stroke="#232938"/><text x="52" y="239" font-size="9" fill="#8893a8" text-anchor="end">20</text>
+<line x1="60" y1="160" x2="730" y2="160" stroke="#232938"/><text x="52" y="164" font-size="9" fill="#8893a8" text-anchor="end">40</text>
+<line x1="60" y1="85" x2="730" y2="85" stroke="#232938"/><text x="52" y="89" font-size="9" fill="#8893a8" text-anchor="end">60</text>
+<line x1="60" y1="46" x2="730" y2="46" stroke="#232938"/><text x="52" y="50" font-size="9" fill="#8893a8" text-anchor="end">75</text>
+<g><rect x="85" y="136.3" width="40" height="173.7" fill="#5ad1a0"/><text x="105" y="128" font-size="9.5" fill="#5ad1a0" text-anchor="middle">46.5</text><text x="105" y="325" font-size="8.5" fill="#c4ccda" text-anchor="middle">Opus 4.6</text></g>
+<g><rect x="175" y="138.95" width="40" height="171.05" fill="#5ad1a0"/><text x="195" y="131" font-size="9.5" fill="#5ad1a0" text-anchor="middle">45.8</text><text x="195" y="325" font-size="8.5" fill="#c4ccda" text-anchor="middle">Sonnet 4.6</text></g>
+<g><rect x="265" y="138.95" width="40" height="171.05" fill="#f2a65a"/><text x="285" y="131" font-size="9.5" fill="#f2a65a" text-anchor="middle">45.8</text><text x="285" y="325" font-size="8.5" fill="#c4ccda" text-anchor="middle">GPT-5.5</text></g>
+<g><rect x="355" y="145.98" width="40" height="164.02" fill="#f2a65a"/><text x="375" y="138" font-size="9.5" fill="#f2a65a" text-anchor="middle">43.7</text><text x="375" y="325" font-size="8.5" fill="#c4ccda" text-anchor="middle">GPT-5.4 mini</text></g>
+<g><rect x="445" y="63.5" width="40" height="246.5" fill="#8893a8"/><text x="465" y="56" font-size="9.5" fill="#8893a8" text-anchor="middle">66.0</text><text x="465" y="325" font-size="8.5" fill="#c4ccda" text-anchor="middle">Qwen 35B-A3B</text></g>
+<g><rect x="535" y="50.9" width="40" height="259.1" fill="#8893a8"/><text x="555" y="43" font-size="9.5" fill="#8893a8" text-anchor="middle">69.2</text><text x="555" y="325" font-size="8.5" fill="#c4ccda" text-anchor="middle">Qwen 9B</text></g>
+<text x="20" y="345" font-size="10" fill="#8893a8">Source: arXiv:2606.16748, Table 2 and Figure 6, read 28 October 2026.</text>
+</g></svg>
+
+<h2 id="the-fix-and-where-it-lives">The fix phoneshell built, and the one place it is called from</h2>
+
+<p><code>phoneshell/autolock.py</code> states its reason for existing in its own opening lines: "A lock ends a scan. iOS refuses to launch apps from the lock screen, so the run stops producing screenshots and reports a failure that is really just a phone doing its job. This project has lost four runs that way." Its fix, a context manager called <code>KeepAwake</code>, reads the phone's current Auto-Lock setting off the Display & Brightness row text (no need to open the Auto-Lock screen itself), sets it to Never for the length of a scan if it is not already there, and restores the original value on every exit, including a crash, because leaving someone's personal phone set to never sleep "would be a rude thing to do with their battery." The class verifies the change took by reading the setting back rather than trusting the tap, the same principle <code>autolock.py</code>'s own docstring states for reading it: "a tap that reports success and changes nothing is the normal failure in this stack, not the unusual one."</p>
+
+<p>A repository-wide search for <code>KeepAwake</code> finds exactly two files: its own definition in <code>autolock.py</code>, and one call site, in <code>phoneshell/crawl.py</code>, where it wraps the app-crawling feature's own scan. <code>phoneshell/bench/runner.py</code>, the module that actually executes phoneshell's 80 scored tasks against a model, one at a time, up to 240 seconds each, contains no reference to <code>KeepAwake</code> or <code>autolock</code> at all, and neither does <code>cli.py</code>, <code>server.py</code> or <code>mcp_server.py</code>. No task YAML, no setup step and no documentation we found tells an operator to set Auto-Lock to Never by hand before running the benchmark either. The fix built specifically because of four lost runs protects a different feature than the one phoneshell measures itself by.</p>
+
+<svg viewBox="0 0 820 300" style="width:100%;height:auto" role="img" aria-label="Diagram showing where phoneshell's KeepAwake class is actually called from. autolock.py defines KeepAwake, built after this project lost four runs to the screen locking mid-task. A repository search finds exactly one caller, crawl.py's app-crawling feature. bench/runner.py, the module that executes phoneshell's 80 scored benchmark tasks, has zero references to KeepAwake or autolock, so the fix for the failure mode it was built to prevent does not protect the benchmark runs this site reports.">
+<rect x="0" y="0" width="820" height="300" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">KeepAwake: built for lost runs, called from one feature</text>
+<rect x="20" y="55" width="250" height="100" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="145" y="80" font-size="11.5" font-weight="600" text-anchor="middle">autolock.py</text>
+<text x="35" y="100" font-size="10" fill="#c4ccda">class KeepAwake, context manager</text>
+<text x="35" y="118" font-size="10" fill="#c4ccda">reads, sets, verifies, restores</text>
+<text x="35" y="138" font-size="9.5" fill="#5ad1a0">"lost four runs that way"</text>
+<path d="M270,100 L330,100" stroke="#5ad1a0" stroke-width="2" fill="none" marker-end="url(#ah3)"/>
+<rect x="330" y="55" width="220" height="100" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="440" y="80" font-size="11.5" font-weight="600" text-anchor="middle">crawl.py</text>
+<text x="345" y="105" font-size="10" fill="#c4ccda">the app-crawling feature</text>
+<text x="345" y="125" font-size="10" fill="#5ad1a0">the one caller</text>
+<rect x="330" y="185" width="220" height="80" rx="8" fill="#262d3d" stroke="#e2574c"/>
+<text x="440" y="210" font-size="11.5" font-weight="600" text-anchor="middle" fill="#e2574c">bench/runner.py</text>
+<text x="345" y="232" font-size="10" fill="#c4ccda">runs all 80 scored tasks</text>
+<text x="345" y="250" font-size="10" fill="#e2574c">0 references to KeepAwake</text>
+<path d="M270,130 L300,130 L300,225 L330,225" stroke="#e2574c" stroke-width="2" fill="none" stroke-dasharray="5,4" marker-end="url(#ah4)"/>
+<text x="580" y="100" font-size="10.5" fill="#8893a8">no doc or setup step</text>
+<text x="580" y="118" font-size="10.5" fill="#8893a8">tells an operator to set</text>
+<text x="580" y="136" font-size="10.5" fill="#8893a8">Auto-Lock to Never by hand</text>
+<defs>
+<marker id="ah3" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#5ad1a0"/></marker>
+<marker id="ah4" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#e2574c"/></marker>
+</defs>
+<text x="20" y="285" font-size="10" fill="#8893a8">Sources: phoneshell/autolock.py, phoneshell/crawl.py, phoneshell/bench/runner.py, read 28 October 2026.</text>
+</g></svg>
+
+<h2 id="what-it-means">What it means for a benchmark that has already lost runs to this</h2>
+
+<ul>
+  <li>MyPCBench's own numbers describe a different device and a different failure surface, a Linux desktop with no screen lock to speak of. The relevance to phoneshell is not that MyPCBench's exact step counts transfer to an iPhone, it is that MyPCBench's agents, and most agentic harnesses at this task length, spend dozens of steps per task including the ones that end in failure, and every one of those steps is an opportunity for an idle gap on a real phone to run past whatever Auto-Lock interval is currently set.</li>
+  <li>phoneshell's own default task timeout, 240 seconds, is itself evidence the risk is not zero: a model response that takes more than a typical iOS Auto-Lock interval (30 seconds up to 5 minutes, device-dependent) between taps, which the project's own cost comments elsewhere describe as "1-3s... everything else is noise" but do not bound on the slow end, would pass that interval with nothing touching the screen.</li>
+  <li>The fix already exists, tested, verified, and safe to leave running unattended because it restores the original setting on every exit including a crash. Wiring the same context manager around <code>bench/runner.py</code>'s per-task loop is not a new feature; it is calling a function that already works from a second place.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># the reason KeepAwake exists, in its own words
+sed -n '1,14p' phoneshell/autolock.py
+
+# every file that references it
+grep -rn "KeepAwake" --include="*.py" .
+
+# confirm bench/runner.py has no reference at all
+grep -c "KeepAwake\|autolock" phoneshell/bench/runner.py
+
+# phoneshell's fixed per-task timeout, applied to all 80 tasks
+grep -n "timeout_seconds" phoneshell/bench/schema.py
+grep -h "timeout_seconds" environments/*.yaml | sort -u || echo "no task overrides the default"
+
+# MyPCBench's own step and zero-score figures
+curl -s https://arxiv.org/html/2606.16748 | grep -iE "average steps|zero-score|Table 2"</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim <code>KeepAwake</code> is called from exactly one place in phoneshell's own source, <code>crawl.py</code>, and never from <code>bench/runner.py</code>, so phoneshell's own 80 scored benchmark tasks run with no automatic protection against the same lock-screen failure mode the class exists to prevent. That is wrong if a later commit wires it into the runner and we checked a stale copy of the source. We also claim this is a real, not theoretical, exposure given phoneshell's own 240-second timeout and the range of iOS Auto-Lock intervals. That claim is falsified the day someone runs phoneshell's benchmark suite with Auto-Lock deliberately left at a short interval, say 30 seconds, across enough tasks to see whether any fail specifically because the screen locked mid-task, a test nothing in the current results schema would currently let anyone attribute correctly even if it happened. We will treat either event, a code change or a reproduced lock-related failure, as grounds to revisit this piece by 30 April 2027.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Jang, Jang, Koh, Salakhutdinov, <a href="https://arxiv.org/abs/2606.16748">MyPCBench: A Benchmark for Personally Intelligent Computer-Use Agents</a>, arXiv:2606.16748, submitted 15 June 2026, read 28 October 2026.</li>
+      <li>Full text, Table 2 and Figure 6: <a href="https://arxiv.org/html/2606.16748">arxiv.org/html/2606.16748</a>.</li>
+      <li>Code and leaderboard: <a href="https://github.com/ljang0/MyPCBench">github.com/ljang0/MyPCBench</a>.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/autolock.py</code>, <code>phoneshell/crawl.py</code>, <code>phoneshell/bench/runner.py</code>, read 28 October 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
