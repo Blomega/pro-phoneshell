@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GhostEI-Bench's worst model completes 56.25% of the injected-overlay attacks it should refuse, GPT-5 only 16.43%; phoneshell's own overlay reflex blocks the same words and hands the rest to the model anyway - Blolabel</title>
+<meta name="description" content="GhostEI-Bench (arXiv:2510.20333, Shanghai Jiao Tong University and Shanghai AI Laboratory) injects fake overlays and spoofed notifications into Android agent trajectories and measures a Vulnerability Rate from 16.43% for GPT-5 to 56.25% for UI-TARS-7B-SFT. phoneshell's own overlay-dismissal reflex refuses, by construction, to tap any control whose text matches pay, confirm, allow, send or ten other words, then tries three content-blind gestures before handing an unresolved overlay straight to the model, the exact point GhostEI-Bench's own numbers say frontier models get wrong.">
+<link rel="canonical" href="https://blolabel.ai/blog/ghostei-bench-16-to-56-vr-phoneshell-reflex-defers-to-model/">
+<meta property="og:title" content="GhostEI-Bench's worst model completes 56.25% of the injected-overlay attacks it should refuse, GPT-5 only 16.43%; phoneshell's own overlay reflex blocks the same words and hands the rest to the model anyway - Blolabel">
+<meta property="og:description" content="GhostEI-Bench measures a Vulnerability Rate from 16.43% for GPT-5 to 56.25% for UI-TARS-7B-SFT against injected overlay attacks. phoneshell's overlay reflex blocks the same attack words by construction, then falls back to three content-blind gestures, then the model, exactly where GhostEI-Bench finds the failures.">
+<meta property="og:url" content="https://blolabel.ai/blog/ghostei-bench-16-to-56-vr-phoneshell-reflex-defers-to-model/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/ghostei-bench-16-to-56-vr-phoneshell-reflex-defers-to-model-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "GhostEI-Bench's worst model completes 56.25% of the injected-overlay attacks it should refuse, GPT-5 only 16.43%; phoneshell's own overlay reflex blocks the same words and hands the rest to the model anyway", "description": "GhostEI-Bench (arXiv:2510.20333) injects fake overlays and spoofed notifications into Android agent trajectories and measures a Vulnerability Rate from 16.43% for GPT-5 to 56.25% for UI-TARS-7B-SFT. phoneshell's overlay-dismissal reflex refuses to tap any control whose text matches pay, confirm, allow, send or ten other words, then tries three content-blind gestures before handing an unresolved overlay to the model, the exact point GhostEI-Bench's numbers say models get wrong.", "datePublished": "2026-10-28", "dateModified": "2026-10-28", "url": "https://blolabel.ai/blog/ghostei-bench-16-to-56-vr-phoneshell-reflex-defers-to-model/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/ghostei-bench-16-to-56-vr-phoneshell-reflex-defers-to-model/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/ghostei-bench-16-to-56-vr-phoneshell-reflex-defers-to-model-hero.png", "citation": ["https://arxiv.org/abs/2510.20333", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-28">28 October 2026</time>
+    <span>9 min read</span>
+  </div>
+  <h1>GhostEI-Bench's worst model completes 56.25% of the injected-overlay attacks it should refuse, GPT-5 only 16.43%; phoneshell's own overlay reflex blocks the same words and hands the rest to the model anyway</h1>
+  <p class="standfirst">GhostEI-Bench injects fake overlays and spoofed notifications into an Android agent's own screen and measures how often that gets an attacker's goal partly or fully completed: a Vulnerability Rate of 16.43% for the best model tested, GPT-5, and 56.25% for the worst, UI-TARS-7B-SFT. phoneshell's harness-level reflex for clearing overlays refuses, by construction, to tap any control whose text contains pay, confirm, allow, send or ten other words. When that is the only way out, it tries three gestures that never read the overlay's content at all, then hands the whole thing to the model unresolved, which is the exact decision GhostEI-Bench's numbers say models get wrong.</p>
+
+<p>GhostEI-Bench (arXiv:2510.20333, Chiyu Chen, Xinhao Song, Yunkai Chai, Yang Yao, Haodong Zhao, Lijun Li, Jie Li, Yan Teng, Gongshen Liu and Yingchun Wang, submitted 23 October 2025, revised to v3 on 5 March 2026, accepted as an ICLR 2026 poster) names a threat it calls environmental injection: a fake overlay or a spoofed notification placed into the screen an agent sees, built to bypass text-based safety filters because the attack lives in the pixels, not the instruction. Running Mobile-Agent-v2 and AppAgent against injected attacks across seven critical-risk categories, the paper's Table 1 reports a Vulnerability Rate, the share of non-benign-failure trajectories that fully or partially completed the attacker's goal, from 16.43% for GPT-5 up to 56.25% for UI-TARS-7B-SFT. phoneshell's own reflex for clearing exactly this class of screen element, a sheet or popover in the way of the actual task, was built for a different reason entirely, getting past promotional interstitials cheaply, and it already refuses by construction to tap the words these attacks would need tapped.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/ghostei-bench-16-to-56-vr-phoneshell-reflex-defers-to-model-hero.png" alt="Abstract technical illustration on a dark grid: a translucent panel floating above a phone-shaped outline, with a narrow corridor of light passing through a small gap at its edge toward a single glowing node, while the rest of the panel's surface is shown as an opaque, impenetrable barrier, cool blues and teal with one amber accent on the narrow corridor, no icons or text" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="what-ghostei-bench-measures">What GhostEI-Bench measures, and where its numbers land</h2>
+
+<p>GhostEI-Bench's attack model is specific: it is not a prompt injection in the text the agent reads, it is a visual one, a fake "Update Required" sheet, a spoofed payment confirmation, a deceptive notification, rendered into the same screen the agent is already looking at inside a real app workflow on an Android emulator, across seven critical-risk fields (Fraud, Cybercrime, Disinformation, System Sabotage, Privacy Leakage, Copyright Infringement, Harassment) and seven application domains (Communication, Finance, Social Media, Web Navigation, Productivity, Settings, Life Services). A judge LLM reviews the full trajectory, screenshots and actions together, and labels each run Task Completion, Full Attack Success, Partial Attack Success or Benign Failure; Vulnerability Rate is (FAS + PAS) divided by every case that was not a benign failure. Table 1 reports results for seven models under Mobile-Agent-v2 and two of those seven repeated under AppAgent, plus two UI-TARS variants whose framework the paper's text does not name, a gap we are stating rather than guessing past.</p>
+
+<table>
+  <thead><tr><th>Model</th><th>Framework</th><th>Task Completion</th><th>Full Attack Success</th><th>Partial Attack Success</th><th>Vulnerability Rate</th></tr></thead>
+  <tbody>
+    <tr><td>GPT-5</td><td>Mobile-Agent-v2</td><td>56.4%</td><td>5.5%</td><td>5.5%</td><td>16.43%</td></tr>
+    <tr><td>Gemini-2.5 Pro</td><td>Mobile-Agent-v2</td><td>50.0%</td><td>24.6%</td><td>8.2%</td><td>40.00%</td></tr>
+    <tr><td>GPT-5-chat-latest (preview)</td><td>Mobile-Agent-v2</td><td>45.5%</td><td>27.3%</td><td>4.6%</td><td>41.67%</td></tr>
+    <tr><td>Qwen2.5-VL-72B-Instruct</td><td>AppAgent</td><td>34.6%</td><td>24.5%</td><td>12.7%</td><td>52.56%</td></tr>
+    <tr><td>Claude-3.7-Sonnet</td><td>Mobile-Agent-v2</td><td>33.6%</td><td>27.3%</td><td>11.8%</td><td>55.12%</td></tr>
+    <tr><td>UI-TARS-7B-SFT</td><td>not reported</td><td>26.4%</td><td>18.2%</td><td>14.5%</td><td>56.25%</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: arXiv:2510.20333, Table 1, read 28 October 2026. The paper's Section 4.2 text calls Claude-3.7-Sonnet's 55.12% "the highest of all models," which conflicts with Table 1's own 56.25% for UI-TARS-7B-SFT; we report both numbers as the table states them rather than resolving the discrepancy ourselves.</p>
+
+<svg viewBox="0 0 760 360" style="width:100%;height:auto" role="img" aria-label="Bar chart of GhostEI-Bench's Vulnerability Rate by model, from Table 1. GPT-5 is lowest at 16.43 percent. Gemini-2.5 Pro is 40.00 percent. GPT-5-chat-latest is 41.67 percent. Qwen2.5-VL-72B-Instruct under AppAgent is 52.56 percent. Claude-3.7-Sonnet is 55.12 percent. UI-TARS-7B-SFT is highest at 56.25 percent.">
+<rect x="0" y="0" width="760" height="360" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="24" font-size="13" font-weight="600">Vulnerability Rate by model, GhostEI-Bench Table 1</text>
+<line x1="60" y1="310" x2="730" y2="310" stroke="#2a3140"/>
+<text x="52" y="314" font-size="9" fill="#8893a8" text-anchor="end">0%</text>
+<line x1="60" y1="220" x2="730" y2="220" stroke="#232938"/><text x="52" y="224" font-size="9" fill="#8893a8" text-anchor="end">25%</text>
+<line x1="60" y1="130" x2="730" y2="130" stroke="#232938"/><text x="52" y="134" font-size="9" fill="#8893a8" text-anchor="end">50%</text>
+<line x1="60" y1="40" x2="730" y2="40" stroke="#232938"/><text x="52" y="44" font-size="9" fill="#8893a8" text-anchor="end">75%</text>
+<g>
+<rect x="90" y="250.6" width="44" height="59.4" fill="#5ad1a0"/>
+<text x="112" y="243" font-size="10" fill="#5ad1a0" text-anchor="middle">16.43</text>
+<text x="112" y="330" font-size="9.5" fill="#c4ccda" text-anchor="middle">GPT-5</text>
+</g>
+<g>
+<rect x="190" y="166.4" width="44" height="143.6" fill="#f2a65a"/>
+<text x="212" y="159" font-size="10" fill="#f2a65a" text-anchor="middle">40.00</text>
+<text x="212" y="330" font-size="9.5" fill="#c4ccda" text-anchor="middle">Gemini-2.5 Pro</text>
+</g>
+<g>
+<rect x="290" y="160" width="44" height="150" fill="#f2a65a"/>
+<text x="312" y="153" font-size="10" fill="#f2a65a" text-anchor="middle">41.67</text>
+<text x="312" y="330" font-size="9.5" fill="#c4ccda" text-anchor="middle">GPT-5-chat</text>
+</g>
+<g>
+<rect x="390" y="121.1" width="44" height="188.9" fill="#e2574c"/>
+<text x="412" y="114" font-size="10" fill="#e2574c" text-anchor="middle">52.56</text>
+<text x="412" y="330" font-size="9.5" fill="#c4ccda" text-anchor="middle">Qwen2.5-VL-72B</text>
+</g>
+<g>
+<rect x="490" y="112.9" width="44" height="197.1" fill="#e2574c"/>
+<text x="512" y="106" font-size="10" fill="#e2574c" text-anchor="middle">55.12</text>
+<text x="512" y="330" font-size="9.5" fill="#c4ccda" text-anchor="middle">Claude-3.7-Sonnet</text>
+</g>
+<g>
+<rect x="590" y="111.5" width="44" height="198.5" fill="#e2574c"/>
+<text x="612" y="105" font-size="10" fill="#e2574c" text-anchor="middle">56.25</text>
+<text x="612" y="330" font-size="9.5" fill="#c4ccda" text-anchor="middle">UI-TARS-7B-SFT</text>
+</g>
+<text x="20" y="345" font-size="10" fill="#8893a8">Source: arXiv:2510.20333, Table 1, read 28 October 2026.</text>
+</g></svg>
+
+<h2 id="phoneshells-reflex">What phoneshell's overlay reflex already refuses, and what it does instead</h2>
+
+<p><code>phoneshell/agent/overlays.py</code> was not built for attacks. Its own docstring states the problem it solves: "the single most common way a phone agent stalls" is a promotional sheet covering the screen, and dismissing it is "a reflex with maybe six known moves" that belongs in the harness, not the model, because it costs nothing and cannot loop. Three boundaries are stated explicitly in the same docstring: permission dialogs are never auto-answered, anything that reads as money, sending or deleting is never tapped, and a dismissal must be verified gone rather than assumed. The second boundary is enforced by one regular expression, <code>NEVER</code>, checked inside <code>_is_close_control</code> against every candidate's label, name and value: <code>pay, buy, order, checkout, purchase, subscribe, confirm, send, delete, remove, allow, don't allow, sign out, log out, agree, accept</code>. Any element whose text matches is excluded from the reflex's list of safe things to tap, full stop, whether or not it looks like the overlay's intended close control.</p>
+
+<p>That exclusion does not make the reflex give up. <code>dismiss()</code> runs through five further moves in order, and three of them never read the overlay's content at all: dragging the sheet down from its grabber or top edge, tapping the dimmed backdrop above it, and swiping back from the screen edge. Each of these can close a sheet whose only labelled button says "Confirm" or "Allow" without ever tapping that button, because the gesture targets geometry, not text. Only when drag, backdrop and back-swipe all fail does <code>dismiss()</code> return an unresolved result, carrying the overlay's own text and a note on everything that was tried, straight back into the model's context. A true system alert, Apple's own permission or confirmation dialog, skips all of this and is refused immediately, on the stated principle that answering it is the user's call. GhostEI-Bench's injected elements are fake overlays rendered inside an app's own view, not a genuine system alert, so they would be classified as a sheet or fullscreen modal and run the full five-step gauntlet before ever reaching a model, if they reached phoneshell at all.</p>
+
+<svg viewBox="0 0 820 340" style="width:100%;height:auto" role="img" aria-label="Flow diagram of phoneshell's overlay dismissal pipeline. An overlay is detected and classified. If a close candidate's text matches the NEVER word list, pay, confirm, allow, send among others, that candidate is excluded regardless of position. The reflex then tries three content-blind physical moves in order: dragging the sheet down, tapping the backdrop, and swiping back from the edge. Only if all three fail does the overlay reach the model unresolved, with its text and a note on what was tried, which is the exact decision point where GhostEI-Bench's judge-LLM protocol measured a Vulnerability Rate from 16.43 to 56.25 percent.">
+<rect x="0" y="0" width="820" height="340" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">phoneshell's overlay reflex: what it blocks, what it still has to pass along</text>
+<rect x="20" y="50" width="200" height="70" rx="8" fill="#262d3d" stroke="#8893a8"/>
+<text x="120" y="80" font-size="11" text-anchor="middle">overlay detected</text>
+<text x="120" y="98" font-size="9.5" fill="#c4ccda" text-anchor="middle">(sheet, popover, fullscreen)</text>
+<rect x="250" y="50" width="220" height="70" rx="8" fill="#262d3d" stroke="#e2574c"/>
+<text x="360" y="74" font-size="11" text-anchor="middle" fill="#e2574c">NEVER word match excludes</text>
+<text x="360" y="92" font-size="9.5" fill="#c4ccda" text-anchor="middle">pay, confirm, allow, send...</text>
+<text x="360" y="108" font-size="9.5" fill="#c4ccda" text-anchor="middle">the candidate, not the overlay</text>
+<rect x="500" y="50" width="300" height="100" rx="8" fill="#262d3d" stroke="#f2a65a"/>
+<text x="650" y="72" font-size="11" text-anchor="middle" fill="#f2a65a">three content-blind gestures</text>
+<text x="520" y="92" font-size="9.5" fill="#c4ccda">1. drag the sheet down</text>
+<text x="520" y="108" font-size="9.5" fill="#c4ccda">2. tap the dimmed backdrop</text>
+<text x="520" y="124" font-size="9.5" fill="#c4ccda">3. swipe back from the edge</text>
+<rect x="500" y="190" width="300" height="100" rx="8" fill="#262d3d" stroke="#e2574c"/>
+<text x="650" y="214" font-size="11" font-weight="600" text-anchor="middle" fill="#e2574c">unresolved: reaches the model</text>
+<text x="520" y="234" font-size="9.5" fill="#c4ccda">text and attempted moves passed</text>
+<text x="520" y="250" font-size="9.5" fill="#c4ccda">up; model must judge the overlay</text>
+<text x="520" y="266" font-size="9.5" fill="#f2a65a">GhostEI-Bench measured this exact</text>
+<text x="520" y="280" font-size="9.5" fill="#f2a65a">decision at 16.43 to 56.25% VR</text>
+<path d="M220,85 L250,85" stroke="#8893a8" stroke-width="2" fill="none" marker-end="url(#ah1)"/>
+<path d="M470,85 L500,85" stroke="#8893a8" stroke-width="2" fill="none" marker-end="url(#ah1)"/>
+<path d="M650,150 L650,190" stroke="#e2574c" stroke-width="2" fill="none" marker-end="url(#ah2)"/>
+<defs>
+<marker id="ah1" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8893a8"/></marker>
+<marker id="ah2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#e2574c"/></marker>
+</defs>
+<text x="20" y="320" font-size="10" fill="#8893a8">Source: phoneshell/agent/overlays.py, dismiss() and _is_close_control, read 28 October 2026; GhostEI-Bench arXiv:2510.20333 Table 1.</text>
+</g></svg>
+
+<h2 id="what-it-means">What it means for a harness that was not built against attacks</h2>
+
+<ul>
+  <li>phoneshell's word blocklist and GhostEI-Bench's attack vocabulary overlap by design accident, not by any shared threat model. <code>NEVER</code> exists to stop the reflex from tapping "Subscribe" on a benign paywall; that it also covers "Confirm" and "Allow" is a side effect of trying to list every word that reads as irreversible, not a response to environmental injection.</li>
+  <li>The gesture fallback is content-blind in both directions. It can dismiss a malicious overlay without ever understanding it was malicious, which GhostEI-Bench's own category list would count as a benign-looking escape rather than a judged defense. It can just as easily drag away, or swipe back from, a legitimate screen that happens to share a sheet's shape, with no distinction between the two anywhere in the code.</li>
+  <li>Nothing in phoneshell's own test suite exercises this path. A grep of <code>environments/*.yaml</code> for any task that plants a deceptive or spoofed overlay mid-task returns nothing; every overlay phoneshell's 80 tasks have ever met is incidental, a real app's own promo sheet, not a planted adversarial one.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># phoneshell's word blocklist, verbatim
+grep -n "NEVER = re.compile" -A4 phoneshell/agent/overlays.py
+
+# the exclusion runs inside the close-control check, before any gesture
+grep -n "_is_close_control\|NEVER.search" phoneshell/agent/overlays.py
+
+# the three content-blind fallbacks, in order, inside dismiss()
+grep -n "drag the sheet down\|tap the dimmed backdrop\|back edge swipe" -B2 phoneshell/agent/overlays.py
+
+# system alerts are refused outright, before any of the above runs
+grep -n "system_alert" -A4 phoneshell/agent/overlays.py
+
+# GhostEI-Bench's own Table 1 and Vulnerability Rate definition
+curl -s https://arxiv.org/html/2510.20333v3 | grep -i "Vulnerability Rate\|VR ="</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim phoneshell's overlay-dismissal reflex has never been tested against anything resembling GhostEI-Bench's injected adversarial overlays, so whether its word blocklist plus gesture fallback performs better, worse, or incomparably to the Android agents in Table 1 is unknown. That is wrong if a GhostEI-Bench-style injected overlay has already been run against phoneshell's <code>dismiss()</code> on a real iPhone and we did not find the record. We also claim the gesture fallback cannot distinguish a malicious overlay from a legitimate one that shares its shape. That is falsified the day someone builds one phoneshell task with a planted deceptive sheet whose only path forward is a NEVER-listed word, and the reflex's drag, backdrop and back-swipe sequence reliably clears it without the model ever seeing the deception, which would mean the content-blind fallback is doing more real defensive work than this piece credits it for. We will treat either event, published or reproduced, as grounds to revisit this comparison by 30 April 2027.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Chen, Song, Chai, Yao, Zhao, Li, Li, Teng, Liu, Wang, <a href="https://arxiv.org/abs/2510.20333">GhostEI-Bench: Do Mobile Agents Resilience to Environmental Injection in Dynamic On-Device Environments?</a>, arXiv:2510.20333, submitted 23 October 2025, v3 5 March 2026, read 28 October 2026.</li>
+      <li>Full text and Table 1: <a href="https://arxiv.org/html/2510.20333v3">arxiv.org/html/2510.20333v3</a>.</li>
+      <li>ICLR 2026 poster listing: <a href="https://iclr.cc/virtual/2026/poster/10011688">iclr.cc/virtual/2026/poster/10011688</a>.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/agent/overlays.py</code>, read 28 October 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
