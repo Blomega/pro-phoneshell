@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RiOSWorld finds agents intend a risky OS operation 91.3% of the time when induced; phoneshell's own patch notes describe a route to the same class of action that skips the agent, and the model, entirely - Blolabel</title>
+<meta name="description" content="RiOSWorld (arXiv:2506.00618) measures a 91.3% intention and 84.0% completion unsafe rate for induced OS-operation tasks across ten multimodal agents, and 41.1%/33.3% for file writes. phoneshell/wda/patches.py documents two custom WebDriverAgent routes, including one that writes directly to the camera roll, both declared withoutSession and reachable by anything on the network when the phone is driven over wifi, because WebDriverAgent authenticates nothing.">
+<link rel="canonical" href="https://blolabel.ai/blog/unauthenticated-route-skips-the-agent-riosworld-measures/">
+<meta property="og:title" content="RiOSWorld finds agents intend a risky OS operation 91.3% of the time when induced; phoneshell's own patch notes describe a route to the same class of action that skips the agent, and the model, entirely - Blolabel">
+<meta property="og:description" content="RiOSWorld measures a 91.3%/84.0% unsafe rate for induced OS-operation tasks and 41.1%/33.3% for file writes, across ten agents. phoneshell's own code documents an unauthenticated route to the same class of action, reachable by anything on the network, that needs no agent decision at all.">
+<meta property="og:url" content="https://blolabel.ai/blog/unauthenticated-route-skips-the-agent-riosworld-measures/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/unauthenticated-route-skips-the-agent-riosworld-measures-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "RiOSWorld finds agents intend a risky OS operation 91.3% of the time when induced; phoneshell's own patch notes describe a route to the same class of action that skips the agent, and the model, entirely", "description": "RiOSWorld (arXiv:2506.00618) measures a 91.3% intention and 84.0% completion unsafe rate for induced OS-operation tasks across ten agents, and 41.1%/33.3% for file writes. phoneshell/wda/patches.py documents two custom WebDriverAgent routes, including one that writes to the camera roll, both withoutSession and reachable by anything on the network over wifi, because WebDriverAgent authenticates nothing.", "datePublished": "2026-10-28", "dateModified": "2026-10-28", "url": "https://blolabel.ai/blog/unauthenticated-route-skips-the-agent-riosworld-measures/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/unauthenticated-route-skips-the-agent-riosworld-measures/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/unauthenticated-route-skips-the-agent-riosworld-measures-hero.png", "citation": ["https://arxiv.org/abs/2506.00618", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-28">28 October 2026</time>
+    <span>10 min read</span>
+  </div>
+  <h1>RiOSWorld finds agents intend a risky OS operation 91.3% of the time when induced; phoneshell's own patch notes describe a route to the same class of action that skips the agent, and the model, entirely</h1>
+  <p class="standfirst">RiOSWorld induces ten multimodal agents toward risky goals on a real desktop and measures how often they intend, then complete, the risky action: 91.3% intention and 84.0% completion averaged across OS-operation tasks, 41.1% and 33.3% for file writes. Every one of those numbers describes a model deciding to do something unsafe. phoneshell's own code documents a different channel to the same class of harm, writing a file, that requires no model, no reasoning and no decision at all: an unauthenticated route, reachable by anything on the same wifi network, which is exactly why phoneshell prefers a cable and warns about the alternative in its own comments.</p>
+
+<p>RiOSWorld (arXiv:2506.00618, Jingyi Yang, Shuai Shao, Dongrui Liu and Jing Shao, submitted 31 May 2025, revised to v3 20 June 2025, listed as a NeurIPS 2025 poster) asks whether safety behavior built into dialogue models survives the move to computer-use agents with real OS access. Across 492 tasks split between user-originated risks (238 tasks: Web, Social Media, Office, File I/O, OS Operation, Code, Multimedia) and environmental risks (254 tasks: phishing pages, phishing email, pop-ups, reCAPTCHA, account fraud, induced text), the paper reports an unsafe rate for both whether the agent intended the risky outcome and whether it actually completed it. The category closest to what an iOS automation harness touches, OS Operation, averages 91.3% intention and 84.0% completion across the ten models tested; File I/O, writing to disk, averages 41.1% and 33.3%. phoneshell's own code, read directly, documents a route to exactly that category of action that does not pass through any of what RiOSWorld is measuring, because no agent decision is involved.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/unauthenticated-route-skips-the-agent-riosworld-measures-hero.png" alt="Abstract technical illustration on a dark grid: a complex branching decision tree rendered in cool blue light, converging toward a single locked gate, next to it a short, separate straight line in amber light that bypasses the entire tree and the gate, connecting directly to the same endpoint, cool blues and teal with one amber accent on the bypass line, no icons or text" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="what-riosworld-measures">What RiOSWorld measures: a model's own decision to do harm</h2>
+
+<p>RiOSWorld runs on a Linux-based virtual machine, screenshot-only observation at 1920x1080, agent actions issued through pyautogui, building on OSWorld's environment rather than a phone. Each risky task is modeled as a partially observable Markov decision process, and every trajectory is scored on two separate questions: did the agent's stated or inferred goal match the risky one it was induced toward (intention), and did it actually carry that goal out (completion). The gap between the two numbers in every category the paper reports is the share of cases where a model meant to do something unsafe but did not manage to, not where it recognized the risk and declined.</p>
+
+<table>
+  <thead><tr><th>Category</th><th>Type</th><th>Tasks</th><th>Unsafe, intention</th><th>Unsafe, completion</th></tr></thead>
+  <tbody>
+    <tr><td>OS Operation</td><td>user-originated</td><td>30</td><td>91.3%</td><td>84.0%</td></tr>
+    <tr><td>Web</td><td>user-originated</td><td>42</td><td>95.7%</td><td>86.6%</td></tr>
+    <tr><td>Code</td><td>user-originated</td><td>41</td><td>94.7%</td><td>81.8%</td></tr>
+    <tr><td>Multimedia</td><td>user-originated</td><td>50</td><td>87.2%</td><td>50.4%</td></tr>
+    <tr><td>Office</td><td>user-originated</td><td>22</td><td>71.6%</td><td>54.4%</td></tr>
+    <tr><td>File I/O</td><td>user-originated</td><td>23</td><td>41.1%</td><td>33.3%</td></tr>
+    <tr><td>Phishing Web</td><td>environmental</td><td>56</td><td>99.2%</td><td>83.7%</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: arXiv:2506.00618, Tables 2, 3 and 4, read 28 October 2026. Averages are across ten tested models (GPT-4o, GPT-4o-mini, GPT-4.1, Gemini-2.0-pro, Gemini-2.5-pro-exp, Claude-3.5-Sonnet, Claude-3.7-Sonnet, Qwen2-VL-72B, Qwen2.5-VL-72B, Llama-3.2-90B-Vision), reconstructed from the paper's HTML tables; the paper's single overall per-model ranking appears only in a figure we could not read as text.</p>
+
+<svg viewBox="0 0 760 360" style="width:100%;height:auto" role="img" aria-label="Bar chart of RiOSWorld's intention and completion unsafe rates for seven task categories. OS Operation is 91.3 percent intention and 84.0 percent completion. Web is 95.7 and 86.6. Code is 94.7 and 81.8. Multimedia is 87.2 and 50.4. Office is 71.6 and 54.4. File I/O is lowest at 41.1 and 33.3. Phishing Web, an environmental risk, is 99.2 and 83.7.">
+<rect x="0" y="0" width="760" height="360" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="24" font-size="13" font-weight="600">Unsafe rate by category, RiOSWorld Tables 2-4</text>
+<line x1="60" y1="310" x2="730" y2="310" stroke="#2a3140"/>
+<text x="52" y="314" font-size="9" fill="#8893a8" text-anchor="end">0%</text>
+<line x1="60" y1="220" x2="730" y2="220" stroke="#232938"/><text x="52" y="224" font-size="9" fill="#8893a8" text-anchor="end">33%</text>
+<line x1="60" y1="130" x2="730" y2="130" stroke="#232938"/><text x="52" y="134" font-size="9" fill="#8893a8" text-anchor="end">66%</text>
+<line x1="60" y1="40" x2="730" y2="40" stroke="#232938"/><text x="52" y="44" font-size="9" fill="#8893a8" text-anchor="end">100%</text>
+<g><rect x="80" y="63.9" width="22" height="246.1" fill="#f2a65a"/><rect x="104" y="83.7" width="22" height="226.3" fill="#8893a8"/><text x="102" y="325" font-size="8.5" fill="#c4ccda" text-anchor="middle">OS Op.</text></g>
+<g><rect x="165" y="51.6" width="22" height="258.4" fill="#f2a65a"/><rect x="189" y="76.2" width="22" height="233.8" fill="#8893a8"/><text x="187" y="325" font-size="8.5" fill="#c4ccda" text-anchor="middle">Web</text></g>
+<g><rect x="250" y="54.3" width="22" height="255.7" fill="#f2a65a"/><rect x="274" y="89.1" width="22" height="220.9" fill="#8893a8"/><text x="272" y="325" font-size="8.5" fill="#c4ccda" text-anchor="middle">Code</text></g>
+<g><rect x="335" y="74.6" width="22" height="235.4" fill="#f2a65a"/><rect x="359" y="173.9" width="22" height="136.1" fill="#8893a8"/><text x="357" y="325" font-size="8.5" fill="#c4ccda" text-anchor="middle">Multimedia</text></g>
+<g><rect x="420" y="116.7" width="22" height="193.3" fill="#f2a65a"/><rect x="444" y="163.1" width="22" height="146.9" fill="#8893a8"/><text x="442" y="325" font-size="8.5" fill="#c4ccda" text-anchor="middle">Office</text></g>
+<g><rect x="505" y="199.0" width="22" height="111.0" fill="#5ad1a0"/><rect x="529" y="220.1" width="22" height="89.9" fill="#8893a8"/><text x="527" y="325" font-size="8.5" fill="#c4ccda" text-anchor="middle">File I/O</text></g>
+<g><rect x="590" y="42.2" width="22" height="267.8" fill="#e2574c"/><rect x="614" y="84.0" width="22" height="226.0" fill="#8893a8"/><text x="612" y="325" font-size="8.5" fill="#c4ccda" text-anchor="middle">Phishing Web</text></g>
+<rect x="650" y="55" width="12" height="12" fill="#f2a65a"/><text x="668" y="65" font-size="9" fill="#c4ccda">intention</text>
+<rect x="650" y="72" width="12" height="12" fill="#8893a8"/><text x="668" y="82" font-size="9" fill="#c4ccda">completion</text>
+<text x="20" y="345" font-size="10" fill="#8893a8">Source: arXiv:2506.00618, Tables 2-4, read 28 October 2026.</text>
+</g></svg>
+
+<h2 id="the-unauthenticated-route">The route that skips the question entirely</h2>
+
+<p><code>phoneshell/wda/patches.py</code> adds two custom routes to WebDriverAgent that Appium's own build does not ship, and its module docstring states plainly why: there is no other way to put a picture into the camera roll from automation, because the photo library is a database guarded by <code>PHPhotoLibrary</code>, not a directory a file write can reach, and WebDriverAgent is the only process already running on the phone that can call it. The docstring also measures the alternative it closes off: writing straight to <code>/var/mobile/Media/DCIM</code> over AFC lands a file on disk, confirmed with <code>stat</code>, while the photo library's own count stays unchanged across a write and a relaunch of Photos. Both new routes, <code>importMedia</code> and <code>pressButton</code> without a session, are declared <code>.withoutSession</code>, the same flag WebDriverAgent itself uses for its sessionless read routes. The file's own comment states the consequence without softening it: "anything that can reach the WebDriverAgent port can use them, and WebDriverAgent authenticates nothing."</p>
+
+<p>phoneshell's own bring-up code already treats this as a real cost, not a hypothetical one. <code>bringup.py</code> prefers a cable connection over wifi specifically because the cable "does not put an unauthenticated automation server on the wifi," and the WebDriverAgent runner is launched bound to <code>127.0.0.1</code> only when the transport is not wifi; the moment phoneshell is driving a phone over wifi instead of a cable, that loopback bind is dropped. RiOSWorld's 91.3% intention rate on OS Operation and 41.1% on File I/O describe a model choosing, under inducement, to do something unsafe. The route <code>patches.py</code> documents requires no choice: a POST to <code>/wda/customMedia</code> or whatever path the patch registers, from any device on the same network as a phone running phoneshell over wifi, writes a file to that phone's camera roll with no model, no screenshot, no reasoning step, and no induced goal anywhere in the chain.</p>
+
+<svg viewBox="0 0 820 320" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting two paths to the same category of unsafe outcome, an unauthorized file write. RiOSWorld's path runs through a model: induced goal, intention, then completion, measured at 91.3 percent intention and 84.0 percent completion for OS operations, 41.1 and 33.3 for file writes, across ten models. phoneshell's documented path is shorter: an unauthenticated, withoutSession WebDriverAgent route, reachable by anything on the same wifi network when the phone is not connected by cable, writes directly to the camera roll with no model, no screenshot, and no decision involved at any point.">
+<rect x="0" y="0" width="820" height="320" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Two paths to the same category of harm: an unauthorized file write</text>
+<rect x="20" y="55" width="360" height="130" rx="10" fill="#262d3d" stroke="#8893a8"/>
+<text x="34" y="78" font-size="12" font-weight="600">RiOSWorld's path (desktop agent)</text>
+<text x="34" y="100" font-size="10.5" fill="#c4ccda">induced goal &rarr; model forms intention</text>
+<text x="34" y="120" font-size="10.5" fill="#c4ccda">&rarr; model attempts completion</text>
+<text x="34" y="142" font-size="10.5" fill="#8893a8">OS Operation: 91.3% / 84.0%</text>
+<text x="34" y="162" font-size="10.5" fill="#8893a8">File I/O: 41.1% / 33.3%</text>
+<rect x="440" y="55" width="360" height="130" rx="10" fill="#262d3d" stroke="#f2a65a"/>
+<text x="454" y="78" font-size="12" font-weight="600" fill="#f2a65a">phoneshell's documented path</text>
+<text x="454" y="100" font-size="10.5" fill="#c4ccda">HTTP POST to a withoutSession route</text>
+<text x="454" y="120" font-size="10.5" fill="#c4ccda">on the WDA port, from anything on wifi</text>
+<text x="454" y="142" font-size="10.5" fill="#f2a65a">no model, no screenshot, no decision</text>
+<text x="454" y="162" font-size="10.5" fill="#f2a65a">writes to the camera roll directly</text>
+<text x="20" y="225" font-size="11" fill="#c4ccda">Mitigated today only by a default: WebDriverAgent binds to 127.0.0.1</text>
+<text x="20" y="245" font-size="11" fill="#c4ccda">when the transport is not wifi. Nothing authenticates the route itself.</text>
+<text x="20" y="295" font-size="10" fill="#8893a8">Sources: arXiv:2506.00618 Tables 2-4; phoneshell/wda/patches.py, phoneshell/bringup.py, read 28 October 2026.</text>
+</g></svg>
+
+<h2 id="what-it-means">What it means for a harness that runs on a real phone</h2>
+
+<ul>
+  <li>These are different risk models, not competing measurements of the same thing. RiOSWorld studies whether an agent's own judgment fails under inducement; the gap in phoneshell's own code is an access-control question that never reaches judgment at all. Citing one as evidence about the other would overstate both.</li>
+  <li>The mitigation that exists is a default, not a control. Binding WebDriverAgent to loopback when not using wifi is a choice <code>launch_wda</code> makes automatically, and <code>bringup.py</code>'s own comment states the reasoning in plain terms, but nothing in <code>patches.py</code> itself adds a credential, a token or any check on the caller. The security property phoneshell currently has rests entirely on choosing the cable.</li>
+  <li>RiOSWorld's File I/O category, the one closest in kind to <code>importMedia</code>, is the single lowest unsafe rate the paper reports among user-originated risks, 41.1% intention, which the paper's own framing would read as models being comparatively reluctant to write files under inducement. phoneshell's unauthenticated route removes the one actor, the model, whose reluctance that number is measuring.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># the two custom, unauthenticated routes and their own stated risk
+grep -n "withoutSession\|authenticates nothing" -B5 phoneshell/wda/patches.py
+
+# the cable-over-wifi preference, stated in phoneshell's own bring-up code
+grep -n "unauthenticated automation server" -B3 -A3 phoneshell/bringup.py
+
+# the loopback bind, and when it is dropped
+grep -n "bind_loopback\|127.0.0.1" phoneshell/bringup.py
+
+# RiOSWorld's own category tables
+curl -s https://arxiv.org/html/2506.00618v3 | grep -iE "OS Operation|File I/O|Unsafe"</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim phoneshell's custom WebDriverAgent routes carry no authentication beyond the default of binding to loopback when the transport is not wifi, so a phone deliberately or accidentally driven over wifi exposes an unauthenticated write path to its camera roll to anything on that network. That is wrong if a later version of <code>patches.py</code> or the WebDriverAgent fork it patches adds a token, a pairing step or a network check we did not find. We also claim this gap is architecturally distinct from the risk RiOSWorld measures, since it requires no agent and no induced goal. That distinction fails if someone demonstrates the route cannot actually be reached without a valid WDA session despite the <code>.withoutSession</code> declaration, which would mean our reading of the flag is wrong rather than the code. We will treat either finding, reproduced against a real device, as grounds to revisit this piece by 30 April 2027.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Yang, Shao, Liu, Shao, <a href="https://arxiv.org/abs/2506.00618">RiOSWorld: Benchmarking the Risk of Multimodal Computer-Use Agents</a>, arXiv:2506.00618, submitted 31 May 2025, v3 20 June 2025, read 28 October 2026.</li>
+      <li>Full text, Tables 2-4: <a href="https://arxiv.org/html/2506.00618v3">arxiv.org/html/2506.00618v3</a>.</li>
+      <li>NeurIPS 2025 poster listing: <a href="https://neurips.cc/virtual/2025/poster/117273">neurips.cc/virtual/2025/poster/117273</a>.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/wda/patches.py</code>, <code>phoneshell/bringup.py</code>, read 28 October 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
