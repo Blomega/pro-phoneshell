@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UI-CUBE's best model falls from 84.8% on simple UI tasks to 19.4% on its 50 copy-paste workflows; phoneshell has a working three-finger copy and paste gesture that zero of its 80 tasks ever call - Blolabel</title>
+<meta name="description" content="UI-CUBE (arXiv:2511.17131, UiPath) scores five computer-use agents at 66.7% to 84.8% on simple UI tasks and 9.5% to 19.4% on complex workflows built around copy-paste between apps, against a human baseline of 97.9% and 61.2%. phoneshell/gestures.py already implements the exact iOS gesture, a three-finger pinch, that performs copy and paste, but a search of all 80 environment files finds no task that ever calls it.">
+<link rel="canonical" href="https://blolabel.ai/blog/fifty-copy-paste-tasks-collapse-phoneshells-pinch-goes-unused/">
+<meta property="og:title" content="UI-CUBE's best model falls from 84.8% on simple UI tasks to 19.4% on its 50 copy-paste workflows; phoneshell has a working three-finger copy and paste gesture that zero of its 80 tasks ever call - Blolabel">
+<meta property="og:description" content="UI-CUBE scores five agents at 66.7-84.8% on simple UI tasks and 9.5-19.4% on copy-paste workflows, against a 97.9%/61.2% human baseline. phoneshell already has the iOS three-finger pinch gesture for copy and paste implemented in code, and zero of its 80 tasks ever call it.">
+<meta property="og:url" content="https://blolabel.ai/blog/fifty-copy-paste-tasks-collapse-phoneshells-pinch-goes-unused/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/fifty-copy-paste-tasks-collapse-phoneshells-pinch-goes-unused-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "UI-CUBE's best model falls from 84.8% on simple UI tasks to 19.4% on its 50 copy-paste workflows; phoneshell has a working three-finger copy and paste gesture that zero of its 80 tasks ever call", "description": "UI-CUBE (arXiv:2511.17131) scores five computer-use agents at 66.7% to 84.8% on simple UI tasks and 9.5% to 19.4% on complex copy-paste workflows, against a human baseline of 97.9% and 61.2%. phoneshell/gestures.py already implements the iOS three-finger pinch that performs copy and paste, but no task in its public suite ever calls it.", "datePublished": "2026-10-28", "dateModified": "2026-10-28", "url": "https://blolabel.ai/blog/fifty-copy-paste-tasks-collapse-phoneshells-pinch-goes-unused/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/fifty-copy-paste-tasks-collapse-phoneshells-pinch-goes-unused/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/fifty-copy-paste-tasks-collapse-phoneshells-pinch-goes-unused-hero.png", "citation": ["https://arxiv.org/abs/2511.17131", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-28">28 October 2026</time>
+    <span>9 min read</span>
+  </div>
+  <h1>UI-CUBE's best model falls from 84.8% on simple UI tasks to 19.4% on its 50 copy-paste workflows; phoneshell has a working three-finger copy and paste gesture that zero of its 80 tasks ever call</h1>
+  <p class="standfirst">UI-CUBE splits 226 enterprise computer-use tasks into simple UI interactions and complex workflows built around copying data between applications. Its five tested agents score 66.7% to 84.8% on the simple tasks and collapse to 9.5% to 19.4% on the complex ones, against a human baseline of 97.9% and 61.2%. phoneshell/gestures.py already implements the exact iOS move, a three-finger pinch, that performs copy and paste on a real phone. No task in its public suite has ever asked an agent to use it.</p>
+
+<p>UI-CUBE (arXiv:2511.17131, Horia Cristescu, Charles Park, Trong Canh Nguyen, Sergiu Talmacel, Alexandru-Gabriel Ilie and Stefan Adam, submitted 21 November 2025, benchmark and code published under UiPath's GitHub organization) argues that task accuracy alone understates how far current computer-use agents are from enterprise deployment, and backs that with a specific split: 136 simple UI-interaction tasks, 50 copy-paste workflows and 40 enterprise application scenarios, 226 in total. Averaged across resolutions in the paper's Table 5, five agents score between 66.7% and 84.8% on simple tasks and between 9.5% and 19.4% on complex ones, a drop the paper attributes to architectural limits in memory management, hierarchical planning and state coordination rather than to anything a bigger model fixes on its own. phoneshell has never run anything like UI-CUBE's copy-paste category, but not for lack of a gesture: the move exists in its code, unused.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/fifty-copy-paste-tasks-collapse-phoneshells-pinch-goes-unused-hero.png" alt="Abstract technical illustration on a dark grid: three glowing points converging into a single pinching motion above a phone-shaped outline on one side of the grid, with a faint dotted trail leading across a gap to a second, dimmer phone-shaped outline on the other side where the trail fades out before arriving, cool blues and teal with one amber accent on the pinch, no icons or text" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="the-collapse">The collapse, and where it comes from</h2>
+
+<p>UI-CUBE evaluates five agents, Claude Computer Use 4.0, OpenAI-computer-use-preview, and three configurations of UiPath's own ScreenAgent (on Gemini 2.5 Flash, GPT-5 mini and GPT-5), scored against application state rather than an LLM judge, across multiple screen resolutions. Table 5's averages show every one of the five dropping by at least 47 points moving from simple tasks to complex ones, and the paper's human baseline, Table 8, drops too: 97.9% on simple tasks to 61.2% on complex ones, people with no prior experience in the specific application. The gap between the best model's complex score, 19.4%, and the weakest human application score the paper reports, 50.0% on Concur and SAP Stock in Table 7, is itself larger than the best model's entire simple-task score minus its complex one for three of the five agents.</p>
+
+<table>
+  <thead><tr><th>Agent</th><th>Simple tasks</th><th>Complex tasks</th><th>Drop</th></tr></thead>
+  <tbody>
+    <tr><td>Claude Computer Use 4.0</td><td>66.7%</td><td>9.5%</td><td>&minus;57.2 pts</td></tr>
+    <tr><td>OpenAI-computer-use-preview</td><td>70.3%</td><td>10.5%</td><td>&minus;59.8 pts</td></tr>
+    <tr><td>UiPath ScreenAgent / Gemini 2.5 Flash</td><td>68.6%</td><td>11.9%</td><td>&minus;56.7 pts</td></tr>
+    <tr><td>UiPath ScreenAgent / GPT-5 mini</td><td>77.0%</td><td>18.4%</td><td>&minus;58.6 pts</td></tr>
+    <tr><td>UiPath ScreenAgent / GPT-5</td><td>84.8%</td><td>19.4%</td><td>&minus;65.4 pts</td></tr>
+    <tr><td>Human baseline</td><td>97.9%</td><td>61.2%</td><td>&minus;36.7 pts</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: arXiv:2511.17131, Tables 5 and 8, read 28 October 2026. Complex tasks include the paper's 50 copy-paste workflows and 40 enterprise application scenarios; per-category scores for copy-paste alone are not reported separately in the content we could access.</p>
+
+<svg viewBox="0 0 760 420" style="width:100%;height:auto" role="img" aria-label="Bar chart comparing simple-task and complex-task success rates for five computer-use agents and a human baseline, from UI-CUBE Tables 5 and 8. Claude Computer Use 4.0 scores 66.7 percent simple and 9.5 percent complex. OpenAI-computer-use-preview scores 70.3 and 10.5. UiPath ScreenAgent on Gemini 2.5 Flash scores 68.6 and 11.9. On GPT-5 mini it scores 77.0 and 18.4. On GPT-5 it scores 84.8 and 19.4, the best of the five. Humans score 97.9 percent on simple tasks and 61.2 percent on complex tasks.">
+<rect x="0" y="0" width="760" height="420" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="24" font-size="13" font-weight="600">Simple vs complex task success, UI-CUBE Tables 5 and 8</text>
+<line x1="60" y1="370" x2="730" y2="370" stroke="#2a3140"/>
+<text x="52" y="374" font-size="9" fill="#8893a8" text-anchor="end">0%</text>
+<line x1="60" y1="290" x2="730" y2="290" stroke="#232938"/><text x="52" y="294" font-size="9" fill="#8893a8" text-anchor="end">25%</text>
+<line x1="60" y1="210" x2="730" y2="210" stroke="#232938"/><text x="52" y="214" font-size="9" fill="#8893a8" text-anchor="end">50%</text>
+<line x1="60" y1="130" x2="730" y2="130" stroke="#232938"/><text x="52" y="134" font-size="9" fill="#8893a8" text-anchor="end">75%</text>
+<line x1="60" y1="50" x2="730" y2="50" stroke="#232938"/><text x="52" y="54" font-size="9" fill="#8893a8" text-anchor="end">100%</text>
+<g>
+<rect x="85" y="156.6" width="26" height="213.4" fill="#5ad1a0"/>
+<rect x="113" y="339.6" width="26" height="30.4" fill="#e2574c"/>
+<text x="113" y="385" font-size="9" fill="#c4ccda" text-anchor="middle">Claude CU 4.0</text>
+</g>
+<g>
+<rect x="175" y="145.0" width="26" height="225.0" fill="#5ad1a0"/>
+<rect x="203" y="336.4" width="26" height="33.6" fill="#e2574c"/>
+<text x="203" y="385" font-size="9" fill="#c4ccda" text-anchor="middle">OpenAI CU-preview</text>
+</g>
+<g>
+<rect x="265" y="150.5" width="26" height="219.5" fill="#5ad1a0"/>
+<rect x="293" y="331.9" width="26" height="38.1" fill="#e2574c"/>
+<text x="293" y="385" font-size="9" fill="#c4ccda" text-anchor="middle">ScreenAgent/Flash</text>
+</g>
+<g>
+<rect x="355" y="123.6" width="26" height="246.4" fill="#5ad1a0"/>
+<rect x="383" y="311.1" width="26" height="58.9" fill="#e2574c"/>
+<text x="383" y="385" font-size="9" fill="#c4ccda" text-anchor="middle">ScreenAgent/5-mini</text>
+</g>
+<g>
+<rect x="445" y="98.6" width="26" height="271.4" fill="#5ad1a0"/>
+<rect x="473" y="307.9" width="26" height="62.1" fill="#f2a65a"/>
+<text x="459" y="88" font-size="9.5" fill="#5ad1a0" text-anchor="middle">84.8</text>
+<text x="473" y="385" font-size="9" fill="#c4ccda" text-anchor="middle">ScreenAgent/GPT-5</text>
+</g>
+<g>
+<rect x="560" y="56.7" width="26" height="313.3" fill="#5ad1a0"/>
+<rect x="588" y="174.2" width="26" height="195.8" fill="#f2a65a"/>
+<text x="574" y="46" font-size="9.5" fill="#5ad1a0" text-anchor="middle">97.9</text>
+<text x="602" y="164" font-size="9.5" fill="#f2a65a" text-anchor="middle">61.2</text>
+<text x="588" y="385" font-size="9" fill="#c4ccda" text-anchor="middle">human baseline</text>
+</g>
+<rect x="640" y="60" width="14" height="14" fill="#5ad1a0"/><text x="660" y="71" font-size="10" fill="#c4ccda">simple tasks</text>
+<rect x="640" y="80" width="14" height="14" fill="#e2574c"/><text x="660" y="91" font-size="10" fill="#c4ccda">complex, agent</text>
+<text x="20" y="405" font-size="10" fill="#8893a8">Source: arXiv:2511.17131, Tables 5 and 8, read 28 October 2026.</text>
+</g></svg>
+
+<h2 id="the-unused-gesture">The gesture phoneshell already has for exactly this</h2>
+
+<p>iOS has its own built-in gesture for copy and paste that has nothing to do with menus: a three-finger pinch inward copies the current selection, and pinching outward pastes it, system-wide, in any text field. <code>phoneshell/gestures.py</code> implements it as <code>three_finger_pinch(cx, cy, spread_out)</code>, a three-path W3C touch sequence converging on or diverging from a point, and wraps it in two one-line convenience methods, <code>copy_selection(cx, cy)</code> and <code>paste_selection(cx, cy)</code>. The code has existed and worked since before this run; it is not a stub. What does not exist anywhere in <code>environments/</code> is a task that calls it. Two of the 80 files touch the neighborhood: <code>notes_text_select.yaml</code> asks an agent to long-press a word until "Select All, Look Up, Paste, Cut" appears on screen, and <code>safari_link_menu.yaml</code> asks for a link's preview menu to show "Copy Link" among its options. Both check only that the menu's text appeared; neither task performs the pinch, and neither moves anything from one place to another, let alone one app to another.</p>
+
+<svg viewBox="0 0 820 300" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting a capability that exists in code with a capability that is ever exercised. phoneshell's gestures.py implements copy_selection and paste_selection as a three-finger pinch, a working iOS gesture. Zero of phoneshell's 80 environment tasks call either function; the two tasks that mention copying or pasting only check that a context menu's text appeared on screen. UI-CUBE's own copy-paste category, 50 of its 226 tasks, is the single sharpest part of its complex-task collapse, with its best agent reaching only 19.4 percent on complex tasks overall.">
+<rect x="0" y="0" width="820" height="300" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">A working gesture with nothing asking for it</text>
+<rect x="20" y="50" width="360" height="130" rx="10" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="34" y="74" font-size="12" font-weight="600" fill="#5ad1a0">phoneshell/gestures.py</text>
+<text x="34" y="96" font-size="10.5" fill="#c4ccda">three_finger_pinch(cx, cy, spread_out)</text>
+<text x="34" y="114" font-size="10.5" fill="#c4ccda">copy_selection() / paste_selection()</text>
+<text x="34" y="136" font-size="10.5" fill="#c4ccda">implemented, callable, not a stub</text>
+<text x="34" y="160" font-size="11" fill="#5ad1a0">called by 0 of 80 environment tasks</text>
+<rect x="430" y="50" width="360" height="130" rx="10" fill="#262d3d" stroke="#f2a65a"/>
+<text x="444" y="74" font-size="12" font-weight="600" fill="#f2a65a">UI-CUBE's copy-paste category</text>
+<text x="444" y="96" font-size="10.5" fill="#c4ccda">50 of 226 tasks move data between apps</text>
+<text x="444" y="118" font-size="10.5" fill="#c4ccda">best agent: 19.4% on all complex tasks</text>
+<text x="444" y="140" font-size="10.5" fill="#c4ccda">human baseline: 61.2% on complex tasks</text>
+<text x="444" y="160" font-size="11" fill="#f2a65a">the sharpest edge of the simple/complex gap</text>
+<text x="20" y="220" font-size="11" fill="#c4ccda">phoneshell's two copy/paste-adjacent tasks check only that a context menu's</text>
+<text x="20" y="240" font-size="11" fill="#c4ccda">text appeared on screen (notes_text_select.yaml, safari_link_menu.yaml);</text>
+<text x="20" y="260" font-size="11" fill="#c4ccda">neither performs the pinch or moves content anywhere.</text>
+<text x="20" y="284" font-size="10" fill="#8893a8">Sources: phoneshell/gestures.py; environments/*.yaml; arXiv:2511.17131 Tables 2 and 5, read 28 October 2026.</text>
+</g></svg>
+
+<h2 id="what-it-means">What it means for a harness with the move but no reason to use it</h2>
+
+<ul>
+  <li>Having the gesture is not the same as having tested it. <code>three_finger_pinch</code>'s own geometry, three simultaneous paths converging over roughly 300 milliseconds, has never been checked against a real cross-app paste on a physical iPhone inside a scored task, so whether it reliably lands at UI-CUBE's task scale is unverified in either direction.</li>
+  <li>UI-CUBE's attributed cause, memory management, hierarchical planning and state coordination across apps, is a model-side claim about why complex tasks fail. phoneshell's gap is upstream of that: there is no task yet that would even give a model the chance to fail at coordinating a copy from one app into a paste in another, because no task asks it to.</li>
+  <li>The two existing tasks that get closest, <code>notes_text_select.yaml</code> and <code>safari_link_menu.yaml</code>, are both tagged <code>difficulty: hard</code> for reaching a context menu via a sustained long-press, not for anything about moving data. phoneshell's current notion of "hard" in this area is about gesture timing, not about the cross-app state UI-CUBE's collapse is attributed to.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># the working gesture, unused by any task
+grep -n "def three_finger_pinch\|def copy_selection\|def paste_selection" -A4 phoneshell/gestures.py
+
+# confirm no environment task calls it
+grep -rl "copy_selection\|paste_selection\|three_finger_pinch" environments/*.yaml || echo "no task calls it"
+
+# the two tasks that only check for menu text
+cat environments/notes_text_select.yaml environments/safari_link_menu.yaml
+
+# UI-CUBE's own task counts and Table 5 / Table 8
+curl -s https://arxiv.org/html/2511.17131 | grep -iE "copy-paste|Table 5|Table 8"</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim phoneshell's three-finger pinch has never been exercised by any task in its public suite, and that its two copy/paste-adjacent tasks test only that a menu appeared, not that anything moved. That is wrong if a private or since-added task calls <code>copy_selection</code> or <code>paste_selection</code> and we did not find it in this grep of <code>environments/</code>. We also claim this gap sits upstream of UI-CUBE's attributed cause for its own collapse, meaning phoneshell cannot currently say whether its agents would fail at cross-app state coordination the way UI-CUBE's did, only that nothing has asked them to try. That is settled the day a phoneshell task is built that copies a value from one real app and pastes it into a second one, graded from device state, and either passes reliably or reveals the same kind of collapse UI-CUBE reports. We will treat that specific run, by either side, as the relevant check, by 30 April 2027.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Cristescu, Park, Nguyen, Talmacel, Ilie, Adam, <a href="https://arxiv.org/abs/2511.17131">UI-CUBE: Enterprise-Grade Computer Use Agent Benchmarking Beyond Task Accuracy to Operational Reliability</a>, arXiv:2511.17131, submitted 21 November 2025, read 28 October 2026.</li>
+      <li>Full text, Tables 5 and 8: <a href="https://arxiv.org/html/2511.17131v1">arxiv.org/html/2511.17131v1</a>.</li>
+      <li>UiPath, <a href="https://www.uipath.com/ai/research/ui-cube-benchmark">UI-CUBE benchmark</a>, UiPath AI Research.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/gestures.py</code>, <code>environments/notes_text_select.yaml</code>, <code>environments/safari_link_menu.yaml</code>, read 28 October 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
