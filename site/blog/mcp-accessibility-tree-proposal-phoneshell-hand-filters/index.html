@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A proposed MCP layer would expose a11y trees with low integration cost and no per-platform code; phoneshell's own tree reader is 170-plus lines of hand-written iOS-specific filtering rules - Blolabel</title>
+<meta name="description" content="MCP-Driven Accessibility Tree Standardization (arXiv:2608.24898) proposes a Model Context Protocol layer scoring 'Low' integration cost against 'High' for per-framework tree scraping in its own comparison table, with four tools and three resource URIs as its whole interface. phoneshell's perception/tree.py is exactly the per-framework scraping side of that table: hand-written rules for how XCUITest reports iOS UI, built because a raw accessibility dump is 3000-plus nodes and 400KB of JSON per screen.">
+<link rel="canonical" href="https://blolabel.ai/blog/mcp-accessibility-tree-proposal-phoneshell-hand-filters/">
+<meta property="og:title" content="A proposed MCP layer would expose a11y trees with low integration cost and no per-platform code; phoneshell's own tree reader is 170-plus lines of hand-written iOS-specific filtering rules - Blolabel">
+<meta property="og:description" content="A 2026 paper proposes a Model Context Protocol layer for accessibility trees, scoring it 'Low' integration cost against 'High' for today's per-framework scraping. phoneshell's own tree reader is the per-framework side of that comparison: hand-written rules for exactly how XCUITest reports iOS UI, with no implementation of the proposal to compare against.">
+<meta property="og:url" content="https://blolabel.ai/blog/mcp-accessibility-tree-proposal-phoneshell-hand-filters/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/mcp-accessibility-tree-proposal-phoneshell-hand-filters-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "A proposed MCP layer would expose a11y trees with low integration cost and no per-platform code; phoneshell's own tree reader is 170-plus lines of hand-written iOS-specific filtering rules", "description": "MCP-Driven Accessibility Tree Standardization (arXiv:2608.24898) proposes a Model Context Protocol layer scoring Low integration cost against High for per-framework tree scraping in its own comparison table, with four tools and three resource URIs as its whole interface. phoneshell's perception/tree.py is the per-framework scraping side of that table: hand-written rules for how XCUITest reports iOS UI.", "datePublished": "2026-10-29", "dateModified": "2026-10-29", "url": "https://blolabel.ai/blog/mcp-accessibility-tree-proposal-phoneshell-hand-filters/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/mcp-accessibility-tree-proposal-phoneshell-hand-filters/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/mcp-accessibility-tree-proposal-phoneshell-hand-filters-hero.png", "citation": ["https://arxiv.org/abs/2608.24898", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind foundational">foundational</span>
+    <time datetime="2026-10-29">29 October 2026</time>
+    <span>9 min read</span>
+  </div>
+  <h1>A proposed MCP layer would expose a11y trees with low integration cost and no per-platform code; phoneshell's own tree reader is 170-plus lines of hand-written iOS-specific filtering rules</h1>
+  <p class="standfirst">A July 2026 paper scores a proposed Model Context Protocol accessibility layer "Low" integration cost against "High" for the per-framework tree scraping every current GUI agent does today, in its own comparison table. phoneshell's perception/tree.py is that second column made concrete: rules written specifically for how Apple's XCUITest reports iOS UI, because a raw dump is 3000-plus nodes and 400KB of JSON per screen. No implementation of the proposal exists yet to compare it against.</p>
+
+<p>MCP-Driven Accessibility Tree Standardization for AI-Powered Screen Reader Agents (arXiv:2608.24898, Ramineni, Saksena, Agarwal, Bidkar, Pothineni, Maruthavanan, Butra, Chintham, submitted 13 July 2026) proposes using the Model Context Protocol, the same wire format Anthropic's Claude and other tool-calling agents use to reach external systems, as a shared transport between platform accessibility APIs and LLM-based agents. Today, the paper argues, four separate frameworks, Windows UI Automation, macOS Accessibility, Android AccessibilityService and web ARIA, each need their own integration code, and a screenshot alone "lacks the semantic roles and relationships screen readers need." Its own Table I scores three perception strategies on four axes, and the comparison is stark: screenshot and vision gets Low semantic fidelity and High token cost; per-framework tree scraping gets High fidelity but High integration cost; the proposed MCP-mediated tree claims High fidelity at Low integration cost and Low-to-Medium token cost. The paper is explicit that this is a conceptual framework: "it does not present an empirical implementation."</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/mcp-accessibility-tree-proposal-phoneshell-hand-filters-hero.png" alt="Abstract technical illustration on a dark grid: on the left, four separate thin glowing paths of different colours each winding through a small maze of right-angle turns representing four distinct per-framework integrations, converging on the right into a single thick clean path entering one plain rectangle, cool blues and teal with one amber accent on the single converged path, no icons or text" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="the-proposal">What the proposal actually specifies</h2>
+
+<p>The paper's design is small enough to state in full. Three MCP resources expose the tree and a user's accessibility profile: <code>a11y://tree/{session}</code> for the full node graph, a scoped variant with <code>root</code> and <code>depth</code> query parameters for a subtree, and <code>a11y://profile/{userId}</code> for a persisted disability profile covering preferred reading granularity, landmark verbosity, minimum interactable element size, and preferred confirmation behavior before destructive actions. Four MCP tools act on it: <code>focus(nodeId)</code> moves accessibility focus, <code>activate(nodeId)</code> invokes a control's default action, <code>read(nodeId, granularity)</code> returns text at word, sentence or block granularity, and <code>query(predicate)</code> searches by role or name pattern. A node carries a stable identifier, an ARIA-aligned role, an accessible name, a state set such as focused or disabled, a bounding-region hint, and an ordered list of child identifiers. Tree-change events are pushed rather than polled. None of this has a reference implementation; the paper's own contribution is "comparative analysis of accessibility APIs, GUI agent architectures, and the MCP specification," not code.</p>
+
+<table>
+  <thead><tr><th>Perception strategy</th><th>Semantic fidelity</th><th>Integration cost</th><th>Latency</th><th>Token cost</th></tr></thead>
+  <tbody>
+    <tr><td>Screenshot / vision</td><td>Low-Medium</td><td>Low</td><td>Low-Medium</td><td>High</td></tr>
+    <tr><td>Per-framework tree scraping</td><td>High</td><td>High</td><td>Medium</td><td>Medium</td></tr>
+    <tr><td>MCP-mediated tree (proposed)</td><td>High</td><td>Low</td><td>Medium</td><td>Low-Medium</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: arXiv:2608.24898, Table I, read 29 October 2026. The MCP-mediated row is the paper's own conceptual proposal, with no measured implementation behind the scores.</p>
+
+<svg viewBox="0 0 820 320" style="width:100%;height:auto" role="img" aria-label="Diagram of the proposed MCP accessibility schema from arXiv 2608.24898. Two resources: a11y colon slash slash tree slash session, the node graph, optionally scoped by root and depth; and a11y colon slash slash profile slash userId, a persisted accessibility profile covering reading granularity, landmark verbosity, minimum interactable element size, and confirmation behavior before destructive actions. Four tools act on the tree: focus of nodeId moves accessibility focus, activate of nodeId invokes a control's default action, read of nodeId and granularity returns text at word, sentence or block level, and query of predicate searches by role or name pattern. Tree-change events are pushed to the agent rather than polled.">
+<rect x="0" y="0" width="820" height="320" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">The proposal's entire interface: 2 resources, 4 tools</text>
+<rect x="20" y="50" width="360" height="100" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="200" y="72" font-size="11.5" font-weight="600" text-anchor="middle">Resources</text>
+<text x="35" y="94" font-size="10" fill="#c4ccda">a11y://tree/{session}?root&amp;depth</text>
+<text x="35" y="112" font-size="10" fill="#c4ccda">a11y://profile/{userId}</text>
+<text x="35" y="132" font-size="9.5" fill="#8893a8">granularity, verbosity, min element size,</text>
+<text x="35" y="146" font-size="9.5" fill="#8893a8">confirmation before destructive actions</text>
+<rect x="440" y="50" width="360" height="130" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="620" y="72" font-size="11.5" font-weight="600" text-anchor="middle">Tools</text>
+<text x="455" y="94" font-size="10" fill="#c4ccda">focus(nodeId): move accessibility focus</text>
+<text x="455" y="112" font-size="10" fill="#c4ccda">activate(nodeId): invoke default action</text>
+<text x="455" y="130" font-size="10" fill="#c4ccda">read(nodeId, granularity): word, sentence or block</text>
+<text x="455" y="148" font-size="10" fill="#c4ccda">query(predicate): search by role or name</text>
+<text x="455" y="168" font-size="9.5" fill="#8893a8">tree-change events pushed, not polled</text>
+<rect x="230" y="220" width="360" height="70" rx="8" fill="#262d3d" stroke="#e2574c" stroke-dasharray="5,4"/>
+<text x="410" y="245" font-size="11" font-weight="600" text-anchor="middle" fill="#e2574c">Reference implementation</text>
+<text x="245" y="267" font-size="10" fill="#e2574c">none. Paper's own words: conceptual framework only</text>
+<path d="M200,150 L300,220" stroke="#5ad1a0" stroke-width="2" fill="none" stroke-dasharray="3,3"/>
+<path d="M620,180 L500,220" stroke="#5ad1a0" stroke-width="2" fill="none" stroke-dasharray="3,3"/>
+<text x="20" y="305" font-size="10" fill="#8893a8">Source: arXiv:2608.24898, section proposing the MCP resource and tool model, read 29 October 2026.</text>
+</g></svg>
+
+<h2 id="what-phoneshell-actually-does">What phoneshell's own tree reader actually does instead</h2>
+
+<p>phoneshell has never had the option this paper proposes, so it built the per-framework side of the comparison by hand. <code>phoneshell/perception/tree.py</code> states the problem it exists to solve in its own opening lines: "a raw /source dump for a screen like GrabFood is 3000+ nodes and 400KB of JSON: unusable as a prompt and full of layout scaffolding with no meaning." Its fix is a set of rules "learned from how XCUITest actually reports iOS UI," specific enough to name the quirks: node rects arrive already in screen points, but <code>isVisible</code> is computed by XCTest hit-testing in a way that marks real offscreen scroll content as visible anyway, so the file clips against the window rect itself rather than trusting the flag; container elements of type <code>Other</code> repeat a child's label, so an unfiltered tree hands a model five identical "Add to cart" candidates at the same coordinates; and a table row (<code>Cell</code>) gets its static text folded into one line while any real button inside it stays separate, because that is the unit a person actually perceives as one row. None of this logic is reusable against Android's AccessibilityService or a web page's DOM. It is specific to one framework, on one OS, which is precisely the "High integration cost" cell in the paper's own table.</p>
+
+<svg viewBox="0 0 820 300" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting the MCP paper's proposed architecture with phoneshell's actual one. The paper proposes one MCP accessibility server mediating between four platform APIs, Windows UI Automation, macOS Accessibility, Android AccessibilityService and web ARIA, and any agent, with no reference implementation built yet. phoneshell instead reads WebDriverAgent's raw accessibility tree directly and applies perception slash tree dot py, a file of rules written specifically for how Apple's XCUITest reports iOS UI, clipping offscreen rects, folding repeated container labels, and merging cell text, none of which would transfer to another platform's accessibility API without being rewritten.">
+<rect x="0" y="0" width="820" height="300" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Proposed (no implementation) vs. phoneshell (shipped)</text>
+<rect x="20" y="55" width="330" height="90" rx="8" fill="#262d3d" stroke="#e2574c" stroke-dasharray="5,4"/>
+<text x="185" y="78" font-size="11.5" font-weight="600" text-anchor="middle" fill="#e2574c">Proposed MCP a11y server</text>
+<text x="35" y="100" font-size="10" fill="#c4ccda">one layer, 3 resources, 4 tools</text>
+<text x="35" y="118" font-size="9.5" fill="#e2574c">no reference implementation (paper's own words)</text>
+<rect x="460" y="55" width="340" height="90" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="630" y="78" font-size="11.5" font-weight="600" text-anchor="middle">phoneshell/perception/tree.py</text>
+<text x="475" y="100" font-size="10" fill="#c4ccda">rules for XCUITest's quirks specifically</text>
+<text x="475" y="118" font-size="9.5" fill="#5ad1a0">shipped, reads WebDriverAgent today</text>
+<rect x="150" y="190" width="200" height="60" rx="8" fill="#262d3d" stroke="#8893a8"/>
+<text x="250" y="215" font-size="10.5" text-anchor="middle" fill="#8893a8">4 separate platform APIs</text>
+<text x="250" y="233" font-size="9.5" text-anchor="middle" fill="#8893a8">UIA, macOS, Android, ARIA</text>
+<rect x="470" y="190" width="200" height="60" rx="8" fill="#262d3d" stroke="#8893a8"/>
+<text x="570" y="215" font-size="10.5" text-anchor="middle" fill="#8893a8">1 platform, 1 set of rules</text>
+<text x="570" y="233" font-size="9.5" text-anchor="middle" fill="#8893a8">none of it reusable elsewhere</text>
+<path d="M250,190 L185,145" stroke="#8893a8" stroke-width="2" fill="none" marker-end="url(#ah8)"/>
+<path d="M570,190 L630,145" stroke="#8893a8" stroke-width="2" fill="none" marker-end="url(#ah8)"/>
+<defs><marker id="ah8" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#8893a8"/></marker></defs>
+<text x="20" y="280" font-size="10" fill="#8893a8">Sources: arXiv:2608.24898, Table I and Fig. 1; phoneshell/perception/tree.py, read 29 October 2026.</text>
+</g></svg>
+
+<h2 id="what-it-means">What it means for a harness that already pays the cost the paper describes</h2>
+
+<ul>
+  <li>phoneshell is a working example of the exact cost the paper's table assigns the number "High": a dedicated file, with comments explaining specific iOS quirks, that a port to Android or web would not reuse at all. The paper's claim that an MCP layer reduces this to "Low" is plausible in principle but untested; nothing in the paper measures an actual integration against a real framework the way phoneshell's own file had to.</li>
+  <li>The paper's proposed node fields, a stable identifier, an ARIA-aligned role, a state set, a bounding-region hint, map closely onto what phoneshell's own <code>Element</code> type already carries from WebDriverAgent. The gap is not in what gets exposed, it is in who writes the adapter: today that is phoneshell's own maintainers, reading XCUITest's specific behavior by trial; the paper's proposal would move that work to whoever builds the MCP server once, for every agent that speaks MCP.</li>
+  <li>The paper's three research questions, protocol extensibility, the latency and fidelity trade-off against screenshots, and profile persistence, are all open. phoneshell's own measured numbers on the second question (hybrid tree-plus-image beating either channel alone, cited elsewhere on this site) are closer to actual evidence than anything in this paper, because phoneshell runs on a real device and this proposal does not run anywhere yet.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># the exact problem phoneshell's tree reader exists to solve, in its own words
+sed -n '1,16p' phoneshell/perception/tree.py
+
+# the three element-type sets that encode iOS-specific filtering rules
+grep -n "^INTERACTIVE\|^INFORMATIONAL\|^CONTAINERS" -A4 phoneshell/perception/tree.py
+
+# confirm there is no MCP accessibility server anywhere in this repo
+grep -rln "a11y://" --include="*.py" . || echo "no match"
+
+# the paper's own comparison table and schema, read from the source
+curl -s https://arxiv.org/html/2608.24898v1 | grep -iE "Table I|integration cost|a11y://"</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim this paper proposes an MCP accessibility layer with no reference implementation, scored against per-framework scraping using the paper's own, unmeasured table. That is wrong if a later version of the paper, or a separate project, ships and benchmarks an actual MCP accessibility server against real per-framework code; we would then want the paper's "Low integration cost" claim tested against a real port, not just asserted. We also claim phoneshell's own tree reader is iOS-specific enough that none of its filtering rules would transfer to another platform's accessibility API unmodified. That claim is falsified by anyone who takes <code>perception/tree.py</code> and successfully points it at Android's AccessibilityService or a browser's DOM with no changes to the rule sets we quoted above. We will treat either event as grounds to revisit this piece by 30 April 2027.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Ramineni, Saksena, Agarwal, Bidkar, Pothineni, Maruthavanan, Butra, Chintham, <a href="https://arxiv.org/abs/2608.24898">MCP-Driven Accessibility Tree Standardization for AI-Powered Screen Reader Agents</a>, arXiv:2608.24898, submitted 13 July 2026, read 29 October 2026.</li>
+      <li>Full text, Table I and Figure 1: <a href="https://arxiv.org/html/2608.24898v1">arxiv.org/html/2608.24898v1</a>.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/perception/tree.py</code>, read 29 October 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
