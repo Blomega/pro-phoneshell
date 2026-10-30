@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AndroidReality's worst model loses 36.6 points to notifications and permission prompts alone; phoneshell's reflex is built to never auto-answer that exact screen class - Blolabel</title>
+<meta name="description" content="AndroidReality (arXiv:2608.07775) perturbs AndroidWorld with notifications, permission requests and security sheets and measures 13 to 36 point drops across eight agents, with UI-TARS-1.5-7B losing 36.61 points on transition perturbations specifically. phoneshell's own overlay-dismissal reflex names permission dialogs as a hard exclusion by design, so it never auto-answers the exact class of interruption AndroidReality's own point drop is largest on, which means every one of those screens still waits on the model alone.">
+<link rel="canonical" href="https://blolabel.ai/blog/transition-perturbations-cost-36-6-points-phoneshell-never-auto-answers/">
+<meta property="og:title" content="AndroidReality's worst model loses 36.6 points to notifications and permission prompts alone; phoneshell's reflex is built to never auto-answer that exact screen class - Blolabel">
+<meta property="og:description" content="AndroidReality measures 13 to 36 point success drops when notifications, permission requests and security sheets interrupt eight Android agents. phoneshell's own overlay reflex deliberately refuses to auto-dismiss permission dialogs, and its tap-confirmation gate has no pattern that would catch the model doing it instead.">
+<meta property="og:url" content="https://blolabel.ai/blog/transition-perturbations-cost-36-6-points-phoneshell-never-auto-answers/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/transition-perturbations-cost-36-6-points-phoneshell-never-auto-answers-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "AndroidReality's worst model loses 36.6 points to notifications and permission prompts alone; phoneshell's reflex is built to never auto-answer that exact screen class", "description": "AndroidReality (arXiv:2608.07775) perturbs AndroidWorld with notifications, permission requests and security sheets and measures 13 to 36 point success-rate drops across eight agents, with UI-TARS-1.5-7B losing 36.61 points on transition perturbations specifically. phoneshell's own overlay-dismissal reflex excludes permission dialogs by design, so it never auto-answers the class of interruption AndroidReality's point drop is largest on.", "datePublished": "2026-10-29", "dateModified": "2026-10-29", "url": "https://blolabel.ai/blog/transition-perturbations-cost-36-6-points-phoneshell-never-auto-answers/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/transition-perturbations-cost-36-6-points-phoneshell-never-auto-answers/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/transition-perturbations-cost-36-6-points-phoneshell-never-auto-answers-hero.png", "citation": ["https://arxiv.org/abs/2608.07775", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-29">29 October 2026</time>
+    <span>9 min read</span>
+  </div>
+  <h1>AndroidReality's worst model loses 36.6 points to notifications and permission prompts alone; phoneshell's reflex is built to never auto-answer that exact screen class</h1>
+  <p class="standfirst">Eight Android agents drop 13 to 36 points when AndroidReality injects notifications, permission requests and security sheets into their runs, with UI-TARS-1.5-7B losing 36.61 of its clean 64.20 points to that one perturbation family. phoneshell's own overlay-dismissal code names permission dialogs as the one thing it will never tap on the model's behalf, which means the exact screen class AndroidReality found hardest still reaches the model with no harness help at all, every time.</p>
+
+<p>AndroidReality: How Far Are Mobile Agents from the Real World? (arXiv:2608.07775, Liu, Da, Chen, Ling, Wei, Arizona State University, submitted 7 August 2026) builds a perturbation layer on top of AndroidWorld and organizes it into state, action, and transition perturbations, the last category covering interface interruptions a phone actually produces during normal use: notifications, app update prompts, interstitial ads, permission requests, security verification sheets, and "rate this app" prompts. Across eight open-source agents, including the GUI-Owl and UI-TARS families, success rates fell 13 to 36 absolute percentage points once these were injected. The paper's own description of the effect is not uniform collapse but "high variance," with some agents dismissing the interruption cleanly and others, its words, getting "distracted."</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/transition-perturbations-cost-36-6-points-phoneshell-never-auto-answers-hero.png" alt="Abstract technical illustration on a dark grid: a smooth glowing horizontal path representing a clean agent run is interrupted midway by a small sharp rectangular shape overlapping it like a dialog box, after which the path splits into two thin diverging lines of different brightness representing divergent outcomes, cool blues and teal with one amber accent on the interrupting rectangle, no icons or text" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="the-drop">How much a notification or a permission prompt costs, by model</h2>
+
+<p>AndroidReality's Table 2 reports clean and perturbed success rates for each model, broken down by perturbation category. The transition category, the one that includes permission requests and notifications, is where the largest single drops show up. UI-TARS-1.5-7B falls from a clean 64.20% (its own paper's reported figure) to 27.27% under transition perturbations, a 36.93-point drop, the worst in the table. GUI-Owl-1.5-32B, the strongest model overall, still loses 25.00 points on the same category, from 72.73% clean to 47.73%. Every model in the table loses more to transition perturbations than to action perturbations, and most lose more than to state perturbations as well.</p>
+
+<table>
+  <thead><tr><th>Model</th><th>Transition clean</th><th>Transition perturbed</th><th>Drop</th></tr></thead>
+  <tbody>
+    <tr><td>GUI-Owl-1.5-32B</td><td>72.73</td><td>47.73</td><td>-25.00</td></tr>
+    <tr><td>GUI-Owl-32B</td><td>65.91</td><td>39.77</td><td>-26.14</td></tr>
+    <tr><td>GUI-Owl-7B</td><td>65.91</td><td>55.68</td><td>-10.23</td></tr>
+    <tr><td>GUI-Owl-1.5-8B</td><td>61.36</td><td>35.23</td><td>-26.13</td></tr>
+    <tr><td>GUI-Owl-1.5-2B</td><td>52.27</td><td>22.73</td><td>-29.54</td></tr>
+    <tr><td>GUI-Owl-1.5-4B</td><td>31.82</td><td>29.55</td><td>-2.27</td></tr>
+    <tr><td>UI-TARS-1.5-7B</td><td>64.20</td><td>27.27</td><td>-36.93</td></tr>
+    <tr><td>UI-TARS-7B-SFT</td><td>33.00</td><td>20.45</td><td>-12.55</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: arXiv:2608.07775, Table 2, success rate (%) on AndroidReality's transition-perturbation subset, read 29 October 2026. UI-TARS clean figures are the models' own reported baselines, per the paper.</p>
+
+<svg viewBox="0 0 760 330" style="width:100%;height:auto" role="img" aria-label="Bar chart of success-rate drop under AndroidReality's transition perturbations, which include notifications and permission requests, for eight agent models. UI-TARS-1.5-7B drops 36.93 points, the largest. GUI-Owl-1.5-2B drops 29.54. GUI-Owl-32B drops 26.14. GUI-Owl-1.5-8B drops 26.13. GUI-Owl-1.5-32B drops 25.00. UI-TARS-7B-SFT drops 12.55. GUI-Owl-7B drops 10.23. GUI-Owl-1.5-4B drops 2.27, the smallest.">
+<rect x="0" y="0" width="760" height="330" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="24" font-size="13" font-weight="600">Point drop under transition perturbations (Table 2)</text>
+<line x1="60" y1="280" x2="730" y2="280" stroke="#2a3140"/>
+<text x="52" y="284" font-size="9" fill="#8893a8" text-anchor="end">0</text>
+<line x1="60" y1="210" x2="730" y2="210" stroke="#232938"/><text x="52" y="214" font-size="9" fill="#8893a8" text-anchor="end">-10</text>
+<line x1="60" y1="140" x2="730" y2="140" stroke="#232938"/><text x="52" y="144" font-size="9" fill="#8893a8" text-anchor="end">-20</text>
+<line x1="60" y1="70" x2="730" y2="70" stroke="#232938"/><text x="52" y="74" font-size="9" fill="#8893a8" text-anchor="end">-30</text>
+<line x1="60" y1="25" x2="730" y2="25" stroke="#232938"/><text x="52" y="29" font-size="9" fill="#8893a8" text-anchor="end">-37</text>
+<g><rect x="80" y="30" width="60" height="258.5" fill="#e2574c"/><text x="110" y="22" font-size="9.5" fill="#e2574c" text-anchor="middle">-36.9</text><text x="110" y="300" font-size="8" fill="#c4ccda" text-anchor="middle">TARS-1.5-7B</text></g>
+<g><rect x="165" y="73" width="60" height="207.4" fill="#f2a65a"/><text x="195" y="65" font-size="9.5" fill="#f2a65a" text-anchor="middle">-29.5</text><text x="195" y="300" font-size="8" fill="#c4ccda" text-anchor="middle">Owl-1.5-2B</text></g>
+<g><rect x="250" y="97" width="60" height="183.3" fill="#f2a65a"/><text x="280" y="89" font-size="9.5" fill="#f2a65a" text-anchor="middle">-26.1</text><text x="280" y="300" font-size="8" fill="#c4ccda" text-anchor="middle">Owl-32B</text></g>
+<g><rect x="335" y="97.3" width="60" height="183" fill="#f2a65a"/><text x="365" y="89" font-size="9.5" fill="#f2a65a" text-anchor="middle">-26.1</text><text x="365" y="300" font-size="8" fill="#c4ccda" text-anchor="middle">Owl-1.5-8B</text></g>
+<g><rect x="420" y="105.5" width="60" height="174.8" fill="#f2a65a"/><text x="450" y="97" font-size="9.5" fill="#f2a65a" text-anchor="middle">-25.0</text><text x="450" y="300" font-size="8" fill="#c4ccda" text-anchor="middle">Owl-1.5-32B</text></g>
+<g><rect x="505" y="192.5" width="60" height="87.8" fill="#8893a8"/><text x="535" y="185" font-size="9.5" fill="#8893a8" text-anchor="middle">-12.6</text><text x="535" y="300" font-size="8" fill="#c4ccda" text-anchor="middle">TARS-7B-SFT</text></g>
+<g><rect x="590" y="208" width="60" height="72.3" fill="#8893a8"/><text x="620" y="200" font-size="9.5" fill="#8893a8" text-anchor="middle">-10.2</text><text x="620" y="300" font-size="8" fill="#c4ccda" text-anchor="middle">Owl-7B</text></g>
+<g><rect x="675" y="264" width="60" height="16.3" fill="#8893a8"/><text x="705" y="257" font-size="9.5" fill="#8893a8" text-anchor="middle">-2.3</text><text x="705" y="300" font-size="8" fill="#c4ccda" text-anchor="middle">Owl-1.5-4B</text></g>
+<text x="20" y="315" font-size="10" fill="#8893a8">Source: arXiv:2608.07775, Table 2, read 29 October 2026.</text>
+</g></svg>
+
+<h2 id="phoneshells-reflex">phoneshell's own overlay reflex, and the one thing it refuses to do</h2>
+
+<p><code>phoneshell/agent/overlays.py</code> exists to stop a model from burning its step budget narrating its way around a promo sheet or an onboarding screen, a problem its own docstring calls "the single most common way a phone agent stalls." It auto-dismisses sheets, interstitials and paywalls by tapping a close control it finds through a labeled allowlist, <code>CLOSE_LABELS</code>, things like "not now" and "skip." The file states its own boundary in the same docstring: "permission dialogs are NEVER auto-answered, because 'Allow location' is the user's decision, not ours." The code backs that line twice. Its <code>NEVER</code> regex, checked before any tap the reflex considers, blocks on the word <code>allow</code> (and its negation, <code>don't allow</code>) alongside pay, buy, delete and send. And its <code>classify()</code> function gives a system alert its own kind, <code>system_alert</code>, which the step loop explicitly excludes from the auto-dismiss notice it gives the model for every other covering shape: <code>if found is not None and found.kind != "system_alert"</code>.</p>
+
+<p>That design choice means permission dialogs, notifications and system alerts, AndroidReality's transition category, reach phoneshell's model with no harness assistance of any kind, neither a dismissal nor even a hint that something is covering the screen. The reflex that handles every other interruption class deliberately sits this one out. The one place phoneshell's own stack does auto-answer a permission prompt is not this path at all: <code>wda/patches.py</code> patches WebDriverAgentRunner itself to call <code>requestAuthorizationForAccessLevel</code> directly against the Photos API when importing media into the camera roll, a one-time grant for the runner's own process, answered through Apple's API rather than a screen tap, and unrelated to any permission dialog a target app shows mid-task.</p>
+
+<svg viewBox="0 0 820 300" style="width:100%;height:auto" role="img" aria-label="Diagram of phoneshell's overlay handling by screen type. The reflex in overlays.py auto-dismisses sheets, interstitials and paywalls by tapping a labeled close control. System alerts, which include permission dialogs and notifications, are classified separately as system_alert and are explicitly excluded from the auto-dismiss notice the step loop gives the model, so they pass through to the model with no harness assistance, the exact screen class AndroidReality's own data shows costs the most success rate when it interrupts an agent.">
+<rect x="0" y="0" width="820" height="300" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">overlays.py: one reflex, one hard exclusion</text>
+<rect x="20" y="55" width="260" height="100" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="150" y="80" font-size="11.5" font-weight="600" text-anchor="middle">Sheets, interstitials, paywalls</text>
+<text x="35" y="102" font-size="10" fill="#c4ccda">CLOSE_LABELS allowlist tap</text>
+<text x="35" y="120" font-size="10" fill="#5ad1a0">auto-dismissed by the reflex</text>
+<text x="35" y="138" font-size="9.5" fill="#8893a8">verified gone before moving on</text>
+<rect x="320" y="55" width="260" height="100" rx="8" fill="#262d3d" stroke="#e2574c"/>
+<text x="450" y="80" font-size="11.5" font-weight="600" text-anchor="middle" fill="#e2574c">System alerts (permission, notification)</text>
+<text x="335" y="102" font-size="10" fill="#c4ccda">kind == "system_alert"</text>
+<text x="335" y="120" font-size="10" fill="#e2574c">excluded from the dismiss notice</text>
+<text x="335" y="138" font-size="9.5" fill="#8893a8">"allow" blocked by NEVER regex too</text>
+<path d="M450,155 L450,215" stroke="#e2574c" stroke-width="2" fill="none" stroke-dasharray="5,4" marker-end="url(#ah7)"/>
+<rect x="320" y="220" width="260" height="60" rx="8" fill="#262d3d" stroke="#e2574c"/>
+<text x="450" y="245" font-size="11" font-weight="600" text-anchor="middle" fill="#e2574c">reaches the model alone</text>
+<text x="335" y="265" font-size="9.5" fill="#8893a8">AndroidReality's worst-case class</text>
+<text x="620" y="100" font-size="10.5" fill="#8893a8">confirm_patterns, the model's</text>
+<text x="620" y="118" font-size="10.5" fill="#8893a8">own tap-confirmation gate,</text>
+<text x="620" y="136" font-size="10.5" fill="#8893a8">has no "allow" pattern either</text>
+<defs><marker id="ah7" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#e2574c"/></marker></defs>
+<text x="20" y="285" font-size="10" fill="#8893a8">Sources: phoneshell/agent/overlays.py, phoneshell/config.py, phoneshell/wda/patches.py, read 29 October 2026.</text>
+</g></svg>
+
+<h2 id="what-it-means">What it means for a harness that already excludes this screen</h2>
+
+<ul>
+  <li>phoneshell's exclusion is deliberate and arguably the safer design: AndroidReality's own text describes agents that mishandle permission prompts getting "distracted," not merely slow, so refusing to auto-tap is a defensible position even at a measured cost in speed or step count.</li>
+  <li>The gap is in the second layer, not the reflex. <code>phoneshell/safety.py</code>'s <code>Guard.classify_tap</code>, which flags taps needing human confirmation, draws from <code>confirm_patterns</code>, and that list has no entry for "allow," "don't allow," "while using the app," or any other permission-dialog phrasing. If the model itself decides to tap "Allow" rather than the reflex, nothing in the confirmation gate notices. The overlay reflex's restraint and the safety gate's blind spot point at the same screen from opposite directions.</li>
+  <li>AndroidReality's own agents are Android models on Android UI; iOS permission sheets differ in exact wording and layout, so the point-drop numbers above do not transfer directly. What transfers is the category: a transition-style interruption phoneshell has not benchmarked against on purpose, because none of its own 80 tasks currently inject one.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># phoneshell's own stated boundary on permission dialogs
+sed -n '1,13p' phoneshell/agent/overlays.py
+
+# the NEVER regex that blocks "allow" from the auto-dismiss reflex
+grep -n "^NEVER" -A3 phoneshell/agent/overlays.py
+
+# system_alert excluded from the auto-dismiss notice given to the model
+grep -n "system_alert" phoneshell/actions.py phoneshell/agent/overlays.py
+
+# confirm_patterns has no permission-dialog entry
+grep -n "confirm_patterns" -A10 phoneshell/config.py
+
+# AndroidReality's own transition-perturbation table
+curl -s https://arxiv.org/html/2608.07775v1 | grep -iE "Table 2|transition|permission"</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim phoneshell's auto-dismiss reflex never fires on a system alert, including permission dialogs, and that its separate tap-confirmation gate has no pattern matching "allow" or similar permission-grant language. Both claims are falsified by the greps above returning a different result than shown, and we encourage running them directly. We also claim this matters because AndroidReality measured the largest, most variable success-rate drops in exactly this screen category, 13 to 37 points, across eight Android agents; that transfers as a category, not as a number, since phoneshell has never run its own 80 tasks against an injected permission prompt or notification. We will treat either a repository change to this exclusion, or a phoneshell run against an injected interruption of this kind, as grounds to revisit this piece by 30 April 2027.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Liu, Da, Chen, Ling, Wei, <a href="https://arxiv.org/abs/2608.07775">AndroidReality: How Far Are Mobile Agents from the Real World?</a>, arXiv:2608.07775, submitted 7 August 2026, read 29 October 2026.</li>
+      <li>Full text, Table 2: <a href="https://arxiv.org/html/2608.07775v1">arxiv.org/html/2608.07775v1</a>.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/agent/overlays.py</code>, <code>phoneshell/safety.py</code>, <code>phoneshell/config.py</code>, <code>phoneshell/wda/patches.py</code>, read 29 October 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
