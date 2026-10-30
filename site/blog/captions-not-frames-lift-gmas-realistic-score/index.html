@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GMA's biggest realistic-tier jump is captions, not more frames: 11.0 to 34.6 at the same two screenshots; phoneshell already serializes its screen as text, never the picture - Blolabel</title>
+<meta name="description" content="Benchmarking General Mobile Assistants (arXiv:2608.27477) finds every one of 8 frontier models drops to single digits or 0% on its Realistic task tier, and its own harness ablation shows captions, not more screenshots, produced the largest single gain: Realistic Average rose from 11.00 to 34.60 at a fixed two images. phoneshell's observation.py already sends a text serialization of the screen on every step and has never tried captioning the picture it sends alongside it.">
+<link rel="canonical" href="https://blolabel.ai/blog/captions-not-frames-lift-gmas-realistic-score/">
+<meta property="og:title" content="GMA's biggest realistic-tier jump is captions, not more frames: 11.0 to 34.6 at the same two screenshots; phoneshell already serializes its screen as text, never the picture - Blolabel">
+<meta property="og:description" content="GMA's 8 frontier models all collapse on its Realistic tier, and the harness ablation's single biggest gain came from adding captions at a fixed image count, not from more images. phoneshell's own observation step already builds a text serialization of the screen and has never captioned the image it sends.">
+<meta property="og:url" content="https://blolabel.ai/blog/captions-not-frames-lift-gmas-realistic-score/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/captions-not-frames-lift-gmas-realistic-score-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "GMA's biggest realistic-tier jump is captions, not more frames: 11.0 to 34.6 at the same two screenshots; phoneshell already serializes its screen as text, never the picture", "description": "Benchmarking General Mobile Assistants (arXiv:2608.27477) finds every one of 8 frontier models drops to single digits or 0% on its Realistic task tier. Its own harness ablation shows captions, not more screenshots, produced the largest single gain: Realistic Average rose from 11.00 to 34.60 at a fixed two images. phoneshell's observation.py already sends a text serialization of the screen on every step and has never captioned the picture it sends alongside it.", "datePublished": "2026-10-29", "dateModified": "2026-10-29", "url": "https://blolabel.ai/blog/captions-not-frames-lift-gmas-realistic-score/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/captions-not-frames-lift-gmas-realistic-score/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/captions-not-frames-lift-gmas-realistic-score-hero.png", "citation": ["https://arxiv.org/abs/2608.27477", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-29">29 October 2026</time>
+    <span>9 min read</span>
+  </div>
+  <h1>GMA's biggest realistic-tier jump is captions, not more frames: 11.0 to 34.6 at the same two screenshots; phoneshell already serializes its screen as text, never the picture</h1>
+  <p class="standfirst">Eight frontier models tested on GMA's hardest tier either score 0.00 or fail to clear 20%. The paper's own harness ablation, run on one of those models, found that going from 2 screenshots to 16 barely moved its hardest-tier score, but adding a text caption to the same 2 screenshots nearly tripled it, from 11.00 to 34.60. phoneshell already sends a text description of every screen on every step. It has never captioned the picture that goes with it.</p>
+
+<p>Benchmarking General Mobile Assistants in Challenging Real-World Scenarios (arXiv:2608.27477, Zhu, Gao, Fan, Zeng, Wu, Li, Xu, Li, Yan and Liu, submitted 21 August 2026) tests 8 frontier models, including GPT-5.5, GPT-5.6 Sol, Claude Sonnet 4.6, Claude Opus 4.7, Gemini 3.5 Flash, Doubao-Seed-2.1-pro, Qwen3.7-Plus and Qwen3.8-Max, on 300 tasks across 7 open-source apps, split into four difficulty tiers: Atomic, Compositional, Cross-Application, and Realistic. The paper's own line is blunt: "No model completes more than 20% of these tasks perfectly." Its Table 1 shows why. Every model that scores above 80% on Atomic tasks lands at 0.00 to 20.00 on Realistic ones, the tier meant to resemble how someone actually uses a phone rather than a scripted, single-intent request.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/captions-not-frames-lift-gmas-realistic-score-hero.png" alt="Abstract technical illustration on a dark grid: two small glowing squares representing screenshots sit side by side near the bottom of the frame, connected upward by a thin bright thread labelled only by its brightness to a tall rising bar, while a second, duller stack of eight identical squares beside it connects to a nearly flat, barely rising bar, cool blues and teal with one amber accent on the thread and the tall bar, no icons or text" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="the-realistic-tier-collapse">Where every model falls apart, and by how much</h2>
+
+<p>GMA's four tiers are cumulative in difficulty: Atomic is a single UI action, Compositional chains a few inside one app, Cross-Application spans two or more apps, and Realistic adds the ambiguity and multi-step planning of an actual use case inside the same app set. The drop from Atomic to Realistic is not gradual. Qwen3.8-Max, the strongest model on the easy end at 93.15% Atomic, falls to 10.00% on Realistic, an 83.15-point drop. Four of the eight models, Qwen3.7-Plus, Gemini 3.5 Flash, GPT-5.5 and Claude Sonnet 4.6, score exactly 0.00% on Realistic. Doubao-Seed-2.1-pro posts the best Realistic score in the table at 20.00%, still one task in five.</p>
+
+<table>
+  <thead><tr><th>Model</th><th>Atomic</th><th>Compositional</th><th>Cross-App</th><th>Realistic</th></tr></thead>
+  <tbody>
+    <tr><td>Qwen3.8-Max</td><td>93.15</td><td>70.54</td><td>52.56</td><td>10.00</td></tr>
+    <tr><td>Doubao-Seed-2.1-pro</td><td>89.04</td><td>65.89</td><td>41.03</td><td>20.00</td></tr>
+    <tr><td>GPT-5.6 Sol</td><td>86.30</td><td>68.99</td><td>43.59</td><td>10.00</td></tr>
+    <tr><td>Claude Opus 4.7</td><td>87.67</td><td>65.12</td><td>37.18</td><td>15.00</td></tr>
+    <tr><td>GPT-5.5</td><td>87.67</td><td>65.12</td><td>39.74</td><td>0.00</td></tr>
+    <tr><td>Claude Sonnet 4.6</td><td>83.56</td><td>60.47</td><td>34.62</td><td>0.00</td></tr>
+    <tr><td>Gemini 3.5 Flash</td><td>80.82</td><td>62.02</td><td>30.77</td><td>0.00</td></tr>
+    <tr><td>Qwen3.7-Plus</td><td>78.08</td><td>51.94</td><td>30.77</td><td>0.00</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: arXiv:2608.27477, Table 1, success rate (%) by tier, read 29 October 2026.</p>
+
+<h2 id="the-harness-ablation">What the paper's own harness ablation changed, and what it did not</h2>
+
+<p>GMA's authors ran a separate ablation on Qwen3.7-Plus alone, varying how much screen history the agent's context carries and in what form, measured against the same Realistic Average. Scaling the image count on its own does almost nothing: 2 images with a thought step scores a 11.00 Realistic Average, 4 images scores 12.86, 8 images scores 21.44, and 16 images scores 23.81, a slow climb that costs four to eight times the image tokens for roughly double the score. The paper's own line: "explicitly maintaining task state can provide useful information beyond simply retaining raw interaction history, particularly when the available visual history is limited." The single largest jump in the whole table is not from any of those: keeping the image count fixed at 2 and adding text captions alongside them took the Realistic Average from 11.00 to 34.60, more than the 16-image run achieved with eight times the pictures.</p>
+
+<table>
+  <thead><tr><th>Context setup (Qwen3.7-Plus)</th><th>Overall success</th><th>Overall average</th><th>Realistic average</th></tr></thead>
+  <tbody>
+    <tr><td>1 image, thought</td><td>43.33</td><td>57.20</td><td>9.97</td></tr>
+    <tr><td>2 images, thought</td><td>49.33</td><td>63.78</td><td>11.00</td></tr>
+    <tr><td>2 images, no thought</td><td>41.67</td><td>55.77</td><td>6.89</td></tr>
+    <tr><td>2 images, thought + captions</td><td>51.33</td><td>65.13</td><td>34.60</td></tr>
+    <tr><td>4 images, thought</td><td>51.00</td><td>65.53</td><td>12.86</td></tr>
+    <tr><td>8 images, thought</td><td>52.00</td><td>67.10</td><td>21.44</td></tr>
+    <tr><td>16 images, thought</td><td>52.00</td><td>65.52</td><td>23.81</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: arXiv:2608.27477, Table 2, read 29 October 2026. Ablation run on Qwen3.7-Plus only; the paper does not report this ablation for the other seven models.</p>
+
+<svg viewBox="0 0 760 340" style="width:100%;height:auto" role="img" aria-label="Bar chart comparing GMA's Realistic Average score for Qwen3.7-Plus across six context setups. Two images with a thought step scores 11.00. Four images scores 12.86. Eight images scores 21.44. Sixteen images scores 23.81. Two images with thought plus captions, the same two images as the first bar, scores 34.60, the highest value in the chart, higher than the sixteen-image run that uses eight times the pictures.">
+<rect x="0" y="0" width="760" height="340" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="24" font-size="13" font-weight="600">GMA Realistic Average by context setup, Qwen3.7-Plus (Table 2)</text>
+<line x1="60" y1="290" x2="730" y2="290" stroke="#2a3140"/>
+<text x="52" y="294" font-size="9" fill="#8893a8" text-anchor="end">0</text>
+<line x1="60" y1="222" x2="730" y2="222" stroke="#232938"/><text x="52" y="226" font-size="9" fill="#8893a8" text-anchor="end">10</text>
+<line x1="60" y1="154" x2="730" y2="154" stroke="#232938"/><text x="52" y="158" font-size="9" fill="#8893a8" text-anchor="end">20</text>
+<line x1="60" y1="86" x2="730" y2="86" stroke="#232938"/><text x="52" y="90" font-size="9" fill="#8893a8" text-anchor="end">30</text>
+<line x1="60" y1="40" x2="730" y2="40" stroke="#232938"/><text x="52" y="44" font-size="9" fill="#8893a8" text-anchor="end">36</text>
+<g><rect x="85" y="215.3" width="70" height="74.7" fill="#8893a8"/><text x="120" y="208" font-size="10" fill="#8893a8" text-anchor="middle">11.0</text><text x="120" y="305" font-size="9" fill="#c4ccda" text-anchor="middle">2 images</text></g>
+<g><rect x="195" y="203.98" width="70" height="86.02" fill="#8893a8"/><text x="230" y="197" font-size="10" fill="#8893a8" text-anchor="middle">12.9</text><text x="230" y="305" font-size="9" fill="#c4ccda" text-anchor="middle">4 images</text></g>
+<g><rect x="305" y="144.9" width="70" height="145.1" fill="#8893a8"/><text x="340" y="138" font-size="10" fill="#8893a8" text-anchor="middle">21.4</text><text x="340" y="305" font-size="9" fill="#c4ccda" text-anchor="middle">8 images</text></g>
+<g><rect x="415" y="128.8" width="70" height="161.2" fill="#8893a8"/><text x="450" y="122" font-size="10" fill="#8893a8" text-anchor="middle">23.8</text><text x="450" y="305" font-size="9" fill="#c4ccda" text-anchor="middle">16 images</text></g>
+<g><rect x="580" y="54.3" width="70" height="235.7" fill="#5ad1a0"/><text x="615" y="47" font-size="11" font-weight="600" fill="#5ad1a0" text-anchor="middle">34.6</text><text x="615" y="305" font-size="9" fill="#5ad1a0" text-anchor="middle">2 images + captions</text></g>
+<text x="20" y="325" font-size="10" fill="#8893a8">Source: arXiv:2608.27477, Table 2, read 29 October 2026. Same two screenshots as the leftmost bar; only the captions were added.</text>
+</g></svg>
+
+<h2 id="what-phoneshell-already-sends">What phoneshell's own observation step already builds, and never adds</h2>
+
+<p>phoneshell's <code>agent/observation.py</code> states the reasoning for its own context format in its opening docstring: hybrid tree-plus-image perception beats either channel alone in the literature it cites (53.7% versus 35.2% tree-only versus 15.6% pixels-only), and it serializes the accessibility tree as TSV rather than JSON specifically to save tokens, "30-40% more tokens for zero extra information" is how the file describes the alternative. Every step phoneshell sends a model already carries two things GMA's caption condition approximates separately: a textual description of what is on screen (the TSV) and the screenshot itself, scaled down because "a 512px-wide frame is ~760 tokens and loses nothing that matters at tap granularity," per the same file. What phoneshell has never done is caption the image independently of the tree serialization, the specific intervention GMA's ablation isolated as the one that moved the Realistic score the most.</p>
+
+<p>The distinction matters because phoneshell's TSV already tells a model what the accessibility tree reports is on screen, structurally. A caption, in GMA's sense, would describe what the picture itself shows, which can disagree with the tree when a view is custom-drawn, a WebView, or stale. <code>agent/observation.py</code> names exactly this risk in its own <code>OPAQUE_TYPES</code> set: WebView, Map, Other, ScrollView and Image, container types the file's own comment says mean "the tree is probably lying about what is here." GMA's caption condition is, in effect, a second read of the screen that does not trust the tree either, run through the same model as a separate step rather than skipped.</p>
+
+<svg viewBox="0 0 820 300" style="width:100%;height:auto" role="img" aria-label="Diagram of what phoneshell sends per step versus GMA's caption condition. phoneshell's observation.py already builds two inputs every step: a TSV serialization of the accessibility tree, and a scaled screenshot. GMA's ablation adds a third input, a text caption describing the screenshot independently of the tree, and that addition alone, with no change to image count, produced the largest score gain in its harness table. phoneshell has no code path that generates this third input.">
+<rect x="0" y="0" width="820" height="300" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Two inputs today, versus GMA's three</text>
+<rect x="20" y="55" width="230" height="90" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="135" y="78" font-size="11.5" font-weight="600" text-anchor="middle">TSV tree serialization</text>
+<text x="35" y="100" font-size="10" fill="#c4ccda">what the a11y tree reports</text>
+<text x="35" y="118" font-size="9.5" fill="#5ad1a0">observation.py, every step</text>
+<rect x="20" y="165" width="230" height="90" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="135" y="188" font-size="11.5" font-weight="600" text-anchor="middle">Scaled screenshot</text>
+<text x="35" y="210" font-size="10" fill="#c4ccda">~760 tokens, 512px wide</text>
+<text x="35" y="228" font-size="9.5" fill="#5ad1a0">observation.py, every step</text>
+<path d="M250,110 L300,160" stroke="#5ad1a0" stroke-width="2" fill="none" marker-end="url(#ah5)"/>
+<path d="M250,210 L300,160" stroke="#5ad1a0" stroke-width="2" fill="none" marker-end="url(#ah5)"/>
+<rect x="300" y="125" width="200" height="70" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="400" y="150" font-size="11.5" font-weight="600" text-anchor="middle">sent to the model</text>
+<text x="315" y="172" font-size="10" fill="#c4ccda">today, both inputs</text>
+<rect x="560" y="55" width="230" height="90" rx="8" fill="#262d3d" stroke="#e2574c" stroke-dasharray="5,4"/>
+<text x="675" y="78" font-size="11.5" font-weight="600" text-anchor="middle" fill="#e2574c">Image caption</text>
+<text x="575" y="100" font-size="10" fill="#c4ccda">independent read of the pixels</text>
+<text x="575" y="118" font-size="9.5" fill="#e2574c">no code path builds this</text>
+<path d="M500,160 L560,100" stroke="#e2574c" stroke-width="2" fill="none" stroke-dasharray="5,4" marker-end="url(#ah6)"/>
+<text x="560" y="200" font-size="10.5" fill="#8893a8">GMA's ablation: adding only this,</text>
+<text x="560" y="218" font-size="10.5" fill="#8893a8">at a fixed 2 images, took its</text>
+<text x="560" y="236" font-size="10.5" fill="#8893a8">Realistic Average from 11.0 to 34.6</text>
+<defs>
+<marker id="ah5" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#5ad1a0"/></marker>
+<marker id="ah6" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#e2574c"/></marker>
+</defs>
+<text x="20" y="280" font-size="10" fill="#8893a8">Sources: phoneshell/agent/observation.py, read 29 October 2026; arXiv:2608.27477, Table 2.</text>
+</g></svg>
+
+<h2 id="what-it-means">What it means for a harness that already picked tree-plus-image</h2>
+
+<ul>
+  <li>GMA's own caveat applies here too: this ablation ran on one model, Qwen3.7-Plus, on one benchmark's Realistic tier, with one caption-generation setup the paper does not fully specify in the parts we could read. A gain this size on one model is a strong signal to test, not a result to assume transfers to GPT-5.6 Sol or Claude Opus 4.7, both of which outscore Qwen3.7-Plus on GMA's Realistic tier without any caption step at all.</li>
+  <li>phoneshell's own rationale for TSV over JSON, and for a 512px frame over full resolution, is about not wasting tokens on information the tree or a smaller image already carries. A caption step adds tokens and a model call on every step; the honest comparison phoneshell would need is whether a caption changes which of its 80 tasks fail, not just whether it changes the token bill.</li>
+  <li>The sharpest test case for phoneshell would be exactly the screens its own <code>OPAQUE_TYPES</code> set already flags as untrustworthy, WebView and custom-drawn views, where the tree and the picture are most likely to disagree and a caption would carry information the TSV cannot.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># phoneshell's own reasoning for TSV over JSON and image scaling
+sed -n '1,14p' phoneshell/agent/observation.py
+
+# the container types phoneshell's own file says the tree may be lying about
+grep -n "OPAQUE_TYPES" -A3 phoneshell/agent/observation.py
+
+# confirm no caption-generation call exists anywhere in the agent loop
+grep -rn "caption" --include="*.py" phoneshell/ || echo "no match"
+
+# GMA's own ablation table and tier collapse, read from the source
+curl -s https://arxiv.org/html/2608.27477v1 | grep -iE "Realistic|caption|Table 1|Table 2"</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim phoneshell has no code path, anywhere in its agent loop, that generates a text caption of a screenshot independent of the accessibility tree serialization it already builds. That is wrong the moment a <code>caption</code> call turns up in the repository, and we encourage anyone to check the grep above themselves. We also claim GMA's own data shows captions, not image count, drove its largest ablation gain on Qwen3.7-Plus: that one model, one benchmark result does not establish that captioning would move phoneshell's own 80-task pass rate, which this site has not tested with or without captions. We will treat a repository change adding captioning, or a run of phoneshell's own benchmark with captions isolated as the only variable, as grounds to revisit this piece by 30 April 2027.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Zhu, Gao, Fan, Zeng, Wu, Li, Xu, Li, Yan, Liu, <a href="https://arxiv.org/abs/2608.27477">Benchmarking General Mobile Assistants in Challenging Real-World Scenarios</a>, arXiv:2608.27477, submitted 21 August 2026, read 29 October 2026.</li>
+      <li>Full text, Table 1 and Table 2: <a href="https://arxiv.org/html/2608.27477v1">arxiv.org/html/2608.27477v1</a>.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/agent/observation.py</code>, read 29 October 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
