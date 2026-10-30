@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DeltaReplay's similarity router gains up to 25 points by deciding when a stored route still applies; phoneshell's macro store has no such decision, only an exact name lookup - Blolabel</title>
+<meta name="description" content="DeltaReplay (arXiv:2610.11707, submitted 8 October 2026) gains up to 10.3 points on AndroidWorld and 25.0 on SPA-Bench by deciding, per step, whether a stored route matches the current task closely enough to replay, replay with swapped parameters, or hand off to the base agent, with a measured 83.7% precision on that decision. phoneshell's get(name) macro lookup has no equivalent: a macro runs only when called by its exact name, with no code anywhere that checks whether a new task resembles a stored one.">
+<link rel="canonical" href="https://blolabel.ai/blog/similarity-router-worth-25-points-phoneshell-macros-exact-name-lookup/">
+<meta property="og:title" content="DeltaReplay's similarity router gains up to 25 points by deciding when a stored route still applies; phoneshell's macro store has no such decision, only an exact name lookup - Blolabel">
+<meta property="og:description" content="DeltaReplay gains up to 10.3 points on AndroidWorld and 25.0 on SPA-Bench by deciding per step whether a stored route still applies, with measured precision for that decision. phoneshell's own macro store has no selection logic at all: a macro only ever runs when something calls it by its exact saved name.">
+<meta property="og:url" content="https://blolabel.ai/blog/similarity-router-worth-25-points-phoneshell-macros-exact-name-lookup/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/similarity-router-worth-25-points-phoneshell-macros-exact-name-lookup-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "DeltaReplay's similarity router gains up to 25 points by deciding when a stored route still applies; phoneshell's macro store has no such decision, only an exact name lookup", "description": "DeltaReplay (arXiv:2610.11707) gains up to 10.3 points on AndroidWorld and 25.0 on SPA-Bench by deciding per step whether a stored route matches the current task closely enough to replay, replay with swapped parameters, or hand off to the base agent. phoneshell's get(name) macro lookup has no equivalent: a macro runs only when called by its exact saved name.", "datePublished": "2026-10-29", "dateModified": "2026-10-29", "url": "https://blolabel.ai/blog/similarity-router-worth-25-points-phoneshell-macros-exact-name-lookup/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/similarity-router-worth-25-points-phoneshell-macros-exact-name-lookup/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/similarity-router-worth-25-points-phoneshell-macros-exact-name-lookup-hero.png", "citation": ["https://arxiv.org/abs/2610.11707", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAABOCAMAAAD4iTj8AAAAilBMVEVMaXFiXmJhXmEVieRkYGRiXmJiXmJEaZJiX2IWjehNaIJhXmEUjOcVjOdgXWBjX2MWjecUjOZiXmJiXmIUi+UVjehUoN7w9/33+/7q9Pzg7/p8gIlkYGQXjuj///9oZGgWk/JmY2YVjullYWUJh+dtaG0olumr1/dSq+7T6vo6n+tntfCMx/N7vvJEi25LAAAAHHRSTlMAakku/HusA/z7Eo+hwDL30nXizUnjHfvKolE8aPCOgAAAAAlwSFlzAAALEgAACxIB0t1+/AAAB35JREFUeJztmn1zsjoThwMCCaCg4EvbASFA1bZ3v//XO7MJeQFBwJ55nnNP85v+oSYB9mJ3k2yKkJGRkZGRkZGRkZGRkZGRkZGRkdHPhZXQ7xPuGH2P4Gk4P8L6P3slGCOEV7vderNZr3f7I/yEfpEwQqvd1i+FDpt90PWCwBKyF147kiOjxc8VzborvtdI++gV0Grtl2XuC1Vledhh5QQY2e8F17u3yASMQjnSXehVGFnaXReOxUvug3c+WJ9LMQbblbwpRnYdO6CYLgZA25HFEwAKddfxscdVX0eIaPnw6ueR2xw3ZaVZLxiU/k7cFSObkgzkFIsBFE478hkAYuw4AIzWld/TYbvetw6M0Ur69XZ4/GpbCvOrBiQQ5KUgMAeACjM95voAxoJxKH5nAyh7r6+qyrLacAcGAK095RAAjI7K/uZy+/q6fVYtAt8XBKYB6I89wwPu0tTQtZ4GkEMMl/4exkwBQHijhv85nUEfN+kELYFJABjhyA09L7QxQpEtFPQAoMCCTlakJVhucWDDcM9zoU363dMAcnj2A5/NHwLojL6ehb6ED1Q+c6QpABjZqUMhXdM0QuG7Q5lY3tcB2AnvFHuRPsUg24spaykojVMLuP0YQO6Xa3gxDwFgtJfpr/mW9p9Pl0oM2szwAIzcmhLiOA4hNI7CIiYgh3YAvFu2Q6ET62WpBBt4tMjYcN5WJHbrd0sB+FwiFRyC6RDQAuBDATh/d4PgMQAwkvDmLCM09age9QIAqcOklr1I0RLAKErUaDaM1DVLF8sBlEzSBao9ZJcHADDaqwT4qdl/vioA26kQYI3KAuKIL10AGXEcrReJWRSA/e2llYjD8CwHsGbypfvuJgEoB2huOoAPLZIYxocekN6ZMASgZ2R7IZwWyi3kpwzwLAewZ9j2/kwA0NbCyvPmSwcgkwBPJY8AqDb++p0HACDO5eestVFaXVMVImDxYgAVvCssX+sMADuVAUYBQCp5DMBTNlBKVUDfASAFLSQsUoRglPQeSB7KlQiBCHnGAxAKtjyz+9VqCsB6GgC/zKMQCGRuI5ln2558jf0cQJzQtmQzoSnGKIrl1xAj7EkcbOziHLADbVr72/T1aBbQ5oCxHNDOA6MAwAb5/l0gHgoj+gAoS/yyOUsCJCPAoSm7Wtrycdj257lZoOT255C9HgPABwWgupyGZoEZAOz2mUmdsCJCkAx6AKlTFqCyOcsiwNG20jACuVS72E/WAX6Vs1XsQwCBBiBv1ELwfL4tASAs5E+J0cg6gMe8aia1jZDyeS4REVkWPwFAU3XgCWECgLYNbj5PQw4wDUA9Zbt86W5/epsh3SUYgMFJEgBEPwKQ+5s9b57vAdpa+PT5/wDAl8Liy1Me4OtL4bJcT4UAVjthRuDPgP0DADrFNz0EpI+TIQBUNHcBCJ+vO8qeygGlvhb22yXM3FmgyS/N7eN0Pl0vzacqi8zIATJvpcAGYTEt9gC0zWrW5ElQTBlx0pX3xEpww5bCG7+NbLaKnbcOaKrb9eP01TSXz7zJr+ePP5+NXFHvdStpGukKkDaV1xZbvo1Ng5kNzSLPizQnr4uDIMBRFADDIAiCpxdCaN8ucPmGeM5KsLnxreD1dskv3+3nC3eC6nDsLHdJrKm2tIUQyWI3ilyxLLgHEFtRFIooh2kRoSiTCyHobMdJ6rk2cH1mN7jn4Sl/YRviGXsBEfwQ/yc5F3ywVOCXG30v0BVf26ipLCvieHwpTDIaO3LjyI3CqSKQul6cZVAYIUnq/cADkAhteHkdAHdnB6xnZwVw7q0G2h3FMACHAZA+DzYKe4Y3Q5DepQfwiNA2QwXAg8pIRuD44QkAGGLnuBOze+VrAPLK32o6MLugHqCXgro6XRqfQXzsAVpa6+K58wB9KIsAfSeRqXoBrxYsB3DgkiWRTgjkeVXq4gvFbakvgPq6Nv2K0AAAfUvLHl5Y2s8BtV42IZTVvTCyZQHl5wWRiksuCyB8NQDq6AuqxtywfaklgHt9VlvIR489AGHvXQuCRG5ougBqL5FOQMh7KJ7fqnUyjCBLiM8URX2tJNifBrtqC94wWq8F9vXdtMV1u26Llh3BLMB24F4BRVD2V9iuPNByO0djllU4bSen8LRjtwRqolKZXhSdPhrDY1Vh5gBTAKB68MD+81WeC4hjyq7eRWnTjYuC1jUtYqt3HKp/c+Oihk40sXQLAjehBaV1VlNoC1VZfMbhKB4GAE6+CaYBYHQcTwHn86u4beQOq63vYxRYXpokaRghZHda9W8oCqGTJyr/wgQU2CEMT1IvtNlT89/VXcePxzEAuFdV+uugezbYlTr1ehsn8DL7NJPBDAJ5qjPai3e6O0Djw1nToqNtxADcy9+u5dngQLOcBTiBl/H3r53mDUtrFw/fbez0lT/dmdH+1G2a8+81GO22m67Wu91K+BFGq82gttrZ9/F1yPzTG/qbhZf4Eb53gtMrbAH+DuHH/yQz4bttp7eXU8/8v8b+f0Ng6/Ht9YXp9fWN589fJTzx/TcIyw+/0XojIyMjIyMjIyMjIyMjIyP0n9Y/P2/lF8zxuoMAAAAASUVORK5CYII=" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-29">29 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>DeltaReplay's similarity router gains up to 25 points by deciding when a stored route still applies; phoneshell's macro store has no such decision, only an exact name lookup</h1>
+  <p class="standfirst">DeltaReplay gains 10.3 points on AndroidWorld and 25.0 on SPA-Bench over the same backbone's base agent, entirely from deciding, per step, whether a stored route matches a new task closely enough to replay outright, replay with swapped parameters, or hand off to the model. phoneshell already stores and replays action sequences of its own, but the only way one ever runs is by a caller naming it exactly. Nothing in the code asks whether a new task looks like a saved one.</p>
+
+<p>DeltaReplay: Task-Relative Memory Reuse for Mobile GUI Agents (arXiv:2610.11707, Bai, Chen, Yao, Wang, submitted 8 October 2026) tackles a specific failure of memory-augmented GUI agents: stored successful trajectories rarely match a new task exactly, so forcing one in misleads the agent and discarding it wastes a route the agent already found. DeltaReplay stores trajectories as a transition graph, pages as nodes and actions as edges, with each action split into a task-independent operation and task-specific parameters. At reuse time it compares a recorded step against the new task and the live screen and picks one of three routes: Route A, replay the step as recorded; Route B, re-ground it by swapping in new parameters; or Route C, discard the memory and defer to the base agent entirely. On AndroidWorld-116 it lifts Qwen3-VL-30B from 43.1% to 53.4% (+10.3 points) and Qwen3.8-Flash from 49.1% to 56.9% (+7.8 points); on SPA-Bench-60 it lifts the same two backbones from 23.3% to 48.3% (+25.0 points) and from 41.7% to 58.3% (+16.6 points).</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/similarity-router-worth-25-points-phoneshell-macros-exact-name-lookup-hero.png" alt="Abstract technical illustration on a dark grid: a single glowing node near the top sends three thin branching paths downward of different brightness and texture, one solid and bright labelled only by its clarity representing an exact replay, one dashed and medium brightness representing a re-grounded replay with swapped values, and one faint and dotted representing a full handoff, converging at the bottom into a single plain rectangle, cool blues and teal with one amber accent on the solid bright path, no icons or text" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="the-numbers">What the router gains, and what it costs to decide wrong</h2>
+
+<p>DeltaReplay's Table 2 reports success rate and latency per step for both backbones on both benchmarks, plus three prior memory-reuse baselines, GUI-explorer, RAG-prompting, and GUI-Owl's own built-in memory, none of which beat the base agent by more than a few points and one of which, RAG-prompting, scores below the base agent outright (41.4% versus 49.1% for Qwen3.8-Flash on AndroidWorld). The gain is concentrated in how often the router gets the route right: on 150 sampled steps, 50 per route, DeltaReplay's own precision was 83.7% for Route A (replay), 78.0% for Route B (re-ground), and 75.5% for Route C (discard). Table 7 breaks down which route actually fires by how closely the new task matches stored memory: when the task matches an existing memory exactly, 56.1% of steps replay outright and the rest discard, with zero re-grounding needed; when it only matches the same app with no closer template match, the router discards 89.9% of the time and almost never tries to force a stored step in.</p>
+
+<table>
+  <thead><tr><th>Setup</th><th>AndroidWorld-116 SR (%)</th><th>SPA-Bench-60 SR (%)</th></tr></thead>
+  <tbody>
+    <tr><td>Base agent, Qwen3-VL-30B</td><td>43.1</td><td>23.3</td></tr>
+    <tr><td>DeltaReplay, Qwen3-VL-30B</td><td>53.4 (+10.3)</td><td>48.3 (+25.0)</td></tr>
+    <tr><td>Base agent, Qwen3.8-Flash</td><td>49.1</td><td>41.7</td></tr>
+    <tr><td>DeltaReplay, Qwen3.8-Flash</td><td>56.9 (+7.8)</td><td>58.3 (+16.6)</td></tr>
+    <tr><td>RAG-prompting, Qwen3.8-Flash</td><td>41.4</td><td>not reported</td></tr>
+    <tr><td>GUI-explorer, Qwen3.8-Flash</td><td>47.4</td><td>not reported</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: arXiv:2610.11707, Table 2, success rate by backbone and benchmark, read 29 October 2026.</p>
+
+<svg viewBox="0 0 760 310" style="width:100%;height:auto" role="img" aria-label="Bar chart of DeltaReplay's route breakdown on AndroidWorld-116 with Qwen3.8-Flash, by how closely the new task matches stored memory. When the task matches exactly, 56.1 percent of steps replay outright and 43.9 percent discard, with no re-grounding. When only the template matches, 41.5 percent replay, 14.8 percent re-ground, and 43.7 percent discard. When only the app matches with no closer template, 0 percent replay, 10.1 percent re-ground, and 89.9 percent discard. When nothing matches, 100 percent discard.">
+<rect x="0" y="0" width="760" height="310" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="24" font-size="13" font-weight="600">Route taken by memory-match level, AndroidWorld-116 (Table 7)</text>
+<text x="20" y="48" font-size="10" fill="#8893a8">Same task</text>
+<rect x="140" y="38" width="280.5" height="16" fill="#5ad1a0"/><text x="160" y="50" font-size="9" fill="#151a24">56.1% replay</text>
+<rect x="420.5" y="38" width="219.5" height="16" fill="#8893a8"/><text x="430" y="50" font-size="9" fill="#151a24">43.9% discard</text>
+<text x="20" y="88" font-size="10" fill="#8893a8">Same template</text>
+<rect x="140" y="78" width="207.5" height="16" fill="#5ad1a0"/><text x="150" y="90" font-size="9" fill="#151a24">41.5% replay</text>
+<rect x="347.5" y="78" width="74" height="16" fill="#f2a65a"/>
+<rect x="421.5" y="78" width="218.5" height="16" fill="#8893a8"/><text x="430" y="90" font-size="9" fill="#151a24">43.7% discard</text>
+<text x="20" y="128" font-size="10" fill="#8893a8">Same app only</text>
+<rect x="140" y="118" width="50.5" height="16" fill="#f2a65a"/><text x="192" y="130" font-size="9" fill="#e9ecf2">10.1% re-ground</text>
+<rect x="190.5" y="118" width="449.5" height="16" fill="#8893a8"/><text x="400" y="130" font-size="9" fill="#151a24">89.9% discard</text>
+<text x="20" y="168" font-size="10" fill="#8893a8">No match</text>
+<rect x="140" y="158" width="500" height="16" fill="#8893a8"/><text x="390" y="170" font-size="9" fill="#151a24">100% discard, hand to base agent</text>
+<rect x="20" y="210" width="14" height="14" fill="#5ad1a0"/><text x="40" y="222" font-size="9.5" fill="#c4ccda">A: replay as recorded</text>
+<rect x="190" y="210" width="14" height="14" fill="#f2a65a"/><text x="210" y="222" font-size="9.5" fill="#c4ccda">B: re-ground, swap parameters</text>
+<rect x="420" y="210" width="14" height="14" fill="#8893a8"/><text x="440" y="222" font-size="9.5" fill="#c4ccda">C: discard, defer to base agent</text>
+<text x="20" y="260" font-size="10" fill="#8893a8">Step-level precision on 150 sampled steps: 83.7% (A), 78.0% (B), 75.5% (C).</text>
+<text x="20" y="290" font-size="10" fill="#8893a8">Source: arXiv:2610.11707, Table 7 and section 5, read 29 October 2026.</text>
+</g></svg>
+
+<h2 id="phoneshell-macros">What phoneshell's own macro store does when a task is close but not identical</h2>
+
+<p>phoneshell already has the mechanism DeltaReplay is routing between, in a simpler form. <code>agent/macros.py</code> states its own payoff plainly: "merging a verified sequence of steps into one replayable unit is worth roughly twenty points of task success on repeat work and cuts token use by most of an order of magnitude." Its safety mechanism is an anchor, a piece of text that must be on screen before each step fires; if the anchor is missing, "the macro stops and hands the screen back to the model," which is phoneshell's version of DeltaReplay's Route C. Its <code>Macro</code> dataclass even has a <code>inputs</code> field for exactly DeltaReplay's Route B idea, swapped parameters, for example a saved dish name a step can refer to as <code>{dish}</code> with a different value passed at run time.</p>
+
+<p>What is missing is the part that makes DeltaReplay's gain possible: a way to decide, automatically, that a new task is close enough to a stored one to be worth trying at all. <code>agent/macros.py</code>'s own lookup function is <code>get(name)</code>, a dictionary read by exact string. A repository-wide search for anything that compares a new task's description against a stored macro's name, description or bundle id finds nothing: no embedding, no fuzzy string match, no template graph. Whatever decides a macro is relevant to the current task has to already know its exact name ahead of time, which in practice means a human or the calling code chose it, not the agent reasoning about similarity. DeltaReplay's own coverage-group table shows exactly where that gap bites: its "same template" row still replays 41.5% of steps outright and re-grounds another 14.8%, work phoneshell's exact-name lookup cannot attempt because it never gets to the question of whether a near-match exists.</p>
+
+<svg viewBox="0 0 820 300" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting DeltaReplay's reuse decision with phoneshell's macro lookup. DeltaReplay compares a new task and the current screen against a transition graph of stored trajectories and picks one of three routes per step: replay, re-ground with swapped parameters, or discard. phoneshell's agent slash macros dot py instead exposes a function called get of name, a lookup by exact string match only, with no code anywhere that measures how similar a new task is to a stored macro's template or app.">
+<rect x="0" y="0" width="820" height="300" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">A similarity decision, versus a dictionary lookup</text>
+<rect x="20" y="55" width="360" height="110" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="200" y="78" font-size="11.5" font-weight="600" text-anchor="middle">DeltaReplay</text>
+<text x="35" y="100" font-size="10" fill="#c4ccda">compares new task + screen vs.</text>
+<text x="35" y="118" font-size="10" fill="#c4ccda">transition graph of stored trajectories</text>
+<text x="35" y="140" font-size="9.5" fill="#5ad1a0">picks replay / re-ground / discard per step</text>
+<text x="35" y="156" font-size="9.5" fill="#5ad1a0">+10.3 to +25.0 points over base agent</text>
+<rect x="440" y="55" width="360" height="110" rx="8" fill="#262d3d" stroke="#e2574c"/>
+<text x="620" y="78" font-size="11.5" font-weight="600" text-anchor="middle" fill="#e2574c">phoneshell agent/macros.py</text>
+<text x="455" y="100" font-size="10" fill="#c4ccda">get(name): dictionary lookup only</text>
+<text x="455" y="122" font-size="10" fill="#e2574c">no similarity check anywhere in the file</text>
+<text x="455" y="144" font-size="9.5" fill="#8893a8">caller must already know the exact name</text>
+<path d="M200,165 L200,220" stroke="#5ad1a0" stroke-width="2" fill="none" marker-end="url(#ah9)"/>
+<path d="M620,165 L620,220" stroke="#e2574c" stroke-width="2" fill="none" stroke-dasharray="5,4" marker-end="url(#ah10)"/>
+<rect x="60" y="225" width="280" height="55" rx="8" fill="#262d3d" stroke="#8893a8"/>
+<text x="200" y="248" font-size="10" text-anchor="middle" fill="#8893a8">partial matches get partial reuse</text>
+<text x="200" y="266" font-size="9.5" text-anchor="middle" fill="#8893a8">e.g. "same template" rows above</text>
+<rect x="480" y="225" width="280" height="55" rx="8" fill="#262d3d" stroke="#8893a8"/>
+<text x="620" y="248" font-size="10" text-anchor="middle" fill="#8893a8">partial matches get nothing</text>
+<text x="620" y="266" font-size="9.5" text-anchor="middle" fill="#8893a8">exact name or full handoff to the model</text>
+<defs>
+<marker id="ah9" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#5ad1a0"/></marker>
+<marker id="ah10" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#e2574c"/></marker>
+</defs>
+<text x="20" y="290" font-size="10" fill="#8893a8">Sources: phoneshell/agent/macros.py, read 29 October 2026; arXiv:2610.11707, Table 7.</text>
+</g></svg>
+
+<h2 id="what-it-means">What it means for a macro store that already has the primitives</h2>
+
+<ul>
+  <li>phoneshell is not missing the replay primitive or the parameter-substitution primitive; <code>inputs</code> and anchor-gated replay already do the job of DeltaReplay's Route A and Route B once a macro has been selected. What is missing is everything upstream of that choice: a way to ask "is there a stored macro close enough to this new task to be worth trying," the question DeltaReplay's router answers per step with 75 to 84 percent precision.</li>
+  <li>DeltaReplay's own numbers warn against assuming the fix is free: Route C, discard, still carries 75.5% precision, meaning roughly one in four discard decisions in its own sampled set was arguably wrong, either a route that should have fired or one that should not have. A similarity router added to phoneshell's macro store would inherit the same risk of wrong calls, not just the gain.</li>
+  <li>DeltaReplay measures its backbones on AndroidWorld-116 and SPA-Bench-60, Android benchmarks with Android app sets; the percentage-point gains quoted above do not transfer directly to phoneshell's 80 iOS tasks. What transfers is the mechanism gap: phoneshell's macro store currently cannot benefit from a near-match at all, on any platform, because nothing in it looks for one.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># phoneshell's own stated payoff for macro replay
+sed -n '1,12p' phoneshell/agent/macros.py
+
+# the only macro lookup function that exists, by exact name
+grep -n "^def get" -A6 phoneshell/agent/macros.py
+
+# confirm there is no similarity or fuzzy-match code for macro selection
+grep -rln "difflib\|embedding\|similarity\|fuzzy" --include="*.py" phoneshell/agent/ || echo "no match"
+
+# the inputs field that already supports DeltaReplay's "re-ground" idea
+grep -n "inputs:" -A3 phoneshell/agent/macros.py
+
+# DeltaReplay's own route-breakdown table
+curl -s https://arxiv.org/html/2610.11707v1 | grep -iE "Table 7|Route A|Route B|Route C"</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim phoneshell's macro store has no code that measures similarity between a new task and a stored macro, and that <code>get(name)</code> is the only lookup path that exists. That is wrong the moment a similarity check, embedding comparison, or fuzzy match turns up anywhere in <code>phoneshell/agent/</code>, and the grep above is how to check. We also claim DeltaReplay's gains, up to 10.3 points on AndroidWorld and 25.0 on SPA-Bench, come specifically from the per-step routing decision rather than from the replay or parameter-substitution mechanisms phoneshell already has; that is a claim about the paper's own ablation design, not about phoneshell, and would be undermined by a version of the paper showing the gain holds even with routing disabled. We will treat either a repository change adding macro-selection logic, or a later version of this paper isolating the routing decision's contribution more precisely, as grounds to revisit this piece by 30 April 2027.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Bai, Chen, Yao, Wang, <a href="https://arxiv.org/abs/2610.11707">DeltaReplay: Task-Relative Memory Reuse for Mobile GUI Agents</a>, arXiv:2610.11707, submitted 8 October 2026, read 29 October 2026.</li>
+      <li>Full text, Table 2 and Table 7: <a href="https://arxiv.org/html/2610.11707v1">arxiv.org/html/2610.11707v1</a>.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/agent/macros.py</code>, read 29 October 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
