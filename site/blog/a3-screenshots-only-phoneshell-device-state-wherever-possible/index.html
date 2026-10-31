@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A3 rejects device state as "not suitable" and grades 100 tasks from screenshots alone; phoneshell rejects screenshots the same way and grades from device state - Blolabel</title>
+<meta name="description" content="A3 (arXiv:2501.01149, Chai et al., revised 12 January 2026) explicitly rejects function-based, device-state checks for its 100-task Android benchmark, judging task progress from screenshots alone with an MLLM reward model that reaches 53% success and 66.4% essential-state agreement for its best agent. phoneshell's bench/verify.py makes the opposite call for the same category of problem: state is checked wherever it can be, because state is harder to fake than pixels.">
+<link rel="canonical" href="https://blolabel.ai/blog/a3-screenshots-only-phoneshell-device-state-wherever-possible/">
+<meta property="og:title" content="A3 rejects device state as &quot;not suitable&quot; and grades 100 tasks from screenshots alone; phoneshell rejects screenshots the same way and grades from device state - Blolabel">
+<meta property="og:description" content="Two projects solving the same problem, judging whether a mobile agent actually finished a task on a dynamic, real app, reach opposite architectural decisions: A3's reward model never reads device state, phoneshell's checker reads device state whenever it can and falls back to pixels only when it must.">
+<meta property="og:url" content="https://blolabel.ai/blog/a3-screenshots-only-phoneshell-device-state-wherever-possible/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/a3-screenshots-only-phoneshell-device-state-wherever-possible-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "A3 rejects device state as \"not suitable\" and grades 100 tasks from screenshots alone; phoneshell rejects screenshots the same way and grades from device state", "description": "A3 (arXiv:2501.01149) explicitly rejects function-based device-state checks for dynamic apps, judging task progress from screenshots alone via an MLLM reward model. phoneshell's bench/verify.py makes the opposite architectural call for the same class of problem, preferring device state and falling back to pixels only when state is unavailable.", "datePublished": "2026-10-30", "dateModified": "2026-10-30", "url": "https://blolabel.ai/blog/a3-screenshots-only-phoneshell-device-state-wherever-possible/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/a3-screenshots-only-phoneshell-device-state-wherever-possible/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/a3-screenshots-only-phoneshell-device-state-wherever-possible-hero.png", "citation": ["https://arxiv.org/abs/2501.01149", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind comparison">comparison</span>
+    <time datetime="2026-10-30">30 October 2026</time>
+    <span>9 min read</span>
+  </div>
+  <h1>A3 rejects device state as "not suitable" and grades 100 tasks from screenshots alone; phoneshell rejects screenshots the same way and grades from device state</h1>
+  <p class="standfirst">A3's own paper states that function-based checks against device internals are "not suitable for this task of dynamic, constantly updating apps," so its reward model judges every task from a sliding window of screenshots, never from the phone's actual state. phoneshell's bench/verify.py states the mirror-image rule for the same category of app: a check reads device state wherever it can, because "state is harder to fake and does not move when Apple redesigns a screen." Both projects name the same problem and pick opposite sides.</p>
+
+<p>A3: Android Agent Arena for Mobile GUI Agents with Essential-State Procedural Evaluation (arXiv:2501.01149, Chai, Tang, Xiao, Lin, Li, Zhang, Liu, Zhao, Liu, Wang, Ren, Han, Zhang, Huang, Li; first submitted 2 January 2025, latest revision 12 January 2026) builds a 100-task benchmark from 20 widely used, dynamic Google Play apps across 20 categories, and its central contribution is how it decides whether an agent actually finished a task. An "essential state" is defined in the paper as "a critical, observable semantic milestone that must be achieved for a task to be considered successful," produced by a three-stage human protocol: two operators independently complete each task by different strategies to surface varied trajectories, the operators jointly propose essential states that are visually verifiable and sufficient to cover the task's logic, and an independent auditor checks the result. At evaluation time, a sliding window of recorded frames moves through the agent's run, and at each window position a multimodal reward model, A3RM, judges whether any essential state is visible in that segment. The paper is explicit about what this method deliberately does not do: it never inspects the device's accessibility tree, view hierarchy, or any other app-internal state, calling that approach unsuitable for apps whose UI and backend content change constantly.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/a3-screenshots-only-phoneshell-device-state-wherever-possible-hero.png" alt="Abstract technical illustration on a dark grid: two parallel vertical columns, the left one showing a sliding window moving down a stack of screenshot frames toward a single glowing judgment node, the right one showing a stack of structured data fields feeding directly into a plain checkmark node with no frames involved, connected at the top by a single shared question mark node representing the same unresolved problem, cool blues and slate greys with one amber accent on each column's final node, no icons or text" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="the-numbers">What judging from pixels alone scores, by agent</h2>
+
+<p>Table 3 of the paper, evaluated by A3RM, reports two figures per agent: SR, the fraction of tasks where every essential state was found, and ESAR, essential-state achievement rate, the fraction of individual essential states found across all tasks regardless of whether the full task completed. The gap between the two numbers is the paper's own evidence that single-state credit and whole-task credit diverge sharply: T3A paired with Gemini-2.5-pro reaches 53% SR against 66.4% ESAR, and InfiGUI-R1, the best fully open single-model agent, reaches 27% SR against 52.1% ESAR, meaning it clears roughly half of the individual milestones in a task about twice as often as it clears every milestone the task has. Table 6, a separate evaluation of the same runs using Gemini-2.5-pro directly as the judge instead of the trained A3RM, gives different SR numbers for several agents, which the paper reports side by side without resolving which judge is more accurate.</p>
+
+<table>
+  <thead><tr><th>Agent</th><th>SR % (A3RM, Table 3)</th><th>ESAR % (A3RM, Table 3)</th><th>SR % (Gemini-2.5-pro, Table 6)</th></tr></thead>
+  <tbody>
+    <tr><td>T3A + Gemini-2.5-pro</td><td>53</td><td>66.4</td><td>58</td></tr>
+    <tr><td>InfiGUI-R1</td><td>27</td><td>52.1</td><td>29</td></tr>
+    <tr><td>Mobile-Use + Qwen2.5-VL</td><td>16</td><td>39.5</td><td>19</td></tr>
+    <tr><td>UI-Venus</td><td>20</td><td>32.0</td><td>21</td></tr>
+    <tr><td>Qwen2.5-VL</td><td>3</td><td>14.2</td><td>5</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: arXiv:2501.01149v3, Table 3 (A3RM-evaluated) and Table 6 (Gemini-2.5-pro-evaluated), read 30 October 2026.</p>
+
+<svg viewBox="0 0 760 280" style="width:100%;height:auto" role="img" aria-label="Bar chart comparing A3's SR, success rate, against ESAR, essential state achievement rate, for five agents judged by A3RM. T3A plus Gemini-2.5-pro scores 53 percent SR against 66.4 percent ESAR. InfiGUI-R1 scores 27 percent SR against 52.1 percent ESAR. Mobile-Use plus Qwen2.5-VL scores 16 percent SR against 39.5 percent ESAR. UI-Venus scores 20 percent SR against 32.0 percent ESAR. Qwen2.5-VL scores 3 percent SR against 14.2 percent ESAR. In every case ESAR is substantially higher than SR, showing agents clear individual milestones far more often than they clear every milestone in a task.">
+<rect x="0" y="0" width="760" height="280" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="24" font-size="13" font-weight="600">SR vs. ESAR, A3RM-judged (Table 3)</text>
+<text x="20" y="48" font-size="9.5" fill="#8893a8">T3A + Gemini-2.5-pro</text>
+<rect x="190" y="40" width="159" height="12" fill="#5ad1a0"/><text x="353" y="50" font-size="9" fill="#e9ecf2">53% SR</text>
+<rect x="190" y="54" width="199.2" height="12" fill="#8893a8"/><text x="393" y="64" font-size="9" fill="#e9ecf2">66.4% ESAR</text>
+<text x="20" y="92" font-size="9.5" fill="#8893a8">InfiGUI-R1</text>
+<rect x="190" y="84" width="81" height="12" fill="#5ad1a0"/><text x="275" y="94" font-size="9" fill="#e9ecf2">27% SR</text>
+<rect x="190" y="98" width="156.3" height="12" fill="#8893a8"/><text x="350" y="108" font-size="9" fill="#e9ecf2">52.1% ESAR</text>
+<text x="20" y="136" font-size="9.5" fill="#8893a8">Mobile-Use + Qwen2.5-VL</text>
+<rect x="190" y="128" width="48" height="12" fill="#5ad1a0"/><text x="242" y="138" font-size="9" fill="#e9ecf2">16% SR</text>
+<rect x="190" y="142" width="118.5" height="12" fill="#8893a8"/><text x="312" y="152" font-size="9" fill="#e9ecf2">39.5% ESAR</text>
+<text x="20" y="180" font-size="9.5" fill="#8893a8">UI-Venus</text>
+<rect x="190" y="172" width="60" height="12" fill="#5ad1a0"/><text x="254" y="182" font-size="9" fill="#e9ecf2">20% SR</text>
+<rect x="190" y="186" width="96" height="12" fill="#8893a8"/><text x="290" y="196" font-size="9" fill="#e9ecf2">32.0% ESAR</text>
+<text x="20" y="224" font-size="9.5" fill="#8893a8">Qwen2.5-VL</text>
+<rect x="190" y="216" width="9" height="12" fill="#5ad1a0"/><text x="203" y="226" font-size="9" fill="#e9ecf2">3% SR</text>
+<rect x="190" y="230" width="42.6" height="12" fill="#8893a8"/><text x="236" y="240" font-size="9" fill="#e9ecf2">14.2% ESAR</text>
+<rect x="20" y="258" width="12" height="12" fill="#5ad1a0"/><text x="38" y="268" font-size="9" fill="#c4ccda">SR, every essential state found</text>
+<rect x="250" y="258" width="12" height="12" fill="#8893a8"/><text x="268" y="268" font-size="9" fill="#c4ccda">ESAR, individual states found, pooled</text>
+</g></svg>
+
+<h2 id="phoneshell-checks">Why phoneshell's checker makes the opposite bet</h2>
+
+<p>phoneshell faces the same category of app, dynamic, real, closed-source consumer software, and its own module docstring in <code>bench/verify.py</code> states the reasoning directly: "Every check reads the phone directly rather than believing the agent's account of itself... Where a check can be made against real device state rather than against pixels, it is: state is harder to fake and does not move when Apple redesigns a screen." Its checks dispatch against a live accessibility tree, a foreground app identifier, or a UI element's actual position and value, read through WebDriverAgent. The one exception the file names explicitly is the <code>answer_contains</code> check, used only for tasks whose deliverable is information rather than a state change, where there is nothing on the device to inspect, so the model's stated answer is scanned instead, against a page phoneshell hosts itself so the ground truth cannot drift. That single carve-out is the full extent to which phoneshell's grading ever resembles A3RM's screenshot-only judgment: everywhere a state read is possible, phoneshell takes it, and A3 takes the opposite path by design, arguing that state reads do not generalize across a diverse app set the way a visual judge does.</p>
+
+<svg viewBox="0 0 820 260" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting two opposite answers to the same question: how to grade task completion on dynamic, real mobile apps. A3's answer is to judge only from screenshots with a trained multimodal reward model, explicitly rejecting device-state checks as not suitable for apps that constantly change. phoneshell's answer is to check live device state, such as the accessibility tree or foreground app, whenever possible, falling back to the agent's own stated answer only for the one task type with nothing on the device to inspect.">
+<rect x="0" y="0" width="820" height="260" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Same problem, opposite architectural bet</text>
+<rect x="20" y="55" width="360" height="120" rx="8" fill="#262d3d" stroke="#f2a65a"/>
+<text x="200" y="78" font-size="11.5" font-weight="600" text-anchor="middle">A3 (arXiv:2501.01149)</text>
+<text x="35" y="100" font-size="10" fill="#c4ccda">device-state checks called "not suitable"</text>
+<text x="35" y="120" font-size="10" fill="#c4ccda">A3RM judges a sliding window of screenshots</text>
+<text x="35" y="142" font-size="9.5" fill="#f2a65a">no accessibility tree or view hierarchy read, ever</text>
+<text x="35" y="160" font-size="9.5" fill="#8893a8">best agent: 53% SR, 66.4% ESAR (Table 3)</text>
+<rect x="440" y="55" width="360" height="120" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="620" y="78" font-size="11.5" font-weight="600" text-anchor="middle">phoneshell bench/verify.py</text>
+<text x="455" y="100" font-size="10" fill="#c4ccda">"state is harder to fake" than pixels</text>
+<text x="455" y="120" font-size="10" fill="#c4ccda">Check reads tree, app id, element state</text>
+<text x="455" y="142" font-size="9.5" fill="#5ad1a0">pixels (the model's own answer) used only</text>
+<text x="455" y="158" font-size="9.5" fill="#5ad1a0">for tasks with no device state to inspect</text>
+<text x="20" y="205" font-size="10" fill="#8893a8">Neither bet is free: A3's screenshot judge must generalize across unfamiliar apps without ground truth;</text>
+<text x="20" y="223" font-size="10" fill="#8893a8">phoneshell's state-reading bet needs an accessibility tree to exist and say something true, which it does not always do.</text>
+<text x="20" y="245" font-size="10" fill="#8893a8">Sources: arXiv:2501.01149, section 3.3; phoneshell/bench/verify.py, read 30 October 2026.</text>
+</g></svg>
+
+<h2 id="what-it-means">What it means for choosing a verification method</h2>
+
+<ul>
+  <li>A3's rejection of device state is a scale argument: 20 apps across 20 categories, built and maintained by different companies, cannot be assumed to expose a stable or even accessible internal state, so a visual judge is the only method that transfers across all of them without per-app engineering.</li>
+  <li>phoneshell's acceptance of device state is a depth argument: within one phone's set of real apps, deliberately curated and re-verified when they change, a tree read is available often enough, and reliable enough once <code>verify.py</code>'s own consistency gate confirms the label is actually drawn where claimed, that paying the engineering cost per app is worth not depending on a judge model's visual accuracy at all.</li>
+  <li>The two are not actually in conflict as a general claim, they are each correct for the regime they were built for. A system trying to cover hundreds of unfamiliar third-party apps should expect to need something closer to A3RM; a system holding a fixed, maintained set of real apps on one device should expect device-state checks to pay for themselves, as phoneshell's own 153 assertions across 80 tasks, 133 of them already a direct state read according to this site's own prior measurement, suggest it has.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># phoneshell's own stated reasoning for preferring device state
+sed -n '1,10p' phoneshell/bench/verify.py
+
+# the one exception: grading from the model's stated answer, not device state
+grep -n "answer_contains" -A10 phoneshell/bench/verify.py
+
+# every other check kind dispatches against live device state
+grep -n "^def _dispatch" -A 15 phoneshell/bench/verify.py
+
+# A3's own stated rejection of function-based, device-state checks
+curl -s https://arxiv.org/html/2501.01149v3 | grep -iE "not suitable|essential state|A3RM"
+
+# A3's Table 3 and Table 6 results, as quoted above
+curl -s https://arxiv.org/html/2501.01149v3 | grep -iE "Table 3|Table 6|ESAR"</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim A3's paper explicitly calls function-based, device-state verification unsuitable for its benchmark and that A3RM's judgment is based on screenshots alone with no accessibility-tree or view-hierarchy input anywhere in the pipeline; that is checkable against the paper's section 3.3 and would be false if a later revision adds any state-reading component. We also claim phoneshell's checker reads device state for every check kind except <code>answer_contains</code>; that is checkable directly against <code>bench/verify.py</code>'s dispatch table and would be false the moment a screenshot-only judge is added there. Neither claim says one project's choice is correct in general, only that the two made opposite calls for a similar-sounding problem; we will revisit this piece if phoneshell ever adds a vision-judged check kind, or if a later version of A3 adds device-state verification, by 30 April 2027.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Chai, Tang, Xiao, Lin, Li, Zhang, Liu, Zhao, Liu, Wang, Ren, Han, Zhang, Huang, Li, <a href="https://arxiv.org/abs/2501.01149">A3: Android Agent Arena for Mobile GUI Agents with Essential-State Procedural Evaluation</a>, arXiv:2501.01149, first submitted 2 January 2025, latest revision (v3) 12 January 2026, read 30 October 2026.</li>
+      <li>Full text, section 3.3, Table 3 and Table 6: <a href="https://arxiv.org/html/2501.01149v3">arxiv.org/html/2501.01149v3</a>.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/bench/verify.py</code>, read 30 October 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
