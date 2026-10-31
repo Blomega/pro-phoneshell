@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AndroidControl-Curated finds 24 to 38 percent of labels wrong per category; phoneshell's checker has no recorded action to be wrong about - Blolabel</title>
+<meta name="description" content="Leung, Xi and Zuo (arXiv:2510.18488, submitted 21 October 2025) re-audit AndroidControl's ground-truth action labels and find three error categories covering 24.13%, 8.12% and 37.63% of samples reviewed, lifting curated success rates by 11 to 18 points for five re-tested models. phoneshell's 80 tasks carry no recorded action sequence to mislabel: a Check asserts device state after the run, not whether a step matched a stored click.">
+<link rel="canonical" href="https://blolabel.ai/blog/ground-truth-wrong-38-percent-phoneshell-checks-have-no-recorded-action/">
+<meta property="og:title" content="AndroidControl-Curated finds 24 to 38 percent of labels wrong per category; phoneshell's checker has no recorded action to be wrong about - Blolabel">
+<meta property="og:description" content="A benchmark purification pass on AndroidControl finds three label-error categories covering roughly a quarter to over a third of reviewed samples, and curated scores rise 11 to 18 points for five models. phoneshell's own 80 tasks are graded from device state after the run, not from matching a pre-recorded action, so this specific failure mode has nothing to attach to.">
+<meta property="og:url" content="https://blolabel.ai/blog/ground-truth-wrong-38-percent-phoneshell-checks-have-no-recorded-action/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/ground-truth-wrong-38-percent-phoneshell-checks-have-no-recorded-action-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "AndroidControl-Curated finds 24 to 38 percent of labels wrong per category; phoneshell's checker has no recorded action to be wrong about", "description": "AndroidControl-Curated (arXiv:2510.18488) re-audits AndroidControl's ground-truth action labels and finds three error categories covering 24.13%, 8.12% and 37.63% of reviewed samples, lifting curated success rates 11 to 18 points for five re-tested models. phoneshell's own tasks carry no recorded action sequence to mislabel, since a Check asserts device state after the run rather than matching a stored click.", "datePublished": "2026-10-30", "dateModified": "2026-10-30", "url": "https://blolabel.ai/blog/ground-truth-wrong-38-percent-phoneshell-checks-have-no-recorded-action/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/ground-truth-wrong-38-percent-phoneshell-checks-have-no-recorded-action/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/ground-truth-wrong-38-percent-phoneshell-checks-have-no-recorded-action-hero.png", "citation": ["https://arxiv.org/abs/2510.18488", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-30">30 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>AndroidControl-Curated finds 24 to 38 percent of labels wrong per category; phoneshell's checker has no recorded action to be wrong about</h1>
+  <p class="standfirst">Leung, Xi and Zuo re-audited AndroidControl's ground-truth action labels and sorted the damage into three categories covering 24.13%, 8.12% and 37.63% of reviewed samples. Fixing them lifts curated success rates 11 to 18 points for five re-tested models, all of which were being marked wrong for picking an action the original label never considered valid. phoneshell's 80 tasks cannot carry this specific failure, not because its labels are better audited, but because its checker never records a "correct" action to compare against in the first place.</p>
+
+<p>AndroidControl-Curated: Revealing the True Potential of GUI Agents through Benchmark Purification (arXiv:2510.18488, Leung, Xi, Zuo, submitted 21 October 2025) starts from a specific complaint about AndroidControl, the widely used Android action-grounding benchmark: its ground-truth labels were written once, by one annotator per episode, and never checked against the actual range of actions that would complete the task. The authors ran automated corrections, then had an expert panel review a sample of them, then had an independent auditor check the panel's calls. Three error categories came out of that process, reported as a share of reviewed samples: Unclear Task, 24.13%, where the instruction itself does not pin down one action; Multiple Valid Actions, 8.12%, where the recorded action was correct but not the only correct one, so a model choosing a different valid action was marked wrong; and Wrong Ground Truth, 37.63%, where the recorded label was simply incorrect. The paper's own text is inconsistent about the total: its introduction cites "approximately 30%" of the benchmark as flawed, while section 3.4.1 calls the combined category share "over 70%," and the three numbers above sum to 69.88%, matching neither figure exactly. We report both statements rather than resolve the discrepancy, since the paper does not explain it.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/ground-truth-wrong-38-percent-phoneshell-checks-have-no-recorded-action-hero.png" alt="Abstract technical illustration on a dark grid: a single stream of recorded data splits into three diverging paths of different widths, one labelled only by its size representing an unclear task, one narrower representing multiple valid actions, one widest representing a wrong ground truth label, each path fading from solid to a dashed outline as it diverges, cool blues and slate greys with one amber accent marking where the paths first separate, no icons or text" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="the-numbers">What purification is worth, model by model</h2>
+
+<p>Table 2 of the paper is the only place it compares original AndroidControl scores against the curated version for the same models, and it covers five: GUI-R1-3B, GUI-R1-7B, Infi-GUI-R1, Qwen3-VL-235B and Magma-R1, all on the Hard subset. Every one of them gained from fixing the labels, and the gains are not small: Qwen3-VL-235B rose from 61.2% to 76.5%, a gain of 15.3 points, and Magma-R1 rose from 57.6% to 75.3%, a gain of 17.7 points. The paper does not report an original-benchmark score for GPT-4o, Qwen3-VL-30B, OS-Atlas-4B, UI-R1 or any Gemini model, so those five appear only with their curated-only numbers in Table 1, not as part of this comparison.</p>
+
+<table>
+  <thead><tr><th>Model</th><th>Original AndroidControl SR (%)</th><th>Curated-Box SR (%)</th><th>Final Curated SR (%)</th><th>Total gain</th></tr></thead>
+  <tbody>
+    <tr><td>GUI-R1-3B</td><td>41.5</td><td>49.4</td><td>54.4</td><td>+12.9</td></tr>
+    <tr><td>GUI-R1-7B</td><td>46.3</td><td>53.2</td><td>57.5</td><td>+11.2</td></tr>
+    <tr><td>Infi-GUI-R1</td><td>59.0</td><td>67.6</td><td>70.7</td><td>+11.7</td></tr>
+    <tr><td>Qwen3-VL-235B</td><td>61.2</td><td>71.7</td><td>76.5</td><td>+15.3</td></tr>
+    <tr><td>Magma-R1</td><td>57.6</td><td>69.1</td><td>75.3</td><td>+17.7</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: arXiv:2510.18488, Table 2, Hard subset, read 30 October 2026.</p>
+
+<svg viewBox="0 0 760 280" style="width:100%;height:auto" role="img" aria-label="Bar chart of AndroidControl-Curated's three label-error categories as a share of reviewed samples: Unclear Task 24.13 percent, Multiple Valid Actions 8.12 percent, Wrong Ground Truth 37.63 percent, summing to 69.88 percent, a figure the paper's own section 3.4.1 separately describes as over 70 percent while its introduction describes the overall flaw rate as approximately 30 percent.">
+<rect x="0" y="0" width="760" height="280" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="13" font-weight="600">Share of reviewed AndroidControl samples by error category</text>
+<text x="20" y="54" font-size="10" fill="#8893a8">Unclear Task</text>
+<rect x="150" y="44" width="145" height="18" fill="#5ad1a0"/><text x="300" y="57" font-size="10" fill="#e9ecf2">24.13%</text>
+<text x="20" y="94" font-size="10" fill="#8893a8">Multiple Valid Actions</text>
+<rect x="150" y="84" width="49" height="18" fill="#f2a65a"/><text x="204" y="97" font-size="10" fill="#e9ecf2">8.12%</text>
+<text x="20" y="134" font-size="10" fill="#8893a8">Wrong Ground Truth</text>
+<rect x="150" y="124" width="226" height="18" fill="#e2574c"/><text x="381" y="137" font-size="10" fill="#e9ecf2">37.63%</text>
+<line x1="150" y1="160" x2="150" y2="200" stroke="#8893a8" stroke-width="1" stroke-dasharray="3,3"/>
+<text x="20" y="195" font-size="10" fill="#8893a8">Sum of the three categories: 69.88%</text>
+<text x="20" y="215" font-size="10" fill="#8893a8">Section 3.4.1 calls this combined share "over 70%"; the introduction separately gives "approximately 30%" for overall benchmark flaws.</text>
+<text x="20" y="255" font-size="10" fill="#8893a8">Source: arXiv:2510.18488, section 3.4.1, read 30 October 2026. Both figures are quoted as written; the paper does not reconcile them.</text>
+</g></svg>
+
+<h2 id="phoneshell-checks">Why phoneshell's checker cannot have this error, by construction</h2>
+
+<p>AndroidControl's flaw is specific to one benchmark design: a human annotator performs a task once, records the action taken at each step as the label, and every model is then graded on whether it reproduces that recorded action. If the annotator's path was ambiguous, non-unique, or simply wrong, every model that disagrees with it is marked wrong too, regardless of what actually happened on the device afterward. <code>bench/schema.py</code> states phoneshell's own benchmark design in its module docstring: a task is three parts, "setup" (deterministic steps, no model involved), "instruct" (the sentence handed to the agent), and "checks" (assertions run afterward that decide pass or fail automatically), and the file is explicit that "the checker is the product." A <code>Check</code> dataclass carries a <code>kind</code>, resolved in <code>bench/verify.py</code> against live device state: a foreground app, an element present in the accessibility tree, a toggle's position, or, for the one task type with no device state to inspect, a scan of the agent's own stated answer. None of this is a comparison against a recorded action sequence. There is no field anywhere in <code>Check</code> for "the action the annotator took," so a model that reaches the same end state by a different path passes exactly the same as one that reproduces the original author's keystrokes.</p>
+
+<svg viewBox="0 0 820 280" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting AndroidControl's grading method with phoneshell's. AndroidControl grades a model by comparing its chosen action at each step against one annotator's recorded action, so an unclear instruction, multiple valid actions, or a wrong original label all mark correct behavior as wrong. phoneshell's bench slash verify dot py instead resolves a Check against live device state after the task finishes, such as the foreground app or an element in the accessibility tree, with no recorded action anywhere to disagree with.">
+<rect x="0" y="0" width="820" height="280" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Grading against a recorded action, versus grading against device state</text>
+<rect x="20" y="55" width="360" height="130" rx="8" fill="#262d3d" stroke="#e2574c"/>
+<text x="200" y="78" font-size="11.5" font-weight="600" text-anchor="middle" fill="#e2574c">AndroidControl (original)</text>
+<text x="35" y="100" font-size="10" fill="#c4ccda">one annotator records one action per step</text>
+<text x="35" y="120" font-size="10" fill="#c4ccda">model's action compared to that recording</text>
+<text x="35" y="142" font-size="9.5" fill="#e2574c">wrong, ambiguous or non-unique labels</text>
+<text x="35" y="158" font-size="9.5" fill="#e2574c">mark correct behavior as a failure</text>
+<text x="35" y="176" font-size="9.5" fill="#8893a8">24.13% / 8.12% / 37.63% of samples, Table in section 3.4.1</text>
+<rect x="440" y="55" width="360" height="130" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="620" y="78" font-size="11.5" font-weight="600" text-anchor="middle">phoneshell bench/verify.py</text>
+<text x="455" y="100" font-size="10" fill="#c4ccda">setup puts the phone in a known state</text>
+<text x="455" y="120" font-size="10" fill="#c4ccda">Check reads live device state afterward</text>
+<text x="455" y="142" font-size="9.5" fill="#5ad1a0">no recorded action field exists in Check</text>
+<text x="455" y="158" font-size="9.5" fill="#5ad1a0">any path to the right end state passes</text>
+<text x="455" y="176" font-size="9.5" fill="#8893a8">"the checker is the product" (bench/schema.py)</text>
+<text x="20" y="225" font-size="10" fill="#8893a8">This does not mean phoneshell's own task instructions or setup scripts are error-free; it means label-matching errors</text>
+<text x="20" y="243" font-size="10" fill="#8893a8">specifically, the category AndroidControl-Curated measures, have nothing to attach to in a state-asserted checker.</text>
+<text x="20" y="265" font-size="10" fill="#8893a8">Sources: arXiv:2510.18488, section 3.4.1; phoneshell/bench/schema.py and bench/verify.py, read 30 October 2026.</text>
+</g></svg>
+
+<h2 id="what-it-means">What it means for choosing or building a mobile agent benchmark</h2>
+
+<ul>
+  <li>A benchmark that scores action-matching against one recorded trajectory needs exactly the kind of purification pass AndroidControl-Curated ran, and the 11 to 18 point swings in Table 2 say the uncorrected scores were not close approximations, they were measuring annotator idiosyncrasy as much as model skill.</li>
+  <li>A benchmark that scores device state after the fact, phoneshell's design, sidesteps this category of error but does not replace the need for review: its own setup scripts and check assertions can still be wrong, just not wrong in this specific way. The two designs trade one failure mode for a different one, they are not simply better or worse along the same axis.</li>
+  <li>The paper's own unresolved gap, "approximately 30%" versus "over 70%" for what sounds like the same quantity, is itself a small instance of exactly the problem it is diagnosing: a reported number that nobody re-audited before publication. Treat the Table 2 figures, which are per-model and reproducible from the released data, as the load-bearing claim here, not the prose summaries.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># phoneshell's own statement of what a task and a check are
+sed -n '1,20p' phoneshell/bench/schema.py
+
+# the Check dataclass: confirm there is no recorded-action field
+grep -n "class Check" -A 20 phoneshell/bench/schema.py
+
+# how a Check is resolved against live device state, not a recorded path
+sed -n '1,20p' phoneshell/bench/verify.py
+
+# AndroidControl-Curated's own error-category table
+curl -s https://arxiv.org/html/2510.18488 | grep -iE "Unclear Task|Multiple Valid|Wrong Ground Truth"
+
+# AndroidControl-Curated's Table 2, original vs curated
+curl -s https://arxiv.org/html/2510.18488 | grep -iE "Table 2|GUI-R1|Magma-R1"</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim phoneshell's <code>Check</code> dataclass has no field recording a reference action sequence, only a <code>kind</code> resolved against live device state, which is checkable directly against <code>bench/schema.py</code> and would be false the moment such a field is added. We also claim the five models in AndroidControl-Curated's Table 2 gained 11.2 to 17.7 points purely from label correction on an unchanged action space, which rests entirely on the paper's own methodology being sound; a later audit finding the correction process itself introduced new errors, something the paper does not rule out given its own unreconciled 30%-versus-70% figures, would undercut the size of the claimed gain without changing the direction of it. We will revisit this piece if either phoneshell's checker design changes to include trajectory matching, or a follow-up paper re-audits AndroidControl-Curated's own corrections, by 30 April 2027.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Leung, Xi, Zuo, <a href="https://arxiv.org/abs/2510.18488">AndroidControl-Curated: Revealing the True Potential of GUI Agents through Benchmark Purification</a>, arXiv:2510.18488, submitted 21 October 2025, read 30 October 2026.</li>
+      <li>Full text, section 3.4.1 and Tables 1-2: <a href="https://arxiv.org/html/2510.18488">arxiv.org/html/2510.18488</a>.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/bench/schema.py</code> and <code>phoneshell/bench/verify.py</code>, read 30 October 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
