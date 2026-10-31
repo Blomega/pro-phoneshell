@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Apple's onscreen awareness needs the app to declare a persistent identifier; phoneshell gets a MAC address and a raw pointer baked into one instead - Blolabel</title>
+<meta name="description" content="WWDC26 session 343 (Apple, presented by Antonio Cancio) shows apps attaching a persistent EntityIdentifier to on-screen content so Siri can resolve references like \"play the third one\" without reading pixels or a tree. phoneshell's agent drives apps that never opt into this: memory.py's own comments quote a real WebDriverAgent identifier baking in a MAC address and a raw pointer, which has to be stripped by regex before two sightings of a screen can even be treated as the same screen.">
+<link rel="canonical" href="https://blolabel.ai/blog/onscreen-awareness-needs-the-app-phoneshell-gets-a-mac-address-instead/">
+<meta property="og:title" content="Apple's onscreen awareness needs the app to declare a persistent identifier; phoneshell gets a MAC address and a raw pointer baked into one instead - Blolabel">
+<meta property="og:description" content="Apple's WWDC26 onscreen awareness APIs ask a developer to attach a stable EntityIdentifier to what's on screen. phoneshell has no such cooperation from the ordinary consumer apps it drives, and has to detect and strip instance-specific noise, including a real identifier containing a Bluetooth MAC address, out of WebDriverAgent's raw accessibility tree before two visits to a screen can be recognized as the same screen.">
+<meta property="og:url" content="https://blolabel.ai/blog/onscreen-awareness-needs-the-app-phoneshell-gets-a-mac-address-instead/">
+<meta property="og:type" content="event">
+<meta property="og:image" content="https://blolabel.ai/images/blog/onscreen-awareness-needs-the-app-phoneshell-gets-a-mac-address-instead-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Apple's onscreen awareness needs the app to declare a persistent identifier; phoneshell gets a MAC address and a raw pointer baked into one instead", "description": "WWDC26 session 343 shows apps attaching a persistent EntityIdentifier to on-screen content so Siri can resolve references without reading pixels or a tree. phoneshell drives apps that never opt into this, and strips instance-specific noise, including a real WebDriverAgent identifier containing a Bluetooth MAC address and a raw pointer, before two visits to a screen can be treated as the same screen.", "datePublished": "2026-10-30", "dateModified": "2026-10-30", "url": "https://blolabel.ai/blog/onscreen-awareness-needs-the-app-phoneshell-gets-a-mac-address-instead/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/onscreen-awareness-needs-the-app-phoneshell-gets-a-mac-address-instead/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/onscreen-awareness-needs-the-app-phoneshell-gets-a-mac-address-instead-hero.png", "citation": ["https://developer.apple.com/videos/play/wwdc2026/343/", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAABOCAMAAAD4iTj8AAAAilBMVEVMaXFiXmJhXmEVieRkYGRiXmJiXmJEaZJiX2IWjehNaIJhXmEUjOcVjOdgXWBjX2MWjecUjOZiXmJiXmIUi+UVjehUoN7w9/33+/7q9Pzg7/p8gIlkYGQXjuj///9oZGgWk/JmY2YVjullYWUJh+dtaG0olumr1/dSq+7T6vo6n+tntfCMx/N7vvJEi25LAAAAHHRSTlMAakku/HusA/z7Eo+hwDL30nXizUnjHfvKolE8aPCOgAAAAAlwSFlzAAALEgAACxIB0t1+/AAAB35JREFUeJztmn1zsjoThwMCCaCg4EvbASFA1bZ3v//XO7MJeQFBwJ55nnNP85v+oSYB9mJ3k2yKkJGRkZGRkZGRkZGRkZGRkZGRkdHPhZXQ7xPuGH2P4Gk4P8L6P3slGCOEV7vderNZr3f7I/yEfpEwQqvd1i+FDpt90PWCwBKyF147kiOjxc8VzborvtdI++gV0Grtl2XuC1Vledhh5QQY2e8F17u3yASMQjnSXehVGFnaXReOxUvug3c+WJ9LMQbblbwpRnYdO6CYLgZA25HFEwAKddfxscdVX0eIaPnw6ueR2xw3ZaVZLxiU/k7cFSObkgzkFIsBFE478hkAYuw4AIzWld/TYbvetw6M0Ur69XZ4/GpbCvOrBiQQ5KUgMAeACjM95voAxoJxKH5nAyh7r6+qyrLacAcGAK095RAAjI7K/uZy+/q6fVYtAt8XBKYB6I89wwPu0tTQtZ4GkEMMl/4exkwBQHijhv85nUEfN+kELYFJABjhyA09L7QxQpEtFPQAoMCCTlakJVhucWDDcM9zoU363dMAcnj2A5/NHwLojL6ehb6ED1Q+c6QpABjZqUMhXdM0QuG7Q5lY3tcB2AnvFHuRPsUg24spaykojVMLuP0YQO6Xa3gxDwFgtJfpr/mW9p9Pl0oM2szwAIzcmhLiOA4hNI7CIiYgh3YAvFu2Q6ET62WpBBt4tMjYcN5WJHbrd0sB+FwiFRyC6RDQAuBDATh/d4PgMQAwkvDmLCM09age9QIAqcOklr1I0RLAKErUaDaM1DVLF8sBlEzSBao9ZJcHADDaqwT4qdl/vioA26kQYI3KAuKIL10AGXEcrReJWRSA/e2llYjD8CwHsGbypfvuJgEoB2huOoAPLZIYxocekN6ZMASgZ2R7IZwWyi3kpwzwLAewZ9j2/kwA0NbCyvPmSwcgkwBPJY8AqDb++p0HACDO5eestVFaXVMVImDxYgAVvCssX+sMADuVAUYBQCp5DMBTNlBKVUDfASAFLSQsUoRglPQeSB7KlQiBCHnGAxAKtjyz+9VqCsB6GgC/zKMQCGRuI5ln2558jf0cQJzQtmQzoSnGKIrl1xAj7EkcbOziHLADbVr72/T1aBbQ5oCxHNDOA6MAwAb5/l0gHgoj+gAoS/yyOUsCJCPAoSm7Wtrycdj257lZoOT255C9HgPABwWgupyGZoEZAOz2mUmdsCJCkAx6AKlTFqCyOcsiwNG20jACuVS72E/WAX6Vs1XsQwCBBiBv1ELwfL4tASAs5E+J0cg6gMe8aia1jZDyeS4REVkWPwFAU3XgCWECgLYNbj5PQw4wDUA9Zbt86W5/epsh3SUYgMFJEgBEPwKQ+5s9b57vAdpa+PT5/wDAl8Liy1Me4OtL4bJcT4UAVjthRuDPgP0DADrFNz0EpI+TIQBUNHcBCJ+vO8qeygGlvhb22yXM3FmgyS/N7eN0Pl0vzacqi8zIATJvpcAGYTEt9gC0zWrW5ElQTBlx0pX3xEpww5bCG7+NbLaKnbcOaKrb9eP01TSXz7zJr+ePP5+NXFHvdStpGukKkDaV1xZbvo1Ng5kNzSLPizQnr4uDIMBRFADDIAiCpxdCaN8ucPmGeM5KsLnxreD1dskv3+3nC3eC6nDsLHdJrKm2tIUQyWI3ilyxLLgHEFtRFIooh2kRoSiTCyHobMdJ6rk2cH1mN7jn4Sl/YRviGXsBEfwQ/yc5F3ywVOCXG30v0BVf26ipLCvieHwpTDIaO3LjyI3CqSKQul6cZVAYIUnq/cADkAhteHkdAHdnB6xnZwVw7q0G2h3FMACHAZA+DzYKe4Y3Q5DepQfwiNA2QwXAg8pIRuD44QkAGGLnuBOze+VrAPLK32o6MLugHqCXgro6XRqfQXzsAVpa6+K58wB9KIsAfSeRqXoBrxYsB3DgkiWRTgjkeVXq4gvFbakvgPq6Nv2K0AAAfUvLHl5Y2s8BtV42IZTVvTCyZQHl5wWRiksuCyB8NQDq6AuqxtywfaklgHt9VlvIR489AGHvXQuCRG5ougBqL5FOQMh7KJ7fqnUyjCBLiM8URX2tJNifBrtqC94wWq8F9vXdtMV1u26Llh3BLMB24F4BRVD2V9iuPNByO0djllU4bSen8LRjtwRqolKZXhSdPhrDY1Vh5gBTAKB68MD+81WeC4hjyq7eRWnTjYuC1jUtYqt3HKp/c+Oihk40sXQLAjehBaV1VlNoC1VZfMbhKB4GAE6+CaYBYHQcTwHn86u4beQOq63vYxRYXpokaRghZHda9W8oCqGTJyr/wgQU2CEMT1IvtNlT89/VXcePxzEAuFdV+uugezbYlTr1ehsn8DL7NJPBDAJ5qjPai3e6O0Djw1nToqNtxADcy9+u5dngQLOcBTiBl/H3r53mDUtrFw/fbez0lT/dmdH+1G2a8+81GO22m67Wu91K+BFGq82gttrZ9/F1yPzTG/qbhZf4Eb53gtMrbAH+DuHH/yQz4bttp7eXU8/8v8b+f0Ng6/Ht9YXp9fWN589fJTzx/TcIyw+/0XojIyMjIyMjIyMjIyMjIyP0n9Y/P2/lF8zxuoMAAAAASUVORK5CYII=" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind event">event</span>
+    <time datetime="2026-10-30">30 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>Apple's onscreen awareness needs the app to declare a persistent identifier; phoneshell gets a MAC address and a raw pointer baked into one instead</h1>
+  <p class="standfirst">WWDC26 session 343 shows a developer attaching a persistent EntityIdentifier to whatever is on screen so Siri can resolve "play the third one" without a word of pixel or tree parsing. That cooperation does not exist in the ordinary, unmodified consumer apps phoneshell drives, and its memory.py file quotes, from a real run, exactly what shows up instead: an identifier with a Bluetooth MAC address and a raw memory pointer baked into it, which has to be detected and stripped before two sightings of the same screen can be recognized as the same screen at all.</p>
+
+<p>Apple's WWDC26 session 343, "Explore advanced App Intents features for Siri and Apple Intelligence," presented by Antonio Cancio of the App Intents team, covers onscreen awareness: the mechanism that lets Siri connect what is visible on a screen to entities and actions it understands. Without it, the session states, Siri has no way to resolve a reference like "play the third one" or know which artist is meant if the artist's name is not itself visible. The session's code examples show four ways a developer opts a screen into this: attaching an <code>NSUserActivity</code> with an <code>appEntityIdentifier</code> for a screen dedicated to one primary item; a per-view <code>.appEntityIdentifier</code> annotation for a view representing one entity among several; a collection annotation, <code>.appEntityIdentifier(forSelectionType:)</code>, for lists, which fetches identifiers lazily and keeps working even after a selected row scrolls out of the view hierarchy; and UIKit and AppKit equivalents, <code>AppEntityAnnotatable</code> and <code>UICollectionViewAppIntentsDataSource</code>. Every one of these requires the identifier to be persistent, and the session separately stresses implementing fast display-representation queries, so Siri can resolve an on-screen entity without loading its full content, warning that without this Siri may ask for clarification or give up.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/onscreen-awareness-needs-the-app-phoneshell-gets-a-mac-address-instead-hero.png" alt="Abstract technical illustration on a dark grid: on the left, a clean labelled token travels from a screen shape directly into a recognition node, representing a persistent identifier an app declares on purpose; on the right, a messy string of mixed characters travels from an identical screen shape toward a filter node that strips several of its segments before a shorter, cleaned token continues on to the same kind of recognition node, cool blues and slate greys with one amber accent marking the filter node, no icons or text" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="the-mechanism">What Apple's onscreen awareness assumes the app will do</h2>
+
+<p>The design Apple describes puts the entire burden of stable identity on the app's own code. A developer who wants Siri to ground a reference to a song, a playlist, or a conversation must supply an <code>EntityIdentifier</code> that refers to the same underlying item every time it is shown, across launches, across scroll positions, across however the surrounding UI happens to be laid out that day. The session's sample code pairs a <code>SongEntity</code> or <code>AlbumEntity</code> type with a stable identifier string the app already uses internally, not with anything derived from the view hierarchy or the screen's rendered content. This works precisely because the app knows its own data model and is choosing, at build time, to expose a piece of it through a documented API. The mechanism has no fallback for an app that declines to participate: the session does not describe any way for Siri to infer an entity's identity from an app that has not adopted these annotations.</p>
+
+<table>
+  <thead><tr><th>Opt-in surface (WWDC26 session 343)</th><th>Screen scenario</th><th>What makes the identifier persistent</th></tr></thead>
+  <tbody>
+    <tr><td><code>NSUserActivity.appEntityIdentifier</code></td><td>a screen dedicated to one primary item</td><td>attached to the activity itself, not derived from the view hierarchy</td></tr>
+    <tr><td><code>.appEntityIdentifier</code> (per-view annotation)</td><td>a view representing one entity among several on screen</td><td>tags that one view directly, independent of where it sits</td></tr>
+    <tr><td><code>.appEntityIdentifier(forSelectionType:)</code> (collection annotation)</td><td>lists</td><td>fetched lazily, keeps working after a selected row scrolls out of the view hierarchy</td></tr>
+    <tr><td><code>AppEntityAnnotatable</code> / <code>UICollectionViewAppIntentsDataSource</code></td><td>UIKit and AppKit screens</td><td>mirrors the SwiftUI annotations for non-SwiftUI code</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: Apple, WWDC26 session 343, "Explore advanced App Intents features for Siri and Apple Intelligence," presented by Antonio Cancio, read 30 October 2026.</p>
+
+<h2 id="phoneshell-apps">What phoneshell gets from an app that never opted in</h2>
+
+<p>phoneshell drives ordinary, unmodified consumer iOS apps, none of which were built with onscreen awareness or any equivalent agent-facing API in mind. Its own grounding problem, deciding whether a screen the agent is looking at now is the same screen it saw before, is solved entirely from what WebDriverAgent's accessibility tree happens to expose, and <code>memory.py</code>'s own comments document exactly how unreliable that is as a source of stable identity. The file quotes two real identifiers pulled from a live run of iOS Settings:</p>
+
+<pre><code>com.apple.settings.followUpGroupAsItem...group.account.61932825-AFFA-4F26-...
+com.apple.settings.connectedHeadphone.38:C4:3A:26:96:EE-0x85a8cf0f0</code></pre>
+
+<p>The comment accompanying them is direct about what is wrong: the first contains a UUID, the second a Bluetooth MAC address and a raw memory pointer, both of which "survive within one launch and change on the next, which silently turns every revisit into a screen the agent has never seen." Where Apple's mechanism asks the app to hand over an identifier that means "this exact song" forever, iOS Settings, with no obligation to do any such thing, hands phoneshell an identifier that means "this exact Bluetooth session, at this exact address in memory, right now." <code>memory.py</code> answers this not by requesting better identifiers, which it has no way to do, but with a regex table, <code>_ID_NOISE</code>, that pattern-matches and strips UUIDs, MAC addresses, and similar instance-specific fragments before an identifier is allowed anywhere near a screen fingerprint.</p>
+
+<svg viewBox="0 0 820 280" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting two sources of on-screen identity. Apple's onscreen awareness requires the app's own code to declare a persistent EntityIdentifier at build time, tied to the app's internal data model, with no fallback for an app that does not participate. phoneshell has no such cooperation from ordinary consumer apps, so its memory dot py strips instance-specific noise, such as a quoted real identifier containing a Bluetooth MAC address and a raw memory pointer from iOS Settings, with a regex table before treating two sightings of a screen as the same screen.">
+<rect x="0" y="0" width="820" height="280" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Declared identity, versus identity recovered from noise</text>
+<rect x="20" y="55" width="360" height="135" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="200" y="78" font-size="11.5" font-weight="600" text-anchor="middle">Apple onscreen awareness (WWDC26 #343)</text>
+<text x="35" y="100" font-size="10" fill="#c4ccda">app declares EntityIdentifier at build time</text>
+<text x="35" y="120" font-size="10" fill="#c4ccda">tied to the app's own internal data model</text>
+<text x="35" y="142" font-size="9.5" fill="#5ad1a0">persistent by construction, by design</text>
+<text x="35" y="160" font-size="9.5" fill="#8893a8">no fallback if the app does not opt in</text>
+<text x="35" y="178" font-size="9.5" fill="#8893a8">NSUserActivity, per-view and collection annotations</text>
+<rect x="440" y="55" width="360" height="135" rx="8" fill="#262d3d" stroke="#e2574c"/>
+<text x="620" y="78" font-size="11.5" font-weight="600" text-anchor="middle" fill="#e2574c">phoneshell memory.py, unmodified apps</text>
+<text x="455" y="100" font-size="10" fill="#c4ccda">whatever WebDriverAgent's tree exposes</text>
+<text x="455" y="120" font-size="10" fill="#c4ccda">e.g. 38:C4:3A:26:96:EE-0x85a8cf0f0 (quoted, Settings)</text>
+<text x="455" y="142" font-size="9.5" fill="#e2574c">contains a MAC address and a raw pointer</text>
+<text x="455" y="160" font-size="9.5" fill="#e2574c">changes on every relaunch, by accident</text>
+<text x="455" y="178" font-size="9.5" fill="#8893a8">_ID_NOISE regex table strips it before use</text>
+<text x="20" y="225" font-size="10" fill="#8893a8">Apple's mechanism is a protocol between a cooperating app and Siri; phoneshell's problem is grounding an app that was never asked to cooperate.</text>
+<text x="20" y="243" font-size="10" fill="#8893a8">Neither identifier string was designed for an agent to key a cache on. One is deliberately stable; the other is accidentally unstable.</text>
+<text x="20" y="265" font-size="10" fill="#8893a8">Sources: developer.apple.com/videos/play/wwdc2026/343/; phoneshell/memory.py, read 30 October 2026.</text>
+</g></svg>
+
+<svg viewBox="0 0 820 260" style="width:100%;height:auto" role="img" aria-label="Flow diagram of phoneshell's screen fingerprint pipeline. A raw accessibility identifier from WebDriverAgent, the quoted connectedHeadphone string containing Bluetooth MAC address 38 colon C4 colon 3A colon 26 colon 96 colon EE and raw memory pointer 0x85a8cf0f0, enters memory dot py's underscore ID underscore NOISE regex table, which strips both the MAC address and the pointer segment, before the cleaned identifier is compared against the fingerprint of every screen phoneshell has seen before.">
+<rect x="0" y="0" width="820" height="260" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">memory.py's fingerprint pipeline for one real identifier</text>
+
+<rect x="15" y="55" width="190" height="140" rx="8" fill="#262d3d" stroke="#8893a8"/>
+<text x="110" y="78" font-size="11" font-weight="600" text-anchor="middle">WebDriverAgent tree</text>
+<text x="28" y="100" font-size="9.5" fill="#c4ccda">raw accessibility id,</text>
+<text x="28" y="116" font-size="9.5" fill="#c4ccda">read fresh each visit</text>
+<text x="28" y="140" font-size="9" fill="#e2574c">connectedHeadphone.</text>
+<text x="28" y="154" font-size="9" fill="#e2574c">38:C4:3A:26:96:EE-</text>
+<text x="28" y="168" font-size="9" fill="#e2574c">0x85a8cf0f0</text>
+
+<path d="M210 125 L260 125" stroke="#5ad1a0" stroke-width="2" fill="none"/>
+<polygon points="260,119 272,125 260,131" fill="#5ad1a0"/>
+
+<rect x="275" y="55" width="190" height="140" rx="8" fill="#262d3d" stroke="#e8a33d"/>
+<text x="370" y="78" font-size="11" font-weight="600" text-anchor="middle" fill="#e8a33d">_ID_NOISE table</text>
+<text x="288" y="100" font-size="9.5" fill="#c4ccda">memory.py's regex list</text>
+<text x="288" y="122" font-size="9.5" fill="#e8a33d">strips 38:C4:3A:26:96:EE</text>
+<text x="288" y="138" font-size="9.5" fill="#e8a33d">strips 0x85a8cf0f0</text>
+<text x="288" y="160" font-size="9.5" fill="#c4ccda">also strips bare UUIDs,</text>
+<text x="288" y="174" font-size="9.5" fill="#c4ccda">e.g. 61932825-AFFA-4F26</text>
+
+<path d="M470 125 L520 125" stroke="#5ad1a0" stroke-width="2" fill="none"/>
+<polygon points="520,119 532,125 520,131" fill="#5ad1a0"/>
+
+<rect x="535" y="55" width="130" height="140" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="600" y="78" font-size="11" font-weight="600" text-anchor="middle">cleaned id</text>
+<text x="548" y="100" font-size="9.5" fill="#c4ccda">instance noise</text>
+<text x="548" y="114" font-size="9.5" fill="#c4ccda">removed, only the</text>
+<text x="548" y="128" font-size="9.5" fill="#c4ccda">stable prefix left,</text>
+<text x="548" y="146" font-size="9.5" fill="#5ad1a0">e.g. connectedHeadphone</text>
+
+<path d="M670 125 L715 125" stroke="#5ad1a0" stroke-width="2" fill="none"/>
+<polygon points="715,119 727,125 715,131" fill="#5ad1a0"/>
+
+<rect x="730" y="55" width="75" height="140" rx="8" fill="#262d3d" stroke="#8893a8"/>
+<text x="767" y="78" font-size="10.5" font-weight="600" text-anchor="middle">screen fingerprint</text>
+<text x="742" y="102" font-size="9" fill="#c4ccda">matched</text>
+<text x="742" y="116" font-size="9" fill="#c4ccda">against</text>
+<text x="742" y="130" font-size="9" fill="#c4ccda">prior</text>
+<text x="742" y="144" font-size="9" fill="#c4ccda">visits</text>
+
+<text x="20" y="225" font-size="10" fill="#8893a8">Without this stripping step, the MAC address and pointer alone would make every relaunch of this screen look new.</text>
+<text x="20" y="243" font-size="10" fill="#8893a8">Source: phoneshell/memory.py, read 30 October 2026.</text>
+</g></svg>
+
+<h2 id="what-it-means">What it means for grounding on iOS, with and without app cooperation</h2>
+
+<ul>
+  <li>Apple's onscreen awareness is not a general solution to the grounding problem phoneshell has: it only helps for the subset of apps whose developers adopt the annotations, and consumer apps adopt new App Intents APIs on their own schedule, typically slower than an agent needing to work on them today.</li>
+  <li>phoneshell's regex-based noise stripping is a workaround for the absence of exactly the cooperation Apple's mechanism assumes, not a competing design: if every app phoneshell drove shipped onscreen awareness annotations, memory.py's fingerprinting problem would mostly disappear, because the app itself would be handing over the stable identifier phoneshell currently has to reconstruct by filtering out MAC addresses and pointers.</li>
+  <li>The gap is a measure of how far consumer iOS apps are from agent-readiness: a MAC address and a raw pointer sitting inside what is nominally an accessibility identifier is the kind of implementation detail a developer would never expose on purpose to a system built to read it, which is exactly why phoneshell has to assume nothing about any identifier's stability until it is checked.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># the real identifiers phoneshell quotes from a live iOS Settings run
+grep -n "followUpGroupAsItem\|connectedHeadphone" phoneshell/memory.py
+
+# the regex table that strips UUIDs, MAC addresses and similar noise
+grep -n "_ID_NOISE" -A 10 phoneshell/memory.py
+
+# confirm memory.py's match key is the screen fingerprint, computed after noise stripping
+sed -n '1,24p' phoneshell/memory.py
+
+# Apple's session page and its onscreen awareness chapter
+open "https://developer.apple.com/videos/play/wwdc2026/343/"
+
+# the specific annotation APIs named in the session
+#   NSUserActivity.appEntityIdentifier, .appEntityIdentifier(forSelectionType:),
+#   AppEntityAnnotatable, UICollectionViewAppIntentsDataSource</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim Apple's onscreen awareness APIs, as shown in WWDC26 session 343, require the hosting app to declare a persistent entity identifier at build time, with no mechanism shown for Siri to infer stable identity from an app that has not adopted them; that is checkable against the session itself and would be false if Apple's own documentation describes a fallback path we have not found. We also claim the two identifier strings quoted above are real output from a live run against iOS Settings, not constructed examples; that is checkable directly in <code>memory.py</code>'s own comments, dated to this repository's history. We will revisit this piece if a future iOS release ships onscreen awareness support that works without app-side annotation, or if phoneshell's own identifier-noise table needs new patterns for an app we have not yet seen, by 30 April 2027.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Apple, <a href="https://developer.apple.com/videos/play/wwdc2026/343/">Explore advanced App Intents features for Siri and Apple Intelligence</a>, WWDC26 session 343, presented by Antonio Cancio, read 30 October 2026.</li>
+      <li>Apple, <a href="https://developer.apple.com/documentation/updates/appintents.md">App Intents updates</a>, developer documentation, read 30 October 2026.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/memory.py</code>, read 30 October 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
