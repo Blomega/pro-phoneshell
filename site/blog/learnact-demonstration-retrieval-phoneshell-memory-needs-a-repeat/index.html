@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LearnAct turns one demonstration into a 32.4-point gain on a task the model has never seen; phoneshell's memory only helps on a screen it has seen before - Blolabel</title>
+<meta name="description" content="LearnAct (arXiv:2504.13805, Liu et al.) retrieves relevant demonstration knowledge by embedding a new task's instruction and ranking stored demonstrations by cosine similarity, lifting Gemini-1.5-Pro's offline accuracy from 19.3% to 51.7% on tasks it has not performed before. phoneshell's memory.py only activates once a screen's structural fingerprint repeats: on a task's first appearance, however similar to one solved before, it contributes nothing.">
+<link rel="canonical" href="https://blolabel.ai/blog/learnact-demonstration-retrieval-phoneshell-memory-needs-a-repeat/">
+<meta property="og:title" content="LearnAct turns one demonstration into a 32.4-point gain on a task the model has never seen; phoneshell's memory only helps on a screen it has seen before - Blolabel">
+<meta property="og:description" content="LearnAct's KnowSeeker finds relevant demonstration knowledge for a brand new task by instruction-embedding similarity, not by matching the exact screen. phoneshell's memory.py is a screen-fingerprint cache: it does nothing for the agent the first time a task family shows up, no matter how closely it resembles something already solved.">
+<meta property="og:url" content="https://blolabel.ai/blog/learnact-demonstration-retrieval-phoneshell-memory-needs-a-repeat/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/learnact-demonstration-retrieval-phoneshell-memory-needs-a-repeat-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "LearnAct turns one demonstration into a 32.4-point gain on a task the model has never seen; phoneshell's memory only helps on a screen it has seen before", "description": "LearnAct (arXiv:2504.13805) retrieves relevant demonstration knowledge by embedding a new task's instruction and ranking stored demonstrations by cosine similarity, lifting Gemini-1.5-Pro's offline accuracy from 19.3% to 51.7% on tasks it has not performed before. phoneshell's memory.py only activates once a screen's structural fingerprint repeats, contributing nothing on a task's first appearance.", "datePublished": "2026-10-30", "dateModified": "2026-10-30", "url": "https://blolabel.ai/blog/learnact-demonstration-retrieval-phoneshell-memory-needs-a-repeat/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/learnact-demonstration-retrieval-phoneshell-memory-needs-a-repeat/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/learnact-demonstration-retrieval-phoneshell-memory-needs-a-repeat-hero.png", "citation": ["https://arxiv.org/abs/2504.13805", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-10-30">30 October 2026</time>
+    <span>9 min read</span>
+  </div>
+  <h1>LearnAct turns one demonstration into a 32.4-point gain on a task the model has never seen; phoneshell's memory only helps on a screen it has seen before</h1>
+  <p class="standfirst">LearnAct's KnowSeeker embeds a new task's instruction and retrieves the most similar stored demonstration by cosine similarity, before the agent has ever attempted anything resembling that exact screen. phoneshell's memory.py, examined for a different mechanism elsewhere on this site, solves a narrower problem than DeltaReplay's per-step routing: it caches a structural fingerprint of a screen and reuses what it learned only once that same fingerprint reappears. A task's first occurrence gets nothing from it, no matter how close a cousin it is to one already solved.</p>
+
+<p>LearnAct: Few-Shot Mobile GUI Agent with a Unified Demonstration Benchmark (arXiv:2504.13805, Liu, Zhao, Liu, Chen, Chai, Ren, Wang, He, Meng, submitted 18 April 2025) attacks a specific gap in mobile GUI agents: a base model can be shown exactly one worked example of a task family and still fail to generalize, because the example and the new task differ in wording, screen state, or target content. LearnAct is a three-part pipeline. DemoParser converts a raw demonstration, instruction, coordinate-based actions, and screenshots, into a natural-language knowledge entry per step, templated as "[On/In] [Screen Name], [Action Details], to [Purpose]" for intermediate steps and "[On/In] [Screen], complete task, [Reason/Answer]" for the terminal one, with an optional "Memory" annotation carrying task-relevant facts a later step might need, such as a price read off an earlier screen. KnowSeeker embeds every stored instruction in advance with the all-MiniLM-L6-v2 sentence transformer; for a new task it embeds that task's instruction, ranks stored entries by cosine similarity, and returns the top matches above a threshold. Retrieval runs on instruction similarity alone, not on screen layout or action similarity. ActExecutor then runs the task with the retrieved knowledge folded into its prompt.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/learnact-demonstration-retrieval-phoneshell-memory-needs-a-repeat-hero.png" alt="Abstract technical illustration on a dark grid: on the left, a new, never-before-seen instruction glows and sends a thin line into a field of small stored instruction nodes, lighting up the one nearest to it by proximity before any screen appears, labelled only by that proximity relationship; on the right, a single screen shape must be matched exactly against an identical stored screen shape before anything lights up, with a dimmed, unlit field of near-miss screen shapes around it that never activate, cool blues and slate greys with one amber accent on each diagram's active node, no icons or text" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="the-numbers">What one demonstration is worth, by model and setting</h2>
+
+<p>Table 4 of the paper reports offline action-match accuracy on LearnGUI-Offline, built by extending the AMEX dataset with standardized actions and k-shot combinations: Gemini-1.5-Pro rises from a 19.3% zero-shot baseline to 51.7% with one retrieved demonstration, a 32.4-point gain, and continues to 57.7% at three shots. Models that already score well with no demonstration gain far less in absolute terms: UI-TARS-7B-SFT moves from 77.5% to 82.8%, a 5.3-point gain. Table 6 reports online task success rate on LearnGUI-Online, built on AndroidWorld with 101 tasks: UI-TARS-7B-SFT rises from 18.1% to 32.8%, a 14.7-point gain, and Qwen2-VL-7B rises from 9.9% to 21.1%, a 11.2-point gain. The paper excluded an online LearnAct result for Gemini-1.5-Pro itself, citing limited task completion in preliminary tests, so the model with the largest offline gain has no reported online figure.</p>
+
+<table>
+  <thead><tr><th>Model</th><th>Setting</th><th>0-shot</th><th>LearnAct (1-shot)</th><th>Gain</th></tr></thead>
+  <tbody>
+    <tr><td>Gemini-1.5-Pro</td><td>LearnGUI-Offline, action-match acc.</td><td>19.3%</td><td>51.7%</td><td>+32.4</td></tr>
+    <tr><td>Qwen2-VL-7B</td><td>LearnGUI-Offline, action-match acc.</td><td>71.8%</td><td>77.3%</td><td>+5.5</td></tr>
+    <tr><td>UI-TARS-7B-SFT</td><td>LearnGUI-Offline, action-match acc.</td><td>77.5%</td><td>82.8%</td><td>+5.3</td></tr>
+    <tr><td>Qwen2-VL-7B</td><td>LearnGUI-Online, task success rate</td><td>9.9%</td><td>21.1%</td><td>+11.2</td></tr>
+    <tr><td>UI-TARS-7B-SFT</td><td>LearnGUI-Online, task success rate</td><td>18.1%</td><td>32.8%</td><td>+14.7</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: arXiv:2504.13805v1, Table 4 (offline) and Table 6 (online), read 30 October 2026.</p>
+
+<svg viewBox="0 0 760 240" style="width:100%;height:auto" role="img" aria-label="Bar chart of LearnAct's gain from zero to one demonstration for three models. Gemini-1.5-Pro offline action-match accuracy rises 19.3 to 51.7 percent, a 32.4 point gain. Qwen2-VL-7B online task success rate rises 9.9 to 21.1 percent, an 11.2 point gain. UI-TARS-7B-SFT online task success rate rises 18.1 to 32.8 percent, a 14.7 point gain. The weaker the zero-shot baseline, the larger the absolute gain from one retrieved demonstration.">
+<rect x="0" y="0" width="760" height="240" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="24" font-size="13" font-weight="600">Zero-shot vs. one-shot (retrieved demonstration)</text>
+<text x="20" y="48" font-size="9.5" fill="#8893a8">Gemini-1.5-Pro, offline accuracy</text>
+<rect x="260" y="40" width="96.5" height="14" fill="#8893a8"/>
+<rect x="356.5" y="40" width="162" height="14" fill="#5ad1a0"/><text x="525" y="51" font-size="9" fill="#e9ecf2">19.3% to 51.7%</text>
+<text x="20" y="88" font-size="9.5" fill="#8893a8">Qwen2-VL-7B, online SR</text>
+<rect x="260" y="80" width="49.5" height="14" fill="#8893a8"/>
+<rect x="309.5" y="80" width="56" height="14" fill="#5ad1a0"/><text x="372" y="91" font-size="9" fill="#e9ecf2">9.9% to 21.1%</text>
+<text x="20" y="128" font-size="9.5" fill="#8893a8">UI-TARS-7B-SFT, online SR</text>
+<rect x="260" y="120" width="90.5" height="14" fill="#8893a8"/>
+<rect x="350.5" y="120" width="73.5" height="14" fill="#5ad1a0"/><text x="430" y="131" font-size="9" fill="#e9ecf2">18.1% to 32.8%</text>
+<rect x="20" y="160" width="12" height="12" fill="#8893a8"/><text x="38" y="170" font-size="9.5" fill="#c4ccda">0-shot baseline</text>
+<rect x="160" y="160" width="12" height="12" fill="#5ad1a0"/><text x="178" y="170" font-size="9.5" fill="#c4ccda">+ LearnAct 1-shot (retrieved by instruction similarity)</text>
+<text x="20" y="210" font-size="10" fill="#8893a8">Source: arXiv:2504.13805v1, Table 4 and Table 6, read 30 October 2026.</text>
+</g></svg>
+
+<h2 id="phoneshell-memory">What phoneshell's memory.py activates on, and what it does not</h2>
+
+<p>phoneshell's own <code>memory.py</code> states its trigger condition in its module docstring without ambiguity: "Next time the same screen appears, the agent is told what it is and what worked here before." What is stored per screen is "a structural fingerprint of the screen, insensitive to the text that changes (prices, restaurant names, timestamps) but sensitive to the layout that does not," computed and matched against the current screen before any lookup succeeds. This is a different mechanism from <code>agent/macros.py</code>'s named-macro replay, which this site covered separately in connection with DeltaReplay's similarity router: macros are invoked by an exact name a caller already knows, while memory.py's fingerprint lookup runs automatically on every screen, with no name required. But the two share the same structural limit LearnAct's design does not have. Memory.py's match key is the screen itself, computed after the agent has already landed on it; LearnAct's match key is the task instruction, compared before the agent has taken a single action. A phoneshell task that has never been run before, however similar in wording or intent to one already in the memory store, produces a cache miss on its very first screen and gets no benefit until, and unless, that specific screen reappears on a later run.</p>
+
+<svg viewBox="0 0 820 260" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting when each system's memory activates. LearnAct's KnowSeeker compares a new task's instruction, by embedding similarity, against stored demonstrations before any action is taken, so it can help on the task's very first attempt if a similar instruction was demonstrated before. phoneshell's memory dot py compares the current screen's structural fingerprint against previously seen screens, so it can only help once that literal screen has already been visited once, regardless of how similar an unvisited screen's task might be in wording.">
+<rect x="0" y="0" width="820" height="260" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">What each memory is keyed on, and when it can first fire</text>
+<rect x="20" y="55" width="360" height="120" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="200" y="78" font-size="11.5" font-weight="600" text-anchor="middle">LearnAct KnowSeeker</text>
+<text x="35" y="100" font-size="10" fill="#c4ccda">key: new task's instruction, embedded</text>
+<text x="35" y="120" font-size="10" fill="#c4ccda">compared before any action is taken</text>
+<text x="35" y="142" font-size="9.5" fill="#5ad1a0">can fire on the task's first attempt</text>
+<text x="35" y="160" font-size="9.5" fill="#8893a8">if a similar instruction was demonstrated before</text>
+<rect x="440" y="55" width="360" height="120" rx="8" fill="#262d3d" stroke="#e2574c"/>
+<text x="620" y="78" font-size="11.5" font-weight="600" text-anchor="middle" fill="#e2574c">phoneshell memory.py</text>
+<text x="455" y="100" font-size="10" fill="#c4ccda">key: current screen's structural fingerprint</text>
+<text x="455" y="120" font-size="10" fill="#c4ccda">compared only after the agent lands on a screen</text>
+<text x="455" y="142" font-size="9.5" fill="#e2574c">cannot fire on a screen's first visit</text>
+<text x="455" y="160" font-size="9.5" fill="#8893a8">regardless of how similar the task's wording is</text>
+<text x="20" y="205" font-size="10" fill="#8893a8">Not the same gap this site covered for agent/macros.py: that file's exact-name lookup never compares anything at all.</text>
+<text x="20" y="223" font-size="10" fill="#8893a8">memory.py does compare, by fingerprint, but the fingerprint is the screen seen, not the task asked, and it is checked after the fact.</text>
+<text x="20" y="245" font-size="10" fill="#8893a8">Sources: arXiv:2504.13805, section on KnowSeeker; phoneshell/memory.py, read 30 October 2026.</text>
+</g></svg>
+
+<h2 id="what-it-means">What it means for a memory system meant to help on new tasks</h2>
+
+<ul>
+  <li>LearnAct's gains are concentrated exactly where phoneshell's memory cannot reach: a model's first encounter with a task. A system that wants that benefit needs a second index, keyed on task semantics rather than screen structure, checked before the agent acts rather than after it lands somewhere.</li>
+  <li>phoneshell's design is not a weaker version of LearnAct's, it solves a problem LearnAct does not: repeated execution of the identical task on the identical app build, where a fingerprint match lets the agent skip the model entirely rather than retrieve a hint for it. memory.py's own measured step costs, quoted in its docstring, show the win is "not asking the model at all," a stronger claim than LearnAct makes for any of its reported numbers, all of which still run the base model with retrieved context rather than skipping it.</li>
+  <li>LearnAct's own ceiling is visible in its numbers: three-shot retrieval only lifts Gemini-1.5-Pro to 57.7%, six points past its one-shot score, so stacking more retrieved demonstrations has rapidly diminishing returns in this paper's own data, not a path to arbitrarily high accuracy.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># phoneshell memory.py's own stated trigger: the SAME screen reappearing
+sed -n '1,24p' phoneshell/memory.py
+
+# confirm the fingerprint is computed from the screen, not the task instruction
+grep -n "fingerprint\|def.*hash\|_VOLATILE" phoneshell/memory.py
+
+# confirm there is no instruction-embedding or similarity search anywhere in memory.py
+grep -n "embed\|cosine\|sentence.transformer\|similarity" phoneshell/memory.py || echo "no match"
+
+# LearnAct's own description of KnowSeeker's retrieval method
+curl -s https://arxiv.org/html/2504.13805v1 | grep -iE "KnowSeeker|cosine|MiniLM"
+
+# LearnAct's Table 4 and Table 6 results, as quoted above
+curl -s https://arxiv.org/html/2504.13805v1 | grep -iE "Table 4|Table 6|Gemini-1.5-Pro"</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim phoneshell's <code>memory.py</code> has no code path that compares a new task's instruction against stored knowledge before the agent reaches a screen, only a post-hoc structural fingerprint of the screen itself; that is checkable directly against the file and would be false the moment an instruction-embedding or similarity-search step is added upstream of any screen read. We also claim LearnAct's reported gains, up to 32.4 points offline and 14.7 online, come from retrieval keyed on instruction similarity specifically, which rests on the paper's own ablation design; a later version isolating KnowSeeker's contribution from DemoParser's knowledge format would sharpen or undercut how much of the gain is retrieval versus representation. We will revisit this piece if phoneshell adds any pre-action, instruction-level retrieval to its memory system, or if a later LearnAct revision changes the attribution between its three components, by 30 April 2027.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Liu, Zhao, Liu, Chen, Chai, Ren, Wang, He, Meng, <a href="https://arxiv.org/abs/2504.13805">LearnAct: Few-Shot Mobile GUI Agent with a Unified Demonstration Benchmark</a>, arXiv:2504.13805, submitted 18 April 2025, read 30 October 2026.</li>
+      <li>Full text, Table 4 and Table 6: <a href="https://arxiv.org/html/2504.13805v1">arxiv.org/html/2504.13805v1</a>.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/memory.py</code>, read 30 October 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
