@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OSWorld-Human catches agents taking up to 4.3 times the necessary steps; phoneshell's score() has never recorded what the necessary number is &mdash; Blolabel</title>
+<meta name="description" content="OSWorld-Human (Abhyankar, Qi and Zhang, MLSys 2026 oral) builds a human-recorded trajectory for all 369 OSWorld tasks and finds even the best of 16 evaluated agents takes 2.7 to 4.3 times more steps than a human needed. phoneshell's score() function reports avg_turns per model, a raw step count, but no task file in its suite records a human baseline step count to divide it by, so a model that wastes steps and one that does not look identical on its own leaderboard.">
+<link rel="canonical" href="https://blolabel.ai/blog/osworld-human-4-3x-the-steps-phoneshell-records-no-necessary-number/">
+<meta property="og:title" content="OSWorld-Human catches agents taking up to 4.3 times the necessary steps; phoneshell's score() has never recorded what the necessary number is &mdash; Blolabel">
+<meta property="og:description" content="A human-trajectory benchmark finds the best computer-use agents still take 2.7 to 4.3 times more steps than necessary. phoneshell's own leaderboard reports a raw step count per model with nothing to compare it against.">
+<meta property="og:url" content="https://blolabel.ai/blog/osworld-human-4-3x-the-steps-phoneshell-records-no-necessary-number/">
+<meta property="og:type" content="event">
+<meta property="og:image" content="https://blolabel.ai/images/blog/osworld-human-4-3x-the-steps-phoneshell-records-no-necessary-number-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "OSWorld-Human catches agents taking up to 4.3 times the necessary steps; phoneshell's score() has never recorded what the necessary number is", "description": "OSWorld-Human builds a human-recorded trajectory for all 369 OSWorld tasks and finds even the best of 16 evaluated agents takes 2.7 to 4.3 times more steps than a human needed. phoneshell's score() function reports avg_turns per model, a raw step count, with no human baseline step count anywhere in its schema to compare it against.", "datePublished": "2026-10-31", "dateModified": "2026-10-31", "url": "https://blolabel.ai/blog/osworld-human-4-3x-the-steps-phoneshell-records-no-necessary-number/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/osworld-human-4-3x-the-steps-phoneshell-records-no-necessary-number/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/osworld-human-4-3x-the-steps-phoneshell-records-no-necessary-number-hero.png", "citation": ["https://arxiv.org/abs/2506.16042", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind event">event</span>
+    <time datetime="2026-10-31">31 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>OSWorld-Human catches agents taking up to 4.3 times the necessary steps; phoneshell's score() has never recorded what the necessary number is</h1>
+  <p class="standfirst">OSWorld-Human hand-built a human trajectory for every one of OSWorld's 369 tasks, so that a step count stops being a raw number and becomes a ratio against what a person actually needed. Measured that way, even the best of 16 agents the authors evaluated takes 2.7 to 4.3 times more steps than necessary. phoneshell's own leaderboard function, score(), reports avg_turns per model and nothing else: no task file records how many steps a human needs, so two models that pass the same task at 6 and 24 steps currently look exactly as efficient as each other, and exactly as inefficient as a human nobody measured.</p>
+
+<p>Reyna Abhyankar, Qi Qi, and Yiying Zhang's "OSWorld-Human: Benchmarking the Efficiency of Computer-Use Agents" (arXiv:2506.16042, submitted 19 June 2025, revised 18 May 2026, presented as an MLSys 2026 oral) starts from a complaint the authors state plainly: today's computer-use agents are "practically unusable due to extremely high end-to-end latency," most of it from large model calls spent on planning, reflection, and self-judging rather than on acting. Success rate alone cannot see this cost, because a task counted as a pass whether it took six tool calls or sixty. The paper's fix is a manually-constructed set of human trajectories covering all 369 OSWorld tasks, the same number as the original benchmark, which gives every task a recorded, human-determined number of steps to measure an agent's own step count against.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/osworld-human-4-3x-the-steps-phoneshell-records-no-necessary-number-hero.png" alt="Abstract technical illustration on a dark grid: two parallel horizontal paths run from the same start point to the same end point, the top path short and direct with a small number of evenly spaced nodes representing a human trajectory, the bottom path much longer and winding with many more nodes representing an agent's trajectory to the identical destination, a dashed ratio bracket spanning the vertical gap between the two paths' lengths, cool blues and slate greys with one amber accent on the longer path, no icons or text" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="the-mechanism">What a step count means once there is a human number to divide it by</h2>
+
+<p>The paper's efficiency metric, the Weighted Efficiency Score, has two halves, and neither is a plain percentage. WES+ credits a successful task by how it compares to the human baseline: WES+ = &Sigma; r_t &times; (t_exp / t_actual), where r_t is 1 for a success and 0 otherwise, t_exp is the human's recorded step count for that task, and t_actual is the agent's own step count, so a success that takes exactly the human's step count scores 1 for that task and a success that takes twice as many steps scores 0.5. WES&minus; penalizes a failure by how much of its step budget it burned before giving up: WES&minus; = &Sigma; &minus;(1 &minus; r_t) &times; (t_actual / S), where S is the agent's maximum allowed steps, so a failure that gives up fast costs less than one that exhausts its entire budget first.</p>
+
+<p>Evaluated against this, the paper reports that even the best agents it tested take 2.7 to 4.3 times more steps than necessary across the 369 tasks and 16 agents evaluated. The paper's own Table 4 makes the point concrete and, in one place, inconvenient for a tidy headline: Agent S2 with Gemini 2.5, screenshot observation, 50-step limit, holds the highest single-action WES+ score in the table at 28.2%, against an original OSWorld success rate of 41.4%, a 1.5&times; reduction. Measured by the stricter grouped-action WES+, the same agent's score falls further to 17.4%, a 2.4&times; reduction from that same 41.4%. The paper's introduction separately states that the best agent reaches "a 42.5% success rate but only 17.4% on our strictest metric," and Table 4 shows those two figures actually belong to two different agents, UI-TARS-1.5 for the 42.5% and Agent S2 with Gemini 2.5 for the 17.4%: an internal mismatch worth flagging exactly as written, not silently resolved one way or the other.</p>
+
+<table>
+  <thead><tr><th>Metric (OSWorld-Human, Table 4, Agent S2 w/ Gemini 2.5, 50-step limit)</th><th>Value</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>Original OSWorld success rate</td><td>41.4%</td><td>arXiv:2506.16042, Table 4</td></tr>
+    <tr><td>Single-action WES+ (best in table)</td><td>28.2%, a 1.5&times; reduction</td><td>arXiv:2506.16042, Table 4</td></tr>
+    <tr><td>Grouped-action WES+ (strictest)</td><td>17.4%, a 2.4&times; reduction</td><td>arXiv:2506.16042, Table 4</td></tr>
+    <tr><td>Best-agent step inefficiency, across 16 agents</td><td>2.7&times; to 4.3&times; more steps than necessary</td><td>arXiv:2506.16042 abstract</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: Reyna Abhyankar, Qi Qi, and Yiying Zhang, "OSWorld-Human," arXiv:2506.16042, revised 18 May 2026, read 31 October 2026.</p>
+
+<h2 id="phoneshell-score">What phoneshell's score() function reports, and what it cannot</h2>
+
+<p>phoneshell's leaderboard aggregation lives in <code>bench/runner.py</code>'s <code>score()</code> function. For each model it computes <code>pass_rate</code>, <code>avg_turns</code>, <code>avg_seconds</code>, and <code>total_cost_usd</code> over every non-skipped task that model ran. <code>avg_turns</code> is a plain mean of <code>result.turns</code>, the raw number of tool calls a model's run used, with nothing to normalize it against. <code>bench/schema.py</code>'s <code>Task</code> dataclass carries a <code>max_steps</code> field, defaulting to 25, but that number is a budget set by whoever wrote the task file, not a measured minimum: nothing in the schema has a field like OSWorld-Human's human-recorded step count, and no phoneshell task file has ever had a human run it specifically to record how many steps the task actually needs.</p>
+
+<p>The practical consequence shows up the moment two models pass the same task at different speeds. phoneshell's <code>avg_turns</code> will correctly report, say, 6 steps for one model and 24 for another on an identical task, and a reader can see that the second model took four times as many turns. What phoneshell's schema cannot say, because it does not record the number, is whether 6 steps was actually the minimum the task required, or whether even the faster model wasted turns a human would not have. OSWorld-Human's WES+ exists specifically to answer that second question; phoneshell's leaderboard, as it stands, can only ever answer the first.</p>
+
+<svg viewBox="0 0 820 300" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting OSWorld-Human's Weighted Efficiency Score with phoneshell's score function. OSWorld-Human divides an agent's step count by a human-recorded minimum for all 369 tasks, finding even the best agent takes 2.7 to 4.3 times more steps than necessary. phoneshell's score function in bench runner dot py reports avg_turns, a raw mean step count, with no recorded human-minimum field anywhere in its task schema to divide by.">
+<rect x="0" y="0" width="820" height="300" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">A step count with a denominator, versus a step count without one</text>
+<rect x="20" y="55" width="360" height="155" rx="8" fill="#262d3d" stroke="#e8a33d"/>
+<text x="200" y="78" font-size="11.5" font-weight="600" text-anchor="middle" fill="#e8a33d">OSWorld-Human, WES+, 369 tasks</text>
+<text x="35" y="100" font-size="10" fill="#c4ccda">t_exp: human-recorded step count,</text>
+<text x="35" y="118" font-size="10" fill="#c4ccda">built by hand for every one of 369 tasks</text>
+<text x="35" y="144" font-size="9.5" fill="#e8a33d">WES+ = r_t &times; (t_exp / t_actual)</text>
+<text x="35" y="162" font-size="9.5" fill="#e8a33d">best agent: 2.7 to 4.3x more steps than needed</text>
+<text x="35" y="186" font-size="9.5" fill="#8893a8">Agent S2/Gemini 2.5: 41.4% success,</text>
+<text x="35" y="198" font-size="9.5" fill="#8893a8">17.4% grouped WES+, a 2.4x reduction</text>
+<rect x="440" y="55" width="360" height="155" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="620" y="78" font-size="11.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">phoneshell, bench/runner.py score()</text>
+<text x="455" y="100" font-size="10" fill="#c4ccda">avg_turns: mean of result.turns,</text>
+<text x="455" y="118" font-size="10" fill="#c4ccda">a raw tool-call count per model</text>
+<text x="455" y="144" font-size="9.5" fill="#5ad1a0">no t_exp field anywhere in Task (bench/schema.py)</text>
+<text x="455" y="162" font-size="9.5" fill="#8893a8">max_steps=25 is an author-set budget,</text>
+<text x="455" y="180" font-size="9.5" fill="#8893a8">not a measured human minimum</text>
+<text x="455" y="198" font-size="9.5" fill="#8893a8">6 steps and 24 steps are both just "avg_turns"</text>
+<text x="20" y="245" font-size="10" fill="#8893a8">phoneshell can already see that one model took four times as many turns as another on the same task. It cannot say</text>
+<text x="20" y="263" font-size="10" fill="#8893a8">whether the faster model's own step count was actually close to necessary, because no human baseline is ever recorded.</text>
+<text x="20" y="285" font-size="10" fill="#8893a8">Sources: arxiv.org/abs/2506.16042; phoneshell/bench/runner.py; phoneshell/bench/schema.py, read 31 October 2026.</text>
+</g></svg>
+
+<svg viewBox="0 0 820 230" style="width:100%;height:auto" role="img" aria-label="Flow diagram of phoneshell's score function. Results for a model across every task it ran are aggregated into pass rate, average turns, average seconds and total cost. The average turns figure is a plain mean of each result's turn count, with no step taken to divide it by a recorded human minimum, because no such minimum exists anywhere in the task schema.">
+<rect x="0" y="0" width="820" height="230" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">score(): what avg_turns actually is</text>
+<rect x="15" y="55" width="220" height="120" rx="8" fill="#262d3d" stroke="#8893a8"/>
+<text x="125" y="78" font-size="11" font-weight="600" text-anchor="middle">per-task results</text>
+<text x="28" y="100" font-size="9.5" fill="#c4ccda">result.turns: raw tool-call</text>
+<text x="28" y="116" font-size="9.5" fill="#c4ccda">count for one model, one task</text>
+<path d="M240 115 L290 115" stroke="#5ad1a0" stroke-width="2" fill="none"/>
+<polygon points="290,109 302,115 290,121" fill="#5ad1a0"/>
+<rect x="305" y="55" width="200" height="120" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="405" y="78" font-size="11" font-weight="600" text-anchor="middle">sum(turns) / len(runs)</text>
+<text x="318" y="100" font-size="9.5" fill="#c4ccda">a plain mean,</text>
+<text x="318" y="116" font-size="9.5" fill="#c4ccda">rounded to 1 decimal</text>
+<path d="M510 115 L560 115" stroke="#e8a33d" stroke-width="2" fill="none"/>
+<polygon points="560,109 572,115 560,121" fill="#e8a33d"/>
+<rect x="575" y="55" width="230" height="120" rx="8" fill="#262d3d" stroke="#e8a33d"/>
+<text x="690" y="78" font-size="11" font-weight="600" text-anchor="middle" fill="#e8a33d">avg_turns, reported</text>
+<text x="588" y="100" font-size="9.5" fill="#c4ccda">never divided by a</text>
+<text x="588" y="116" font-size="9.5" fill="#c4ccda">human baseline step count,</text>
+<text x="588" y="132" font-size="9.5" fill="#e8a33d">because none is recorded</text>
+<text x="20" y="200" font-size="10" fill="#8893a8">Source: phoneshell/bench/runner.py, function score(), read 31 October 2026.</text>
+</g></svg>
+
+<h2 id="what-it-means">What it means for anyone reading a step count on an agent leaderboard</h2>
+
+<ul>
+  <li>OSWorld-Human's core move, building a human trajectory for every task before publishing any efficiency claim, is expensive and that expense is the entire point: without it, a raw step count cannot distinguish a model that is slow because the task is hard from a model that is slow because it is bad at this specific task.</li>
+  <li>phoneshell's <code>avg_turns</code> is still useful for what it actually measures, a direct comparison between two models on the identical task set, which is the paired statistical comparison <code>bench/stats.py</code> was built to make rigorous. It simply cannot answer OSWorld-Human's question, how far either model sits from a human's step count, because that number has never been collected.</li>
+  <li>The paper's own internal mismatch between its 42.5% headline and its 17.4% strictest-metric figure, which its introduction pairs as if describing one agent when Table 4 shows they belong to two different ones, is a reminder that even a benchmark built specifically to fix a measurement gap can introduce a new one in its own prose; the fix there is the same fix phoneshell's house rule insists on elsewhere, trust the table, not the sentence summarizing it.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># phoneshell's score() function and what avg_turns actually averages
+grep -n "avg_turns\|def score" -A 15 phoneshell/bench/runner.py
+
+# confirm there is no human-baseline step field in the task schema
+grep -n "class Task" -A 15 phoneshell/bench/schema.py
+
+# OSWorld-Human's efficiency metric and Table 4
+open "https://arxiv.org/html/2506.16042v1"
+
+# the headline ratio and the Table 4 figures as quoted in this piece
+# 2.7x-4.3x more steps than necessary; 41.4% -> 28.2% (1.5x) -> 17.4% (2.4x)</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim OSWorld-Human reports that even its best-performing agents take 2.7 to 4.3 times more steps than a human-recorded baseline across all 369 OSWorld tasks, and that its Table 4 attributes the 42.5% and 17.4% figures its introduction pairs together to two different agents; both are checkable against the paper's HTML full text and would be false if a later revision corrects that mismatch or revises the ratio. We also claim no field in phoneshell's <code>bench/schema.py</code> <code>Task</code> dataclass records a human-measured step count for any task; that is checkable by reading the dataclass directly. This piece will need revisiting if phoneshell adds such a field and starts reporting an efficiency ratio of its own, which as of this writing it does not, by 30 April 2027.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Reyna Abhyankar, Qi Qi, and Yiying Zhang, <a href="https://arxiv.org/abs/2506.16042">OSWorld-Human: Benchmarking the Efficiency of Computer-Use Agents</a>, arXiv:2506.16042, submitted 19 June 2025, revised 18 May 2026, MLSys 2026 oral, read 31 October 2026.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/bench/runner.py</code>, <code>phoneshell/bench/schema.py</code>, read 31 October 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
