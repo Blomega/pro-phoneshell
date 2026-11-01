@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CUARewardBench's best reward model still misreads the screen on 30.2% of its own failures; phoneshell's stats module has no reward model to misread anything &mdash; Blolabel</title>
+<meta name="description" content="CUARewardBench (Lin et al., submitted 21 October 2025) scores reward models that judge computer-use agent trajectories: its best ensemble method reaches 89.8% precision at best, and a breakdown of 53 of its own failure cases finds reasoning errors in 35.8% and visual understanding errors in 30.2%. phoneshell's bench/stats.py replaces the entire judge with a paired exact test over device-state pass/fail, and reports a confidence interval and a p-value instead of a reward model's own accuracy rate.">
+<link rel="canonical" href="https://blolabel.ai/blog/cuarewardbench-30-2-percent-visual-errors-phoneshell-has-no-reward-model/">
+<meta property="og:title" content="CUARewardBench's best reward model still misreads the screen on 30.2% of its own failures; phoneshell's stats module has no reward model to misread anything &mdash; Blolabel">
+<meta property="og:description" content="A reward-model benchmark for computer-use agents finds its best method's own failures are nearly a third visual-understanding errors. phoneshell skips the judge entirely: its stats module tests disagreement between models directly, over device-state checks.">
+<meta property="og:url" content="https://blolabel.ai/blog/cuarewardbench-30-2-percent-visual-errors-phoneshell-has-no-reward-model/">
+<meta property="og:type" content="event">
+<meta property="og:image" content="https://blolabel.ai/images/blog/cuarewardbench-30-2-percent-visual-errors-phoneshell-has-no-reward-model-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "CUARewardBench's best reward model still misreads the screen on 30.2% of its own failures; phoneshell's stats module has no reward model to misread anything", "description": "CUARewardBench scores reward models that judge computer-use agent trajectories. Its best ensemble method reaches 89.8% precision, and of its own 53 analyzed failure cases, 35.8% are reasoning errors and 30.2% are visual understanding errors. phoneshell's bench/stats.py never asks a model to judge a trajectory: it runs a paired exact test over device-state pass/fail instead.", "datePublished": "2026-10-31", "dateModified": "2026-10-31", "url": "https://blolabel.ai/blog/cuarewardbench-30-2-percent-visual-errors-phoneshell-has-no-reward-model/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/cuarewardbench-30-2-percent-visual-errors-phoneshell-has-no-reward-model/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/cuarewardbench-30-2-percent-visual-errors-phoneshell-has-no-reward-model-hero.png", "citation": ["https://arxiv.org/abs/2510.18596", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind event">event</span>
+    <time datetime="2026-10-31">31 October 2026</time>
+    <span>9 min read</span>
+  </div>
+  <h1>CUARewardBench's best reward model still misreads the screen on 30.2% of its own failures; phoneshell's stats module has no reward model to misread anything</h1>
+  <p class="standfirst">CUARewardBench, submitted 21 October 2025, scores how well a vision-language model can judge whether a computer-use agent's trajectory succeeded. Its best method reaches 89.8% precision on outcome judgments, and when the authors read 53 of that model's own wrong calls by hand, 35.8% were reasoning errors and 30.2% were visual understanding errors: the judge itself cannot reliably see the screen it is grading. phoneshell's bench/stats.py answers a related question, whether one model beat another, without ever appointing a judge: it runs McNemar's exact test over which device-state checks each model actually passed.</p>
+
+<p>Haojia Lin and eleven co-authors from the Youtu-Agent team published "CUARewardBench: A Benchmark for Evaluating Reward Models on Computer-using Agent" (arXiv:2510.18596, submitted 21 October 2025) to fill a gap the authors describe as "largely underexplored": almost every computer-use agent paper that reports a reward signal either hand-waves the judge's own reliability or assumes a vision-language model can grade a trajectory as well as it can generate one. CUARewardBench tests that assumption directly. It covers seven agent architectures across ten software categories, with agent success rates across those architectures ranging from 25.9% to 50.8%, and evaluates both outcome reward models (ORM, which score a whole trajectory) and process reward models (PRM, which score individual steps) across seven vision-language models and three prompt templates.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/cuarewardbench-30-2-percent-visual-errors-phoneshell-has-no-reward-model-hero.png" alt="Abstract technical illustration on a dark grid: on the left, a stack of recorded agent trajectories feeds into a judge node shaped like an eye that outputs a confidence score with a visible crack running through it, representing an evaluator that misjudges what it is looking at; on the right, two parallel trajectories of discrete pass or fail marks feed directly into a balance-scale node with no eye or judge shape at all, representing a direct statistical comparison with no evaluator in the loop, cool blues and slate greys with one amber accent on the cracked eye, no icons or text" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="the-mechanism">What CUARewardBench's best judge gets wrong, and how often</h2>
+
+<p>The benchmark's own Table 2 splits its ground truth into 272 trajectory-level annotations (139 successful, 133 failed) and 346 step-level annotations (182 good actions, 164 bad). Against that ground truth, the paper's proposed method, Unanimous Prompt Ensemble (UPE), is the best performer: 89.8% precision and 93.3% negative predictive value for outcome judgments, falling to 81.7% precision and 85.1% NPV for the harder, step-level process judgments. The paper is explicit that action-level evaluation is harder than trajectory-level evaluation, and that general-purpose vision-language models beat models specifically trained as computer-use agents at this judging task, without giving a numeric margin for that comparison.</p>
+
+<p>Section 4's failure analysis is the sharpest number in the paper. The authors hand-reviewed 53 failure cases produced by GLM-4.5V-106B, the strongest individual outcome reward model tested, and categorized every one. Reasoning errors accounted for 19 of the 53 cases (35.8%), and visual understanding errors accounted for 16 (30.2%). Together those two categories cover two thirds of every mistake the best outcome judge in the paper made. The remaining categories were action understanding errors (9 cases, 17.0%), knowledge deficiency (8 cases, 15.1%), and a single case of what the authors call an inherent reward-model limitation (1 case, 1.9%). A model built specifically to grade whether a computer-use agent succeeded is, by its own authors' accounting, wrong about what it saw on screen in nearly a third of its failures.</p>
+
+<table>
+  <thead><tr><th>Failure category (GLM-4.5V-106B as ORM, n=53)</th><th>Cases</th><th>Share</th></tr></thead>
+  <tbody>
+    <tr><td>Reasoning error</td><td>19</td><td>35.8%</td></tr>
+    <tr><td>Visual understanding error</td><td>16</td><td>30.2%</td></tr>
+    <tr><td>Action understanding error</td><td>9</td><td>17.0%</td></tr>
+    <tr><td>Knowledge deficiency</td><td>8</td><td>15.1%</td></tr>
+    <tr><td>Inherent reward-model limitation</td><td>1</td><td>1.9%</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: Lin et al., "CUARewardBench," arXiv:2510.18596, Table 7 and Section 4, submitted 21 October 2025, read 31 October 2026.</p>
+
+<h2 id="phoneshell-stats">What phoneshell's stats module asks instead of appointing a judge</h2>
+
+<p>phoneshell's <code>bench/stats.py</code> exists because, in the module's own words, "the first version of this project computed [these statistics] in three places and published a leaderboard that did none of it. Six models sat on six percentages, three of them identical, and the page presented that as an ordering." Nothing in that file asks a vision-language model to look at a trajectory and render a verdict. Every outcome it compares is already a pass/fail produced by <code>bench/verify.py</code>'s device-state checks, which read the accessibility tree, a switch's value, the foreground bundle ID, or OCR text directly off the phone, never a model's opinion of a screenshot.</p>
+
+<p>Where CUARewardBench's best judge trades off precision against the two failure modes in the table above, phoneshell's <code>stats.py</code> trades off something else entirely: statistical power. Its <code>wilson()</code> function puts a 95% confidence interval on a raw pass rate rather than reporting the point estimate alone, because, as the module's docstring notes, "20/24 is 83.3%, but the 95% Wilson interval on it runs from 64% to 93%." Its <code>mcnemar_exact()</code> function compares two models over the same paired tasks using only the disagreements between them, and the module computes that it takes six one-directional disagreements, independent of how many tasks exist, before two models can be called different at p&lt;0.05 at all. Neither function has an error rate of its own in the sense CUARewardBench's judge does: a Wilson interval and an exact p-value are arithmetic on the pass/fail counts, not a second model's perception of the first model's behavior that can itself be reasoning-wrong or visually wrong.</p>
+
+<svg viewBox="0 0 820 300" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting CUARewardBench's reward-model judge with phoneshell's paired statistical test. CUARewardBench's best outcome reward model reaches 89.8 percent precision, and of its own 53 failure cases, 35.8 percent are reasoning errors and 30.2 percent are visual understanding errors. phoneshell's stats module never appoints a judge: it runs Wilson confidence intervals and McNemar's exact test directly over device-state pass or fail outcomes, which have no perception error of their own.">
+<rect x="0" y="0" width="820" height="300" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">A judge that can misjudge, versus arithmetic that cannot</text>
+<rect x="20" y="55" width="360" height="155" rx="8" fill="#262d3d" stroke="#e8a33d"/>
+<text x="200" y="78" font-size="11.5" font-weight="600" text-anchor="middle" fill="#e8a33d">CUARewardBench, best ORM (GLM-4.5V-106B)</text>
+<text x="35" y="100" font-size="10" fill="#c4ccda">89.8% precision, 93.3% NPV on outcomes</text>
+<text x="35" y="118" font-size="10" fill="#c4ccda">reads a trajectory, renders a verdict</text>
+<text x="35" y="144" font-size="9.5" fill="#e8a33d">of 53 own failures: 35.8% reasoning error</text>
+<text x="35" y="162" font-size="9.5" fill="#e8a33d">30.2% visual understanding error</text>
+<text x="35" y="186" font-size="9.5" fill="#8893a8">general VLMs beat specialized CUA models</text>
+<text x="35" y="198" font-size="9.5" fill="#8893a8">at this judging task, per the paper's abstract</text>
+<rect x="440" y="55" width="360" height="155" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="620" y="78" font-size="11.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">phoneshell, bench/stats.py</text>
+<text x="455" y="100" font-size="10" fill="#c4ccda">wilson(): 95% CI on a raw pass rate</text>
+<text x="455" y="118" font-size="10" fill="#c4ccda">mcnemar_exact(): paired exact test on disagreements</text>
+<text x="455" y="144" font-size="9.5" fill="#5ad1a0">inputs are device-state pass/fail, not a</text>
+<text x="455" y="162" font-size="9.5" fill="#5ad1a0">model's opinion of a screenshot</text>
+<text x="455" y="186" font-size="9.5" fill="#8893a8">6 discordant pairs needed for p&lt;0.05,</text>
+<text x="455" y="198" font-size="9.5" fill="#8893a8">regardless of task-set size</text>
+<text x="20" y="245" font-size="10" fill="#8893a8">CUARewardBench improves the judge. phoneshell's design question is different: given that checks already read the device directly,</text>
+<text x="20" y="263" font-size="10" fill="#8893a8">what can honestly be said about two models' pass/fail counts without appointing anything to interpret them.</text>
+<text x="20" y="285" font-size="10" fill="#8893a8">Sources: arxiv.org/abs/2510.18596; phoneshell/bench/stats.py, read 31 October 2026.</text>
+</g></svg>
+
+<svg viewBox="0 0 820 240" style="width:100%;height:auto" role="img" aria-label="Flow diagram of phoneshell's model comparison. Two models run the same tasks and each task produces a pass or fail from a device-state check. The paired results feed into McNemar's exact test, which counts only the tasks where the two models disagree, win A and win B, and returns a p-value, with no reward model or judge anywhere in the pipeline.">
+<rect x="0" y="0" width="820" height="240" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">paired(): comparing model A and model B on the same tasks</text>
+<rect x="15" y="55" width="220" height="130" rx="8" fill="#262d3d" stroke="#8893a8"/>
+<text x="125" y="78" font-size="11" font-weight="600" text-anchor="middle">same task set,</text>
+<text x="125" y="94" font-size="11" font-weight="600" text-anchor="middle">two models</text>
+<text x="28" y="118" font-size="9.5" fill="#c4ccda">each task: pass/fail</text>
+<text x="28" y="134" font-size="9.5" fill="#c4ccda">from bench/verify.py,</text>
+<text x="28" y="150" font-size="9.5" fill="#c4ccda">read off the phone</text>
+<path d="M240 120 L290 120" stroke="#5ad1a0" stroke-width="2" fill="none"/>
+<polygon points="290,114 302,120 290,126" fill="#5ad1a0"/>
+<rect x="305" y="55" width="200" height="130" rx="8" fill="#262d3d" stroke="#e8a33d"/>
+<text x="405" y="78" font-size="11" font-weight="600" text-anchor="middle" fill="#e8a33d">discordant counts</text>
+<text x="318" y="100" font-size="9.5" fill="#c4ccda">win_a: A passed, B failed</text>
+<text x="318" y="118" font-size="9.5" fill="#c4ccda">win_b: B passed, A failed</text>
+<text x="318" y="140" font-size="9.5" fill="#8893a8">agreements carry no signal,</text>
+<text x="318" y="154" font-size="9.5" fill="#8893a8">correctly ignored</text>
+<path d="M510 120 L560 120" stroke="#5ad1a0" stroke-width="2" fill="none"/>
+<polygon points="560,114 572,120 560,126" fill="#5ad1a0"/>
+<rect x="575" y="55" width="230" height="130" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="690" y="78" font-size="11" font-weight="600" text-anchor="middle">mcnemar_exact(win_a, win_b)</text>
+<text x="588" y="100" font-size="9.5" fill="#c4ccda">exact two-sided p-value</text>
+<text x="588" y="118" font-size="9.5" fill="#c4ccda">no model asked to judge</text>
+<text x="588" y="134" font-size="9.5" fill="#5ad1a0">either model's trajectory</text>
+<text x="20" y="208" font-size="10" fill="#8893a8">Source: phoneshell/bench/stats.py, functions wilson, mcnemar_exact and paired, read 31 October 2026.</text>
+</g></svg>
+
+<h2 id="what-it-means">What it means for anyone comparing two agents on the same tasks</h2>
+
+<ul>
+  <li>CUARewardBench's result is not an argument against reward models; it is a measured cost of using one. 89.8% precision at best, with a third of the remaining errors coming from the judge misreading the screen, is a real number a team should weigh against the alternative of not needing a judge at all.</li>
+  <li>phoneshell's alternative only works because its checks already read device state directly. A paired statistical test over pass/fail is only as trustworthy as the checks producing those pass/fail values, which is a different failure surface than a reward model's visual or reasoning error, not a strictly smaller one.</li>
+  <li>The comparison sharpens a real tradeoff: a reward model can grade free-form, open-ended trajectories a deterministic checker cannot describe in advance, which is exactly why CUARewardBench exists. phoneshell's paired-test approach is only available because every one of its 80 tasks ships with a checker that can decide pass/fail without seeing a trajectory at all.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># the paired exact test and the confidence interval phoneshell uses instead of a judge
+sed -n '1,93p' phoneshell/bench/stats.py
+
+# where the leaderboard actually calls these functions
+grep -n "mcnemar_exact\|wilson(" phoneshell/bench/site.py
+
+# the paper's own failure breakdown (read the HTML version for Table 7)
+open "https://arxiv.org/html/2510.18596v1"
+
+# the headline UPE precision/NPV numbers as quoted in this piece
+# ORM: 89.8% precision, 93.3% NPV. PRM: 81.7% precision, 85.1% NPV.</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim CUARewardBench's Table 7 attributes 35.8% of GLM-4.5V-106B's 53 analyzed outcome-judging failures to reasoning errors and 30.2% to visual understanding errors; that is checkable directly against the paper's HTML version and would be false if a later revision changes that table. We also claim phoneshell's model-comparison statistics in <code>bench/stats.py</code> never invoke a vision-language model as a judge, which is checkable by reading the file in full: it imports only <code>math</code>. This piece will need revisiting if phoneshell ever adds a reward-model-style judge to its own pipeline, which would make this contrast obsolete, by 30 April 2027.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Haojia Lin, Xiaoyu Tan, Yulei Qin, et al., <a href="https://arxiv.org/abs/2510.18596">CUARewardBench: A Benchmark for Evaluating Reward Models on Computer-using Agent</a>, arXiv:2510.18596, submitted 21 October 2025, read 31 October 2026.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/bench/stats.py</code>, <code>phoneshell/bench/site.py</code>, read 31 October 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
