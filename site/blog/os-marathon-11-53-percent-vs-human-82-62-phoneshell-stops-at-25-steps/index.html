@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OS-Marathon's best agent clears 11.53% of 100 repetitive tasks against a human's 82.62%; phoneshell's own grounding has never run past 25 steps &mdash; Blolabel</title>
+<meta name="description" content="OS-Marathon (Wu et al., submitted 28 January 2026, revised 26 August 2026) scores agents on vast-horizon tasks that repeat the same sub-workflow across many instances, and names grounding failures and premature termination as two of the ways agents lose track of how many instances are left. Its best agent reaches 11.53% end-to-end success against a measured human rate of 82.62%. phoneshell's memory.py grounds every action in a re-verified screen fingerprint rather than an internal model of progress, but no task in its 80-task suite, capped at 25 steps, has ever asked that mechanism to track more than one pass through anything.">
+<link rel="canonical" href="https://blolabel.ai/blog/os-marathon-11-53-percent-vs-human-82-62-phoneshell-stops-at-25-steps/">
+<meta property="og:title" content="OS-Marathon's best agent clears 11.53% of 100 repetitive tasks against a human's 82.62%; phoneshell's own grounding has never run past 25 steps &mdash; Blolabel">
+<meta property="og:description" content="A new vast-horizon benchmark scores agents on repeating the same sub-workflow across many instances and finds the best agent clears 11.53% against a human's 82.62%. phoneshell's grounding mechanism was built for exactly this failure mode, but has never been tested at this scale.">
+<meta property="og:url" content="https://blolabel.ai/blog/os-marathon-11-53-percent-vs-human-82-62-phoneshell-stops-at-25-steps/">
+<meta property="og:type" content="event">
+<meta property="og:image" content="https://blolabel.ai/images/blog/os-marathon-11-53-percent-vs-human-82-62-phoneshell-stops-at-25-steps-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "OS-Marathon's best agent clears 11.53% of 100 repetitive tasks against a human's 82.62%; phoneshell's own grounding has never run past 25 steps", "description": "OS-Marathon scores agents on vast-horizon tasks that repeat a sub-workflow across many instances. Its best agent reaches 11.53% end-to-end success against a measured human rate of 82.62%, with grounding failures and premature termination named as causes. phoneshell's memory.py grounds every action in a re-verified screen fingerprint, but has never been tested at anything like this scale.", "datePublished": "2026-10-31", "dateModified": "2026-10-31", "url": "https://blolabel.ai/blog/os-marathon-11-53-percent-vs-human-82-62-phoneshell-stops-at-25-steps/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/os-marathon-11-53-percent-vs-human-82-62-phoneshell-stops-at-25-steps/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/os-marathon-11-53-percent-vs-human-82-62-phoneshell-stops-at-25-steps-hero.png", "citation": ["https://arxiv.org/abs/2601.20650", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind event">event</span>
+    <time datetime="2026-10-31">31 October 2026</time>
+    <span>9 min read</span>
+  </div>
+  <h1>OS-Marathon's best agent clears 11.53% of 100 repetitive tasks against a human's 82.62%; phoneshell's own grounding has never run past 25 steps</h1>
+  <p class="standfirst">OS-Marathon tests whether agents can repeat the same sub-workflow correctly across many instances inside one task, like processing every receipt in a folder rather than one. Its best agent, GPT-5.4 Native Computer Use, clears 11.53% of 100 such tasks end to end; a human clears 82.62%. The paper traces the gap partly to agents losing track of which instances are already done. phoneshell's memory.py was built to answer exactly that question by re-checking a screen's identity on every visit, but no task in its 80-task, 25-step-capped suite has ever asked it to track progress across more than one pass through anything.</p>
+
+<p>Jing Wu and nine co-authors' "OS-Marathon: Benchmarking Computer-Use Agents on Long-Horizon Repetitive Tasks" (arXiv:2601.20650, submitted 28 January 2026, revised to v3 on 26 August 2026) targets a gap the authors say earlier long-horizon benchmarks leave open: a task that is long because it repeats a short, well-defined sub-workflow many times, rather than long because it has many distinct steps. The v3 benchmark covers 100 vast-horizon tasks spanning 5 scenarios and 10 domains, run across 12 execution environments, with examples including processing expense reports from a folder of receipts and organizing PDF annotations into structured notes. The authors evaluate general-purpose computer-use agents directly, and separately test whether a task-orchestrator pattern, splitting the workflow into per-instance subtasks handled by solver agents, fixes the problem; they report it does not, because errors made by one solver corrupt the shared environment state that the next solver reasons from.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/os-marathon-11-53-percent-vs-human-82-62-phoneshell-stops-at-25-steps-hero.png" alt="Abstract technical illustration on a dark grid: a long horizontal row of many identical small geometric instances stretches across the frame, most of them dimmed out to represent instances an agent has lost track of partway through, with a single bright connecting thread looping back to a small marker near the start to represent a grounding check that re-verifies where processing actually is, cool blues and slate greys with one amber accent on the dimmed instances, no icons or text" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="the-mechanism">Where OS-Marathon's agents actually lose the thread</h2>
+
+<p>The paper names several distinct failure modes rather than one generic "long tasks are hard." Agents show a visual-salience bias, getting pulled toward whichever UI element is most visually prominent regardless of whether it is the one the sub-workflow actually calls for next, and the authors describe cases where an agent "hallucinates plausible values" for a field it never actually read from a grounded source. Separately, agents exhibit weak global planning and persistence: rather than maintaining a fixed order across all instances, they frequently "terminate prematurely, declaring the task complete before all N instances are processed," stopping the loop early because nothing in their own state tracking flagged that work remained. Weaker models in the evaluation, including OpenCUA-7B and UI-TARS-7B, bottleneck even earlier, at the atomic-action level, which the authors attribute partly to raw grounding failure and partly to difficulty decomposing a high-level instruction into the right sequence of actions in the first place.</p>
+
+<p>Scored end to end, the best agent tested, GPT-5.4 Native Computer Use, reaches 11.53% task-level success; every other baseline the paper reports scores below 3%. Human evaluators, working the same tasks, complete 82.62% of them. On the paper's easier "Lite" tier the best agent reaches 16.22%; on the harder "Pro" tier it falls to 6.83%. The gap between those two tiers is itself informative: a benchmark built around repetition, not raw task difficulty per step, still produces a large collapse once the number of repetitions goes up, which is consistent with the paper's claim that the failure is about tracking state across instances, not about any single instance being hard to execute correctly in isolation.</p>
+
+<table>
+  <thead><tr><th>Metric (OS-Marathon v3, 100 tasks, 5 scenarios, 10 domains)</th><th>Value</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>Best agent, end-to-end task success</td><td>11.53% (GPT-5.4 Native Computer Use)</td><td>arXiv:2601.20650 v3</td></tr>
+    <tr><td>Human task success, same tasks</td><td>82.62%</td><td>arXiv:2601.20650 v3</td></tr>
+    <tr><td>Best agent, Lite tier</td><td>16.22%</td><td>arXiv:2601.20650 v3</td></tr>
+    <tr><td>Best agent, Pro tier</td><td>6.83%</td><td>arXiv:2601.20650 v3</td></tr>
+    <tr><td>Every other baseline, end-to-end</td><td>below 3%</td><td>arXiv:2601.20650 v3</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: Jing Wu, Wenjie Ai, Daphne Barretto, et al., "OS-Marathon," arXiv:2601.20650, v3 revised 26 August 2026, read 31 October 2026.</p>
+
+<h2 id="phoneshell-memory">What phoneshell's grounding mechanism was built for, and where it stops</h2>
+
+<p>phoneshell's <code>memory.py</code> exists to answer, on every single screen the agent lands on, a question close to the one OS-Marathon's agents keep getting wrong: is this the same place I was before, or somewhere new. Its docstring states the design directly: the module keeps "a structural fingerprint of the screen, insensitive to the text that changes (prices, restaurant names, timestamps) but sensitive to the layout that does not," plus "where its controls are and what they are called" and "which action led to which screen, and how often that held." The <code>fingerprint()</code> function computes that identity from the accessibility tree's structural elements and stable identifiers, explicitly stripping instance-specific noise first, and <code>ControlMemory.led_to</code> records, as a running count, which screen a given control actually produced the last several times it was tapped, not what a model expects it to produce.</p>
+
+<p>This is, mechanically, a cheap, local answer to the class of error OS-Marathon's grounding and intention-understanding failures describe: rather than trusting an internal running count of "instances processed so far," phoneshell re-derives identity from the live screen every time, which cannot drift the way an agent's own unverified belief about progress can. But the comparison has a hard honesty limit. Every phoneshell task caps at 25 steps by default (<code>bench/schema.py</code>'s <code>Task.max_steps: int = 25</code>), and its 80-task public suite was built around single-pass tasks, not around repeating one sub-workflow across many instances inside a single task. phoneshell's memory is designed to recognize the same screen twice; it has simply never been asked to track whether instance 47 of 100 was processed yet, because no task in the suite poses that question at all.</p>
+
+<svg viewBox="0 0 820 300" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting OS-Marathon's grounding failures with phoneshell's memory.py. OS-Marathon's agents lose track of how many of 100 repeated instances are processed, terminating early or hallucinating values, and the best agent reaches 11.53 percent against a human's 82.62 percent. phoneshell's memory.py re-derives a screen's identity from a structural fingerprint on every visit rather than trusting an internal progress count, but its tasks cap at 25 steps and have never posed a multi-instance repetition problem.">
+<rect x="0" y="0" width="820" height="300" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Tracking progress by belief, versus re-checking identity every time</text>
+<rect x="20" y="55" width="360" height="155" rx="8" fill="#262d3d" stroke="#e8a33d"/>
+<text x="200" y="78" font-size="11.5" font-weight="600" text-anchor="middle" fill="#e8a33d">OS-Marathon, 100 tasks, 10 domains</text>
+<text x="35" y="100" font-size="10" fill="#c4ccda">agent tracks "instances done" internally</text>
+<text x="35" y="118" font-size="10" fill="#c4ccda">terminates early, declares complete too soon</text>
+<text x="35" y="144" font-size="9.5" fill="#e8a33d">best agent: 11.53% end-to-end</text>
+<text x="35" y="162" font-size="9.5" fill="#e8a33d">human: 82.62% on the same tasks</text>
+<text x="35" y="186" font-size="9.5" fill="#8893a8">orchestrator split doesn't fix it:</text>
+<text x="35" y="198" font-size="9.5" fill="#8893a8">one solver's error corrupts the next</text>
+<rect x="440" y="55" width="360" height="155" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="620" y="78" font-size="11.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">phoneshell, memory.py</text>
+<text x="455" y="100" font-size="10" fill="#c4ccda">re-derives screen identity from the live tree</text>
+<text x="455" y="118" font-size="10" fill="#c4ccda">fingerprint() every visit, not a belief carried forward</text>
+<text x="455" y="144" font-size="9.5" fill="#5ad1a0">ControlMemory.led_to: counted, observed outcomes</text>
+<text x="455" y="162" font-size="9.5" fill="#8893a8">max_steps=25 (bench/schema.py), 80 single-pass tasks</text>
+<text x="455" y="184" font-size="9.5" fill="#8893a8">never asked to track "instance 47 of 100"</text>
+<text x="20" y="245" font-size="10" fill="#8893a8">OS-Marathon's failure mode is exactly what re-verified grounding is supposed to prevent. The comparison stops at scale:</text>
+<text x="20" y="263" font-size="10" fill="#8893a8">phoneshell's mechanism has never been exercised on a task long enough to need it tested the way OS-Marathon tests it.</text>
+<text x="20" y="285" font-size="10" fill="#8893a8">Sources: arxiv.org/abs/2601.20650 v3; phoneshell/memory.py; phoneshell/bench/schema.py, read 31 October 2026.</text>
+</g></svg>
+
+<svg viewBox="0 0 820 240" style="width:100%;height:auto" role="img" aria-label="Flow diagram of phoneshell's AppMemory.see method. On each visit to a screen, the accessibility tree is read, a structural fingerprint is computed, and the screen's seen counter is incremented. Controls on the screen are matched against previously recorded controls by a stable key, and if a control was tapped before, its recorded outcome, which screen it led to and how many times, is available to hint back to the agent, with the fingerprint recomputed fresh on every single visit rather than carried forward as a belief.">
+<rect x="0" y="0" width="820" height="240" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">AppMemory.see(): what happens on every single visit</text>
+<rect x="15" y="55" width="190" height="130" rx="8" fill="#262d3d" stroke="#8893a8"/>
+<text x="110" y="78" font-size="11" font-weight="600" text-anchor="middle">live tree, now</text>
+<text x="28" y="100" font-size="9.5" fill="#c4ccda">read fresh, not</text>
+<text x="28" y="116" font-size="9.5" fill="#c4ccda">carried from a</text>
+<text x="28" y="132" font-size="9.5" fill="#c4ccda">prior belief</text>
+<path d="M210 120 L260 120" stroke="#5ad1a0" stroke-width="2" fill="none"/>
+<polygon points="260,114 272,120 260,126" fill="#5ad1a0"/>
+<rect x="275" y="55" width="200" height="130" rx="8" fill="#262d3d" stroke="#8893a8"/>
+<text x="375" y="78" font-size="11" font-weight="600" text-anchor="middle">fingerprint()</text>
+<text x="288" y="100" font-size="9.5" fill="#c4ccda">structural hash,</text>
+<text x="288" y="116" font-size="9.5" fill="#c4ccda">noise stripped,</text>
+<text x="288" y="132" font-size="9.5" fill="#c4ccda">recomputed every time</text>
+<path d="M480 120 L530 120" stroke="#5ad1a0" stroke-width="2" fill="none"/>
+<polygon points="530,114 542,120 530,126" fill="#5ad1a0"/>
+<rect x="545" y="55" width="260" height="130" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="675" y="78" font-size="11" font-weight="600" text-anchor="middle">screen.seen += 1</text>
+<text x="558" y="100" font-size="9.5" fill="#c4ccda">control outcomes matched</text>
+<text x="558" y="116" font-size="9.5" fill="#c4ccda">by observed led_to counts,</text>
+<text x="558" y="132" font-size="9.5" fill="#5ad1a0">never by an unverified count</text>
+<text x="20" y="208" font-size="10" fill="#8893a8">Source: phoneshell/memory.py, AppMemory.see() and ControlMemory.led_to, read 31 October 2026.</text>
+</g></svg>
+
+<h2 id="what-it-means">What it means for anyone building a long-horizon mobile task</h2>
+
+<ul>
+  <li>OS-Marathon's finding is a warning specifically for any task that asks an agent to repeat a sub-workflow N times inside one run: tracking "how many are left" is a distinct capability from executing any single pass correctly, and the paper shows frontier agents collapsing on the former even when the latter is well within reach.</li>
+  <li>phoneshell's design principle, re-derive identity from the live screen rather than trust an internal count, is the right shape of fix for exactly this failure mode. It has simply never been load-tested the way OS-Marathon tests it, because phoneshell's own task suite has no multi-instance repetition task at any scale, let alone 100 instances.</li>
+  <li>A fair next experiment is obvious and currently unrun: write a phoneshell task that asks an agent to process several identical items in one app (several unread messages, several similar reminders) and see whether <code>memory.py</code>'s fingerprint-based grounding actually prevents the premature-termination and hallucinated-value failures OS-Marathon documents, or merely looks like it should on paper.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># memory.py's fingerprint and control-outcome tracking
+sed -n '86,249p' phoneshell/memory.py
+
+# the step cap every phoneshell task currently runs under
+grep -n "max_steps" phoneshell/bench/schema.py
+
+# OS-Marathon's latest full text and its failure-mode language
+open "https://arxiv.org/html/2601.20650v3"
+
+# the headline numbers as quoted in this piece
+# best agent 11.53% end-to-end, human 82.62%, Lite 16.22%, Pro 6.83%</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim OS-Marathon v3 reports an 11.53% end-to-end success rate for its best agent against an 82.62% human rate on the same 100 tasks, with every other baseline below 3%; that is checkable against the arXiv v3 full text and would be false if a later revision changes these figures. We also claim no task in phoneshell's public 80-task suite asks an agent to repeat a sub-workflow across multiple instances within a single run; that is checkable by reading every task file in <code>environments/</code>. This piece will need revisiting the first time phoneshell adds a multi-instance repetition task and measures whether <code>memory.py</code>'s grounding actually helps at that scale, which as of this writing it has not done, by 30 April 2027.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Jing Wu, Wenjie Ai, Daphne Barretto, et al., <a href="https://arxiv.org/abs/2601.20650">OS-Marathon: Benchmarking Computer-Use Agents on Long-Horizon Repetitive Tasks</a>, arXiv:2601.20650, submitted 28 January 2026, v3 revised 26 August 2026, read 31 October 2026.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/memory.py</code>, <code>phoneshell/bench/schema.py</code>, read 31 October 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
