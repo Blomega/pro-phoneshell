@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GOLD beats SHAM by up to 25.9 points on a provenance audit; phoneshell's one answer-reading check was built to dodge exactly that confound &mdash; Blolabel</title>
+<meta name="description" content="Success Is Not Self-Explanatory (Luo and Peng, 27 July 2026) finds that substituting a wrong value for the right one, while keeping the same exposure opportunity, still changes agent success by 19.1 to 25.9 percentage points: a correct answer does not prove the agent read it rather than already knowing it. phoneshell's one check that grades what a model said rather than what the phone shows exists for exactly one reason: its ground truth lives on a page the task owns, so the confound this paper audits cannot occur there in the first place.">
+<link rel="canonical" href="https://blolabel.ai/blog/gold-beats-sham-25-9-points-phoneshells-answer-check-dodges-the-confound/">
+<meta property="og:title" content="GOLD beats SHAM by up to 25.9 points on a provenance audit; phoneshell's one answer-reading check was built to dodge exactly that confound &mdash; Blolabel">
+<meta property="og:description" content="A new audit names the gap between a correct answer and a correct answer for the right reason success provenance, and measures it at 19.1 to 25.9 points. phoneshell's answer_contains check sidesteps the whole question by fixing the ground truth in advance.">
+<meta property="og:url" content="https://blolabel.ai/blog/gold-beats-sham-25-9-points-phoneshells-answer-check-dodges-the-confound/">
+<meta property="og:type" content="event">
+<meta property="og:image" content="https://blolabel.ai/images/blog/gold-beats-sham-25-9-points-phoneshells-answer-check-dodges-the-confound-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "GOLD beats SHAM by up to 25.9 points on a provenance audit; phoneshell's one answer-reading check was built to dodge exactly that confound", "description": "Success Is Not Self-Explanatory audits whether a correct agent answer proves the agent read the right value or just happened to already have it. phoneshell's answer_contains check, its only check that grades what a model said rather than what the phone shows, exists for a narrow reason that sidesteps this exact confound: it is used only against ground truth fixed on a page the task controls.", "datePublished": "2026-10-31", "dateModified": "2026-10-31", "url": "https://blolabel.ai/blog/gold-beats-sham-25-9-points-phoneshells-answer-check-dodges-the-confound/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/gold-beats-sham-25-9-points-phoneshells-answer-check-dodges-the-confound/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/gold-beats-sham-25-9-points-phoneshells-answer-check-dodges-the-confound-hero.png", "citation": ["https://arxiv.org/abs/2607.24054", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#leaderboard">Leaderboard</a>
+     <a href="/blog/">Notes</a>
+     <a href="https://huggingface.co/datasets/blolabel/phoneshell-bench">Dataset</a>
+    <a href="#tasks">Tasks</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind event">event</span>
+    <time datetime="2026-10-31">31 October 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>GOLD beats SHAM by up to 25.9 points on a provenance audit; phoneshell's one answer-reading check was built to dodge exactly that confound</h1>
+  <p class="standfirst">A paper posted 27 July 2026 names a confound most agent benchmarks never check for: a correct answer can mean the agent read the right value, or it can mean the agent already had a value and the environment happened to agree. Swapping in a matched wrong value instead of the right one, while changing nothing else about the task, moves success by 19.1 to 25.9 percentage points in the authors' own test. phoneshell's single check that ever grades what a model said, rather than what the phone shows, was restricted on purpose to the one case where this confound cannot arise: a ground truth the task itself fixes on a page it hosts.</p>
+
+<p>Jingkun Luo and Da-Tian Peng's "Success Is Not Self-Explanatory: Auditing Success Provenance in Agent Evaluation" (arXiv:2607.24054, submitted 27 July 2026) argues that outcome correctness is not the same claim as "the agent's reasoning used the information it was supposed to use." An agent can produce the right final answer by actually finding and reading the target value, or by already carrying a plausible guess that happens to match, or by exploiting some other artifact of the evaluation surface that has nothing to do with the task's intended information flow. Ordinary benchmarks cannot tell these apart because they only ever present the correct value. The paper's fix is a three-way substitution: a CLEAN condition that keeps only what the benchmark itself authorizes, a GOLD condition that makes the true target value available, and a SHAM condition that keeps the identical source structure and the identical exposure opportunity but swaps in a matched, incorrect value. If an agent's success rate depends on whether the value it was exposed to was actually correct, GOLD must outperform SHAM. If it does not, outcome correctness was never tracking what the benchmark assumed it was tracking.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/gold-beats-sham-25-9-points-phoneshells-answer-check-dodges-the-confound-hero.png" alt="Abstract technical illustration on a dark grid: two parallel identical pipelines run left to right, one labelled with a green token carrying a correct value into a result node, one labelled with an amber token carrying a visually identical but incorrect value into an equivalent result node; a measurement bracket spans the gap between the two result nodes, representing the measured difference between them, cool blues and slate greys with green and amber accents, no icons or text, no readable words" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="the-mechanism">What success provenance measures, and what D0 found</h2>
+
+<p>The authors call the thing a correctness-only score fails to capture <em>success provenance</em>: whether success depended on an acquired target at all, as opposed to following from something the agent already had or from a leak in how the surface is constructed. Their first experiment, D0, runs this GOLD-versus-SHAM substitution across four standardized evaluation surfaces and reports that GOLD exceeds SHAM by 19.1 to 25.9 percentage points. That range is itself the headline: on a benchmark where this test has never been run, a reported success rate could, in principle, already be sitting on contamination from either end of that gap, and nothing in a plain pass/fail score would show it. The paper's recommendation is not a new scoring formula bolted onto existing benchmarks; it asks that agent evaluations report success alongside whether the evaluated information state actually supported it, so a reader can separate "the agent used the right information" from "the agent happened to land on the right string."</p>
+
+<table>
+  <thead><tr><th>Condition (Luo &amp; Peng, D0)</th><th>What the agent is exposed to</th><th>What a high success rate there would mean</th></tr></thead>
+  <tbody>
+    <tr><td>CLEAN</td><td>only what the benchmark itself authorizes</td><td>the benchmark's intended baseline</td></tr>
+    <tr><td>GOLD</td><td>the correct target value is made available</td><td>success can track correctness, if it moves</td></tr>
+    <tr><td>SHAM</td><td>same source structure, same exposure opportunity, a matched wrong value</td><td>a high score here means success was never about the value at all</td></tr>
+    <tr><td>GOLD minus SHAM</td><td>&mdash;</td><td>19.1 to 25.9 percentage points, per the paper's D0 result</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: Jingkun Luo and Da-Tian Peng, "Success Is Not Self-Explanatory: Auditing Success Provenance in Agent Evaluation," arXiv:2607.24054, submitted 27 July 2026, read 31 October 2026.</p>
+
+<h2 id="phoneshell-answer-check">Why phoneshell's answer-reading check cannot have this problem</h2>
+
+<p>phoneshell's house rule, stated in <code>bench/verify.py</code>'s own docstring, is that every check reads the phone directly rather than believing the agent's account of itself: "an agent that says 'I have enabled Do Not Disturb' and an agent that enabled Do Not Disturb are different things, and only the second one passes." There is exactly one exception, the <code>answer_contains</code> check, and its own comment names the reason it exists and the limit placed on it in the same breath: it is "the ONLY check that grades what the model said rather than what the phone shows, and it exists for one narrow case: a task whose deliverable is information, not a state change." The comment continues: "ground truth has to be fixed and known in advance, which is why these tasks run against a page we host rather than against content that can change."</p>
+
+<p>That restriction is, without the paper's vocabulary, a working answer to the exact confound D0 measures. A GOLD/SHAM substitution test asks whether an agent's success tracks the true target or merely a plausible value it could have produced some other way. phoneshell's design removes the ambiguity at the source rather than auditing for it after the fact: the only tasks that ever use <code>answer_contains</code> point the agent at a page phoneshell itself hosts, with one value in it, so there is no live content that could change, no second plausible value the agent could already be carrying, and no SHAM condition to even construct. The check works because the environment that produces the "GOLD" value and the environment the task actually runs against are, by construction, the same four walls.</p>
+
+<svg viewBox="0 0 820 300" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting the GOLD versus SHAM substitution test with phoneshell's answer_contains check. The paper's test varies which value an agent is exposed to across a shared, mutable evaluation surface and measures a 19.1 to 25.9 percentage point gap between a correct and an incorrect value. phoneshell instead fixes the ground truth once, on a page it hosts itself, so the substitution the paper tests for has no second value to swap in.">
+<rect x="0" y="0" width="820" height="300" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">A test that needs two values to compare, against a check with only one</text>
+<rect x="20" y="55" width="360" height="155" rx="8" fill="#262d3d" stroke="#e8a33d"/>
+<text x="200" y="78" font-size="11.5" font-weight="600" text-anchor="middle" fill="#e8a33d">Success Is Not Self-Explanatory, D0</text>
+<text x="35" y="100" font-size="10" fill="#c4ccda">same source structure, same exposure</text>
+<text x="35" y="118" font-size="10" fill="#c4ccda">GOLD: the true target value is present</text>
+<text x="35" y="136" font-size="10" fill="#c4ccda">SHAM: a matched WRONG value instead</text>
+<text x="35" y="162" font-size="9.5" fill="#e8a33d">GOLD minus SHAM = 19.1 to 25.9 points</text>
+<text x="35" y="184" font-size="9.5" fill="#8893a8">a high SHAM score means success never</text>
+<text x="35" y="198" font-size="9.5" fill="#8893a8">tracked the value at all</text>
+<rect x="440" y="55" width="360" height="155" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="620" y="78" font-size="11.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">phoneshell, answer_contains</text>
+<text x="455" y="100" font-size="10" fill="#c4ccda">one value, on a page phoneshell hosts</text>
+<text x="455" y="118" font-size="10" fill="#c4ccda">fixed and known in advance (bench/verify.py)</text>
+<text x="455" y="136" font-size="10" fill="#c4ccda">no live content that could change</text>
+<text x="455" y="162" font-size="9.5" fill="#5ad1a0">no second plausible value exists to swap in</text>
+<text x="455" y="184" font-size="9.5" fill="#8893a8">used ONLY for information deliverables,</text>
+<text x="455" y="198" font-size="9.5" fill="#8893a8">never for a state-change task</text>
+<text x="20" y="245" font-size="10" fill="#8893a8">The paper's test varies which value is exposed and watches success move. phoneshell's design removes the variation</text>
+<text x="20" y="263" font-size="10" fill="#8893a8">before the task runs, so there is nothing for a GOLD/SHAM swap to act on in the first place.</text>
+<text x="20" y="285" font-size="10" fill="#8893a8">Sources: arxiv.org/abs/2607.24054; phoneshell/bench/verify.py, read 31 October 2026.</text>
+</g></svg>
+
+<svg viewBox="0 0 820 230" style="width:100%;height:auto" role="img" aria-label="Flow diagram of phoneshell's answer_contains check. The agent is handed an instruction pointing at a page phoneshell itself hosts, with exactly one value present. The agent's final said text is lower-cased and checked for whether the hosted value's lower-cased text is a substring, with no comparison ever made against the phone's live screen state for this one check kind.">
+<rect x="0" y="0" width="820" height="230" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">answer_contains, the one check that never reads the phone</text>
+<rect x="15" y="55" width="190" height="120" rx="8" fill="#262d3d" stroke="#8893a8"/>
+<text x="110" y="78" font-size="11" font-weight="600" text-anchor="middle">hosted page</text>
+<text x="28" y="100" font-size="9.5" fill="#c4ccda">one value, fixed</text>
+<text x="28" y="116" font-size="9.5" fill="#c4ccda">and known before</text>
+<text x="28" y="132" font-size="9.5" fill="#c4ccda">the task even runs</text>
+<path d="M210 115 L260 115" stroke="#5ad1a0" stroke-width="2" fill="none"/>
+<polygon points="260,109 272,115 260,121" fill="#5ad1a0"/>
+<rect x="275" y="55" width="190" height="120" rx="8" fill="#262d3d" stroke="#8893a8"/>
+<text x="370" y="78" font-size="11" font-weight="600" text-anchor="middle">agent's final "said"</text>
+<text x="288" y="100" font-size="9.5" fill="#c4ccda">result text from the</text>
+<text x="288" y="116" font-size="9.5" fill="#c4ccda">model's own reply,</text>
+<text x="288" y="132" font-size="9.5" fill="#c4ccda">lower-cased</text>
+<path d="M470 115 L520 115" stroke="#5ad1a0" stroke-width="2" fill="none"/>
+<polygon points="520,109 532,115 520,121" fill="#5ad1a0"/>
+<rect x="535" y="55" width="270" height="120" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="670" y="78" font-size="11" font-weight="600" text-anchor="middle">substring test</text>
+<text x="548" y="100" font-size="9.5" fill="#c4ccda">want in got: the hosted value's</text>
+<text x="548" y="116" font-size="9.5" fill="#c4ccda">text must appear in the said text</text>
+<text x="548" y="134" font-size="9.5" fill="#5ad1a0">pass/fail, no screen read at all</text>
+<text x="20" y="200" font-size="10" fill="#8893a8">Every other check kind in bench/verify.py dispatches to the live phone. This is the only one that never does, and it is restricted to this one shape of task.</text>
+<text x="20" y="216" font-size="10" fill="#8893a8">Source: phoneshell/bench/verify.py, lines 31-46, read 31 October 2026.</text>
+</g></svg>
+
+<h2 id="what-it-means">What this means for anyone writing an information-deliverable check</h2>
+
+<ul>
+  <li>Success provenance is a real gap in any benchmark that lets an agent see several plausible values before answering, including ones that let a model browse the web, read a document, or query a database it does not fully control. phoneshell's answer-reading tasks never give the agent that choice: the only value in play is the one the task hosts, so there is no second source for success to secretly depend on.</li>
+  <li>This is a design decision with a cost, not a free lunch. By restricting <code>answer_contains</code> to pages it hosts itself, phoneshell gets a check immune to this confound at the price of never grading an agent's performance against the live, changing web, which is most of what a phone is actually used for day to day.</li>
+  <li>The paper's broader point, that benchmarks should report success alongside whether the evaluated information state supported it, has no open item for phoneshell's <code>answer_contains</code> tasks specifically, because the information state there has exactly one possible value by construction. It would matter immediately if phoneshell ever added an information-deliverable task against live, uncontrolled content, which as of this writing it has not.</li>
+</ul>
+
+<h2 id="check-it-yourself">Check it yourself</h2>
+
+<pre><code># the one check that grades what the model said, and why it is restricted this way
+grep -n "answer_contains" -A 14 phoneshell/bench/verify.py
+
+# every other check kind dispatches against the live phone instead
+sed -n '47,150p' phoneshell/bench/verify.py
+
+# the paper itself
+open "https://arxiv.org/abs/2607.24054"
+
+# the D0 result as quoted in this piece
+# "GOLD exceeds SHAM by 19.1 to 25.9 percentage points"</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim the paper's D0 experiment reports a GOLD-minus-SHAM gap of 19.1 to 25.9 percentage points across four standardized surfaces; that is checkable against the arXiv page itself and would be false if a later revision changes that range. We also claim phoneshell's <code>answer_contains</code> check is used only against pages phoneshell hosts with a single fixed value, which is checkable by reading every task file in <code>environments/</code> that uses that check kind. This piece will need revisiting if phoneshell ever adds an <code>answer_contains</code> task against live, agent-browsable content, which would reopen exactly the confound this design currently avoids, or if the paper's D0 range is revised in a later arXiv version, by 30 April 2027.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Jingkun Luo and Da-Tian Peng, <a href="https://arxiv.org/abs/2607.24054">Success Is Not Self-Explanatory: Auditing Success Provenance in Agent Evaluation</a>, arXiv:2607.24054, submitted 27 July 2026, read 31 October 2026.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/bench/verify.py</code>, read 31 October 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
