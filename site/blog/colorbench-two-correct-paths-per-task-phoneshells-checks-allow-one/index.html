@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ColorBench gives 175 mobile tasks at least two correct paths each; phoneshell's Check list can only credit one &mdash; Blolabel</title>
+<meta name="description" content="ColorBench (OPPO, Shanghai Jiao Tong University, arXiv:2510.14621) models every task as a shared, strongly connected graph of screen states, where each of its 175 tasks has at least two correct paths plus recovery paths that count toward success. phoneshell's bench/schema.py Check list is a flat set of end-state assertions with no concept of an alternate valid route, so a task finished correctly by a different path than the one its author imagined cannot currently be credited as a pass.">
+<link rel="canonical" href="https://blolabel.ai/blog/colorbench-two-correct-paths-per-task-phoneshells-checks-allow-one/">
+<meta property="og:title" content="ColorBench gives 175 mobile tasks at least two correct paths each; phoneshell's Check list can only credit one &mdash; Blolabel">
+<meta property="og:description" content="ColorBench models mobile tasks as a graph with multiple correct and recovery paths. phoneshell grades every task against one fixed set of end-state checks, with no way to recognize a different, still-correct route.">
+<meta property="og:url" content="https://blolabel.ai/blog/colorbench-two-correct-paths-per-task-phoneshells-checks-allow-one/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/colorbench-two-correct-paths-per-task-phoneshells-checks-allow-one-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "ColorBench gives 175 mobile tasks at least two correct paths each; phoneshell's Check list can only credit one", "description": "ColorBench models mobile agent tasks as nodes and edges on one shared, strongly connected graph, so each of its 175 tasks carries at least two correct solution paths plus recovery paths that still count as success. phoneshell's bench/schema.py Task dataclass evaluates a flat list of end-state Check assertions with no concept of an alternate route, so a correct task finished a different way than its author wrote has no mechanism to be credited.", "datePublished": "2026-11-06", "dateModified": "2026-11-06", "url": "https://blolabel.ai/blog/colorbench-two-correct-paths-per-task-phoneshells-checks-allow-one/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/colorbench-two-correct-paths-per-task-phoneshells-checks-allow-one/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/colorbench-two-correct-paths-per-task-phoneshells-checks-allow-one-hero.png", "citation": ["https://arxiv.org/abs/2510.14621", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#evidence">Evidence</a>
+    <a href="#mechanism">Mechanism</a>
+    <a href="/blog/">Notes</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind comparison">comparison</span>
+    <time datetime="2026-11-06">6 November 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>ColorBench gives 175 mobile tasks at least two correct paths each; phoneshell's Check list can only credit one</h1>
+  <p class="standfirst">ColorBench (arXiv:2510.14621, OPPO and Shanghai Jiao Tong University) builds one shared, strongly connected graph of mobile screen states and defines each of its 175 tasks, with an average length past 13 steps, as having "at least two correct paths" through that graph, plus recovery paths where an agent that errs and corrects still counts as succeeding. phoneshell's own task format, <code>bench/schema.py</code>'s <code>Check</code> list, is a flat set of end-state assertions written once per task. There is no field anywhere in it for a second valid route, which means a model that finishes a phoneshell task correctly by a path its author did not write down has no mechanism available to be credited for it.</p>
+
+<p>"ColorBench: Benchmarking Mobile Agents with Graph-Structured Framework for Complex Long-Horizon Tasks" was posted to arXiv on 16 October 2025 by Yuanyi Song, Heyuan Huang, Qiqiang Lin, Yin Zhao, Xiangmou Qu, Jun Wang, Xingyu Lou, Weiwen Liu, Zhuosheng Zhang, Yong Yu and Weinan Zhang, with code released under the MadeAgents organization on GitHub. The paper's motivating complaint is one phoneshell's own house thesis would recognize: a benchmark that defines success as reaching one scripted end state cannot tell a model that solved the task a legitimate but different way from a model that got lucky, and it cannot give any credit at all to a model that made a mistake and then correctly recovered from it.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/colorbench-two-correct-paths-per-task-phoneshells-checks-allow-one-hero.png" alt="Abstract technical illustration on a dark grid: a branching directed graph of small circular nodes connected by curved edges, with two distinct colored paths of equal visual weight running from a shared start node to the same shared end node, one path shorter and one path longer with a small loop representing a corrected error, set against a second, separate flat single-line path drawn below the graph with no branching at all, cool blues and slate greys with one amber accent marking the corrected-error loop, no icons or text" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="method">A graph where a screen is a node and a tap is an edge</h2>
+
+<p>ColorBench's structure is explicit about what a node and an edge are. Section 3.1 states the benchmark "abstracts the finite states of real mobile environment into a strongly connected directed graph G=(V,E)," where "different screen states are modeled as distinct nodes at the granularity of action transitions," and edges represent "action transition relationships between screen states at the node granularity. Each edge corresponds to a specific action a transitioning from one node N_i to another N_j, such as 'click bbox[x1,y1,x2,y2]' or 'type[TEXT]'." Every one of the benchmark's 175 tasks, 101 cross-app and 74 single-app, originates from a shared "HOME" node and reaches completion through "predefined nodes, which represent task completion," with sub-task progress marked by graph-wide milestones.</p>
+
+<p>Because the graph is shared and strongly connected rather than one linear script per task, it "naturally support[s] multi-path solutions." The paper is explicit that this is not an incidental property: the graph is "designed to encompass not only the optimal path but also sub-optimal ones and, importantly, recovery paths where the agent corrects its errors." Its introduction illustrates this with "multiple solutions (paths of different colors), reflective backtracking (the blue path), and automated evaluation milestones (the red flag)." The paper evaluates fifteen models, three closed-source and ten open-source plus two custom baselines, against this structure. The per-model success-rate table itself is not reported here: it was not independently re-verified against the paper's primary PDF for this piece, and this house's rule against guessing a number applies as much to a range as to a single figure. Readers who want the leaderboard should read Table 2 of the paper directly.</p>
+
+<table>
+  <thead><tr><th>What the task format can represent</th><th>ColorBench's graph</th><th>phoneshell's <code>Check</code> list (bench/schema.py)</th></tr></thead>
+  <tbody>
+    <tr><td>Screen state</td><td>a node in one shared, strongly connected graph</td><td>not modeled; no state graph exists in the schema</td></tr>
+    <tr><td>Number of correct routes per task</td><td>"at least two correct paths," plus recovery paths</td><td>one fixed <code>checks: list[Check]</code>, evaluated once at the end</td></tr>
+    <tr><td>Credit for correcting a mistake mid-task</td><td>explicit: "recovery paths where the agent corrects its errors"</td><td>not reported; no field distinguishes a clean run from a recovered one</td></tr>
+    <tr><td>Action granularity</td><td>edge-level, e.g. <code>click bbox[x1,y1,x2,y2]</code>, <code>type[TEXT]</code></td><td>not tracked between setup and check; only setup <code>Step</code>s and final <code>Check</code>s exist</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Sources: ColorBench, arXiv:2510.14621, Sec. 3.1 and 3.2, submitted 16 October 2025, read 6 November 2026; phoneshell/bench/schema.py.</p>
+
+<h2 id="mechanism">What phoneshell's Task actually records</h2>
+
+<p><code>bench/schema.py</code>'s own docstring is direct about what the format is for: a task is three parts, "setup" steps that run deterministically with no model involved, an "instruct" sentence handed to the model, and "checks," assertions "run afterwards that decide pass or fail automatically." The <code>Task</code> dataclass's <code>checks</code> field is typed <code>list[Check]</code>, a flat list, and every <code>Check</code> is one assertion, a <code>kind</code>, with optional <code>text</code>, <code>value</code>, <code>app</code> and a <code>negate</code> flag, defined in <code>bench/verify.py</code>'s vocabulary. Nothing in the dataclass carries a path, a sequence, or a reference to which actions were taken to reach the end state being checked. The checks run once, after the model's run has already finished, against whatever state the phone happens to be in.</p>
+
+<p>That design is not an oversight; it is the same design choice that makes phoneshell's scoring auditable at all, since a check written once and run deterministically is exactly what lets a result be reproduced by anyone with the task file and the phone. ColorBench's graph buys something phoneshell's flat checks cannot, a benchmark-wide account of which paths are legitimate, at the cost of something phoneshell's format protects especially carefully: the published suite stays deliberately incomplete specifically so a public answer key never becomes training data, and a graph detailed enough to enumerate every legitimate path through 175 tasks is also detailed enough to describe, in large part, how to solve them.</p>
+
+<svg viewBox="0 0 820 240" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting how ColorBench and phoneshell represent a mobile task. ColorBench models every task as nodes and edges on one shared graph, where a task can be solved by at least two correct paths or a recovery path that corrects an error, and all of this is credited by the graph's own structure. phoneshell's Task dataclass instead has a flat setup list and a flat checks list, evaluated once at the end against whatever state the phone is in, with no path, sequence, or recovery information recorded anywhere in the schema.">
+<rect x="0" y="0" width="820" height="240" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">What a task "is," in two formats</text>
+<rect x="20" y="50" width="370" height="155" rx="8" fill="#262d3d" stroke="#e8a33d"/>
+<text x="205" y="72" font-size="11.5" font-weight="600" text-anchor="middle" fill="#e8a33d">ColorBench: G = (V, E)</text>
+<text x="33" y="95" font-size="10" fill="#c4ccda">V = screen states, E = actions (click bbox, type)</text>
+<text x="33" y="113" font-size="9.5" fill="#e8a33d">each task: at least 2 correct paths through G</text>
+<text x="33" y="131" font-size="9.5" fill="#e8a33d">+ recovery paths credited as success</text>
+<text x="33" y="155" font-size="9.5" fill="#8893a8">175 tasks, 101 cross-app, 74 single-app,</text>
+<text x="33" y="170" font-size="9.5" fill="#8893a8">average length over 13 steps</text>
+<rect x="430" y="50" width="370" height="155" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="615" y="72" font-size="11.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">phoneshell: Task(setup, checks)</text>
+<text x="443" y="95" font-size="10" fill="#c4ccda">setup: list[Step], checks: list[Check]</text>
+<text x="443" y="113" font-size="9.5" fill="#5ad1a0">checks run once, after the run ends</text>
+<text x="443" y="131" font-size="9.5" fill="#5ad1a0">against whatever state the phone is in</text>
+<text x="443" y="155" font-size="9.5" fill="#8893a8">no path, sequence or recovery field</text>
+<text x="443" y="170" font-size="9.5" fill="#8893a8">anywhere in bench/schema.py</text>
+<text x="20" y="225" font-size="10" fill="#8893a8">Sources: arxiv.org/abs/2510.14621 Sec. 3.1; phoneshell/bench/schema.py, phoneshell/bench/verify.py, read 6 November 2026.</text>
+</g></svg>
+
+<svg viewBox="0 0 900 320" style="width:100%;height:auto" role="img" aria-label="Diagram of ColorBench's shared graph showing two routes to the same DONE node: an optimal path that takes a click bbox action then a type TEXT action, and a recovery path that takes a wrong click bbox action and backtracks before rejoining that same type TEXT edge. Both routes reach the identical DONE node and then hit phoneshell's single Check, made of the kind, text, value, app and negate fields in bench/verify.py, which bench/runner.py evaluates once after setup, so the clean run and the recovered run produce the identical PASS verdict with no record of which route was taken.">
+<rect x="0" y="0" width="900" height="320" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Two routes to the same node, one Check at the end</text>
+<line x1="86" y1="66" x2="440" y2="48" stroke="#e8a33d" stroke-width="2"/>
+<line x1="478" y1="48" x2="800" y2="66" stroke="#e8a33d" stroke-width="2"/>
+<line x1="72" y1="80" x2="248" y2="138" stroke="#5ad1a0" stroke-width="2"/>
+<line x1="266" y1="150" x2="444" y2="54" stroke="#5ad1a0" stroke-width="2"/>
+<text x="255" y="38" font-size="9.5" fill="#e8a33d" text-anchor="middle">click bbox[x1,y1,x2,y2]</text>
+<text x="640" y="38" font-size="9.5" fill="#e8a33d" text-anchor="middle">type[TEXT]</text>
+<text x="130" y="118" font-size="9.5" fill="#5ad1a0" text-anchor="middle">click bbox[x1,y1,x2,y2]</text>
+<text x="335" y="128" font-size="9.5" fill="#5ad1a0" text-anchor="middle">back (recovery)</text>
+<circle cx="70" cy="65" r="16" fill="#262d3d" stroke="#8893a8" stroke-width="2"/>
+<text x="70" y="69" font-size="9" text-anchor="middle">HOME</text>
+<circle cx="460" cy="45" r="18" fill="#262d3d" stroke="#8893a8" stroke-width="2"/>
+<text x="460" y="48" font-size="8" text-anchor="middle">shared</text>
+<circle cx="260" cy="150" r="16" fill="#262d3d" stroke="#5ad1a0" stroke-width="2"/>
+<text x="260" y="153" font-size="8" text-anchor="middle">wrong</text>
+<circle cx="820" cy="65" r="18" fill="#262d3d" stroke="#e8a33d" stroke-width="2"/>
+<text x="820" y="68" font-size="9" text-anchor="middle">DONE</text>
+<text x="20" y="100" font-size="9.5" fill="#c4ccda">optimal path (amber): HOME to DONE in two edges</text>
+<text x="20" y="117" font-size="9.5" fill="#5ad1a0">recovery path (teal): wrong click, backtrack, rejoins the same shared edge into DONE</text>
+<line x1="820" y1="83" x2="820" y2="195" stroke="#8893a8" stroke-width="2" stroke-dasharray="4,3"/>
+<rect x="500" y="195" width="380" height="60" rx="8" fill="#262d3d" stroke="#8893a8"/>
+<text x="690" y="216" font-size="10.5" font-weight="600" text-anchor="middle" fill="#e9ecf2">Check(kind, text, value, app, negate)</text>
+<text x="690" y="233" font-size="9" text-anchor="middle" fill="#8893a8">bench/verify.py, run once by bench/runner.py after setup</text>
+<text x="690" y="249" font-size="9.5" font-weight="600" text-anchor="middle" fill="#e8a33d">same PASS for the clean run and the recovered run</text>
+<text x="20" y="282" font-size="10" fill="#8893a8">Both paths share node "shared" and its outgoing type[TEXT] edge, so either route reaches the same DONE node.</text>
+<text x="20" y="298" font-size="10" fill="#8893a8">phoneshell's Check runs once against that end state and cannot tell the two runs apart. Sources: arXiv:2510.14621 Sec. 3.1-3.2; phoneshell/bench/schema.py, bench/verify.py, bench/runner.py, read 6 November 2026.</text>
+</g></svg>
+
+<h2 id="what-it-means">What it means for writing a phoneshell task</h2>
+
+<ul>
+  <li>Right now, a phoneshell task author who wants two legitimate routes to count has to write a check that is true under both, phrased at the end-state level: "the setting is on," not "the toggle in the third row was tapped." Every existing phoneshell task already does this by convention, grading device state rather than actions, which is why the gap ColorBench exposes is narrower in practice than the schema alone suggests.</li>
+  <li>Where the gap is real is recovery credit. A model that fat-fingers a wrong screen, notices, backs out, and still reaches the correct end state passes a phoneshell check exactly the same as a model that never erred, because the check only ever sees the end state. That is arguably the right answer for a benchmark whose house rule is to grade outcomes, not narrate process, but it means phoneshell currently cannot report the distinction ColorBench's graph makes visible: who got there clean, and who got there by correcting a mistake.</li>
+  <li>A graph detailed enough to enumerate every correct path is also a published answer key. phoneshell's private held-out task set exists specifically to keep that key off the public record, which is a genuine tradeoff against ColorBench's approach rather than a simple deficiency: more structure recorded per task is also more structure available to memorize.</li>
+</ul>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># phoneshell's Task and Check dataclasses: no path or sequence field exists
+grep -n "class Task\|class Check" -A 15 phoneshell/bench/schema.py
+
+# confirm checks run once, after setup, with nothing recorded about the path taken
+grep -n "checks" phoneshell/bench/runner.py
+
+# ColorBench's graph definition and multi-path claim, read directly
+open "https://arxiv.org/html/2510.14621v1"</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim ColorBench's own text states its 175 tasks each have "at least two correct paths" plus recovery paths, checkable in Section 3.2 of the arXiv HTML version. We also claim no field in phoneshell's <code>bench/schema.py</code> <code>Task</code> or <code>Check</code> dataclasses records a path, action sequence, or recovery distinction, checkable by reading the dataclasses directly. This should be revisited if phoneshell adds a path- or recovery-aware scoring field, or if ColorBench's published per-model leaderboard figures are independently re-verified against its camera-ready version rather than the preprint cited here, by 30 April 2027.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Yuanyi Song, Heyuan Huang, Qiqiang Lin, Yin Zhao, Xiangmou Qu, Jun Wang, Xingyu Lou, Weiwen Liu, Zhuosheng Zhang, Yong Yu, Weinan Zhang, <a href="https://arxiv.org/abs/2510.14621">ColorBench: Benchmarking Mobile Agents with Graph-Structured Framework for Complex Long-Horizon Tasks</a>, arXiv:2510.14621, submitted 16 October 2025, read 6 November 2026.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/bench/schema.py</code>, <code>phoneshell/bench/verify.py</code>, read 6 November 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
