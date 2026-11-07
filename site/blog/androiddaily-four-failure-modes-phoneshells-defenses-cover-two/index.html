@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AndroidDaily's best score is 62.0% on 350 real tasks; phoneshell catches one of its three failure bottlenecks and none of a model that mis-sees a correct screen &mdash; Blolabel</title>
+<meta name="description" content="AndroidDaily (StepFun, BUPT, Waseda; ACM Multimedia 2026) runs 350 real daily-use tasks across 94 Android apps and finds even the best model, Gemini 3 Flash, succeeds only 62.0% of the time, with inference latency, memory-induced action loops, and a model's own action protocol degrading its perception named as the three dominant bottlenecks. phoneshell's StuckDetector catches the loops and its consistency_gate catches some latency-driven staleness; neither touches a model that mis-sees a screen it is otherwise perceiving correctly.">
+<link rel="canonical" href="https://blolabel.ai/blog/androiddaily-four-failure-modes-phoneshells-defenses-cover-two/">
+<meta property="og:title" content="AndroidDaily's best score is 62.0% on 350 real tasks; phoneshell catches one of its three failure bottlenecks and none of a model that mis-sees a correct screen &mdash; Blolabel">
+<meta property="og:description" content="AndroidDaily names three bottlenecks behind a 62.0% best score across 350 real Android tasks. phoneshell's harness has a direct answer for one of them, and no answer at all for a model whose own action protocol degrades what it can see.">
+<meta property="og:url" content="https://blolabel.ai/blog/androiddaily-four-failure-modes-phoneshells-defenses-cover-two/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/androiddaily-four-failure-modes-phoneshells-defenses-cover-two-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "AndroidDaily's best score is 62.0% on 350 real tasks; phoneshell catches one of its three failure bottlenecks and none of a model that mis-sees a correct screen", "description": "AndroidDaily evaluates twelve mobile GUI agent models on 350 real daily-use Android tasks across 94 apps and finds the best, Gemini 3 Flash, reaches 62.0% success, with latency-driven misalignment, memory-induced action loops, and protocol-induced capability degradation named as the dominant failure bottlenecks. phoneshell's StuckDetector and consistency_gate answer the first two in part; nothing in the harness answers the third.", "datePublished": "2026-11-06", "dateModified": "2026-11-06", "url": "https://blolabel.ai/blog/androiddaily-four-failure-modes-phoneshells-defenses-cover-two/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/androiddaily-four-failure-modes-phoneshells-defenses-cover-two/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/androiddaily-four-failure-modes-phoneshells-defenses-cover-two-hero.png", "citation": ["https://arxiv.org/abs/2605.27761", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#evidence">Leaderboard</a>
+    <a href="#mechanism">Failure modes</a>
+    <a href="/blog/">Notes</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-11-06">6 November 2026</time>
+    <span>9 min read</span>
+  </div>
+  <h1>AndroidDaily's best score is 62.0% on 350 real tasks; phoneshell catches one of its three failure bottlenecks and none of a model that mis-sees a correct screen</h1>
+  <p class="standfirst">AndroidDaily (arXiv:2605.27761, StepFun, Beijing University of Posts and Telecommunications and Waseda University, accepted to ACM Multimedia 2026) runs 350 real daily-use tasks across 94 closed-source Android apps and finds the strongest of twelve evaluated models, Gemini 3 Flash, succeeds 62.0% of the time. Its manual failure analysis names three dominant bottlenecks: inference latency, memory-induced action loops, and a model's own action protocol degrading perception it otherwise has. phoneshell's harness built a direct countermeasure for the second of those, a partial one for the first, and has never had to answer the third, because nothing in it watches for a model that mis-sees a screen it could otherwise read correctly.</p>
+
+<p>The paper, "AndroidDaily: A Verifiable Benchmark for Mobile GUI Agents on Real-World Closed-Source Applications," was posted to arXiv on 26 May 2026 by a team from StepFun, BUPT and Waseda and is scheduled for ACM Multimedia 2026 in Rio de Janeiro this November. Its central contribution is a judge, GRADE, built to replace human review at scale: evaluated against 879 manually reviewed sessions, the full two-layer version of GRADE reaches 87.37% agreement with human evaluators, up from 84.76% for its evidence layer alone. Every task caps a session at 60 interaction steps and 40 minutes of wall-clock time, scored pass@1. The task set splits into Information and Decision (173 tasks, 49.4%), Execution and Operations (78 tasks, 22.3%), and Creation and Communication (99 tasks, 28.3%).</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/androiddaily-four-failure-modes-phoneshells-defenses-cover-two-hero.png" alt="Abstract technical illustration on a dark grid: three narrow gates arranged in a row between a wide input band and a wide output band, each gate labeled only by a distinct icon-free geometric pattern representing a different failure bottleneck, the first gate partly shielded by a thin translucent barrier, the second gate fully shielded by a solid barrier, the third gate entirely unshielded and open, cool blues and slate greys with one amber accent on the unshielded third gate, no text" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="method">The leaderboard, and the number that does not change what it measures</h2>
+
+<p>AndroidDaily evaluated twelve models. The spread between the top and bottom is wide enough that "a mobile GUI agent" stops meaning much on its own.</p>
+
+<table>
+  <thead><tr><th>Model</th><th>Overall success</th><th>Avg step time (s)</th></tr></thead>
+  <tbody>
+    <tr><td>Gemini 3 Flash</td><td>62.0%</td><td>14.7</td></tr>
+    <tr><td>Gemini 3 Pro</td><td>58.6%</td><td>30.0</td></tr>
+    <tr><td>Seed1.8</td><td>46.3%</td><td>7.9</td></tr>
+    <tr><td>Seed2.0 Pro</td><td>45.4%</td><td>9.7</td></tr>
+    <tr><td>UI-TARS-1.5</td><td>42.3%</td><td>7.0</td></tr>
+    <tr><td>GLM-4.6V</td><td>33.1%</td><td>19.7</td></tr>
+    <tr><td>Step-GUI-30A3</td><td>29.7%</td><td>2.0</td></tr>
+    <tr><td>Step-GUI-8B</td><td>29.1%</td><td>3.3</td></tr>
+    <tr><td>UI-Venus-1.5-8B</td><td>22.9%</td><td>4.0</td></tr>
+    <tr><td>GUI-Owl-1.5-32B-Think</td><td>21.6%</td><td>25.6</td></tr>
+    <tr><td>GUI-Owl-1.5-8B-Think</td><td>19.0%</td><td>10.6</td></tr>
+    <tr><td>MAI-UI-8B</td><td>9.7%</td><td>2.6</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: AndroidDaily, arXiv:2605.27761, Table 2, submitted 26 May 2026, read 6 November 2026.</p>
+
+<p>The fastest model per step, Step-GUI-30A3 at 2.0 seconds, is not close to the most successful; the slowest, Gemini 3 Pro at 30.0 seconds, loses to its own faster sibling Gemini 3 Flash by 3.4 points. Speed and success move independently here, which is exactly what makes the paper's failure analysis worth reading past the leaderboard: a model that fails fast and a model that fails slow are not failing for the same reason.</p>
+
+<svg viewBox="0 0 820 480" style="width:100%;height:auto" role="img" aria-label="Scatter chart plotting average step time in seconds against overall task success percentage for the twelve models AndroidDaily evaluated. Gemini 3 Flash reaches the highest success, 62.0%, at 14.7 seconds per step; Gemini 3 Pro takes 30.0 seconds per step, more than twice as long, yet trails by 3.4 points at 58.6%. Step-GUI-30A3 is the fastest model at 2.0 seconds per step but lands near the bottom of the field at 29.7% success. Step time and task success move independently across the twelve models.">
+<rect x="0" y="0" width="820" height="480" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Step time and success move independently, AndroidDaily Table 2</text>
+<line x1="130" y1="60" x2="130" y2="360" stroke="#444c5e"/>
+<line x1="130" y1="360" x2="780" y2="360" stroke="#444c5e"/>
+<line x1="130" y1="317.1" x2="780" y2="317.1" stroke="#262d3d"/>
+<line x1="130" y1="274.3" x2="780" y2="274.3" stroke="#262d3d"/>
+<line x1="130" y1="231.4" x2="780" y2="231.4" stroke="#262d3d"/>
+<line x1="130" y1="188.6" x2="780" y2="188.6" stroke="#262d3d"/>
+<line x1="130" y1="145.7" x2="780" y2="145.7" stroke="#262d3d"/>
+<line x1="130" y1="102.9" x2="780" y2="102.9" stroke="#262d3d"/>
+<line x1="130" y1="60" x2="780" y2="60" stroke="#262d3d"/>
+<text x="122" y="364" font-size="9" text-anchor="end" fill="#8893a8">0%</text>
+<text x="122" y="321.1" font-size="9" text-anchor="end" fill="#8893a8">10%</text>
+<text x="122" y="278.3" font-size="9" text-anchor="end" fill="#8893a8">20%</text>
+<text x="122" y="235.4" font-size="9" text-anchor="end" fill="#8893a8">30%</text>
+<text x="122" y="192.6" font-size="9" text-anchor="end" fill="#8893a8">40%</text>
+<text x="122" y="149.7" font-size="9" text-anchor="end" fill="#8893a8">50%</text>
+<text x="122" y="106.9" font-size="9" text-anchor="end" fill="#8893a8">60%</text>
+<text x="122" y="64" font-size="9" text-anchor="end" fill="#8893a8">70%</text>
+<text x="130" y="375" font-size="9" text-anchor="middle" fill="#8893a8">0s</text>
+<text x="231.6" y="375" font-size="9" text-anchor="middle" fill="#8893a8">5s</text>
+<text x="333.1" y="375" font-size="9" text-anchor="middle" fill="#8893a8">10s</text>
+<text x="434.7" y="375" font-size="9" text-anchor="middle" fill="#8893a8">15s</text>
+<text x="536.3" y="375" font-size="9" text-anchor="middle" fill="#8893a8">20s</text>
+<text x="637.8" y="375" font-size="9" text-anchor="middle" fill="#8893a8">25s</text>
+<text x="739.4" y="375" font-size="9" text-anchor="middle" fill="#8893a8">30s</text>
+<text x="455" y="398" font-size="10.5" text-anchor="middle" fill="#c4ccda">Average step time (seconds)</text>
+<text x="40" y="210" font-size="10.5" fill="#c4ccda" transform="rotate(-90 40 210)" text-anchor="middle">Overall success (%)</text>
+<circle cx="428.6" cy="94.3" r="4.5" fill="#5ad1a0"/>
+<text x="428.6" y="70.3" font-size="10.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">Gemini 3 Flash</text>
+<text x="428.6" y="82.3" font-size="9.5" text-anchor="middle" fill="#5ad1a0">62.0%, 14.7s</text>
+<circle cx="739.4" cy="108.9" r="4.5" fill="#5ad1a0"/>
+<text x="739.4" y="84.9" font-size="10.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">Gemini 3 Pro</text>
+<text x="739.4" y="96.9" font-size="9.5" text-anchor="middle" fill="#5ad1a0">58.6%, 30.0s</text>
+<circle cx="170.6" cy="232.7" r="4.5" fill="#e8a33d"/>
+<text x="170.6" y="208.7" font-size="10.5" font-weight="600" text-anchor="middle" fill="#e8a33d">Step-GUI-30A3</text>
+<text x="170.6" y="220.7" font-size="9.5" text-anchor="middle" fill="#e8a33d">29.7%, 2.0s, fastest</text>
+<circle cx="290.5" cy="161.5" r="3" fill="#7f8aa8"/>
+<text x="300.5" y="158.5" font-size="8.2" fill="#8893a8">Seed1.8 46.3%, 7.9s</text>
+<circle cx="327.0" cy="165.4" r="3" fill="#7f8aa8"/>
+<text x="337.0" y="148.4" font-size="8.2" fill="#8893a8">Seed2.0 Pro 45.4%, 9.7s</text>
+<circle cx="272.2" cy="178.7" r="3" fill="#7f8aa8"/>
+<text x="238.2" y="196.7" font-size="8.2" fill="#8893a8">UI-TARS-1.5 42.3%, 7.0s</text>
+<circle cx="530.2" cy="218.1" r="3" fill="#7f8aa8"/>
+<text x="540.2" y="215.1" font-size="8.2" fill="#8893a8">GLM-4.6V 33.1%, 19.7s</text>
+<circle cx="197.0" cy="235.3" r="3" fill="#7f8aa8"/>
+<text x="207.0" y="252.3" font-size="8.2" fill="#8893a8">Step-GUI-8B 29.1%, 3.3s</text>
+<circle cx="211.3" cy="261.9" r="3" fill="#7f8aa8"/>
+<text x="221.3" y="278.9" font-size="8.2" fill="#8893a8">UI-Venus-1.5-8B 22.9%, 4.0s</text>
+<circle cx="650.0" cy="267.4" r="3" fill="#7f8aa8"/>
+<text x="660.0" y="264.4" font-size="8.2" fill="#8893a8">GUI-Owl-1.5-32B-Think 21.6%, 25.6s</text>
+<circle cx="345.3" cy="278.6" r="3" fill="#7f8aa8"/>
+<text x="355.3" y="296.6" font-size="8.2" fill="#8893a8">GUI-Owl-1.5-8B-Think 19.0%, 10.6s</text>
+<circle cx="182.8" cy="318.4" r="3" fill="#7f8aa8"/>
+<text x="192.8" y="335.4" font-size="8.2" fill="#8893a8">MAI-UI-8B 9.7%, 2.6s</text>
+<text x="20" y="425" font-size="10" fill="#c4ccda">The fastest model, Step-GUI-30A3 at 2.0 seconds a step, finishes near the bottom of the field at 29.7% success. The slowest,</text>
+<text x="20" y="442" font-size="10" fill="#c4ccda">Gemini 3 Pro at 30.0 seconds a step, still trails its own faster sibling Gemini 3 Flash by 3.4 points at the top of the field.</text>
+<text x="20" y="463" font-size="10" fill="#8893a8">Source: AndroidDaily, arXiv:2605.27761, Table 2, submitted 26 May 2026, read 6 November 2026.</text>
+</g></svg>
+
+<h2 id="mechanism">Three bottlenecks, and what each one looks like on screen</h2>
+
+<p>Manually categorizing failed sessions from the top three frontier and top three GUI-specialized models, the authors write that "our failure analysis identifies three dominant bottlenecks: inference latency causing UI misalignment, memory-induced action loops, and protocol-induced capability degradation." The paper gives each a concrete shape rather than leaving it abstract.</p>
+
+<p>Latency shows up two ways. The slow one is an accumulated-time failure: "accumulated per-step latency frequently pushes sessions past the 40-minute wall-clock limit." The sharp one is a race condition: "during the delay between decision and execution, a transient UI element" appears and "shifts the intended click target," so "the tap lands on the wrong element, forcing the agent to dismiss it and navigate back." Memory-induced loops are simpler to state: "the agent loses track of its history and cycles between a few states indefinitely, exhausting the step budget without progress." Protocol-induced degradation is the strangest of the three, because nothing about the screen or the model's own visual competence has changed: the paper's case study has a model correctly identify, under a plain visual question, that "pizza" is absent from a screen, then, "under the agent protocol," hallucinate a click on a visually similar item anyway. The authors describe the structured action protocol itself as something that "can probabilistically interfere with the underlying VLM's visual reasoning," concluding that "the perceptual capability exists but fails to activate under the structured action protocol." The paper reports no percentage breakdown across the three categories; that figure is, in its own words, not reported.</p>
+
+<p>phoneshell has two pieces of code built for exactly two of these shapes, for reasons that predate AndroidDaily entirely. <code>agent/verify.py</code>'s <code>StuckDetector</code> keeps the last eight screen signatures and actions and flags two patterns: the same action repeated with no screen change, and an A-B-A-B alternation across six consecutive states, "this is a loop." That is memory-induced looping, named and caught, independent of any particular model's own memory failing to notice it. The same file's <code>consistency_gate</code> runs before every tap: it crops the claimed element out of the current frame and checks, via OCR, whether the pixels there actually say what the accessibility tree claims. Its own docstring states the reason bluntly: "a stale or wrong label overrides correct visual perception 30-79% of the time in measurement, and that becomes a wrong action 65-100% of the time." That is a direct answer to AndroidDaily's latency-driven misalignment, the case where the screen moved during the gap between a model's decision and its execution, catching it at the moment of action rather than trying to make the model faster.</p>
+
+<svg viewBox="0 0 820 260" style="width:100%;height:auto" role="img" aria-label="Diagram showing AndroidDaily's three named failure bottlenecks against phoneshell's two defensive mechanisms. Memory-induced action loops are caught by phoneshell's StuckDetector, which flags repeated actions and ping-pong screen states. Latency-driven UI misalignment is partly caught by phoneshell's consistency gate, which re-verifies an element's pixels against its claimed label before every tap. Protocol-induced capability degradation, where a model's own action protocol suppresses perceptual accuracy it otherwise has, has no corresponding check anywhere in phoneshell.">
+<rect x="0" y="0" width="820" height="260" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">AndroidDaily's three bottlenecks vs. phoneshell's defenses</text>
+<rect x="20" y="50" width="245" height="175" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="142" y="72" font-size="11" font-weight="600" text-anchor="middle" fill="#5ad1a0">memory-induced action loops</text>
+<text x="33" y="95" font-size="9.5" fill="#c4ccda">"cycles between a few states</text>
+<text x="33" y="110" font-size="9.5" fill="#c4ccda">indefinitely," AndroidDaily Sec. 4.4</text>
+<text x="33" y="135" font-size="9.5" fill="#5ad1a0">caught: StuckDetector,</text>
+<text x="33" y="150" font-size="9.5" fill="#5ad1a0">repeat-limit 3, history window 8</text>
+<rect x="288" y="50" width="245" height="175" rx="8" fill="#262d3d" stroke="#e8a33d"/>
+<text x="410" y="72" font-size="11" font-weight="600" text-anchor="middle" fill="#e8a33d">inference latency / misalignment</text>
+<text x="301" y="95" font-size="9.5" fill="#c4ccda">"the tap lands on the wrong</text>
+<text x="301" y="110" font-size="9.5" fill="#c4ccda">element," AndroidDaily Sec. 4.4</text>
+<text x="301" y="135" font-size="9.5" fill="#e8a33d">partly caught: consistency_gate</text>
+<text x="301" y="150" font-size="9.5" fill="#e8a33d">re-checks pixels right before the tap</text>
+<text x="301" y="170" font-size="9.5" fill="#8893a8">not caught: the 40-min timeout half</text>
+<rect x="556" y="50" width="245" height="175" rx="8" fill="#262d3d" stroke="#8893a8"/>
+<text x="678" y="72" font-size="11" font-weight="600" text-anchor="middle" fill="#8893a8">protocol-induced degradation</text>
+<text x="569" y="95" font-size="9.5" fill="#c4ccda">correct in plain VQA, wrong "under</text>
+<text x="569" y="110" font-size="9.5" fill="#c4ccda">the agent protocol," Sec. 4.4</text>
+<text x="569" y="135" font-size="9.5" fill="#8893a8">not caught: no field or check in</text>
+<text x="569" y="150" font-size="9.5" fill="#8893a8">phoneshell inspects the model's own</text>
+<text x="569" y="165" font-size="9.5" fill="#8893a8">action-protocol prompting at all</text>
+<text x="20" y="245" font-size="10" fill="#8893a8">Sources: arxiv.org/abs/2605.27761 Sec. 4.4; phoneshell/agent/verify.py (StuckDetector, consistency_gate), read 6 November 2026.</text>
+</g></svg>
+
+<h2 id="what-it-means">What it means for anyone building the harness around a model, not the model itself</h2>
+
+<ul>
+  <li>Two of AndroidDaily's three bottlenecks are things a harness sitting between a model and a phone can catch without touching the model at all. phoneshell's two defenses here were not written in response to this paper, they predate it, which is itself evidence that these failure shapes are generic enough to show up independently in two different research efforts aimed at the same problem.</li>
+  <li>The third bottleneck is not a harness problem. "Protocol-induced capability degradation" is, by the paper's own account, the agent's action-protocol prompting suppressing a visual competence the same model demonstrates it has under a plain VQA query. There is nothing for an external observer checking pixels against accessibility labels to catch, because the model's perception of the correct pixels was never wrong; only its action under the protocol was. Fixing it means changing the protocol, not adding a gate downstream of it.</li>
+  <li>The paper's own proposed mitigations split cleanly along this same line: "latency-aware agent design" and long-horizon memory that does not degrade across many steps are the kind of fix a harness or a training run can deliver externally, while "capability-preserving agentic protocols" is a claim about the prompting and action schema itself, something no amount of post-hoc verification on the harness side will touch.</li>
+</ul>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># phoneshell's loop detector, the direct answer to "memory-induced action loops"
+grep -n "class StuckDetector" -A 30 phoneshell/agent/verify.py
+
+# phoneshell's tap-time consistency check, the partial answer to latency-driven misalignment
+grep -n "def consistency_gate" -A 25 phoneshell/agent/verify.py
+
+# confirm there is no check anywhere for a model's own protocol suppressing its perception
+grep -rn "protocol" phoneshell/agent/*.py phoneshell/bench/*.py
+
+# AndroidDaily's own failure-mode section and leaderboard
+open "https://arxiv.org/html/2605.27761v1"</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim AndroidDaily's Table 2 puts Gemini 3 Flash's overall success at 62.0% against 350 tasks across 94 apps, and that its Section 4.4 names the three bottlenecks quoted above with no accompanying percentage breakdown; both are checkable against the arXiv HTML directly and would be false if a later revision changes the table or adds the missing breakdown. We also claim no file in phoneshell's codebase, as of 6 November 2026, contains any check for a model's action-protocol prompting degrading its own stated perceptual accuracy; that is checkable by grepping the repository. This should be revisited if phoneshell adds such a check, or if AndroidDaily's camera-ready ACM Multimedia version, due this November, reports the per-category breakdown the preprint does not, by 31 March 2027.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>YiFan Sui, Xin Huang, Hongbing Li, Fang Xu, Jiahe Lv, Haolong Yan, Yeqing Shen, Litao Liu, Zhimin Fan, Ziyang Meng, Jia Wang, Junbo Qi, Kaijun Tan, Zheng Ge, Xiangyu Zhang, Daxin Jiang, Osamu Yoshie, <a href="https://arxiv.org/abs/2605.27761">AndroidDaily: A Verifiable Benchmark for Mobile GUI Agents on Real-World Closed-Source Applications</a>, arXiv:2605.27761, submitted 26 May 2026, accepted ACM Multimedia 2026, read 6 November 2026.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/agent/verify.py</code>, read 6 November 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
