@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Siri AI opens to every developer on 3 November 2026, locked to dev-signed builds; phoneshell's siri() call still can't name an app &mdash; Blolabel</title>
+<meta name="description" content="Apple's Siri AI Developer Preview, open to all developers from 3 November 2026, lets an app teach Siri its own actions and entities through App Intents, but only in Xcode dev-signed builds: not the App Store, not even external TestFlight. phoneshell's own Siri call, WebDriverAgent's /wda/siri/activate, reaches the system layer underneath with a plain text string and no way to target which app's action should answer.">
+<link rel="canonical" href="https://blolabel.ai/blog/siri-ai-opens-to-all-developers-not-to-the-apps-phoneshell-drives/">
+<meta property="og:title" content="Siri AI opens to every developer on 3 November 2026, locked to dev-signed builds; phoneshell's siri() call still can't name an app &mdash; Blolabel">
+<meta property="og:description" content="Apple opened Siri AI's App Intents integration to every developer, but only for builds that cannot reach the App Store yet. phoneshell's own Siri escape hatch predates the feature by months and has no way to use it.">
+<meta property="og:url" content="https://blolabel.ai/blog/siri-ai-opens-to-all-developers-not-to-the-apps-phoneshell-drives/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/siri-ai-opens-to-all-developers-not-to-the-apps-phoneshell-drives-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Siri AI opens to every developer on 3 November 2026, locked to dev-signed builds; phoneshell's siri() call still can't name an app", "description": "Apple's Siri AI Developer Preview opened to all developers on 3 November 2026 through App Intents, but the integration only runs in development-signed Xcode builds, excluded from the App Store and external TestFlight. phoneshell's own Siri escape hatch, WebDriverAgent's /wda/siri/activate, sends a plain text string to the system layer with no way to target a specific app's declared action.", "datePublished": "2026-11-06", "dateModified": "2026-11-06", "url": "https://blolabel.ai/blog/siri-ai-opens-to-all-developers-not-to-the-apps-phoneshell-drives/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/siri-ai-opens-to-all-developers-not-to-the-apps-phoneshell-drives/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/siri-ai-opens-to-all-developers-not-to-the-apps-phoneshell-drives-hero.png", "citation": ["https://developer.apple.com/news?id=gdk2umrf", "https://developer.apple.com/documentation/appintents/siri-ai-developer-preview", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">What changed</a>
+    <a href="#evidence">Evidence</a>
+    <a href="#mechanism">Mechanism</a>
+    <a href="/blog/">Notes</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind event">event</span>
+    <time datetime="2026-11-06">6 November 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>Siri AI opens to every developer on 3 November 2026, locked to dev-signed builds; phoneshell's siri() call still can't name an app</h1>
+  <p class="standfirst">Apple's Siri AI Developer Preview, announced 3 November 2026, lets any developer teach Siri their app's own actions, entities and chained "skills" through App Intents. The catch: it only runs in development-signed builds launched from Xcode. It is explicitly withheld from the App Store and from external TestFlight testers, which is to say from every build a phone ever gets by downloading an app normally. phoneshell's own Siri call, a WebDriverAgent endpoint named <code>/wda/siri/activate</code>, has existed since before this preview and reaches only the system layer beneath every app: a plain text string in, no app named, no entity resolved, nothing read back.</p>
+
+<p>Apple's developer news post, published 3 November 2026 under the headline "Siri AI is now open to all developers," states the preview ships "starting today with the iOS 27.3, iPadOS 27.3, macOS 27.3, and visionOS 27.3 betas." A separate availability line on the same page adds watchOS 27.3 to that list, and the technical documentation page drops visionOS's watchOS companion entirely, three different lists on two Apple pages for the same feature. The post names two capabilities beyond the existing App Intents surface: "skills," which let a developer "teach Siri AI how to combine several actions into a single experience," and broader entity surfacing, where "Siri AI can now surface any entity in the Spotlight semantic index, not just the ones that fit an existing schema." App Store submission is described only as opening "in the spring," with first customer shipments "in a few months," neither date fixed.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/siri-ai-opens-to-all-developers-not-to-the-apps-phoneshell-drives-hero.png" alt="Abstract technical illustration on a dark grid: a funnel shape narrows from a wide top band labeled as every developer down through a single narrow gate representing a development-signed Xcode build, with two blocked side-channels branching off and dead-ending, one wider and one narrower, representing the App Store and external TestFlight distribution paths, cool blues and slate greys with one amber accent marking the single open gate, no icons or text" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="method">What the preview actually restricts</h2>
+
+<p>The distinction Apple draws is not about capability, it is about distribution. Apple's documentation page states plainly: "The Siri AI Developer Preview isn't available to external testers in TestFlight or to versions of your app that you publish on the App Store." It repeats the same restriction a second time for emphasis: an app built with the preview's App Intents API "isn't available to external testers or people who get your app from the App Store." The only sanctioned path to running it is "Build your app with Xcode, sign it with a development profile, and run it on a device that supports the Siri AI Developer Preview," together with internal TestFlight testers. Apple also warns that "the App Intents API and Siri functionality may change" during the preview, which is the standard hedge for anything not yet frozen.</p>
+
+<p>The API surface itself is new macro-driven App Intents: <code>AppIntent</code> and <code>AppEntity</code> declarations carrying <code>AppIntentTraits</code> and <code>AppEntityTraits</code>, a <code>ToolIntent</code> protocol, <code>ComputedProperty</code> and <code>DeferredProperty</code> wrappers that each accept an <code>indexingKey</code> so a property can register itself into the system's semantic index, and a new <code>SiriEvaluations</code> framework that "lets you script requests to Siri, measure how Siri handles them, and catch changes in how Siri responds as you update your intents and entities." Xcode's Siri Integration Advisor reviews an app's declared intents against that framework before anything ships. None of this existed in the Siri that phoneshell has been talking to.</p>
+
+<table>
+  <thead><tr><th>What determines whether an app's Siri action is reachable</th><th>Siri AI Developer Preview (Apple, 3 Nov 2026)</th><th>phoneshell's <code>siri()</code> (WebDriverAgent)</th></tr></thead>
+  <tbody>
+    <tr><td>Target of the call</td><td>a specific <code>AppIntent</code>/<code>AppEntity</code> the app declares and indexes</td><td>the system Siri layer, no app named in the call</td></tr>
+    <tr><td>Build required to use it</td><td>development-signed, run from Xcode, internal TestFlight only</td><td>any installed build, including ordinary App Store apps</td></tr>
+    <tr><td>Action composition</td><td>"skills" chain several intents into one flow</td><td>one text string per call, no chaining, no return value</td></tr>
+    <tr><td>Automated verification of the response</td><td><code>SiriEvaluations</code> framework scripts requests and measures Siri's handling</td><td>none; the harness checks phone state after the whole task, not Siri's reply</td></tr>
+    <tr><td>Entity resolution scope</td><td>any entity in the Spotlight semantic index, including non-schema entities</td><td>not reported (phoneshell has no semantic-index integration at all)</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Sources: developer.apple.com/news?id=gdk2umrf and developer.apple.com/documentation/appintents/siri-ai-developer-preview, both read 6 November 2026; phoneshell/wda/client.py, phoneshell/gestures.py.</p>
+
+<h2 id="mechanism">What phoneshell's one Siri call actually does</h2>
+
+<p>phoneshell's <code>GestureController.siri()</code>, in <code>gestures.py</code>, is documented as "an escape hatch for things with no UI affordance: 'turn on wifi', 'set brightness to 50%'." It forwards straight to <code>WDAClient.activate_siri()</code> in <code>wda/client.py</code>, whose own docstring calls it "a real escape hatch for actions that have no UI affordance, e.g. 'turn on wifi'." The implementation is one line: <code>self.post("/wda/siri/activate", {"text": text})</code>. There is no bundle id in that payload, no entity, no App Intent name, nothing for Siri to resolve against a specific app's declared actions, because at the time this code was written there was nothing to resolve: Siri's third-party surface was SiriKit's fixed domains (ride booking, messaging, workouts and a short list of others), not an open App Intents schema a developer could extend arbitrarily.</p>
+
+<p>That design was correct for the Siri it was built against. It is now a mismatch with the Siri Apple announced on 3 November. Even leaving the API gap aside, phoneshell could not exercise the new preview's actual behaviour if it tried: the feature is walled off from exactly the build type phoneshell drives. <code>apps.py</code>'s own docstring frames phoneshell's whole relationship to installed software as "what is installed on the phone, and the deep links that skip the UI entirely," a catalogue of bundle ids and URL schemes already on the device, extracted from each app's own registered behaviour, never a source tree phoneshell compiles and signs itself. <code>device.py</code> describes phoneshell building and signing one thing, WebDriverAgent, "with the Blomega team, into a path the simulator and the install chain can both reach." The apps under test are not that; they arrive the ordinary way, which on a real device means either an App Store download or, at best, an external TestFlight build. Both are the two categories Apple's own documentation names as excluded.</p>
+
+<svg viewBox="0 0 820 300" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting Apple's Siri AI Developer Preview with phoneshell's siri call. Apple's preview targets a specific app-declared AppIntent or AppEntity, chains multiple actions as a skill, and verifies the response with the SiriEvaluations framework, but only runs in a development-signed Xcode build excluded from the App Store and external TestFlight. phoneshell's siri call in wda client dot py sends one plain text string to the system Siri layer with no app named, and the apps phoneshell actually drives arrive as ordinary App Store or TestFlight installs, the exact category the preview excludes.">
+<rect x="0" y="0" width="820" height="300" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Two things both called "talking to Siri"</text>
+<rect x="20" y="55" width="360" height="155" rx="8" fill="#262d3d" stroke="#e8a33d"/>
+<text x="200" y="78" font-size="11.5" font-weight="600" text-anchor="middle" fill="#e8a33d">Siri AI Developer Preview, 3 Nov 2026</text>
+<text x="35" y="100" font-size="10" fill="#c4ccda">targets one app's own AppIntent/AppEntity,</text>
+<text x="35" y="118" font-size="10" fill="#c4ccda">resolved against the semantic index</text>
+<text x="35" y="144" font-size="9.5" fill="#e8a33d">"skills" chain several actions into one flow</text>
+<text x="35" y="162" font-size="9.5" fill="#e8a33d">SiriEvaluations scripts and measures the response</text>
+<text x="35" y="186" font-size="9.5" fill="#8893a8">runs only: dev-signed build, Xcode, internal</text>
+<text x="35" y="198" font-size="9.5" fill="#8893a8">TestFlight. Not App Store, not external TestFlight.</text>
+<rect x="440" y="55" width="360" height="155" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="620" y="78" font-size="11.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">phoneshell, wda/client.py activate_siri()</text>
+<text x="455" y="100" font-size="10" fill="#c4ccda">POST /wda/siri/activate {"text": text},</text>
+<text x="455" y="118" font-size="10" fill="#c4ccda">no bundle id, no entity, no app named</text>
+<text x="455" y="144" font-size="9.5" fill="#5ad1a0">one string per call, no chaining, no return value</text>
+<text x="455" y="162" font-size="9.5" fill="#8893a8">apps.py: catalogue of already-installed bundle ids</text>
+<text x="455" y="180" font-size="9.5" fill="#8893a8">and deep links, never a build phoneshell signs itself</text>
+<text x="455" y="198" font-size="9.5" fill="#8893a8">so the apps under test are App Store/TestFlight installs</text>
+<text x="20" y="245" font-size="10" fill="#8893a8">The build type the preview requires and the build type phoneshell drives do not overlap. Even a rewritten siri() call</text>
+<text x="20" y="263" font-size="10" fill="#8893a8">naming an AppIntent could not reach preview behaviour on an app phoneshell installed the ordinary way.</text>
+<text x="20" y="285" font-size="10" fill="#8893a8">Sources: developer.apple.com/documentation/appintents/siri-ai-developer-preview; phoneshell/wda/client.py; phoneshell/apps.py; read 6 November 2026.</text>
+</g></svg>
+
+<p>The announcement's own paperwork does not agree with itself on which operating systems carry the preview:</p>
+
+<svg viewBox="0 0 820 300" style="width:100%;height:auto" role="img" aria-label="Table comparing three lists of operating systems Apple names as supporting the Siri AI Developer Preview from its 3 November 2026 announcement: the news post's lead paragraph lists iOS 27.3, iPadOS 27.3, macOS 27.3 and visionOS 27.3 with no mention of watchOS; the same news post's separate availability bullet adds watchOS 27.3; the App Intents documentation page omits watchOS 27.3 again, three different platform lists for one feature across two Apple pages.">
+<rect x="0" y="0" width="820" height="300" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Three lists, one announcement: where does watchOS 27.3 appear</text>
+<text x="330" y="52" font-size="10" font-weight="600" text-anchor="middle" fill="#c4ccda">News post, lead paragraph</text>
+<text x="540" y="52" font-size="10" font-weight="600" text-anchor="middle" fill="#c4ccda">News post, availability bullet</text>
+<text x="750" y="52" font-size="10" font-weight="600" text-anchor="middle" fill="#c4ccda">App Intents documentation page</text>
+<line x1="20" y1="62" x2="800" y2="62" stroke="#444c5e"/>
+<text x="20" y="85" font-size="10.5" fill="#e9ecf2">iOS</text>
+<text x="330" y="85" font-size="10.5" text-anchor="middle" fill="#5ad1a0">27.3</text>
+<text x="540" y="85" font-size="10.5" text-anchor="middle" fill="#5ad1a0">27.3</text>
+<text x="750" y="85" font-size="10.5" text-anchor="middle" fill="#5ad1a0">27.3</text>
+<text x="20" y="110" font-size="10.5" fill="#e9ecf2">iPadOS</text>
+<text x="330" y="110" font-size="10.5" text-anchor="middle" fill="#5ad1a0">27.3</text>
+<text x="540" y="110" font-size="10.5" text-anchor="middle" fill="#5ad1a0">27.3</text>
+<text x="750" y="110" font-size="10.5" text-anchor="middle" fill="#5ad1a0">27.3</text>
+<text x="20" y="135" font-size="10.5" fill="#e9ecf2">macOS</text>
+<text x="330" y="135" font-size="10.5" text-anchor="middle" fill="#5ad1a0">27.3</text>
+<text x="540" y="135" font-size="10.5" text-anchor="middle" fill="#5ad1a0">27.3</text>
+<text x="750" y="135" font-size="10.5" text-anchor="middle" fill="#5ad1a0">27.3</text>
+<text x="20" y="160" font-size="10.5" fill="#e9ecf2">visionOS</text>
+<text x="330" y="160" font-size="10.5" text-anchor="middle" fill="#5ad1a0">27.3</text>
+<text x="540" y="160" font-size="10.5" text-anchor="middle" fill="#5ad1a0">27.3</text>
+<text x="750" y="160" font-size="10.5" text-anchor="middle" fill="#5ad1a0">27.3</text>
+<text x="20" y="185" font-size="10.5" font-weight="600" fill="#e9ecf2">watchOS</text>
+<text x="330" y="185" font-size="10.5" font-weight="600" text-anchor="middle" fill="#e8a33d">not listed</text>
+<text x="540" y="185" font-size="10.5" font-weight="600" text-anchor="middle" fill="#e8a33d">27.3</text>
+<text x="750" y="185" font-size="10.5" font-weight="600" text-anchor="middle" fill="#e8a33d">not listed</text>
+<line x1="20" y1="200" x2="800" y2="200" stroke="#444c5e"/>
+<text x="20" y="225" font-size="10" fill="#8893a8">Same news post, two different lines: the lead paragraph and the separate availability bullet disagree on watchOS.</text>
+<text x="20" y="243" font-size="10" fill="#8893a8">The documentation page agrees with the lead paragraph, not the availability bullet, on the same announcement.</text>
+<text x="20" y="265" font-size="10" fill="#8893a8">Source: developer.apple.com/news?id=gdk2umrf and developer.apple.com/documentation/appintents/siri-ai-developer-preview, read 6 November 2026.</text>
+</g></svg>
+
+<h2 id="what-it-means">What it means for anyone benchmarking Siri integration</h2>
+
+<ul>
+  <li>Any claim that an agent harness "tested Siri AI integration" on a real device this year needs a build-provenance check before it means anything: if the app under test came from the App Store or external TestFlight, the Siri AI Developer Preview's App Intents behaviour was never active on that install, by Apple's own stated restriction, regardless of what the app's developers wrote.</li>
+  <li>phoneshell's <code>siri()</code> was built for, and is still correct for, the pre-App-Intents system Siri: dictating short device-control commands with no UI affordance. Extending it to target a declared AppIntent would need both new API surface (a bundle id and intent name in the payload) and, separately, a dev-signed build of the target app, neither of which exists in phoneshell today.</li>
+  <li>Apple's own three conflicting OS-availability lists for the same announcement, the news post's lead paragraph, its availability bullet, and the documentation page, are themselves worth flagging rather than quietly resolving: watchOS appears in one, is missing from another, and the discrepancy is checkable on Apple's own pages as of this writing.</li>
+</ul>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># phoneshell's Siri call: one text string, no app target
+grep -n "def siri\|activate_siri" -A 6 phoneshell/gestures.py phoneshell/wda/client.py
+
+# confirm phoneshell treats apps as already-installed, not self-built
+sed -n '1,25p' phoneshell/apps.py
+
+# Apple's own restriction, read directly
+open "https://developer.apple.com/documentation/appintents/siri-ai-developer-preview"
+open "https://developer.apple.com/news?id=gdk2umrf"</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim that, as of 6 November 2026, phoneshell's <code>activate_siri()</code> call carries no app, bundle id or App Intent name in its payload, checkable directly in <code>phoneshell/wda/client.py</code>. We also claim Apple's own documentation page states the Siri AI Developer Preview is unavailable to App Store and external TestFlight builds, checkable at the cited URL. Both claims are falsified the moment either changes: if phoneshell adds an App-Intent-targeted Siri call, or if Apple's "spring" App Store submission date arrives and the restriction lifts, whichever comes first. We will revisit this piece by 30 June 2027, by which point Apple's own stated spring timeline should have resolved one way or the other.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Apple, <a href="https://developer.apple.com/news?id=gdk2umrf">Siri AI is now open to all developers</a>, Apple Developer News, published 3 November 2026, read 6 November 2026.</li>
+      <li>Apple, <a href="https://developer.apple.com/documentation/appintents/siri-ai-developer-preview">Siri AI Developer Preview</a>, App Intents documentation, read 6 November 2026.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/wda/client.py</code>, <code>phoneshell/gestures.py</code>, <code>phoneshell/apps.py</code>, <code>phoneshell/device.py</code>, read 6 November 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
