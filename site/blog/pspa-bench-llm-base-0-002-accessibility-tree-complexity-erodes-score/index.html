@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PSPA-Bench's LLM-Base scores 0.002 without the accessibility tree; every augmented agent still loses a third to a half of its score at high complexity &mdash; Blolabel</title>
+<meta name="description" content="PSPA-Bench (arXiv:2603.29318, Northwestern Polytechnical University, Tsinghua, Peking University) scores agents against 100 user personas and over 12,855 personalized instructions. A bare LLM with no accessibility input scores 0.002 out of 1.0; adding the accessibility tree lifts every agent above 0.5, but moving from low to high task complexity still costs each of the paper's 11 agent designs a third to a half of that score. phoneshell has never reported a success rate below 1 in 58.">
+<link rel="canonical" href="https://blolabel.ai/blog/pspa-bench-llm-base-0-002-accessibility-tree-complexity-erodes-score/">
+<meta property="og:title" content="PSPA-Bench's LLM-Base scores 0.002 without the accessibility tree; every augmented agent still loses a third to a half of its score at high complexity &mdash; Blolabel">
+<meta property="og:description" content="PSPA-Bench scores agents on personalized smartphone tasks. A bare LLM scores 0.002 of 1.0 with no accessibility input; adding it lifts every agent above 0.5, but high task complexity still costs each of 11 tested agent designs a third to a half of that score.">
+<meta property="og:url" content="https://blolabel.ai/blog/pspa-bench-llm-base-0-002-accessibility-tree-complexity-erodes-score/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/pspa-bench-llm-base-0-002-accessibility-tree-complexity-erodes-score-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "PSPA-Bench's LLM-Base scores 0.002 without the accessibility tree; every augmented agent still loses a third to a half of its score at high complexity", "description": "PSPA-Bench scores smartphone agents against 100 user personas and more than 12,855 personalized instructions across 22 apps. A bare LLM-Base agent with no accessibility input scores 0.002 of 1.0; adding the accessibility tree lifts every one of 11 tested agent designs above 0.5, but moving from low to high task complexity still costs each design roughly a third to a half of that score by the paper's own Table 2. phoneshell's leaderboard has never reported a success rate anywhere near that low.", "datePublished": "2026-11-07", "dateModified": "2026-11-07", "url": "https://blolabel.ai/blog/pspa-bench-llm-base-0-002-accessibility-tree-complexity-erodes-score/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/pspa-bench-llm-base-0-002-accessibility-tree-complexity-erodes-score/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/pspa-bench-llm-base-0-002-accessibility-tree-complexity-erodes-score-hero.png", "citation": ["https://arxiv.org/abs/2603.29318", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#evidence">Evidence</a>
+    <a href="#mechanism">Mechanism</a>
+    <a href="/blog/">Notes</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-11-07">7 November 2026</time>
+    <span>7 min read</span>
+  </div>
+  <h1>PSPA-Bench's LLM-Base scores 0.002 without the accessibility tree; every augmented agent still loses a third to a half of its score at high complexity</h1>
+  <p class="standfirst">PSPA-Bench (arXiv:2603.29318, Northwestern Polytechnical University, Tsinghua University, Peking University and the Beijing Institute of Mathematical Sciences and Applications, submitted 31 March 2026) scores agents against 100 user personas and more than 12,855 personalized instructions across 22 apps. A bare LLM-Base agent, given no accessibility input at all, scores 0.002 on the paper's own 0-to-1 scale, essentially zero. Adding the accessibility tree lifts every one of the paper's 11 agent designs above 0.5, but by our own reading of its Table 2, moving a task from low to high complexity still costs each of those 11 designs between a third and a half of its score. phoneshell has never reported a success rate anywhere near 0.002: its worst recorded run on its own leaderboard is 55 of 58 scored tasks.</p>
+
+<p>"PSPA-Bench: A Personalized Benchmark for Smartphone GUI Agent" (arXiv:2603.29318v1) builds personalization around a user profile the paper writes as &rho;u, which "induces a conditional distribution" over which instruction a given user would actually give. Each task is backed by a task decomposition graph with some steps fixed and some left open to preference, filled from slots like <code>&lt;product_category&gt;</code> or <code>&lt;price_range&gt;</code> that the agent has to resolve from the profile's long-term preferences ("favoring eco-friendly brands," in the paper's own example) or short-term signals such as recent searches. The paper does not say whether its agents read a stated profile directly or infer it from behavior; what it says is that personalization has to flow through the same decomposition graph that defines whether the task was completed at all, so getting the preference wrong and getting the task wrong are measured by the same structure, not two separate checks.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/pspa-bench-llm-base-0-002-accessibility-tree-complexity-erodes-score-hero.png" alt="Abstract technical illustration on a dark grid: a single branching path splitting into many thinner paths as it moves right, the paths thinning and fading representing success dropping as task complexity rises, a faint silhouette of a user profile card in outline only in the background, cool blues and slate greys, one amber accent on the first branch point, no icons or readable text" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="method">Eleven agent designs, scored by a ratio the paper never turns into a percentage</h2>
+
+<p>PSPA-Bench does not report success rate as a percentage of tasks completed. Its Table 2 scores every agent design on two ratio metrics, APR and PPR, each on a 0-to-1 scale; the text we read does not spell out what either initialism expands to, so we report them exactly as the paper labels them rather than guess. What the numbers show regardless of their full name: a bare LLM-Base agent, with no accessibility-tree input, scores 0.002 on APR at both low and high task complexity, functionally a zero. The moment any architecture adds accessibility-tree access, that score jumps by more than two orders of magnitude, into a 0.6-to-0.7 range at low complexity. The jump itself is the paper's cleanest result, cleaner than anything that follows it: without structured UI information, a personalized smartphone task is close to impossible for the agents tested, no matter how it is prompted.</p>
+
+<table>
+  <thead><tr><th>Agent design</th><th>APR, low complexity</th><th>APR, high complexity</th></tr></thead>
+  <tbody>
+    <tr><td>LLM-Base (no accessibility input)</td><td>0.002</td><td>0.002</td></tr>
+    <tr><td>+A11y</td><td>0.625</td><td>0.364</td></tr>
+    <tr><td>+A11y+SoM</td><td>0.643</td><td>0.373</td></tr>
+    <tr><td>+A11y+Thinking</td><td>0.674</td><td>0.382</td></tr>
+    <tr><td>Self-Refine</td><td>0.596</td><td>0.308</td></tr>
+    <tr><td>ReAct</td><td>0.683</td><td>0.414</td></tr>
+    <tr><td>Reflexion</td><td>0.665</td><td>0.438</td></tr>
+    <tr><td>AppAgent</td><td>0.654</td><td>0.373</td></tr>
+    <tr><td>Mobile-Agent V2</td><td>0.674</td><td>0.435</td></tr>
+    <tr><td>M3A</td><td>0.685</td><td>0.460</td></tr>
+    <tr><td>Mobile-Agent E</td><td>0.695</td><td>0.468</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: PSPA-Bench, arXiv:2603.29318v1, Table 2, submitted 31 March 2026, read 7 November 2026. The table's own caption and column header describe the complexity setting inconsistently in the HTML version we read; we report the two columns as printed and note the conflict rather than resolve it by guessing.</p>
+
+<svg viewBox="0 0 820 390" style="width:100%;height:auto" role="img" aria-label="Bar chart of PSPA-Bench APR scores at low versus high task complexity for six agent designs: LLM-Base stays at 0.002 both ways, plus-A11y falls from 0.625 to 0.364, ReAct falls from 0.683 to 0.414, Reflexion falls from 0.665 to 0.438, M3A falls from 0.685 to 0.460, and Mobile-Agent E falls from 0.695 to 0.468, the highest score of the six at both complexity levels."><rect x="0" y="0" width="820" height="390" rx="12" fill="#151a24"/><g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2"><text x="20" y="24" font-size="14" font-weight="600">PSPA-Bench APR score, low vs. high task complexity (0-to-1 scale shown as 0-100)</text><line x1="60" y1="280" x2="800" y2="280" stroke="#2c3344" stroke-width="1"/><text x="50" y="283" font-size="9.5" text-anchor="end" fill="#8893a8">0.0</text><line x1="60" y1="232" x2="800" y2="232" stroke="#2c3344" stroke-width="1"/><text x="50" y="235" font-size="9.5" text-anchor="end" fill="#8893a8">0.2</text><line x1="60" y1="184" x2="800" y2="184" stroke="#2c3344" stroke-width="1"/><text x="50" y="187" font-size="9.5" text-anchor="end" fill="#8893a8">0.4</text><line x1="60" y1="136" x2="800" y2="136" stroke="#2c3344" stroke-width="1"/><text x="50" y="139" font-size="9.5" text-anchor="end" fill="#8893a8">0.6</text><line x1="60" y1="88" x2="800" y2="88" stroke="#2c3344" stroke-width="1"/><text x="50" y="91" font-size="9.5" text-anchor="end" fill="#8893a8">0.8</text><line x1="60" y1="40" x2="800" y2="40" stroke="#2c3344" stroke-width="1"/><text x="50" y="43" font-size="9.5" text-anchor="end" fill="#8893a8">1.0</text>
+<rect x="90" y="279.5" width="22" height="0.5" fill="#7a8bd6"/><rect x="116" y="279.5" width="22" height="0.5" fill="#5ad1a0"/><text x="124" y="296" font-size="9" text-anchor="middle" fill="#c4ccda">LLM-Base</text><text x="100" y="275" font-size="8.5" text-anchor="middle" fill="#7a8bd6">0.002</text>
+<rect x="220" y="130" width="22" height="150" fill="#7a8bd6"/><text x="231" y="124" font-size="10" font-weight="600" text-anchor="middle" fill="#7a8bd6">0.625</text>
+<rect x="246" y="192.8" width="22" height="87.2" fill="#5ad1a0"/><text x="257" y="186.8" font-size="10" font-weight="600" text-anchor="middle" fill="#5ad1a0">0.364</text>
+<text x="241" y="296" font-size="9" text-anchor="middle" fill="#c4ccda">+A11y</text>
+<rect x="350" y="117.8" width="22" height="162.2" fill="#7a8bd6"/><text x="361" y="111.8" font-size="10" font-weight="600" text-anchor="middle" fill="#7a8bd6">0.683</text>
+<rect x="376" y="179.8" width="22" height="100.2" fill="#5ad1a0"/><text x="387" y="173.8" font-size="10" font-weight="600" text-anchor="middle" fill="#5ad1a0">0.414</text>
+<text x="371" y="296" font-size="9" text-anchor="middle" fill="#c4ccda">ReAct</text>
+<rect x="480" y="130.5" width="22" height="149.5" fill="#7a8bd6"/><text x="491" y="124.5" font-size="10" font-weight="600" text-anchor="middle" fill="#7a8bd6">0.665</text>
+<rect x="506" y="148.4" width="22" height="131.6" fill="#5ad1a0"/><text x="517" y="142.4" font-size="10" font-weight="600" text-anchor="middle" fill="#5ad1a0">0.438</text>
+<text x="501" y="296" font-size="9" text-anchor="middle" fill="#c4ccda">Reflexion</text>
+<rect x="610" y="115.5" width="22" height="164.5" fill="#7a8bd6"/><text x="621" y="109.5" font-size="10" font-weight="600" text-anchor="middle" fill="#7a8bd6">0.685</text>
+<rect x="636" y="142" width="22" height="138" fill="#5ad1a0"/><text x="647" y="136" font-size="10" font-weight="600" text-anchor="middle" fill="#5ad1a0">0.460</text>
+<text x="631" y="296" font-size="9" text-anchor="middle" fill="#c4ccda">M3A</text>
+<rect x="710" y="112.4" width="22" height="167.6" fill="#7a8bd6"/><text x="721" y="106.4" font-size="10" font-weight="600" text-anchor="middle" fill="#7a8bd6">0.695</text>
+<rect x="736" y="137.6" width="22" height="142.4" fill="#5ad1a0"/><text x="747" y="131.6" font-size="10" font-weight="600" text-anchor="middle" fill="#5ad1a0">0.468</text>
+<text x="731" y="296" font-size="9" text-anchor="middle" fill="#c4ccda">Mobile-Agent E</text>
+<rect x="60" y="316" width="14" height="10" fill="#7a8bd6"/><text x="80" y="325" font-size="9.5" fill="#c4ccda">Low complexity</text><rect x="230" y="316" width="14" height="10" fill="#5ad1a0"/><text x="250" y="325" font-size="9.5" fill="#c4ccda">High complexity</text>
+<text x="20" y="356" font-size="9.5" fill="#8893a8">LLM-Base's 0.002 score is near-invisible at this scale: every other design clears 0.3 at both complexity levels.</text>
+<text x="20" y="374" font-size="10" fill="#8893a8">Source: PSPA-Bench, arXiv:2603.29318v1, Table 2, read 7 November 2026.</text>
+</g></svg>
+
+<h2 id="mechanism">What complexity costs, once the accessibility tree is already there</h2>
+
+<p>Strip out LLM-Base, whose near-zero score tells you about the accessibility tree rather than about complexity, and a second pattern holds across all ten remaining designs: every one of them loses APR score moving from low to high complexity, and by our own calculation from the table above, the relative loss sits in a fairly narrow band, from 32.7% for Mobile-Agent E (0.695 down to 0.468) to 48.3% for Self-Refine (0.596 down to 0.308). Architectural differences that separate the agents by as much as 0.1 at low complexity (0.596 to 0.695) compress at high complexity into a tighter cluster (0.308 to 0.468), which suggests complexity is eroding something closer to a shared bottleneck than to any one architecture's particular weakness. The paper's own instruction-generation validation, a human study comparing its generated instructions against random and static alternatives, reported 81.3% preference for its own method over random and 72.5% over static, which at least supports that the harder instructions are harder because of genuine preference ambiguity, not because the benchmark's own task generator produced a worse-written sentence.</p>
+
+<svg viewBox="0 0 820 230" style="width:100%;height:auto" role="img" aria-label="Diagram showing PSPA-Bench's personalization pipeline: a user profile with long-term and short-term preferences feeds a task decomposition graph with fixed and open steps, which the agent must resolve using accessibility-tree input, with an annotation that removing accessibility input drops APR from above 0.6 to 0.002, and that high complexity alone costs every remaining agent design 33 to 48 percent of its score.">
+<rect x="0" y="0" width="820" height="230" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Two ways PSPA-Bench's score collapses</text>
+<rect x="20" y="50" width="370" height="155" rx="8" fill="#262d3d" stroke="#e8a33d"/>
+<text x="205" y="72" font-size="11.5" font-weight="600" text-anchor="middle" fill="#e8a33d">No accessibility-tree input</text>
+<text x="33" y="95" font-size="9.5" fill="#c4ccda">LLM-Base, low and high complexity:</text>
+<text x="33" y="113" font-size="10.5" font-weight="600" fill="#e8a33d">APR 0.002, both conditions</text>
+<text x="33" y="137" font-size="9.5" fill="#8893a8">the profile and the decomposition</text>
+<text x="33" y="152" font-size="9.5" fill="#8893a8">graph exist, but the agent has no</text>
+<text x="33" y="167" font-size="9.5" fill="#8893a8">structured UI signal to act on them with</text>
+<rect x="430" y="50" width="370" height="155" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="615" y="72" font-size="11.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">Accessibility tree present, complexity rising</text>
+<text x="443" y="95" font-size="9.5" fill="#c4ccda">10 augmented designs, low vs. high:</text>
+<text x="443" y="113" font-size="10.5" font-weight="600" fill="#5ad1a0">APR falls 32.7% to 48.3%, relatively</text>
+<text x="443" y="137" font-size="9.5" fill="#8893a8">the gap between the best and worst</text>
+<text x="443" y="152" font-size="9.5" fill="#8893a8">design narrows under complexity,</text>
+<text x="443" y="167" font-size="9.5" fill="#8893a8">0.099 spread at low vs. 0.160 at high</text>
+<text x="20" y="220" font-size="10" fill="#8893a8">Source: PSPA-Bench, arXiv:2603.29318v1, Table 2; relative-drop figures calculated from those values, read 7 November 2026.</text>
+</g></svg>
+
+<h2 id="what-it-means">What it means for reading a personalization claim</h2>
+
+<p>PSPA-Bench's own conclusion is blunt about where this leaves the field: "existing methods perform poorly under personalized settings, with even the best agent achieving limited success." The paper's limitations section adds two caveats worth repeating rather than smoothing over: its instructions are "synthetically generated based on predefined templates rather than collected from real users," and the benchmark is "primarily designed for Android devices." Whether its evaluation ran on physical hardware or an emulator is not stated in the sections we read, so we report that as not reported rather than assume either way.</p>
+
+<p>phoneshell's own numbers live in a different register entirely: a 55-of-58 run on a physical iPhone, reported as a plain success count because every task it runs can be reduced to a pass or fail read from device state. PSPA-Bench cannot do that for personalization, because a personalized task does not have a single correct screen state to check against, it has a profile-dependent one, and that is a structurally harder grading problem than the one phoneshell's Check list was built to solve. The ratio metrics PSPA-Bench reports instead are a reasonable response to that harder problem, but they are not interchangeable with a success percentage, and a reader who converts 0.695 into "69.5% success" is making a translation the paper itself never makes.</p>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># PSPA-Bench's Table 2, APR and PPR by agent and complexity, read directly
+open "https://arxiv.org/html/2603.29318v1"
+
+# phoneshell's leaderboard score format: a plain pass/fail count from device
+# state, never a 0-to-1 ratio
+grep -n "scored\|passed" phoneshell/bench/site.py | head -5</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim PSPA-Bench's Table 2 reports an APR of 0.002 for LLM-Base at both complexity levels, and APR values ranging from 0.596 to 0.695 at low complexity and 0.308 to 0.468 at high complexity for its other ten agent designs, all checkable directly against the cited arXiv v1 HTML. The 32.7%-to-48.3% relative-drop range is our own calculation from those same printed values, shown in full above rather than asserted. This should be revisited if a later revision of the paper defines APR and PPR in full and those definitions change how the ratio should be read, or if any tested design holds its low-complexity score within 10 relative percent at high complexity, by 30 June 2027.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Hongyi Nie, Xunyuan Liu, Yudong Bai, Yaqing Wang, Yang Liu, Quanming Yao, Zhen Wang, <a href="https://arxiv.org/abs/2603.29318">PSPA-Bench: A Personalized Benchmark for Smartphone GUI Agent</a>, arXiv:2603.29318v1, submitted 31 March 2026, read 7 November 2026.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/bench/site.py</code>, read 7 November 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
