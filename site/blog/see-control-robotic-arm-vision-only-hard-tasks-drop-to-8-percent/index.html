@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>See-Control drives the phone with a robotic arm and a camera; hard single-app tasks succeed 3 times in 36 &mdash; Blolabel</title>
+<meta name="description" content="See-Control (arXiv:2512.08629, UCL, Imperial, Huawei Noah's Ark, ShanghaiTech, SUSTech) operates a smartphone through a low-DoF robotic arm and screen-mirrored vision, with no ADB and no accessibility tree at all. On its own 155-task ESO benchmark, hard single-app tasks succeed 3 times in 36, and the paper reports no baseline or ablation to say why. phoneshell drives the same kind of device entirely in software, with its leaderboard graded from accessibility-level device state, not a camera.">
+<link rel="canonical" href="https://blolabel.ai/blog/see-control-robotic-arm-vision-only-hard-tasks-drop-to-8-percent/">
+<meta property="og:title" content="See-Control drives the phone with a robotic arm and a camera; hard single-app tasks succeed 3 times in 36 &mdash; Blolabel">
+<meta property="og:description" content="See-Control operates a phone through a robotic arm and screen-mirrored vision, no ADB, no accessibility tree. Hard single-app tasks on its own 155-task benchmark succeed 3 times in 36, with no baseline or ablation reported to explain why.">
+<meta property="og:url" content="https://blolabel.ai/blog/see-control-robotic-arm-vision-only-hard-tasks-drop-to-8-percent/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/see-control-robotic-arm-vision-only-hard-tasks-drop-to-8-percent-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "See-Control drives the phone with a robotic arm and a camera; hard single-app tasks succeed 3 times in 36", "description": "See-Control operates a real phone through a low-DoF robotic arm and screen-mirrored vision, without ADB or accessibility-tree access. On its own 155-task ESO benchmark, hard single-app tasks succeed 3 of 36 times and cross-app tasks succeed 2 of 15, with no baseline model or ablation study reported anywhere in the paper to explain the drop. phoneshell drives the same class of device entirely in software, grading every task from accessibility-level device state rather than from a mirrored camera feed.", "datePublished": "2026-11-07", "dateModified": "2026-11-07", "url": "https://blolabel.ai/blog/see-control-robotic-arm-vision-only-hard-tasks-drop-to-8-percent/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/see-control-robotic-arm-vision-only-hard-tasks-drop-to-8-percent/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/see-control-robotic-arm-vision-only-hard-tasks-drop-to-8-percent-hero.png", "citation": ["https://arxiv.org/abs/2512.08629", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#evidence">Evidence</a>
+    <a href="#mechanism">Mechanism</a>
+    <a href="/blog/">Notes</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-11-07">7 November 2026</time>
+    <span>7 min read</span>
+  </div>
+  <h1>See-Control drives the phone with a robotic arm and a camera; hard single-app tasks succeed 3 times in 36</h1>
+  <p class="standfirst">See-Control (arXiv:2512.08629, University College London, Imperial College London, Huawei's Noah's Ark Lab, ShanghaiTech University and the Southern University of Science and Technology, submitted 9 December 2025) operates a smartphone through a low-DoF robotic arm and screen-mirrored vision, with no ADB connection and no accessibility tree at all. On the paper's own 155-task ESO benchmark, hard single-app tasks succeed 3 times in 36, and cross-app tasks succeed 2 times in 15. The paper reports neither a baseline model nor an ablation study to explain the drop. phoneshell drives the same class of device entirely in software, grading every task from accessibility-level device state rather than a camera pointed at a screen.</p>
+
+<p>"See-Control: A Multimodal Agent Framework for Smartphone Interaction with a Robotic Arm" describes a system built to operate a phone the way a person with motor limitations might: "via direct physical interaction with a low-DoF robotic arm," the paper's phrase, and explicitly "without requiring ADB or system back-end access." That constraint rules out the accessibility tree by construction, not by choice of baseline: there is no software bridge into the phone at all, only a camera watching a mirrored screen and an arm that taps, swipes, and types by moving in physical space. The vision stack pairs OCR for on-screen text with Grounding DINO for icons, and marks candidate targets with index-mark visual prompting the authors describe as "inspired by LLM-Optic and SoM," feeding a GPT-4o backbone that picks the next action from five primitives: Tap, Swipe, Text, Back, Exit.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/see-control-robotic-arm-vision-only-hard-tasks-drop-to-8-percent-hero.png" alt="Abstract technical illustration on a dark grid: a slender mechanical arm reaching toward a glowing rectangular panel representing a phone screen, rendered only as simple geometric line forms with no hands or fingers, a thin dashed line tracing a faltering path across the panel that breaks before reaching the far edge, cool blues and slate greys, one amber accent on the arm's joint, no icons or readable text" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="method">155 tasks, one benchmark the authors built themselves, no comparison model</h2>
+
+<p>The paper's evaluation runs entirely on its own ESO (Embodied Smartphone Operation) benchmark: 140 single-app tasks and 15 cross-app tasks, split by difficulty into Simple, Medium, and Hard. AndroidWorld, the closest thing to a standard reference point for this kind of work, appears only in the paper's reference list, never as a comparison run. No other agent, framework, or baseline configuration of See-Control itself is scored against these 155 tasks; the numbers below are the entire quantitative result the paper reports.</p>
+
+<table>
+  <thead><tr><th>Task subset</th><th>Simple SR</th><th>Medium SR</th><th>Hard SR</th></tr></thead>
+  <tbody>
+    <tr><td>Single-app, Standard (37 tasks)</td><td>11/13</td><td>5/13</td><td>1/11</td></tr>
+    <tr><td>Single-app, Challenging (103 tasks)</td><td>23/32</td><td>18/35</td><td>3/36</td></tr>
+    <tr><td>Cross-app (15 tasks)</td><td colspan="3">2/15 overall, not split by difficulty</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: See-Control, arXiv:2512.08629v1, Table 1, submitted 9 December 2025, read 7 November 2026. Cross-app overall completion rate (CR) is 0.333 and step efficiency (SE) is 0.649, both reported as ratios, not success counts.</p>
+
+<svg viewBox="0 0 820 390" style="width:100%;height:auto" role="img" aria-label="Bar chart of See-Control's success rate by difficulty on its own ESO benchmark. Single-app Standard subset: 11 of 13 simple tasks, 5 of 13 medium, 1 of 11 hard. Single-app Challenging subset: 23 of 32 simple, 18 of 35 medium, 3 of 36 hard. Success rate falls steadily from simple to hard in both subsets, reaching single digits of percent on hard tasks."><rect x="0" y="0" width="820" height="390" rx="12" fill="#151a24"/><g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2"><text x="20" y="24" font-size="14" font-weight="600">See-Control success rate on its own ESO benchmark, by difficulty</text><line x1="60" y1="280" x2="800" y2="280" stroke="#2c3344" stroke-width="1"/><text x="50" y="283" font-size="9.5" text-anchor="end" fill="#8893a8">0%</text><line x1="60" y1="232" x2="800" y2="232" stroke="#2c3344" stroke-width="1"/><text x="50" y="235" font-size="9.5" text-anchor="end" fill="#8893a8">20%</text><line x1="60" y1="184" x2="800" y2="184" stroke="#2c3344" stroke-width="1"/><text x="50" y="187" font-size="9.5" text-anchor="end" fill="#8893a8">40%</text><line x1="60" y1="136" x2="800" y2="136" stroke="#2c3344" stroke-width="1"/><text x="50" y="139" font-size="9.5" text-anchor="end" fill="#8893a8">60%</text><line x1="60" y1="88" x2="800" y2="88" stroke="#2c3344" stroke-width="1"/><text x="50" y="91" font-size="9.5" text-anchor="end" fill="#8893a8">80%</text><line x1="60" y1="40" x2="800" y2="40" stroke="#2c3344" stroke-width="1"/><text x="50" y="43" font-size="9.5" text-anchor="end" fill="#8893a8">100%</text>
+<rect x="110" y="79.8" width="34" height="200.2" fill="#7a8bd6"/><text x="127" y="73.8" font-size="10" font-weight="600" text-anchor="middle" fill="#7a8bd6">11/13</text>
+<rect x="154" y="187.7" width="34" height="92.3" fill="#5ad1a0"/><text x="171" y="181.7" font-size="10" font-weight="600" text-anchor="middle" fill="#5ad1a0">5/13</text>
+<rect x="198" y="258.2" width="34" height="21.8" fill="#e8a33d"/><text x="215" y="252.2" font-size="10" font-weight="600" text-anchor="middle" fill="#e8a33d">1/11</text>
+<text x="171" y="298" font-size="9.5" text-anchor="middle" fill="#c4ccda">Standard (37)</text>
+<rect x="340" y="107.5" width="34" height="172.5" fill="#7a8bd6"/><text x="357" y="101.5" font-size="10" font-weight="600" text-anchor="middle" fill="#7a8bd6">23/32</text>
+<rect x="384" y="181.6" width="34" height="98.4" fill="#5ad1a0"/><text x="401" y="175.6" font-size="10" font-weight="600" text-anchor="middle" fill="#5ad1a0">18/35</text>
+<rect x="428" y="260" width="34" height="20" fill="#e8a33d"/><text x="445" y="254" font-size="10" font-weight="600" text-anchor="middle" fill="#e8a33d">3/36</text>
+<text x="401" y="298" font-size="9.5" text-anchor="middle" fill="#c4ccda">Challenging (103)</text>
+<rect x="570" y="200" width="60" height="80" fill="#8893a8"/><text x="600" y="194" font-size="10" font-weight="600" text-anchor="middle" fill="#8893a8">2/15</text>
+<text x="600" y="298" font-size="9.5" text-anchor="middle" fill="#c4ccda">Cross-app, not split by difficulty</text>
+<rect x="60" y="316" width="14" height="10" fill="#7a8bd6"/><text x="80" y="325" font-size="9.5" fill="#c4ccda">Simple</text>
+<rect x="160" y="316" width="14" height="10" fill="#5ad1a0"/><text x="180" y="325" font-size="9.5" fill="#c4ccda">Medium</text>
+<rect x="260" y="316" width="14" height="10" fill="#e8a33d"/><text x="280" y="325" font-size="9.5" fill="#c4ccda">Hard</text>
+<text x="20" y="356" font-size="9.5" fill="#8893a8">Hard single-app tasks succeed 1 time in 11 (Standard) and 3 times in 36 (Challenging); the paper offers no ablation to say which component fails.</text>
+<text x="20" y="374" font-size="10" fill="#8893a8">Source: See-Control, arXiv:2512.08629v1, Table 1, read 7 November 2026.</text>
+</g></svg>
+
+<h2 id="mechanism">A touch without a bridge, and what that removes from the agent</h2>
+
+<p>The mechanism here is the absence of a mechanism other mobile agents rely on. Where an accessibility-tree agent gets element names, types, and labels directly from the OS, See-Control's agent has to re-derive all of that from pixels, through OCR and an object detector, then convert a decision into a physical gesture a robotic arm executes against real glass: tap coordinates have to be correct not in screen space but in the arm's own coordinate frame, and the paper names "screen glare, touch friction, alignment errors" as the physical-world costs an emulator never has to pay. Text entry works by "keyboard-key localization from anchor points," meaning every character typed re-locates a key on the rendered keyboard from vision rather than sending a key code, a slower and more error-prone path than any software input method. The paper's own step-efficiency metric, HStep divided by AStep, is defined in a way that inverts the usual reading of such a ratio, which the paper does not flag as unusual; we note it rather than silently normalize it to match other papers' conventions.</p>
+
+<svg viewBox="0 0 820 230" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting See-Control's physical, camera-driven control loop with phoneshell's software control loop. See-Control: camera watches a mirrored screen, OCR and Grounding DINO extract elements, GPT-4o picks an action, a robotic arm executes it as a physical gesture, with no accessibility tree and no ADB at any stage. phoneshell: the accessibility API and device state are read directly over a software connection, and task success is graded from that same device state, with no camera or physical actuator anywhere in the loop.">
+<rect x="0" y="0" width="820" height="230" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Two control loops for the same class of device</text>
+<rect x="20" y="50" width="370" height="155" rx="8" fill="#262d3d" stroke="#e8a33d"/>
+<text x="205" y="72" font-size="11.5" font-weight="600" text-anchor="middle" fill="#e8a33d">See-Control: camera in, arm out</text>
+<text x="33" y="95" font-size="9.5" fill="#c4ccda">Mirrored screen &#8594; OCR + Grounding DINO</text>
+<text x="33" y="113" font-size="9.5" fill="#c4ccda">&#8594; GPT-4o picks an action &#8594; robotic arm</text>
+<text x="33" y="131" font-size="9.5" fill="#c4ccda">taps, swipes, types on real glass</text>
+<text x="33" y="155" font-size="9.5" fill="#8893a8">No ADB, no accessibility tree, at any stage</text>
+<text x="33" y="175" font-size="9.5" fill="#8893a8">Hard single-app tasks: 3 of 36 succeed</text>
+<rect x="430" y="50" width="370" height="155" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="615" y="72" font-size="11.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">phoneshell: software in, software out</text>
+<text x="443" y="95" font-size="9.5" fill="#c4ccda">Accessibility API + device state read</text>
+<text x="443" y="113" font-size="9.5" fill="#c4ccda">directly over a software connection,</text>
+<text x="443" y="131" font-size="9.5" fill="#c4ccda">no camera and no physical actuator</text>
+<text x="443" y="155" font-size="9.5" fill="#8893a8">Every task graded from that same</text>
+<text x="443" y="170" font-size="9.5" fill="#8893a8">device state, never from a mirrored frame</text>
+<text x="20" y="220" font-size="10" fill="#8893a8">Source: See-Control, arXiv:2512.08629v1, Sections 2-3; phoneshell/bench/verify.py, read 7 November 2026.</text>
+</g></svg>
+
+<h2 id="what-it-means">What it means for reading a robotic-touch result</h2>
+
+<p>See-Control's conclusion frames the project modestly: Embodied Smartphone Operation agents "offer a complementary path, rather than a replacement, for MLLM-based smartphone operation agents," and the paper does not claim to outperform a software-connected agent anywhere in its text. That restraint is appropriate given what the numbers show: a single-digit-percent success rate on hard single-app tasks, no baseline model run on the same 155 tasks, and no ablation isolating whether the OCR stage, the detector, the backbone, or the arm's own positioning accounts for most of the failures. A reader cannot tell from this paper whether a better vision-language backbone would move the Hard-task numbers meaningfully, because nothing in the paper varies the backbone while holding the arm constant, or varies the arm's precision while holding the backbone constant.</p>
+
+<p>The paper's real contribution is proving the mechanism works at all without a software bridge, which matters for accessibility use cases where ADB access or an accessibility-service grant is not available or not permitted. phoneshell's own leaderboard measures something adjacent but distinct: not whether a phone can be operated without any software access, but how well an agent performs when it has the best access iOS will grant it. Neither number substitutes for the other, and a comparison that put See-Control's 3-in-36 next to phoneshell's 55-of-58 without naming this gap would misstate what either number is for.</p>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># See-Control's own benchmark results and the step-efficiency definition
+open "https://arxiv.org/html/2512.08629v1"
+
+# phoneshell's device-state grading: the one thing See-Control has no equivalent of
+grep -n "Where a check can be made against real device state" phoneshell/bench/verify.py</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim See-Control's Table 1 reports single-app Standard success of 11/13, 5/13, and 1/11 across Simple, Medium, and Hard difficulty, single-app Challenging success of 23/32, 18/35, and 3/36 across the same three levels, and cross-app success of 2/15 overall, all checkable directly against the cited arXiv v1 HTML, which also contains no baseline model and no ablation study over its own pipeline stages. This should be revisited if a later revision of the paper adds either, or if a follow-up paper runs the same ESO benchmark with a software-connected (ADB or accessibility-tree) agent for direct comparison, by 30 June 2027.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Haoyu Zhao, Weizhong Ding, Yuhao Yang, Zheng Tian, Linyi Yang, Kun Shao, Jun Wang, <a href="https://arxiv.org/abs/2512.08629">See-Control: A Multimodal Agent Framework for Smartphone Interaction with a Robotic Arm</a>, arXiv:2512.08629v1, submitted 9 December 2025, read 7 November 2026.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/bench/verify.py</code>, read 7 November 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
