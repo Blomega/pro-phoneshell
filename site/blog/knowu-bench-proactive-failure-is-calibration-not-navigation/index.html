@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KnowU-Bench finds proactive failure is a calibration problem, not a navigation one: Claude intervenes wrongly 60% of the time it fails &mdash; Blolabel</title>
+<meta name="description" content="KnowU-Bench (arXiv:2604.08455, Zhejiang University, Apple, Tencent) scores mobile agents on three axes beyond task completion: interactive, proactive, personalized. Claude Sonnet 4.6 leads overall at 60.4% success, but when it fails on a proactive task, 60% of those failures are wrong interventions, not navigation errors, and when it fails on a personalized task, two-thirds are failures to ask a clarifying question. phoneshell's Check list has no field for why a task failed, only whether it did.">
+<link rel="canonical" href="https://blolabel.ai/blog/knowu-bench-proactive-failure-is-calibration-not-navigation/">
+<meta property="og:title" content="KnowU-Bench finds proactive failure is a calibration problem, not a navigation one: Claude intervenes wrongly 60% of the time it fails &mdash; Blolabel">
+<meta property="og:description" content="KnowU-Bench scores agents on interactive, proactive and personalized axes beyond task completion. Claude Sonnet 4.6 leads overall at 60.4%, but 60% of its proactive failures are wrong interventions and two-thirds of its personalized failures are missed clarifying questions.">
+<meta property="og:url" content="https://blolabel.ai/blog/knowu-bench-proactive-failure-is-calibration-not-navigation/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/knowu-bench-proactive-failure-is-calibration-not-navigation-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "KnowU-Bench finds proactive failure is a calibration problem, not a navigation one: Claude intervenes wrongly 60% of the time it fails", "description": "KnowU-Bench scores mobile agents on interactive, proactive, and personalized axes instead of plain task completion. Claude Sonnet 4.6 leads overall success at 60.4%, but its proactive failures are 60% wrong interventions against only 15% GUI errors, and its personalized failures are two-thirds missed clarifying questions. phoneshell's own Check list records pass or fail from device state and carries no field for why a task failed.", "datePublished": "2026-11-07", "dateModified": "2026-11-07", "url": "https://blolabel.ai/blog/knowu-bench-proactive-failure-is-calibration-not-navigation/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/knowu-bench-proactive-failure-is-calibration-not-navigation/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/knowu-bench-proactive-failure-is-calibration-not-navigation-hero.png", "citation": ["https://arxiv.org/abs/2604.08455", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#evidence">Evidence</a>
+    <a href="#mechanism">Mechanism</a>
+    <a href="/blog/">Notes</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-11-07">7 November 2026</time>
+    <span>8 min read</span>
+  </div>
+  <h1>KnowU-Bench finds proactive failure is a calibration problem, not a navigation one: Claude intervenes wrongly 60% of the time it fails</h1>
+  <p class="standfirst">KnowU-Bench (arXiv:2604.08455, Zhejiang University, Apple and Tencent, submitted 9 April 2026) scores mobile agents on three axes beyond whether a task got done: interactive, proactive, personalized. Claude Sonnet 4.6 leads the field on overall success at 60.4%, but the paper's own failure breakdown shows that when Claude fails a proactive task, 60% of those failures are the agent intervening when it should have stayed quiet, against 15% that are plain GUI mistakes. phoneshell's Check list has no field for why a task failed, only a device-state read of whether it did.</p>
+
+<p>"KnowU-Bench: Towards Interactive, Proactive, and Personalized Mobile Agent Evaluation" (arXiv:2604.08455v1, 16 authors including Tongbo Chen, Zhengxi Lu and Yongliang Shen, affiliated with Zhejiang University, Apple and Tencent) argues that task completion alone hides three separate skills a deployed assistant needs. Interactive tasks test whether an agent asks for missing information instead of guessing, scored through an Interaction Efficiency metric that rewards resolving a task in fewer clarifying questions. Personalized tasks hide a user's preferences in behavioral logs the agent can read but never see labeled as a profile, so the agent has to infer what the user wants from the pattern of past choices rather than from a stated rule. Proactive tasks go further still: "proactive tasks omit explicit instructions entirely," and the agent must decide for itself whether to act directly, propose an action and wait for confirmation, or do nothing at all.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/knowu-bench-proactive-failure-is-calibration-not-navigation-hero.png" alt="Abstract technical illustration on a dark grid: three overlapping translucent circles representing interactive, proactive and personalized evaluation axes, their overlap region rendered as a brighter mid-tone wedge, connected by thin calibration-dial tick marks along one circle's edge, cool blues and slate greys, one amber accent on the tick marks, no icons or readable text" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="method">192 tasks, four personas, and an app count the paper does not reconcile</h2>
+
+<p>The benchmark splits into "42 general tasks, 86 personalized tasks, and 64 proactive tasks," 192 by our own addition since the paper does not total them in one place. Four fixed personas carry the personalization signal: Developer, Grandma, Student, Researcher, each with its own behavioral history. The app count is less settled: Section 3.1 states "23 applications in total," while the paper's own Table 5 lists 17. The paper does not reconcile the two figures anywhere in its text, which is worth flagging exactly as stated rather than picking one number to repeat as fact.</p>
+
+<table>
+  <thead><tr><th>Model</th><th>Overall success rate</th></tr></thead>
+  <tbody>
+    <tr><td>Claude Sonnet 4.6</td><td>60.4%</td></tr>
+    <tr><td>Seed 2.0 Pro</td><td>51.6%</td></tr>
+    <tr><td>Gemini 3.1 Pro Preview</td><td>44.3%</td></tr>
+    <tr><td>Qwen3.5-397B-A17B</td><td>37.5%</td></tr>
+    <tr><td>Qwen3-VL-32B</td><td>29.2%</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: KnowU-Bench, arXiv:2604.08455v1, Table 2, submitted 9 April 2026, read 7 November 2026. The paper reports 11 models in total; these five span the range.</p>
+
+<svg viewBox="0 0 820 340" style="width:100%;height:auto" role="img" aria-label="Bar chart of KnowU-Bench overall success rate by model: Claude Sonnet 4.6 leads at 60.4 percent, followed by Seed 2.0 Pro at 51.6 percent, Gemini 3.1 Pro Preview at 44.3 percent, Qwen3.5-397B-A17B at 37.5 percent, and Qwen3-VL-32B at 29.2 percent, none above two-thirds success across the benchmark's interactive, proactive and personalized tasks combined."><rect x="0" y="0" width="820" height="340" rx="12" fill="#151a24"/><g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2"><text x="20" y="24" font-size="14" font-weight="600">KnowU-Bench overall success rate, five of eleven models reported</text><line x1="60" y1="260" x2="800" y2="260" stroke="#2c3344" stroke-width="1"/><text x="50" y="263" font-size="9.5" text-anchor="end" fill="#8893a8">0%</text><line x1="60" y1="212" x2="800" y2="212" stroke="#2c3344" stroke-width="1"/><text x="50" y="215" font-size="9.5" text-anchor="end" fill="#8893a8">20%</text><line x1="60" y1="164" x2="800" y2="164" stroke="#2c3344" stroke-width="1"/><text x="50" y="167" font-size="9.5" text-anchor="end" fill="#8893a8">40%</text><line x1="60" y1="116" x2="800" y2="116" stroke="#2c3344" stroke-width="1"/><text x="50" y="119" font-size="9.5" text-anchor="end" fill="#8893a8">60%</text><line x1="60" y1="68" x2="800" y2="68" stroke="#2c3344" stroke-width="1"/><text x="50" y="71" font-size="9.5" text-anchor="end" fill="#8893a8">80%</text><line x1="60" y1="40" x2="800" y2="40" stroke="#2c3344" stroke-width="1" stroke-dasharray="3,3"/><text x="50" y="43" font-size="9" text-anchor="end" fill="#6a7488">90%</text>
+<rect x="110" y="115.9" width="40" height="144.1" fill="#5ad1a0"/><text x="130" y="109.9" font-size="11" font-weight="600" text-anchor="middle" fill="#5ad1a0">60.4%</text><text x="130" y="278" font-size="10" text-anchor="middle" fill="#c4ccda">Claude Sonnet 4.6</text>
+<rect x="250" y="136.2" width="40" height="123.8" fill="#7a8bd6"/><text x="270" y="130.2" font-size="11" font-weight="600" text-anchor="middle" fill="#7a8bd6">51.6%</text><text x="270" y="278" font-size="10" text-anchor="middle" fill="#c4ccda">Seed 2.0 Pro</text>
+<rect x="390" y="153.7" width="40" height="106.3" fill="#7a8bd6"/><text x="410" y="147.7" font-size="11" font-weight="600" text-anchor="middle" fill="#7a8bd6">44.3%</text><text x="410" y="278" font-size="10" text-anchor="middle" fill="#c4ccda">Gemini 3.1 Pro Prev.</text>
+<rect x="530" y="170" width="40" height="90" fill="#7a8bd6"/><text x="550" y="164" font-size="11" font-weight="600" text-anchor="middle" fill="#7a8bd6">37.5%</text><text x="550" y="278" font-size="10" text-anchor="middle" fill="#c4ccda">Qwen3.5-397B-A17B</text>
+<rect x="670" y="190" width="40" height="70" fill="#7a8bd6"/><text x="690" y="184" font-size="11" font-weight="600" text-anchor="middle" fill="#7a8bd6">29.2%</text><text x="690" y="278" font-size="10" text-anchor="middle" fill="#c4ccda">Qwen3-VL-32B</text>
+<text x="20" y="310" font-size="10" fill="#8893a8">Source: KnowU-Bench, arXiv:2604.08455v1, Table 2, read 7 November 2026.</text>
+</g></svg>
+
+<h2 id="mechanism">What Claude's own failures are made of</h2>
+
+<p>Overall success rate flattens three different skills into one number, and KnowU-Bench's own failure-cause breakdown for the leading model shows why that flattening hides the more useful fact. When Claude Sonnet 4.6 fails a personalized task, the paper categorizes each failure, and "Clarify" failures, the agent should have asked a question about the user's preference and did not, account for 66.7% of them. "Partial" failures, where the agent gets part of the preference right but not all of it, are 27.1%. Plain GUI execution mistakes are only 4.2%, and getting the preference itself wrong despite having the right information is 2.1%. On proactive tasks the same pattern repeats in a different shape: "Intervention" failures, acting when the agent should have stayed silent or only confirmed, make up 60.0% of Claude's proactive failures. "Passive" failures, staying silent when action was called for, are 20.0%. GUI execution errors are 15.0%, and outright wrongly rejecting a valid confirmation is 5.0%. The paper states the conclusion these numbers point to directly: "proactive failure is primarily a calibration problem rather than an execution problem."</p>
+
+<svg viewBox="0 0 820 260" style="width:100%;height:auto" role="img" aria-label="Diagram of Claude Sonnet 4.6's failure causes on KnowU-Bench. Personalized task failures: 66.7 percent clarify failures, 27.1 percent partial, 4.2 percent GUI, 2.1 percent preference. Proactive task failures: 60.0 percent intervention, 20.0 percent passive, 15.0 percent GUI, 5.0 percent rejection. In both categories the GUI execution share is small and the decision-calibration share is large.">
+<rect x="0" y="0" width="820" height="260" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Claude Sonnet 4.6: what its failures are made of, not just how many there are</text>
+<rect x="20" y="50" width="370" height="185" rx="8" fill="#262d3d" stroke="#5a6478"/>
+<text x="205" y="72" font-size="11.5" font-weight="600" text-anchor="middle" fill="#c4ccda">Personalized task failures</text>
+<rect x="35" y="86" width="340" height="18" fill="#e8a33d"/><text x="45" y="99" font-size="9.5" fill="#151a24" font-weight="600">Clarify (failed to ask): 66.7%</text>
+<rect x="35" y="110" width="138" height="18" fill="#7a8bd6"/><text x="178" y="123" font-size="9.5" fill="#c4ccda">Partial: 27.1%</text>
+<rect x="35" y="134" width="21" height="18" fill="#5ad1a0"/><text x="60" y="147" font-size="9.5" fill="#c4ccda">GUI: 4.2%</text>
+<rect x="35" y="158" width="10" height="18" fill="#8893a8"/><text x="48" y="171" font-size="9.5" fill="#8893a8">Preference wrong: 2.1%</text>
+<text x="35" y="205" font-size="9" fill="#8893a8">Two-thirds of failures never reach a GUI step.</text>
+<rect x="430" y="50" width="370" height="185" rx="8" fill="#262d3d" stroke="#5a6478"/>
+<text x="615" y="72" font-size="11.5" font-weight="600" text-anchor="middle" fill="#c4ccda">Proactive task failures</text>
+<rect x="445" y="86" width="306" height="18" fill="#e8a33d"/><text x="455" y="99" font-size="9.5" fill="#151a24" font-weight="600">Intervention (wrongly acted): 60.0%</text>
+<rect x="445" y="110" width="102" height="18" fill="#7a8bd6"/><text x="552" y="123" font-size="9.5" fill="#c4ccda">Passive: 20.0%</text>
+<rect x="445" y="134" width="76" height="18" fill="#5ad1a0"/><text x="525" y="147" font-size="9.5" fill="#c4ccda">GUI: 15.0%</text>
+<rect x="445" y="158" width="26" height="18" fill="#8893a8"/><text x="475" y="171" font-size="9.5" fill="#8893a8">Rejection: 5.0%</text>
+<text x="445" y="205" font-size="9" fill="#8893a8">"Primarily a calibration problem," per the paper.</text>
+<text x="20" y="250" font-size="10" fill="#8893a8">Source: KnowU-Bench, arXiv:2604.08455v1, Section 5 failure analysis, read 7 November 2026.</text>
+</g></svg>
+
+<h2 id="what-it-means">What it means for reading a mobile agent's success rate</h2>
+
+<p>A single success-rate number cannot tell you whether a model fails because it cannot find the right button or because it does not know whether it should press one. KnowU-Bench's contribution is making that distinction visible inside a benchmark score rather than leaving it to a reader's guess, and its own summary states the finding as the paper's actual thesis: "existing models can often navigate the interface, but they still struggle to decide what should be done for which user and when it should be done." For anyone choosing a model to run unattended on a personal device, that is a materially different thing to optimize for than raw GUI accuracy, and a leaderboard built only from task completion will not surface it.</p>
+
+<p>phoneshell's own Check list grades a task from device state, pass or fail, with no further taxonomy at all: the house thesis is that a screenshot is worth 100 points or zero depending on whether the answer lives in the accessibility tree, which is a claim about information availability, not about why an agent chose the action it chose. KnowU-Bench's failure categories, Clarify, Partial, Intervention, Passive, Rejection, describe decisions a device-state check cannot distinguish from each other: two failed proactive tasks that both end in the wrong Siri Shortcut running look identical to a pass/fail grader even when one was an agent that acted too eagerly and the other was an agent that acted on the wrong information entirely.</p>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># KnowU-Bench's own failure-category definitions and the Claude breakdown, read directly
+open "https://arxiv.org/html/2604.08455v1"
+
+# phoneshell's Check list: confirm it records pass/fail from device state,
+# with no failure-cause field
+grep -rn "class Check\|def grade\|def check" phoneshell/bench/schema.py phoneshell/bench/verify.py 2>/dev/null</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim KnowU-Bench's Table 2 reports an overall success rate of 60.4% for Claude Sonnet 4.6 against 29.2% for Qwen3-VL-32B, and that its Section 5 failure analysis attributes 66.7% of Claude's personalized-task failures to missed clarification and 60.0% of its proactive-task failures to wrongful intervention, with the paper's own sentence that this is "primarily a calibration problem rather than an execution problem," all checkable against the cited arXiv v1 HTML. We also note the paper's own unreconciled app count (23 in Section 3.1, 17 in Table 5), checkable the same way. This should be revisited if a later revision resolves that count, or if any model KnowU-Bench evaluates clears 80% overall success without a corresponding drop in Intervention-type failures specifically, by 30 June 2027.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Tongbo Chen, Zhengxi Lu, Zhan Xu, Guocheng Shao, Shaohan Zhao, Fei Tang, Yong Du, Kaitao Song, Yizhou Liu, Yuchen Yan, Wenqi Zhang, Xu Tan, Weiming Lu, Jun Xiao, Yueting Zhuang, Yongliang Shen, <a href="https://arxiv.org/abs/2604.08455">KnowU-Bench: Towards Interactive, Proactive, and Personalized Mobile Agent Evaluation</a>, arXiv:2604.08455v1, submitted 9 April 2026, read 7 November 2026.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/bench/schema.py</code>, <code>phoneshell/bench/verify.py</code>, read 7 November 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
