@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WindowsWorld's infeasible-task score rewards giving up: UiPath scores 50% on it while passing 4.64% of tasks overall &mdash; Blolabel</title>
+<meta name="description" content="WindowsWorld (arXiv:2604.27776, Harbin Institute of Technology, Shenzhen, submitted 30 April 2026) scores GUI agents on rejecting infeasible tasks as its L4 difficulty tier. In its own Table 2, UiPath scores 50.00% on L4, the highest in the table, while passing only 4.64% of all tasks overall, the second-lowest score in the table. The paper's own prose also misstates its own table, crediting Gemini-3-flash-preview's L3 score with a number that is actually its L4 score.">
+<link rel="canonical" href="https://blolabel.ai/blog/windowsworld-uipath-50-percent-on-rejecting-tasks-4-point-six-overall/">
+<meta property="og:title" content="WindowsWorld's infeasible-task score rewards giving up: UiPath scores 50% on it while passing 4.64% of tasks overall &mdash; Blolabel">
+<meta property="og:description" content="WindowsWorld's Table 2 shows UiPath scoring 50.00% on L4, the task tier that rewards correctly rejecting infeasible instructions, while passing only 4.64% of all tasks overall. A system that fails almost everything also tends to correctly reject everything that cannot be done.">
+<meta property="og:url" content="https://blolabel.ai/blog/windowsworld-uipath-50-percent-on-rejecting-tasks-4-point-six-overall/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/windowsworld-uipath-50-percent-on-rejecting-tasks-4-point-six-overall-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "WindowsWorld's infeasible-task score rewards giving up: UiPath scores 50% on it while passing 4.64% of tasks overall", "description": "WindowsWorld (arXiv:2604.27776, Harbin Institute of Technology, Shenzhen, submitted 30 April 2026) adds an L4 difficulty tier of intentionally infeasible tasks, scored on whether an agent correctly rejects them. Table 2 shows UiPath w/ Gemini-3-flash-preview scoring 50.00% on L4, the highest score anywhere in the table, while its overall S_final average is 4.64%, near the bottom of the table. The paper's own Section 4.2 prose also misreports its own Table 2, attributing a 16.67% figure to Gemini-3-flash-preview's L3 score when the table lists that figure under L4 and gives L3 as 14.00%.", "datePublished": "2026-11-08", "dateModified": "2026-11-08", "url": "https://blolabel.ai/blog/windowsworld-uipath-50-percent-on-rejecting-tasks-4-point-six-overall/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/windowsworld-uipath-50-percent-on-rejecting-tasks-4-point-six-overall/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/windowsworld-uipath-50-percent-on-rejecting-tasks-4-point-six-overall-hero.png", "citation": ["https://arxiv.org/abs/2604.27776", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#mechanism">Mechanism</a>
+    <a href="/blog/">Notes</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker" id="finding">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-11-08">8 November 2026</time>
+    <span>7 min read</span>
+  </div>
+  <h1>WindowsWorld's infeasible-task score rewards giving up: UiPath scores 50% on it while passing 4.64% of tasks overall</h1>
+  <p class="standfirst">WindowsWorld (arXiv:2604.27776, Harbin Institute of Technology, Shenzhen, submitted 30 April 2026) adds a fourth difficulty tier, L4, made entirely of tasks that cannot be completed: invalid URLs, missing files, instructions that need authentication the agent does not have. An agent earns L4 credit by correctly calling a failure action instead of attempting the task. In the paper's own Table 2, UiPath w/ Gemini-3-flash-preview scores 50.00% on L4, the highest score in the entire table, while its overall S_final average across all four tiers is 4.64%, the second-lowest score in the table.</p>
+
+<p>WindowsWorld's stated motivation is that prior GUI-agent benchmarks "mainly focus on isolated and single-application tasks," overlooking workflows that span multiple professional applications. Its six authors (Jinchao Li, Yunxin Li, Chenrui Zhao, Zhenran Xu, Baotian Hu, Min Zhang) built 181 tasks across 17 Windows desktop applications, generated through a multi-agent pipeline steered by 16 occupations and refined by human review, with 77.9% of tasks requiring two or more applications. The best model overall, Gemini-3-flash-preview with a hybrid screenshot-plus-accessibility-tree input, reaches a 20.44% S_final average, matching the paper's own framing that "the best agents only achieve a 20% success rate."</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/windowsworld-uipath-50-percent-on-rejecting-tasks-4-point-six-overall-hero.png" alt="Abstract technical illustration on a dark grid: a single geometric gate shape rendered as simple line forms, with one thin path shown stepping around the gate rather than passing through its opening, cool blues and slate greys, one amber accent marking the gate, no text or readable symbols" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="method">L4 counts a refusal as correct, whatever caused it</h2>
+
+<p>Section 3.2 defines L4 tasks as "intentionally unachievable due to factors such as invalid URLs, missing files, or required account authentication," and Section 3.5 scores them under the Final Check Score, which "assesses the correctness of the terminal state, including the agent's ability to correctly reject infeasible instructions." The action space includes a FAIL() primitive alongside DONE(); calling it on an L4 task is counted as a correct terminal state. Nothing in that scoring rule distinguishes an agent that investigated the task and determined it was impossible from an agent that gives up constantly and happened to give up on the right ones too.</p>
+
+<p>Table 2's own numbers show the gap that rule leaves open. UiPath w/ Gemini-3-flash-preview, the one commercial RPA-style agent in the table, scores 0.00% on L2 and L3, 3.03% on L1, and 50.00% on L4, an S_final average of 4.64%. GPT-5.2 under Set-of-Marks prompting shows the same shape: 0.00% on L1 through L3, 25.00% on L4, an average of 0.55%. Both scored far better on the tier built from tasks that cannot be done than on the tiers built from tasks that can.</p>
+
+<table>
+  <thead><tr><th>Model, input mode</th><th>L1</th><th>L3</th><th>L4</th><th>S_final Avg</th></tr></thead>
+  <tbody>
+    <tr><td>Gemini-3-flash-preview, Hybrid (best overall)</td><td>35.90%</td><td>14.00%</td><td>16.67%</td><td>20.44%</td></tr>
+    <tr><td>Gemini-3-pro-preview, Screenshot</td><td>25.64%</td><td>2.00%</td><td>8.33%</td><td>8.29%</td></tr>
+    <tr><td>UiPath w/ Gemini-3-flash-preview</td><td>3.03%</td><td>0.00%</td><td>50.00%</td><td>4.64%</td></tr>
+    <tr><td>GPT-5.2, Set of Marks</td><td>0.00%</td><td>0.00%</td><td>25.00%</td><td>0.55%</td></tr>
+    <tr><td>Claude-Sonnet 4.5, Hybrid</td><td>0.00%</td><td>0.00%</td><td>8.33%</td><td>0.55%</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: WindowsWorld, arXiv:2604.27776v1, Table 2, submitted 30 April 2026, read 8 November 2026. L4 values are multiples of 1/12, consistent with roughly 12 L4 tasks in the benchmark, though the paper does not state the exact count in the sections read.</p>
+
+<svg viewBox="0 0 820 420" style="width:100%;height:auto" role="img" aria-label="Bar chart from WindowsWorld, arXiv 2604.27776, Table 2, comparing each agent configuration's overall S_final average success rate against its L4 score, the rate of correctly rejecting infeasible tasks. Gemini-3-flash-preview with the hybrid screenshot and accessibility tree input scores 20.44 percent overall and 16.67 percent on L4, a roughly even match. UiPath using Gemini-3-flash-preview as its backbone scores only 4.64 percent overall but 50.00 percent on L4, the highest L4 score in the table. GPT-5.2 with Set-of-Marks prompting scores 0.55 percent overall but 25.00 percent on L4. Claude-Sonnet-4.5 with the hybrid input scores 0.55 percent overall and 8.33 percent on L4."><rect x="0" y="0" width="820" height="420" rx="12" fill="#151a24"/><g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="24" font-size="14" font-weight="600">Table 2, arXiv:2604.27776: the agents worst overall score best at rejecting infeasible tasks</text>
+<line x1="60" y1="280.0" x2="800" y2="280.0" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="283.0" font-size="9.5" text-anchor="end" fill="#8893a8">0%</text>
+<line x1="60" y1="236.4" x2="800" y2="236.4" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="239.4" font-size="9.5" text-anchor="end" fill="#8893a8">10%</text>
+<line x1="60" y1="192.7" x2="800" y2="192.7" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="195.7" font-size="9.5" text-anchor="end" fill="#8893a8">20%</text>
+<line x1="60" y1="149.1" x2="800" y2="149.1" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="152.1" font-size="9.5" text-anchor="end" fill="#8893a8">30%</text>
+<line x1="60" y1="105.5" x2="800" y2="105.5" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="108.5" font-size="9.5" text-anchor="end" fill="#8893a8">40%</text>
+<line x1="60" y1="61.8" x2="800" y2="61.8" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="64.8" font-size="9.5" text-anchor="end" fill="#8893a8">50%</text>
+<rect x="90" y="190.8" width="30" height="89.2" fill="#7a8bd6"/>
+<text x="105.0" y="184.8" font-size="9.5" font-weight="700" text-anchor="middle" fill="#7a8bd6">20.44%</text>
+<rect x="130" y="207.3" width="30" height="72.7" fill="#e8a33d"/>
+<text x="145.0" y="201.3" font-size="9.5" font-weight="700" text-anchor="middle" fill="#e8a33d">16.67%</text>
+<text x="125.0" y="322" font-size="9" text-anchor="middle" fill="#c4ccda">Gemini-3-flash-preview</text>
+<text x="125.0" y="335" font-size="9" text-anchor="middle" fill="#c4ccda">(Hybrid)</text>
+<rect x="240" y="243.8" width="30" height="36.2" fill="#7a8bd6"/>
+<text x="255.0" y="237.8" font-size="9.5" font-weight="700" text-anchor="middle" fill="#7a8bd6">8.29%</text>
+<rect x="280" y="243.7" width="30" height="36.3" fill="#e8a33d"/>
+<text x="295.0" y="237.7" font-size="9.5" font-weight="700" text-anchor="middle" fill="#e8a33d">8.33%</text>
+<text x="275.0" y="322" font-size="9" text-anchor="middle" fill="#c4ccda">Gemini-3-pro-preview</text>
+<text x="275.0" y="335" font-size="9" text-anchor="middle" fill="#c4ccda">(Screenshot)</text>
+<rect x="390" y="259.8" width="30" height="20.2" fill="#7a8bd6"/>
+<text x="405.0" y="253.8" font-size="9.5" font-weight="700" text-anchor="middle" fill="#7a8bd6">4.64%</text>
+<rect x="430" y="61.8" width="30" height="218.2" fill="#e8a33d"/>
+<text x="445.0" y="55.8" font-size="9.5" font-weight="700" text-anchor="middle" fill="#e8a33d">50.0%</text>
+<text x="425.0" y="322" font-size="9" text-anchor="middle" fill="#c4ccda">UiPath w/ Gemini-3-flash</text>
+<text x="425.0" y="335" font-size="9" text-anchor="middle" fill="#c4ccda">(Screenshot agent)</text>
+<rect x="540" y="277.6" width="30" height="2.4" fill="#7a8bd6"/>
+<text x="555.0" y="271.6" font-size="9.5" font-weight="700" text-anchor="middle" fill="#7a8bd6">0.55%</text>
+<rect x="580" y="170.9" width="30" height="109.1" fill="#e8a33d"/>
+<text x="595.0" y="164.9" font-size="9.5" font-weight="700" text-anchor="middle" fill="#e8a33d">25.0%</text>
+<text x="575.0" y="322" font-size="9" text-anchor="middle" fill="#c4ccda">GPT-5.2</text>
+<text x="575.0" y="335" font-size="9" text-anchor="middle" fill="#c4ccda">(Set of Marks)</text>
+<rect x="690" y="277.6" width="30" height="2.4" fill="#7a8bd6"/>
+<text x="705.0" y="271.6" font-size="9.5" font-weight="700" text-anchor="middle" fill="#7a8bd6">0.55%</text>
+<rect x="730" y="243.7" width="30" height="36.3" fill="#e8a33d"/>
+<text x="745.0" y="237.7" font-size="9.5" font-weight="700" text-anchor="middle" fill="#e8a33d">8.33%</text>
+<text x="725.0" y="322" font-size="9" text-anchor="middle" fill="#c4ccda">Claude-Sonnet 4.5</text>
+<text x="725.0" y="335" font-size="9" text-anchor="middle" fill="#c4ccda">(Hybrid)</text>
+<rect x="60" y="378" width="14" height="10" fill="#7a8bd6"/><text x="80" y="387" font-size="9.5" fill="#c4ccda">S_final Avg (overall)</text>
+<rect x="260" y="378" width="14" height="10" fill="#e8a33d"/><text x="280" y="387" font-size="9.5" fill="#c4ccda">L4 (infeasible-task rejection)</text>
+<text x="20" y="408" font-size="10" fill="#8893a8">Source: WindowsWorld, arXiv:2604.27776v1, Table 2, read 8 November 2026.</text>
+</g></svg>
+
+<h2 id="mechanism">One action, two different reasons to take it</h2>
+
+<p>The mechanism is a single shared exit: calling FAIL() scores the same whether it follows genuine diagnosis (the agent checked the URL, found it broken, and correctly reported the task cannot be done) or indiscriminate refusal (the agent calls FAIL() on most things it is unsure how to start, and some of those happen to be the L4 tasks). WindowsWorld's own Table 2 cannot distinguish the two paths from the score alone, because L4's acceptance criterion, per Section 3.5, is the correctness of the terminal state, not the reasoning that produced it.</p>
+
+<svg viewBox="0 0 820 240" style="width:100%;height:auto" role="img" aria-label="Diagram of two different paths to the same FAIL action in WindowsWorld's L4 scoring. Path one: an agent investigates a task, finds a broken URL or missing file or missing authentication, and correctly calls FAIL, earning L4 credit through genuine diagnosis. Path two: an agent fails or gives up on most tasks regardless of feasibility, which also calls FAIL on the infeasible ones, earning the same L4 credit without having diagnosed anything, while its score on the completable L1 through L3 tiers stays near zero.">
+<rect x="0" y="0" width="820" height="240" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Two roads into the same FAIL(), scored identically by L4</text>
+<rect x="20" y="50" width="370" height="165" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="205" y="72" font-size="11.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">Genuine diagnosis</text>
+<text x="33" y="96" font-size="9.5" fill="#c4ccda">Agent checks the URL, file, or auth requirement</text>
+<text x="33" y="114" font-size="9.5" fill="#c4ccda">&#8594; confirms the task cannot be completed</text>
+<text x="33" y="132" font-size="9.5" fill="#c4ccda">&#8594; calls FAIL(), correctly, on this one task</text>
+<text x="33" y="157" font-size="9.5" fill="#8893a8">Also completes L1-L3 tasks at a normal rate,</text>
+<text x="33" y="175" font-size="9.5" fill="#8893a8">because the agent is not refusing indiscriminately</text>
+<text x="33" y="196" font-size="9.5" fill="#8893a8">Example: Gemini-3-flash-preview, 20.44% S_final avg</text>
+<rect x="430" y="50" width="370" height="165" rx="8" fill="#262d3d" stroke="#e8a33d"/>
+<text x="615" y="72" font-size="11.5" font-weight="600" text-anchor="middle" fill="#e8a33d">Indiscriminate refusal</text>
+<text x="443" y="96" font-size="9.5" fill="#c4ccda">Agent fails or gives up on most tasks it is</text>
+<text x="443" y="114" font-size="9.5" fill="#c4ccda">handed, feasible or not, for unrelated reasons</text>
+<text x="443" y="132" font-size="9.5" fill="#c4ccda">&#8594; also calls FAIL() on the L4 tasks, by coincidence</text>
+<text x="443" y="157" font-size="9.5" fill="#8893a8">L1-L3 scores stay near zero, the same refusal</text>
+<text x="443" y="175" font-size="9.5" fill="#8893a8">habit that inflates L4 depresses everything else</text>
+<text x="443" y="196" font-size="9.5" fill="#8893a8">Example: UiPath, 50.00% on L4, 4.64% S_final avg</text>
+</g></svg>
+
+<h2 id="what-it-means">What it means for reading an infeasibility score</h2>
+
+<p>An "ability to reject unachievable goals" score is only informative alongside the completion rate on achievable ones; read alone, it rewards two opposite behaviors with one number. WindowsWorld's conclusion correctly names "the ability to reliably report task failure" as "a significant open challenge," but Table 2 as published does not let a reader separate a model that is good at this specific judgment from a model that is simply bad at everything, including starting. A benchmark can fix this without dropping the L4 idea: score L4 against a false-positive rate measured on the L1-L3 tasks the same run attempted, so an agent that quits constantly is penalized for the quitting on the tiers where quitting is wrong, not rewarded for the coincidence of quitting on the tiers where it happens to be right.</p>
+
+<p>Separately, the paper's own Section 4.2 text states that Gemini-3-flash-preview's "S_final plummets from 35.90% (L1) to 16.67% (L3)." Table 2 lists L3 for that row as 14.00%, not 16.67%; the 16.67% figure is the row's L4 score. The two numbers are close enough that the error does not change the paper's qualitative claim, a declining trend across tiers, but it is checkable directly against the table the sentence is describing, and a reader citing the prose instead of the table would cite the wrong tier.</p>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># WindowsWorld's Table 2 and Section 3.5's scoring definition
+open "https://arxiv.org/html/2604.27776v1"
+
+# phoneshell's own answer to "did it actually do the thing": read device state, not a self-report
+grep -n "An agent that says" phoneshell/bench/verify.py</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim Table 2 of arXiv:2604.27776v1 reports UiPath w/ Gemini-3-flash-preview scoring L1 3.03%, L2 0.00%, L3 0.00%, L4 50.00%, S_final Avg 4.64%, and GPT-5.2 under Set-of-Marks prompting scoring 0.00% on L1-L3, 25.00% on L4, and an average of 0.55%, both checkable directly against the cited arXiv v1 HTML. This should be revisited if a later revision of the paper adds a false-positive-adjusted L4 metric that still shows UiPath or a similarly low-scoring agent leading on infeasibility rejection, or if the authors clarify that the 16.67% figure in Section 4.2 was intentional rather than a tier mislabel, by 30 June 2027.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Jinchao Li, Yunxin Li, Chenrui Zhao, Zhenran Xu, Baotian Hu, Min Zhang, <a href="https://arxiv.org/abs/2604.27776">WindowsWorld: A Process-Centric Benchmark of Autonomous GUI Agents in Professional Cross-Application Environments</a>, arXiv:2604.27776v1, submitted 30 April 2026, read 8 November 2026.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/bench/verify.py</code>, read 8 November 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
