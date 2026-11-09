@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Plain PPO ties Gemini-3.1-Pro on Apple's own iOS benchmark; Apple's proposed GiGPPO method scores lower getting there &mdash; Blolabel</title>
+<meta name="description" content="Apple's online-RL framework for training iOS navigation agents (arXiv:2610.39264, submitted 29 October 2026) reports its 8B agent tying Gemini-3.1-Pro on real iOS apps and gaining nearly sevenfold over its SFT baseline. Both headline numbers, in the paper's own Table 1, belong to plain PPO, not to GiGPPO, the paper's proposed neighbor-conditioned method, which scores lower on both benchmarks and only pulls ahead on iOSWorld, the one benchmark where every model in the table scores worst.">
+<link rel="canonical" href="https://blolabel.ai/blog/plain-ppo-ties-gemini-beats-apples-own-gigppo-method/">
+<meta property="og:title" content="Plain PPO ties Gemini-3.1-Pro on Apple's own iOS benchmark; Apple's proposed GiGPPO method scores lower getting there &mdash; Blolabel">
+<meta property="og:description" content="Apple's Table 1 shows plain PPO, not its proposed GiGPPO method, producing the headline numbers: a tie with Gemini-3.1-Pro on UINavBench and a near-sevenfold gain over the SFT baseline on AndroidWorld. GiGPPO only leads on iOSWorld, the benchmark where everything scores worst.">
+<meta property="og:url" content="https://blolabel.ai/blog/plain-ppo-ties-gemini-beats-apples-own-gigppo-method/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/plain-ppo-ties-gemini-beats-apples-own-gigppo-method-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Plain PPO ties Gemini-3.1-Pro on Apple's own iOS benchmark; Apple's proposed GiGPPO method scores lower getting there", "description": "Apple's online reinforcement-learning framework for training UI-navigation agents directly on live iOS apps (arXiv:2610.39264, submitted 29 October 2026) reports its 8B agent tying Gemini-3.1-Pro on real iOS applications and gaining nearly a sevenfold improvement over its supervised baseline. Table 1 of the paper shows both of those headline numbers belong to plain PPO at training step 336, not to GiGPPO, the paper's own proposed neighbor-conditioned method, which scores lower on both UINavBench and AndroidWorld and only overtakes PPO on iOSWorld, the single benchmark where every method in the table scores worst.", "datePublished": "2026-11-08", "dateModified": "2026-11-08", "url": "https://blolabel.ai/blog/plain-ppo-ties-gemini-beats-apples-own-gigppo-method/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/plain-ppo-ties-gemini-beats-apples-own-gigppo-method/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/plain-ppo-ties-gemini-beats-apples-own-gigppo-method-hero.png", "citation": ["https://arxiv.org/abs/2610.39264", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#mechanism">Mechanism</a>
+    <a href="/blog/">Notes</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker" id="finding">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-11-08">8 November 2026</time>
+    <span>7 min read</span>
+  </div>
+  <h1>Plain PPO ties Gemini-3.1-Pro on Apple's own iOS benchmark; Apple's proposed GiGPPO method scores lower getting there</h1>
+  <p class="standfirst">Apple's new online reinforcement-learning framework for training UI-navigation agents directly on live iOS apps (arXiv:2610.39264, submitted 29 October 2026) reports its 8B agent "tying with Gemini-3.1-Pro on real iOS applications" and gaining "nearly a sevenfold improvement" over its supervised baseline. Both numbers, in the paper's own Table 1, belong to plain PPO at training step 336. GiGPPO, the neighbor-conditioned method the paper actually proposes, scores lower than plain PPO on both of those benchmarks at the same step, and only pulls ahead on iOSWorld, the one benchmark where every method in the table scores worst.</p>
+
+<p>The paper, "Online Dense Reinforcement Learning with Planning-Grounding Agent for UI Navigation on Live iOS Apps," comes from five Apple researchers: Peitong Duan, Khashayar Gatmiry, Jeffrey Nichols, Samy Bengio, and Emmanuel Abbe. It trains an 8B agent, built from a Planning agent and a UI Grounding model, with Proximal Policy Optimization against hundreds of concurrent virtual iOS devices, arguing that supervised fine-tuning and offline RL "often memorize static trajectories, leading to brittle execution and an inability to recover from errors." The paper's headline contribution is GiGPPO, a neighbor-conditioned PPO variant meant to stabilize the critic using step-level LLM-as-Judge rewards instead of rewarding only the final outcome.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/plain-ppo-ties-gemini-beats-apples-own-gigppo-method-hero.png" alt="Abstract technical illustration on a dark grid: two thin glowing paths rising from a shared origin point, one path reaching a horizontal threshold line cleanly, the other dipping below a lower line before climbing only partway up, cool blues and slate greys, one amber accent marking the point where the two paths diverge, no icons or readable text" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="method">Table 1: the headline numbers are PPO's, not GiGPPO's</h2>
+
+<p>Section 4.3's Table 1 scores eleven training checkpoints (three reward designs across three step counts) plus five reference models on three benchmarks: UINavBench (116 tasks, 36 real iOS apps), iOSWorld (133 tasks, 26 synthetic iOS apps), and AndroidWorld (116 tasks, 20 real Android apps, used as the out-of-distribution generalization test). The paper's own prose credits "PPO Step 336 (2 epochs)" with tying Gemini-3.1-Pro at 32.4% on UINavBench and with "scoring nearly 7 times higher (32.8% vs. 4.7%)" than the SFT baseline on AndroidWorld. GiGPPO at the same step scores 28.4% on UINavBench and 31.9% on AndroidWorld, below plain PPO on both. GiGPPO's one clear win over PPO is on iOSWorld: 9.8% against PPO's 2.3%, both still far under Gemini-3.1-Pro's 39.5% there and under the SFT baseline's own 4.5%, which PPO at step 336 actually falls below.</p>
+
+<table>
+  <thead><tr><th>Model, training step</th><th>UINavBench</th><th>iOSWorld</th><th>AndroidWorld</th></tr></thead>
+  <tbody>
+    <tr><td>SFT Baseline</td><td>16.7%</td><td>4.5%</td><td>4.7%</td></tr>
+    <tr><td>PPO, Step 336 (2 epochs)</td><td>32.4%</td><td>2.3%</td><td>32.8%</td></tr>
+    <tr><td>GiGPPO, Step 336 (2 epochs)</td><td>28.4%</td><td>9.8%</td><td>31.9%</td></tr>
+    <tr><td>Gemini-3.5-Flash</td><td>28.4%</td><td>12.9%</td><td>57.8%</td></tr>
+    <tr><td>Gemini-3.1-Pro</td><td>32.4%</td><td>39.5%</td><td>60.8%</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: "Online Dense Reinforcement Learning with Planning-Grounding Agent for UI Navigation on Live iOS Apps," arXiv:2610.39264v1, Table 1, Section 4.3, submitted 29 October 2026, read 8 November 2026.</p>
+
+<svg viewBox="0 0 820 400" style="width:100%;height:auto" role="img" aria-label="Grouped bar chart comparing the SFT baseline, plain PPO at training step 336, and GiGPPO at training step 336 against Gemini-3.1-Pro, across three benchmarks from arXiv:2610.39264 Table 1. On UINavBench, PPO reaches 32.4%, tying Gemini-3.1-Pro, while GiGPPO reaches only 28.4%. On AndroidWorld, PPO reaches 32.8% against a 4.7% SFT baseline, while GiGPPO reaches 31.9%. On iOSWorld, the pattern reverses: GiGPPO reaches 9.8% against PPO at only 2.3%, below the 4.5% SFT baseline, while Gemini-3.1-Pro leads all of them at 39.5%."><rect x="0" y="0" width="820" height="400" rx="12" fill="#151a24"/><g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="24" font-size="14" font-weight="600">Table 1, arXiv:2610.39264: plain PPO ties Gemini-3.1-Pro twice; GiGPPO only wins on iOSWorld</text>
+<line x1="60" y1="280.0" x2="800" y2="280.0" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="283.0" font-size="9.5" text-anchor="end" fill="#8893a8">0%</text>
+<line x1="60" y1="232.0" x2="800" y2="232.0" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="235.0" font-size="9.5" text-anchor="end" fill="#8893a8">20%</text>
+<line x1="60" y1="184.0" x2="800" y2="184.0" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="187.0" font-size="9.5" text-anchor="end" fill="#8893a8">40%</text>
+<line x1="60" y1="136.0" x2="800" y2="136.0" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="139.0" font-size="9.5" text-anchor="end" fill="#8893a8">60%</text>
+<line x1="60" y1="88.0" x2="800" y2="88.0" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="91.0" font-size="9.5" text-anchor="end" fill="#8893a8">80%</text>
+<line x1="60" y1="40.0" x2="800" y2="40.0" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="43.0" font-size="9.5" text-anchor="end" fill="#8893a8">100%</text>
+<rect x="110" y="239.9" width="34" height="40.1" fill="#8893a8"/>
+<text x="127.0" y="233.9" font-size="10" font-weight="600" text-anchor="middle" fill="#8893a8">16.7%</text>
+<rect x="154" y="202.2" width="34" height="77.8" fill="#7a8bd6"/>
+<text x="171.0" y="196.2" font-size="10" font-weight="600" text-anchor="middle" fill="#7a8bd6">32.4%</text>
+<rect x="198" y="211.8" width="34" height="68.2" fill="#e8a33d"/>
+<text x="215.0" y="205.8" font-size="10" font-weight="600" text-anchor="middle" fill="#e8a33d">28.4%</text>
+<polygon points="148,202.24 154,196.24 160,202.24 154,208.24" fill="#5ad1a0" stroke="#0d1119" stroke-width="1"/>
+<text x="154" y="191.2" font-size="9.5" font-weight="700" text-anchor="middle" fill="#5ad1a0">32.4%</text>
+<text x="171" y="322" font-size="10.5" text-anchor="middle" fill="#c4ccda">UINavBench</text>
+<rect x="340" y="269.2" width="34" height="10.8" fill="#8893a8"/>
+<text x="357.0" y="263.2" font-size="10" font-weight="600" text-anchor="middle" fill="#8893a8">4.5%</text>
+<rect x="384" y="274.5" width="34" height="5.5" fill="#7a8bd6"/>
+<text x="401.0" y="268.5" font-size="10" font-weight="600" text-anchor="middle" fill="#7a8bd6">2.3%</text>
+<rect x="428" y="256.5" width="34" height="23.5" fill="#e8a33d"/>
+<text x="445.0" y="250.5" font-size="10" font-weight="600" text-anchor="middle" fill="#e8a33d">9.8%</text>
+<polygon points="378,185.2 384,179.2 390,185.2 384,191.2" fill="#5ad1a0" stroke="#0d1119" stroke-width="1"/>
+<text x="384" y="174.2" font-size="9.5" font-weight="700" text-anchor="middle" fill="#5ad1a0">39.5%</text>
+<text x="401" y="322" font-size="10.5" text-anchor="middle" fill="#c4ccda">iOSWorld</text>
+<rect x="570" y="268.7" width="34" height="11.3" fill="#8893a8"/>
+<text x="587.0" y="262.7" font-size="10" font-weight="600" text-anchor="middle" fill="#8893a8">4.7%</text>
+<rect x="614" y="201.3" width="34" height="78.7" fill="#7a8bd6"/>
+<text x="631.0" y="195.3" font-size="10" font-weight="600" text-anchor="middle" fill="#7a8bd6">32.8%</text>
+<rect x="658" y="203.4" width="34" height="76.6" fill="#e8a33d"/>
+<text x="675.0" y="197.4" font-size="10" font-weight="600" text-anchor="middle" fill="#e8a33d">31.9%</text>
+<polygon points="608,134.08 614,128.08 620,134.08 614,140.08" fill="#5ad1a0" stroke="#0d1119" stroke-width="1"/>
+<text x="614" y="123.1" font-size="9.5" font-weight="700" text-anchor="middle" fill="#5ad1a0">60.8%</text>
+<text x="631" y="322" font-size="10.5" text-anchor="middle" fill="#c4ccda">AndroidWorld</text>
+<rect x="60" y="346" width="14" height="10" fill="#8893a8"/><text x="80" y="355" font-size="9.5" fill="#c4ccda">SFT baseline</text>
+<rect x="200" y="346" width="14" height="10" fill="#7a8bd6"/><text x="220" y="355" font-size="9.5" fill="#c4ccda">PPO, Step 336</text>
+<rect x="360" y="346" width="14" height="10" fill="#e8a33d"/><text x="380" y="355" font-size="9.5" fill="#c4ccda">GiGPPO, Step 336</text>
+<polygon points="534,351 540,345 546,351 540,357" fill="#5ad1a0" stroke="#0d1119" stroke-width="1"/><text x="552" y="355" font-size="9.5" fill="#c4ccda">Gemini-3.1-Pro</text>
+<text x="20" y="380" font-size="9.5" fill="#8893a8">Plain PPO ties or beats the paper's own proposed GiGPPO on 2 of 3 benchmarks at the same training step.</text>
+<text x="20" y="394" font-size="10" fill="#8893a8">Source: arXiv:2610.39264v1, Table 1, read 8 November 2026.</text>
+</g></svg>
+
+<h2 id="mechanism">Where GiGPPO's reward design actually pays off</h2>
+
+<p>GiGPPO's difference from plain PPO is in what it rewards and when: PPO as ablated here comes in a terminal-only variant (reward only at episode end) and a step-level variant, while GiGPPO adds neighbor-conditioned value estimation on top of step-level LLM-as-Judge rewards, meant to reduce critic variance when an 8B policy is being pushed by a much larger judge model's feedback at every step rather than only at the end. That extra stabilization is exactly the kind of thing that should matter most on the noisiest environment, and iOSWorld, built from synthetic rather than real iOS apps, is where every single model and checkpoint in Table 1 scores worst: the SFT baseline sits at 4.5%, the strongest reference model (Gemini-3.1-Pro) tops out at 39.5%, nothing like its 60.8% on AndroidWorld. GiGPPO's 9.8% there is still a small absolute number, but it is more than four times PPO's 2.3% on the same benchmark, and the only place in the table where the paper's proposed method is unambiguously ahead of its own ablation.</p>
+
+<svg viewBox="0 0 820 260" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting Apple's training loop for this paper with phoneshell's grading loop. Apple's loop: hundreds of concurrent virtual iOS devices feed a Planning agent and UI Grounding model, an LLM acting as judge assigns step-level and terminal rewards, and PPO or GiGPPO updates the policy from those judged rewards. phoneshell's loop: one physical iPhone 17 Pro Max runs the task, and every check reads real accessibility-tree device state directly, with no judge model and no simulated device anywhere in the grading path.">
+<rect x="0" y="0" width="820" height="260" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Two different things being measured: a judge's opinion, and a device's actual state</text>
+<rect x="20" y="50" width="370" height="180" rx="8" fill="#262d3d" stroke="#e8a33d"/>
+<text x="205" y="72" font-size="11.5" font-weight="600" text-anchor="middle" fill="#e8a33d">This paper's training loop</text>
+<text x="33" y="96" font-size="9.5" fill="#c4ccda">Hundreds of concurrent virtual iOS devices</text>
+<text x="33" y="114" font-size="9.5" fill="#c4ccda">&#8594; Planning agent + UI Grounding model act</text>
+<text x="33" y="132" font-size="9.5" fill="#c4ccda">&#8594; an LLM-as-Judge scores each step and the end</text>
+<text x="33" y="150" font-size="9.5" fill="#c4ccda">&#8594; PPO or GiGPPO updates the policy on that score</text>
+<text x="33" y="175" font-size="9.5" fill="#8893a8">Reward is a model's opinion of a simulated screen</text>
+<text x="33" y="193" font-size="9.5" fill="#8893a8">iOSWorld, the hardest of the three, runs on 26</text>
+<text x="33" y="208" font-size="9.5" fill="#8893a8">synthetic iOS apps, not real ones</text>
+<rect x="430" y="50" width="370" height="180" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="615" y="72" font-size="11.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">phoneshell's grading loop</text>
+<text x="443" y="96" font-size="9.5" fill="#c4ccda">One physical iPhone 17 Pro Max, iOS 26.6</text>
+<text x="443" y="114" font-size="9.5" fill="#c4ccda">&#8594; the agent acts on the real device directly</text>
+<text x="443" y="132" font-size="9.5" fill="#c4ccda">&#8594; a check reads accessibility-tree device state</text>
+<text x="443" y="150" font-size="9.5" fill="#c4ccda">&#8594; pass or fail comes from that state, not a judge</text>
+<text x="443" y="175" font-size="9.5" fill="#8893a8">No reward model, no simulated screen, and no</text>
+<text x="443" y="193" font-size="9.5" fill="#8893a8">model's self-report decides whether a task passed</text>
+</g></svg>
+
+<h2 id="what-it-means">What it means for reading an RL-for-UI result</h2>
+
+<p>An ablation table that includes the method actually proposed, next to a simpler baseline the authors also ran, is useful exactly because it lets a reader check whether the fancier design earns its complexity. Here it does not, on two of three benchmarks, at the step the paper's own text chooses to highlight. That is not evidence GiGPPO is a bad idea: its neighbor-conditioned critic is explicitly a variance-reduction technique, and iOSWorld, the one noisy environment where everyone's numbers are worst, is exactly where variance reduction should show up first. But a reader who only reads the abstract would come away thinking the paper's named contribution produced the sevenfold AndroidWorld gain and the UINavBench tie with Gemini-3.1-Pro. Table 1 says plain PPO produced both, and GiGPPO trails PPO by 4.0 points on UINavBench and 0.9 points on AndroidWorld to get its 7.5-point lead on iOSWorld. Whether that trade is worth it depends entirely on which benchmark a reader cares about, a judgment the abstract does not offer and the reader has to make from the table.</p>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># Apple's Table 1, the ablation across PPO and GiGPPO at matched steps
+open "https://arxiv.org/html/2610.39264v1"
+
+# phoneshell's equivalent: no judge model, device state decides pass or fail
+grep -n "Where a check can be made against real device state" phoneshell/bench/verify.py</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim Table 1 of arXiv:2610.39264v1 reports PPO at Step 336 scoring 32.4% on UINavBench and 32.8% on AndroidWorld, GiGPPO at Step 336 scoring 28.4% and 31.9% on the same two benchmarks respectively, and GiGPPO scoring 9.8% against PPO's 2.3% on iOSWorld, all checkable directly against the cited arXiv v1 HTML. This should be revisited if a later revision of the paper reports a different ablation ordering, publishes a training-step budget where GiGPPO leads PPO on UINavBench or AndroidWorld as well, or if a follow-up paper reproduces both methods at larger scale and finds the current ordering was a step-336 artifact, by 30 June 2027.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Peitong Duan, Khashayar Gatmiry, Jeffrey Nichols, Samy Bengio, Emmanuel Abbe, <a href="https://arxiv.org/abs/2610.39264">Online Dense Reinforcement Learning with Planning-Grounding Agent for UI Navigation on Live iOS Apps</a>, arXiv:2610.39264v1, submitted 29 October 2026, read 8 November 2026.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/bench/verify.py</code>, read 8 November 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
