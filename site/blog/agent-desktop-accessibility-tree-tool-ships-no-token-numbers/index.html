@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vercel's agent-desktop reads the accessibility tree instead of screenshots; the token-savings numbers describing it trace to no primary source &mdash; Blolabel</title>
+<meta name="description" content="Vercel Labs' agent-desktop (Apache-2.0, v1.2.0 released 5 November 2026) lets an AI agent read and operate macOS, Windows, and Linux apps through the OS accessibility tree, with the README's own words, without screenshots or pixel matching. Neither the README nor the release notes through v1.2.0 publish a single token-cost or efficiency figure. The 78-96 percent and 273-versus-1,000-to-1,800-token numbers circulating about it in blog coverage do not appear in the project's own documentation.">
+<link rel="canonical" href="https://blolabel.ai/blog/agent-desktop-accessibility-tree-tool-ships-no-token-numbers/">
+<meta property="og:title" content="Vercel's agent-desktop reads the accessibility tree instead of screenshots; the token-savings numbers describing it trace to no primary source &mdash; Blolabel">
+<meta property="og:description" content="agent-desktop's own README and release notes through v1.2.0 contain zero token-cost or efficiency figures. Every specific percentage or token count attached to the tool in blog coverage traces to secondary sources, not to Vercel Labs' own documentation.">
+<meta property="og:url" content="https://blolabel.ai/blog/agent-desktop-accessibility-tree-tool-ships-no-token-numbers/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/agent-desktop-accessibility-tree-tool-ships-no-token-numbers-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Vercel's agent-desktop reads the accessibility tree instead of screenshots; the token-savings numbers describing it trace to no primary source", "description": "agent-desktop (vercel-labs/agent-desktop, Apache-2.0) reads macOS, Windows, and Linux apps through the OS accessibility tree (AX API, UI Automation, AT-SPI) rather than screenshots, reaching v1.2.0 on 5 November 2026. Its README and release notes through that version contain no token-cost or efficiency number of any kind. Blog coverage circulating specific figures, 78 to 96 percent fewer tokens, roughly 273 tokens per accessibility snapshot against 1,000 to 1,800 for a screenshot, does not trace to any sentence in the project's own documentation.", "datePublished": "2026-11-08", "dateModified": "2026-11-08", "url": "https://blolabel.ai/blog/agent-desktop-accessibility-tree-tool-ships-no-token-numbers/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/agent-desktop-accessibility-tree-tool-ships-no-token-numbers/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/agent-desktop-accessibility-tree-tool-ships-no-token-numbers-hero.png", "citation": ["https://github.com/vercel-labs/agent-desktop", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#mechanism">Mechanism</a>
+    <a href="/blog/">Notes</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker" id="finding">
+    <span class="kind event">event</span>
+    <time datetime="2026-11-08">8 November 2026</time>
+    <span>6 min read</span>
+  </div>
+  <h1>Vercel's agent-desktop reads the accessibility tree instead of screenshots; the token-savings numbers describing it trace to no primary source</h1>
+  <p class="standfirst">Vercel Labs' agent-desktop (Apache-2.0, originally lahfir/agent-desktop before an October 2026 org transfer) reached v1.2.0 on 5 November 2026, adding an MCP server on top of a CLI that lets an AI agent read and operate macOS, Windows, and Linux apps through the OS accessibility tree, in the README's own words, "without screenshots or pixel matching." Neither the README nor any release note through v1.2.0 states a single token-cost, latency, or efficiency figure. The specific numbers circulating in blog coverage, 78 to 96 percent fewer tokens, roughly 273 tokens per accessibility snapshot against 1,000 to 1,800 for a screenshot, do not appear anywhere in the project's own documentation.</p>
+
+<p>The tool reads each platform's native accessibility layer directly: the AX API on macOS 13+, UI Automation on Windows 10 1809+, and AT-SPI on Ubuntu 24.04+ under X11 or Wayland. It assigns a stable reference to each interactive element so an agent acts on that reference instead of on pixel coordinates. Chris Tate, who also built Vercel's agent-browser, announced it on X on 31 October 2026 as "agent-browser, for your whole computer." The repository had reached roughly 19,700 stars by the time of this writing, with ten pull requests merged between the v1.1.0 and v1.2.0 releases alone.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/agent-desktop-accessibility-tree-tool-ships-no-token-numbers-hero.png" alt="Abstract technical illustration on a dark grid: a single geometric node at the center with several thin duplicate lines radiating outward and fading into a diffuse haze near the frame's edges, cool blues and slate greys, one amber accent at the center node, no text, no numbers, no logos" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="method">What the project ships, and what it does not publish</h2>
+
+<p>The docs site's own framing of the tool's limits is explicit and modest: "Limited to what apps expose. It reads accessibility trees and does not match pixels, so it cannot see a UI that publishes no accessibility tree," and "Desktop apps only. It does not automate web pages; use agent-browser for those." Chromium and Electron apps are handled by opening a DevTools port that agent-browser connects to, not by agent-desktop's own tree-reading path. None of the version history below, pulled from the GitHub releases page, contains a cost comparison against screenshot-based computer use.</p>
+
+<table>
+  <thead><tr><th>Version</th><th>Date</th><th>Change</th></tr></thead>
+  <tbody>
+    <tr><td>v0.9.2</td><td>17 Sep 2026</td><td>Released as lahfir/agent-desktop, before the org transfer</td></tr>
+    <tr><td>v1.0.0</td><td>28 Oct 2026</td><td>First release under vercel-labs/agent-desktop</td></tr>
+    <tr><td>v1.0.2</td><td>30 Oct 2026</td><td>Release notes: repository links repointed to vercel-labs/agent-desktop after the transfer</td></tr>
+    <tr><td>v1.2.0</td><td>5 Nov 2026 (latest)</td><td>Adds an agent-desktop MCP server (PR #519)</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: github.com/vercel-labs/agent-desktop, releases page, read 8 November 2026. No release in this history states a token, cost, or latency figure.</p>
+
+<h2 id="mechanism">How the tree-only approach works, and where the published numbers stop</h2>
+
+<svg viewBox="0 0 820 240" style="width:100%;height:auto" role="img" aria-label="Diagram of agent-desktop's perception path compared to a screenshot-based computer-use agent. agent-desktop: the operating system's AX API, UI Automation, or AT-SPI exposes a structured accessibility tree, each interactive element gets a stable reference, and the agent acts on that reference, with no image ever rendered or sent to a model. Screenshot-based computer use: a frame of the screen is rendered, encoded, and sent to a vision-language model as image tokens, and the agent acts on pixel coordinates it infers from that image. Neither path in agent-desktop's own documentation is paired with a published token count for either side of the comparison.">
+<rect x="0" y="0" width="820" height="240" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Two ways an agent can see a desktop app</text>
+<rect x="20" y="50" width="370" height="155" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="205" y="72" font-size="11.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">agent-desktop: tree only</text>
+<text x="33" y="96" font-size="9.5" fill="#c4ccda">AX API / UI Automation / AT-SPI exposes the</text>
+<text x="33" y="114" font-size="9.5" fill="#c4ccda">accessibility tree &#8594; each element gets a stable ref</text>
+<text x="33" y="132" font-size="9.5" fill="#c4ccda">&#8594; the agent acts on that reference, no image sent</text>
+<text x="33" y="157" font-size="9.5" fill="#8893a8">Cannot see a UI that publishes no accessibility</text>
+<text x="33" y="175" font-size="9.5" fill="#8893a8">tree; does not automate web pages at all</text>
+<rect x="430" y="50" width="370" height="155" rx="8" fill="#262d3d" stroke="#e8a33d"/>
+<text x="615" y="72" font-size="11.5" font-weight="600" text-anchor="middle" fill="#e8a33d">Screenshot-based computer use</text>
+<text x="443" y="96" font-size="9.5" fill="#c4ccda">A frame of the screen is rendered and encoded</text>
+<text x="443" y="114" font-size="9.5" fill="#c4ccda">&#8594; sent to a vision-language model as image tokens</text>
+<text x="443" y="132" font-size="9.5" fill="#c4ccda">&#8594; the agent infers pixel coordinates to act on</text>
+<text x="443" y="157" font-size="9.5" fill="#8893a8">Works on anything rendered, including canvases</text>
+<text x="443" y="175" font-size="9.5" fill="#8893a8">and unlabeled icons a tree cannot describe</text>
+</g></svg>
+
+<svg viewBox="0 0 820 230" style="width:100%;height:auto" role="img" aria-label="Diagram showing how a specific token-savings figure for agent-desktop circulated without a primary source. Vercel Labs' own README and release notes state the approach qualitatively, without screenshots or pixel matching, but no number. A secondary blog estimates specific figures, roughly 273 tokens for a tree snapshot against 1000 to 1800 for a screenshot, and a self-reported 78 to 96 percent reduction. Multiple aggregator and news sites then repeat those figures as established facts, each citing the blog rather than Vercel, so the chain never closes back to a measurement Vercel itself published.">
+<rect x="0" y="0" width="820" height="230" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Where the circulating token numbers actually come from</text>
+<rect x="20" y="50" width="175" height="150" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="107" y="75" font-size="11" font-weight="600" text-anchor="middle" fill="#5ad1a0">Vercel's README</text>
+<text x="33" y="100" font-size="9" fill="#c4ccda">"without screenshots</text>
+<text x="33" y="114" font-size="9" fill="#c4ccda">or pixel matching"</text>
+<text x="33" y="138" font-size="9" fill="#8893a8">No number stated</text>
+<text x="33" y="152" font-size="9" fill="#8893a8">anywhere in the repo</text>
+<text x="220" y="130" font-size="16" fill="#8893a8">&#8594;</text>
+<rect x="245" y="50" width="175" height="150" rx="8" fill="#262d3d" stroke="#e8a33d"/>
+<text x="332" y="75" font-size="11" font-weight="600" text-anchor="middle" fill="#e8a33d">A secondary blog</text>
+<text x="258" y="100" font-size="9" fill="#c4ccda">estimates ~273 tokens</text>
+<text x="258" y="114" font-size="9" fill="#c4ccda">vs 1,000-1,800, and a</text>
+<text x="258" y="128" font-size="9" fill="#c4ccda">self-reported 78-96%</text>
+<text x="258" y="150" font-size="9" fill="#8893a8">Not attributed to any</text>
+<text x="258" y="164" font-size="9" fill="#8893a8">Vercel measurement</text>
+<text x="445" y="130" font-size="16" fill="#8893a8">&#8594;</text>
+<rect x="470" y="50" width="330" height="150" rx="8" fill="#262d3d" stroke="#8893a8"/>
+<text x="635" y="75" font-size="11" font-weight="600" text-anchor="middle" fill="#8893a8">Aggregators and news sites</text>
+<text x="483" y="100" font-size="9" fill="#c4ccda">Repeat the figures as established fact,</text>
+<text x="483" y="114" font-size="9" fill="#c4ccda">citing each other rather than Vercel</text>
+<text x="483" y="138" font-size="9" fill="#8893a8">Two outlets even disagree with each other</text>
+<text x="483" y="152" font-size="9" fill="#8893a8">on the screenshot figure, one citing 50,000</text>
+<text x="483" y="166" font-size="9" fill="#8893a8">tokens where another cites 1,000-1,800</text>
+</g>
+</svg>
+
+<h2 id="what-it-means">What it means for citing a tool's efficiency claims</h2>
+
+<p>The underlying intuition, that a structured accessibility tree is cheaper to transmit than a rendered screenshot, is reasonable and consistent with what phoneshell's own perception code already assumes: it reads the accessibility tree directly and only falls back to OCR over a cropped region when verifying a specific element's label, rather than sending full frames by default. But "reasonable and consistent with existing practice" is a different claim than "measured," and nothing in agent-desktop's own repository measures it. A reader who wants a real number for this specific tool has none to cite yet; the honest version of this story is "not reported," not a number borrowed from a blog's own estimate. Two of the outlets covering it do not even agree with each other on the screenshot side of the comparison, one citing roughly 50,000 tokens for a vision model's screenshot and another citing 1,000 to 1,800, a 30x spread that alone should have stopped the 78-96% figure from being repeated as settled.</p>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># agent-desktop's README and release history, searched for any cost figure
+open "https://github.com/vercel-labs/agent-desktop"
+open "https://github.com/vercel-labs/agent-desktop/releases"
+
+# phoneshell's own default: read the tree, fall back to OCR only to verify one element
+grep -n "class Element" phoneshell/perception/tree.py 2>/dev/null || grep -rn "accessibility tree" phoneshell/perception/*.py</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim that, as of v1.2.0 released 5 November 2026, the agent-desktop README and every release note back through v0.9.2 contain no token-cost, latency, or percentage-savings figure, a claim checkable directly against the repository and its releases page. This should be revisited if Vercel Labs publishes its own benchmark or changelog entry with a measured token comparison against screenshot-based computer use, or if a third party runs and publishes a reproducible, methodology-disclosed measurement of agent-desktop's actual token cost per step, by 30 June 2027.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Vercel Labs, <a href="https://github.com/vercel-labs/agent-desktop">agent-desktop</a>, README and releases page, read 8 November 2026.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: accessibility-tree perception path, read 8 November 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
