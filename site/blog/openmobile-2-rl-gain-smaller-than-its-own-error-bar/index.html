@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OpenMobile-2's reinforcement-learning step moves AndroidWorld accuracy less than its own reported error bar &mdash; Blolabel</title>
+<meta name="description" content="OpenMobile-2 (arXiv:2610.14157, Nanjing University, SenseTime and five other institutions, submitted 9 October 2026) reports RL fine-tuning as a stage in its training recipe. On AndroidWorld Pass@1, the benchmark the paper did not build, RL moves its 9B model from 73.3 plus or minus 1.5% to 74.0 plus or minus 2.9%, and its 27B model from 80.8 plus or minus 3.5% to 79.9 plus or minus 3.0%. Both changes are smaller than the paper's own reported run-to-run spread, on the one metric where that spread is reported at all.">
+<link rel="canonical" href="https://blolabel.ai/blog/openmobile-2-rl-gain-smaller-than-its-own-error-bar/">
+<meta property="og:title" content="OpenMobile-2's reinforcement-learning step moves AndroidWorld accuracy less than its own reported error bar &mdash; Blolabel">
+<meta property="og:description" content="OpenMobile-2's own Table 2 gives error bars only for AndroidWorld Pass@1, and the RL stage's effect on that one metric, plus 0.7 points for the 9B model, minus 0.9 for the 27B model, sits inside those bars. RL's larger, unambiguous gains show up on MobileGym, the benchmark the same team built.">
+<meta property="og:url" content="https://blolabel.ai/blog/openmobile-2-rl-gain-smaller-than-its-own-error-bar/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/openmobile-2-rl-gain-smaller-than-its-own-error-bar-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "OpenMobile-2's reinforcement-learning step moves AndroidWorld accuracy less than its own reported error bar", "description": "OpenMobile-2 (arXiv:2610.14157, submitted 9 October 2026) trains mobile GUI agents in stages: a base model, GUI-only SFT, hybrid SFT, then RL. Table 2 reports an error bar only for AndroidWorld Pass@1, and on that metric the RL stage moves the 9B model from 73.3 plus or minus 1.5% to 74.0 plus or minus 2.9%, and the 27B model from 80.8 plus or minus 3.5% to 79.9 plus or minus 3.0%, both changes smaller than the reported spread. RL's unambiguous gains appear on MobileGym success rate instead, the benchmark built by the same team, where no error bar is reported to check against.", "datePublished": "2026-11-08", "dateModified": "2026-11-08", "url": "https://blolabel.ai/blog/openmobile-2-rl-gain-smaller-than-its-own-error-bar/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/openmobile-2-rl-gain-smaller-than-its-own-error-bar/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/openmobile-2-rl-gain-smaller-than-its-own-error-bar-hero.png", "citation": ["https://arxiv.org/abs/2610.14157", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#mechanism">Mechanism</a>
+    <a href="/blog/">Notes</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker" id="finding">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-11-08">8 November 2026</time>
+    <span>6 min read</span>
+  </div>
+  <h1>OpenMobile-2's reinforcement-learning step moves AndroidWorld accuracy less than its own reported error bar</h1>
+  <p class="standfirst">OpenMobile-2 (arXiv:2610.14157, Nanjing University, SenseTime, and five other institutions, submitted 9 October 2026) trains mobile GUI agents through a staged recipe: a base model, GUI-only supervised fine-tuning, hybrid SFT, then reinforcement learning. On AndroidWorld Pass@1, the one metric in the paper's main results table that carries a reported error bar, the RL stage moves the 9B model from 73.3 plus or minus 1.5% to 74.0 plus or minus 2.9%, and the 27B model from 80.8 plus or minus 3.5% to 79.9 plus or minus 3.0%. Both changes are smaller than the paper's own reported spread.</p>
+
+<p>The paper's 24 authors, led by Chenyang Yan, position OpenMobile-2 as "a near-frontier mobile agent with fully open training environments and recipes," releasing roughly 12,000 SFT trajectories, over 2,000 RL-ready executable tasks with automatic rewards, and a 35-app commercial-style simulator called MobileGym++ alongside the model weights. Its stated advances are open training data at scale and hybrid GUI-plus-tool-call action, not the RL stage specifically, which the paper applies after SFT as the final step in both its 9B and 27B model lines.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/openmobile-2-rl-gain-smaller-than-its-own-error-bar-hero.png" alt="Abstract technical illustration on a dark grid: two horizontal measurement bars with visible bracket-shaped error ranges at each end, the ranges overlapping each other in the middle of the frame, cool blues and slate greys, one amber accent marking the overlap zone, no text or numbers" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="method">The clear gains are on the benchmark the authors built</h2>
+
+<p>Table 2 scores each training stage on eight metrics across four benchmarks: AndroidWorld (Pass@1 and Pass@3), MobileWorld (GUI and MCP variants), MobileGym (success rate SR and progress rate PR), MobileGym++ (GUI and Hybrid), and SPA-Bench L3, a real-device evaluation. Only the AndroidWorld Pass@1 column carries a plus-or-minus spread in the table; none of the other seven columns do. On that one column with a stated margin, RL's effect sits inside its own noise band for both model sizes. On MobileGym success rate, a benchmark inherited and extended by the same team rather than an independent one, RL's effect is unambiguous in direction for the 9B model (35.9% to 38.3%) and for the 27B model (48.4% to 51.2%), though no error bar is reported there to check whether those gaps clear the same kind of noise.</p>
+
+<table>
+  <thead><tr><th>Model, stage</th><th>AndroidWorld Pass@1</th><th>MobileGym SR</th><th>MobileGym PR</th><th>SPA-Bench L3</th></tr></thead>
+  <tbody>
+    <tr><td>9B, Hybrid SFT (before RL)</td><td>73.3% &plusmn;1.5</td><td>35.9%</td><td>52.2%</td><td>48.9%</td></tr>
+    <tr><td>9B, + RL (after RL)</td><td>74.0% &plusmn;2.9</td><td>38.3%</td><td>52.0%</td><td>48.9%</td></tr>
+    <tr><td>27B, Hybrid SFT (before RL)</td><td>80.8% &plusmn;3.5</td><td>48.4%</td><td>64.5%</td><td>57.4%</td></tr>
+    <tr><td>27B, + RL (after RL)</td><td>79.9% &plusmn;3.0</td><td>51.2%</td><td>66.6%</td><td>59.6%</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: OpenMobile-2, arXiv:2610.14157v1, Table 2, Section 5.2, submitted 9 October 2026, read 8 November 2026. Only the AndroidWorld Pass@1 column reports a confidence spread in the source table.</p>
+
+<svg viewBox="0 0 820 400" style="width:100%;height:auto" role="img" aria-label="Bar chart with error bars of AndroidWorld Pass at 1 success rate from OpenMobile-2, arXiv 2610.14157 Table 2. The 9B model moves from 73.3 plus or minus 1.5 percent after hybrid supervised fine-tuning to 74.0 plus or minus 2.9 percent after reinforcement learning. The 27B model moves from 80.8 plus or minus 3.5 percent to 79.9 plus or minus 3.0 percent. In both cases the reinforcement learning step changes the score by less than its own reported error bar, so the change is not distinguishable from run to run noise on this specific metric."><rect x="0" y="0" width="820" height="400" rx="12" fill="#151a24"/><g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="24" font-size="14" font-weight="600">AndroidWorld Pass@1: the RL step moves the score by less than its own error bar</text>
+<line x1="60" y1="280.0" x2="800" y2="280.0" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="283.0" font-size="9.5" text-anchor="end" fill="#8893a8">0%</text>
+<line x1="60" y1="236.4" x2="800" y2="236.4" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="239.4" font-size="9.5" text-anchor="end" fill="#8893a8">20%</text>
+<line x1="60" y1="192.7" x2="800" y2="192.7" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="195.7" font-size="9.5" text-anchor="end" fill="#8893a8">40%</text>
+<line x1="60" y1="149.1" x2="800" y2="149.1" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="152.1" font-size="9.5" text-anchor="end" fill="#8893a8">60%</text>
+<line x1="60" y1="105.5" x2="800" y2="105.5" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="108.5" font-size="9.5" text-anchor="end" fill="#8893a8">80%</text>
+<line x1="60" y1="61.8" x2="800" y2="61.8" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="64.8" font-size="9.5" text-anchor="end" fill="#8893a8">100%</text>
+<rect x="140" y="104.1" width="70" height="175.9" fill="#7a8bd6"/>
+<line x1="175.0" y1="100.5" x2="175.0" y2="107.7" stroke="#e9ecf2" stroke-width="1.5"/>
+<line x1="167.0" y1="100.5" x2="183.0" y2="100.5" stroke="#e9ecf2" stroke-width="1.5"/>
+<line x1="167.0" y1="107.7" x2="183.0" y2="107.7" stroke="#e9ecf2" stroke-width="1.5"/>
+<text x="175.0" y="90.5" font-size="10.5" font-weight="700" text-anchor="middle" fill="#7a8bd6">73.3%</text>
+<text x="175.0" y="320" font-size="10.5" text-anchor="middle" fill="#c4ccda">9B</text>
+<text x="175.0" y="334" font-size="10.5" text-anchor="middle" fill="#c4ccda">Hybrid SFT</text>
+<rect x="260" y="102.4" width="70" height="177.6" fill="#5ad1a0"/>
+<line x1="295.0" y1="95.4" x2="295.0" y2="109.4" stroke="#e9ecf2" stroke-width="1.5"/>
+<line x1="287.0" y1="95.4" x2="303.0" y2="95.4" stroke="#e9ecf2" stroke-width="1.5"/>
+<line x1="287.0" y1="109.4" x2="303.0" y2="109.4" stroke="#e9ecf2" stroke-width="1.5"/>
+<text x="295.0" y="85.4" font-size="10.5" font-weight="700" text-anchor="middle" fill="#5ad1a0">74.0%</text>
+<text x="295.0" y="320" font-size="10.5" text-anchor="middle" fill="#c4ccda">9B</text>
+<text x="295.0" y="334" font-size="10.5" text-anchor="middle" fill="#c4ccda">+RL</text>
+<rect x="460" y="86.1" width="70" height="193.9" fill="#7a8bd6"/>
+<line x1="495.0" y1="77.7" x2="495.0" y2="94.5" stroke="#e9ecf2" stroke-width="1.5"/>
+<line x1="487.0" y1="77.7" x2="503.0" y2="77.7" stroke="#e9ecf2" stroke-width="1.5"/>
+<line x1="487.0" y1="94.5" x2="503.0" y2="94.5" stroke="#e9ecf2" stroke-width="1.5"/>
+<text x="495.0" y="67.7" font-size="10.5" font-weight="700" text-anchor="middle" fill="#7a8bd6">80.8%</text>
+<text x="495.0" y="320" font-size="10.5" text-anchor="middle" fill="#c4ccda">27B</text>
+<text x="495.0" y="334" font-size="10.5" text-anchor="middle" fill="#c4ccda">Hybrid SFT</text>
+<rect x="580" y="88.2" width="70" height="191.8" fill="#5ad1a0"/>
+<line x1="615.0" y1="81.0" x2="615.0" y2="95.4" stroke="#e9ecf2" stroke-width="1.5"/>
+<line x1="607.0" y1="81.0" x2="623.0" y2="81.0" stroke="#e9ecf2" stroke-width="1.5"/>
+<line x1="607.0" y1="95.4" x2="623.0" y2="95.4" stroke="#e9ecf2" stroke-width="1.5"/>
+<text x="615.0" y="71.0" font-size="10.5" font-weight="700" text-anchor="middle" fill="#5ad1a0">79.9%</text>
+<text x="615.0" y="320" font-size="10.5" text-anchor="middle" fill="#c4ccda">27B</text>
+<text x="615.0" y="334" font-size="10.5" text-anchor="middle" fill="#c4ccda">+RL</text>
+<line x1="400" y1="40" x2="400" y2="280" stroke="#2c3344" stroke-width="1" stroke-dasharray="4,4"/>
+<rect x="60" y="358" width="14" height="10" fill="#7a8bd6"/><text x="80" y="367" font-size="9.5" fill="#c4ccda">Hybrid SFT (before RL)</text>
+<rect x="280" y="358" width="14" height="10" fill="#5ad1a0"/><text x="300" y="367" font-size="9.5" fill="#c4ccda">+ RL (after RL)</text>
+<text x="20" y="390" font-size="10" fill="#8893a8">Source: OpenMobile-2, arXiv:2610.14157v1, Table 2, Section 5.2, read 8 November 2026.</text>
+</g></svg>
+
+<h2 id="mechanism">Why the gap lands where it lands</h2>
+
+<p>AndroidWorld is an external benchmark, built by a different team, with 116 tasks across 20 real applications the OpenMobile-2 authors did not design. MobileGym is partly their own: its Appendix describes MobileGym++ as combining "35 applications built in this work" with "28 inherited from MobileGym," the earlier benchmark from the same lineage. A training recipe tends to fit most cleanly to the data and reward signal closest to how it was built, and OpenMobile-2's over 2,000 RL-ready tasks with automatic rewards were constructed inside that same MobileGym++/MobileGym++ environment family, not inside AndroidWorld. That is an ordinary and expected pattern in agent training, not a flaw unique to this paper, but it means the RL stage's clearest measured win lands on the benchmark most similar to its own training distribution, while its effect on the outside benchmark does not clear the paper's own stated measurement noise.</p>
+
+<svg viewBox="0 0 820 230" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting where OpenMobile-2's reinforcement learning stage shows a clear gain against where it does not. On MobileGym, a benchmark environment the same team built and used to construct its RL training tasks, the 9B model's success rate rises from 35.9 to 38.3 percent and the 27B model's rises from 48.4 to 51.2 percent, with no reported error bar to check against. On AndroidWorld, a benchmark built by a separate team with no overlap in its training data, the one metric with a reported error bar shows both model sizes moving by less than that error bar after reinforcement learning.">
+<rect x="0" y="0" width="820" height="230" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Same RL stage, two benchmarks, two different kinds of evidence</text>
+<rect x="20" y="50" width="370" height="155" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="205" y="72" font-size="11.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">MobileGym (same lineage as training)</text>
+<text x="33" y="96" font-size="9.5" fill="#c4ccda">RL tasks built inside MobileGym++/MobileGym</text>
+<text x="33" y="114" font-size="9.5" fill="#c4ccda">9B success rate: 35.9% &#8594; 38.3% after RL</text>
+<text x="33" y="132" font-size="9.5" fill="#c4ccda">27B success rate: 48.4% &#8594; 51.2% after RL</text>
+<text x="33" y="157" font-size="9.5" fill="#8893a8">Direction is consistent across both model sizes,</text>
+<text x="33" y="175" font-size="9.5" fill="#8893a8">but Table 2 reports no error bar on this column</text>
+<rect x="430" y="50" width="370" height="155" rx="8" fill="#262d3d" stroke="#e8a33d"/>
+<text x="615" y="72" font-size="11.5" font-weight="600" text-anchor="middle" fill="#e8a33d">AndroidWorld (separate team, separate data)</text>
+<text x="443" y="96" font-size="9.5" fill="#c4ccda">No overlap with OpenMobile-2's RL task set</text>
+<text x="443" y="114" font-size="9.5" fill="#c4ccda">9B Pass@1: 73.3% &#177;1.5 &#8594; 74.0% &#177;2.9 after RL</text>
+<text x="443" y="132" font-size="9.5" fill="#c4ccda">27B Pass@1: 80.8% &#177;3.5 &#8594; 79.9% &#177;3.0 after RL</text>
+<text x="443" y="157" font-size="9.5" fill="#8893a8">Both changes are smaller than the reported</text>
+<text x="443" y="175" font-size="9.5" fill="#8893a8">spread, on the one metric the spread is given for</text>
+</g></svg>
+
+<h2 id="what-it-means">What it means for reading a staged training recipe</h2>
+
+<p>A paper that reports a confidence interval on one metric and not on seven others is not hiding anything by doing so, every ablation table has to stop somewhere, but a reader evaluating a specific claim ("RL improves AndroidWorld performance") should use the column where uncertainty is actually quantified rather than the columns where a bare point estimate might look more decisive. Here the quantified column is the one that does not clear its own noise, and the larger, cleaner-looking deltas sit on the benchmark closest to the authors' own training environment, where no bar is given to check them against. Neither fact invalidates OpenMobile-2's broader contribution, the released training data and MobileGym++ environment are useful independent of this one metric, but it does mean the specific claim "RL improves AndroidWorld generalization" is not demonstrated by Table 2 as published; the claim "RL improves MobileGym performance" is directionally supported, pending a stated error bar for that column too.</p>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># OpenMobile-2's Table 2, the only column with a stated confidence spread
+open "https://arxiv.org/html/2610.14157v1"
+
+# phoneshell's equivalent discipline: report what was never scored, not just what failed
+grep -n "not scored rather than counted as failures" site/blog/*/index.html | head -1</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim Table 2 of arXiv:2610.14157v1 reports AndroidWorld Pass@1 for the 9B model at 73.3% &plusmn;1.5 before RL and 74.0% &plusmn;2.9 after, for the 27B model at 80.8% &plusmn;3.5 before RL and 79.9% &plusmn;3.0 after, and MobileGym success rate rising from 35.9% to 38.3% (9B) and 48.4% to 51.2% (27B) over the same stage, all checkable directly against the cited arXiv v1 HTML. This should be revisited if a later revision of the paper adds error bars to the MobileGym columns and those gaps also sit inside the noise, or if an independent reproduction reports an AndroidWorld gain from the same RL recipe that clears a properly measured confidence interval, by 30 June 2027.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Chenyang Yan et al. (24 authors), <a href="https://arxiv.org/abs/2610.14157">OpenMobile-2: Building Versatile Mobile Agents with Scalable Environments and App-Native Tools</a>, arXiv:2610.14157v1, submitted 9 October 2026, read 8 November 2026.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: not-scored vs failed task reporting convention, read 8 November 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
