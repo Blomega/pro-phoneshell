@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AnTrap set out to prove GUI agents are universally vulnerable to runtime anomalies; its own coordinate-offset trap raised three of fourteen models' scores - Blolabel</title>
+<meta name="description" content="AnTrap (arXiv:2608.24099, 25 August 2026) injects 10 categories of runtime anomaly into 236 AndroidWorld-based tasks and reports universal vulnerability across 16 models. Under its Grounding Error trap, which overrides executed tap coordinates away from the intended target, 3 of 14 tabulated models score higher than on the unperturbed task set, while the worst-hit model drops 11.9 points.">
+<link rel="canonical" href="https://blolabel.ai/blog/antrap-grounding-trap-raises-three-of-fourteen-scores/">
+<meta property="og:title" content="AnTrap set out to prove GUI agents are universally vulnerable to runtime anomalies; its own coordinate-offset trap raised three of fourteen models' scores - Blolabel">
+<meta property="og:description" content="AnTrap's abstract claims universal vulnerability to runtime anomalies. Its own Table 3 shows 3 of 14 models score higher under the Grounding Error trap, which overrides executed tap coordinates, than on the unperturbed tasks.">
+<meta property="og:url" content="https://blolabel.ai/blog/antrap-grounding-trap-raises-three-of-fourteen-scores/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/antrap-grounding-trap-raises-three-of-fourteen-scores-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "AnTrap set out to prove GUI agents are universally vulnerable to runtime anomalies; its own coordinate-offset trap raised three of fourteen models' scores", "description": "AnTrap (arXiv:2608.24099, submitted 25 August 2026, Guo Gan et al.) builds a four-layer, ten-subcategory taxonomy of runtime anomalies on top of 236 AndroidWorld-based tasks (116 original, augmented), and evaluates 16 GUI agent models, reporting in its abstract universal vulnerability to dynamic anomalies. Its Table 3 reports success rates under each trap subcategory; under Grounding Error, defined in Section 3.3 as the harness intercepting the agent's output to override executed coordinates away from the intended target while leaving the agent's recorded intent unchanged, 3 of the 14 models with a tabulated score (GUI-Owl-1.5-8B-Instruct, GUI-Owl-1.5-8B-Think, Qwen3-VL-8B-Thinking) score higher than on the unperturbed task set, while the largest drop (UI-TARS-1.5-7B, -11.9 points) and smaller drops across most other models still support the paper's broader claim across its ten anomaly subcategories.", "datePublished": "2026-11-09", "dateModified": "2026-11-09", "url": "https://blolabel.ai/blog/antrap-grounding-trap-raises-three-of-fourteen-scores/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/antrap-grounding-trap-raises-three-of-fourteen-scores/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/antrap-grounding-trap-raises-three-of-fourteen-scores-hero.png", "citation": ["https://arxiv.org/abs/2608.24099", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAABOCAMAAAD4iTj8AAAAilBMVEVMaXFiXmJhXmEVieRkYGRiXmJiXmJEaZJiX2IWjehNaIJhXmEUjOcVjOdgXWBjX2MWjecUjOZiXmJiXmIUi+UVjehUoN7w9/33+/7q9Pzg7/p8gIlkYGQXjuj///9oZGgWk/JmY2YVjullYWUJh+dtaG0olumr1/dSq+7T6vo6n+tntfCMx/N7vvJEi25LAAAAHHRSTlMAakku/HusA/z7Eo+hwDL30nXizUnjHfvKolE8aPCOgAAAAAlwSFlzAAALEgAACxIB0t1+/AAAB35JREFUeJztmn1zsjoThwMCCaCg4EvbASFA1bZ3v//XO7MJeQFBwJ55nnNP85v+oSYB9mJ3k2yKkJGRkZGRkZGRkZGRkZGRkZGRkdHPhZXQ7xPuGH2P4Gk4P8L6P3slGCOEV7vderNZr3f7I/yEfpEwQqvd1i+FDpt90PWCwBKyF147kiOjxc8VzborvtdI++gV0Grtl2XuC1Vledhh5QQY2e8F17u3yASMQjnSXehVGFnaXReOxUvug3c+WJ9LMQbblbwpRnYdO6CYLgZA25HFEwAKddfxscdVX0eIaPnw6ueR2xw3ZaVZLxiU/k7cFSObkgzkFIsBFE478hkAYuw4AIzWld/TYbvetw6M0Ur69XZ4/GpbCvOrBiQQ5KUgMAeACjM95voAxoJxKH5nAyh7r6+qyrLacAcGAK095RAAjI7K/uZy+/q6fVYtAt8XBKYB6I89wwPu0tTQtZ4GkEMMl/4exkwBQHijhv85nUEfN+kELYFJABjhyA09L7QxQpEtFPQAoMCCTlakJVhucWDDcM9zoU363dMAcnj2A5/NHwLojL6ehb6ED1Q+c6QpABjZqUMhXdM0QuG7Q5lY3tcB2AnvFHuRPsUg24spaykojVMLuP0YQO6Xa3gxDwFgtJfpr/mW9p9Pl0oM2szwAIzcmhLiOA4hNI7CIiYgh3YAvFu2Q6ET62WpBBt4tMjYcN5WJHbrd0sB+FwiFRyC6RDQAuBDATh/d4PgMQAwkvDmLCM09age9QIAqcOklr1I0RLAKErUaDaM1DVLF8sBlEzSBao9ZJcHADDaqwT4qdl/vioA26kQYI3KAuKIL10AGXEcrReJWRSA/e2llYjD8CwHsGbypfvuJgEoB2huOoAPLZIYxocekN6ZMASgZ2R7IZwWyi3kpwzwLAewZ9j2/kwA0NbCyvPmSwcgkwBPJY8AqDb++p0HACDO5eestVFaXVMVImDxYgAVvCssX+sMADuVAUYBQCp5DMBTNlBKVUDfASAFLSQsUoRglPQeSB7KlQiBCHnGAxAKtjyz+9VqCsB6GgC/zKMQCGRuI5ln2558jf0cQJzQtmQzoSnGKIrl1xAj7EkcbOziHLADbVr72/T1aBbQ5oCxHNDOA6MAwAb5/l0gHgoj+gAoS/yyOUsCJCPAoSm7Wtrycdj257lZoOT255C9HgPABwWgupyGZoEZAOz2mUmdsCJCkAx6AKlTFqCyOcsiwNG20jACuVS72E/WAX6Vs1XsQwCBBiBv1ELwfL4tASAs5E+J0cg6gMe8aia1jZDyeS4REVkWPwFAU3XgCWECgLYNbj5PQw4wDUA9Zbt86W5/epsh3SUYgMFJEgBEPwKQ+5s9b57vAdpa+PT5/wDAl8Liy1Me4OtL4bJcT4UAVjthRuDPgP0DADrFNz0EpI+TIQBUNHcBCJ+vO8qeygGlvhb22yXM3FmgyS/N7eN0Pl0vzacqi8zIATJvpcAGYTEt9gC0zWrW5ElQTBlx0pX3xEpww5bCG7+NbLaKnbcOaKrb9eP01TSXz7zJr+ePP5+NXFHvdStpGukKkDaV1xZbvo1Ng5kNzSLPizQnr4uDIMBRFADDIAiCpxdCaN8ucPmGeM5KsLnxreD1dskv3+3nC3eC6nDsLHdJrKm2tIUQyWI3ilyxLLgHEFtRFIooh2kRoSiTCyHobMdJ6rk2cH1mN7jn4Sl/YRviGXsBEfwQ/yc5F3ywVOCXG30v0BVf26ipLCvieHwpTDIaO3LjyI3CqSKQul6cZVAYIUnq/cADkAhteHkdAHdnB6xnZwVw7q0G2h3FMACHAZA+DzYKe4Y3Q5DepQfwiNA2QwXAg8pIRuD44QkAGGLnuBOze+VrAPLK32o6MLugHqCXgro6XRqfQXzsAVpa6+K58wB9KIsAfSeRqXoBrxYsB3DgkiWRTgjkeVXq4gvFbakvgPq6Nv2K0AAAfUvLHl5Y2s8BtV42IZTVvTCyZQHl5wWRiksuCyB8NQDq6AuqxtywfaklgHt9VlvIR489AGHvXQuCRG5ougBqL5FOQMh7KJ7fqnUyjCBLiM8URX2tJNifBrtqC94wWq8F9vXdtMV1u26Llh3BLMB24F4BRVD2V9iuPNByO0djllU4bSen8LRjtwRqolKZXhSdPhrDY1Vh5gBTAKB68MD+81WeC4hjyq7eRWnTjYuC1jUtYqt3HKp/c+Oihk40sXQLAjehBaV1VlNoC1VZfMbhKB4GAE6+CaYBYHQcTwHn86u4beQOq63vYxRYXpokaRghZHda9W8oCqGTJyr/wgQU2CEMT1IvtNlT89/VXcePxzEAuFdV+uugezbYlTr1ehsn8DL7NJPBDAJ5qjPai3e6O0Djw1nToqNtxADcy9+u5dngQLOcBTiBl/H3r53mDUtrFw/fbez0lT/dmdH+1G2a8+81GO22m67Wu91K+BFGq82gttrZ9/F1yPzTG/qbhZf4Eb53gtMrbAH+DuHH/yQz4bttp7eXU8/8v8b+f0Ng6/Ht9YXp9fWN589fJTzx/TcIyw+/0XojIyMjIyMjIyMjIyMjIyP0n9Y/P2/lF8zxuoMAAAAASUVORK5CYII=" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#mechanism">Mechanism</a>
+    <a href="/blog/">Notes</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker" id="finding">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-11-09">9 November 2026</time>
+    <span>7 min read</span>
+  </div>
+  <h1>AnTrap set out to prove GUI agents are universally vulnerable to runtime anomalies; its own coordinate-offset trap raised three of fourteen models' scores</h1>
+  <p class="standfirst">AnTrap (arXiv:2608.24099, submitted 25 August 2026) injects ten categories of runtime anomaly into 236 AndroidWorld-based tasks across 16 GUI agent models and reports, in its abstract, “universal vulnerability to dynamic anomalies.” Its own Table 3 shows that under Grounding Error, the one trap that most directly resembles a vision-grounding failure, three of the fourteen models with a tabulated score do not drop at all. They score higher than on the unperturbed task set.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/antrap-grounding-trap-raises-three-of-fourteen-scores-hero.png" alt="Abstract technical illustration on a dark background: a cluster of small glowing dots at slightly varying heights around a shared baseline, most dipping slightly below the line and a few rising slightly above it, with one dot connected by a thin offset arrow to a faint ghost position beside it, cool blues and slate greys, one amber accent on the displaced dot, no text, no icons" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="method">Ten ways to break an agent, one of which moves the tap itself</h2>
+
+<p>AnTrap, full name "AnTrap: Evaluating Agents in Dynamic Adversarial Environments," comes from Guo Gan, Yilun Zhao, Cong Chen, Jinbiao Wei, Tingyu Song, Zheyuan Yang, Lin Fu, and Hong Zhou, across Zhejiang University, Yale University, the University of Chinese Academy of Sciences, and Tongji University. Posted to arXiv on 25 August 2026, it builds a four-layer taxonomy, State, Thinking, Action, and Round, with ten subcategories: External Interruption and Visual Obscuration at the State layer; Temporal Conflict and Visual Hallucination at Thinking; Grounding Error, Type Mismatch, and Intent Deviation at Action; and State Deadlock, Context Disruption, and Loop at Round. The benchmark augments AndroidWorld's original 116 tasks to 236, scores agents with a rule-based success metric at Pass@3, and reports that a validated sample finds 91% of tasks satisfy its construction criteria. It evaluates 16 models from 7 organizations and concludes, in its abstract, that there is "universal vulnerability to dynamic anomalies" across them, though it also finds that "single-step traps at the state and action layers are largely addressable," while "deep contextual traps, like state deadlock," are not.</p>
+
+<p>Grounding Error, the Action-layer trap, is built differently from most of the others: Section 3.3 states that the harness intercepts the agent's output "to dynamically override coordinates or action types before execution," so the tap the agent intended to make at its chosen target is redirected to a different point on the screen, while the model's own reasoning trace is left untouched. That makes it the one trap in the taxonomy that most directly resembles a real vision-grounding failure, where an agent correctly identifies an element but fails to place the tap accurately. Table 3 reports success rates under this trap for 14 of the 16 models (the two GPT-5.4 variants are excluded, per the paper's appendix, because their inference mode does not carry a grounding requirement). Three of those fourteen score higher under the trap than on the unperturbed task set.</p>
+
+<table>
+  <thead><tr><th>Model</th><th>Unperturbed success</th><th>Under Grounding Error trap</th><th>Change</th></tr></thead>
+  <tbody>
+    <tr><td>Human Annotator</td><td>94.1%</td><td>94.1%</td><td>0.0</td></tr>
+    <tr><td>Claude-Sonnet-4.6</td><td>74.2%</td><td>69.9%</td><td>&minus;4.3</td></tr>
+    <tr><td>Gemini-3-Pro</td><td>72.9%</td><td>68.6%</td><td>&minus;4.3</td></tr>
+    <tr><td>GUI-Owl-1.5-32B-Instruct</td><td>68.2%</td><td>63.1%</td><td>&minus;5.1</td></tr>
+    <tr><td>GUI-Owl-1.5-8B-Instruct</td><td>64.8%</td><td>65.7%</td><td>+0.9</td></tr>
+    <tr><td>GUI-Owl-1.5-8B-Think</td><td>66.1%</td><td>67.4%</td><td>+1.3</td></tr>
+    <tr><td>Qwen3-VL-8B-Thinking</td><td>62.7%</td><td>64.4%</td><td>+1.7</td></tr>
+    <tr><td>UI-TARS-1.5-7B</td><td>29.7%</td><td>17.8%</td><td>&minus;11.9</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: AnTrap, arXiv:2608.24099v1, Table 3, Section 3.3, submitted 25 August 2026, read 9 November 2026. Human Annotator's identical score in both columns reflects the paper's reference row; the text available does not state whether the human baseline was independently re-measured under this specific trap.</p>
+
+<h2 id="mechanism">An injected offset, not a measured natural failure</h2>
+
+<p>It matters that Grounding Error is constructed by overriding the executed action, not by observing where a model's own grounding goes wrong on its own. The trap changes only the coordinate that gets sent to the device; the model's stated target and reasoning are left exactly as it produced them. By that construction, every model facing this trap is, in effect, being tested on how much a single mis-executed tap costs its overall task success, not on whether it can locate elements correctly in the first place. The paper's companion result (Table 4) trains two models with GRPO directly against the trap set: UI-TARS-7B rises from a 17.8% base to 25.4% after trap-aware training, a 7.6-point gain the authors mark as a genuine, learnable improvement. That a model can be trained to recover from this specific injected offset is some evidence the trap carries a real, consistent signal; it does not explain why three untrained models would score higher under it than without it.</p>
+
+<svg viewBox="0 0 820 280" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting how AnTrap constructs its Grounding Error trap with what it actually measures. The harness intercepts the agent's chosen action and overrides the executed coordinates away from the intended target, leaving the agent's own reasoning trace unchanged, then executes the altered tap on the device. Across 14 tabulated models this produces a range of outcomes from a 11.9 point drop to a 1.7 point rise, which the diagram marks as inconsistent with the paper's abstract claim of universal vulnerability for this specific trap, while still occurring within a benchmark whose other nine anomaly subcategories may show more uniform degradation.">
+<rect x="0" y="0" width="820" height="280" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">How the Grounding Error trap is built, and what it actually produced across 14 models</text>
+<rect x="20" y="50" width="370" height="190" rx="8" fill="#262d3d" stroke="#e8a33d"/>
+<text x="205" y="72" font-size="11.5" font-weight="600" text-anchor="middle" fill="#e8a33d">How the trap is built (Section 3.3)</text>
+<text x="33" y="96" font-size="9.5" fill="#c4ccda">Agent chooses a target and a tap coordinate</text>
+<text x="33" y="114" font-size="9.5" fill="#c4ccda">&#8594; harness intercepts the output</text>
+<text x="33" y="132" font-size="9.5" fill="#c4ccda">&#8594; coordinates are overridden before execution</text>
+<text x="33" y="150" font-size="9.5" fill="#c4ccda">&#8594; the altered tap lands on the real device</text>
+<text x="33" y="175" font-size="9.5" fill="#8893a8">The agent's own reasoning trace and stated</text>
+<text x="33" y="193" font-size="9.5" fill="#8893a8">target are left unchanged; only the executed</text>
+<text x="33" y="211" font-size="9.5" fill="#8893a8">pixel moves.</text>
+<rect x="430" y="50" width="370" height="190" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="615" y="72" font-size="11.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">What Table 3 actually shows</text>
+<text x="443" y="96" font-size="9.5" fill="#c4ccda">11 of 14 models score lower under the trap</text>
+<text x="443" y="114" font-size="9.5" fill="#c4ccda">(range: &minus;0.9 to &minus;11.9 points)</text>
+<text x="443" y="140" font-size="9.5" fill="#c4ccda">3 of 14 models score higher under the trap</text>
+<text x="443" y="158" font-size="9.5" fill="#c4ccda">(GUI-Owl-1.5-8B-Instruct +0.9, GUI-Owl-1.5-8B-Think</text>
+<text x="443" y="176" font-size="9.5" fill="#c4ccda">+1.3, Qwen3-VL-8B-Thinking +1.7)</text>
+<text x="443" y="202" font-size="9.5" fill="#8893a8">This one trap's own result does not match the</text>
+<text x="443" y="220" font-size="9.5" fill="#8893a8">abstract's "universal vulnerability" framing.</text>
+</g></svg>
+
+<h2 id="spread">The spread across models, laid out side by side</h2>
+
+<p>Laid out model by model, the direction of the change under the Grounding Error trap is not predicted by how strong a model is unperturbed. The two highest-scoring models in this table, Claude-Sonnet-4.6 and Gemini-3-Pro, both drop by exactly 4.3 points. The weakest model in the table, UI-TARS-1.5-7B, takes by far the largest hit, -11.9 points. In between, three mid-tier models gain rather than lose.</p>
+
+<svg viewBox="0 0 820 320" style="width:100%;height:auto" role="img" aria-label="Paired bar chart of unperturbed success rate against success rate under AnTrap's Grounding Error trap for 7 models (excluding the human-annotator reference row) from Table 3 of arXiv:2608.24099. Claude-Sonnet-4.6 falls from 74.2 to 69.9 percent. Gemini-3-Pro falls from 72.9 to 68.6 percent. GUI-Owl-1.5-32B-Instruct falls from 68.2 to 63.1 percent. GUI-Owl-1.5-8B-Instruct rises from 64.8 to 65.7 percent. GUI-Owl-1.5-8B-Think rises from 66.1 to 67.4 percent. Qwen3-VL-8B-Thinking rises from 62.7 to 64.4 percent. UI-TARS-1.5-7B falls from 29.7 to 17.8 percent, the largest drop in the set.">
+<rect x="0" y="0" width="820" height="320" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="22" font-size="13" font-weight="600">Unperturbed vs. under Grounding Error, 7 of the 8 tabulated models (Table 3)</text>
+<line x1="60" y1="270" x2="800" y2="270" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="273" font-size="9" text-anchor="end" fill="#8893a8">0%</text>
+<line x1="60" y1="102" x2="800" y2="102" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="105" font-size="9" text-anchor="end" fill="#8893a8">80%</text>
+<rect x="90" y="96.9" width="20" height="173.1" fill="#7a8bd6"/>
+<rect x="114" y="106.9" width="20" height="163.1" fill="#e8a33d"/>
+<text x="112" y="90.9" font-size="8.3" text-anchor="middle" fill="#c4ccda">Claude 74.2&#8594;69.9</text>
+<rect x="180" y="99.9" width="20" height="170.1" fill="#7a8bd6"/>
+<rect x="204" y="109.9" width="20" height="160.1" fill="#e8a33d"/>
+<text x="202" y="93.9" font-size="8.3" text-anchor="middle" fill="#c4ccda">Gemini 72.9&#8594;68.6</text>
+<rect x="270" y="110.9" width="20" height="159.1" fill="#7a8bd6"/>
+<rect x="294" y="122.8" width="20" height="147.2" fill="#e8a33d"/>
+<text x="292" y="104.9" font-size="8.3" text-anchor="middle" fill="#c4ccda">Owl-32B-I 68.2&#8594;63.1</text>
+<rect x="360" y="118.8" width="20" height="151.2" fill="#7a8bd6"/>
+<rect x="384" y="116.7" width="20" height="153.3" fill="#5ad1a0"/>
+<text x="382" y="110.7" font-size="8.3" text-anchor="middle" fill="#c4ccda">Owl-8B-I 64.8&#8594;65.7</text>
+<rect x="450" y="115.8" width="20" height="154.2" fill="#7a8bd6"/>
+<rect x="474" y="112.7" width="20" height="157.3" fill="#5ad1a0"/>
+<text x="472" y="106.7" font-size="8.3" text-anchor="middle" fill="#c4ccda">Owl-8B-T 66.1&#8594;67.4</text>
+<rect x="540" y="123.7" width="20" height="146.3" fill="#7a8bd6"/>
+<rect x="564" y="119.7" width="20" height="150.3" fill="#5ad1a0"/>
+<text x="562" y="113.7" font-size="8.3" text-anchor="middle" fill="#c4ccda">Qwen3-T 62.7&#8594;64.4</text>
+<rect x="630" y="200.7" width="20" height="69.3" fill="#7a8bd6"/>
+<rect x="654" y="228.5" width="20" height="41.5" fill="#e8a33d"/>
+<text x="652" y="194.7" font-size="8.3" text-anchor="middle" fill="#c4ccda">UI-TARS 29.7&#8594;17.8</text>
+<rect x="60" y="295" width="14" height="10" fill="#7a8bd6"/><text x="80" y="304" font-size="9.5" fill="#c4ccda">Unperturbed</text>
+<rect x="180" y="295" width="14" height="10" fill="#e8a33d"/><text x="200" y="304" font-size="9.5" fill="#c4ccda">Under trap, lower</text>
+<rect x="330" y="295" width="14" height="10" fill="#5ad1a0"/><text x="350" y="304" font-size="9.5" fill="#c4ccda">Under trap, higher</text>
+<text x="500" y="304" font-size="9.5" fill="#8893a8">Source: arXiv:2608.24099v1, Table 3, read 9 November 2026.</text>
+</g></svg>
+
+<h2 id="what-it-means">What it means for a "universal vulnerability" claim</h2>
+
+<p>An abstract-level claim averaged across ten very different anomaly subcategories, spanning four layers from a dropped notification to a multi-turn state deadlock, can be true in aggregate while any one subcategory behaves inconsistently model to model. That is what AnTrap's own Table 3 shows for Grounding Error specifically: most models lose a few points, one loses nearly twelve, and three gain slightly. With 236 tasks split across ten subcategories and a Pass@3 metric, the per-category sample sizes are not stated in the sections available, so small-sample noise remains a plausible explanation for the three increases, one the paper itself does not address since it reports success rates without confidence intervals at the subcategory level. What the data does rule out is treating "universal vulnerability to dynamic anomalies" as meaning every model degrades under every trap; for this trap, a quarter of the tabulated models did not.</p>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># Table 3's full model-by-trap breakdown, including the Grounding Error column
+open "https://arxiv.org/html/2608.24099"
+
+# Section 3.3's description of how the harness overrides executed coordinates
+open "https://arxiv.org/abs/2608.24099"
+
+# phoneshell never injects a synthetic coordinate offset; every tap is read back from device state
+grep -n "Where a check can be made against real device state" phoneshell/bench/verify.py</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim that AnTrap's Table 3 (arXiv:2608.24099v1) reports Claude-Sonnet-4.6 dropping from 74.2% to 69.9% and UI-TARS-1.5-7B dropping from 29.7% to 17.8% under the Grounding Error trap, while GUI-Owl-1.5-8B-Instruct rises from 64.8% to 65.7%, GUI-Owl-1.5-8B-Think rises from 66.1% to 67.4%, and Qwen3-VL-8B-Thinking rises from 62.7% to 64.4%, all checkable directly against the cited arXiv v1 HTML. This should be revisited if the authors or a replication publish per-subcategory task counts large enough to rule out sampling noise and the three increases persist outside the margin, confirming a genuine robustness effect, or if revised or larger-scale data shows the increases disappear, confirming they were noise, by 31 December 2027.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Guo Gan, Yilun Zhao, Cong Chen, Jinbiao Wei, Tingyu Song, Zheyuan Yang, Lin Fu, Hong Zhou, <a href="https://arxiv.org/abs/2608.24099">AnTrap: Evaluating Agents in Dynamic Adversarial Environments</a>, arXiv:2608.24099v1, submitted 25 August 2026, read 9 November 2026.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/bench/verify.py</code>, read 9 November 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
