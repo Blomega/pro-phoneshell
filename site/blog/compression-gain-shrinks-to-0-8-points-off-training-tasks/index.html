@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A screenshot-compression agent's 4.8-point gain over baseline is mostly 74 memorized tasks; held out, it is 0.8 points, not significant - Blolabel</title>
+<meta name="description" content=""Screenshots or Tools?" (arXiv:2608.03327, last revised 6 August 2026) reports a retrained, screenshot-compressed GUI-MCP agent reaching 37.8% on OSWorld-MCP's 309 tasks against a 33.0% base, at 53% of the input token cost. Section 5.3 attributes about 4.1 of those 4.8 points to the 74 tasks the checkpoint trained on. On the other 235 tasks, the gain is 0.8 points, which the authors label not significant.">
+<link rel="canonical" href="https://blolabel.ai/blog/compression-gain-shrinks-to-0-8-points-off-training-tasks/">
+<meta property="og:title" content="A screenshot-compression agent's 4.8-point gain over baseline is mostly 74 memorized tasks; held out, it is 0.8 points, not significant - Blolabel">
+<meta property="og:description" content="The paper's own Section 5.3 splits its headline 37.8% vs 33.0% result: about 4.1 points of the 4.8-point gain comes from 74 training tasks the compressed checkpoint had seen. Held out, on 235 tasks it never trained on, the gain is 0.8 points, not significant.">
+<meta property="og:url" content="https://blolabel.ai/blog/compression-gain-shrinks-to-0-8-points-off-training-tasks/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/compression-gain-shrinks-to-0-8-points-off-training-tasks-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "A screenshot-compression agent's 4.8-point gain over baseline is mostly 74 memorized tasks; held out, it is 0.8 points, not significant", "description": ""Screenshots or Tools? Eliciting Tool Use and Managing Multimodal Context in Hybrid GUI-MCP Computer-Use Agents" (arXiv:2608.03327, submitted 4 August 2026, revised 6 August 2026) tests a hybrid GUI-plus-MCP-tool computer-use agent on the 309-task OSWorld-MCP suite. Section 4.2 shows that compressing screenshot history (window-depth limiting plus dropping a frame after a successful tool call) costs -3.9 percentage points at inference time on an already-trained policy, while cutting cumulative input tokens by about a third. Section 5.3 shows that retraining the policy under the same compressed observation rule removes that cost and, at one checkpoint, reaches 37.8% against a 33.0% same-period base anchor, at 53% of the input cost. The same section attributes about 4.1 of the resulting 4.8-point gain to the 74 tasks that checkpoint was trained on; on the 235 tasks it never trained on, the gain is +0.8 percentage points, which the authors label not significant.", "datePublished": "2026-11-09", "dateModified": "2026-11-09", "url": "https://blolabel.ai/blog/compression-gain-shrinks-to-0-8-points-off-training-tasks/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/compression-gain-shrinks-to-0-8-points-off-training-tasks/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/compression-gain-shrinks-to-0-8-points-off-training-tasks-hero.png", "citation": ["https://arxiv.org/abs/2608.03327", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#mechanism">Mechanism</a>
+    <a href="/blog/">Notes</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker" id="finding">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-11-09">9 November 2026</time>
+    <span>7 min read</span>
+  </div>
+  <h1>A screenshot-compression agent's 4.8-point gain over baseline is mostly 74 memorized tasks; held out, it is 0.8 points, not significant</h1>
+  <p class="standfirst">“Screenshots or Tools? Eliciting Tool Use and Managing Multimodal Context in Hybrid GUI-MCP Computer-Use Agents” (arXiv:2608.03327, last revised 6 August 2026) reports a compressed computer-use agent reaching 37.8% on the 309-task OSWorld-MCP suite, against 33.0% for an uncompressed baseline, at 53% of the input token cost. The paper's own Section 5.3 attributes about 4.1 percentage points of that 4.8-point gain to 74 tasks the compressed checkpoint was trained on. On the 235 tasks it never saw during training, the gain is +0.8 percentage points, a result the authors themselves label not significant.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/compression-gain-shrinks-to-0-8-points-off-training-tasks-hero.png" alt="Abstract technical illustration on a dark background: a single rising curve made of a solid line for most of its length and a dashed, lower-opacity segment for its final third, representing a gain that thins out, next to a small cluster of translucent squares where most are one color and a minority are a contrasting color, cool blues and slate greys, one amber accent, no text, no icons" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="method">Two separate claims, one about tools and one about compression</h2>
+
+<p>The paper, by Siqi Fan, Minghao Li, Xiaoqian Ma, Wenhui Tan, Xiusheng Huang, Juntong Wu, Liujie Zhang, Shuo Shang, and Weihang Chen, with authors from UESTC, Xiaohongshu, Renmin University of China, and Peking University, tests a hybrid agent that can both tap the screen and call MCP tools, under one identical harness, on OSWorld-MCP's 309-task suite. Its first finding, under Section 3.1's static grid (Table 2), is that the same MCP tools help one backbone and hurt another: a reasoning model (Qwen3-VL-8B-Thinking) improves by +4.0 percentage points when given tools (30.5% to 34.5%), while a non-reasoning model (Qwen3-VL-8B-Instruct) drops by 5.9 points (25.4% to 19.5%), both over 5 runs and beyond 2 standard errors.</p>
+
+<p>Its second finding is about screenshot history. The Thinking model's tool-using agent keeps a window of the last several screenshots in context; a successful tool call often makes the next screenshot redundant, since the result is already in the text trace. Table 2 shows what happens when that window is simply narrowed and a redundant frame dropped, at inference time, on a policy that was trained with a wider window: accuracy falls from 34.5% to 30.6%, a cost of 3.9 points, while cumulative input tokens drop from 337.1K to 219.5K, about a third. Section 4.2 names the likely cause: "mis-adaptation, not incapability," because "the policy is asked to act on an observation distribution it never saw during training."</p>
+
+<p>Section 5.3 then retrains the policy under that same compressed observation rule from the start. At one checkpoint (step 40), the retrained, compressed agent reaches 37.8% on the full 309-task suite, against a 33.0% same-period base anchor, at 53% of the input cost and a 37% lower peak context. That 33.0% anchor is a separate baseline from the 34.5% uncompressed row in Table 2; the two numbers come from different points in the paper and should not be read as the same measurement. Taken at face value, 37.8% vs 33.0% looks like proof that compression, once trained for, pays for itself twice over: lower cost and higher accuracy. The paper's own next sentence says otherwise. It attributes "~4.1pp of that margin" to the 74 tasks inside the 309 that were part of the checkpoint's own training set, reading the full-suite number "as in-distribution." On the 235 tasks the checkpoint never trained on, the held-out gain is "+0.8pp, n.s." (not significant).</p>
+
+<table>
+  <thead><tr><th>Configuration</th><th>Accuracy</th><th>Cumulative input tokens</th><th>What it measures</th></tr></thead>
+  <tbody>
+    <tr><td>GUI only (Thinking model)</td><td>30.5%</td><td>313.1K</td><td>No MCP tools at all</td></tr>
+    <tr><td>win-4, GUI+MCP (RL operating point)</td><td>34.5%</td><td>337.1K</td><td>Full screenshot window, trained with tools</td></tr>
+    <tr><td>win-2 ++ drop, inference-only (ctx_opt)</td><td>30.6%</td><td>219.5K</td><td>Same win-4 policy, compressed only at inference: -3.9pp</td></tr>
+    <tr><td>Retrained step-40 checkpoint, full suite</td><td>37.8%</td><td>not reported separately (53% of base input cost)</td><td>Compressed policy, retrained from scratch under the compressed rule</td></tr>
+    <tr><td>Same-period uncompressed base anchor</td><td>33.0%</td><td>not reported</td><td>Separate baseline the 37.8% is compared against</td></tr>
+    <tr><td>Held-out gain, 235 non-training tasks</td><td>+0.8pp</td><td>not reported</td><td>"n.s." (not significant), per the authors</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: "Screenshots or Tools? Eliciting Tool Use and Managing Multimodal Context in Hybrid GUI-MCP Computer-Use Agents," arXiv:2608.03327v2, Table 2 (Section 3.1) and Section 5.3, last revised 6 August 2026, read 9 November 2026.</p>
+
+<h2 id="mechanism">The drop rule, and why it is nearly free on paper but not in the headline number</h2>
+
+<p>The compression mechanism itself is simple and the paper is explicit that it is not a learned redundancy detector. A window of depth k keeps only the last k screenshots; a "drop" rule additionally replaces a frame with a short text placeholder whenever the immediately preceding MCP call returned "execution-level success," meaning it parsed, dispatched, and returned without error, regardless of whether the call was semantically correct. Section 4.2 concedes the scope problem directly: a find-and-replace tool "can return success with zero replacements," which the drop rule would still treat as a reason to discard the screenshot. The token-efficient configuration the paper calls ctx_opt is window-2 plus drop, and Section 4.1 reports it as "nearly free in accuracy" relative to window-4 when both are trained together, because "it removes a frame whose tool result is already in text." That accuracy-preserving version of the rule is the trained one, not the inference-only retrofit, which is the version that actually lost 3.9 points in Table 2.</p>
+
+<svg viewBox="0 0 820 300" style="width:100%;height:auto" role="img" aria-label="Diagram splitting the paper's headline 4.8 percentage point gain, 37.8% minus 33.0%, into two parts per its own Section 5.3: about 4.1 percentage points attributed to 74 tasks inside the 309-task suite that the compressed checkpoint was trained on, and 0.8 percentage points, labeled not significant by the authors, measured on the 235 tasks the checkpoint never trained on.">
+<rect x="0" y="0" width="820" height="300" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="14" font-weight="600">Section 5.3's own split of the 4.8-point headline gain (37.8% vs 33.0%)</text>
+<rect x="60" y="60" width="700" height="60" rx="8" fill="#262d3d" stroke="#8893a8"/>
+<text x="410" y="95" font-size="12" text-anchor="middle" fill="#c4ccda">Full 309-task suite: 37.8% vs 33.0% &#8594; a 4.8-point gain</text>
+<rect x="60" y="150" width="590" height="60" rx="8" fill="#262d3d" stroke="#e8a33d"/>
+<text x="355" y="178" font-size="11" text-anchor="middle" fill="#e8a33d">~4.1 points: the 74 training tasks the checkpoint had already seen</text>
+<text x="355" y="196" font-size="9.5" text-anchor="middle" fill="#8893a8">"the full-suite number is read as in-distribution" (Section 5.3)</text>
+<rect x="660" y="150" width="100" height="60" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="710" y="178" font-size="11" font-weight="600" text-anchor="middle" fill="#5ad1a0">+0.8pp</text>
+<text x="710" y="195" font-size="9" text-anchor="middle" fill="#8893a8">held out, "n.s."</text>
+<text x="20" y="250" font-size="9.5" fill="#8893a8">Held-out gain measured on the 235 of 309 tasks never used in training this checkpoint.</text>
+<text x="20" y="266" font-size="10" fill="#8893a8">Source: arXiv:2608.03327v2, Section 5.3, read 9 November 2026.</text>
+</g></svg>
+
+<h2 id="tradeoff">The inference-only tradeoff, before any retraining happens</h2>
+
+<p>Table 2's static grid isolates the inference-only tradeoff cleanly, without the training-task question attached. Holding the Thinking model's policy fixed, narrowing its screenshot window and dropping redundant frames moves it along one line: fewer tokens, lower accuracy. The policy was never shown this narrower observation distribution during training, so it pays a measurable cost to receive less context at test time, exactly as Section 4.2's "mis-adaptation" explanation predicts.</p>
+
+<svg viewBox="0 0 820 300" style="width:100%;height:auto" role="img" aria-label="Chart plotting accuracy against cumulative input tokens for three inference-time configurations of the Thinking model from arXiv:2608.03327 Table 2, holding the trained policy fixed. GUI only reaches 30.5 percent accuracy at 313.1 thousand tokens. The full win-4 screenshot window with MCP tools reaches 34.5 percent accuracy at 337.1 thousand tokens. Narrowing to a window of 2 screenshots plus dropping redundant frames, without retraining, reaches 30.6 percent accuracy at 219.5 thousand tokens, a 3.9 point accuracy cost for roughly a third fewer tokens.">
+<rect x="0" y="0" width="820" height="300" rx="12" fill="#151a24"/>
+<g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="24" font-size="14" font-weight="600">Inference-only tradeoff, Thinking model, same trained policy (Table 2)</text>
+<line x1="70" y1="250" x2="760" y2="250" stroke="#2c3344" stroke-width="1"/>
+<line x1="70" y1="40" x2="70" y2="250" stroke="#2c3344" stroke-width="1"/>
+<text x="415" y="280" font-size="10.5" text-anchor="middle" fill="#c4ccda">Cumulative input tokens (thousands)</text>
+<text x="25" y="145" font-size="10.5" text-anchor="middle" fill="#c4ccda" transform="rotate(-90 25 145)">Accuracy (%)</text>
+<text x="60" y="253" font-size="9" text-anchor="end" fill="#8893a8">0</text>
+<text x="60" y="48" font-size="9" text-anchor="end" fill="#8893a8">40%</text>
+<circle cx="245" cy="194" r="7" fill="#8893a8"/>
+<text x="245" y="178" font-size="10" font-weight="600" text-anchor="middle" fill="#8893a8">GUI only: 30.5%, 313.1K</text>
+<circle cx="500" cy="164" r="7" fill="#5ad1a0"/>
+<text x="500" y="148" font-size="10" font-weight="600" text-anchor="middle" fill="#5ad1a0">win-4, GUI+MCP: 34.5%, 337.1K</text>
+<circle cx="155" cy="192" r="7" fill="#e8a33d"/>
+<text x="155" y="226" font-size="10" font-weight="600" text-anchor="middle" fill="#e8a33d">win-2++drop: 30.6%, 219.5K</text>
+<line x1="155" y1="192" x2="500" y2="164" stroke="#e8a33d" stroke-width="1.5" stroke-dasharray="4,3"/>
+<text x="20" y="286" font-size="9.5" fill="#8893a8">Source: arXiv:2608.03327v2, Table 2, read 9 November 2026. Axis is schematic; token and accuracy values are exact.</text>
+</g></svg>
+
+<h2 id="what-it-means">What it means for reading a compression-plus-retraining result</h2>
+
+<p>A retrained checkpoint beating a baseline on the benchmark's own task suite is not evidence the retraining generalizes, if some of those tasks were in the training set. This paper is unusually transparent about exactly that: it names the 74 tasks, computes their share of the margin, and reports the held-out number with a significance label attached, rather than leaving a reader to wonder. The practical upshot for anyone comparing agent configurations on cost and accuracy together is that "53% of the input cost, equal or better accuracy" needs to specify which accuracy, on which split, against which baseline; this paper's three different accuracy figures (30.6% inference-only, 34.5% trained-uncompressed, 37.8% retrained-compressed on the full suite, 33.0% on a separate anchor) are not interchangeable, and the authors' own wording for the full-suite result is "equal accuracy at half the cost," not "higher accuracy."</p>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># Section 5.3's own accounting of the 74 training tasks and the 0.8pp held-out gain
+open "https://arxiv.org/html/2608.03327"
+
+# Table 2, Section 3.1: the static grid with all five configurations side by side
+open "https://arxiv.org/abs/2608.03327"
+
+# phoneshell never retrains on its own benchmark tasks between a run and its grading
+grep -rn "retrain" phoneshell/bench/ 2>/dev/null || echo "no retraining step in phoneshell's grading path"</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim that arXiv:2608.03327v2 Table 2 reports the win-4 (GUI+MCP) configuration at 34.5% accuracy and 337.1K cumulative input tokens against win-2++drop at 30.6% and 219.5K for the Thinking-model policy, and that Section 5.3 reports the retrained step-40 checkpoint at 37.8% on the full 309-task suite against a 33.0% base anchor, attributing about 4.1 of the 4.8-point gap to 74 training tasks and reporting a +0.8pp, not-significant gain on the 235 held-out tasks, all checkable directly against the cited arXiv v2 HTML. This should be revisited if a later revision or a follow-up paper reports the held-out-only accuracy for this compression method at larger scale and finds a gain that clears statistical significance, or if it remains within noise at a larger sample, by 30 June 2027.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Siqi Fan, Minghao Li, Xiaoqian Ma, Wenhui Tan, Xiusheng Huang, Juntong Wu, Liujie Zhang, Shuo Shang, Weihang Chen, <a href="https://arxiv.org/abs/2608.03327">Screenshots or Tools? Eliciting Tool Use and Managing Multimodal Context in Hybrid GUI-MCP Computer-Use Agents</a>, arXiv:2608.03327v2, submitted 4 August 2026, revised 6 August 2026, read 9 November 2026.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>, read 9 November 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
