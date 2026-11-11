@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Show an LLM judge the agent&#x27;s own success claim and its recall on false successes drops from 0.49 to 0.23 - Blolabel</title>
+<meta name="description" content="A controlled aware/blind experiment in arXiv:2610.29609 (submitted 21 October 2026, accepted to ICSE 2027) shows that an LLM completion judge shown the GUI agent&#x27;s own self-report catches fewer false successes: recall falls from 0.49 to 0.23 with Qwen3.5-35B-A3B and from 0.52 to 0.44 with DeepSeek-284B-A13B on 465 annotated Android runs, 180 of them dangerous misreports. The paper&#x27;s own Table III also contradicts one sentence of its prose, and its 465-record headline includes 335 development records.">
+<link rel="canonical" href="https://blolabel.ai/blog/judge-shown-the-agents-success-claim-catches-half-as-many-false-successes/">
+<meta property="og:title" content="Show an LLM judge the agent&#x27;s own success claim and its recall on false successes drops from 0.49 to 0.23 - Blolabel">
+<meta property="og:description" content="On 465 annotated Android agent runs, appending the agent&#x27;s own report to the judge&#x27;s input cut Qwen3.5-35B-A3B&#x27;s recall on false success claims from 0.49 to 0.23; 79 of 80 flipped verdicts moved toward passing a false success (arXiv:2610.29609, ICSE 2027).">
+<meta property="og:url" content="https://blolabel.ai/blog/judge-shown-the-agents-success-claim-catches-half-as-many-false-successes/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/judge-shown-the-agents-success-claim-catches-half-as-many-false-successes-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Show an LLM judge the agent's own success claim and its recall on false successes drops from 0.49 to 0.23", "description": "A controlled aware/blind experiment in arXiv:2610.29609 (submitted 21 October 2026, accepted to ICSE 2027) shows that an LLM completion judge shown the GUI agent's own self-report catches fewer false successes: recall falls from 0.49 to 0.23 with Qwen3.5-35B-A3B and from 0.52 to 0.44 with DeepSeek-284B-A13B on 465 annotated Android runs, 180 of them dangerous misreports. The paper's own Table III also contradicts one sentence of its prose, and its 465-record headline includes 335 development records.", "datePublished": "2026-11-10", "dateModified": "2026-11-10", "url": "https://blolabel.ai/blog/judge-shown-the-agents-success-claim-catches-half-as-many-false-successes/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/judge-shown-the-agents-success-claim-catches-half-as-many-false-successes/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/judge-shown-the-agents-success-claim-catches-half-as-many-false-successes-hero.png", "citation": ["https://arxiv.org/abs/2610.29609", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#mechanism">Mechanism</a>
+    <a href="/blog/">Notes</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker" id="finding">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-11-10">10 November 2026</time>
+    <span>7 min read</span>
+  </div>
+  <h1>Show an LLM judge the agent&#x27;s own success claim and its recall on false successes drops from 0.49 to 0.23</h1>
+  <p class="standfirst">Appending a GUI agent's own final report to the input of an LLM completion judge cut that judge's recall on false success claims from 0.49 to 0.23 with Qwen3.5-35B-A3B, across 465 annotated Android runs (arXiv:2610.29609, submitted 21 October 2026, accepted to ICSE 2027). Measured on the trace verdict alone, before any claim gating, the gap is 43.4 points. Of the 80 verdicts that changed when the report was shown, 79 were harmful flips and 1 was a recovery.</p>
+
+<p>The paper is "Who Verifies the Agent's Success Claim? Self-Report Leakage in GUI-Agent Completion Judging" by Yunfeng Zhu and Zhenyu Chen (Nanjing University), Shengcheng Yu (Technical University of Munich) and Zihan Li (Nanjing Normal University). It starts from 1,384 in-scope execution attempts by two agents, AppAgent and Mobile-Agent-v3, on AndroidWorld, an AndroidWorld extension and Themis. After clean passes and non-auditable runs are removed, annotators labelled 465 records. 180 of them are what the authors call a dangerous misreport: "an unhedged success claim that the trace does not support as causal accomplishment during the run." Each agent contributes 90.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/judge-shown-the-agents-success-claim-catches-half-as-many-false-successes-hero.png" alt="Abstract technical illustration on a dark grid: two parallel streams of small glowing blocks flow toward a single gate, one stream cool blue and one amber; where the amber stream touches the gate the gate tilts open, cool blues and slate greys with one amber accent, no icons or readable text" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="method">The same judge reads the same trace twice; only the agent's report differs</h2>
+
+<p>Section IV holds everything fixed between two conditions: task, trace, serialization, model, scoring rule, temperature 0, and five runs aggregated by a 3-of-5 vote. In the "aware" condition the agent's final report and per-step self-reports are appended. In the "blind" condition they are withheld. Two hosted judge models are reported separately and never pooled. Gold labels come from two annotators with a Cohen's kappa of 0.79 on the dangerous-misreport label before adjudication.</p>
+
+<table>
+  <thead><tr><th>Scope</th><th>Judge model</th><th>Recall, report shown</th><th>Recall, report withheld</th><th>Trace-only recall shift</th><th>Harmful / recovery flips</th></tr></thead>
+  <tbody>
+    <tr><td>All 465 records</td><td>Qwen3.5-35B-A3B</td><td>0.23</td><td>0.49</td><td>+0.43</td><td>79 / 1</td></tr>
+    <tr><td>All 465 records</td><td>DeepSeek-284B-A13B</td><td>0.44</td><td>0.52</td><td>+0.13</td><td>31 / 7</td></tr>
+    <tr><td>Batch 2 (130, held out)</td><td>Qwen3.5-35B-A3B</td><td>0.20</td><td>0.42</td><td>+0.38</td><td>19 / 0</td></tr>
+    <tr><td>Batch 2 (130, held out)</td><td>DeepSeek-284B-A13B</td><td>0.46</td><td>0.52</td><td>+0.14</td><td>9 / 2 (p = 0.065)</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: "Who Verifies the Agent's Success Claim? Self-Report Leakage in GUI-Agent Completion Judging," arXiv:2610.29609v1, Table II, Section V-A, submitted 21 October 2026, read 10 November 2026. Recall columns are the claim-gated detector view; the shift column is measured before claim gating.</p>
+
+<svg viewBox="0 0 820 400" style="width:100%;height:auto" role="img" aria-label="Grouped bar chart from Table II of arXiv:2610.29609 showing a judge&#x27;s recall on dangerous misreports with the agent&#x27;s self-report shown (aware) and withheld (blind). Qwen3.5-35B-A3B on all 465 records rises from 0.23 aware to 0.49 blind; DeepSeek-284B-A13B rises from 0.44 to 0.52. On the held-out Batch 2 of 130 records, Qwen rises from 0.20 to 0.42 and DeepSeek from 0.46 to 0.52. Recall is higher with the report withheld in all four settings."><rect x="0" y="0" width="820" height="400" rx="12" fill="#151a24"/><g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="13.5" font-weight="600">Table II, arXiv:2610.29609: recall on false success claims, report shown vs withheld</text>
+<line x1="60" y1="280.0" x2="800" y2="280.0" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="283.0" font-size="9.5" text-anchor="end" fill="#8893a8">0.00</text>
+<line x1="60" y1="222.5" x2="800" y2="222.5" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="225.5" font-size="9.5" text-anchor="end" fill="#8893a8">0.20</text>
+<line x1="60" y1="165.0" x2="800" y2="165.0" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="168.0" font-size="9.5" text-anchor="end" fill="#8893a8">0.40</text>
+<line x1="60" y1="107.5" x2="800" y2="107.5" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="110.5" font-size="9.5" text-anchor="end" fill="#8893a8">0.60</text>
+<line x1="60" y1="50.0" x2="800" y2="50.0" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="53.0" font-size="9.5" text-anchor="end" fill="#8893a8">0.80</text>
+<rect x="110.5" y="213.9" width="40.0" height="66.1" fill="#e8a33d"/>
+<text x="130.5" y="208.9" font-size="9.5" font-weight="600" text-anchor="middle" fill="#e8a33d">0.23</text>
+<rect x="154.5" y="139.1" width="40.0" height="140.9" fill="#5ad1a0"/>
+<text x="174.5" y="134.1" font-size="9.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">0.49</text>
+<text x="152.5" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">Qwen3.5-35B-A3B</text>
+<text x="152.5" y="311" font-size="10" text-anchor="middle" fill="#c4ccda">465 records</text>
+<rect x="295.5" y="153.5" width="40.0" height="126.5" fill="#e8a33d"/>
+<text x="315.5" y="148.5" font-size="9.5" font-weight="600" text-anchor="middle" fill="#e8a33d">0.44</text>
+<rect x="339.5" y="130.5" width="40.0" height="149.5" fill="#5ad1a0"/>
+<text x="359.5" y="125.5" font-size="9.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">0.52</text>
+<text x="337.5" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">DeepSeek-284B-A13B</text>
+<text x="337.5" y="311" font-size="10" text-anchor="middle" fill="#c4ccda">465 records</text>
+<rect x="480.5" y="222.5" width="40.0" height="57.5" fill="#e8a33d"/>
+<text x="500.5" y="217.5" font-size="9.5" font-weight="600" text-anchor="middle" fill="#e8a33d">0.20</text>
+<rect x="524.5" y="159.2" width="40.0" height="120.7" fill="#5ad1a0"/>
+<text x="544.5" y="154.2" font-size="9.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">0.42</text>
+<text x="522.5" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">Qwen3.5-35B-A3B</text>
+<text x="522.5" y="311" font-size="10" text-anchor="middle" fill="#c4ccda">held-out Batch 2</text>
+<rect x="665.5" y="147.8" width="40.0" height="132.2" fill="#e8a33d"/>
+<text x="685.5" y="142.8" font-size="9.5" font-weight="600" text-anchor="middle" fill="#e8a33d">0.46</text>
+<rect x="709.5" y="130.5" width="40.0" height="149.5" fill="#5ad1a0"/>
+<text x="729.5" y="125.5" font-size="9.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">0.52</text>
+<text x="707.5" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">DeepSeek-284B-A13B</text>
+<text x="707.5" y="311" font-size="10" text-anchor="middle" fill="#c4ccda">held-out Batch 2</text>
+<rect x="60" y="342" width="14" height="10" fill="#e8a33d"/><text x="80" y="351" font-size="9.5" fill="#c4ccda">aware: judge sees the agent&#x27;s self-report</text>
+<rect x="346" y="342" width="14" height="10" fill="#5ad1a0"/><text x="366" y="351" font-size="9.5" fill="#c4ccda">blind: self-report withheld</text>
+<text x="20" y="374" font-size="9.5" fill="#8893a8">Same judge, same trace, same model, same 3-of-5 vote. The only change is whether the agent&#x27;s own report is appended.</text>
+<text x="20" y="389" font-size="9.5" fill="#8893a8">Source: arXiv:2610.29609v1, Table II, claim-gated recall, read 10 November 2026.</text></g></svg>
+
+<p>The direction holds in all four rows. The size does not: DeepSeek-284B-A13B loses 8 points of claim-gated recall on the full set where Qwen3.5-35B-A3B loses 26, and on held-out Batch 2 DeepSeek's 9 harmful flips against 2 recoveries give a sign-test p of 0.065, which the authors call directionally consistent. Batch 2 has 50 positives. Treat the DeepSeek held-out row as suggestive.</p>
+
+<h2 id="mechanism">Withholding the report helps, and still leaves a judge at F1 0.62</h2>
+
+<p>The paper states it flatly: "Report isolation alone is not sufficient." A prompt-blind judge reaches F1 0.62 (Qwen) and 0.64 (DeepSeek) on the 465 records. The authors' structured auditor splits the job into three parts. A claim reader C classifies what the report asserts. A claim-blind extractor E sees only task and trace and fills 5 fields (action, target_id, transition, committed, final_supports_goal); in the paper's words, "the extractor is not allowed to output completed or not_completed." A deterministic checker G maps those fields to a verdict. That design reaches F1 0.75 and 0.78 on all 465 records, and 0.77 and 0.81 on held-out Batch 2. Human annotators reading the trace alone score 0.90 and 0.95, so a gap remains.</p>
+
+<svg viewBox="0 0 820 270" style="width:100%;height:auto" role="img" aria-label="Diagram comparing three completion-judging designs. A claim-aware LLM judge reads the task, the trace and the agent&#x27;s self-report together; in arXiv:2610.29609 showing the report produced 79 harmful flips against 1 recovery for Qwen and 31 against 7 for DeepSeek, with F1 of 0.56 and 0.63. The paper&#x27;s structured auditor separates a claim reader C from a claim-blind evidence extractor E with 5 fields and a deterministic checker G, reaching F1 0.75 and 0.78 on 465 records and 0.77 and 0.81 on held-out Batch 2. phoneshell&#x27;s bench/verify.py has 12 check kinds and no judge model: 11 read the phone and ignore the agent&#x27;s words, and 1, answer_contains, substring-matches the answer against fixed ground truth and accounts for 20 of 153 checks in the 80 public task files."><rect x="0" y="0" width="820" height="270" rx="12" fill="#151a24"/><g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="13.5" font-weight="600">Three ways to decide whether a run passed, and where the agent&#x27;s words enter</text>
+<rect x="20" y="44" width="247" height="210" rx="8" fill="#262d3d" stroke="#e8a33d"/>
+<text x="143" y="66" font-size="11.5" font-weight="600" text-anchor="middle" fill="#e8a33d">Claim-aware LLM judge</text>
+<text x="33" y="90" font-size="9.5" fill="#c4ccda">task + trace + the agent&#x27;s self-report</text>
+<text x="33" y="107" font-size="9.5" fill="#c4ccda">-&gt; one LLM reads all of it</text>
+<text x="33" y="124" font-size="9.5" fill="#c4ccda">-&gt; completed or not_completed</text>
+<text x="33" y="147" font-size="9.5" fill="#8893a8">Qwen: 79 harmful flips, 1 recovery</text>
+<text x="33" y="163" font-size="9.5" fill="#8893a8">DeepSeek: 31 harmful flips, 7 recovery</text>
+<text x="33" y="179" font-size="9.5" fill="#8893a8">F1 0.56 and 0.63 (matched setup)</text>
+<rect x="287" y="44" width="247" height="210" rx="8" fill="#262d3d" stroke="#7a8bd6"/>
+<text x="410" y="66" font-size="11.5" font-weight="600" text-anchor="middle" fill="#7a8bd6">Structured auditor (the paper)</text>
+<text x="300" y="90" font-size="9.5" fill="#c4ccda">C reads the report: what was claimed</text>
+<text x="300" y="107" font-size="9.5" fill="#c4ccda">E reads task + trace only, 5 fields</text>
+<text x="300" y="124" font-size="9.5" fill="#c4ccda">G: deterministic rules decide</text>
+<text x="300" y="147" font-size="9.5" fill="#8893a8">E may not output a completion verdict</text>
+<text x="300" y="163" font-size="9.5" fill="#8893a8">F1 0.75 and 0.78 on 465 records</text>
+<text x="300" y="179" font-size="9.5" fill="#8893a8">F1 0.77 and 0.81 on held-out Batch 2</text>
+<rect x="553" y="44" width="247" height="210" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="677" y="66" font-size="11.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">phoneshell bench/verify.py</text>
+<text x="566" y="90" font-size="9.5" fill="#c4ccda">12 check kinds, no judge model</text>
+<text x="566" y="107" font-size="9.5" fill="#c4ccda">11 read the phone and ignore `said`</text>
+<text x="566" y="124" font-size="9.5" fill="#c4ccda">1 (answer_contains) matches a string</text>
+<text x="566" y="147" font-size="9.5" fill="#8893a8">answer_contains: 20 of 153 checks</text>
+<text x="566" y="163" font-size="9.5" fill="#8893a8">in the 80 public task files</text>
+<text x="566" y="179" font-size="9.5" fill="#8893a8">fixed ground truth, substring match</text>
+</g></svg>
+
+<p>Three things in the tables are worth reading against the prose.</p>
+
+<p>First, Section V-B says "matched claim-aware judging trails both isolated methods on recall." Table III does not support that for DeepSeek: on Batch 2 the matched claim-aware judge has recall 0.56 against the prompt-blind judge's 0.52, and on the full set the two tie at 0.52. The sentence is true for Qwen and for the structured auditor everywhere.</p>
+
+<p>Second, the abstract's F1 of 0.75 to 0.78 is computed on all 465 records, 335 of which (Batch 1) were used to develop the auditor. The held-out figures are 0.77 with a 95% interval of [0.67, 0.86] for Qwen and 0.81 with [0.72, 0.88] for DeepSeek. The abstract reports both, but only the Batch 2 numbers are out of sample.</p>
+
+<p>Third, a rule with no model in it, flagging every success claim in the audit set, scores F1 0.57. The matched claim-aware Qwen judge scores 0.56 and the DeepSeek one 0.63. For Qwen, five LLM calls per record and a majority vote bought nothing over the rule.</p>
+
+<h2 id="what-it-means">What it means if your benchmark is graded by a model</h2>
+
+<p>Any pipeline that hands a judge the agent's last message is running the aware condition. That includes most LLM-as-judge setups for mobile agents, because the final message is the cheapest summary of a trace whose median length here is about 89K characters. The cost of that convenience is now measured: 79 lost detections against 1 gained for one judge model, 31 against 7 for the other.</p>
+
+<p>The paper's deployment numbers give the price of fixing it. With flag and review both blocking an automatic pass, the auditor stops 138 of 180 dangerous misreports (Qwen) and 159 of 180 (DeepSeek) while sending 48% and 56% of the audit set to inspection. Against all 1,384 attempts the authors put that load at roughly 16% and 19%. Between 12% and 23% of false successes still pass silently.</p>
+
+<p>phoneshell sits at the far end of this axis because it has no judge to persuade. <code>run_check</code> in <code>phoneshell/bench/verify.py</code> accepts the agent's words as a <code>said</code> argument, and exactly one of its 12 check kinds, <code>answer_contains</code>, reads it; the other 11 query the phone. A grep of the 80 public task files finds 153 checks, 20 of them <code>answer_contains</code>, each a substring match against ground truth fixed in advance for tasks whose deliverable is information. Our judgement: that removes leakage and keeps a different weakness, since a substring match can pass an answer that happens to contain the right word. We covered the general failure in <a href="/blog/agents-report-success-device-disagrees/">agents report success, the device disagrees</a>.</p>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># Table II (aware vs blind) and Table III (detector comparison)
+open "https://arxiv.org/html/2610.29609v1"
+
+# The sentence to compare against Table III, Batch 2, deepseek rows:
+#   "matched claim-aware judging trails both isolated methods on recall"
+
+# phoneshell: which check kinds ever see the agent's words
+git clone https://github.com/Blomega/phoneshell &amp;&amp; cd phoneshell
+grep -n "said" phoneshell/bench/verify.py
+grep -rhoE "answer_contains|foreground_app|element_exists_anywhere|element_exists|regex_on_screen" environments/*.yaml | sort | uniq -c
+grep -l answer_contains environments/*.yaml | wc -l    # 20 of 80 task files</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim Table II of arXiv:2610.29609v1 reports claim-gated recall of 0.23 aware and 0.49 blind for Qwen3.5-35B-A3B, 0.44 and 0.52 for DeepSeek-284B-A13B, and harmful-to-recovery flip counts of 79 to 1 and 31 to 7. Our prediction: any paper published by 30 June 2027 that repeats an aware/blind ablation on a mobile or desktop agent benchmark with at least 100 false-success positives will find blind recall at or above aware recall for every judge model it tests. One judge model with significantly higher aware recall at that sample size proves the prediction wrong.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Yunfeng Zhu, Shengcheng Yu, Zihan Li, Zhenyu Chen, <a href="https://arxiv.org/abs/2610.29609">Who Verifies the Agent's Success Claim? Self-Report Leakage in GUI-Agent Completion Judging</a>, arXiv:2610.29609v1, submitted 21 October 2026, accepted to the ICSE 2027 Research Track, Tables I to V, read 10 November 2026.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/bench/verify.py</code> and <code>environments/*.yaml</code>, read 10 November 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
