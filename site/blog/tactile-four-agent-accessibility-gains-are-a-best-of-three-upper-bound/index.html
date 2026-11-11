@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tactile&#x27;s four-agent accessibility gains are a best-of-three upper bound, and one of the three is the baseline - Blolabel</title>
+<meta name="description" content="Tactile (arXiv:2607.14443, submitted 16 July 2026, Shanghai Jiao Tong University) is an open MCP tool layer that prefers macOS accessibility actions and falls back to OCR and vision. Its abstract reports consistent gains across Codex, Claude Code, OpenCode and Goose on a 96-task subset. Section 5 defines the cross-agent With Tactile score as a skill-optional upper bound, the best per-task result among no-skill, tactile-implicit and tactile-explicit settings, with no confidence intervals and no screenshot-only baseline.">
+<link rel="canonical" href="https://blolabel.ai/blog/tactile-four-agent-accessibility-gains-are-a-best-of-three-upper-bound/">
+<meta property="og:title" content="Tactile&#x27;s four-agent accessibility gains are a best-of-three upper bound, and one of the three is the baseline - Blolabel">
+<meta property="og:description" content="Tactile (arXiv:2607.14443, 16 July 2026) reports that an accessibility-first tool layer lifts four coding agents on a 96-task macOS subset. Section 5 defines that cross-agent score as the best per-task result among three settings including no-skill, so it cannot go down; Goose&#x27;s gain is 2 tasks.">
+<meta property="og:url" content="https://blolabel.ai/blog/tactile-four-agent-accessibility-gains-are-a-best-of-three-upper-bound/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/tactile-four-agent-accessibility-gains-are-a-best-of-three-upper-bound-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Tactile's four-agent accessibility gains are a best-of-three upper bound, and one of the three is the baseline", "description": "Tactile (arXiv:2607.14443, submitted 16 July 2026, Shanghai Jiao Tong University) is an open MCP tool layer that prefers macOS accessibility actions and falls back to OCR and vision. Its abstract reports consistent gains across Codex, Claude Code, OpenCode and Goose on a 96-task subset. Section 5 defines the cross-agent With Tactile score as a skill-optional upper bound, the best per-task result among no-skill, tactile-implicit and tactile-explicit settings, with no confidence intervals and no screenshot-only baseline.", "datePublished": "2026-11-10", "dateModified": "2026-11-10", "url": "https://blolabel.ai/blog/tactile-four-agent-accessibility-gains-are-a-best-of-three-upper-bound/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/tactile-four-agent-accessibility-gains-are-a-best-of-three-upper-bound/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/tactile-four-agent-accessibility-gains-are-a-best-of-three-upper-bound-hero.png", "citation": ["https://arxiv.org/abs/2607.14443", "https://github.com/yliust/Tactile", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#mechanism">Mechanism</a>
+    <a href="/blog/">Notes</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker" id="finding">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-11-10">10 November 2026</time>
+    <span>6 min read</span>
+  </div>
+  <h1>Tactile&#x27;s four-agent accessibility gains are a best-of-three upper bound, and one of the three is the baseline</h1>
+  <p class="standfirst">The cross-agent result in Tactile's abstract ("consistent gains across Codex, Claude Code, OpenCode, and Goose" on 96 macOS tasks, arXiv:2607.14443, submitted 16 July 2026) is defined in Section 5 as "a skill-optional upper bound computed from the best per-task result among no-skill, tactile-implicit, and tactile-explicit settings." A maximum over three settings that include the baseline cannot score below the baseline. For Goose the gain is 41.67% to 43.75%, which is 2 tasks.</p>
+
+<p>"Tactile: Giving Computer-Using Agents Hands and Feet" is by Yong Liu, Zhenyi Zhong and Zhanpeng Shi of Shanghai Jiao Tong University. Tactile is an MCP server with a Swift runtime that handles macOS Accessibility traversal and actions, ScreenCapture, Vision OCR and input events, exposing eight tools such as <code>get_app_state</code>, <code>click</code> and <code>perform_secondary_action</code>. Its design argument is one we agree with: a coordinate click "collapses target grounding, action execution, and outcome verification into a single ambiguous operation," and an agent should prefer a named, verifiable action when the operating system offers one. This note is about how much of that the evaluation shows.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/tactile-four-agent-accessibility-gains-are-a-best-of-three-upper-bound-hero.png" alt="Abstract technical illustration on a dark grid: three stacked horizontal rungs like a short ladder, the top rung solid and brightly lit, the middle rung thinner, the bottom rung a faint dashed outline, with a single amber marker beside the top rung, cool blues and slate greys, no icons or readable text" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="method">The paper has no results table; the numbers are in two paragraphs of Section 5.1</h2>
+
+<p>The HTML version contains two tables, one of runtime requirements and one of application examples, and neither holds a score. The metric is "Success@100, the percentage of tasks completed within 100 interaction steps." The first comparison is Codex against Codex with Tactile on "currently graded macOSWorld samples": 41.06% to 50.00% overall, 45.22% to 55.26% on AX-adapted tasks, 27.78% to 33.33% on Limited-AX tasks. The number of tasks in that sample and in each split is not reported. The second comparison is the 96-task subset across four agent clients.</p>
+
+<table>
+  <thead><tr><th>Agent</th><th>Scope</th><th>No-skill baseline</th><th>With Tactile</th><th>Gain</th><th>Gain in tasks (derived)</th></tr></thead>
+  <tbody>
+    <tr><td>Codex</td><td>graded macOSWorld sample, overall (task count not reported)</td><td>41.06%</td><td>50.00%</td><td>+8.94</td><td>not derivable</td></tr>
+    <tr><td>Codex</td><td>graded sample, AX-adapted</td><td>45.22%</td><td>55.26%</td><td>+10.04</td><td>not derivable</td></tr>
+    <tr><td>Codex</td><td>graded sample, Limited-AX</td><td>27.78%</td><td>33.33%</td><td>+5.55</td><td>not derivable</td></tr>
+    <tr><td>Codex</td><td>96-task subset</td><td>38.54%</td><td>50.00%</td><td>+11.46</td><td>37 to 48 of 96</td></tr>
+    <tr><td>Claude Code</td><td>96-task subset</td><td>33.33%</td><td>43.75%</td><td>+10.42</td><td>32 to 42 of 96</td></tr>
+    <tr><td>OpenCode</td><td>96-task subset</td><td>33.33%</td><td>40.62%</td><td>+7.29</td><td>32 to 39 of 96</td></tr>
+    <tr><td>Goose</td><td>96-task subset</td><td>41.67%</td><td>43.75%</td><td>+2.08</td><td>40 to 42 of 96</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: "Tactile: Giving Computer-Using Agents Hands and Feet," arXiv:2607.14443v1, Section 5.1, submitted 16 July 2026, read 10 November 2026. The 96-task "With Tactile" column is the paper's skill-optional upper bound. Task counts are our arithmetic from the percentages.</p>
+
+<svg viewBox="0 0 820 400" style="width:100%;height:auto" role="img" aria-label="Bar chart of Success@100 on Tactile&#x27;s 96-task cross-agent subset from Section 5.1 of arXiv:2607.14443. Codex: 38.54% no-skill baseline, 50.00% With Tactile. Claude Code: 33.33% and 43.75%. OpenCode: 33.33% and 40.62%. Goose: 41.67% and 43.75%. The With Tactile bar is a skill-optional upper bound, the best per-task result among three settings, and one of those three settings is the baseline itself."><rect x="0" y="0" width="820" height="400" rx="12" fill="#151a24"/><g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="13.5" font-weight="600">Section 5.1, arXiv:2607.14443: Success@100 on the 96-task cross-agent subset</text>
+<line x1="60" y1="280.0" x2="800" y2="280.0" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="283.0" font-size="9.5" text-anchor="end" fill="#8893a8">0.00%</text>
+<line x1="60" y1="222.5" x2="800" y2="222.5" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="225.5" font-size="9.5" text-anchor="end" fill="#8893a8">20.00%</text>
+<line x1="60" y1="165.0" x2="800" y2="165.0" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="168.0" font-size="9.5" text-anchor="end" fill="#8893a8">40.00%</text>
+<line x1="60" y1="107.5" x2="800" y2="107.5" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="110.5" font-size="9.5" text-anchor="end" fill="#8893a8">60.00%</text>
+<line x1="60" y1="50.0" x2="800" y2="50.0" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="53.0" font-size="9.5" text-anchor="end" fill="#8893a8">80.00%</text>
+<rect x="110.5" y="169.2" width="40.0" height="110.8" fill="#8893a8"/>
+<text x="130.5" y="164.2" font-size="9.5" font-weight="600" text-anchor="middle" fill="#8893a8">38.54%</text>
+<rect x="154.5" y="136.2" width="40.0" height="143.8" fill="#e8a33d"/>
+<text x="174.5" y="131.2" font-size="9.5" font-weight="600" text-anchor="middle" fill="#e8a33d">50.00%</text>
+<text x="152.5" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">Codex</text>
+<rect x="295.5" y="184.2" width="40.0" height="95.8" fill="#8893a8"/>
+<text x="315.5" y="179.2" font-size="9.5" font-weight="600" text-anchor="middle" fill="#8893a8">33.33%</text>
+<rect x="339.5" y="154.2" width="40.0" height="125.8" fill="#e8a33d"/>
+<text x="359.5" y="149.2" font-size="9.5" font-weight="600" text-anchor="middle" fill="#e8a33d">43.75%</text>
+<text x="337.5" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">Claude Code</text>
+<rect x="480.5" y="184.2" width="40.0" height="95.8" fill="#8893a8"/>
+<text x="500.5" y="179.2" font-size="9.5" font-weight="600" text-anchor="middle" fill="#8893a8">33.33%</text>
+<rect x="524.5" y="163.2" width="40.0" height="116.8" fill="#e8a33d"/>
+<text x="544.5" y="158.2" font-size="9.5" font-weight="600" text-anchor="middle" fill="#e8a33d">40.62%</text>
+<text x="522.5" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">OpenCode</text>
+<rect x="665.5" y="160.2" width="40.0" height="119.8" fill="#8893a8"/>
+<text x="685.5" y="155.2" font-size="9.5" font-weight="600" text-anchor="middle" fill="#8893a8">41.67%</text>
+<rect x="709.5" y="154.2" width="40.0" height="125.8" fill="#e8a33d"/>
+<text x="729.5" y="149.2" font-size="9.5" font-weight="600" text-anchor="middle" fill="#e8a33d">43.75%</text>
+<text x="707.5" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">Goose</text>
+<rect x="60" y="342" width="14" height="10" fill="#8893a8"/><text x="80" y="351" font-size="9.5" fill="#c4ccda">no-skill baseline</text>
+<rect x="202" y="342" width="14" height="10" fill="#e8a33d"/><text x="222" y="351" font-size="9.5" fill="#c4ccda">With Tactile (best of three settings per task)</text>
+<text x="20" y="374" font-size="9.5" fill="#8893a8">The second bar takes the best of no-skill, tactile-implicit and tactile-explicit for each task, so it cannot fall below the first.</text>
+<text x="20" y="389" font-size="9.5" fill="#8893a8">Source: arXiv:2607.14443v1, Sections 5 and 5.1 (prose; the paper has no numeric results table), read 10 November 2026.</text></g></svg>
+
+<p>On 96 tasks one task is 1.04 points, so the percentages convert cleanly: Codex gains 11 tasks, Claude Code 10, OpenCode 7, Goose 2. The paper adds that on Limited-AX tasks "Goose shows no change." No run counts, seeds or intervals are given, and Section 5.3 lists "report uncertainty estimates" as future work. A 2-task difference on 96 is inside any plausible run-to-run noise; an 11-task difference may not be, but the paper gives no way to tell.</p>
+
+<h2 id="mechanism">An oracle over three settings measures headroom, which is a weaker claim than a gain</h2>
+
+<p>Section 5 states the construction and Section 5.3 repeats it: "The skill-optional cross-agent score is an upper bound rather than a learned routing policy." For each task the With Tactile score takes whichever of three runs succeeded: the agent with no skill, the agent with Tactile available implicitly, the agent told explicitly to use it. Two consequences follow. The score counts a task as solved "with Tactile" when only the no-skill run solved it. And three attempts beat one attempt on any task with run-to-run variance, with or without a new tool. The abstract carries the cross-agent claim and omits the caveat. Whether the Codex-only 41.06% to 50.00% comparison is a single configuration or the same oracle is not stated clearly enough for us to say.</p>
+
+<svg viewBox="0 0 820 250" style="width:100%;height:auto" role="img" aria-label="Diagram of Tactile&#x27;s three-level operating ladder from arXiv:2607.14443. Level 1 uses macOS Accessibility traversal and native actions such as AXPress in observation mode ax; it is measured only as a task split, AX-adapted, where Codex moves from 45.22% to 55.26%. Level 2 uses OCR-grounded coordinates in mode ax_ocr when visible text is the best evidence; how often it fired is not reported. Level 3 is visual fallback for canvases, media editors, remote desktops and icon-only widgets in mode ax_ocr_visual; how often it fired is not reported, and on the Limited-AX split Codex moves from 27.78% to 33.33%."><rect x="0" y="0" width="820" height="250" rx="12" fill="#151a24"/><g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="13.5" font-weight="600">Tactile&#x27;s three-level ladder, and which rungs the paper measured</text>
+<rect x="20" y="44" width="247" height="190" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="143" y="66" font-size="11.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">Level 1: accessibility semantics</text>
+<text x="33" y="90" font-size="9.5" fill="#c4ccda">macOS Accessibility traversal and</text>
+<text x="33" y="107" font-size="9.5" fill="#c4ccda">  native actions (for example AXPress)</text>
+<text x="33" y="124" font-size="9.5" fill="#c4ccda">observation mode: ax</text>
+<text x="33" y="147" font-size="9.5" fill="#8893a8">Measured as a task split:</text>
+<text x="33" y="163" font-size="9.5" fill="#8893a8">AX-adapted, Codex 45.22% to 55.26%</text>
+<rect x="287" y="44" width="247" height="190" rx="8" fill="#262d3d" stroke="#7a8bd6"/>
+<text x="410" y="66" font-size="11.5" font-weight="600" text-anchor="middle" fill="#7a8bd6">Level 2: OCR-grounded coordinates</text>
+<text x="300" y="90" font-size="9.5" fill="#c4ccda">Vision OCR when visible text is the</text>
+<text x="300" y="107" font-size="9.5" fill="#c4ccda">  best evidence or a name is missing</text>
+<text x="300" y="124" font-size="9.5" fill="#c4ccda">observation mode: ax_ocr</text>
+<text x="300" y="147" font-size="9.5" fill="#8893a8">How often it fired: not reported</text>
+<rect x="553" y="44" width="247" height="190" rx="8" fill="#262d3d" stroke="#e8a33d"/>
+<text x="677" y="66" font-size="11.5" font-weight="600" text-anchor="middle" fill="#e8a33d">Level 3: visual fallback</text>
+<text x="566" y="90" font-size="9.5" fill="#c4ccda">canvases, media editors, remote</text>
+<text x="566" y="107" font-size="9.5" fill="#c4ccda">  desktops, icon-only widgets</text>
+<text x="566" y="124" font-size="9.5" fill="#c4ccda">observation mode: ax_ocr_visual</text>
+<text x="566" y="147" font-size="9.5" fill="#8893a8">How often it fired: not reported</text>
+<text x="566" y="163" font-size="9.5" fill="#8893a8">Limited-AX split, Codex:</text>
+<text x="566" y="179" font-size="9.5" fill="#8893a8">27.78% to 33.33%</text>
+</g></svg>
+
+<p>The ladder itself is where the interesting measurement would be. Tactile defines three levels (accessibility semantics, OCR-grounded coordinates, visual fallback) and three observation modes (<code>ax</code>, <code>ax_ocr</code>, <code>ax_ocr_visual</code>). The paper reports no count of how often each level fired or how tasks fared when Level 3 was needed; the AX-adapted and Limited-AX labels are assigned per task in advance. It gives no numeric trigger for escalation, and Section 7 says future work should record "why structured evidence was insufficient." The baseline is a "no-skill" agent client, and Section 5.3 names a "stronger visual-only baseline" as still needed, so the evaluation does not compare accessibility against screenshots.</p>
+
+<h2 id="what-it-means">What it means for the accessibility-versus-vision decision</h2>
+
+<p>The direction of the Codex split is what the design predicts: a 10.04-point gain where the tree is usable and 5.55 where it is thin. That is one agent, one unreported sample size, no interval. Treat it as an anecdote that agrees with the hypothesis. The four-agent claim should be read as "there exist tasks where some Tactile setting succeeded and no-skill failed": 11, 10, 7 and 2 of them at most, minus however many the no-skill run would also have picked up on a second and third try.</p>
+
+<p>What would turn this into evidence is cheap to state: a fixed Tactile configuration per agent, three runs of each arm, and a per-step log of which ladder level acted. The trace format already exists; the paper shows one Zoom task with eleven state snapshots and traversal times of 0.24s to 0.85s.</p>
+
+<p>phoneshell has the same ladder on iOS and a measurement of its bottom rung. The tree is read first; <code>phoneshell/agent/observation.py</code> overlays numbered boxes on the screenshot only on stated conditions, two of them in its own words: "the accessibility tree is very thin" or "the tree exposes nothing interactive." Targets recovered from pixels by <code>phoneshell/perception/blind.py</code> are tagged <code>source="pixel"</code> with a confidence, and a pixel candidate that overlaps something the tree named is dropped. The house result from 120 paired runs on a physical iPhone 17 Pro Max is the number Tactile lacks: when the answer exists only as pixels, success is 100% with the screenshot and 0% without it (p &lt; 0.0001), and when the answer is in the tree the image changes nothing while adding about 35% to per-step cost. That is a statement about tasks. Tactile's 5.55-point Limited-AX figure is a statement about a task label, and the two should not be compared directly.</p>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># Section 5 (upper-bound definition), 5.1 (all numbers), 5.3 (caveats)
+open "https://arxiv.org/html/2607.14443v1"
+open "https://github.com/yliust/Tactile"
+
+# Percentages to task counts on the 96-task subset
+python3 -c "
+for name, a, b in (('Codex',38.54,50.00),('Claude Code',33.33,43.75),('OpenCode',33.33,40.62),('Goose',41.67,43.75)):
+    print(name, round(a*96/100), round(b*96/100))"
+# Codex 37 48 / Claude Code 32 42 / OpenCode 32 39 / Goose 40 42
+
+# phoneshell: the stated conditions for attaching a screenshot, and the pixel tag
+grep -n "so the screenshot carries numbered boxes" phoneshell/agent/observation.py
+grep -n 'source="pixel"' phoneshell/perception/blind.py</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim arXiv:2607.14443v1 defines its cross-agent With Tactile score as a best-per-task result among three settings that include no-skill, and reports Goose at 41.67% and 43.75% on 96 tasks. Our prediction: if a revision or follow-up published by 30 June 2027 reports a single fixed Tactile configuration with at least three runs per arm, the Goose gain will not be statistically distinguishable from zero and the Codex gain on the 96-task subset will be smaller than 11.46 points. A fixed-configuration Codex gain of 11.46 points or more with a 95% interval excluding zero would show the oracle construction was not inflating the result.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Yong Liu, Zhenyi Zhong, Zhanpeng Shi, <a href="https://arxiv.org/abs/2607.14443">Tactile: Giving Computer-Using Agents Hands and Feet</a>, arXiv:2607.14443v1, submitted 16 July 2026, Sections 3.2, 4, 5, 5.1, 5.3 and 7, read 10 November 2026.</li>
+      <li>Yong Liu et al., <a href="https://github.com/yliust/Tactile">Tactile repository</a>, linked from the paper; we did not run it.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/agent/observation.py</code>, <code>phoneshell/perception/blind.py</code>, and the pre-registered paired-run result on the <a href="https://blolabel.ai">Blolabel</a> home page, read 10 November 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
