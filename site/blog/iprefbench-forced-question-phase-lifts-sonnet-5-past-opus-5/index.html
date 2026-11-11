@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>On Apple&#x27;s iPrefBench, a forced question phase lifts Claude Sonnet 5 from 39.2% to 53.8%, past Opus 5&#x27;s 47.7% - Blolabel</title>
+<meta name="description" content="iPrefBench (arXiv:2610.34735, submitted 26 October 2026 by Apple and Ohio State researchers) tests 7 agents on 130 underspecified iOS tasks and reports action completion up to 91.6% against full task success up to 47.7%. Table 2 shows that requiring a pre-execution clarification phase raises Claude Sonnet 5 from 39.2% to 53.8% and Qwen3.8-27B from 26.2% to 35.4%, while question precision falls. The same model, Claude Sonnet 5, is an evaluated agent, the simulated user and the judge.">
+<link rel="canonical" href="https://blolabel.ai/blog/iprefbench-forced-question-phase-lifts-sonnet-5-past-opus-5/">
+<meta property="og:title" content="On Apple&#x27;s iPrefBench, a forced question phase lifts Claude Sonnet 5 from 39.2% to 53.8%, past Opus 5&#x27;s 47.7% - Blolabel">
+<meta property="og:description" content="iPrefBench (arXiv:2610.34735, Apple and Ohio State, 26 October 2026) reports agents completing up to 91.6% of actions but 47.7% of tasks. Its own Table 2 shows a prompt-level fix worth more than a model tier: a pre-execution clarification phase moves Claude Sonnet 5 from 39.2% to 53.8%.">
+<meta property="og:url" content="https://blolabel.ai/blog/iprefbench-forced-question-phase-lifts-sonnet-5-past-opus-5/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/iprefbench-forced-question-phase-lifts-sonnet-5-past-opus-5-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "On Apple's iPrefBench, a forced question phase lifts Claude Sonnet 5 from 39.2% to 53.8%, past Opus 5's 47.7%", "description": "iPrefBench (arXiv:2610.34735, submitted 26 October 2026 by Apple and Ohio State researchers) tests 7 agents on 130 underspecified iOS tasks and reports action completion up to 91.6% against full task success up to 47.7%. Table 2 shows that requiring a pre-execution clarification phase raises Claude Sonnet 5 from 39.2% to 53.8% and Qwen3.8-27B from 26.2% to 35.4%, while question precision falls. The same model, Claude Sonnet 5, is an evaluated agent, the simulated user and the judge.", "datePublished": "2026-11-10", "dateModified": "2026-11-10", "url": "https://blolabel.ai/blog/iprefbench-forced-question-phase-lifts-sonnet-5-past-opus-5/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/iprefbench-forced-question-phase-lifts-sonnet-5-past-opus-5/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/iprefbench-forced-question-phase-lifts-sonnet-5-past-opus-5-hero.png", "citation": ["https://arxiv.org/abs/2610.34735", "https://arxiv.org/abs/2606.09764", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#mechanism">Mechanism</a>
+    <a href="/blog/">Notes</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker" id="finding">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-11-10">10 November 2026</time>
+    <span>7 min read</span>
+  </div>
+  <h1>On Apple&#x27;s iPrefBench, a forced question phase lifts Claude Sonnet 5 from 39.2% to 53.8%, past Opus 5&#x27;s 47.7%</h1>
+  <p class="standfirst">Requiring one clarification phase before the first tap raises Claude Sonnet 5 from 39.2% to 53.8% full task success on Apple's iPrefBench (arXiv:2610.34735, submitted 26 October 2026), a 14.6-point gain that puts it above Claude Opus 5's 47.7% default score. Left to decide for themselves, the 7 agents tested ask between 0.08 and 0.35 questions per task, on a benchmark where 76 of 130 tasks contain something only the user can supply.</p>
+
+<p>"iPrefBench: A User-Centric Benchmark for Personalized Mobile Use Agents" comes from ten authors at The Ohio State University and Apple, led by Yuting Ning, with Jeffrey Nichols and Eldon Schoop as corresponding authors at Apple. It builds on the iOSWorld simulator and its single fictional user, Jordan Avery, whose 26 mock apps hold 3,051 past activity events. Each of the 130 tasks is underspecified on purpose. Some missing details can be inferred from that history; others (58.5% of tasks have at least one) can only be obtained by calling <code>ask_user</code>, which a simulated user answers.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/iprefbench-forced-question-phase-lifts-sonnet-5-past-opus-5-hero.png" alt="Abstract technical illustration on a dark grid: a path of small glowing nodes runs toward a target and stops just short of it, while a second path pauses early at a branching node, sends a thin amber line sideways and back, then reaches the target; cool blues and slate greys with one amber accent, no icons or readable text" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="method">Agents finish 91.6% of the actions and 47.7% of the tasks</h2>
+
+<p>The abstract's headline is the gap between two columns of Table 1. Claude Opus 5 satisfies 91.6% of action-completion criteria and passes 47.7% of tasks, because a task passes only when every criterion passes, personalization included. The paper splits personalization into Infer and Ask. Opus 5 scores 76.3% on Infer and 51.3% on Ask. Gemini 3.7 Flash scores 67.5% and 21.1%, the widest split in the table at 46.4 points, and it is also the agent that asks least: 0.08 questions per task. Gemini 3.1 Pro and Kimi K3 tie at 36.2% success, and Qwen3.8-Flash-Next reaches 31.5%.</p>
+
+<table>
+  <thead><tr><th>Agent</th><th>Clarification</th><th>Success</th><th>Action completion</th><th>Ask score</th><th>Ask recall</th><th>Ask precision</th><th>Questions per task</th></tr></thead>
+  <tbody>
+    <tr><td>Claude Opus 5</td><td>on-demand</td><td>47.7%</td><td>91.6%</td><td>51.3%</td><td>44.2%</td><td>65.8%</td><td>0.35</td></tr>
+    <tr><td>Claude Sonnet 5</td><td>on-demand</td><td>39.2%</td><td>83.1%</td><td>41.5%</td><td>25.7%</td><td>60.4%</td><td>0.24</td></tr>
+    <tr><td>Claude Sonnet 5</td><td>+ pre-execution</td><td>53.8%</td><td>82.0%</td><td>82.0%</td><td>85.0%</td><td>42.5%</td><td>1.37</td></tr>
+    <tr><td>Qwen3.8-27B</td><td>on-demand</td><td>26.2%</td><td>77.5%</td><td>29.4%</td><td>21.2%</td><td>70.6%</td><td>0.21</td></tr>
+    <tr><td>Qwen3.8-27B</td><td>+ pre-execution</td><td>35.4%</td><td>76.6%</td><td>65.0%</td><td>69.0%</td><td>60.9%</td><td>0.84</td></tr>
+    <tr><td>Gemini 3.7 Flash</td><td>on-demand</td><td>30.0%</td><td>79.6%</td><td>21.1%</td><td>10.6%</td><td>70.6%</td><td>0.08</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: "iPrefBench: A User-Centric Benchmark for Personalized Mobile Use Agents," arXiv:2610.34735v1, Table 1 (Section 4.2) and Table 2 (Section 4.4), submitted 26 October 2026, read 10 November 2026. Opus 5 with pre-execution clarification: not reported.</p>
+
+<p>Table 2 is the more useful result. With a prompt that requires a clarification phase before execution, Sonnet 5 asks 1.37 questions per task instead of 0.24, its recall of ask-only requirements goes from 25.7% to 85.0%, and success goes from 39.2% to 53.8%. Qwen3.8-27B goes from 26.2% to 35.4%. Action completion barely moves in either case (83.1% to 82.0%, and 77.5% to 76.6%), so the agents did not get better at operating the phone. They got the missing facts.</p>
+
+<svg viewBox="0 0 820 400" style="width:100%;height:auto" role="img" aria-label="Bar chart of full task success rate on the 130 iPrefBench tasks from Tables 1 and 2 of arXiv:2610.34735. With default on-demand asking: Claude Opus 5 47.7%, Claude Sonnet 5 39.2%, Gemini 3.1 Pro 36.2%, Kimi K3 36.2%, Qwen3.8-Flash-Next 31.5%, Gemini 3.7 Flash 30.0%, Qwen3.8-27B 26.2%. With an explicit pre-execution clarification phase, Claude Sonnet 5 rises to 53.8%, above Opus 5&#x27;s default score, and Qwen3.8-27B rises to 35.4%. Only those two agents were run with the clarification phase."><rect x="0" y="0" width="820" height="400" rx="12" fill="#151a24"/><g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="13.5" font-weight="600">Tables 1 and 2, arXiv:2610.34735: full task success on 130 iPrefBench tasks</text>
+<line x1="60" y1="280.0" x2="800" y2="280.0" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="283.0" font-size="9.5" text-anchor="end" fill="#8893a8">0.0%</text>
+<line x1="60" y1="222.5" x2="800" y2="222.5" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="225.5" font-size="9.5" text-anchor="end" fill="#8893a8">20.0%</text>
+<line x1="60" y1="165.0" x2="800" y2="165.0" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="168.0" font-size="9.5" text-anchor="end" fill="#8893a8">40.0%</text>
+<line x1="60" y1="107.5" x2="800" y2="107.5" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="110.5" font-size="9.5" text-anchor="end" fill="#8893a8">60.0%</text>
+<line x1="60" y1="50.0" x2="800" y2="50.0" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="53.0" font-size="9.5" text-anchor="end" fill="#8893a8">80.0%</text>
+<rect x="74.0" y="142.9" width="36.9" height="137.1" fill="#7a8bd6"/>
+<text x="92.4" y="137.9" font-size="9.5" font-weight="600" text-anchor="middle" fill="#7a8bd6">47.7%</text>
+<text x="112.9" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">Claude</text>
+<text x="112.9" y="311" font-size="10" text-anchor="middle" fill="#c4ccda">Opus 5</text>
+<rect x="179.7" y="167.3" width="36.9" height="112.7" fill="#7a8bd6"/>
+<text x="198.1" y="162.3" font-size="9.5" font-weight="600" text-anchor="middle" fill="#7a8bd6">39.2%</text>
+<rect x="220.6" y="125.3" width="36.9" height="154.7" fill="#e8a33d"/>
+<text x="239.0" y="120.3" font-size="9.5" font-weight="600" text-anchor="middle" fill="#e8a33d">53.8%</text>
+<text x="218.6" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">Claude</text>
+<text x="218.6" y="311" font-size="10" text-anchor="middle" fill="#c4ccda">Sonnet 5</text>
+<rect x="285.4" y="175.9" width="36.9" height="104.1" fill="#7a8bd6"/>
+<text x="303.9" y="170.9" font-size="9.5" font-weight="600" text-anchor="middle" fill="#7a8bd6">36.2%</text>
+<text x="324.3" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">Gemini</text>
+<text x="324.3" y="311" font-size="10" text-anchor="middle" fill="#c4ccda">3.1 Pro</text>
+<rect x="391.1" y="175.9" width="36.9" height="104.1" fill="#7a8bd6"/>
+<text x="409.6" y="170.9" font-size="9.5" font-weight="600" text-anchor="middle" fill="#7a8bd6">36.2%</text>
+<text x="430.0" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">Kimi K3</text>
+<rect x="496.9" y="189.4" width="36.9" height="90.6" fill="#7a8bd6"/>
+<text x="515.3" y="184.4" font-size="9.5" font-weight="600" text-anchor="middle" fill="#7a8bd6">31.5%</text>
+<text x="535.7" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">Qwen3.8-</text>
+<text x="535.7" y="311" font-size="10" text-anchor="middle" fill="#c4ccda">Flash-Next</text>
+<rect x="602.6" y="193.8" width="36.9" height="86.2" fill="#7a8bd6"/>
+<text x="621.0" y="188.8" font-size="9.5" font-weight="600" text-anchor="middle" fill="#7a8bd6">30.0%</text>
+<text x="641.4" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">Gemini</text>
+<text x="641.4" y="311" font-size="10" text-anchor="middle" fill="#c4ccda">3.7 Flash</text>
+<rect x="708.3" y="204.7" width="36.9" height="75.3" fill="#7a8bd6"/>
+<text x="726.7" y="199.7" font-size="9.5" font-weight="600" text-anchor="middle" fill="#7a8bd6">26.2%</text>
+<rect x="749.1" y="178.2" width="36.9" height="101.8" fill="#e8a33d"/>
+<text x="767.6" y="173.2" font-size="9.5" font-weight="600" text-anchor="middle" fill="#e8a33d">35.4%</text>
+<text x="747.1" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">Qwen3.8-</text>
+<text x="747.1" y="311" font-size="10" text-anchor="middle" fill="#c4ccda">27B</text>
+<rect x="60" y="342" width="14" height="10" fill="#7a8bd6"/><text x="80" y="351" font-size="9.5" fill="#c4ccda">on-demand asking (default)</text>
+<rect x="256" y="342" width="14" height="10" fill="#e8a33d"/><text x="276" y="351" font-size="9.5" fill="#c4ccda">+ pre-execution clarification phase</text>
+<text x="20" y="374" font-size="9.5" fill="#8893a8">Only Sonnet 5 and Qwen3.8-27B were run with the clarification phase. Opus 5 was not.</text>
+<text x="20" y="389" font-size="9.5" fill="#8893a8">Source: arXiv:2610.34735v1, Table 1 and Table 2, read 10 November 2026.</text></g></svg>
+
+<p>The cost is visible in the same row. Sonnet 5's question precision falls from 60.4% to 42.5%: more than half of its questions under the forced phase ask for something that was not an ask-only requirement. The paper's Appendix E.3 puts the default behaviour this way: "the bottleneck in user interaction is not how agents ask but whether they ask."</p>
+
+<h2 id="mechanism">One model is the agent, the user and the judge</h2>
+
+<p>Section 4.1 says: "We use Claude Sonnet 5 for both the user simulator and LLM judges." Claude Sonnet 5 is also one of the 7 evaluated agents, and the 53.8% result is Sonnet 5 asking questions of Sonnet 5 and being graded by Sonnet 5. Grading is an LLM judge scoring each rubric criterion as binary from screenshots, actions, the final answer, the hidden profile and hidden context. We found no device-state check in the paper. A cross-judge check with Gemini 3.7 Flash is reported in Appendix E.4, and we could not find an analysis of whether the judge favours its own model family.</p>
+
+<svg viewBox="0 0 820 280" style="width:100%;height:auto" role="img" aria-label="Diagram contrasting iPrefBench with phoneshell. In iPrefBench, which runs in the iOS simulator, Claude Sonnet 5 appears three times: as one of the 7 agents under test, as the simulated user, and as the judge of every rubric criterion. The ask_user action is first-class but agents use it only 0.08 to 0.35 times per task, although 76 of 130 tasks need an answer only the user can give. phoneshell runs on a physical iPhone with no simulated user and no judge model, and its bench has no ask_user verb; its server prompt allows a question only after a tool refuses an irreversible action."><rect x="0" y="0" width="820" height="280" rx="12" fill="#151a24"/><g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="13.5" font-weight="600">Where one model sits three times in iPrefBench, and what phoneshell has instead</text>
+<rect x="20" y="44" width="380" height="220" rx="8" fill="#262d3d" stroke="#e8a33d"/>
+<text x="210" y="66" font-size="11.5" font-weight="600" text-anchor="middle" fill="#e8a33d">iPrefBench (iOS simulator)</text>
+<text x="33" y="90" font-size="9.5" fill="#c4ccda">agent under test: 7 models,</text>
+<text x="33" y="107" font-size="9.5" fill="#c4ccda">  one of them Claude Sonnet 5</text>
+<text x="33" y="124" font-size="9.5" fill="#c4ccda">simulated user: Claude Sonnet 5</text>
+<text x="33" y="141" font-size="9.5" fill="#c4ccda">judge of every rubric criterion:</text>
+<text x="33" y="158" font-size="9.5" fill="#c4ccda">  Claude Sonnet 5</text>
+<text x="33" y="181" font-size="9.5" fill="#8893a8">ask_user is a first-class action</text>
+<text x="33" y="197" font-size="9.5" fill="#8893a8">used 0.08 to 0.35 times per task</text>
+<text x="33" y="213" font-size="9.5" fill="#8893a8">76 of 130 tasks need an answer</text>
+<text x="33" y="229" font-size="9.5" fill="#8893a8">only the user can give</text>
+<rect x="420" y="44" width="380" height="220" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="610" y="66" font-size="11.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">phoneshell (physical iPhone)</text>
+<text x="433" y="90" font-size="9.5" fill="#c4ccda">agent under test: the model</text>
+<text x="433" y="107" font-size="9.5" fill="#c4ccda">no simulated user</text>
+<text x="433" y="124" font-size="9.5" fill="#c4ccda">no judge model: bench/verify.py</text>
+<text x="433" y="141" font-size="9.5" fill="#c4ccda">  reads the phone after the run</text>
+<text x="433" y="164" font-size="9.5" fill="#8893a8">no ask_user verb in the bench</text>
+<text x="433" y="180" font-size="9.5" fill="#8893a8">the server prompt allows a question</text>
+<text x="433" y="196" font-size="9.5" fill="#8893a8">only after a tool refuses an</text>
+<text x="433" y="212" font-size="9.5" fill="#8893a8">irreversible action</text>
+</g></svg>
+
+<p>Two smaller mismatches between prose and table: the introduction and Section 4.2 give the best ask recall as 44.3%, and Table 1 prints 44.2% for Opus 5. Section 4.4 says Qwen3.8-27B's inferable personalization reaches 63% with the top-50 history events and that the full history adds nothing further; Table 1 gives 62.1% for the full-history default. Neither changes a conclusion.</p>
+
+<h2 id="what-it-means">What it means for building a phone agent that asks</h2>
+
+<p>A 14.6-point gain from a prompt change is larger than the 8.5-point gap between Sonnet 5 and Opus 5 at default settings. If a product team is choosing between a bigger model and a mandatory "confirm the unknowns" step, Table 2 says the step is worth more on this task mix, and it costs about one extra user interruption per task. Whether a user tolerates 1.37 questions per request, more than half of them unnecessary, is a product question the benchmark does not measure. Opus 5 with the forced phase is not reported, so the table cannot say whether the two gains stack.</p>
+
+<p>The default numbers also say something about agent priors. An agent that is handed <code>ask_user</code> and uses it once every three to twelve tasks has learned that finishing is rewarded and asking is not. The paper's failure analysis agrees: 89% of Sonnet 5's 79 failed tasks and 84% of Qwen3.8-27B's 96 contain at least one personalization error, with "Silent Default" and "Silent Guess" among the four categories. Per-category shares are in a figure we could not read as text: not reported here.</p>
+
+<p>phoneshell cannot be scored on this axis at all. Its benchmark has no <code>ask_user</code> verb, and the only place its server prompt allows a question is after a refusal: "If a tool refuses an action because it looks irreversible, stop and ask the user in one sentence." We wrote that gap up in <a href="/blog/no-verb-exists-for-asking-back/">no verb exists for asking back</a>, and covered the Jordan Avery environment in <a href="/blog/jordan-avery-one-identity-26-apps/">one identity, 26 apps</a>. Our 80 public tasks are fully specified, which is why device-state checks can grade them without a judge. An underspecified task needs a user, and iPrefBench shows what that buys and what it costs: a simulated user and a judge that share weights with one of the contestants.</p>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># Table 1 (7 agents) and Table 2 (pre-execution clarification)
+open "https://arxiv.org/html/2610.34735v1"
+# The HTML render duplicates some digits ("47.747.7%"); the PDF is clean:
+open "https://arxiv.org/pdf/2610.34735v1"
+
+# The judge and simulator sentence is in Section 4.1:
+#   "We use Claude Sonnet 5 for both the user simulator and LLM judges"
+
+# phoneshell: no ask verb, one sentence in the server prompt
+git clone https://github.com/Blomega/phoneshell &amp;&amp; cd phoneshell
+grep -rn "ask_user" phoneshell/ ; grep -n "ask the user" phoneshell/server.py</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim Table 2 of arXiv:2610.34735v1 reports Claude Sonnet 5 at 39.2% success on-demand and 53.8% with pre-execution clarification, and Table 1 reports Claude Opus 5 at 47.7%. Our prediction: if the authors or anyone else run Opus 5 with the same clarification phase by 30 June 2027, its success rate will rise by at least 5 points and its question precision will fall. A result where a forced phase leaves Opus 5 flat, or where a second judge model from a different vendor erases the Sonnet 5 gain, would show the 14.6 points were specific to one model or to the Sonnet-judges-Sonnet setup.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Yuting Ning, Ruijia Cheng, Sushobhan Ghosh, Peitong Duan, HungShi Lin, Abhishek Sundararajan, Shreyash Pandey, Huan Sun, Jeffrey Nichols, Eldon Schoop, <a href="https://arxiv.org/abs/2610.34735">iPrefBench: A User-Centric Benchmark for Personalized Mobile Use Agents</a>, arXiv:2610.34735v1, submitted 26 October 2026, Tables 1 and 2, Sections 3.4, 4.1 to 4.4, Appendix E, read 10 November 2026.</li>
+      <li><a href="https://arxiv.org/abs/2606.09764">iOSWorld: A Benchmark for Personally Intelligent Phone Agents</a>, arXiv:2606.09764, released 8 June 2026, the simulator iPrefBench builds on.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/server.py</code>, read 10 November 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
