@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Microsoft&#x27;s HCU scores 66.08 without its screenshot channel and 65.59 with it - Blolabel</title>
+<meta name="description" content="Hybrid Computer Use (arXiv:2610.41432, Microsoft Research with Fudan and Tsinghua, submitted 30 October 2026) exposes code, accessibility (AX) and GUI screenshot channels through one MCP server. In its GPT-5.4 ablation on 361 OSWorld 1.0 tasks, full HCU scores 65.59%, HCU without the GUI channel 66.08% and HCU without the AX channel 62.79%, with the GUI contrast changing sign across the three runs. The ablation covers one model; Claude Opus 5.5 sends 94% of its desktop calls to GUI.">
+<link rel="canonical" href="https://blolabel.ai/blog/hcu-scores-66-08-without-its-screenshot-channel-65-59-with-it/">
+<meta property="og:title" content="Microsoft&#x27;s HCU scores 66.08 without its screenshot channel and 65.59 with it - Blolabel">
+<meta property="og:description" content="Hybrid Computer Use (arXiv:2610.41432, Microsoft Research, 30 October 2026) gives agents code, accessibility and screenshot channels. Its own ablation on OSWorld 1.0: removing screenshots leaves the score at 66.08 against 65.59, removing accessibility costs 2.79 points. Only GPT-5.4 was ablated, and Claude sends 94% of its calls to GUI.">
+<meta property="og:url" content="https://blolabel.ai/blog/hcu-scores-66-08-without-its-screenshot-channel-65-59-with-it/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/hcu-scores-66-08-without-its-screenshot-channel-65-59-with-it-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Microsoft's HCU scores 66.08 without its screenshot channel and 65.59 with it", "description": "Hybrid Computer Use (arXiv:2610.41432, Microsoft Research with Fudan and Tsinghua, submitted 30 October 2026) exposes code, accessibility (AX) and GUI screenshot channels through one MCP server. In its GPT-5.4 ablation on 361 OSWorld 1.0 tasks, full HCU scores 65.59%, HCU without the GUI channel 66.08% and HCU without the AX channel 62.79%, with the GUI contrast changing sign across the three runs. The ablation covers one model; Claude Opus 5.5 sends 94% of its desktop calls to GUI.", "datePublished": "2026-11-11", "dateModified": "2026-11-11", "url": "https://blolabel.ai/blog/hcu-scores-66-08-without-its-screenshot-channel-65-59-with-it/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/hcu-scores-66-08-without-its-screenshot-channel-65-59-with-it/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/hcu-scores-66-08-without-its-screenshot-channel-65-59-with-it-hero.png", "citation": ["https://arxiv.org/abs/2610.41432", "https://arxiv.org/html/2610.41432v1", "https://microsoft.github.io/Hybrid-Computer-Use/", "https://github.com/microsoft/Hybrid-Computer-Use", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#mechanism">Mechanism</a>
+    <a href="/blog/">Notes</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker" id="finding">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-11-11">11 November 2026</time>
+    <span>6 min read</span>
+  </div>
+  <h1>Microsoft&#x27;s HCU scores 66.08 without its screenshot channel and 65.59 with it</h1>
+  <p class="standfirst">Hybrid Computer Use (arXiv:2610.41432, Microsoft Research, submitted 30 October 2026) gives an agent three channels: code, the accessibility tree (AX) and GUI screenshots with pixel input. In its ablation with GPT-5.4 on 361 OSWorld 1.0 tasks, the full interface scores 65.59%. Take the GUI channel away and the score is 66.08%. Take the AX channel away and it is 62.79%. Each figure is a mean of three runs.</p>
+
+<p>The paper is by Haoqing Wang, Xiaoyi Zhang, Sicheng Fan, Zhexin Zhang, Xinjie Zhang, Jiahao Li, Bin Li and Yan Lu, of Microsoft Research with Fudan and Tsinghua. HCU ships as an MIT-licensed MCP server for Linux, macOS and Windows. Its headline is OSWorld 2.0: 72.37% Partial with GPT-6 Astra and 35.19% Binary with Claude Opus 5, the highest full-set scores among the systems it tabulates. The ablation sits behind that headline, in Table 2 and Appendix C.1, and it speaks directly to the question this site keeps asking: what a screenshot buys once the tree is available.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/hcu-scores-66-08-without-its-screenshot-channel-65-59-with-it-hero.png" alt="Abstract technical illustration on a dark grid: three parallel channels running left to right, one a branching tree of thin green lines, one a strip of soft blue rectangles like frames, one a dotted line of small squares, converging on a single point, with the frame strip fading out partway, no icons or readable text" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="method">The screenshot channel's effect on score changes sign from run to run</h2>
+
+<table>
+  <thead><tr><th>Configuration (GPT-5.4, OSWorld 1.0)</th><th>Score, mean of 3 runs</th><th>Run 1 / 2 / 3</th><th>Steps</th><th>Input tokens (M)</th><th>Cost per task</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>HCU</td><td>65.59% (SD 0.61)</td><td>66.16 / 65.65 / 64.95</td><td>28.60</td><td>0.941</td><td>$2.52</td><td>Tables 2 and 10</td></tr>
+    <tr><td>HCU w/o GUI channel</td><td>66.08% (SD 1.66)</td><td>65.64 / 64.70 / 67.92</td><td>32.16</td><td>0.909</td><td>$2.45</td><td>Tables 2 and 10</td></tr>
+    <tr><td>HCU w/o skill</td><td>64.00% (SD 1.25)</td><td>62.84 / 65.33 / 63.83</td><td>33.47</td><td>0.962</td><td>$2.57</td><td>Tables 2 and 10</td></tr>
+    <tr><td>HCU w/o AX channel</td><td>62.79% (SD 0.65)</td><td>63.53 / 62.30 / 62.55</td><td>33.28</td><td>1.051</td><td>$2.82</td><td>Tables 2 and 10</td></tr>
+    <tr><td>CUA Driver</td><td>62.30% (SD 1.12)</td><td>63.29 / 61.09 / 62.51</td><td>40.74</td><td>2.181</td><td>$5.65</td><td>Tables 2 and 10</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: "Hybrid Computer Use: A Unified Programmatic, Semantic, and Visual Interface for General Agents," arXiv:2610.41432v1, Table 2 and Appendix C.1 Table 10, submitted 30 October 2026, read 11 November 2026. 361 tasks, 100-step limit, GPT-5.4 at xhigh reasoning effort in Codex.</p>
+
+<svg viewBox="0 0 820 382" style="width:100%;height:auto" role="img" aria-label="Bar chart of OSWorld 1.0 Score for five configurations with GPT-5.4, means of three runs on 361 tasks, from Tables 2 and 10 of the Hybrid Computer Use paper, arXiv:2610.41432. Full HCU scores 65.59%. HCU without the GUI screenshot channel scores 66.08%. HCU without the skill scores 64.00%. HCU without the accessibility AX channel scores 62.79%. The CUA Driver baseline scores 62.30%. Removing the screenshot channel does not lower the mean; removing the accessibility channel lowers it by 2.79 points."><rect x="0" y="0" width="820" height="382" rx="12" fill="#151a24"/><g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="13.5" font-weight="600">Tables 2 and 10, arXiv:2610.41432: OSWorld 1.0 Score, GPT-5.4, mean of three runs on 361 tasks</text>
+<line x1="60" y1="280.0" x2="800" y2="280.0" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="283.0" font-size="9.5" text-anchor="end" fill="#8893a8">0.00%</text>
+<line x1="60" y1="222.5" x2="800" y2="222.5" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="225.5" font-size="9.5" text-anchor="end" fill="#8893a8">20.00%</text>
+<line x1="60" y1="165.0" x2="800" y2="165.0" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="168.0" font-size="9.5" text-anchor="end" fill="#8893a8">40.00%</text>
+<line x1="60" y1="107.5" x2="800" y2="107.5" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="110.5" font-size="9.5" text-anchor="end" fill="#8893a8">60.00%</text>
+<line x1="60" y1="50.0" x2="800" y2="50.0" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="53.0" font-size="9.5" text-anchor="end" fill="#8893a8">80.00%</text>
+<rect x="112.0" y="91.4" width="44.0" height="188.6" fill="#e8a33d"/>
+<text x="134.0" y="86.4" font-size="9.5" font-weight="600" text-anchor="middle" fill="#e8a33d">65.59%</text>
+<text x="134.0" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">HCU</text>
+<rect x="260.0" y="90.0" width="44.0" height="190.0" fill="#e8a33d"/>
+<text x="282.0" y="85.0" font-size="9.5" font-weight="600" text-anchor="middle" fill="#e8a33d">66.08%</text>
+<text x="282.0" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">HCU without</text>
+<text x="282.0" y="310" font-size="10" text-anchor="middle" fill="#c4ccda">GUI</text>
+<rect x="408.0" y="96.0" width="44.0" height="184.0" fill="#e8a33d"/>
+<text x="430.0" y="91.0" font-size="9.5" font-weight="600" text-anchor="middle" fill="#e8a33d">64.00%</text>
+<text x="430.0" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">HCU without</text>
+<text x="430.0" y="310" font-size="10" text-anchor="middle" fill="#c4ccda">skill</text>
+<rect x="556.0" y="99.5" width="44.0" height="180.5" fill="#e8a33d"/>
+<text x="578.0" y="94.5" font-size="9.5" font-weight="600" text-anchor="middle" fill="#e8a33d">62.79%</text>
+<text x="578.0" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">HCU without</text>
+<text x="578.0" y="310" font-size="10" text-anchor="middle" fill="#c4ccda">AX</text>
+<rect x="704.0" y="100.9" width="44.0" height="179.1" fill="#e8a33d"/>
+<text x="726.0" y="95.9" font-size="9.5" font-weight="600" text-anchor="middle" fill="#e8a33d">62.30%</text>
+<text x="726.0" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">CUA Driver</text>
+<rect x="60" y="330" width="14" height="10" fill="#e8a33d"/><text x="80" y="339" font-size="9.5" fill="#c4ccda">Score (%), mean of three runs</text>
+<text x="20" y="362" font-size="9.5" fill="#8893a8">Sample standard deviations across runs: 0.61, 1.66, 1.25, 0.65 and 1.12 in the order shown. HCU minus HCU without GUI by run: +0.52, +0.95, -2.97.</text>
+<text x="20" y="377" font-size="9.5" fill="#8893a8">Source: arXiv:2610.41432v1, Table 2 and Appendix C.1 Table 10, read 11 November 2026.</text>
+</g></svg>
+
+<p>The authors read the table the same way. Their words: "removing GUI leaves Score within run-to-run variation while increasing Steps by 12.45%." Appendix C.1 gives the runs. Full HCU beats the no-GUI arm by 0.52 and 0.95 points in runs 1 and 2 and loses by 2.97 in run 3; "the contrast with HCU w/o GUI changes sign across runs." The AX contrast does not: HCU leads the no-AX arm by 2.40 to 3.35 points in every run, and the mean gap is 2.79.</p>
+
+<p>What screenshots buy here is steps. With the GUI channel the agent takes 28.60 steps per task, without it 32.16. They cost almost nothing in this design, because the model decides when to look: input tokens go from 0.909M to 0.941M per task (3.4% more) and cost from $2.45 to $2.52 (2.8% more). Against the baseline the saving is large on every axis. CUA Driver, which also offers element-addressed actions, uses 40.74 steps, 2.181M input tokens and $5.65 per task for a score of 62.30%.</p>
+
+<h2 id="mechanism">The ablated model is the one that uses screenshots least</h2>
+
+<svg viewBox="0 0 820 382" style="width:100%;height:auto" role="img" aria-label="Bar chart of the share of each model&#x27;s AX and GUI calls that went to the accessibility channel under Hybrid Computer Use on OSWorld 1.0, from Section 4.4 of arXiv:2610.41432. GPT-5.4 sent 80% to AX, Grok 4.7 sent 68%, Gemini 3.8 Flash sent 51%, and Claude Opus 5.5 sent 6%, using GUI for the other 94%. The channel ablation in Table 2 was run only with GPT-5.4, the model that uses the screenshot channel least."><rect x="0" y="0" width="820" height="382" rx="12" fill="#151a24"/><g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="13.5" font-weight="600">Section 4.4, arXiv:2610.41432: share of each model&#x27;s HCU desktop calls that went to the accessibility (AX) channel</text>
+<line x1="60" y1="280.0" x2="800" y2="280.0" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="283.0" font-size="9.5" text-anchor="end" fill="#8893a8">0%</text>
+<line x1="60" y1="222.5" x2="800" y2="222.5" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="225.5" font-size="9.5" text-anchor="end" fill="#8893a8">25%</text>
+<line x1="60" y1="165.0" x2="800" y2="165.0" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="168.0" font-size="9.5" text-anchor="end" fill="#8893a8">50%</text>
+<line x1="60" y1="107.5" x2="800" y2="107.5" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="110.5" font-size="9.5" text-anchor="end" fill="#8893a8">75%</text>
+<line x1="60" y1="50.0" x2="800" y2="50.0" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="53.0" font-size="9.5" text-anchor="end" fill="#8893a8">100%</text>
+<rect x="130.5" y="96.0" width="44.0" height="184.0" fill="#5ad1a0"/>
+<text x="152.5" y="91.0" font-size="9.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">80%</text>
+<text x="152.5" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">GPT-5.4</text>
+<text x="152.5" y="310" font-size="10" text-anchor="middle" fill="#c4ccda">(Codex)</text>
+<rect x="315.5" y="123.6" width="44.0" height="156.4" fill="#5ad1a0"/>
+<text x="337.5" y="118.6" font-size="9.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">68%</text>
+<text x="337.5" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">Grok 4.7</text>
+<text x="337.5" y="310" font-size="10" text-anchor="middle" fill="#c4ccda">(Grok Build)</text>
+<rect x="500.5" y="162.7" width="44.0" height="117.3" fill="#5ad1a0"/>
+<text x="522.5" y="157.7" font-size="9.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">51%</text>
+<text x="522.5" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">Gemini 3.8 Flash</text>
+<text x="522.5" y="310" font-size="10" text-anchor="middle" fill="#c4ccda">(Gemini CLI)</text>
+<rect x="685.5" y="266.2" width="44.0" height="13.8" fill="#5ad1a0"/>
+<text x="707.5" y="261.2" font-size="9.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">6%</text>
+<text x="707.5" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">Claude Opus 5.5</text>
+<text x="707.5" y="310" font-size="10" text-anchor="middle" fill="#c4ccda">(Claude Code)</text>
+<rect x="60" y="330" width="14" height="10" fill="#5ad1a0"/><text x="80" y="339" font-size="9.5" fill="#c4ccda">AX share of AX plus GUI calls (%), OSWorld 1.0</text>
+<text x="20" y="362" font-size="9.5" fill="#8893a8">Claude&#x27;s 6% is 100 minus the 94% GUI share the paper reports. Score gains over CUA Driver: GPT +3.29, Grok +6.81, Gemini +12.90, Claude +2.94.</text>
+<text x="20" y="377" font-size="9.5" fill="#8893a8">Source: arXiv:2610.41432v1, Section 4.4 and Table 3, read 11 November 2026.</text>
+</g></svg>
+
+<p>Section 4.4 compares four models on the same interface, each in its vendor's own agent CLI. Of their AX and GUI calls, GPT-5.4 sends 80% to AX, Grok 4.7 sends 68% and Gemini 3.8 Flash 51%. Then: "Claude instead uses GUI for 94% of these calls," which leaves 6% for AX. All four score higher with HCU than with CUA Driver: by 3.29 points for GPT, 6.81 for Grok, 12.90 for Gemini and 2.94 for Claude Opus 5.5.</p>
+
+<p>The channel ablation was run with GPT-5.4 only. So the 66.08 against 65.59 result describes a model that already routes four calls in five through the tree. Whether a no-GUI arm would hurt the model that routes 94% through pixels is not in the paper. Claude's 2.94-point gain also came with steps down 1% and time up 6%, and it is the only one of the four whose step count did not fall, which fits a model that kept working mostly the way it did before.</p>
+
+<p>Three of the models mix channels inside a task. On 29% to 31% of the tasks where GPT, Gemini or Grok used GUI at all, every GUI call was a screenshot and every action went through AX. That is a look-with-pixels, act-through-the-tree split, chosen by the model.</p>
+
+<svg viewBox="0 0 820 263" style="width:100%;height:auto" role="img" aria-label="Diagram of the two action guards in Hybrid Computer Use, from Appendix E of arXiv:2610.41432. Before an accessibility action on a ref, the target guard resolves the ref against live state and rejects missing, ambiguous or replaced elements with the error stale_ref; stale-category errors were 88 of 10,783 calls. Before a GUI coordinate action, the layout guard checks the live window layout against the lease registered by the last screenshot and on mismatch blocks input with gui_frame_stale and returns a fresh screenshot. Every response carries a JSON evidence line with an error code and whether input was emitted, per-target effect lines, and an accessibility diff. The project page states batches of up to 64 actions."><rect x="0" y="0" width="820" height="263" rx="12" fill="#151a24"/><g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="13.5" font-weight="600">HCU&#x27;s two action guards (Appendix E): what is checked before input is sent</text>
+<rect x="20" y="44" width="245" height="180" rx="8" fill="#262d3d" stroke="#5ad1a0"/>
+<text x="143" y="66" font-size="11.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">AX action on a ref</text>
+<text x="32" y="90" font-size="9.5" fill="#c4ccda">The target guard resolves the ref</text>
+<text x="32" y="106" font-size="9.5" fill="#c4ccda">against live state before input.</text>
+<text x="32" y="122" font-size="9.5" fill="#c4ccda">Missing, ambiguous or replaced</text>
+<text x="32" y="138" font-size="9.5" fill="#c4ccda">element: rejected as stale_ref.</text>
+<text x="32" y="160" font-size="9.5" fill="#8893a8">Stale-category errors:</text>
+<text x="32" y="176" font-size="9.5" fill="#8893a8">88 of 10,783 calls.</text>
+<line x1="268" y1="134" x2="282" y2="134" stroke="#8893a8" stroke-width="1.5"/><path d="M282 130 L288 134 L282 138 Z" fill="#8893a8"/>
+<rect x="287" y="44" width="245" height="180" rx="8" fill="#262d3d" stroke="#e8a33d"/>
+<text x="410" y="66" font-size="11.5" font-weight="600" text-anchor="middle" fill="#e8a33d">GUI action on a coordinate</text>
+<text x="299" y="90" font-size="9.5" fill="#c4ccda">The layout guard checks the live</text>
+<text x="299" y="106" font-size="9.5" fill="#c4ccda">window layout at the target point</text>
+<text x="299" y="122" font-size="9.5" fill="#c4ccda">against the lease from the last</text>
+<text x="299" y="138" font-size="9.5" fill="#c4ccda">screenshot. Mismatch: input blocked,</text>
+<text x="299" y="154" font-size="9.5" fill="#c4ccda">gui_frame_stale, fresh screenshot.</text>
+<line x1="536" y1="134" x2="550" y2="134" stroke="#8893a8" stroke-width="1.5"/><path d="M550 130 L556 134 L550 138 Z" fill="#8893a8"/>
+<rect x="555" y="44" width="245" height="180" rx="8" fill="#262d3d" stroke="#7a8bd6"/>
+<text x="677" y="66" font-size="11.5" font-weight="600" text-anchor="middle" fill="#7a8bd6">What comes back</text>
+<text x="567" y="90" font-size="9.5" fill="#c4ccda">A JSON evidence line with an error</text>
+<text x="567" y="106" font-size="9.5" fill="#c4ccda">code and whether input was emitted.</text>
+<text x="567" y="122" font-size="9.5" fill="#c4ccda">Per-target effect lines and an AX</text>
+<text x="567" y="138" font-size="9.5" fill="#c4ccda">diff against the last snapshot</text>
+<text x="567" y="154" font-size="9.5" fill="#c4ccda">the model was shown.</text>
+<text x="567" y="176" font-size="9.5" fill="#8893a8">Batches of up to 64 actions</text>
+<text x="567" y="192" font-size="9.5" fill="#8893a8">(project page).</text>
+<text x="20" y="246" font-size="9.5" fill="#8893a8">Source: arXiv:2610.41432v1, Appendix E and Table 11; batch limit from microsoft.github.io/Hybrid-Computer-Use, read 11 November 2026.</text>
+</g></svg>
+
+<p>The guards are what make mixing safe. Before an AX action the target guard resolves the ref against live state and rejects a missing, ambiguous or replaced element as <code>stale_ref</code>. Before a GUI coordinate action the layout guard compares the live window layout with the one registered by the last screenshot and on mismatch blocks input with <code>gui_frame_stale</code>. Table 11 counts how often staleness fired: 88 stale-category errors in 10,783 AX and GUI calls, 0.82%, across 1,083 task-runs. All AX and GUI errors together were 638 of 10,783, 5.9%. The project page gives a batch limit of up to 64 actions per call.</p>
+
+<h2 id="what-it-means">What it means for the tree-versus-pixels decision</h2>
+
+<p>Our house result is the forced version of this experiment. In 120 paired runs on a physical iPhone 17 Pro Max, attaching the screenshot changed nothing when the answer was in the accessibility tree and added about 35% to per-step cost; when the answer existed only as pixels, success was 100% with the image and 0% without it. HCU's number is the optional version on desktop. Let the model ask for the image only when it wants one, and the image costs 2.8% per task with no measurable score effect for a tree-preferring model. The two agree on direction. The size of the tax depends on who decides when to look.</p>
+
+<p>OSWorld 1.0 is also not a pixel-only test set. The paper reports no split of the 361 tasks by whether the tree carries the answer, so 66.08 without GUI cannot be read as "screenshots are unnecessary." It says these tasks, for this model, rarely needed them.</p>
+
+<p>One caution on the numbers that travel. The project page leads with 70.13% on OSWorld 1.0 at 59.1% lower cost than CUA Driver. That is the released version, which Appendix A says was refined after the experiments: "we refined the interface and skill into the released version." The evaluated version behind the ablations scores 65.77% on the same 360 tasks. The run count for the released figure is not reported.</p>
+
+<p>phoneshell guards the same seam differently. It does not keep element handles across a re-render; a comment in <code>phoneshell/actions.py</code> gives the reason: "handles go stale the instant the tree re-renders." It taps a coordinate from the snapshot the model reasoned about, and before the tap <code>phoneshell/agent/verify.py</code> crops the element's rect from the current frame and checks that the claimed label is what the pixels show. HCU re-resolves the reference; we re-read the pixels. HCU's 88 in 10,783 is the first published rate we have seen for how often a live-state guard fires, and we have not measured ours.</p>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># Table 2 (ablation), Table 3 and Section 4.4 (models), Appendix C.1 Tables 10 and 11
+open "https://arxiv.org/html/2610.41432v1"
+open "https://microsoft.github.io/Hybrid-Computer-Use/"
+
+python3 -c "
+hcu=(66.16,65.65,64.95); nogui=(65.64,64.70,67.92); noax=(63.53,62.30,62.55)
+print([round(a-b,2) for a,b in zip(hcu,nogui)])   # [0.52, 0.95, -2.97]
+print([round(a-b,2) for a,b in zip(hcu,noax)])    # [2.63, 3.35, 2.4]
+print(round((32.16-28.60)/28.60*100,2))           # 12.45
+print(round((2.52-2.45)/2.52*100,1), round((0.941-0.909)/0.941*100,1))  # 2.8 3.4
+print(round(88/10783*100,2), round(638/10783*100,1))                    # 0.82 5.9"
+
+# phoneshell: why handles are not cached, and the pre-tap pixel check
+grep -n "handles go stale the instant the tree re-renders" phoneshell/actions.py
+grep -n "does macOS" phoneshell/agent/verify.py</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim that arXiv:2610.41432v1 shows no score loss from removing HCU's screenshot channel for GPT-5.4 on OSWorld 1.0, and that it does not test the model most dependent on that channel. Our prediction: if a no-GUI ablation for Claude Opus 5.5 (or its successor in Claude Code) on the same task set is published by 30 June 2027 with at least three runs, the full interface will beat the no-GUI arm in every run. A result where the no-GUI arm matches or beats full HCU for a model that sends over 90% of its desktop calls to GUI would show the screenshot channel is dispensable more broadly than this paper establishes.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Haoqing Wang, Xiaoyi Zhang, Sicheng Fan, Zhexin Zhang, Xinjie Zhang, Jiahao Li, Bin Li, Yan Lu, <a href="https://arxiv.org/abs/2610.41432">Hybrid Computer Use: A Unified Programmatic, Semantic, and Visual Interface for General Agents</a>, arXiv:2610.41432v1, submitted 30 October 2026, Sections 4.1, 4.3 and 4.4, Tables 2, 3, 4, 10 and 11, Appendices A, C.1 and E, read 11 November 2026.</li>
+      <li>Microsoft, <a href="https://microsoft.github.io/Hybrid-Computer-Use/">Hybrid Computer Use project page</a> and <a href="https://github.com/microsoft/Hybrid-Computer-Use">repository</a> (MIT License), read 11 November 2026; we did not run it.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/actions.py</code>, <code>phoneshell/agent/verify.py</code>, and the pre-registered paired-run result on the <a href="https://blolabel.ai">Blolabel</a> home page, read 11 November 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
