@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>17% of clicks planned in a page&#x27;s first second go stale, 0.4% after it loads, and the one wait rule under 1% is one phoneshell cannot run - Blolabel</title>
+<meta name="description" content="arXiv:2610.39282 (29 October 2026) tracked planned clicks on 31 public web pages: 0.4% were stale 30 seconds after planning on a loaded page, 17% when planned in the first second after the page opened. Of seven wait rules, only network idle got under 1% (0.46% at a median 1.24 s); visual-stability rules left 1.8% to 2.8%, and the paper counts eight of ten open-source agents&#x27; rules as leaving more than 1%. phoneshell settles on pixel stability and taps the snapshot coordinate with no check in between.">
+<link rel="canonical" href="https://blolabel.ai/blog/stale-clicks-17-percent-in-the-first-second-0-4-percent-on-loaded-pages/">
+<meta property="og:title" content="17% of clicks planned in a page&#x27;s first second go stale, 0.4% after it loads, and the one wait rule under 1% is one phoneshell cannot run - Blolabel">
+<meta property="og:description" content="Stale clicks come from page load, not planning time: 17% in the first second, 0.4% after. Only a network-idle wait gets under 1% (0.46%). phoneshell waits on pixels and has no pre-tap check.">
+<meta property="og:url" content="https://blolabel.ai/blog/stale-clicks-17-percent-in-the-first-second-0-4-percent-on-loaded-pages/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/stale-clicks-17-percent-in-the-first-second-0-4-percent-on-loaded-pages-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "17% of clicks planned in a page's first second go stale, 0.4% after it loads, and the one wait rule under 1% is one phoneshell cannot run", "description": "arXiv:2610.39282 (29 October 2026) tracked planned clicks on 31 public web pages: 0.4% were stale 30 seconds after planning on a loaded page, 17% when planned in the first second after the page opened. Of seven wait rules, only network idle got under 1% (0.46% at a median 1.24 s); visual-stability rules left 1.8% to 2.8%, and the paper counts eight of ten open-source agents' rules as leaving more than 1%. phoneshell settles on pixel stability and taps the snapshot coordinate with no check in between.", "datePublished": "2026-11-12", "dateModified": "2026-11-12", "url": "https://blolabel.ai/blog/stale-clicks-17-percent-in-the-first-second-0-4-percent-on-loaded-pages/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/stale-clicks-17-percent-in-the-first-second-0-4-percent-on-loaded-pages/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/stale-clicks-17-percent-in-the-first-second-0-4-percent-on-loaded-pages-hero.png", "citation": ["https://arxiv.org/abs/2610.39282", "https://arxiv.org/html/2610.39282v1", "https://github.com/multimodal-ai-engineering/preflight-bench", "https://arxiv.org/abs/2604.18860", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#mechanism">Mechanism</a>
+    <a href="/blog/">Notes</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker" id="finding">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-11-12">12 November 2026</time>
+    <span>6 min read</span>
+  </div>
+  <h1>17% of clicks planned in a page&#x27;s first second go stale, 0.4% after it loads, and the one wait rule under 1% is one phoneshell cannot run</h1>
+  <p class="standfirst">On 31 public web pages, 0.4% of clicks planned on a fully loaded page were stale 30 seconds later, against 17% of clicks planned in the first second after the page opened (arXiv:2610.39282v1, dated 29 October 2026). Seven wait rules were tested before the screenshot. One got under 1%: network idle, 0.46% at a median 1.24 s. phoneshell settles on pixel stability, the family that left 1.8% to 2.8%, and an iPhone gives it no network signal to switch to.</p>
+
+<p>The paper is "What Does &quot;Now&quot; Mean to Your Computer-Use Agent?" by Vasundra Srinivasan, a single-author preprint with fourteen preregistered hypotheses, eight of them reported as refuted. It tracks up to 20 visible links and buttons per visit and asks whether a click at each planned position still reaches its element. A click is stale when the target "has moved, disappeared or been covered." The work it answers, PUSV (arXiv:2604.18860), measured a 6.5-second gap between screenshot and click and treated that gap as the risk. Section 5.1 moves the risk: the stale share on loaded pages was flat "at every interval from 0.5 to 30 s", and after a fresh open it reached 14.5% by 0.5 s and 17% by 1 s, then stopped rising.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/stale-clicks-17-percent-in-the-first-second-0-4-percent-on-loaded-pages-hero.png" alt="Abstract technical illustration on a dark grid: a row of translucent interface panels sliding downward by a small offset while a single amber point stays fixed in place, thin timing ticks along the bottom edge, cool blues and slate greys, no icons or readable text" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="method">The same nominal second of waiting leaves 3.1%, 9.1% or 11.7% stale depending on where the clock starts</h2>
+
+<table>
+  <thead><tr><th>Wait rule before the screenshot</th><th>Median wait from DOM-ready</th><th>Clicks stale within 6.5 s</th><th>95% CI</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>no wait</td><td>0 s</td><td>14.4%</td><td>12.6 to 16.5</td><td>Table 1, left</td></tr>
+    <tr><td>0.5 s delay</td><td>0.50 s</td><td>2.5%</td><td>1.7 to 3.5</td><td>Table 1, left</td></tr>
+    <tr><td>load event</td><td>0.43 s</td><td>3.0%</td><td>2.2 to 4.2</td><td>Table 1, left</td></tr>
+    <tr><td>layout stable 0.5 s</td><td>0.65 s</td><td>2.8%</td><td>2.0 to 3.8</td><td>Table 1, left</td></tr>
+    <tr><td>boxes stable 0.5 s</td><td>0.81 s</td><td>1.8%</td><td>1.2 to 2.7</td><td>Table 1, left</td></tr>
+    <tr><td>1 s delay</td><td>1.00 s</td><td>3.1%</td><td>2.3 to 4.2</td><td>Table 1, left</td></tr>
+    <tr><td>network idle (no requests for 500 ms)</td><td>1.24 s</td><td>0.46%</td><td>0.21 to 1.0</td><td>Table 1, left</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: Vasundra Srinivasan, "What Does &quot;Now&quot; Mean to Your Computer-Use Agent?", arXiv:2610.39282v1, Table 1 (left), dated 29 October 2026, read 12 November 2026. 31 public pages, about 1,300 tracked targets per page state.</p>
+
+<svg viewBox="0 0 820 306" style="width:100%;height:auto" role="img" aria-label="Horizontal bar chart from Table 1 of arXiv:2610.39282 of the share of planned clicks that went stale within 6.5 seconds on 31 public web pages, by the wait rule used before the screenshot: no wait 14.4%, 0.5 second delay 2.5%, load event 3.0%, layout stable for 0.5 seconds 2.8%, element boxes stable for 0.5 seconds 1.8%, 1 second delay 3.1%, network idle 0.46%. Only the network-idle rule, with a median wait of 1.24 seconds, falls below 1%."><rect x="0" y="0" width="820" height="306" rx="12" fill="#151a24"/><g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="13.5" font-weight="600">Table 1 (left), arXiv:2610.39282: share of planned clicks stale within 6.5 s, by wait rule</text>
+<text x="210" y="61" font-size="10" text-anchor="end" fill="#c4ccda">no wait, 0 s</text>
+<rect x="220" y="46" width="455.4" height="22" fill="#8893a8"/>
+<text x="683.4" y="61" font-size="10" font-weight="600" fill="#8893a8">14.4%</text>
+<text x="210" y="91" font-size="10" text-anchor="end" fill="#c4ccda">0.5 s delay, 0.50 s</text>
+<rect x="220" y="76" width="79.1" height="22" fill="#8893a8"/>
+<text x="307.1" y="91" font-size="10" font-weight="600" fill="#8893a8">2.5%</text>
+<text x="210" y="121" font-size="10" text-anchor="end" fill="#c4ccda">load event, 0.43 s</text>
+<rect x="220" y="106" width="94.9" height="22" fill="#8893a8"/>
+<text x="322.9" y="121" font-size="10" font-weight="600" fill="#8893a8">3.0%</text>
+<text x="210" y="151" font-size="10" text-anchor="end" fill="#c4ccda">layout stable 0.5 s, 0.65 s</text>
+<rect x="220" y="136" width="88.5" height="22" fill="#8893a8"/>
+<text x="316.5" y="151" font-size="10" font-weight="600" fill="#8893a8">2.8%</text>
+<text x="210" y="181" font-size="10" text-anchor="end" fill="#c4ccda">boxes stable 0.5 s, 0.81 s</text>
+<rect x="220" y="166" width="56.9" height="22" fill="#8893a8"/>
+<text x="284.9" y="181" font-size="10" font-weight="600" fill="#8893a8">1.8%</text>
+<text x="210" y="211" font-size="10" text-anchor="end" fill="#c4ccda">1 s delay, 1.00 s</text>
+<rect x="220" y="196" width="98.0" height="22" fill="#8893a8"/>
+<text x="326.0" y="211" font-size="10" font-weight="600" fill="#8893a8">3.1%</text>
+<text x="210" y="241" font-size="10" text-anchor="end" fill="#c4ccda">network idle, 1.24 s</text>
+<rect x="220" y="226" width="14.5" height="22" fill="#e8a33d"/>
+<text x="242.5" y="241" font-size="10" font-weight="600" fill="#e8a33d">0.46%</text>
+<text x="20" y="274" font-size="9.5" fill="#8893a8">Label shows the rule and its median wait from DOM-ready. Only network idle is under 1%; both visual-stability rules stay above it.</text>
+<text x="20" y="289" font-size="9.5" fill="#8893a8">Source: arXiv:2610.39282v1, Table 1 (left), read 12 November 2026.</text>
+</g></svg>
+
+<p>A fixed 1 s delay timed from DOM-ready left 3.1%, which is 6.7 times the network-idle figure for 0.24 s less waiting (our arithmetic). The browser's load event left 3.0%. Waiting for layout shifts to stop for 0.5 s left 2.8%, and the preregistered hypothesis that it would reach 1% was refuted. The paper's reason: the layout-shift signal "does not register content that fills a fixed-size container or overlays a target, as occurs on maps."</p>
+
+<table>
+  <thead><tr><th>Agent</th><th>Wait rule in its code (October 2026)</th><th>Clicks stale</th><th>95% CI</th><th>Median wait</th></tr></thead>
+  <tbody>
+    <tr><td>Anthropic CU demo</td><td>2 s delay</td><td>2.0%</td><td>1.3 to 2.9</td><td>2.02 s</td></tr>
+    <tr><td>browser-use</td><td>load or idle</td><td>4.0%</td><td>3.1 to 5.2</td><td>0.94 s</td></tr>
+    <tr><td>OpenAI CUA sample</td><td>no wait</td><td>15.4%</td><td>13.5 to 17.4</td><td>0.35 s</td></tr>
+    <tr><td>Stagehand v4</td><td>no wait</td><td>12.5%</td><td>10.8 to 14.5</td><td>0.34 s</td></tr>
+    <tr><td>Skyvern</td><td>load, 1 s, animations</td><td>0.46%</td><td>0.21 to 1.0</td><td>2.03 s</td></tr>
+    <tr><td>Agent S3</td><td>1 s delay</td><td>11.7%</td><td>10.1 to 13.6</td><td>1.02 s</td></tr>
+    <tr><td>OpenHands</td><td>load or idle</td><td>2.6%</td><td>1.9 to 3.7</td><td>0.93 s</td></tr>
+    <tr><td>Playwright MCP</td><td>load</td><td>3.0%</td><td>2.2 to 4.1</td><td>0.88 s</td></tr>
+    <tr><td>UI-TARS-desktop</td><td>1 s delay</td><td>9.1%</td><td>7.6 to 10.8</td><td>1.01 s</td></tr>
+    <tr><td>magentic-ui</td><td>3 s delay, then load</td><td>1.2%</td><td>0.7 to 1.9</td><td>3.34 s</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: arXiv:2610.39282v1, Table 1 (right), read 12 November 2026. The wait rules were reimplemented and replayed on the same 31 pages; "the agents themselves were not executed."</p>
+
+<svg viewBox="0 0 820 396" style="width:100%;height:auto" role="img" aria-label="Horizontal bar chart from Table 1 of arXiv:2610.39282 of stale planned clicks under the post-navigation wait rules of ten open-source agents, reimplemented and replayed on 31 pages: OpenAI CUA sample 15.4%, Stagehand v4 12.5%, Agent S3 11.7%, UI-TARS-desktop 9.1%, browser-use 4.0%, Playwright MCP 3.0%, OpenHands 2.6%, Anthropic CU demo 2.0%, magentic-ui 1.2%, Skyvern 0.46%. Nine point estimates exceed 1%, and eight have a confidence interval entirely above 1%."><rect x="0" y="0" width="820" height="396" rx="12" fill="#151a24"/><g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="13.5" font-weight="600">Table 1 (right): the same measure under the wait rules of ten open-source agents</text>
+<text x="290" y="61" font-size="10" text-anchor="end" fill="#c4ccda">OpenAI CUA sample (no wait)</text>
+<rect x="300" y="46" width="383.9" height="22" fill="#8893a8"/>
+<text x="691.9" y="61" font-size="10" font-weight="600" fill="#8893a8">15.4%</text>
+<text x="290" y="91" font-size="10" text-anchor="end" fill="#c4ccda">Stagehand v4 (no wait)</text>
+<rect x="300" y="76" width="311.6" height="22" fill="#8893a8"/>
+<text x="619.6" y="91" font-size="10" font-weight="600" fill="#8893a8">12.5%</text>
+<text x="290" y="121" font-size="10" text-anchor="end" fill="#c4ccda">Agent S3 (1 s delay)</text>
+<rect x="300" y="106" width="291.7" height="22" fill="#8893a8"/>
+<text x="599.7" y="121" font-size="10" font-weight="600" fill="#8893a8">11.7%</text>
+<text x="290" y="151" font-size="10" text-anchor="end" fill="#c4ccda">UI-TARS-desktop (1 s delay)</text>
+<rect x="300" y="136" width="226.9" height="22" fill="#8893a8"/>
+<text x="534.9" y="151" font-size="10" font-weight="600" fill="#8893a8">9.1%</text>
+<text x="290" y="181" font-size="10" text-anchor="end" fill="#c4ccda">browser-use (load or idle)</text>
+<rect x="300" y="166" width="99.7" height="22" fill="#8893a8"/>
+<text x="407.7" y="181" font-size="10" font-weight="600" fill="#8893a8">4.0%</text>
+<text x="290" y="211" font-size="10" text-anchor="end" fill="#c4ccda">Playwright MCP (load)</text>
+<rect x="300" y="196" width="74.8" height="22" fill="#8893a8"/>
+<text x="382.8" y="211" font-size="10" font-weight="600" fill="#8893a8">3.0%</text>
+<text x="290" y="241" font-size="10" text-anchor="end" fill="#c4ccda">OpenHands (load or idle)</text>
+<rect x="300" y="226" width="64.8" height="22" fill="#8893a8"/>
+<text x="372.8" y="241" font-size="10" font-weight="600" fill="#8893a8">2.6%</text>
+<text x="290" y="271" font-size="10" text-anchor="end" fill="#c4ccda">Anthropic CU demo (2 s delay)</text>
+<rect x="300" y="256" width="49.9" height="22" fill="#8893a8"/>
+<text x="357.9" y="271" font-size="10" font-weight="600" fill="#8893a8">2.0%</text>
+<text x="290" y="301" font-size="10" text-anchor="end" fill="#c4ccda">magentic-ui (3 s delay, then load)</text>
+<rect x="300" y="286" width="29.9" height="22" fill="#8893a8"/>
+<text x="337.9" y="301" font-size="10" font-weight="600" fill="#8893a8">1.2%</text>
+<text x="290" y="331" font-size="10" text-anchor="end" fill="#c4ccda">Skyvern (load, 1 s, animations)</text>
+<rect x="300" y="316" width="11.5" height="22" fill="#e8a33d"/>
+<text x="319.5" y="331" font-size="10" font-weight="600" fill="#e8a33d">0.46%</text>
+<text x="20" y="364" font-size="9.5" fill="#8893a8">Agent S3 and UI-TARS-desktop wait a fixed second and still leave 11.7% and 9.1%: their clock starts at the first server response.</text>
+<text x="20" y="379" font-size="9.5" fill="#8893a8">Source: arXiv:2610.39282v1, Table 1 (right), read 12 November 2026. Rules replayed by the author; agents not run end to end. 1.2% for magentic-ui has a CI of 0.7 to 1.9.</text>
+</g></svg>
+
+<p>The abstract says eight of ten agents' rules leave more than 1% stale. By point estimate the table shows 9: magentic-ui sits at 1.2% with an interval of 0.7 to 1.9. Eight is the count whose whole interval is above 1% (our reading; the paper does not say which it means). Agent S3 and UI-TARS-desktop both sleep one second and leave 11.7% and 9.1%, against 3.1% for the paper's own 1 s rule: 3.8 times worse for Agent S3 on the same nominal wait (our arithmetic). Section 5.1 gives the cause. Their delay "starts when the server first responds, so 7% of their screenshots are captured before the HTML has been parsed." Skyvern is the one agent that matches network idle, at 0.46%, by stacking the load event, about a second, and an animation wait.</p>
+
+<p>Two limits on this table. These are rules replayed by the author, so nothing here is an end-to-end agent result. And the 31 pages are clocks, counters, maps, reference and status pages. On commercial pages the network-idle rule itself stops working: in the HTTP Archive crawl of October 2026, 15% of 65 desktop booking and buying home pages went quiet within 3 s, and 52% shifted layout after a capped wait, against 7.8% of 3,028 .gov pages (Table 2). On mobile home pages that gap shrank to 12.9 points and "vanished among fully recorded pages (27% against 28%)". The crawl's shift signal also failed its own transfer check against measured stale clicks (Spearman -0.12), so the commercial stale-click rate is, in the paper's words, "an unvalidated proxy."</p>
+
+<h2 id="mechanism">phoneshell's step has the pixel wait and the after-check, and nothing between the plan and the tap</h2>
+
+<svg viewBox="0 0 820 209" style="width:100%;height:auto" role="img" aria-label="Flow diagram of one phoneshell step in phoneshell/actions.py compared with the three rules in arXiv:2610.39282. Step 1 settles on pixels with wait_until_stable, polling every 0.3 seconds up to a 3.5 second cap and stopping after one quiet pair of frames, where the paper recommends a network-idle wait. Step 2 reads the accessibility tree and calls the model. Step 3 taps the snapshot coordinate with tap_w3c and runs no check of the target first, where the paper recommends a 312 millisecond pixel check before irreversible clicks. Step 4 sleeps 0.6 seconds and compares one screenshot, a pixel change score of the kind the paper found detects 90% of failed actions with no false alarms."><rect x="0" y="0" width="820" height="209" rx="12" fill="#151a24"/><g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="13.5" font-weight="600">One phoneshell step against the paper&#x27;s three rules (file: phoneshell/actions.py)</text>
+<rect x="20.0" y="46" width="175.5" height="99" rx="8" fill="#1d2433" stroke="#3a4560" stroke-width="1.5"/>
+<text x="107.8" y="68" font-size="10.5" font-weight="600" text-anchor="middle" fill="#e9ecf2">1. Settle on pixels</text>
+<text x="107.8" y="83" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">wait_until_stable()</text>
+<text x="107.8" y="98" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">poll every 0.3 s, cap 3.5 s</text>
+<text x="107.8" y="113" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">one quiet pair ends it</text>
+<text x="107.8" y="128" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">paper rule 1: network idle</text>
+<path d="M199.5 95.5 L215.5 95.5" stroke="#8893a8" stroke-width="1.5"/><path d="M215.5 95.5 l-6 -4 l0 8 z" fill="#8893a8"/>
+<rect x="221.5" y="46" width="175.5" height="99" rx="8" fill="#1d2433" stroke="#3a4560" stroke-width="1.5"/>
+<text x="309.2" y="68" font-size="10.5" font-weight="600" text-anchor="middle" fill="#e9ecf2">2. Read and plan</text>
+<text x="309.2" y="83" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">tree read, then model call</text>
+<text x="309.2" y="98" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">snapshot ages while</text>
+<text x="309.2" y="113" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">the model decides</text>
+<text x="309.2" y="128" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda"></text>
+<path d="M401.0 95.5 L417.0 95.5" stroke="#8893a8" stroke-width="1.5"/><path d="M417.0 95.5 l-6 -4 l0 8 z" fill="#8893a8"/>
+<rect x="423.0" y="46" width="175.5" height="99" rx="8" fill="#1d2433" stroke="#e8a33d" stroke-width="1.5"/>
+<text x="510.8" y="68" font-size="10.5" font-weight="600" text-anchor="middle" fill="#e9ecf2">3. Tap the coordinate</text>
+<text x="510.8" y="83" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">tap_w3c(x, y)</text>
+<text x="510.8" y="98" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">no check of the target</text>
+<text x="510.8" y="113" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">before the tap</text>
+<text x="510.8" y="128" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">paper rule 2: 312 ms pixel check</text>
+<path d="M602.5 95.5 L618.5 95.5" stroke="#8893a8" stroke-width="1.5"/><path d="M618.5 95.5 l-6 -4 l0 8 z" fill="#8893a8"/>
+<rect x="624.5" y="46" width="175.5" height="99" rx="8" fill="#1d2433" stroke="#3a4560" stroke-width="1.5"/>
+<text x="712.2" y="68" font-size="10.5" font-weight="600" text-anchor="middle" fill="#e9ecf2">4. Did anything move</text>
+<text x="712.2" y="83" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">sleep 0.6 s, one screenshot</text>
+<text x="712.2" y="98" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">visual_difference &gt; 0.02</text>
+<text x="712.2" y="113" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda"></text>
+<text x="712.2" y="128" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">paper: 90% of failures, 0 false</text>
+<text x="20" y="183" font-size="9.5" fill="#8893a8">Step 3 is the gap: the tap uses coordinates from the step 1 snapshot and nothing re-reads the target in between.</text>
+<text x="20" y="198" font-size="9.5" fill="#8893a8">Sources: phoneshell/actions.py and phoneshell/perception/screen.py at commit 39129df; arXiv:2610.39282v1, Sections 2, 5.2 and 6.</text>
+</g></svg>
+
+<p><code>Phone.snapshot()</code> in <code>phoneshell/actions.py</code> states its choice: "so we settle on pixels and read the tree once." <code>wait_until_stable</code> in <code>phoneshell/perception/screen.py</code> polls a screenshot every 0.3 s (0.12 s on screens seen before), allows 1.2% of pixels to differ, returns on the first quiet pair, and gives up at 3.5 s (1.4 s on the fast path). That is a visual-stability rule with a shorter quiet window than the paper's 0.5 s. A framebuffer diff does see the container fills and overlays that the browser's layout-shift signal misses, so the 2.8% and 1.8% figures do not transfer to it directly. What transfers is the shape of the failure: content that arrives after a quiet 0.3 s is invisible to any rule that only watches for motion, and only the network rule knew more was coming. WebDriverAgent exposes no request activity for the app under test, so phoneshell has no equivalent to switch to.</p>
+
+<p>After the model answers, <code>tap_element</code> sends <code>self.wda.tap_w3c(x, y)</code> with coordinates from that snapshot. Its docstring argues the coordinate is "exactly what the model intended." The paper's airline example is that argument failing: the plan was right for the screenshot, a late banner pushed the form down 52 pixels, and the click landed on a different control. phoneshell runs no check of the target before the tap. It does run the cheap check afterwards: <code>_after</code> sleeps 0.6 s and compares one screenshot, a pixel change score. Table 3 has that kind of check detecting 90% of failed actions with no false alarms, and a 4B model detecting 100%.</p>
+
+<h2 id="what-it-means">A 312 ms pixel check pays above 10% stale for an ordinary click and above 1.2% for an irreversible one</h2>
+
+<p>Equation 1 gives the stale rate above which a pre-click check saves time: (check latency / planning time + false-alarm rate) / (recall x (k - 1) + false-alarm rate), with k the cost of a stale click in planning cycles. Fed the pixel check's Table 3 row (82% detected, 4% false alarms, 312 ms) and a 6.5 s planner, it returns 10.2% for an ordinary click (k = 2) and 1.2% for an irreversible one (k = 10). We recomputed both and they match the paper's "about 10%" and 1.2%. Claude Opus 5.5 as the checker (83%, 12%, 2,366 ms, 7.6 times the latency) returns 50.9%: it never pays for an ordinary click.</p>
+
+<p>For a phone harness that sets the decision. At a loaded-page rate of 0.4% no check pays, and adding one to every tap would be waste. After an app launch or a screen push, the paper's 14% to 17% is above the ordinary-click threshold, if iOS screens behave like those web pages, which nobody has measured. Before a tap that <code>phoneshell/safety.py</code> already classes as irreversible, the threshold is 1.2%, and the patch comparison costs less than one of the settle probes phoneshell already runs. Our judgement: the pre-tap check belongs on the confirm-gated taps first, and on the first tap after a transition second.</p>
+
+<p>The third rule is the one to copy without measuring anything. When a check fires, plan again from a new screenshot. Adjusting the click was unsafe in every configuration tested: the best pixel setting mis-adjusted 11% of the time and Claude Haiku 5.5 clicked wrongly 34% of the time.</p>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># Table 1 (wait rules and ten agents), Table 2 (crawl), Table 3 (checks), Equation 1, Section 8 (refuted hypotheses)
+open "https://arxiv.org/html/2610.39282v1"
+open "https://github.com/multimodal-ai-engineering/preflight-bench"
+
+python3 -c "
+p=lambda d,C,f,r,k:(d/C+f)/(r*(k-1)+f)
+print('pixel, ordinary click   ', round(p(0.312,6.5,0.04,0.82,2)*100,1))
+print('pixel, irreversible k=10', round(p(0.312,6.5,0.04,0.82,10)*100,1))
+print('Opus,  ordinary click   ', round(p(2.366,6.5,0.12,0.83,2)*100,1))
+print('1 s delay vs network idle', round(3.1/0.46,1), ' Agent S3 vs 1 s delay', round(11.7/3.1,1))"
+# pixel, ordinary click    10.2
+# pixel, irreversible k=10 1.2
+# Opus,  ordinary click    50.9
+# 1 s delay vs network idle 6.7  Agent S3 vs 1 s delay 3.8
+
+# phoneshell: the settle rule, the unchecked tap, the after-check
+grep -n "so we settle on pixels and read the tree once" phoneshell/actions.py
+grep -n -A6 "^def wait_until_stable" phoneshell/perception/screen.py
+grep -n "self.wda.tap_w3c(x, y)" phoneshell/actions.py
+grep -n -A6 "time.sleep(settle)" phoneshell/actions.py</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim phoneshell's pixel-settle rule leaves more than 1% of planned taps stale on a freshly opened screen. That is an extrapolation from desktop web pages to iOS apps, and the paper's own mobile crawl numbers warn against assuming it. The test: on the physical iPhone, launch each of the bench apps, take <code>Phone.snapshot()</code>, and for 6.5 s track whether each of up to 20 visible elements still sits under its planned coordinate, three rounds. If that measurement, run by us or anyone by 31 March 2027, puts the stale share at or under 1%, the pre-tap check is not worth building for ordinary taps and this note's recommendation is wrong.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Vasundra Srinivasan, <a href="https://arxiv.org/abs/2610.39282">What Does &quot;Now&quot; Mean to Your Computer-Use Agent? Stale screenshots, page loads, and which check to run before a click</a>, arXiv:2610.39282v1, dated 29 October 2026, abstract, Sections 2 to 6 and 8, Tables 1 to 3, Equation 1, read 12 November 2026. Independent single-author preprint, not peer reviewed.</li>
+      <li>Code and data for the paper: <a href="https://github.com/multimodal-ai-engineering/preflight-bench">multimodal-ai-engineering/preflight-bench</a>. We did not run it.</li>
+      <li>Wenpeng Xu, <a href="https://arxiv.org/abs/2604.18860">Temporal UI state inconsistency in desktop GUI agents</a> (PUSV), arXiv:2604.18860, the source of the 6.5 s interval.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/actions.py</code>, <code>phoneshell/perception/screen.py</code>, <code>phoneshell/safety.py</code>, read 12 November 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
