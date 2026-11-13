@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GraceBench&#x27;s top model passes 63.9% of tasks while completing 62.6% of the required path - Blolabel</title>
+<meta name="description" content="GraceBench (arXiv:2610.19900, Tongji University, submitted 14 October 2026) scores eleven mobile agents on 169 tasks on physical Android devices and reports that 51.24% of successful runs contain a deviation or loop. In its Table 2, GPT-5.6 Sol succeeds on 63.9% of tasks under goal-only instructions while averaging 62.6% completion of the required path, and 426 pairs that succeed under both instruction styles lose 0.0591 completion when the route is not spelled out. Deviation is measured against a reference graph, so part of it is route choice.">
+<link rel="canonical" href="https://blolabel.ai/blog/gracebench-top-model-passes-63-9-percent-while-covering-62-6-percent-of-the-required-path/">
+<meta property="og:title" content="GraceBench&#x27;s top model passes 63.9% of tasks while completing 62.6% of the required path - Blolabel">
+<meta property="og:description" content="GraceBench says 51.24% of successful agent runs deviate or loop. Its Table 2 has GPT-5.6 Sol passing 63.9% of tasks with 62.6% mean completion of the required path: deviation is partly distance from a reference route.">
+<meta property="og:url" content="https://blolabel.ai/blog/gracebench-top-model-passes-63-9-percent-while-covering-62-6-percent-of-the-required-path/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/gracebench-top-model-passes-63-9-percent-while-covering-62-6-percent-of-the-required-path-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "GraceBench's top model passes 63.9% of tasks while completing 62.6% of the required path", "description": "GraceBench (arXiv:2610.19900, Tongji University, submitted 14 October 2026) scores eleven mobile agents on 169 tasks on physical Android devices and reports that 51.24% of successful runs contain a deviation or loop. In its Table 2, GPT-5.6 Sol succeeds on 63.9% of tasks under goal-only instructions while averaging 62.6% completion of the required path, and 426 pairs that succeed under both instruction styles lose 0.0591 completion when the route is not spelled out. Deviation is measured against a reference graph, so part of it is route choice.", "datePublished": "2026-11-12", "dateModified": "2026-11-12", "url": "https://blolabel.ai/blog/gracebench-top-model-passes-63-9-percent-while-covering-62-6-percent-of-the-required-path/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/gracebench-top-model-passes-63-9-percent-while-covering-62-6-percent-of-the-required-path/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/gracebench-top-model-passes-63-9-percent-while-covering-62-6-percent-of-the-required-path-hero.png", "citation": ["https://arxiv.org/abs/2610.19900", "https://arxiv.org/html/2610.19900v1", "https://iaie-physicalai.github.io/GraceBench", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#mechanism">Mechanism</a>
+    <a href="/blog/">Notes</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker" id="finding">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-11-12">12 November 2026</time>
+    <span>6 min read</span>
+  </div>
+  <h1>GraceBench&#x27;s top model passes 63.9% of tasks while completing 62.6% of the required path</h1>
+  <p class="standfirst">GraceBench (arXiv:2610.19900, submitted 14 October 2026) reports that 51.24% of successful mobile-agent runs "still contain a deviation or loop." Its own Table 2 shows what the deviation is measured against. Under goal-only instructions GPT-5.6 Sol succeeds on 63.9% of 169 tasks while its mean completion of the required path is 62.6%. Spell the path out and the success rate stays at 63.9% while completion rises to 73.9%. Part of what the benchmark calls instability is distance from a reference route.</p>
+
+<p>The paper is by Ridong Zhang, Shuxian Liang, Chaoqun Wan, Zhen Huang and Xian-Sheng Hua of the Institute of AI for Engineering, Tongji University. It runs eleven screenshot-only models on physical Android devices across 10 apps, records every episode with scrcpy, and maps each step onto a UI Transition Graph built beforehand by an exploring agent. Each task runs twice: with a detailed instruction that "follows one manually verified feasible path" and with a concise goal. That gives 3,718 trajectories, capped at 15 actions each.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/gracebench-top-model-passes-63-9-percent-while-covering-62-6-percent-of-the-required-path-hero.png" alt="Abstract technical illustration on a dark grid: a single bright amber route between two nodes, with several fainter blue routes branching away from it and rejoining at the same end node, one of them circling once before returning, slate greys, no icons or readable text" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="method">Success is read from the run summary, completion from the graph, and the two disagree in Table 2</h2>
+
+<p>Appendix B defines the two outcome metrics differently. SR is "the proportion of runs marked successful in the frozen per-trajectory evaluation summaries." CR is completed required edges over required edges, averaged across all tasks, failures included. A failed run still earns partial CR, so mean CR should sit above SR. In 21 of the 22 model rows in Table 2 it does.</p>
+
+<table>
+  <thead><tr><th>Measure</th><th>Detailed instruction</th><th>Concise instruction</th><th>Where in the paper</th></tr></thead>
+  <tbody>
+    <tr><td>GPT-5.6 Sol success rate (SR)</td><td>63.9%</td><td>63.9%</td><td>Table 2</td></tr>
+    <tr><td>GPT-5.6 Sol completion rate (CR), mean over all 169 tasks</td><td>73.9%</td><td>62.6%</td><td>Table 2</td></tr>
+    <tr><td>GPT-5.6 Sol deviation rate (DR)</td><td>12.2%</td><td>18.6%</td><td>Table 2</td></tr>
+    <tr><td>GPT-5.6 Sol recovery ability (RA), lowest of 11 models in both</td><td>0.4454</td><td>0.4525</td><td>Table 2</td></tr>
+    <tr><td>Successful runs, all 11 models</td><td>639</td><td>655</td><td>Appendix C.1</td></tr>
+    <tr><td>Successful runs containing a deviation</td><td>36.78%</td><td>46.11%</td><td>Section 4.3</td></tr>
+    <tr><td>Successful runs containing a loop</td><td>20.66%</td><td>27.48%</td><td>Section 4.3</td></tr>
+    <tr><td>Same model and task succeeds under both instructions: change in CR</td><td>baseline</td><td>-0.0591 (426 pairs)</td><td>Table 6</td></tr>
+    <tr><td>Same pairs: change in DR</td><td>baseline</td><td>+0.0467 (426 pairs)</td><td>Table 6</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: Zhang et al., "How GUI Agents Fail: GraceBench for Execution Stability Diagnosis," arXiv:2610.19900v1, submitted 14 October 2026, read 12 November 2026. Rates in Table 2 are printed as decimals; we show SR, CR and DR as percentages. Eleven models, 169 tasks, 3,718 trajectories, 15-action budget, temperature 0.</p>
+
+<svg viewBox="0 0 820 382" style="width:100%;height:auto" role="img" aria-label="Grouped bar chart for GPT-5.6 Sol on GraceBench from Table 2 of arXiv:2610.19900, detailed instruction then concise instruction. Success rate 63.9% and 63.9%. Completion rate of required transitions 73.9% and 62.6%. Deviation rate 12.2% and 18.6%. Under the concise instruction the success rate is higher than the completion rate, so successful runs cannot all have completed the required path."><rect x="0" y="0" width="820" height="382" rx="12" fill="#151a24"/><g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="13.5" font-weight="600">GPT-5.6 Sol on GraceBench, Table 2: success rate holds, required-path coverage and deviation move</text>
+<line x1="60" y1="280.0" x2="800" y2="280.0" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="283.0" font-size="9.5" text-anchor="end" fill="#8893a8">0.0%</text>
+<line x1="60" y1="222.5" x2="800" y2="222.5" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="225.5" font-size="9.5" text-anchor="end" fill="#8893a8">20.0%</text>
+<line x1="60" y1="165.0" x2="800" y2="165.0" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="168.0" font-size="9.5" text-anchor="end" fill="#8893a8">40.0%</text>
+<line x1="60" y1="107.5" x2="800" y2="107.5" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="110.5" font-size="9.5" text-anchor="end" fill="#8893a8">60.0%</text>
+<line x1="60" y1="50.0" x2="800" y2="50.0" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="53.0" font-size="9.5" text-anchor="end" fill="#8893a8">80.0%</text>
+<rect x="133.3" y="96.3" width="48.0" height="183.7" fill="#e8a33d"/>
+<text x="157.3" y="91.3" font-size="9.5" font-weight="600" text-anchor="middle" fill="#e8a33d">63.9%</text>
+<rect x="185.3" y="96.3" width="48.0" height="183.7" fill="#8893a8"/>
+<text x="209.3" y="91.3" font-size="9.5" font-weight="600" text-anchor="middle" fill="#8893a8">63.9%</text>
+<text x="183.3" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">Success rate (SR)</text>
+<rect x="380.0" y="67.6" width="48.0" height="212.4" fill="#e8a33d"/>
+<text x="404.0" y="62.6" font-size="9.5" font-weight="600" text-anchor="middle" fill="#e8a33d">73.9%</text>
+<rect x="432.0" y="100.0" width="48.0" height="180.0" fill="#8893a8"/>
+<text x="456.0" y="95.0" font-size="9.5" font-weight="600" text-anchor="middle" fill="#8893a8">62.6%</text>
+<text x="430.0" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">Completion rate (CR)</text>
+<rect x="626.7" y="244.8" width="48.0" height="35.2" fill="#e8a33d"/>
+<text x="650.7" y="239.8" font-size="9.5" font-weight="600" text-anchor="middle" fill="#e8a33d">12.2%</text>
+<rect x="678.7" y="226.6" width="48.0" height="53.4" fill="#8893a8"/>
+<text x="702.7" y="221.6" font-size="9.5" font-weight="600" text-anchor="middle" fill="#8893a8">18.6%</text>
+<text x="676.7" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">Deviation rate (DR)</text>
+<rect x="60" y="330" width="14" height="10" fill="#e8a33d"/><text x="80" y="339" font-size="9.5" fill="#c4ccda">detailed instruction (the path is spelled out)</text>
+<rect x="351.59999999999997" y="330" width="14" height="10" fill="#8893a8"/><text x="371.59999999999997" y="339" font-size="9.5" fill="#c4ccda">concise instruction (goal only)</text>
+<text x="20" y="362" font-size="9.5" fill="#8893a8">Under the concise instruction SR exceeds mean CR. It is the only one of the 22 model rows in Table 2 where that happens.</text>
+<text x="20" y="377" font-size="9.5" fill="#8893a8">Source: arXiv:2610.19900v1, Table 2, read 12 November 2026. 169 tasks per bar.</text>
+</g></svg>
+
+<p>GPT-5.6 Sol under the concise instruction: SR 63.9%, which is 108 of 169 tasks, and mean CR 62.6%. If every one of its failed runs had completed zero required edges, its successful runs would average a CR of 0.980 (our arithmetic: 0.6261 divided by 0.6391). Failed runs do not score zero, so the true figure is lower: some successes reached the target without walking the required edges. Appendix C.1 says as much: "a task can reach its target without completing every reference transition."</p>
+
+<p>Across all eleven models, 426 model-task pairs succeed under both instructions. Inside those pairs, switching from detailed to concise lowers CR by 0.0591 (95% task-cluster interval -0.0879 to -0.0325) and raises DR by 0.0467 (0.0236 to 0.0713). Same model, same task, same successful outcome; only the route hint changed. For GPT-5.6 Sol the aggregate CR change is -0.1127 with an SR change of exactly zero.</p>
+
+<h2 id="mechanism">A deviation label means the step left the mapped subgraph</h2>
+
+<svg viewBox="0 0 820 209" style="width:100%;height:auto" role="img" aria-label="Flow diagram of GraceBench scoring from arXiv:2610.19900. Ten app transition graphs with 2,909 states and 3,116 transitions, with 83 unresolved targets excluded, are cut into task subgraphs averaging 5.91 core states and 41.09 states with one-hop neighbours. Each step is labelled on path, stagnation, deviation or recovery, where deviation means leaving the subgraph or the graph. Success is read from the run summary and not from the graph, so 663 of 1,294 successful runs, 51.24%, carry a deviation or loop label."><rect x="0" y="0" width="820" height="209" rx="12" fill="#151a24"/><g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="13.5" font-weight="600">How a successful GraceBench run acquires a deviation label</text>
+<rect x="20.0" y="46" width="135.2" height="99" rx="8" fill="#1d2433" stroke="#3a4560" stroke-width="1.5"/>
+<text x="87.6" y="68" font-size="10.5" font-weight="600" text-anchor="middle" fill="#e9ecf2">Reference graph</text>
+<text x="87.6" y="83" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">10 app UTGs</text>
+<text x="87.6" y="98" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">2,909 states</text>
+<text x="87.6" y="113" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">3,116 transitions</text>
+<text x="87.6" y="128" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">83 targets unresolved</text>
+<path d="M159.2 95.5 L175.2 95.5" stroke="#8893a8" stroke-width="1.5"/><path d="M175.2 95.5 l-6 -4 l0 8 z" fill="#8893a8"/>
+<rect x="181.2" y="46" width="135.2" height="99" rx="8" fill="#1d2433" stroke="#3a4560" stroke-width="1.5"/>
+<text x="248.8" y="68" font-size="10.5" font-weight="600" text-anchor="middle" fill="#e9ecf2">Task subgraph</text>
+<text x="248.8" y="83" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">required edges plus</text>
+<text x="248.8" y="98" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">alternative routes</text>
+<text x="248.8" y="113" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">5.91 core states</text>
+<text x="248.8" y="128" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">41.09 with one hop</text>
+<path d="M320.4 95.5 L336.4 95.5" stroke="#8893a8" stroke-width="1.5"/><path d="M336.4 95.5 l-6 -4 l0 8 z" fill="#8893a8"/>
+<rect x="342.4" y="46" width="135.2" height="99" rx="8" fill="#1d2433" stroke="#e8a33d" stroke-width="1.5"/>
+<text x="410.0" y="68" font-size="10.5" font-weight="600" text-anchor="middle" fill="#e9ecf2">Step label</text>
+<text x="410.0" y="83" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">on path, stagnation,</text>
+<text x="410.0" y="98" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">deviation, recovery</text>
+<text x="410.0" y="113" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">deviation = leaves</text>
+<text x="410.0" y="128" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">subgraph or UTG</text>
+<path d="M481.6 95.5 L497.6 95.5" stroke="#8893a8" stroke-width="1.5"/><path d="M497.6 95.5 l-6 -4 l0 8 z" fill="#8893a8"/>
+<rect x="503.6" y="46" width="135.2" height="99" rx="8" fill="#1d2433" stroke="#3a4560" stroke-width="1.5"/>
+<text x="571.2" y="68" font-size="10.5" font-weight="600" text-anchor="middle" fill="#e9ecf2">Outcome label</text>
+<text x="571.2" y="83" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">success is read from</text>
+<text x="571.2" y="98" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">the run summary,</text>
+<text x="571.2" y="113" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">not from the graph</text>
+<text x="571.2" y="128" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">1,294 successes</text>
+<path d="M642.8 95.5 L658.8 95.5" stroke="#8893a8" stroke-width="1.5"/><path d="M658.8 95.5 l-6 -4 l0 8 z" fill="#8893a8"/>
+<rect x="664.8" y="46" width="135.2" height="99" rx="8" fill="#1d2433" stroke="#e8a33d" stroke-width="1.5"/>
+<text x="732.4" y="68" font-size="10.5" font-weight="600" text-anchor="middle" fill="#e9ecf2">Reported</text>
+<text x="732.4" y="83" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">663 of 1,294</text>
+<text x="732.4" y="98" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">successes contain</text>
+<text x="732.4" y="113" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">a deviation or loop</text>
+<text x="732.4" y="128" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">(51.24%)</text>
+<text x="20" y="183" font-size="9.5" fill="#8893a8">A step onto a working route that the explored graph does not hold gets the same label as a wrong turn. The paper does not split the two.</text>
+<text x="20" y="198" font-size="9.5" fill="#8893a8">Source: arXiv:2610.19900v1, Sections 3.1, 3.3 and 4.3, Appendix D.1 (Tables 11 and 12), read 12 November 2026.</text>
+</g></svg>
+
+<p>Section 3.3 labels a step a deviation "if it leaves the task subgraph or enters" a state outside the application graph. The subgraphs include alternative routes and were reviewed by hand. The authors are also explicit that the graphs "do not imply exhaustive coverage" of the apps: 83 unresolved target observations were dropped from the transition counts, and a task's core is 5.91 states on average, 41.09 with one-hop neighbours. A working route outside that neighbourhood is labelled the same way as a wrong tab. So the 51.24% (663 of 1,294 successes) is an upper bound on wasted motion in successful runs. Deviation in successful runs rises from 36.78% under detailed instructions to 46.11% under concise ones, the direction expected if some of it is route choice.</p>
+
+<p>Loops do not depend on which route is canonical: 20.66% of detailed successes and 27.48% of concise successes contain one, and 126 successful runs have zero deviation and still loop.</p>
+
+<h2 id="recovery">The headline about recovery is qualified in Appendix C.4</h2>
+
+<svg viewBox="0 0 820 216" style="width:100%;height:auto" role="img" aria-label="Horizontal bar chart from Appendix C.4 and Table 2 of arXiv:2610.19900. Matched success rate is 25.91% after a return to the path within three decisions and 12.75% without one. Among 1,301 runs that recovered from every observed deviation, 408 succeeded, 31.36%. GPT-5.6 Sol, the model with the lowest recovery ability in both instruction conditions, has the highest success rate at 63.91%."><rect x="0" y="0" width="820" height="216" rx="12" fill="#151a24"/><g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="13.5" font-weight="600">Recovery on GraceBench: what the appendix says a return to the path is worth</text>
+<text x="290" y="61" font-size="10" text-anchor="end" fill="#c4ccda">SR after a return within 3 decisions (matched)</text>
+<rect x="300" y="46" width="148.6" height="22" fill="#8893a8"/>
+<text x="456.6" y="61" font-size="10" font-weight="600" fill="#8893a8">25.91%</text>
+<text x="290" y="91" font-size="10" text-anchor="end" fill="#c4ccda">SR with no return within 3 decisions (matched)</text>
+<rect x="300" y="76" width="73.1" height="22" fill="#8893a8"/>
+<text x="381.1" y="91" font-size="10" font-weight="600" fill="#8893a8">12.75%</text>
+<text x="290" y="121" font-size="10" text-anchor="end" fill="#c4ccda">SR of runs that recovered from every deviation</text>
+<rect x="300" y="106" width="179.8" height="22" fill="#8893a8"/>
+<text x="487.8" y="121" font-size="10" font-weight="600" fill="#8893a8">31.36%</text>
+<text x="290" y="151" font-size="10" text-anchor="end" fill="#c4ccda">GPT-5.6 Sol SR, lowest recovery ability</text>
+<rect x="300" y="136" width="366.4" height="22" fill="#e8a33d"/>
+<text x="674.4" y="151" font-size="10" font-weight="600" fill="#e8a33d">63.91%</text>
+<text x="20" y="184" font-size="9.5" fill="#8893a8">Top two bars: 1,035 matched trajectories over 134 tasks, overlap weighted. Third bar: 408 of 1,301. Fourth bar: Table 2, both conditions.</text>
+<text x="20" y="199" font-size="9.5" fill="#8893a8">Source: arXiv:2610.19900v1, Appendix C.4 and Table 2, read 12 November 2026.</text>
+</g></svg>
+
+<p>The abstract says GPT-5.6 Sol "achieves the highest success rate (SR) but the lowest recovery ability." Table 2 confirms both halves: SR 63.91% in both conditions, RA 0.4454 detailed and 0.4525 concise, last of eleven in both. RA is one over the steps taken to return to the path, zero if the agent never returns. Appendix C.4 tests whether it tracks outcomes. A return within three decisions is associated with SR 25.91% against 12.75% without one, on 1,035 matched trajectories. Yet of 1,301 trajectories that recovered from every deviation, 408 succeeded: 31.36%. And once a return is controlled for, a 0.1 gain in the speed score moves SR by 0.0047, with an interval of -0.0039 to 0.0133 that includes zero. The authors conclude the analysis does not support "an optimal latency function."</p>
+
+<p>Step labels were generated by "expert agents" and audited by blinded humans on 313 trajectories, 3,487 of 34,767 transitions (10.0%). Cohen's kappa was 0.7980 for state match, 0.7952 for deviation, 0.7663 for recovery and 0.8656 for loop. The audit pool covered 3,042 trajectories. The other 676, every run of UI-TARS-1.5-7B and GUI-Owl-1.5-8B-Instruct, arrived with no video or screenshots and were excluded, so 18.2% of the dataset and both GUI-specific models have labels nobody could check against pixels.</p>
+
+<h2 id="what-it-means">A process score inherits its reference path</h2>
+
+<p>GraceBench's concise-instruction numbers are the ones closest to real use, and they are the ones where route distance and real detours are mixed. If you adopt DR, report it under the detailed instruction, and treat the concise-minus-detailed difference (+0.0522 over 1,859 pairs) as route divergence until someone audits the deviating successes. Loop burden travels better.</p>
+
+<p>phoneshell has no reference path at all. A run record in <code>phoneshell/bench/runner.py</code> keeps <code>passed</code>, <code>turns</code>, <code>seconds</code> and <code>cost_usd</code>, and the leaderboard reports <code>avg_turns</code>. We cannot say what share of our passing runs wandered. We do have a loop definition that needs no graph: <code>StuckDetector</code> in <code>phoneshell/agent/verify.py</code> flags the same screen signature three times in a row, or an A, B, A, B, A, B alternation. That is the route-independent half of GraceBench's measure. Our judgement: it is the half worth logging per run first. The bench does not record it today.</p>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># Table 2, Section 4.3, Appendix B, C.1 (Table 6), C.4, D.1, E
+open "https://arxiv.org/html/2610.19900v1"
+
+python3 -c "
+sr_c, cr_c, sr_d, cr_d = 0.6391, 0.6261, 0.6391, 0.7388   # GPT-5.6 Sol, Table 2
+print('successes', round(sr_c*169), 'max mean CR of successes', round(cr_c/sr_c, 3), 'CR change', round(cr_c-cr_d, 4))
+print('successes with deviation or loop', round(663/(639+655)*100, 2))
+print('recovered from every deviation, succeeded', round(408/1301*100, 2))
+print('audited share of transitions', round(3487/34767*100, 1), 'records with no media', round(676/3718*100, 1))"
+# successes 108 max mean CR of successes 0.98 CR change -0.1127
+# successes with deviation or loop 51.24
+# recovered from every deviation, succeeded 31.36
+# audited share of transitions 10.0 records with no media 18.2
+
+# phoneshell: what a run records, and the graph-free loop definition
+grep -n "turns: int = 0" phoneshell/bench/runner.py
+grep -n '"avg_turns"' phoneshell/bench/runner.py
+grep -n "class StuckDetector" phoneshell/agent/verify.py
+grep -n "alternating between two states" phoneshell/agent/verify.py</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We claim that a material share of the deviation labels on successful GraceBench runs marks valid routes absent from the reference subgraph, not wasted actions. Our prediction: if the per-trajectory labels are public by 30 June 2027 and someone hand-reviews the successful concise-instruction runs that carry a deviation label, at least 20% of them will turn out to reach the goal by a legitimate route the subgraph did not contain. A share under 10% would show the 51.24% is nearly all real detour and this note is wrong.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Ridong Zhang, Shuxian Liang, Chaoqun Wan, Zhen Huang, Xian-Sheng Hua (Institute of AI for Engineering, Tongji University), <a href="https://arxiv.org/abs/2610.19900">How GUI Agents Fail: GraceBench for Execution Stability Diagnosis</a>, arXiv:2610.19900v1, submitted 14 October 2026, abstract, Sections 3.1 to 4.4, Tables 2, 4, 6, 8, 9, 11, 12 and 13, Appendices B, C.1, C.4, D.1 and E, read 12 November 2026. The paper states code will be made public; we did not run it. Project page: <a href="https://iaie-physicalai.github.io/GraceBench">iaie-physicalai.github.io/GraceBench</a>.</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/bench/runner.py</code>, <code>phoneshell/agent/verify.py</code>, read 12 November 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
