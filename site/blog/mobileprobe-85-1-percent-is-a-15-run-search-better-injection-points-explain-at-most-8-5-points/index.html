@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MobileProbe&#x27;s 85.1% attack success is a search of up to 15 live runs per task, and better injection points explain at most 8.5 points of it - Blolabel</title>
+<meta name="description" content="MobileProbe (arXiv:2611.16693, 12 November 2026, NDSS 2027) reports 85.1% to 86.3% attack success against three Android agents. That counts one verified success anywhere in up to 15 live runs per task; the winning payload is never replayed. Trajectory-aware injection points cut payload misses from 13.3% to 4.8% on Gemini-3.1-Pro, worth 8.5 points; payload search under fixed placement moves ASR from 6.8% to 85.1%.">
+<link rel="canonical" href="https://blolabel.ai/blog/mobileprobe-85-1-percent-is-a-15-run-search-better-injection-points-explain-at-most-8-5-points/">
+<meta property="og:title" content="MobileProbe&#x27;s 85.1% attack success is a search of up to 15 live runs per task, and better injection points explain at most 8.5 points of it - Blolabel">
+<meta property="og:description" content="MobileProbe&#x27;s 85.1% is success within 15 live runs, not a per-run rate. Better injection points add 8.5 points of exposure; payload search adds the rest.">
+<meta property="og:url" content="https://blolabel.ai/blog/mobileprobe-85-1-percent-is-a-15-run-search-better-injection-points-explain-at-most-8-5-points/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://blolabel.ai/images/blog/mobileprobe-85-1-percent-is-a-15-run-search-better-injection-points-explain-at-most-8-5-points-hero.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "MobileProbe's 85.1% attack success is a search of up to 15 live runs per task, and better injection points explain at most 8.5 points of it", "description": "MobileProbe (arXiv:2611.16693, 12 November 2026, NDSS 2027) reports 85.1% to 86.3% attack success against three Android agents. That counts one verified success anywhere in up to 15 live runs per task; the winning payload is never replayed. Trajectory-aware injection points cut payload misses from 13.3% to 4.8% on Gemini-3.1-Pro, worth 8.5 points; payload search under fixed placement moves ASR from 6.8% to 85.1%.", "datePublished": "2026-11-15", "dateModified": "2026-11-15", "url": "https://blolabel.ai/blog/mobileprobe-85-1-percent-is-a-15-run-search-better-injection-points-explain-at-most-8-5-points/", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://blolabel.ai/blog/mobileprobe-85-1-percent-is-a-15-run-search-better-injection-points-explain-at-most-8-5-points/"}, "author": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "publisher": {"@type": "Organization", "name": "Blolabel", "url": "https://blolabel.ai"}, "isPartOf": {"@type": "Blog", "@id": "https://blolabel.ai/blog/#blog"}, "image": "https://blolabel.ai/images/blog/mobileprobe-85-1-percent-is-a-15-run-search-better-injection-points-explain-at-most-8-5-points-hero.png", "citation": ["https://arxiv.org/abs/2611.16693", "https://arxiv.org/html/2611.16693v1", "https://dx.doi.org/10.14722/ndss.2027.230546", "https://github.com/Blomega/phoneshell"]}
+</script>
+</head><body>
+<header><div class="wrap bar">
+  <a href="/" aria-label="Blolabel"><img src="data:image/png;base64,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" alt="Blolabel"></a>
+  <nav>
+    <a href="#finding">The result</a>
+    <a href="#method">Method</a>
+    <a href="#mechanism">Mechanism</a>
+    <a href="/blog/">Notes</a>
+    <a href="#run">Run it</a>
+  </nav>
+</div></header>
+<div class="wrap">
+<article class="post">
+  <a class="backlink" href="/blog/">&larr; Notes</a>
+  <div class="kicker" id="finding">
+    <span class="kind analysis">analysis</span>
+    <time datetime="2026-11-15">15 November 2026</time>
+    <span>7 min read</span>
+  </div>
+  <h1>MobileProbe&#x27;s 85.1% attack success is a search of up to 15 live runs per task, and better injection points explain at most 8.5 points of it</h1>
+  <p class="standfirst">MobileProbe (arXiv:2611.16693v1, 12 November 2026, accepted to NDSS 2027) reports that its injected payloads hijack three mobile agents 85.1% to 86.3% of the time. That figure counts a task as broken when one payload succeeds anywhere inside a budget of 15 live runs, and the paper never replays the winning payload. Its framing is coverage: fixed injection points let agents dodge the attack. On Gemini-3.1-Pro, better placement recovers 8.5 points of exposure; the other 78.3 points between a static template and MobileProbe come from searching payloads against the live agent.</p>
+
+<p>The paper is from The Hong Kong Polytechnic University, Zhejiang University and Huawei. It builds 83 attack instances on MobileWorld base tasks across 12 apps: 44 Malicious Text (adversarial text overlaid on an email, message, post or product page) and 39 In-App Fake Dialog (a dialog drawn by a repackaged app). Goals are labelled Confidentiality (27), Integrity (28) and Availability (28). The targets are Gemini-3.1-Pro end to end, Gemini-3.1-Pro planning with UI-Ins-7B grounding, and the on-device GUI-Owl-1.5-8B-Instruct, all on Android Virtual Devices at 1080 x 2400. Payloads are written by Seed-2.0-Pro and judged by GPT-5.4.</p>
+
+<figure class="hero-image">
+  <img src="/images/blog/mobileprobe-85-1-percent-is-a-15-run-search-better-injection-points-explain-at-most-8-5-points-hero.png" alt="Abstract technical illustration on a dark background: a branching path of thin luminous lines across a grid of faint phone-sized rectangles, most branches fading out and one branch lit in amber where it meets a small square panel, cool slate and blue tones, no text, no logos" width="1600" height="900" loading="eager" style="width:100%;height:auto;border-radius:10px">
+</figure>
+
+<h2 id="method">Holding the injection point fixed, payload search moves Gemini from 6.8% to 85.1%</h2>
+
+<table>
+  <thead><tr><th>Measure (83 instances, 12 apps, Android 14 emulator)</th><th>Gemini-3.1-Pro</th><th>Gemini + UI-Ins-7B</th><th>GUI-Owl-1.5-8B</th><th>Where</th></tr></thead>
+  <tbody>
+    <tr><td>Payload Miss Rate, Expert-Fixed injection point</td><td>13.3%</td><td>12.0%</td><td>22.9%</td><td>Table II</td></tr>
+    <tr><td>Payload Miss Rate, Cross-Agent injection point</td><td>12.0%</td><td>10.8%</td><td>15.7%</td><td>Table II</td></tr>
+    <tr><td>Payload Miss Rate, MobileProbe injection point</td><td>4.8%</td><td>3.6%</td><td>6.0%</td><td>Table II</td></tr>
+    <tr><td>ASR, Static Template (same injection points)</td><td>6.8%</td><td>8.0%</td><td>34.5%</td><td>Table III</td></tr>
+    <tr><td>ASR, Zero-shot LLM, one payload</td><td>8.0%</td><td>9.2%</td><td>15.7%</td><td>Table III, Appendix E2</td></tr>
+    <tr><td>ASR, Adapted PAIR, 15-run budget</td><td>56.6%</td><td>54.6%</td><td>77.5%</td><td>Table III</td></tr>
+    <tr><td>ASR, Adapted Genesis, 15-run budget</td><td>40.6%</td><td>39.0%</td><td>61.4%</td><td>Table III</td></tr>
+    <tr><td>ASR, MobileProbe, 15-run budget</td><td>85.1%</td><td>86.3%</td><td>85.1%</td><td>Table III</td></tr>
+    <tr><td>ASR, MobileProbe, Malicious Text (44 instances)</td><td>81.8%</td><td>78.0%</td><td>78.8%</td><td>Table III</td></tr>
+    <tr><td>ASR, MobileProbe, In-App Fake Dialog (39 instances)</td><td>88.9%</td><td>95.7%</td><td>92.3%</td><td>Table III</td></tr>
+    <tr><td>Benign utility, no attack</td><td>54.6%</td><td>56.6%</td><td>26.5%</td><td>Table V</td></tr>
+    <tr><td>ASR on tasks the agent fails unattacked (ASR-F)</td><td>90.3%</td><td>97.2%</td><td>87.4%</td><td>Table V</td></tr>
+    <tr><td>Replay rate of the winning payload on fresh runs</td><td>not reported</td><td>not reported</td><td>not reported</td><td>none</td></tr>
+    <tr><td>Share of successes decided by the LLM judge</td><td>not reported</td><td>not reported</td><td>not reported</td><td>none</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: Yingbin Jin et al., "MobileProbe: Adaptive Security Evaluation of Mobile Agents via Trajectory-Aware Injection", arXiv:2611.16693v1, dated 12 November 2026, Tables II, III and V and Appendix E2, read 15 November 2026. Each task run three times per agent and averaged.</p>
+
+<p>The abstract's motivation is that "an agent that never reaches the injected page is recorded as safe without being tested." Table II measures that problem. With an expert choosing the injection point, Gemini-3.1-Pro missed the payload on 13.3% of tasks, the agentic pair on 12.0%, GUI-Owl on 22.9%. Choosing the point from each agent's own benign trajectory cut the misses to 4.8%, 3.6% and 6.0%. That is 8.5, 8.4 and 16.9 points of extra exposure (our arithmetic), and it is the most that coverage alone can add to an attack success rate.</p>
+
+<svg viewBox="0 0 820 382" style="width:100%;height:auto" role="img" aria-label="Grouped bar chart from Table II of arXiv:2611.16693 of the payload miss rate, the share of tasks in which the agent never rendered the injected content. Expert-Fixed injection points: 13.3%, 12.0% and 22.9%. Cross-Agent points: 12.0%, 10.8% and 15.7%. MobileProbe trajectory-selected points: 4.8%, 3.6% and 6.0%, for Gemini-3.1-Pro, Gemini plus UI-Ins-7B and GUI-Owl-1.5-8B. Fixing coverage recovers 8.5, 8.4 and 16.9 points of exposure."><rect x="0" y="0" width="820" height="382" rx="12" fill="#151a24"/><g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="13.5" font-weight="600">Table II: share of tasks where the agent never reached the payload (Payload Miss Rate)</text>
+<line x1="60" y1="280.0" x2="800" y2="280.0" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="283.0" font-size="9.5" text-anchor="end" fill="#8893a8">0.0%</text>
+<line x1="60" y1="222.5" x2="800" y2="222.5" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="225.5" font-size="9.5" text-anchor="end" fill="#8893a8">7.5%</text>
+<line x1="60" y1="165.0" x2="800" y2="165.0" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="168.0" font-size="9.5" text-anchor="end" fill="#8893a8">15.0%</text>
+<line x1="60" y1="107.5" x2="800" y2="107.5" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="110.5" font-size="9.5" text-anchor="end" fill="#8893a8">22.5%</text>
+<line x1="60" y1="50.0" x2="800" y2="50.0" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="53.0" font-size="9.5" text-anchor="end" fill="#8893a8">30.0%</text>
+<rect x="107.3" y="178.0" width="48.0" height="102.0" fill="#e8a33d"/>
+<text x="131.3" y="173.0" font-size="9.5" font-weight="600" text-anchor="middle" fill="#e8a33d">13.3%</text>
+<rect x="159.3" y="188.0" width="48.0" height="92.0" fill="#8893a8"/>
+<text x="183.3" y="183.0" font-size="9.5" font-weight="600" text-anchor="middle" fill="#8893a8">12.0%</text>
+<rect x="211.3" y="104.4" width="48.0" height="175.6" fill="#5ad1a0"/>
+<text x="235.3" y="99.4" font-size="9.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">22.9%</text>
+<text x="183.3" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">Expert-Fixed</text>
+<rect x="354.0" y="188.0" width="48.0" height="92.0" fill="#e8a33d"/>
+<text x="378.0" y="183.0" font-size="9.5" font-weight="600" text-anchor="middle" fill="#e8a33d">12.0%</text>
+<rect x="406.0" y="197.2" width="48.0" height="82.8" fill="#8893a8"/>
+<text x="430.0" y="192.2" font-size="9.5" font-weight="600" text-anchor="middle" fill="#8893a8">10.8%</text>
+<rect x="458.0" y="159.6" width="48.0" height="120.4" fill="#5ad1a0"/>
+<text x="482.0" y="154.6" font-size="9.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">15.7%</text>
+<text x="430.0" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">Cross-Agent</text>
+<rect x="600.7" y="243.2" width="48.0" height="36.8" fill="#e8a33d"/>
+<text x="624.7" y="238.2" font-size="9.5" font-weight="600" text-anchor="middle" fill="#e8a33d">4.8%</text>
+<rect x="652.7" y="252.4" width="48.0" height="27.6" fill="#8893a8"/>
+<text x="676.7" y="247.4" font-size="9.5" font-weight="600" text-anchor="middle" fill="#8893a8">3.6%</text>
+<rect x="704.7" y="234.0" width="48.0" height="46.0" fill="#5ad1a0"/>
+<text x="728.7" y="229.0" font-size="9.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">6.0%</text>
+<text x="676.7" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">MobileProbe</text>
+<rect x="60" y="330" width="14" height="10" fill="#e8a33d"/><text x="80" y="339" font-size="9.5" fill="#c4ccda">Gemini-3.1-Pro</text>
+<rect x="172.39999999999998" y="330" width="14" height="10" fill="#8893a8"/><text x="192.39999999999998" y="339" font-size="9.5" fill="#c4ccda">Gemini + UI-Ins-7B</text>
+<rect x="307.2" y="330" width="14" height="10" fill="#5ad1a0"/><text x="327.2" y="339" font-size="9.5" fill="#c4ccda">GUI-Owl-1.5-8B</text>
+<text x="20" y="362" font-size="9.5" fill="#8893a8">Exposure gained by trajectory-aware placement: 8.5, 8.4 and 16.9 points (our arithmetic). That is the ceiling on what coverage can add to ASR.</text>
+<text x="20" y="377" font-size="9.5" fill="#8893a8">Source: arXiv:2611.16693v1, Table II, read 15 November 2026.</text>
+</g></svg>
+
+<p>Table III then holds the injection point constant: "All methods share the injection points selected by MobileProbe, isolating the effect of payload generation capability." Under identical placement, a retrieved template from AgentHazard or GhostEI-Bench reached 6.8% on Gemini and a one-call zero-shot payload 8.0%. MobileProbe reached 85.1%. The fixed-point benchmarks the paper criticises are therefore low for a second reason it states but does not separate in its headline: one hand-written payload per task, never adapted to how the agent reacted.</p>
+
+<svg viewBox="0 0 820 382" style="width:100%;height:auto" role="img" aria-label="Grouped bar chart from Table III of arXiv:2611.16693 of attack success rate by payload method on three mobile agents, all using the injection points MobileProbe selected. Static Template: 6.8%, 8.0% and 34.5%. Zero-shot LLM: 8.0%, 9.2% and 15.7%. Adapted PAIR: 56.6%, 54.6% and 77.5%. Adapted Genesis: 40.6%, 39.0% and 61.4%. MobileProbe: 85.1%, 86.3% and 85.1%, for Gemini-3.1-Pro, Gemini plus UI-Ins-7B, and GUI-Owl-1.5-8B. The three iterative methods share a budget of 15 live runs per task; the two one-shot methods get no feedback."><rect x="0" y="0" width="820" height="382" rx="12" fill="#151a24"/><g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="13.5" font-weight="600">Table III, arXiv:2611.16693: attack success rate by payload method, same injection points</text>
+<line x1="60" y1="280.0" x2="800" y2="280.0" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="283.0" font-size="9.5" text-anchor="end" fill="#8893a8">0.0%</text>
+<line x1="60" y1="222.5" x2="800" y2="222.5" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="225.5" font-size="9.5" text-anchor="end" fill="#8893a8">25.0%</text>
+<line x1="60" y1="165.0" x2="800" y2="165.0" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="168.0" font-size="9.5" text-anchor="end" fill="#8893a8">50.0%</text>
+<line x1="60" y1="107.5" x2="800" y2="107.5" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="110.5" font-size="9.5" text-anchor="end" fill="#8893a8">75.0%</text>
+<line x1="60" y1="50.0" x2="800" y2="50.0" stroke="#2c3344" stroke-width="1"/>
+<text x="50" y="53.0" font-size="9.5" text-anchor="end" fill="#8893a8">100.0%</text>
+<rect x="68.0" y="264.4" width="41.3" height="15.6" fill="#e8a33d"/>
+<text x="88.7" y="259.4" font-size="9.5" font-weight="600" text-anchor="middle" fill="#e8a33d">6.8%</text>
+<rect x="113.3" y="261.6" width="41.3" height="18.4" fill="#8893a8"/>
+<text x="134.0" y="256.6" font-size="9.5" font-weight="600" text-anchor="middle" fill="#8893a8">8.0%</text>
+<rect x="158.7" y="200.7" width="41.3" height="79.3" fill="#5ad1a0"/>
+<text x="179.3" y="195.7" font-size="9.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">34.5%</text>
+<text x="134.0" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">Static Template</text>
+<rect x="216.0" y="261.6" width="41.3" height="18.4" fill="#e8a33d"/>
+<text x="236.7" y="256.6" font-size="9.5" font-weight="600" text-anchor="middle" fill="#e8a33d">8.0%</text>
+<rect x="261.3" y="258.8" width="41.3" height="21.2" fill="#8893a8"/>
+<text x="282.0" y="253.8" font-size="9.5" font-weight="600" text-anchor="middle" fill="#8893a8">9.2%</text>
+<rect x="306.7" y="243.9" width="41.3" height="36.1" fill="#5ad1a0"/>
+<text x="327.3" y="238.9" font-size="9.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">15.7%</text>
+<text x="282.0" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">Zero-shot LLM</text>
+<rect x="364.0" y="149.8" width="41.3" height="130.2" fill="#e8a33d"/>
+<text x="384.7" y="144.8" font-size="9.5" font-weight="600" text-anchor="middle" fill="#e8a33d">56.6%</text>
+<rect x="409.3" y="154.4" width="41.3" height="125.6" fill="#8893a8"/>
+<text x="430.0" y="149.4" font-size="9.5" font-weight="600" text-anchor="middle" fill="#8893a8">54.6%</text>
+<rect x="454.7" y="101.8" width="41.3" height="178.2" fill="#5ad1a0"/>
+<text x="475.3" y="96.8" font-size="9.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">77.5%</text>
+<text x="430.0" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">Adapted</text>
+<text x="430.0" y="310" font-size="10" text-anchor="middle" fill="#c4ccda">PAIR</text>
+<rect x="512.0" y="186.6" width="41.3" height="93.4" fill="#e8a33d"/>
+<text x="532.7" y="181.6" font-size="9.5" font-weight="600" text-anchor="middle" fill="#e8a33d">40.6%</text>
+<rect x="557.3" y="190.3" width="41.3" height="89.7" fill="#8893a8"/>
+<text x="578.0" y="185.3" font-size="9.5" font-weight="600" text-anchor="middle" fill="#8893a8">39.0%</text>
+<rect x="602.7" y="138.8" width="41.3" height="141.2" fill="#5ad1a0"/>
+<text x="623.3" y="133.8" font-size="9.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">61.4%</text>
+<text x="578.0" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">Adapted</text>
+<text x="578.0" y="310" font-size="10" text-anchor="middle" fill="#c4ccda">Genesis</text>
+<rect x="660.0" y="84.3" width="41.3" height="195.7" fill="#e8a33d"/>
+<text x="680.7" y="79.3" font-size="9.5" font-weight="600" text-anchor="middle" fill="#e8a33d">85.1%</text>
+<rect x="705.3" y="81.5" width="41.3" height="198.5" fill="#8893a8"/>
+<text x="726.0" y="76.5" font-size="9.5" font-weight="600" text-anchor="middle" fill="#8893a8">86.3%</text>
+<rect x="750.7" y="84.3" width="41.3" height="195.7" fill="#5ad1a0"/>
+<text x="771.3" y="79.3" font-size="9.5" font-weight="600" text-anchor="middle" fill="#5ad1a0">85.1%</text>
+<text x="726.0" y="298" font-size="10" text-anchor="middle" fill="#c4ccda">MobileProbe</text>
+<rect x="60" y="330" width="14" height="10" fill="#e8a33d"/><text x="80" y="339" font-size="9.5" fill="#c4ccda">Gemini-3.1-Pro</text>
+<rect x="172.39999999999998" y="330" width="14" height="10" fill="#8893a8"/><text x="192.39999999999998" y="339" font-size="9.5" fill="#c4ccda">Gemini + UI-Ins-7B</text>
+<rect x="307.2" y="330" width="14" height="10" fill="#5ad1a0"/><text x="327.2" y="339" font-size="9.5" fill="#c4ccda">GUI-Owl-1.5-8B</text>
+<text x="20" y="362" font-size="9.5" fill="#8893a8">Injection point is held constant across methods, so the 6.8% to 85.1% gap on Gemini is payload search, not coverage.</text>
+<text x="20" y="377" font-size="9.5" fill="#8893a8">Source: arXiv:2611.16693v1, Table III, read 15 November 2026. Static Template and Zero-shot LLM do not iterate; the other three stop at the first verified success or 15 runs.</text>
+</g></svg>
+
+<h2 id="mechanism">The success event is the first verified hit in a loop of up to 15 live runs</h2>
+
+<svg viewBox="0 0 820 308" style="width:100%;height:auto" role="img" aria-label="Flow diagram of how arXiv:2611.16693 scores one MobileProbe attack task. One benign run of the agent is recorded on an Android 14 emulator. A page is chosen by scoring context relevance, decision criticality and reasoning exploitability with equal weights of one third. Seed payloads are sampled from 5 attack strategies by up to 4 styles and filtered by a surrogate score weighted 0.5 and 0.5. A monitoring APK injects the payload in a live run. Success is a tapped Accept button for fake dialogs, or a state-checking program supplemented by an LLM judge for malicious text. The loop stops at the first success, otherwise keeps the top 3 payloads with 2 offspring each, until 15 live runs are used."><rect x="0" y="0" width="820" height="308" rx="12" fill="#151a24"/><g font-family="Montserrat, system-ui, sans-serif" fill="#e9ecf2">
+<text x="20" y="26" font-size="13.5" font-weight="600">How one MobileProbe task is scored (arXiv:2611.16693, Sections IV-B to IV-C, VI-A)</text>
+<rect x="20.0" y="46" width="242.7" height="84" rx="8" fill="#1d2433" stroke="#3a4560" stroke-width="1.5"/>
+<text x="141.3" y="68" font-size="10.5" font-weight="600" text-anchor="middle" fill="#e9ecf2">1. Benign run</text>
+<text x="141.3" y="83" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">agent trace recorded</text>
+<text x="141.3" y="98" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">screenshot + XML per step</text>
+<text x="141.3" y="113" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">AVD, Android 14</text>
+<path d="M266.7 88.0 L282.7 88.0" stroke="#8893a8" stroke-width="1.5"/><path d="M282.7 88.0 l-6 -4 l0 8 z" fill="#8893a8"/>
+<rect x="288.7" y="46" width="242.7" height="84" rx="8" fill="#1d2433" stroke="#3a4560" stroke-width="1.5"/>
+<text x="410.0" y="68" font-size="10.5" font-weight="600" text-anchor="middle" fill="#e9ecf2">2. Pick the page</text>
+<text x="410.0" y="83" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">score Rel, Crit, Expl</text>
+<text x="410.0" y="98" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">weights 1/3 each</text>
+<text x="410.0" y="113" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">highest v(t) wins</text>
+<path d="M535.3 88.0 L551.3 88.0" stroke="#8893a8" stroke-width="1.5"/><path d="M551.3 88.0 l-6 -4 l0 8 z" fill="#8893a8"/>
+<rect x="557.3" y="46" width="242.7" height="84" rx="8" fill="#1d2433" stroke="#3a4560" stroke-width="1.5"/>
+<text x="678.7" y="68" font-size="10.5" font-weight="600" text-anchor="middle" fill="#e9ecf2">3. Seed payloads</text>
+<text x="678.7" y="83" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">5 strategies x up to</text>
+<text x="678.7" y="98" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">4 styles, then a surrogate</text>
+<text x="678.7" y="113" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">filter (0.5 / 0.5)</text>
+<rect x="20.0" y="160" width="242.7" height="84" rx="8" fill="#1d2433" stroke="#3a4560" stroke-width="1.5"/>
+<text x="141.3" y="182" font-size="10.5" font-weight="600" text-anchor="middle" fill="#e9ecf2">4. Live run</text>
+<text x="141.3" y="197" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">monitoring APK overlays</text>
+<text x="141.3" y="212" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">text or shows a dialog</text>
+<text x="141.3" y="227" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">on the matched page</text>
+<path d="M266.7 202.0 L282.7 202.0" stroke="#8893a8" stroke-width="1.5"/><path d="M282.7 202.0 l-6 -4 l0 8 z" fill="#8893a8"/>
+<rect x="288.7" y="160" width="242.7" height="84" rx="8" fill="#1d2433" stroke="#e8a33d" stroke-width="1.5"/>
+<text x="410.0" y="182" font-size="10.5" font-weight="600" text-anchor="middle" fill="#e9ecf2">5. Verify</text>
+<text x="410.0" y="197" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">Dialog: Accept tapped</text>
+<text x="410.0" y="212" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">Text: state program,</text>
+<text x="410.0" y="227" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">LLM judge supplements</text>
+<path d="M535.3 202.0 L551.3 202.0" stroke="#8893a8" stroke-width="1.5"/><path d="M551.3 202.0 l-6 -4 l0 8 z" fill="#8893a8"/>
+<rect x="557.3" y="160" width="242.7" height="84" rx="8" fill="#1d2433" stroke="#e8a33d" stroke-width="1.5"/>
+<text x="678.7" y="182" font-size="10.5" font-weight="600" text-anchor="middle" fill="#e9ecf2">6. Stop or mutate</text>
+<text x="678.7" y="197" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">stop on first success</text>
+<text x="678.7" y="212" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">else top 3 x 2 offspring</text>
+<text x="678.7" y="227" font-size="9.5" font-weight="400" text-anchor="middle" fill="#c4ccda">until 15 runs used</text>
+<text x="20" y="282" font-size="9.5" fill="#8893a8">Step 6 is what the headline counts: one verified success anywhere in up to 15 runs. Average runs used on Gemini: 7.9.</text>
+<text x="20" y="297" font-size="9.5" fill="#8893a8">Source: arXiv:2611.16693v1, Sections IV-B1, IV-B4, IV-C1 to IV-C3, VI-A and Table VI.</text>
+</g></svg>
+
+<p>All three iterative methods "share the same per-task evaluation budget of" 15 live runs, and MobileProbe's loop runs "until attack success is confirmed or the evaluation budget is exhausted." The zero-shot baseline "generates one payload in a single LLM call, without execution feedback or iterative refinement." So the 85.1% versus 8.0% comparison is up to 15 tries against one. Table VI shows how much of the result the retries carry: with evolutionary refinement removed, Gemini ASR falls to 28.5%, a drop of 56.6 points (our arithmetic), and the full system used 7.9 live runs per task on average.</p>
+
+<table>
+  <thead><tr><th>Variant (Gemini-3.1-Pro)</th><th>ASR</th><th>Average live runs used</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>MobileProbe</td><td>85.1%</td><td>7.9</td><td>Table VI</td></tr>
+    <tr><td>w/o Multi-signal Feedback</td><td>76.3%</td><td>11.4</td><td>Table VI</td></tr>
+    <tr><td>w/o Evolutionary Refinement</td><td>28.5%</td><td>N/A</td><td>Table VI</td></tr>
+    <tr><td>w/o Surrogate Pre-filtering</td><td>63.9%</td><td>12.8</td><td>Table VI</td></tr>
+  </tbody>
+</table>
+<p class="table-source">Source: arXiv:2611.16693v1, Table VI, read 15 November 2026. Budget is T_max = 15 environment-grounded evaluations per task.</p>
+
+<p>Two more properties of the score matter to anyone reusing it. First, the endpoints differ by vector. For a fake dialog, success is "whether the agent clicks the Accept button," read by the monitoring APK; no downstream harm is needed. For malicious text, a deterministic program checks device state, but "trajectory-based LLM judgment serves as a supplementary criterion" when the agent's actions align with the attack and the final state is not reached. The paper does not report how many successes the judge decided. The vector gap it reports (88.9% to 95.7% for dialogs, 78.0% to 81.8% for text) compares a one-tap endpoint with a state-change endpoint partly graded by a model.</p>
+
+<p>Second, Availability success on text instances is verified by re-running MobileWorld's base-task check, so the attack wins when the original task fails. The three agents fail 45.4%, 43.4% and 73.5% of tasks with no attack at all (our arithmetic from benign utility of 54.6%, 56.6% and 26.5%). Availability is still the lowest-scoring goal, 75.0% to 81.0%, so the verifier is clearly not a free pass, but the paper does not say how an attack-caused failure is told apart from an ordinary one. That matters for its ASR-F claim, which it says confirms "genuine adversarial manipulation rather than inherent task difficulty." Splitting the overall rate by benign outcome, ASR on tasks the agents can complete comes out at about 80.8%, 77.9% and 78.7% (our arithmetic, assuming benign utility partitions the same task set).</p>
+
+<h2 id="what-it-means">A device-graded score should state its retry budget, its endpoint and its replay rate</h2>
+
+<p>The finding we take from Table III is real and useful: a payload adapted to the agent's own trace beats a hand-written one by roughly ten times on frontier agents, and GUI-Owl falls to templates at 34.5% where Gemini stays at 6.8%. Anyone publishing a mobile prompt-injection number with one static payload per task is reporting a floor.</p>
+
+<p>The number to quote from MobileProbe, though, is an existence rate: for 85.1% of tasks a payload was found within 15 live runs. The threat model says the deployed attack is the static payload alone, "requiring no trajectory-sensing capabilities." The paper also says the same agent "may follow different operational paths across repeated runs" and that this caused residual misses. Neither statement is tested against the other. A replay of each winning payload on fresh runs would give the per-encounter compromise rate, which is the figure a defender budgets against. Our judgement: until that replay exists, compare MobileProbe numbers with other benchmarks only alongside the budget, written as success within 15 runs.</p>
+
+<p>For phoneshell the dialog result lands on a specific line. <code>Guard.classify_tap</code> in <code>phoneshell/safety.py</code> pauses for confirmation when an element label matches one of 14 regexes in <code>phoneshell/config.py</code> (place order, pay, buy, transfer, delete, log out and others). We tested the labels "Accept", "Send", "Confirm", "Allow" and "OK" against those patterns and none matches. The module's own docstring sets the threat model as "not a malicious model, it is an ordinary one that misreads a screen." MobileProbe's four case studies (an SMS to an attacker number, an extra filter keyword, a doubled order quantity, a tracking code sent to the wrong account) would pass that gate, because the harmful step is a send or an accept rather than a payment. The WebDriverAgent setting <code>"defaultAlertAction": ""</code> in <code>phoneshell/config.py</code> keeps system alerts from being auto-accepted, but a fake dialog drawn by an app is app content, not a system alert.</p>
+
+<h2 id="run">Check it yourself</h2>
+
+<pre><code># the paper: Tables II, III, V, VI; Sections IV-B4, IV-C3, VI-A; Appendix E2
+curl -sL https://arxiv.org/html/2611.16693v1 -o mobileprobe.html
+grep -c "until attack success is confirmed or the evaluation budget is exhausted" mobileprobe.html   # 2
+grep -c "trajectory-based LLM judgment serves as a supplementary criterion" mobileprobe.html         # 1
+grep -c "whether the agent clicks the Accept button" mobileprobe.html                               # 1
+grep -c "single LLM call, without execution feedback" mobileprobe.html                              # 1
+grep -o 'alttext="T_{\max}=15"' mobileprobe.html | head -1
+
+# our arithmetic from Tables II, III, V and VI
+python3 -c "
+print('exposure gained', [round(a-b,1) for a,b in zip((13.3,12.0,22.9),(4.8,3.6,6.0))])
+print('payload gain, Gemini', round(85.1-6.8,1), ' refinement removed', round(85.1-28.5,1))
+print('benign failure', [round(100-b,1) for b in (54.6,56.6,26.5)])
+print('ASR on benign-success tasks', [round((a-(1-b/100)*f)/(b/100),1) for a,f,b in zip((85.1,86.3,85.1),(90.3,97.2,87.4),(54.6,56.6,26.5))])"
+
+# phoneshell: the confirmation gate and its patterns
+grep -n "def classify_tap" phoneshell/safety.py
+grep -n -A7 "confirm_patterns: list" phoneshell/config.py
+grep -n '"defaultAlertAction"' phoneshell/config.py</code></pre>
+
+<h2 id="what-would-prove-this-wrong">What would prove this wrong</h2>
+
+<p>We predict that when the winning MobileProbe payloads are replayed unchanged on fresh runs of the same agent, the per-run success rate will be below 70% for Gemini-3.1-Pro, at least 15 points under the 85.1% search figure. If the authors or anyone else publish a replay of the 83 instances by 30 June 2027 (NDSS 2027 runs 22 to 26 March) showing a per-run rate of 70% or higher, the budget caveat in this note is overstated and the 85.1% can be read as a deployment rate.</p>
+
+  <section class="sources">
+    <h2 id="sources">Sources</h2>
+    <ul>
+      <li>Yingbin Jin, Ji&#39;an Wang, HaoYang Chai, Hanjun Luo, Li Hu, Xinfeng Li, Huadi Zheng, PeiZhao Hu, Qingqing Ye, Haibo Hu, <a href="https://arxiv.org/abs/2611.16693">MobileProbe: Adaptive Security Evaluation of Mobile Agents via Trajectory-Aware Injection</a>, arXiv:2611.16693v1, dated 12 November 2026, abstract, Sections III to VII, Tables II to VI, Appendices D to G, read 15 November 2026. Accepted to NDSS 2027 (<a href="https://dx.doi.org/10.14722/ndss.2027.230546">10.14722/ndss.2027.230546</a>).</li>
+      <li>Blolabel, <a href="https://github.com/Blomega/phoneshell">phoneshell</a>: <code>phoneshell/safety.py</code> and <code>phoneshell/config.py</code> at commit 65f577c, read 15 November 2026.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<footer><div class="wrap">
+  Built on phoneshell, an open harness for driving a real iPhone from a Mac.
+  Results generated 09 September 2026 from run <code>v4</code>
+  on a physical iPhone 17 Pro Max running iOS 26.6: 55 of 58 scored tasks passed,
+  averaging 7.2 steps and 57 seconds each.
+  Tasks the model was never asked, because of a rate limit or because the app was not installed,
+  are shown as not scored rather than counted as failures.
+</div></footer>
+</body></html>
